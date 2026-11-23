@@ -75,12 +75,12 @@ public static class AgentHostMiddlewareExtensions
 
         app.Properties.Add(RegistrationMarker, true);
 
-        // Capture platform identity headers into the request-scoped
-        // FoundryAgentRequestContext before anything else so the call id is
-        // available to the handler and to outbound Foundry-bound clients.
-        app.UseMiddleware<RequestContextMiddleware>();
         app.UseMiddleware<RequestIdMiddleware>();
         app.UseMiddleware<ServerVersionMiddleware>();
+        // Capture platform identity headers before protocol handling so the call id is
+        // available to handlers and outbound Foundry-bound clients. Keep this after the
+        // response-header middleware so rejected requests still receive standard headers.
+        app.UseMiddleware<RequestContextMiddleware>();
         app.UseMiddleware<W3CBaggagePropagator>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
         app.UseMiddleware<InboundRequestLoggingMiddleware>();

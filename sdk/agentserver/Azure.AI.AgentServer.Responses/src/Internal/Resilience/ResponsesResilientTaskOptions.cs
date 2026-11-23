@@ -12,15 +12,22 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 internal sealed class ResponsesResilientTaskOptions : IHostedService
 {
     private bool? _steerable;
+    private bool? _enabled;
 
     public void Initialize(ResponsesServerOptions options)
     {
         Argument.AssertNotNull(options, nameof(options));
         _steerable = options.SteerableConversations;
+        _enabled = options.ResilientBackground || options.SteerableConversations;
     }
 
     public bool IsSteerable()
         => _steerable
+            ?? throw new InvalidOperationException(
+                "Responses resilient-task options were accessed before host startup.");
+
+    public bool IsEnabled()
+        => _enabled
             ?? throw new InvalidOperationException(
                 "Responses resilient-task options were accessed before host startup.");
 

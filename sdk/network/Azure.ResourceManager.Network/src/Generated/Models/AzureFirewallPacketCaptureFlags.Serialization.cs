@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureFlags)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(FlagsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(FlagsType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AzureFirewallPacketCaptureFlagsType? @type = default;
+            AzureFirewallPacketCaptureFlagsType? flagsType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @type = new AzureFirewallPacketCaptureFlagsType(prop.Value.GetString());
+                    flagsType = new AzureFirewallPacketCaptureFlagsType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureFirewallPacketCaptureFlags(@type, additionalBinaryDataProperties);
+            return new AzureFirewallPacketCaptureFlags(flagsType, additionalBinaryDataProperties);
         }
     }
 }

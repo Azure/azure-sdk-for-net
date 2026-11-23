@@ -14,7 +14,9 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         private McpToolFilter _allowedTools;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
@@ -34,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The tool kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUrl">
+        /// <param name="serverUri">
         /// The URL for the MCP server. One of `server_url`, `connector_id`, or
         ///   `tunnel_id` must be provided.
         /// </param>
@@ -52,10 +54,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
-        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
-            ServerUrl = serverUrl;
+            ServerUri = serverUri;
             Authorization = authorization;
             ServerDescription = serverDescription;
             Headers = headers;
@@ -75,7 +77,7 @@ namespace Azure.AI.Projects.Agents
         /// The URL for the MCP server. One of `server_url`, `connector_id`, or
         ///   `tunnel_id` must be provided.
         /// </summary>
-        public Uri ServerUrl { get; set; }
+        public Uri ServerUri { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -103,9 +105,6 @@ namespace Azure.AI.Projects.Agents
                 _allowedToolsIsDefined = true;
             }
         }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }

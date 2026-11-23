@@ -76,6 +76,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> Indicates the destination for this particular rule. </summary>
         [WirePath("properties.destination")]
         public RoutingRuleRouteDestination Destination

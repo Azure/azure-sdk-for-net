@@ -82,9 +82,9 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         CancellationToken cancellationToken) => Task.CompletedTask;
 
     /// <summary>Handles caller interruption of a response.</summary>
-    protected virtual Task OnBargeInAsync(
+    protected virtual Task OnUserBargeInAsync(
         VoiceSession session,
-        VoiceBargeInEvent bargeIn,
+        VoiceUserBargeInEvent bargeIn,
         CancellationToken cancellationToken) => Task.CompletedTask;
 
     /// <summary>Handles proactive response acceptance.</summary>
@@ -290,7 +290,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             VoiceUserNoInputEvent noInput => ApplicationHandler.OnUserNoInputAsync(session, noInput, cancellationToken),
             VoiceUserSpeechStartedEvent speechStarted =>
                 ApplicationHandler.OnUserSpeechStartedAsync(session, speechStarted, cancellationToken),
-            VoiceBargeInEvent bargeIn => ApplicationHandler.OnBargeInAsync(session, bargeIn, cancellationToken),
+            VoiceUserBargeInEvent bargeIn => ApplicationHandler.OnUserBargeInAsync(session, bargeIn, cancellationToken),
             VoiceResponseAcceptedEvent accepted => ApplicationHandler.OnResponseAcceptedAsync(session, accepted, cancellationToken),
             VoiceResponseDroppedEvent dropped => ApplicationHandler.OnResponseDroppedAsync(session, dropped, cancellationToken),
             VoiceResponseCancelledEvent cancelled => ApplicationHandler.OnResponseCancelledAsync(session, cancelled, cancellationToken),

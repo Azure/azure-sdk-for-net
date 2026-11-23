@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppProvisioningState : IEquatable<NetAppProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
         /// <summary> Resource has been Accepted. </summary>
         private const string AcceptedValue = "Accepted";
         /// <summary> Resource is being Created. </summary>
@@ -27,10 +33,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string DeletingValue = "Deleting";
         /// <summary> Resource is being Moved. </summary>
         private const string MovingValue = "Moving";
-        /// <summary> Resource has Failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Resource has Succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="NetAppProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,6 +43,15 @@ namespace Azure.ResourceManager.NetApp.Models
 
             _value = value;
         }
+
+        /// <summary> Resource has been created. </summary>
+        public static NetAppProvisioningState Succeeded { get; } = new NetAppProvisioningState(SucceededValue);
+
+        /// <summary> Resource creation failed. </summary>
+        public static NetAppProvisioningState Failed { get; } = new NetAppProvisioningState(FailedValue);
+
+        /// <summary> Resource creation was canceled. </summary>
+        public static NetAppProvisioningState Canceled { get; } = new NetAppProvisioningState(CanceledValue);
 
         /// <summary> Resource has been Accepted. </summary>
         public static NetAppProvisioningState Accepted { get; } = new NetAppProvisioningState(AcceptedValue);
@@ -59,12 +70,6 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Resource is being Moved. </summary>
         public static NetAppProvisioningState Moving { get; } = new NetAppProvisioningState(MovingValue);
-
-        /// <summary> Resource has Failed. </summary>
-        public static NetAppProvisioningState Failed { get; } = new NetAppProvisioningState(FailedValue);
-
-        /// <summary> Resource has Succeeded. </summary>
-        public static NetAppProvisioningState Succeeded { get; } = new NetAppProvisioningState(SucceededValue);
 
         /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

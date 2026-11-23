@@ -132,7 +132,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="TemporalModifier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemporalModifier?(string value) => value == null ? null : new TemporalModifier(value);
+        public static implicit operator TemporalModifier?(string value) => value == null ? (TemporalModifier?)null : new TemporalModifier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

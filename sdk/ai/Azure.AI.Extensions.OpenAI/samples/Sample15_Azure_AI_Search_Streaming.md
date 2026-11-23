@@ -17,27 +17,6 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 2. Create an agent with `AzureAISearchAgentTool`. The `AzureAISearchAgentTool` constructor requires `AzureAISearchToolOptions`, which contain one or more `AzureAISearchToolIndex` objects. `AzureAISearchToolIndex` defines the index and the search parameters. `aiSearchConnectionName` variable is a name of the Azure AI Search connection ID as found in the "Connections" tab in your Microsoft Foundry project. In the Agent's instructions we explicitly ask it to return the citation.
 
-Synchronous sample:
-```C# Snippet:Sample_CreateAgent_AzureAISearchStreaming_Sync
-AzureAISearchToolIndex index = new()
-{
-    ProjectConnectionId = aiSearchConnectionName,
-    IndexName = "sample_index",
-    TopK = 5,
-    Filter = "category eq 'sleeping bag'",
-    QueryType = AzureAISearchQueryKind.Simple
-};
-DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-{
-    Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
-};
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-    agentName: "myAgent",
-    options: new(agentDefinition));
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_AzureAISearchStreaming_Async
 AzureAISearchToolIndex index = new()
 {
@@ -81,48 +60,12 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 4. Stream the response.
 
-Synchronous sample:
-```C# Snippet:Sample_StreamResponse_AzureAISearchStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-string annotation = "";
-string text = "";
-foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming("What is the temperature rating of the cozynights sleeping bag?"))
-{
-    if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
-    {
-        Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-    {
-        Console.WriteLine($"Delta: {textDelta.Delta}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
-    {
-        text = textDoneUpdate.Text;
-    }
-    else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
-    {
-        if (annotation.Length == 0)
-        {
-            annotation = GetFormattedAnnotation(itemDoneUpdate.Item);
-        }
-    }
-    else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
-    {
-        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}");
-    }
-}
-Console.WriteLine($"{text}{annotation}");
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_AzureAISearchStreaming_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -154,12 +97,6 @@ Console.WriteLine($"{text}{annotation}");
 
 5. Finally, delete all the resources we have created in this sample.
 
-Synchronous sample:
-```C# Snippet:Sample_Cleanup_AzureAISearchStreaming_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_AzureAISearchStreaming_Async
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

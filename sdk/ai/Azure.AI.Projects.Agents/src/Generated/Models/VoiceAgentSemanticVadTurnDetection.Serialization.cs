@@ -11,11 +11,11 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> OpenAI semantic VAD turn-detection settings. </summary>
-    public partial class VoiceAgentSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig, IJsonModel<VoiceAgentSemanticVadTurnDetection>
+    public partial class VoiceAgentSemanticVadTurnDetection : VoiceAgentTurnDetectionConfiguration, IJsonModel<VoiceAgentSemanticVadTurnDetection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentTurnDetectionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentTurnDetectionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSemanticVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -77,15 +77,15 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("eagerness"u8);
                 writer.WriteObjectValue<RealtimeSemanticVadEagernessLevel?>(Eagerness.Value, options);
             }
-            if (Optional.IsDefined(CreateResponse))
+            if (Optional.IsDefined(CreateResponseEnabled))
             {
                 writer.WritePropertyName("create_response"u8);
-                writer.WriteBooleanValue(CreateResponse.Value);
+                writer.WriteBooleanValue(CreateResponseEnabled.Value);
             }
-            if (Optional.IsDefined(InterruptResponse))
+            if (Optional.IsDefined(InterruptResponseEnabled))
             {
                 writer.WritePropertyName("interrupt_response"u8);
-                writer.WriteBooleanValue(InterruptResponse.Value);
+                writer.WriteBooleanValue(InterruptResponseEnabled.Value);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentTurnDetectionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSemanticVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -118,8 +118,8 @@ namespace Azure.AI.Projects.Agents
             bool? autoTruncate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RealtimeSemanticVadEagernessLevel? eagerness = default;
-            bool? createResponse = default;
-            bool? interruptResponse = default;
+            bool? createResponseEnabled = default;
+            bool? interruptResponseEnabled = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -151,7 +151,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    createResponse = prop.Value.GetBoolean();
+                    createResponseEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("interrupt_response"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    interruptResponse = prop.Value.GetBoolean();
+                    interruptResponseEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -173,8 +173,8 @@ namespace Azure.AI.Projects.Agents
                 autoTruncate,
                 additionalBinaryDataProperties,
                 eagerness,
-                createResponse,
-                interruptResponse);
+                createResponseEnabled,
+                interruptResponseEnabled);
         }
     }
 }

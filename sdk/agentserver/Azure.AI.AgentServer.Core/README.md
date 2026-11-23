@@ -144,6 +144,8 @@ string? callId = FoundryAgentRequestContext.Current.CallId;   // per-request cal
 
 OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` distro. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. Azure Monitor export is enabled when `APPLICATIONINSIGHTS_CONNECTION_STRING` is set, and OTLP export is enabled when `OTEL_EXPORTER_OTLP_ENDPOINT` is set.
 
+The default telemetry setup stamps every collected span and log record with the string attribute `microsoft.foundry = "True"`, including telemetry from protocol packages and underlying frameworks. Conflicting values from frameworks, log attributes, or baggage are overridden; `gen_ai.provider.name` is left unchanged. Logs receive the marker even when no activity is active.
+
 Azure Monitor uses 100% fixed-percentage trace sampling by default. Set `OTEL_TRACES_SAMPLER` to `microsoft.rate_limited` or `microsoft.fixed_percentage` and provide its value through `OTEL_TRACES_SAMPLER_ARG` to override this default.
 
 Azure SDK and outbound `HttpClient` dependency spans are disabled by default to reduce infrastructure noise. To opt in, use `AgentHostBuilder.ConfigureTracing(...)` and add the `Azure.*` activity source with `AddSource("Azure.*")`, outbound HTTP instrumentation with `AddHttpClientInstrumentation()`, or both.
@@ -215,6 +217,23 @@ builder.Services.AddSingleton<IAgentSnapshotLifecycle, DatabaseSnapshotLifecycle
 ```
 
 Core serializes lifecycle calls and handles platform retries. A completed `before-snapshot` callback runs once, a repeated `restore_id` returns success without repeating work, and a new `restore_id` for the same session runs `after-restore` again. Session environment overrides are applied before `AfterRestoreAsync` is invoked. Callback implementations should still make their external side effects idempotent.
+
+When an enabled resilient-task host starts with
+`FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, task storage and recovery workers are
+deferred during capture. After restoration, Core prepares the task runtime with
+the restored session environment before calling `AfterRestoreAsync`, so the
+callback can submit registered tasks normally. Automatic recovery begins only
+after the callback completes. The variable accepts only `true` or `false`
+(case-insensitive, with surrounding whitespace); absence preserves ordinary
+cold-start activation.
+
+If snapshot-mode restoration fails, Core keeps the restored configuration in
+place until accepted task workers and owned storage finish cleanup; retries are
+bounded by the host shutdown timeout and continue retained cleanup safely.
+Ordinary cold-mode callbacks preserve their established behavior: a callback
+failure does not revert the restored environment while cold-start workers may
+still be using it. File-backed replay with an implicit directory resolves the
+state root after restoration; an explicitly configured directory remains fixed.
 
 ### Resilient tasks and streaming
 

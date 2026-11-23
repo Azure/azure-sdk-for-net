@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 
 namespace Azure.Analytics.OnlineExperimentation
@@ -19,26 +18,9 @@ namespace Azure.Analytics.OnlineExperimentation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/>. </summary>
-        /// <param name="lifecycle"> Determines whether it is included in experiment analysis. </param>
-        /// <param name="displayName"> A user-friendly display name for the experiment metric shown in reports and dashboards. </param>
-        /// <param name="description"> A detailed description of the experiment metric. </param>
-        /// <param name="categories"> Categories associated with the experiment metric. Used for organizing and filtering metrics. </param>
-        /// <param name="desiredDirection"> The desired direction for changes in the metric value. </param>
-        /// <param name="definition"> The metric definition specifying how the metric value is calculated from event data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="description"/>, <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
-        public ExperimentMetric(LifecycleStage lifecycle, string displayName, string description, IEnumerable<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition)
+        public ExperimentMetric()
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(categories, nameof(categories));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            Lifecycle = lifecycle;
-            DisplayName = displayName;
-            Description = description;
-            Categories = categories.ToList();
-            DesiredDirection = desiredDirection;
-            Definition = definition;
+            Categories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/>. </summary>

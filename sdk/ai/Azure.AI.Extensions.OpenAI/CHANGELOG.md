@@ -1,14 +1,35 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
-
-### Features Added
+## 3.0.0 (2026-11-12)
 
 ### Breaking Changes
-
-### Bugs Fixed
+- Removed the synchronous `ProjectResponsesClient.CreateResponseStreaming` overloads. Use `CreateResponseStreamingAsync` and asynchronous enumeration.
+- `ProjectResponsesClient.CreateResponseStreamingAsync` overloads now return
+  `Task<AsyncStreamingResult<StreamingResponseUpdate>>` instead of
+  `AsyncCollectionResult<StreamingResponseUpdate>`. Await stream creation
+  before enumerating updates.
+- The `ProjectConversationsClient` constructor now accepts `ConversationClientOptions` instead of `OpenAIClientOptions`.
+- `ProjectResponsesClient.GetResponseStreamingAsync` now yields strongly typed response items.
+- `ProjectResponsesClient`'s experimental diagnostic changed from `OPENAI001` to `AAIP002`.
+- Applications using this library with `Azure.AI.Projects.Agents` must update affected agent model references, including `VersionRefIndicator` to `VersionReferenceIndicator` and `ToolboxPolicies.RaiConfig` to `ToolboxPolicies.ContentFilterConfiguration`. These changes are in the Agents library and do not alter this package's public API. See the `Azure.AI.Projects.Agents` changelog for the complete list.
 
 ### Other Changes
+- Updated the `OpenAI` package dependency to `2.15.0`. See the [OpenAI 2.15.0 release notes](https://github.com/openai/openai-dotnet/blob/OpenAI_2.15.0/CHANGELOG.md#2150-2026-11-04) for the upstream breaking changes to experimental APIs, including the async-only streaming methods that `ProjectResponsesClient` inherits.
+
+### Sample Updates
+- Synchronous streaming samples were removed, because streaming in synchronous scenarios is not supported anymore. 
+
+## 3.0.0-beta.6 (2026-10-30)
+
+### Features Added
+- Exposed the constructors of `GitHubCopilotToolsetPreview`, `GitHubCopilotToolsetDefaultConfig` `GitHubCopilotToolsetConfig`, `MicrosoftCopilotToolsetPreview`, `MicrosoftCopilotToolsetDefaultConfig` and `MicrosoftCopilotToolsetConfig`.
+
+### Breaking Changes
+- `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
+- Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
+
+### Sample Updates
+- Added sample for Hosted Agent identity isolation.
 
 ## 3.0.0-beta.5 (2026-10-16)
 

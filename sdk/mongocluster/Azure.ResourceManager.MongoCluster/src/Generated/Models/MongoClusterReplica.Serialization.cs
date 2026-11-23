@@ -16,7 +16,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Represents a mongo cluster replica. </summary>
+    /// <summary> Represents a DocumentDB cluster replica. </summary>
     public partial class MongoClusterReplica : ResourceData, IJsonModel<MongoClusterReplica>
     {
         /// <param name="data"> The data to parse. </param>

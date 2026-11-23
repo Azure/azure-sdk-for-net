@@ -100,6 +100,11 @@ public abstract partial class Specification : ModelBase
                     GenerateBuiltInRoles();
                 }
 
+                if (ModelNameMapping.Values.OfType<Resource>().Any(r => r.ParentResource is not null || r.HasScope))
+                {
+                    GenerateResourceReference();
+                }
+
                 if (ShouldGenerateSchema)
                 {
                     GenerateSchema();

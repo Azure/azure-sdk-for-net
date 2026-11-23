@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -29,9 +29,9 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     /// </summary>
     public BicepValue<ResourceIdentifier> PrivateEndpointId
     {
-        get { Initialize(); return _privateEndpointId!; }
+        get { Initialize(); return _privateEndpointId; }
     }
-    private BicepValue<ResourceIdentifier>? _privateEndpointId;
+    private BicepValue<ResourceIdentifier> _privateEndpointId;
 
     // TypeSpec omits this shipped data-model view; retain its ConnectionState property for compatibility.
     /// <summary>
@@ -40,10 +40,10 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     /// </summary>
     public StoragePrivateLinkServiceConnectionState ConnectionState
     {
-        get { Initialize(); return _connectionState!; }
+        get { Initialize(); return _connectionState; }
         set { Initialize(); AssignOrReplace(ref _connectionState, value); }
     }
-    private StoragePrivateLinkServiceConnectionState? _connectionState;
+    private StoragePrivateLinkServiceConnectionState _connectionState;
 
     // TypeSpec omits this shipped data-model view; retain its ProvisioningState output for compatibility.
     /// <summary>
@@ -51,9 +51,9 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     /// </summary>
     public BicepValue<StoragePrivateEndpointConnectionProvisioningState> ProvisioningState
     {
-        get { Initialize(); return _provisioningState!; }
+        get { Initialize(); return _provisioningState; }
     }
-    private BicepValue<StoragePrivateEndpointConnectionProvisioningState>? _provisioningState;
+    private BicepValue<StoragePrivateEndpointConnectionProvisioningState> _provisioningState;
 
     // TypeSpec omits this shipped data-model view; retain its Id output for compatibility.
     /// <summary>
@@ -61,9 +61,9 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     /// </summary>
     public BicepValue<ResourceIdentifier> Id
     {
-        get { Initialize(); return _id!; }
+        get { Initialize(); return _id; }
     }
-    private BicepValue<ResourceIdentifier>? _id;
+    private BicepValue<ResourceIdentifier> _id;
 
     // TypeSpec omits this shipped data-model view; retain its Name output for compatibility.
     /// <summary>
@@ -71,9 +71,9 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     /// </summary>
     public BicepValue<string> Name
     {
-        get { Initialize(); return _name!; }
+        get { Initialize(); return _name; }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     // TypeSpec omits this shipped data-model view; retain its SystemData output for compatibility.
     /// <summary>
@@ -81,9 +81,9 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     /// </summary>
     public SystemData SystemData
     {
-        get { Initialize(); return _systemData!; }
+        get { Initialize(); return _systemData; }
     }
-    private SystemData? _systemData;
+    private SystemData _systemData;
 
     /// <summary>
     /// Creates a new StoragePrivateEndpointConnectionData.

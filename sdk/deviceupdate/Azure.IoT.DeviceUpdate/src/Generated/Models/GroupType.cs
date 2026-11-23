@@ -51,7 +51,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Converts a string to a <see cref="GroupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GroupType?(string value) => value == null ? null : new GroupType(value);
+        public static implicit operator GroupType?(string value) => value == null ? (GroupType?)null : new GroupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

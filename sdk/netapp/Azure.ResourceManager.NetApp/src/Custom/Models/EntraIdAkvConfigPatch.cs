@@ -33,13 +33,29 @@ namespace Azure.ResourceManager.NetApp.Models
 
         protected virtual EntraIdAkvConfigPatch PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options)
         {
-            var reader = new Utf8JsonReader(data.ToArray());
-            return JsonModelCreateCore(ref reader, options);
+            string format = options.Format == "W" ? ((IPersistableModel<EntraIdAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEntraIdAkvConfigPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EntraIdAkvConfigPatch)} does not support reading '{options.Format}' format.");
+            }
         }
 
         protected virtual System.BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            return BinaryData.FromString("{}");
+            string format = options.Format == "W" ? ((IPersistableModel<EntraIdAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EntraIdAkvConfigPatch)} does not support writing '{options.Format}' format.");
+            }
         }
 
         EntraIdAkvConfigPatch IPersistableModel<EntraIdAkvConfigPatch>.Create(System.BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
@@ -59,11 +75,52 @@ namespace Azure.ResourceManager.NetApp.Models
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            string format = options.Format == "W" ? ((IPersistableModel<EntraIdAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EntraIdAkvConfigPatch)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(AzureKeyVaultUri))
+            {
+                writer.WritePropertyName("azureKeyVaultUri"u8);
+                writer.WriteStringValue(AzureKeyVaultUri.OriginalString);
+            }
+            if (Optional.IsDefined(CertificateName))
+            {
+                writer.WritePropertyName("certificateName"u8);
+                writer.WriteStringValue(CertificateName);
+            }
+            if (Optional.IsDefined(UserAssignedIdentity))
+            {
+                writer.WritePropertyName("userAssignedIdentity"u8);
+                writer.WriteStringValue(UserAssignedIdentity);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         protected virtual EntraIdAkvConfigPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            return new EntraIdAkvConfigPatch();
+            string format = options.Format == "W" ? ((IPersistableModel<EntraIdAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EntraIdAkvConfigPatch)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEntraIdAkvConfigPatch(document.RootElement, options);
         }
     }
 }

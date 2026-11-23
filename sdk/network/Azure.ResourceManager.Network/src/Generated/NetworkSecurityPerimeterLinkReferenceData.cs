@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
-        public NetworkSecurityPerimeterLinkReferenceData() : this(default)
+        public NetworkSecurityPerimeterLinkReferenceData()
         {
         }
 
@@ -58,6 +58,16 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.RemotePerimeterResourceId;
+            }
+        }
+
+        /// <summary> Remote NSP Guid with which the link is created. </summary>
+        [WirePath("properties.remotePerimeterGuid")]
+        public Guid? RemotePerimeterGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemotePerimeterGuid;
             }
         }
 

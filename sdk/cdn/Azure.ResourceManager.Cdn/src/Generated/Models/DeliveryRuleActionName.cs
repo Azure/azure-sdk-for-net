@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OriginGroupOverrideValue = "OriginGroupOverride";
         private const string RouteConfigurationOverrideValue = "RouteConfigurationOverride";
         private const string EdgeActionValue = "EdgeAction";
-        private const string AfdUrlSigningValue = "AfdUrlSigning";
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -66,9 +65,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the EdgeAction. </summary>
         public static DeliveryRuleActionName EdgeAction { get; } = new DeliveryRuleActionName(EdgeActionValue);
-
-        /// <summary> Gets the AfdUrlSigning. </summary>
-        public static DeliveryRuleActionName AfdUrlSigning { get; } = new DeliveryRuleActionName(AfdUrlSigningValue);
 
         /// <summary> Determines if two <see cref="DeliveryRuleActionName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

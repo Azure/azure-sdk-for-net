@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
@@ -23,6 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Contains the endpoint handler methods for the Responses API.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseEndpointHandler
 {
     /// <summary>
@@ -116,6 +118,7 @@ internal sealed class ResponseEndpointHandler
             var requestNode = JsonNode.Parse(bodyBytes)
                 ?? throw new BadRequestException("Request body is required.");
             InternalMetadataEgress.Strip(requestNode);
+            WireShorthandNormalizer.Normalize(requestNode);
             var sanitizedBodyBytes = JsonSerializer.SerializeToUtf8Bytes(requestNode, SharedJsonOptions.Instance);
 
             // Deserialize from the sanitized bytes
@@ -131,9 +134,9 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Detect mode flags (read-only on generated model)
-        var isStreaming = request.Stream == true;
-        var isBackground = request.Background == true;
-        var store = request.Store ?? true;
+        var isStreaming = request.StreamingEnabled == true;
+        var isBackground = request.BackgroundModeEnabled == true;
+        var store = request.StoredOutputEnabled ?? true;
 
         // B13: background=true requires store=true
         if (isBackground && !store)
@@ -224,7 +227,7 @@ internal sealed class ResponseEndpointHandler
         // once a chain exists). AddResponsesServer composes the Core task subsystem in both local and
         // hosted environments (hosted selects the hosted task store), so ANY conversation routes
         // multi-turn — a plain conversation_id chain gets concurrency protection (concurrent overlap
-        // → 409 conversation_locked) even with default options.
+        // → 409 conversation_locked) when Responses enables task execution.
         var steerable = _options.Value.SteerableConversations;
         bool multiTurnAvailable = true;
         bool pickMultiTurn = multiTurnAvailable
@@ -239,12 +242,12 @@ internal sealed class ResponseEndpointHandler
 
         // Multi-turn (conversation / steerable) is NOT background-gated (parity with Python
         // `_pick_primitive`, which routes any conversation_id or steerable turn through the multi-turn
-        // primitive REGARDLESS of background) — a foreground conversation turn must still get
+        // primitive REGARDLESS of background) — an enabled foreground conversation turn gets
         // concurrency arbitration (concurrent overlap → 409 conversation_locked) and fork rejection
         // (409 conversation_fork_not_supported), which are FR-051/FR-052 requirements that are not
         // background-gated.
         //
-        // When the Core task runtime is enabled, every store=true request is task-tracked —
+        // When Responses activates the Core task runtime, every store=true request is task-tracked —
         // including background AND foreground streaming.
         // The streaming task path does NOT await response.created: the SSE result subscribes to the
         // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
@@ -256,7 +259,7 @@ internal sealed class ResponseEndpointHandler
         // background-streaming / Row-3 foreground crash-recovery gap: both are now task-tracked, so the
         // next-lifetime recovery scan observes and marks-failed a crashed turn (Path C).
         //
-        // Task-routing gate (Python parity): when the Core resilient-task runtime is enabled, the
+        // Task-routing gate (Python parity): when Responses enables the Core runtime, the
         // handler runs INSIDE a task for every store=true request — background OR foreground,
         // streaming OR non-streaming, one-shot OR multi-turn. When the runtime is disabled, stored
         // work falls back to in-process execution: response persistence remains active, but crash
@@ -275,7 +278,8 @@ internal sealed class ResponseEndpointHandler
         // x-platform-error-source (see ResilientStartFailureProtocolTests) — .NET returns a clean HTTP
         // error rather than a 200 + error event because, unlike Starlette, the SSE headers are not yet
         // committed when StartResilientTurnAsync runs.
-        bool useResilientTask = _resilientTaskOptions.Value.Enabled
+        bool useResilientTask = (_options.Value.ResilientBackground || _options.Value.SteerableConversations)
+            && _resilientTaskOptions.Value.Enabled
             && (store || (pickMultiTurn && (isBackground || !isStreaming)));
 
         var execution = _tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
@@ -284,6 +288,7 @@ internal sealed class ResponseEndpointHandler
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
         execution.AgentSessionId = request.AgentSessionId;
+        execution.InboundPlatformContext = platformContext;
 
         var context = new ResponseContextImpl(
             responseId,
@@ -583,7 +588,7 @@ internal sealed class ResponseEndpointHandler
                 httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = finalResponse.AgentSessionId;
                 _logger.LogInformation(
                     "Foreground resilient response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                    responseId, finalResponse.Status, finalResponse.Output.Count);
+                    responseId, finalResponse.Status, finalResponse.OutputItems.Count);
                 return JsonForClient(finalResponse);
             }
 
@@ -602,7 +607,7 @@ internal sealed class ResponseEndpointHandler
 
             _logger.LogInformation(
                 "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                responseId, execution.Response!.Status, execution.Response!.Output.Count);
+                responseId, execution.Response!.Status, execution.Response!.OutputItems.Count);
             return JsonForClient(execution.Response!.Snapshot());
         }
     }
@@ -621,13 +626,13 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Derive the recovery disposition from the row classification rather than hard-coding it.
-        // This call site now also serves Row 2 (store + background, non-resilient): ResilientBackground
-        // resolves to re-invoke (Row 1) while a stored non-resilient background response resolves to
-        // mark-failed (Row 2), so the recovery scan marks it failed instead of re-invoking. Deriving it
+        // This call site also serves Row 2 when steering alone enables task execution:
+        // resilient background resolves to re-invoke (Row 1) while stored non-resilient
+        // background work resolves to mark-failed (Row 2). Deriving it
         // keeps every entry correct and matches the dispatch truth table exactly.
         var disposition = ResponseResilienceDispatch.DecideDisposition(
-            store: request.Store != false,
-            background: request.Background == true,
+            store: request.StoredOutputEnabled != false,
+            background: request.BackgroundModeEnabled == true,
             resilientBackground: _options.Value.ResilientBackground);
 
         var payload = new ResponseRecoveryPayload(
@@ -653,12 +658,21 @@ internal sealed class ResponseEndpointHandler
         var enumerator = stream.Subscribe().GetAsyncEnumerator(relayCts.Token);
         Task? executionTask = execution.ExecutionTask;
         var createdSeen = false;
+        string? lastEventId = null;
+        string? failureEventId = null;
+        ExceptionDispatchInfo? completionFailure = null;
         try
         {
             while (true)
             {
                 try
                 {
+                    if (completionFailure is not null
+                        && string.Equals(lastEventId, failureEventId, StringComparison.Ordinal))
+                    {
+                        completionFailure.Throw();
+                    }
+
                     ValueTask<bool> moveNext = enumerator.MoveNextAsync();
                     bool hasNext;
                     if (moveNext.IsCompletedSuccessfully)
@@ -670,7 +684,8 @@ internal sealed class ResponseEndpointHandler
                     else
                     {
                         Task<bool> moveNextTask = moveNext.AsTask();
-                        if (executionTask is not null && !executionTask.IsCompletedSuccessfully)
+                        if (completionFailure is null
+                            && executionTask is not null && !executionTask.IsCompletedSuccessfully)
                         {
                             Task completed = await Task.WhenAny(moveNextTask, executionTask);
                             if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted)
@@ -691,25 +706,26 @@ internal sealed class ResponseEndpointHandler
                                         : ex;
                                 }
 
-                                // Core intentionally leaves the task stream open when its durable
-                                // completed/suspended transition fails so a later process can recover
-                                // it. Observe the task fault here to end only this HTTP subscription;
-                                // SseResult converts the exception to the existing SSE error event.
-                                //
-                                // Cancel and await the pending relay read before disposing its
-                                // enumerator. This cancellation is subscription-local: the Core stream
-                                // remains open and writable for recovery.
-                                relayCts.Cancel();
-                                try
-                                {
-                                    await moveNextTask;
-                                }
-                                catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
-                                {
-                                    // Expected: cancellation releases the pending subscription read.
-                                }
+                                completionFailure = ExceptionDispatchInfo.Capture(failure);
+                                failureEventId = await stream.GetLastEventIdAsync(cancellationToken);
 
-                                ExceptionDispatchInfo.Capture(failure).Throw();
+                                // Replay may require asynchronous I/O even when events are retained.
+                                // Drain through the fault-time watermark before surfacing the failure;
+                                // Core leaves this stream open for recovery, so waiting for EOF hangs.
+                                if (string.Equals(lastEventId, failureEventId, StringComparison.Ordinal))
+                                {
+                                    relayCts.Cancel();
+                                    try
+                                    {
+                                        await moveNextTask;
+                                    }
+                                    catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
+                                    {
+                                        // Cancellation is local to this subscription, not the recoverable stream.
+                                    }
+
+                                    completionFailure.Throw();
+                                }
                             }
                         }
 
@@ -734,6 +750,7 @@ internal sealed class ResponseEndpointHandler
                 }
 
                 var item = enumerator.Current;
+                lastEventId = item.EventId;
                 if (string.Equals(item.EventType, "response.created", StringComparison.Ordinal))
                 {
                     createdSeen = true;
@@ -765,7 +782,7 @@ internal sealed class ResponseEndpointHandler
     private static string DeriveConversationChainId(
         CreateResponse request, string? conversationId, string responseId, bool steerable)
     {
-        AgentReference? agentReference = request.AgentReference ?? request.Agent;
+        AgentReference? agentReference = request.AgentReference ?? request.DeprecatedAgent;
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = request.AgentSessionId is { Length: > 0 } sid
             ? sid
@@ -779,7 +796,7 @@ internal sealed class ResponseEndpointHandler
     private static string DeriveTaskId(
         CreateResponse request, string? conversationId, string responseId, bool steerable)
     {
-        AgentReference? agentReference = request.AgentReference ?? request.Agent;
+        AgentReference? agentReference = request.AgentReference ?? request.DeprecatedAgent;
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = request.AgentSessionId is { Length: > 0 } sid
             ? sid
@@ -896,12 +913,11 @@ internal sealed class ResponseEndpointHandler
             // fork (Core precondition failure) — reject rather than branch the chain. Body shape
             // (type/code/param/message) matches Python `_endpoint_handler` for wire parity.
             throw new ResponsesApiException(
-                new Error("conversation_fork_not_supported",
-                    "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.")
-                {
-                    Type = "conflict",
-                    Param = "previous_response_id",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_fork_not_supported",
+                    "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.",
+                    param: "previous_response_id",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.Conflict)
@@ -910,11 +926,10 @@ internal sealed class ResponseEndpointHandler
             // matches Python `_endpoint_handler` exactly: `Conversation is locked — task is {status}`
             // with the lower-case snake-case wire status and no trailing period.
             throw new ResponsesApiException(
-                new Error("conversation_locked",
-                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}")
-                {
-                    Type = "conflict",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_locked",
+                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.QueueFull)
@@ -923,11 +938,10 @@ internal sealed class ResponseEndpointHandler
             // distinct queue-full code; surfaced as conversation_locked (409 conflict) — recorded as a
             // Python-side verification action item in the parity report.
             throw new ResponsesApiException(
-                new Error("conversation_locked",
-                    "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.")
-                {
-                    Type = "conflict",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_locked",
+                    "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (Exception ex)
@@ -1005,8 +1019,12 @@ internal sealed class ResponseEndpointHandler
             }
         }
 
-        return new ResponseObject(responseId, request.Model ?? string.Empty)
+        return new ResponseObject
         {
+            Id = responseId,
+            Object = "response",
+            CreatedAt = DateTimeOffset.UtcNow,
+            Model = request.Model ?? string.Empty,
             Status = ResponseStatus.Queued,
         };
     }
@@ -1075,7 +1093,7 @@ internal sealed class ResponseEndpointHandler
 
                 // B2: SSE replay requires background mode. Non-bg responses never
                 // have event streams (they use NullPublisher).
-                if (persisted.Background != true)
+                if (persisted.BackgroundModeEnabled != true)
                 {
                     throw new BadRequestException(
                         "This response cannot be streamed because it was not created with background=true.",
@@ -1124,7 +1142,7 @@ internal sealed class ResponseEndpointHandler
         httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation(
             "Retrieved response {ResponseId}: Status={Status} OutputCount={OutputCount}",
-            responseId, response.Status, response.Output.Count);
+            responseId, response.Status, response.OutputItems.Count);
         return JsonForClient(response);
     }
     /// <summary>
@@ -1313,6 +1331,8 @@ internal sealed class ResponseEndpointHandler
         var result = await _provider.GetInputItemsAsync(
             responseId, platformContext, limit, ascending, after, before, httpContext.RequestAborted);
 
+        // Custom providers may build the page without the list envelope discriminator.
+        result.Object ??= "list";
         return JsonForClient(result);
     }
 

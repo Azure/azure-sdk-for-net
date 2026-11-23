@@ -61,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="ComputerUseEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputerUseEnvironment?(string value) => value == null ? null : new ComputerUseEnvironment(value);
+        public static implicit operator ComputerUseEnvironment?(string value) => value == null ? (ComputerUseEnvironment?)null : new ComputerUseEnvironment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

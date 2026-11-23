@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="properties"> Properties of the application gateway advanced routing rule. </param>
         /// <param name="name"> Name of the advanced routing rule that is unique within an advanced routing map. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
-        internal ApplicationGatewayAdvancedRoutingRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayAdvancedRoutingRulePropertiesFormat properties, string name, string eTag, string @type) : base(id, additionalBinaryDataProperties)
+        /// <param name="resourceType"> Type of the resource. </param>
+        internal ApplicationGatewayAdvancedRoutingRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayAdvancedRoutingRulePropertiesFormat properties, string name, string eTag, ResourceType? resourceType) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
             ETag = eTag;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Properties of the application gateway advanced routing rule. </summary>
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Type of the resource. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

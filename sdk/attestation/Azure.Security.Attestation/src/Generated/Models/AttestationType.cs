@@ -71,7 +71,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Converts a string to a <see cref="AttestationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestationType?(string value) => value == null ? null : new AttestationType(value);
+        public static implicit operator AttestationType?(string value) => value == null ? (AttestationType?)null : new AttestationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

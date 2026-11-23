@@ -66,7 +66,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="IndexingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexingStatus?(string value) => value == null ? null : new IndexingStatus(value);
+        public static implicit operator IndexingStatus?(string value) => value == null ? (IndexingStatus?)null : new IndexingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

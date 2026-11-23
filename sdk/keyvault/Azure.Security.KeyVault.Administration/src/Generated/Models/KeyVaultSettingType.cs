@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Converts a string to a <see cref="KeyVaultSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultSettingType?(string value) => value == null ? null : new KeyVaultSettingType(value);
+        public static implicit operator KeyVaultSettingType?(string value) => value == null ? (KeyVaultSettingType?)null : new KeyVaultSettingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

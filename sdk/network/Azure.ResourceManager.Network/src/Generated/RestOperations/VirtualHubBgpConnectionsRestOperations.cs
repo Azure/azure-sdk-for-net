@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetLearnedRoutesRequest(Guid subscriptionId, string resourceGroupName, string hubName, string connectionName, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubBgpConnectionLearnedRoutesRequest(Guid subscriptionId, string resourceGroupName, string hubName, string connectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAdvertisedRoutesRequest(Guid subscriptionId, string resourceGroupName, string hubName, string connectionName, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubBgpConnectionAdvertisedRoutesRequest(Guid subscriptionId, string resourceGroupName, string hubName, string connectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

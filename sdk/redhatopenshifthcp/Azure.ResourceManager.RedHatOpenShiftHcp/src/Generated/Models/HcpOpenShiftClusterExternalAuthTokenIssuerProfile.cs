@@ -30,10 +30,9 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// issuerURL must use the 'https' scheme.
         /// </param>
         /// <param name="audiences">
-        /// This configures the acceptable audiences the JWT token, issued by the identity
-        /// provider, must be issued to. At least one of the entries must match the
-        /// 'aud' claim in the JWT token.
-        /// audiences must contain at least one entry and must not exceed ten entries.
+        /// This configures the acceptable audiences for JWT tokens issued by the identity provider.
+        /// At least one of the entries must match the 'aud' claim in the JWT token.
+        /// Audiences must contain at least one entry and must not exceed ten entries.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="audiences"/> is null. </exception>
         public HcpOpenShiftClusterExternalAuthTokenIssuerProfile(Uri uri, IEnumerable<string> audiences)
@@ -53,13 +52,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// issuerURL must use the 'https' scheme.
         /// </param>
         /// <param name="audiences">
-        /// This configures the acceptable audiences the JWT token, issued by the identity
-        /// provider, must be issued to. At least one of the entries must match the
-        /// 'aud' claim in the JWT token.
-        /// audiences must contain at least one entry and must not exceed ten entries.
+        /// This configures the acceptable audiences for JWT tokens issued by the identity provider.
+        /// At least one of the entries must match the 'aud' claim in the JWT token.
+        /// Audiences must contain at least one entry and must not exceed ten entries.
         /// </param>
         /// <param name="ca">
-        /// The issuer of the token
+        /// The issuer of the token.
         /// Certificate bundle to use to validate server certificates for the configured URL.
         /// It must be PEM encoded and when not specified, the system trust is used.
         /// </param>
@@ -81,15 +79,14 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public Uri Uri { get; set; }
 
         /// <summary>
-        /// This configures the acceptable audiences the JWT token, issued by the identity
-        /// provider, must be issued to. At least one of the entries must match the
-        /// 'aud' claim in the JWT token.
-        /// audiences must contain at least one entry and must not exceed ten entries.
+        /// This configures the acceptable audiences for JWT tokens issued by the identity provider.
+        /// At least one of the entries must match the 'aud' claim in the JWT token.
+        /// Audiences must contain at least one entry and must not exceed ten entries.
         /// </summary>
         public IList<string> Audiences { get; }
 
         /// <summary>
-        /// The issuer of the token
+        /// The issuer of the token.
         /// Certificate bundle to use to validate server certificates for the configured URL.
         /// It must be PEM encoded and when not specified, the system trust is used.
         /// </summary>

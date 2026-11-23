@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.EdgeActions.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionVersionProperties"/>. </summary>
-        /// <param name="deploymentType"> The deployment type. </param>
-        /// <param name="isDefaultVersion"> The active state. </param>
+        /// <param name="deploymentType"> The deployment type for the Edge Action version. Set this value when creating the version. When updating an existing version, any supplied value must match the existing value. </param>
+        /// <param name="isDefaultVersion"> Indicates whether this is the default version. When creating a version, if the Edge Action has no default version, the service makes the new version the default even when false is supplied. If another default version exists, supplying true is rejected. When updating an existing version, any supplied value must match the existing value. Use swapDefault to change the default version. </param>
         public EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionIsDefaultVersion isDefaultVersion)
         {
             DeploymentType = deploymentType;
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionVersionProperties"/>. </summary>
-        /// <param name="deploymentType"> The deployment type. </param>
+        /// <param name="deploymentType"> The deployment type for the Edge Action version. Set this value when creating the version. When updating an existing version, any supplied value must match the existing value. </param>
         /// <param name="validationStatus"> The validation status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="isDefaultVersion"> The active state. </param>
+        /// <param name="isDefaultVersion"> Indicates whether this is the default version. When creating a version, if the Edge Action has no default version, the service makes the new version the default even when false is supplied. If another default version exists, supplying true is rejected. When updating an existing version, any supplied value must match the existing value. Use swapDefault to change the default version. </param>
         /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionVersionValidationStatus? validationStatus, EdgeActionProvisioningState? provisioningState, EdgeActionIsDefaultVersion isDefaultVersion, DateTimeOffset? lastPackageUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The deployment type. </summary>
+        /// <summary> The deployment type for the Edge Action version. Set this value when creating the version. When updating an existing version, any supplied value must match the existing value. </summary>
         public EdgeActionVersionDeploymentType DeploymentType { get; set; }
 
         /// <summary> The validation status. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <summary> The provisioning state. </summary>
         public EdgeActionProvisioningState? ProvisioningState { get; }
 
-        /// <summary> The active state. </summary>
+        /// <summary> Indicates whether this is the default version. When creating a version, if the Edge Action has no default version, the service makes the new version the default even when false is supplied. If another default version exists, supplying true is rejected. When updating an existing version, any supplied value must match the existing value. Use swapDefault to change the default version. </summary>
         public EdgeActionIsDefaultVersion IsDefaultVersion { get; set; }
 
         /// <summary> The last update time in UTC for package update. </summary>

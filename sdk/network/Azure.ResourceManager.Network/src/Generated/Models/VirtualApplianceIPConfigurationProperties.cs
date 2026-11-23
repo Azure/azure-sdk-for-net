@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceIPConfigurationProperties"/>. </summary>
-        /// <param name="primary"> Whether or not this is primary IP configuration of the NIC. </param>
+        /// <param name="isPrimary"> Whether or not this is primary IP configuration of the NIC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceIPConfigurationProperties(bool? primary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualApplianceIPConfigurationProperties(bool? isPrimary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Primary = primary;
+            IsPrimary = isPrimary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether or not this is primary IP configuration of the NIC. </summary>
         [WirePath("primary")]
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
     }
 }

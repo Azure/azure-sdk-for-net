@@ -808,6 +808,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 shortDescription,
                 stacExtensions.ToList(),
                 additionalBinaryDataProperties: null,
+                "FeatureCollection",
                 features.ToList(),
                 boundingBox.ToList(),
                 context);
@@ -847,6 +848,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null,
                 geometry,
                 id,
+                "Feature",
                 collection,
                 boundingBox.ToList(),
                 properties,

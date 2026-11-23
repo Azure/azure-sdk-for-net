@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
         /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerBackendAddressPropertiesFormat(NetworkSubResource virtualNetwork, NetworkSubResource subnet, string ipAddress, NetworkSubResource networkInterfaceIPConfiguration, ResourceIdentifier loadBalancerFrontendIPConfiguration, IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadBalancerBackendAddressPropertiesFormat(NetworkSubResource virtualNetwork, NetworkSubResource subnet, string ipAddress, NetworkSubResource networkInterfaceIPConfiguration, NetworkSubResource loadBalancerFrontendIPConfiguration, IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
         [WirePath("loadBalancerFrontendIPConfiguration")]
-        public ResourceIdentifier LoadBalancerFrontendIPConfiguration { get; set; }
+        internal NetworkSubResource LoadBalancerFrontendIPConfiguration { get; set; }
 
         /// <summary> Collection of inbound NAT rule port mappings. </summary>
         [WirePath("inboundNatRulesPortMapping")]
@@ -116,6 +116,24 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return NetworkInterfaceIPConfiguration is null ? default : NetworkInterfaceIPConfiguration.Id;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("loadBalancerFrontendIPConfiguration.id")]
+        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        {
+            get
+            {
+                return LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
+            }
+            set
+            {
+                if (LoadBalancerFrontendIPConfiguration is null)
+                {
+                    LoadBalancerFrontendIPConfiguration = new NetworkSubResource();
+                }
+                LoadBalancerFrontendIPConfiguration.Id = value;
             }
         }
     }

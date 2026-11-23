@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeMode?(string value) => value == null ? null : new UpgradeMode(value);
+        public static implicit operator UpgradeMode?(string value) => value == null ? (UpgradeMode?)null : new UpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

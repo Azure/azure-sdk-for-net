@@ -16,18 +16,57 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
+#pragma warning disable AAAS005 // Test experimental invocation attribution.
+
 namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceConversationEngineEndpointTests
 {
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
 
+    [TestCase("/invocations_ws")]
+    [TestCase("/voice_conversation_engine")]
+    public async Task ConcurrentVoiceSessionsKeepOriginalSubjectsIsolated(string path)
+    {
+        var observer = new ConnectionObserver();
+        await using var app = BuildVoiceApp(observer);
+        await app.StartAsync();
+
+        async Task<WebSocket> ConnectSubjectAsync(string? subject)
+        {
+            var client = app.GetTestServer().CreateWebSocketClient();
+            if (subject is not null)
+            {
+                client.ConfigureRequest = request =>
+                    request.Headers["x-ms-original-subject"] = $"oid=\"{subject}\", tid=\"tenant\", idtype=\"user\"";
+            }
+            return await client.ConnectAsync(new Uri(app.GetTestServer().BaseAddress, path), CancellationToken.None)
+                .WaitAsync(TestTimeout);
+        }
+
+        using var one = await ConnectSubjectAsync("one");
+        await StartSessionAsync(one);
+        using var two = await ConnectSubjectAsync("two");
+        await StartSessionAsync(two);
+        using var none = await ConnectSubjectAsync(null);
+        await StartSessionAsync(none);
+        var handlers = observer.Handlers.ToArray();
+
+        Assert.That(handlers.Select(h => h.AmbientSubject), Is.EqualTo(new[] { "one", "two", null }));
+        Assert.That(handlers.Select(h => h.Session!.InvocationContext.PlatformContext.OriginalSubject?.ObjectId),
+            Is.EqualTo(new[] { "one", "two", null }));
+
+        await CloseAsync(one);
+        await CloseAsync(two);
+        await CloseAsync(none);
+    }
+
     [TestCase(true, "", "/invocations_ws")]
-    [TestCase(true, "", "/conversation_engine")]
+    [TestCase(true, "", "/voice_conversation_engine")]
     [TestCase(false, "", "/invocations_ws")]
-    [TestCase(false, "", "/conversation_engine")]
+    [TestCase(false, "", "/voice_conversation_engine")]
     [TestCase(false, "/voice", "/invocations_ws")]
-    [TestCase(false, "/voice", "/conversation_engine")]
+    [TestCase(false, "/voice", "/voice_conversation_engine")]
     public async Task VoiceRegistrationExposesBothRoutesWithExistingMessages(
         bool useAgentHostBuilder,
         string prefix,
@@ -53,7 +92,7 @@ public class VoiceConversationEngineEndpointTests
     }
 
     [TestCase("/invocations_ws")]
-    [TestCase("/conversation_engine")]
+    [TestCase("/voice_conversation_engine")]
     public async Task VoiceRoutesRejectRequestsWithoutWebSocketUpgrade(string path)
     {
         await using var app = BuildVoiceApp(new ConnectionObserver());
@@ -62,6 +101,22 @@ public class VoiceConversationEngineEndpointTests
         using var response = await app.GetTestClient().GetAsync(path).WaitAsync(TestTimeout);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    public async Task TypedVoiceHostDoesNotExposeSupersededConversationEngineRoute()
+    {
+        var observer = new ConnectionObserver();
+        await using var app = BuildVoiceApp(observer);
+        await app.StartAsync();
+
+        using var response = await app.GetTestClient().GetAsync("/conversation_engine").WaitAsync(TestTimeout);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        Assert.That(
+            async () => await ConnectAsync(app, "/conversation_engine"),
+            Throws.TypeOf<InvalidOperationException>().With.Message.Contains("404"));
+        Assert.That(observer.Handlers, Is.Empty);
     }
 
     [TestCase(false)]
@@ -74,10 +129,10 @@ public class VoiceConversationEngineEndpointTests
         await using var app = builder.Build().App;
         await app.StartAsync();
 
-        using var ceResponse = await app.GetTestClient().GetAsync("/conversation_engine").WaitAsync(TestTimeout);
+        using var ceResponse = await app.GetTestClient().GetAsync("/voice_conversation_engine").WaitAsync(TestTimeout);
         Assert.That(ceResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         Assert.That(
-            async () => await ConnectAsync(app, "/conversation_engine"),
+            async () => await ConnectAsync(app, "/voice_conversation_engine"),
             Throws.TypeOf<InvalidOperationException>().With.Message.Contains("404"));
 
         if (hasRawWebSocketHandler)
@@ -107,7 +162,7 @@ public class VoiceConversationEngineEndpointTests
         await StartSessionAsync(legacy);
         var legacyHandler = observer.Handlers.Single();
 
-        using var ce = await ConnectAsync(app, "/conversation_engine");
+        using var ce = await ConnectAsync(app, "/voice_conversation_engine");
         await StartSessionAsync(ce);
         var ceHandler = observer.Handlers.Last();
         Assert.Multiple(() =>
@@ -133,7 +188,7 @@ public class VoiceConversationEngineEndpointTests
     }
 
     [TestCase("/invocations_ws")]
-    [TestCase("/conversation_engine")]
+    [TestCase("/voice_conversation_engine")]
     public async Task BothRoutesPreserveReconnectStartContract(string path)
     {
         var observer = new ConnectionObserver();
@@ -152,7 +207,7 @@ public class VoiceConversationEngineEndpointTests
     }
 
     [TestCase("/invocations_ws")]
-    [TestCase("/conversation_engine")]
+    [TestCase("/voice_conversation_engine")]
     public async Task BothRoutesPreserveProtocolErrorCloseCode(string path)
     {
         var observer = new ConnectionObserver();
@@ -173,7 +228,7 @@ public class VoiceConversationEngineEndpointTests
     }
 
     [TestCase("/invocations_ws")]
-    [TestCase("/conversation_engine")]
+    [TestCase("/voice_conversation_engine")]
     public async Task BothRoutesRejectOverriddenVoiceRegistration(string path)
     {
         var observer = new ConnectionObserver();
@@ -192,7 +247,7 @@ public class VoiceConversationEngineEndpointTests
     }
 
     [TestCase("/invocations_ws")]
-    [TestCase("/conversation_engine")]
+    [TestCase("/voice_conversation_engine")]
     public async Task BothRoutesInheritManualRouteGroupFilters(string path)
     {
         var builder = WebApplication.CreateBuilder();
@@ -220,7 +275,7 @@ public class VoiceConversationEngineEndpointTests
         await app.StartAsync();
         var routes = ((IEndpointRouteBuilder)app).DataSources
             .SelectMany(source => source.Endpoints).OfType<RouteEndpoint>()
-            .Where(endpoint => endpoint.RoutePattern.RawText is "/invocations_ws" or "/conversation_engine")
+            .Where(endpoint => endpoint.RoutePattern.RawText is "/invocations_ws" or "/voice_conversation_engine")
             .ToArray();
 
         Assert.That(routes, Has.Length.EqualTo(2));
@@ -344,6 +399,7 @@ public class VoiceConversationEngineEndpointTests
         public VoiceSessionStartEvent? Start { get; private set; }
         public TaskCompletionSource Terminating { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
         public int TerminationCount => _terminationCount;
+        public string? AmbientSubject { get; private set; }
 
         protected override Task OnSessionStartAsync(
             VoiceSession session,
@@ -352,6 +408,7 @@ public class VoiceConversationEngineEndpointTests
         {
             Session = session;
             Start = start;
+            AmbientSubject = FoundryAgentRequestContext.Current.OriginalSubject?.ObjectId;
             return session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
         }
 

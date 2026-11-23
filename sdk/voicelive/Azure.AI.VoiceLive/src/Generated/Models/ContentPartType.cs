@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ContentPartType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentPartType?(string value) => value == null ? null : new ContentPartType(value);
+        public static implicit operator ContentPartType?(string value) => value == null ? (ContentPartType?)null : new ContentPartType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

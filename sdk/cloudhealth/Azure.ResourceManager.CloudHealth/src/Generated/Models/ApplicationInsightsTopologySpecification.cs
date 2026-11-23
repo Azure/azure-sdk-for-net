@@ -13,7 +13,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Discovery rule specification for an Application Insights topology query. </summary>
-    public partial class ApplicationInsightsTopologySpecification : DiscoveryRuleSpecification
+    public partial class ApplicationInsightsTopologySpecification : HealthModelDiscoveryRuleSpecification
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsTopologySpecification"/>. </summary>
         /// <param name="applicationInsightsResourceId"> Application Insights resource ID. </param>

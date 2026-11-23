@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="RankingOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RankingOrder?(string value) => value == null ? null : new RankingOrder(value);
+        public static implicit operator RankingOrder?(string value) => value == null ? (RankingOrder?)null : new RankingOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

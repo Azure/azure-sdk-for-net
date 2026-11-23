@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of tVirtualNetworkGatewayPolicyGroup. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualNetworkGatewayPolicyGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, VirtualNetworkGatewayPolicyGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -95,6 +96,20 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new VirtualNetworkGatewayPolicyGroupProperties();
                 }
                 return Properties.PolicyMembers;
+            }
+        }
+
+        /// <summary> List of references to vngClientConnectionConfigurations. </summary>
+        [WirePath("properties.vngClientConnectionConfigurations")]
+        public IReadOnlyList<WritableSubResource> VngClientConnectionConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayPolicyGroupProperties();
+                }
+                return Properties.VngClientConnectionConfigurations;
             }
         }
 

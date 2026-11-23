@@ -96,6 +96,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("customizedCipherSuiteSet"u8);
                 writer.WriteObjectValue(CustomizedCipherSuiteSet, options);
             }
+            if (Optional.IsDefined(ServerTlsGroupPolicy))
+            {
+                writer.WritePropertyName("serverTlsGroupPolicy"u8);
+                writer.WriteStringValue(ServerTlsGroupPolicy.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ServerTlsGroups))
+            {
+                writer.WritePropertyName("serverTlsGroups"u8);
+                writer.WriteStartArray();
+                foreach (AfdServerTlsGroup item in ServerTlsGroups)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
@@ -147,6 +162,8 @@ namespace Azure.ResourceManager.Cdn.Models
             AfdCipherSuiteSetType? cipherSuiteSetType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
             FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet = default;
+            AfdServerTlsGroupPolicy? serverTlsGroupPolicy = default;
+            IList<AfdServerTlsGroup> serverTlsGroups = default;
             CdnResourceReference secret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,6 +200,29 @@ namespace Azure.ResourceManager.Cdn.Models
                     customizedCipherSuiteSet = FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet.DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("serverTlsGroupPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverTlsGroupPolicy = new AfdServerTlsGroupPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("serverTlsGroups"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AfdServerTlsGroup> array = new List<AfdServerTlsGroup>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AfdServerTlsGroup(item.GetString()));
+                    }
+                    serverTlsGroups = array;
+                    continue;
+                }
                 if (prop.NameEquals("secret"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -202,6 +242,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 cipherSuiteSetType,
                 minimumTlsVersion,
                 customizedCipherSuiteSet,
+                serverTlsGroupPolicy,
+                serverTlsGroups ?? new ChangeTrackingList<AfdServerTlsGroup>(),
                 secret,
                 additionalBinaryDataProperties);
         }

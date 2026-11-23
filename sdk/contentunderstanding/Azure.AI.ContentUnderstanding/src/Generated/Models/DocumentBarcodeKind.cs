@@ -126,7 +126,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="DocumentBarcodeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentBarcodeKind?(string value) => value == null ? null : new DocumentBarcodeKind(value);
+        public static implicit operator DocumentBarcodeKind?(string value) => value == null ? (DocumentBarcodeKind?)null : new DocumentBarcodeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

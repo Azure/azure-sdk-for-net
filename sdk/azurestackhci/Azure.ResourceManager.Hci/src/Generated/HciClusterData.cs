@@ -382,6 +382,16 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        /// <summary> Software Defined Networking Properties of the cluster. </summary>
+        [WirePath("properties.sdnProperties")]
+        public ClusterSdnProperties SdnProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SdnProperties;
+            }
+        }
+
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
         [WirePath("properties.localAvailabilityZones")]
         public IList<LocalAvailabilityZones> LocalAvailabilityZones

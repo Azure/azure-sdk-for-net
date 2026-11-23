@@ -187,6 +187,7 @@ namespace Azure.Search.Documents.Indexes
             options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
+            _serializer = options.Serializer;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -389,7 +390,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<string> GetIndexNamesAsync(
             CancellationToken cancellationToken = default) =>
             new AsyncPageableWrapper<SearchIndexResponse, string>(
-                GetIndexesWithSelectedPropertiesAsync([Constants.NameKey], cancellationToken: cancellationToken),
+                GetIndexesWithSelectedPropertiesAsync([Constants.NameKey], search: default, pageSize: default, searchType: default, cancellationToken: cancellationToken),
                 response => response.Name,
                 supportsContinuationToken: true,
                 ClientDiagnostics,
@@ -428,7 +429,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(
             IEnumerable<string> @select,
             RequestContext context) =>
-            GetIndexesWithSelectedProperties(@select, context: context);
+            GetIndexesWithSelectedProperties(@select, search: null, pageSize: null, searchType: null, context: context);
 
         /// <summary>
         /// Gets a list of all indexes with selected properties.
@@ -441,7 +442,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(
             IEnumerable<string> @select,
             RequestContext context) =>
-            GetIndexesWithSelectedPropertiesAsync(@select, context: context);
+            GetIndexesWithSelectedPropertiesAsync(@select, search: null, pageSize: null, searchType: null, context: context);
 
         #endregion
 
@@ -591,7 +592,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
             CancellationToken cancellationToken = default)
         {
-            return GetSynonymMaps(select: null, cancellationToken: cancellationToken).ToBufferedList();
+            return GetAllSynonymMaps(cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -604,7 +605,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
             CancellationToken cancellationToken = default)
         {
-            return await GetSynonymMapsAsync(select: null, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return await GetAllSynonymMapsAsync(cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -617,7 +618,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SynonymMap>> response = GetSynonymMaps(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            Response<IReadOnlyList<SynonymMap>> response = GetAllSynonymMaps(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
@@ -631,7 +632,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SynonymMap>> response = await GetSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            Response<IReadOnlyList<SynonymMap>> response = await GetAllSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 

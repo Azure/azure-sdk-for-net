@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsProfileLevel))
+            {
+                writer.WritePropertyName("isProfileLevel"u8);
+                writer.WriteBooleanValue(IsProfileLevel.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CdnResourceReference wafPolicy = default;
             IList<SecurityPolicyWebApplicationFirewallAssociation> associations = default;
+            bool? isProfileLevel = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -151,12 +157,21 @@ namespace Azure.ResourceManager.Cdn.Models
                     associations = array;
                     continue;
                 }
+                if (prop.NameEquals("isProfileLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isProfileLevel = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecurityPolicyWebApplicationFirewall(policyType, additionalBinaryDataProperties, wafPolicy, associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>());
+            return new SecurityPolicyWebApplicationFirewall(policyType, additionalBinaryDataProperties, wafPolicy, associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>(), isProfileLevel);
         }
     }
 }

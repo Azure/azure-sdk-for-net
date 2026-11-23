@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Azure semantic voice activity detection. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentAzureSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig
+    public partial class VoiceAgentAzureSemanticVadTurnDetection : VoiceAgentTurnDetectionConfiguration
     {
         private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
         private bool _endOfUtteranceDetectionIsDefined;
@@ -26,26 +26,26 @@ namespace Azure.AI.Projects.Agents
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
-        /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
-        /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
+        /// <param name="prefixPadding"> Audio to include before detected speech, in milliseconds. </param>
+        /// <param name="silenceDuration"> Silence required to end speech detection, in milliseconds. </param>
         /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
-        /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
-        /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
+        /// <param name="createResponseEnabled"> Whether a response is created automatically when speech stops. </param>
+        /// <param name="interruptResponseEnabled"> Whether user speech may interrupt the agent's response. </param>
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
-        internal VoiceAgentAzureSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPaddingMs, TimeSpan? silenceDurationMs, TimeSpan? idleTimeout, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDurationMs, bool? removeFillerWords, bool? createResponse, bool? interruptResponse, IList<string> languages) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceAgentAzureSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPadding, TimeSpan? silenceDuration, TimeSpan? idleTimeout, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDuration, bool? removeFillerWords, bool? createResponseEnabled, bool? interruptResponseEnabled, IList<string> languages) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Threshold = threshold;
-            PrefixPaddingMs = prefixPaddingMs;
-            SilenceDurationMs = silenceDurationMs;
+            PrefixPadding = prefixPadding;
+            SilenceDuration = silenceDuration;
             IdleTimeout = idleTimeout;
             _endOfUtteranceDetection = endOfUtteranceDetection;
-            SpeechDurationMs = speechDurationMs;
+            SpeechDuration = speechDuration;
             RemoveFillerWords = removeFillerWords;
-            CreateResponse = createResponse;
-            InterruptResponse = interruptResponse;
+            CreateResponseEnabled = createResponseEnabled;
+            InterruptResponseEnabled = interruptResponseEnabled;
             Languages = languages;
         }
 
@@ -53,10 +53,10 @@ namespace Azure.AI.Projects.Agents
         public float? Threshold { get; set; }
 
         /// <summary> Audio to include before detected speech, in milliseconds. </summary>
-        public TimeSpan? PrefixPaddingMs { get; set; }
+        public TimeSpan? PrefixPadding { get; set; }
 
         /// <summary> Silence required to end speech detection, in milliseconds. </summary>
-        public TimeSpan? SilenceDurationMs { get; set; }
+        public TimeSpan? SilenceDuration { get; set; }
 
         /// <summary> Maximum idle time before the detector ends the turn, in milliseconds. </summary>
         public TimeSpan? IdleTimeout { get; set; }
@@ -76,16 +76,16 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
-        public TimeSpan? SpeechDurationMs { get; set; }
+        public TimeSpan? SpeechDuration { get; set; }
 
         /// <summary> Whether filler words are removed from transcription. </summary>
         public bool? RemoveFillerWords { get; set; }
 
         /// <summary> Whether a response is created automatically when speech stops. </summary>
-        public bool? CreateResponse { get; set; }
+        public bool? CreateResponseEnabled { get; set; }
 
         /// <summary> Whether user speech may interrupt the agent's response. </summary>
-        public bool? InterruptResponse { get; set; }
+        public bool? InterruptResponseEnabled { get; set; }
 
         /// <summary> BCP-47 language codes used for speech detection. </summary>
         public IList<string> Languages { get; }

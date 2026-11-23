@@ -191,6 +191,50 @@ Some key concepts for OpenTelemetry include:
 
 For more information on the OpenTelemetry project, please review the [OpenTelemetry Specifications](https://github.com/open-telemetry/opentelemetry-specification).
 
+### Custom property truncation
+
+Span, span event, log record, and log scope attributes are exported as custom properties. Keys longer than 150 characters are dropped, and values are truncated to the following lengths (in characters):
+
+| Attributes | Max length |
+| --- | --- |
+| `gen_ai.input.messages`, `gen_ai.output.messages` | 256 KiB (`256 * 1024`); 4 MiB (`4 * 1024 * 1024`) when the `gen_ai_input_output_limit_increase` experimental switch is enabled |
+| `gen_ai.system_instructions`, `gen_ai.tool.definitions`, `gen_ai.tool.call.arguments`, `gen_ai.tool.call.result`, `gen_ai.evaluation.explanation` | 256 KiB (`256 * 1024`) |
+| All other attributes | 8 KiB (`8 * 1024`) |
+
+Values truncated at these limits are cut at the character boundary, so a truncated JSON value is no longer valid JSON.
+
+#### Larger GenAI input and output messages (experimental)
+
+GenAI input and output messages can carry multimodal content, such as base64-encoded images or audio, that exceeds 256 KiB. To keep `gen_ai.input.messages` and `gen_ai.output.messages` up to 4 MiB, enable the `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` `AppContext` switch. It is read once, so set it before building your providers:
+
+```csharp
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase", true);
+```
+
+Or declare it in `runtimeconfig.template.json` so that it is baked into the application:
+
+```json
+{
+  "configProperties": {
+    "Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase": true
+  }
+}
+```
+
+The same setting can be declared in the project file with `<RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase" Value="true" />`.
+
+On .NET Framework, which does not use `runtimeconfig.json`, declare it in `app.config` or `web.config` instead:
+
+```xml
+<configuration>
+  <runtime>
+    <AppContextSwitchOverrides value="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase=true" />
+  </runtime>
+</configuration>
+```
+
+With the switch enabled, multimodal messages can produce large telemetry items. Telemetry is sent uncompressed, up to 512 items per request, and the offline storage cap (50 MiB) is not configurable. If you capture such content, consider limiting content capture in your GenAI instrumentation, or increasing `AzureMonitorExporterOptions.Retry.NetworkTimeout` for slow networks.
+
 ## Telemetry delivery on shutdown
 
 Uploading telemetry takes an ingestion round trip, which can take several seconds. A process that

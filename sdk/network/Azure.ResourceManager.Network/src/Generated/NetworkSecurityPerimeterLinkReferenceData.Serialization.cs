@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Network
     /// <summary> The network security perimeter linkReference resource. </summary>
     public partial class NetworkSecurityPerimeterLinkReferenceData : ResourceData, IJsonModel<NetworkSecurityPerimeterLinkReferenceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkSecurityPerimeterLinkReferenceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkReferenceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterLinkReferenceData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkSecurityPerimeterLinkReferenceData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterLinkReferenceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -93,7 +110,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterLinkReferenceData IJsonModel<NetworkSecurityPerimeterLinkReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkSecurityPerimeterLinkReferenceData IJsonModel<NetworkSecurityPerimeterLinkReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterLinkReferenceData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkReferenceData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityPerimeterLinkReferenceData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

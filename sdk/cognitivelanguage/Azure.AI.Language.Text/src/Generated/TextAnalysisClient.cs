@@ -333,7 +333,7 @@ namespace Azure.AI.Language.Text
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            AnalyzeTextSubmitJobRequest spreadModel = new AnalyzeTextSubmitJobRequest(
+            AnalyzeTextSubmitJobContent spreadModel = new AnalyzeTextSubmitJobContent(
                 displayName,
                 textInput,
                 actions?.ToList() as IList<AnalyzeTextOperationAction> ?? new ChangeTrackingList<AnalyzeTextOperationAction>(),
@@ -357,7 +357,7 @@ namespace Azure.AI.Language.Text
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            AnalyzeTextSubmitJobRequest spreadModel = new AnalyzeTextSubmitJobRequest(
+            AnalyzeTextSubmitJobContent spreadModel = new AnalyzeTextSubmitJobContent(
                 displayName,
                 textInput,
                 actions?.ToList() as IList<AnalyzeTextOperationAction> ?? new ChangeTrackingList<AnalyzeTextOperationAction>(),

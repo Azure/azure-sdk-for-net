@@ -146,6 +146,24 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
+        /// <summary> Configures Turbo Tier for the storage account. </summary>
+        [WirePath("properties.turboTier")]
+        public TurboTier TurboTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TurboTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.TurboTier = value;
+            }
+        }
+
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         [WirePath("properties.azureFilesIdentityBasedAuthentication")]
         public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication

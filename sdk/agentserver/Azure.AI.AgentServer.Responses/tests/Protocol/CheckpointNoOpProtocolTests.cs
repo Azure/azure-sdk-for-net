@@ -11,6 +11,7 @@ using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -124,7 +125,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
         public int UpdateCount => Volatile.Read(ref _updateCount);
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);
@@ -145,7 +146,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
             string responseId, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, context, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
             string responseId, PlatformContext context, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);

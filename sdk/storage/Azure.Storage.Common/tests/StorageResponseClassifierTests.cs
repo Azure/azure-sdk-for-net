@@ -94,20 +94,25 @@ namespace Azure.Storage.Tests
             Assert.IsTrue(classifier.IsRetriableResponse(message));
         }
 
-        [TestCase("ContainerAlreadyExists", "If-Match", false)]
-        [TestCase("ContainerAlreadyExists", "If-None-Match", false)]
-        [TestCase("ContainerAlreadyExists", "If-Unmodified-Since", false)]
-        [TestCase("ContainerAlreadyExists", "If-Modified-Since", false)]
-        [TestCase("BlobAlreadyExists", "If-Match", false)]
-        [TestCase("BlobAlreadyExists", "If-None-Match", false)]
-        [TestCase("BlobAlreadyExists", "If-Unmodified-Since", false)]
-        [TestCase("BlobAlreadyExists", "If-Modified-Since", false)]
-        [TestCase("InternalError", "If-Match", true)]
-        [TestCase("BlobAlreadyExists", "Non-Conditional-Header", true)]
-        public void IsError_409_ConditionalResponse(string code, string header, bool isError)
+        [TestCase("ContainerAlreadyExists", "If-Match", false, false)]
+        [TestCase("ContainerAlreadyExists", "If-None-Match", false, false)]
+        [TestCase("ContainerAlreadyExists", "If-Unmodified-Since", false, false)]
+        [TestCase("ContainerAlreadyExists", "If-Modified-Since", false, false)]
+        [TestCase("BlobAlreadyExists", "If-Match", false, false)]
+        [TestCase("BlobAlreadyExists", "If-None-Match", false, false)]
+        [TestCase("BlobAlreadyExists", "If-Unmodified-Since", false, false)]
+        [TestCase("BlobAlreadyExists", "If-Modified-Since", false, false)]
+        [TestCase("BlobAlreadyExists", "If-None-Match", true, true)]
+        [TestCase("InternalError", "If-Match", true, false)]
+        [TestCase("BlobAlreadyExists", "Non-Conditional-Header", true, false)]
+        public void IsError_409_ConditionalResponse(string code, string header, bool isError, bool includeStructuredMessageHeader)
         {
             var mockRequest = new MockRequest();
             mockRequest.Headers.Add(header, "value");
+            if (includeStructuredMessageHeader)
+            {
+                mockRequest.Headers.Add(Constants.StructuredMessage.StructuredMessageHeader, "XSM/1.0; properties=crc64");
+            }
             var httpMessage = new HttpMessage(mockRequest, new ResponseClassifier());
 
             var mockResponse = new MockResponse(409);

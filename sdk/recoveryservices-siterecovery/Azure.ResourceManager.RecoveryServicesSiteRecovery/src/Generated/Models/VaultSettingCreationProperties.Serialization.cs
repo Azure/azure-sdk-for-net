@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("vmwareToAzureProviderType"u8);
                 writer.WriteStringValue(VMwareToAzureProviderType);
             }
+            if (Optional.IsDefined(RecoveryNetworkConfigAutoSync))
+            {
+                writer.WritePropertyName("recoveryNetworkConfigAutoSync"u8);
+                writer.WriteStringValue(RecoveryNetworkConfigAutoSync.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier migrationSolutionId = default;
             string vMwareToAzureProviderType = default;
+            RecoveryNetworkConfigAutoSyncPolicy? recoveryNetworkConfigAutoSync = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,12 +152,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vMwareToAzureProviderType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("recoveryNetworkConfigAutoSync"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryNetworkConfigAutoSync = new RecoveryNetworkConfigAutoSyncPolicy(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VaultSettingCreationProperties(migrationSolutionId, vMwareToAzureProviderType, additionalBinaryDataProperties);
+            return new VaultSettingCreationProperties(migrationSolutionId, vMwareToAzureProviderType, recoveryNetworkConfigAutoSync, additionalBinaryDataProperties);
         }
     }
 }

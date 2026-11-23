@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Radius. </summary>
         private const string RadiusValue = "Radius";
         /// <summary> AAD. </summary>
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="VpnAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Radius. </summary>
         public static VpnAuthenticationType Radius { get; } = new VpnAuthenticationType(RadiusValue);
+
+        /// <summary> AAD. </summary>
+        public static VpnAuthenticationType Aad { get; } = new VpnAuthenticationType(AadValue);
 
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

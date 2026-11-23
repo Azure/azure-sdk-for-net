@@ -6,12 +6,16 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 
@@ -26,6 +30,37 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
 {
     [Test]
+    public async Task DisabledResponses_DoesNotRecoverWhenCoreIsEnabledForInvocations()
+    {
+        string responseId = IdGenerator.NewResponseId();
+        await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
+            responseId: responseId,
+            disposition: ResponseRecoveryPayload.DispositionReinvoke,
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
+        var store = new LocalTaskStore(TasksDir);
+        string original = (await store.GetAsync(responseId))?.ToJson().ToJsonString()
+            ?? throw new InvalidOperationException("The seeded Responses task was not persisted.");
+
+        var handler = new TestHandler();
+        using var factory = new TestWebApplicationFactory(
+            handler,
+            configureTestServices: services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton(CoreTaskRecoveryTestHelpers.CreateTaskStore(TasksDir));
+            });
+        using var client = factory.CreateClient();
+
+        await factory.Services.GetRequiredService<RecoveryScanner>().ScanAsync();
+        Assert.That(
+            (await store.GetAsync(responseId))?.ToJson().ToJsonString(),
+            Is.EqualTo(original),
+            "disabled Responses must not reclaim, delete, or mutate the persisted task");
+        Assert.That(RecoveryEntryCount(), Is.EqualTo(1));
+        Assert.That(handler.CallCount, Is.Zero);
+    }
+
+    [Test]
     public async Task DefinitiveNotFound_DropsEntry_WithoutDispatch()
     {
         // No durable record is seeded — only the recovery task exists. GET returns a definitive
@@ -33,7 +68,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: IdGenerator.NewResponseId(),
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
 
         var handler = new TestHandler();
         using var factory = NewRecoveringHost(handler);
@@ -93,7 +128,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
             => throw new IOException("Simulated transient store read failure.");
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.CreateResponseAsync(request, context, cancellationToken);
 
         public override Task UpdateResponseAsync(
@@ -104,7 +139,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
             string responseId, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, context, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
             string responseId, PlatformContext context, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);

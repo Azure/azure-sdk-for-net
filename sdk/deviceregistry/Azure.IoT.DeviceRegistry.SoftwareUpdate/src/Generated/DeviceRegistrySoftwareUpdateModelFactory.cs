@@ -161,12 +161,12 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <summary> Import update input metadata. </summary>
         /// <param name="importUpdateInput"> Import update input metadata. </param>
         /// <param name="enableScan"> Whether to enable anti-malware scan of the imported update payload files. </param>
-        /// <returns> A new <see cref="_SoftwareUpdate.ImportUpdateRequest"/> instance for mocking. </returns>
-        public static ImportUpdateRequest ImportUpdateRequest(IEnumerable<ImportUpdateInputItem> importUpdateInput = default, bool? enableScan = default)
+        /// <returns> A new <see cref="_SoftwareUpdate.ImportUpdateContent"/> instance for mocking. </returns>
+        public static ImportUpdateContent ImportUpdateContent(IEnumerable<ImportUpdateInputItem> importUpdateInput = default, bool? enableScan = default)
         {
             importUpdateInput ??= new ChangeTrackingList<ImportUpdateInputItem>();
 
-            return new ImportUpdateRequest(importUpdateInput.ToList(), enableScan, additionalBinaryDataProperties: null);
+            return new ImportUpdateContent(importUpdateInput.ToList(), enableScan, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Import update input item metadata. </summary>

@@ -3,6 +3,8 @@
 ## Import the namespaces
 
 ```C# Snippet:Azure_Search_Tests_Samples_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -13,10 +15,9 @@ using Azure.Search.Documents.Models;
 Create a `SearchServiceClient` and send a request.
 
 ```C# Snippet:Azure_Search_Tests_Samples_CreateClientAsync
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 // Create a new SearchIndexClient
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -32,8 +33,7 @@ All Search operations will throw a RequestFailedException on failure.
 
 ```C# Snippet:Azure_Search_Tests_Samples_HandleErrorsAsync
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 // Create an invalid SearchClient
 string fakeIndexName = "doesnotexist";

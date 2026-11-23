@@ -6,7 +6,7 @@ This sample shows how to build handlers that receive files as input. The Respons
 2. **URL** — a publicly accessible URL in the `file_url` field
 3. **File ID** — a reference to a previously uploaded file in the `file_id` field
 
-The server library deserializes all three into `MessageContentInputFileContent`. Your handler can inspect which fields are populated and act accordingly.
+The server library deserializes all three into a `ResponseContentPart` whose `Kind` is `ResponseContentPartKind.InputFile`. Your handler can inspect which fields are populated and act accordingly.
 
 ## Prerequisites
 
@@ -16,13 +16,13 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Handle base64 file input
 
-Clients can send file content inline using a base64 data URL in the `file_data` field. The handler extracts the raw bytes from the data URL:
+Clients can send file content inline using a base64 data URL in the `file_data` field. The data URL is decoded for you, so the handler reads the raw bytes from `InputFileBytes`:
 
 ```C# Snippet:Responses_Sample14_FileBase64Handler
 public class FileBase64Handler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -35,16 +35,17 @@ public class FileBase64Handler : ResponseHandler
 
         // Find file content parts from user messages.
         var files = items
-            .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputFileContent>()
+            .OfType<MessageResponseItem>()
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputFile)
             .ToList();
 
         string reply;
-        if (files.Count > 0 && DataUrl.TryDecodeBytes(files[0].FileData, out byte[] fileBytes))
+        // OpenAI decodes the file_data data URL into InputFileBytes.
+        if (files.Count > 0 && files[0].InputFileBytes is BinaryData fileBytes)
         {
-            string filename = files[0].Filename ?? "unknown";
-            reply = $"Received file '{filename}' ({fileBytes.Length} bytes inline).";
+            string filename = files[0].InputFilename ?? "unknown";
+            reply = $"Received file '{filename}' ({fileBytes.ToMemory().Length} bytes inline).";
         }
         else
         {
@@ -66,8 +67,8 @@ Clients can also send a URL pointing to the file. The handler can fetch the file
 ```C# Snippet:Responses_Sample14_FileUrlHandler
 public class FileUrlHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -79,16 +80,16 @@ public class FileUrlHandler : ResponseHandler
         var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
         var files = items
-            .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputFileContent>()
+            .OfType<MessageResponseItem>()
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputFile)
             .ToList();
 
         string reply;
-        if (files.Count > 0 && files[0].FileUrl != null)
+        if (files.Count > 0 && files[0].InputFileUri != null)
         {
-            string filename = files[0].Filename ?? "unknown";
-            reply = $"Received file '{filename}' via URL: {files[0].FileUrl}";
+            string filename = files[0].InputFilename ?? "unknown";
+            reply = $"Received file '{filename}' via URL: {files[0].InputFileUri}";
         }
         else
         {
@@ -110,8 +111,8 @@ Clients can reference a file already stored in a file store by passing a `file_i
 ```C# Snippet:Responses_Sample14_FileIdHandler
 public class FileIdHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -123,16 +124,16 @@ public class FileIdHandler : ResponseHandler
         var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
         var files = items
-            .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputFileContent>()
+            .OfType<MessageResponseItem>()
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputFile)
             .ToList();
 
         string reply;
-        if (files.Count > 0 && files[0].FileId != null)
+        if (files.Count > 0 && files[0].InputFileId != null)
         {
-            string filename = files[0].Filename ?? "unknown";
-            reply = $"Received file '{filename}' with ID: {files[0].FileId}";
+            string filename = files[0].InputFilename ?? "unknown";
+            reply = $"Received file '{filename}' with ID: {files[0].InputFileId}";
         }
         else
         {

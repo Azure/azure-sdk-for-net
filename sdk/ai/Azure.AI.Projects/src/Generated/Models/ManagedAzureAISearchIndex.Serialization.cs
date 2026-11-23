@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> Managed Azure AI Search Index Definition. </summary>
     public partial class ManagedAzureAISearchIndex : AIProjectIndex, IJsonModel<ManagedAzureAISearchIndex>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/> for deserialization. </summary>
-        internal ManagedAzureAISearchIndex()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

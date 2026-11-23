@@ -51,7 +51,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="SemanticRerankingDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticRerankingDocumentType?(string value) => value == null ? null : new SemanticRerankingDocumentType(value);
+        public static implicit operator SemanticRerankingDocumentType?(string value) => value == null ? (SemanticRerankingDocumentType?)null : new SemanticRerankingDocumentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

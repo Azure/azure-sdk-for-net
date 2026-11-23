@@ -57,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="LedgerEndpointMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LedgerEndpointMode?(string value) => value == null ? null : new LedgerEndpointMode(value);
+        public static implicit operator LedgerEndpointMode?(string value) => value == null ? (LedgerEndpointMode?)null : new LedgerEndpointMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
