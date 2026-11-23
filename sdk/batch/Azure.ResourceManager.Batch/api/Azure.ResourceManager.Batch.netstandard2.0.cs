@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static Azure.ResourceManager.Batch.Models.VirtualMachineSkuProfile VirtualMachineSkuProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.VirtualMachineSkuProfileVmSize> vmSizes = null, Azure.ResourceManager.Batch.Models.VirtualMachineSkuAllocationStrategy? allocationStrategy = default(Azure.ResourceManager.Batch.Models.VirtualMachineSkuAllocationStrategy?)) { throw null; }
         public static Azure.ResourceManager.Batch.Models.VirtualMachineSkuProfileVmSize VirtualMachineSkuProfileVmSize(string name = null, int? rank = default(int?)) { throw null; }
         public static Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile VmDiskSecurityProfile(Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType? securityEncryptionType = default(Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType?), Azure.Core.ResourceIdentifier diskEncryptionSetId = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.VmSizeProperties VmSizeProperties(int? vcpUsAvailable = default(int?), int? vcpUsPerCore = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.VmSizeProperties VmSizeProperties(int? vcpusAvailable = default(int?), int? vcpusPerCore = default(int?)) { throw null; }
         public static Azure.ResourceManager.Batch.Models.ZoneAllocationPolicy ZoneAllocationPolicy(int? maxZoneCount = default(int?), Azure.ResourceManager.Batch.Models.MaxInstancePercentPerZonePolicy maxInstancePercentPerZonePolicy = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.ZoneAllocationPolicyPatch ZoneAllocationPolicyPatch(int? maxZoneCount = default(int?), Azure.ResourceManager.Batch.Models.MaxInstancePercentPerZonePolicyPatch maxInstancePercentPerZonePolicy = null) { throw null; }
     }
@@ -2750,8 +2750,8 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class VmSizeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VmSizeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VmSizeProperties>
     {
         public VmSizeProperties() { }
-        public int? VCPUsAvailable { get { throw null; } set { } }
-        public int? VCPUsPerCore { get { throw null; } set { } }
+        public int? VcpusAvailable { get { throw null; } set { } }
+        public int? VcpusPerCore { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.VmSizeProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.VmSizeProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
