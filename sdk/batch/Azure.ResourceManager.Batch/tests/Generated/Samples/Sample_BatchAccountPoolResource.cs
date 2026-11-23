@@ -283,17 +283,14 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchAccountPoolResource batchAccountPool = client.GetBatchAccountPoolResource(batchAccountPoolResourceId);
 
             // invoke the operation
-            BatchAccountPoolPatch patch = new BatchAccountPoolPatch
+            BatchAccountPoolData data = new BatchAccountPoolData
             {
-                Properties = new PoolPatchProperties
+                ScaleSettings = new BatchAccountPoolScaleSettings
                 {
-                    ScaleSettings = new BatchAccountPoolScaleSettings
-                    {
-                        AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=34"),
-                    },
+                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=34"),
                 },
             };
-            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(patch);
+            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -324,18 +321,15 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchAccountPoolResource batchAccountPool = client.GetBatchAccountPoolResource(batchAccountPoolResourceId);
 
             // invoke the operation
-            BatchAccountPoolPatch patch = new BatchAccountPoolPatch
+            BatchAccountPoolData data = new BatchAccountPoolData
             {
-                Properties = new PoolPatchProperties
-                {
-                    Metadata = { new BatchAccountPoolMetadataItem("key1", "value1") },
-                    ApplicationPackages = {new BatchApplicationPackageReference(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Batch/batchAccounts/sampleacct/pools/testpool/applications/app_1234")), new BatchApplicationPackageReference(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Batch/batchAccounts/sampleacct/pools/testpool/applications/app_5678"))
+                Metadata = { new BatchAccountPoolMetadataItem("key1", "value1") },
+                ApplicationPackages = {new BatchApplicationPackageReference(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Batch/batchAccounts/sampleacct/pools/testpool/applications/app_1234")), new BatchApplicationPackageReference(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Batch/batchAccounts/sampleacct/pools/testpool/applications/app_5678"))
 {
 Version = "1.0",
 }},
-                },
             };
-            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(patch);
+            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -366,14 +360,11 @@ Version = "1.0",
             BatchAccountPoolResource batchAccountPool = client.GetBatchAccountPoolResource(batchAccountPoolResourceId);
 
             // invoke the operation
-            BatchAccountPoolPatch patch = new BatchAccountPoolPatch
+            BatchAccountPoolData data = new BatchAccountPoolData
             {
-                Properties = new PoolPatchProperties
-                {
-                    StartTask = new BatchAccountPoolStartTask(),
-                },
+                StartTask = new BatchAccountPoolStartTask(),
             };
-            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(patch);
+            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -404,23 +395,20 @@ Version = "1.0",
             BatchAccountPoolResource batchAccountPool = client.GetBatchAccountPoolResource(batchAccountPoolResourceId);
 
             // invoke the operation
-            BatchAccountPoolPatch patch = new BatchAccountPoolPatch
+            BatchAccountPoolData data = new BatchAccountPoolData
             {
-                Properties = new PoolPatchProperties
+                ScaleSettings = new BatchAccountPoolScaleSettings
                 {
-                    ScaleSettings = new BatchAccountPoolScaleSettings
+                    FixedScale = new BatchAccountFixedScaleSettings
                     {
-                        FixedScale = new BatchAccountFixedScaleSettings
-                        {
-                            ResizeTimeout = XmlConvert.ToTimeSpan("PT8M"),
-                            TargetDedicatedNodes = 5,
-                            TargetLowPriorityNodes = 0,
-                            NodeDeallocationOption = BatchNodeDeallocationOption.TaskCompletion,
-                        },
+                        ResizeTimeout = XmlConvert.ToTimeSpan("PT8M"),
+                        TargetDedicatedNodes = 5,
+                        TargetLowPriorityNodes = 0,
+                        NodeDeallocationOption = BatchNodeDeallocationOption.TaskCompletion,
                     },
                 },
             };
-            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(patch);
+            BatchAccountPoolResource result = await batchAccountPool.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

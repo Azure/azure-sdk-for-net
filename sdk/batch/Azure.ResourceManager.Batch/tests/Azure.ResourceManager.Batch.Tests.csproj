@@ -1,8 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Condition="'$(BatchTestTargetFramework)' != ''">
-    <RequiredTargetFrameworks>$(BatchTestTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(BatchTestTargetFramework)</TargetFrameworks>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Batch.csproj" />
   </ItemGroup>

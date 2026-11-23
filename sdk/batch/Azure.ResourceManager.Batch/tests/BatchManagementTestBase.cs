@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Tests
         protected ArmClient Client { get; private set; }
         protected ResourceGroupResource ResourceGroup { get; private set; }
         protected ResourceIdentifier StorageAccountIdentifier { get; private set; }
-        protected AzureLocation DefaultLocation => TestEnvironment.BatchLocation;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
         private ResourceIdentifier _resourceGroupIdentifier;
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Tests
                 using (SessionRecording.DisableRecording())
                 {
                     var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(SessionEnvironment.Location));
+                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.EastUS));
                     var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
                     _resourceGroupIdentifier = rgLro.Value.Data.Id;
                     StorageAccountIdentifier = storage.Id;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Batch.Tests
 
         private async Task<StorageAccountResource> CreateStorageAccount(ResourceGroupResource rg, string storageAccountName)
         {
-            var storageInput = ResourceDataHelper.GetStorageAccountData(new AzureLocation(SessionEnvironment.Location));
+            var storageInput = ResourceDataHelper.GetStorageAccountData();
             storageInput.AllowBlobPublicAccess = false;
             var lro = await rg.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storageInput);
             return lro.Value;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Tests
 
         protected async Task<BatchAccountResource> CreateBatchAccount(ResourceGroupResource rg, string batchAccountName, ResourceIdentifier storageAccountId)
         {
-            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId, DefaultLocation);
+            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
             var lro = await rg.GetBatchAccounts().CreateOrUpdateAsync(WaitUntil.Completed, batchAccountName, input);
             return lro.Value;
         }

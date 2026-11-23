@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VmSizeProperties"/>. </summary>
-        /// <param name="vcpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size. </param>
-        /// <param name="vcpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size. <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
+        /// <param name="vcpUsAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size. </param>
+        /// <param name="vcpUsPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size. <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmSizeProperties(int? vcpusAvailable, int? vcpusPerCore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmSizeProperties(int? vcpUsAvailable, int? vcpUsPerCore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            VcpusAvailable = vcpusAvailable;
-            VcpusPerCore = vcpusPerCore;
+            VCPUsAvailable = vcpUsAvailable;
+            VCPUsPerCore = vcpUsPerCore;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size. </summary>
-        public int? VcpusAvailable { get; set; }
+        public int? VCPUsAvailable { get; set; }
 
         /// <summary> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size. <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </summary>
-        public int? VcpusPerCore { get; set; }
+        public int? VCPUsPerCore { get; set; }
     }
 }

@@ -6,20 +6,6 @@
             "defaultValue": "eastus2",
             "type": "string"
         },
-        "batchAccounts_poolallocation_location": {
-            "defaultValue": "[parameters('location')]",
-            "type": "string",
-            "metadata": {
-                "description": "Optional region override for the Batch-managed allocation account."
-            }
-        },
-        "batchAccounts_usersubscription_location": {
-            "defaultValue": "[parameters('location')]",
-            "type": "string",
-            "metadata": {
-                "description": "Optional region override for the user-subscription account and its Key Vault and disk encryption set."
-            }
-        },
         "useridentity_name": {
             "defaultValue": "[concat('netsdkui', uniquestring(resourceGroup().id, deployment().name))]",
             "type": "string"
@@ -59,7 +45,7 @@
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2023-07-01",
             "name": "[parameters('vaults_keyvalut_name')]",
-            "location": "[parameters('batchAccounts_usersubscription_location')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "sku": {
                     "family": "A",
@@ -111,7 +97,7 @@
             "type": "Microsoft.KeyVault/vaults/keys",
             "apiVersion": "2023-07-01",
             "name": "[concat(parameters('vaults_keyvalut_name'), '/cmk')]",
-            "location": "[parameters('batchAccounts_usersubscription_location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
             ],
@@ -132,7 +118,7 @@
             "type": "Microsoft.Compute/diskEncryptionSets",
             "apiVersion": "2025-01-02",
             "name": "[parameters('diskEncryptionSets_name')]",
-            "location": "[parameters('batchAccounts_usersubscription_location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
             ],
@@ -196,7 +182,7 @@
             "type": "Microsoft.Batch/batchAccounts",
             "apiVersion": "2024-07-01",
             "name": "[parameters('batchAccounts_poolallocation_name')]",
-            "location": "[parameters('batchAccounts_poolallocation_location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('useridentity_name'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
@@ -313,7 +299,7 @@
             "type": "Microsoft.Batch/batchAccounts",
             "apiVersion": "2024-07-01",
             "name": "[parameters('batchAccounts_usersubscription_name')]",
-            "location": "[parameters('batchAccounts_usersubscription_location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]",
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
