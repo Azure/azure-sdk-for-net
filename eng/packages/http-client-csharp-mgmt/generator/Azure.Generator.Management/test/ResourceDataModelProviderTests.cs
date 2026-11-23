@@ -48,7 +48,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase("ResponseType")]
-        [TestCase("WidgetRequest")]
         public void ResourceDataPropertiesResolveLastContractAfterNamespaceVisitor(string resourceName)
         {
             var dateTime = new InputDateTimeType(

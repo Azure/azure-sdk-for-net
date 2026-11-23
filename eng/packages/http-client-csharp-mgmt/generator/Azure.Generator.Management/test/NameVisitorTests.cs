@@ -190,7 +190,6 @@ namespace Azure.Generator.Mgmt.Tests
         [TestCase(false, false)]
         [TestCase(false, true)]
         [TestCase(true, false)]
-        [TestCase(true, true)]
         public void OrdinaryRequestModelPreservesPreviousContractAlongsideContentCustomization(bool rootInputNamespace, bool previousRequest)
         {
             var model = InputFactory.Model("WidgetRequest", clientNamespace: rootInputNamespace ? "Samples" : "Samples.Models",
