@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BillingRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string billingRequestName, BillingRequestData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string billingRequestName, BillingContentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
             Argument.AssertNotNull(data, nameof(data));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(billingRequestName, BillingRequestData.ToRequestContent(data), context);
+                HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(billingRequestName, BillingContentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRequestResource> operation = new BillingArmOperation<BillingRequestResource>(
                     new BillingRequestResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BillingRequestResource> CreateOrUpdate(WaitUntil waitUntil, string billingRequestName, BillingRequestData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingRequestResource> CreateOrUpdate(WaitUntil waitUntil, string billingRequestName, BillingContentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
             Argument.AssertNotNull(data, nameof(data));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(billingRequestName, BillingRequestData.ToRequestContent(data), context);
+                HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(billingRequestName, BillingContentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRequestResource> operation = new BillingArmOperation<BillingRequestResource>(
                     new BillingRequestResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingRequestData> response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                Response<BillingContentData> response = Response.FromValue(BillingContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingRequestData> response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                Response<BillingContentData> response = Response.FromValue(BillingContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingContentData, BillingRequestResource>(new BillingContentDataAsyncCollectionResultOfT(
                 _billingRequestsRestClient,
                 filter,
                 orderBy,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataCollectionResultOfT(
+            return new PageableWrapper<BillingContentData, BillingRequestResource>(new BillingContentDataCollectionResultOfT(
                 _billingRequestsRestClient,
                 filter,
                 orderBy,
@@ -391,14 +391,14 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BillingRequestData> response = default;
+                Response<BillingContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        response = Response.FromValue(BillingContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingRequestData)null, result);
+                        response = Response.FromValue((BillingContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -448,14 +448,14 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BillingRequestData> response = default;
+                Response<BillingContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        response = Response.FromValue(BillingContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingRequestData)null, result);
+                        response = Response.FromValue((BillingContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -505,14 +505,14 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BillingRequestData> response = default;
+                Response<BillingContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        response = Response.FromValue(BillingContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingRequestData)null, result);
+                        response = Response.FromValue((BillingContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -566,14 +566,14 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BillingRequestData> response = default;
+                Response<BillingContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        response = Response.FromValue(BillingContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingRequestData)null, result);
+                        response = Response.FromValue((BillingContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

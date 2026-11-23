@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Billing
         BillingRequestResource IOperationSource<BillingRequestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BillingRequestData data = BillingRequestData.DeserializeBillingRequestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BillingContentData data = BillingContentData.DeserializeBillingContentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingRequestResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing
         async ValueTask<BillingRequestResource> IOperationSource<BillingRequestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BillingRequestData data = BillingRequestData.DeserializeBillingRequestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BillingContentData data = BillingContentData.DeserializeBillingContentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingRequestResource(_client, data);
         }
     }

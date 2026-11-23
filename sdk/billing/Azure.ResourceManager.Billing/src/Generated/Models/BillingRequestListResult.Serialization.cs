@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (BillingRequestData item in Value)
+                foreach (BillingContentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            IReadOnlyList<BillingRequestData> value = default;
+            IReadOnlyList<BillingContentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<BillingRequestData> array = new List<BillingRequestData>();
+                    List<BillingContentData> array = new List<BillingContentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BillingRequestData.DeserializeBillingRequestData(item, options));
+                        array.Add(BillingContentData.DeserializeBillingContentData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BillingRequestListResult(value ?? new ChangeTrackingList<BillingRequestData>(), nextLink, additionalBinaryDataProperties);
+            return new BillingRequestListResult(value ?? new ChangeTrackingList<BillingContentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

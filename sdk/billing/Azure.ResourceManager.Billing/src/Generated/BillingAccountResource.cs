@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync0CollectionResultOfT(
+            return new AsyncPageableWrapper<BillingContentData, BillingRequestResource>(new BillingContentDataAsync0CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Name,
                 filter,
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData0CollectionResultOfT(
+            return new PageableWrapper<BillingContentData, BillingRequestResource>(new BillingContentData0CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Name,
                 filter,
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingSavingsPlanModelResource> GetByBillingAccountAsync(string filter = default, string orderBy = default, float? skiptoken = default, float? take = default, string selectedState = default, string refreshSummary = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingSavingsPlanModelResource> ListByBillingAccountAsync(string filter = default, string orderBy = default, float? skiptoken = default, float? take = default, string selectedState = default, string refreshSummary = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.Billing
                 selectedState,
                 refreshSummary,
                 context,
-                "BillingAccountResource.GetByBillingAccount"), data => new BillingSavingsPlanModelResource(Client, data));
+                "BillingAccountResource.ListByBillingAccount"), data => new BillingSavingsPlanModelResource(Client, data));
         }
 
         /// <summary>
@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingSavingsPlanModelResource> GetByBillingAccount(string filter = default, string orderBy = default, float? skiptoken = default, float? take = default, string selectedState = default, string refreshSummary = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingSavingsPlanModelResource> ListByBillingAccount(string filter = default, string orderBy = default, float? skiptoken = default, float? take = default, string selectedState = default, string refreshSummary = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.Billing
                 selectedState,
                 refreshSummary,
                 context,
-                "BillingAccountResource.GetByBillingAccount"), data => new BillingSavingsPlanModelResource(Client, data));
+                "BillingAccountResource.ListByBillingAccount"), data => new BillingSavingsPlanModelResource(Client, data));
         }
 
         /// <summary>

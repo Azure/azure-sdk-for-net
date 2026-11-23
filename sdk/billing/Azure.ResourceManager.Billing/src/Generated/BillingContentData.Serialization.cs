@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary> A request submitted by a user to manage billing. Users with an owner role on the scope can approve or decline these requests. </summary>
-    public partial class BillingRequestData : ResourceData, IJsonModel<BillingRequestData>
+    public partial class BillingContentData : ResourceData, IJsonModel<BillingContentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingContentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBillingRequestData(document.RootElement, options);
+                        return DeserializeBillingContentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingRequestData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingContentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingContentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BillingRequestData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingContentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BillingRequestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingContentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingRequestData IPersistableModel<BillingRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BillingRequestData)PersistableModelCreateCore(data, options);
+        BillingContentData IPersistableModel<BillingContentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BillingContentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BillingRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="billingRequestData"> The <see cref="BillingRequestData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BillingRequestData billingRequestData)
+        /// <param name="billingContentData"> The <see cref="BillingContentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingContentData billingContentData)
         {
-            if (billingRequestData == null)
+            if (billingContentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(billingRequestData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(billingContentData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BillingRequestData"/> from. </param>
-        internal static BillingRequestData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BillingContentData"/> from. </param>
+        internal static BillingContentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBillingRequestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBillingContentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BillingRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingRequestData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingContentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -136,24 +136,24 @@ namespace Azure.ResourceManager.Billing
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingRequestData IJsonModel<BillingRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BillingRequestData)JsonModelCreateCore(ref reader, options);
+        BillingContentData IJsonModel<BillingContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BillingContentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingRequestData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingContentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBillingRequestData(document.RootElement, options);
+            return DeserializeBillingContentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BillingRequestData DeserializeBillingRequestData(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingContentData DeserializeBillingContentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Billing
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BillingRequestData(
+            return new BillingContentData(
                 id,
                 name,
                 resourceType,
