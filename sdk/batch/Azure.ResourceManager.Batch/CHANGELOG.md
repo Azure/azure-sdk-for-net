@@ -1,14 +1,21 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 2.0.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded the default service API version to `2026-10-01`.
+- Added Instance Mix support for Batch pools.
+- Added virtual machine hardware size settings and availability zone placement and allocation policies.
+
 ### Breaking Changes
+
+- Removed `BatchAuthenticationMode.TaskAuthenticationToken`, which is no longer supported by the service.
+- Changed `BatchAccountPoolResource.Update` and `UpdateAsync` to accept `BatchAccountPoolPatch` instead of `BatchAccountPoolData`. Use the patch model to specify pool updates.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed clearing `BatchVmConfiguration.ResiliencyZoneAllocationPolicy` by assigning null.
 
 ## 1.7.0 (2026-06-02)
 

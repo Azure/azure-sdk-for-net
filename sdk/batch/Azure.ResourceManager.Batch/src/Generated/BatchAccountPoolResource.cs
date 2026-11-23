@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(ResourceType, out string batchAccountPoolApiVersion);
             _poolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _poolRestClient = new Pool(_poolClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountPoolApiVersion ?? "2025-06-01");
+            _poolRestClient = new Pool(_poolClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountPoolApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,13 +212,13 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
+        /// <param name="patch"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<BatchAccountPoolResource>> UpdateAsync(BatchAccountPoolData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<BatchAccountPoolResource>> UpdateAsync(BatchAccountPoolPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _poolClientDiagnostics.CreateScope("BatchAccountPoolResource.Update");
             scope.Start();
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountPoolData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _poolRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountPoolPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchAccountPoolData> response = Response.FromValue(BatchAccountPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -264,13 +265,13 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
+        /// <param name="patch"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<BatchAccountPoolResource> Update(BatchAccountPoolData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<BatchAccountPoolResource> Update(BatchAccountPoolPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _poolClientDiagnostics.CreateScope("BatchAccountPoolResource.Update");
             scope.Start();
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountPoolData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _poolRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchAccountPoolPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchAccountPoolData> response = Response.FromValue(BatchAccountPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -407,7 +408,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -455,7 +456,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -503,7 +504,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -551,7 +552,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -617,7 +618,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountPoolData patch = new BatchAccountPoolData();
+                    BatchAccountPoolPatch patch = new BatchAccountPoolPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -665,7 +666,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountPoolData patch = new BatchAccountPoolData();
+                    BatchAccountPoolPatch patch = new BatchAccountPoolPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -711,7 +712,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountPoolData patch = new BatchAccountPoolData();
+                    BatchAccountPoolPatch patch = new BatchAccountPoolPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<BatchAccountPoolResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -753,7 +754,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountPoolData patch = new BatchAccountPoolData();
+                    BatchAccountPoolPatch patch = new BatchAccountPoolPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<BatchAccountPoolResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -795,7 +796,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountPoolData patch = new BatchAccountPoolData();
+                    BatchAccountPoolPatch patch = new BatchAccountPoolPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -841,7 +842,7 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchAccountPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountPoolData patch = new BatchAccountPoolData();
+                    BatchAccountPoolPatch patch = new BatchAccountPoolPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

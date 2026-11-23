@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(ResourceType, out string batchPrivateLinkResourceApiVersion);
             _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourceRestClient = new PrivateLinkResource(_privateLinkResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchPrivateLinkResourceApiVersion ?? "2025-06-01");
+            _privateLinkResourceRestClient = new PrivateLinkResource(_privateLinkResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchPrivateLinkResourceApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

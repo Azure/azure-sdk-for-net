@@ -13,8 +13,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The authentication mode using shared keys. </summary>
         SharedKey,
         /// <summary> The authentication mode using Microsoft Entra ID. </summary>
-        Aad,
-        /// <summary> The authentication mode using task authentication tokens. </summary>
-        TaskAuthenticationToken
+        Aad
     }
 }
