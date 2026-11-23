@@ -38,5 +38,6 @@ The `agent` artifact's `aw_info.json` records the model the run used. Compare on
 
 - Thread resolution and outdated states, and the text of the pull request, comments, and reviews, are as they are now, not as they were at the cutoff. GitHub keeps no history for them.
 - The contamination check recognizes the tool calls and shell forms agents use, including command substitutions and unquoted heredocs in a `safeoutputs` command, but it does not parse every shell construct, so a clean result is not proof.
-- Replays count toward the workflow's daily AI-credit limit, which live re-reviews share. A live re-review uses about 50 to 110 credits of the default 5,000, so dispatch replays in small batches.
+- Replays count toward the workflow's daily AI-credit limit, which live re-reviews share. A re-review uses about 55 credits for a small pull request and about 170 to 210 for one near the size limit, of the default 5,000 a day, so dispatch replays in small batches.
+- A re-review or replay whose read set is over 700,000 characters skips the agent and spends no AI credits. The `size_gate` job measures the read set with the exporter before the agent job starts. The limit, in `Invoke-PrReReviewSizeGate.ps1`, is about the largest read set a replay has finished (#63806, 668,320 characters), so raise it only after replays of larger pull requests finish.
 - Keep the expected findings for a replay out of `.github`. The agent can read the `.github` checkout, and a replay that sees the answers measures nothing.

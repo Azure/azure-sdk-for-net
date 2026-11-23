@@ -258,6 +258,16 @@ Describe 'pr-re-review trigger routing' {
         Test-WorkflowCondition $condition @{ github = @{ event_name = 'workflow_dispatch' }; needs = $needs } | Should -BeFalse
     }
 
+    It 'starts the agent only when the size gate measured a read set within the limit (within_cap ''<WithinCap>'')' -ForEach @(
+        @{ WithinCap = 'true'; Runs = $true }
+        @{ WithinCap = 'false'; Runs = $false }
+        # A failed or skipped gate leaves the output empty.
+        @{ WithinCap = ''; Runs = $false }
+    ) {
+        $needs = @{ activation = @{ outputs = @{ daily_ai_credits_exceeded = 'false' } }; size_gate = @{ outputs = @{ within_cap = $WithinCap } } }
+        Test-WorkflowCondition (Get-JobCondition 'agent') @{ needs = $needs } | Should -Be $Runs
+    }
+
     It 'keys workflow concurrency by event so the skipped twin run never queues behind the real run' {
         $group = (Get-YamlSection $LockLines 'concurrency' 0) -cmatch '^  group: '
         $group | Should -HaveCount 1

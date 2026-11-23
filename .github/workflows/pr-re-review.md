@@ -90,6 +90,49 @@ pre-agent-steps:
   # Each marker should reach the agent only by reading its patch, never all at once from this file.
   - name: Remove exported-patch markers from the runner
     run: rm -rf "${RUNNER_TEMP}/pr-re-review-input"
+# Skips the agent, before it spends any AI credits, when the read set is too large for one run; see pr-re-review/README.md.
+jobs:
+  size_gate:
+    needs: pre_activation
+    if: needs.pre_activation.outputs.activated == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    outputs:
+      within_cap: ${{ steps.measure.outputs.within_cap }}
+    steps:
+      - name: Checkout trusted re-review helpers
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          path: .pr-re-review-helpers
+          persist-credentials: false
+          sparse-checkout: .github/workflows/pr-re-review
+      - name: Measure the re-review read set
+        id: measure
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          REPLAY_PULL_REQUEST: ${{ inputs.pull_request }}
+          REPLAY_HEAD_SHA: ${{ inputs.head_sha }}
+          REPLAY_BASE_SHA: ${{ inputs.base_sha }}
+          REPLAY_HISTORY_CUTOFF: ${{ inputs.history_cutoff }}
+        run: |
+          $gate = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewSizeGate.ps1'
+          if (Test-Path -PathType Leaf $gate) {
+            & $gate
+          } else {
+            Write-Host '::notice::The base branch predates the re-review size gate, so the re-review runs without a size limit.'
+            Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value 'within_cap=true'
+          }
+  agent:
+    needs: [size_gate]
+    if: needs.size_gate.outputs.within_cap == 'true'
 inlined-imports: true
 permissions:
   copilot-requests: write

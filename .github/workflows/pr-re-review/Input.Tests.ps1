@@ -499,3 +499,42 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/contents/src/Changed.cs?ref=0123456789012345678901234567890123456789' }
     }
 }
+
+Describe 'Invoke-PrReReviewSizeGate.ps1' {
+    BeforeEach {
+        $script:PreviousGateEnvironment = @{}
+        foreach ($envName in 'GITHUB_REPOSITORY', 'GITHUB_EVENT_NAME', 'GITHUB_OUTPUT', 'GITHUB_STEP_SUMMARY', 'PR_NUMBER', 'PR_HEAD_SHA', 'PR_BASE_SHA', 'REVIEW_INPUT_DIR', 'REVIEW_INPUT_MARKERS') {
+            $script:PreviousGateEnvironment[$envName] = [Environment]::GetEnvironmentVariable($envName)
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
+            $patch = (1..400 | ForEach-Object { "+    public string Property$_ { get; set; }" }) -join "`n"
+            "[[$(ConvertTo-Json -Compress -InputObject ([ordered]@{ filename = 'src/Long.cs'; status = 'modified'; additions = 1; deletions = 1; patch = $patch }))]]"
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' } {
+            '{"changed_files":1,"head":{"sha":"abc1234"},"base":{"sha":"base"}}'
+        }
+        $env:GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'
+        $env:GITHUB_EVENT_NAME = 'pull_request'
+        $env:PR_NUMBER = '1'
+        $env:PR_HEAD_SHA = 'abc1234'
+        $env:PR_BASE_SHA = 'base'
+        $env:GITHUB_OUTPUT = Join-Path $TestDrive "output-$([guid]::NewGuid())"
+        $env:GITHUB_STEP_SUMMARY = Join-Path $TestDrive "summary-$([guid]::NewGuid())"
+    }
+
+    AfterEach {
+        foreach ($envName in $script:PreviousGateEnvironment.Keys) {
+            [Environment]::SetEnvironmentVariable($envName, $script:PreviousGateEnvironment[$envName])
+        }
+    }
+
+    It 'starts the agent only when the read set the exporter writes fits the limit (<Label>)' -ForEach @(
+        @{ Label = 'exactly at the limit'; Margin = 0; WithinCap = 'true' }
+        @{ Label = 'one character over'; Margin = -1; WithinCap = 'false' }
+    ) {
+        $patch = (1..400 | ForEach-Object { "+    public string Property$_ { get; set; }" }) -join "`n"
+        $characters = ((Invoke-Export @(New-ChangedFile 'src/Long.cs' -Patch $patch)).ListText | ConvertFrom-Json).readSet.characters
+        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewSizeGate.ps1') -MaxCharacters ($characters + $Margin)
+        Get-Content $env:GITHUB_OUTPUT | Should -Be @("characters=$characters", "within_cap=$WithinCap")
+    }
+}
