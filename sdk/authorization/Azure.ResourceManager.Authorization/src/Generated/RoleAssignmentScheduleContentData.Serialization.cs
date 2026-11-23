@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary> Role Assignment schedule request. </summary>
-    public partial class RoleAssignmentScheduleRequestData : ResourceData, IJsonModel<RoleAssignmentScheduleRequestData>
+    public partial class RoleAssignmentScheduleContentData : ResourceData, IJsonModel<RoleAssignmentScheduleContentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleContentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoleAssignmentScheduleRequestData(document.RootElement, options);
+                        return DeserializeRoleAssignmentScheduleContentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleContentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleContentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleContentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoleAssignmentScheduleRequestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RoleAssignmentScheduleContentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleAssignmentScheduleRequestData IPersistableModel<RoleAssignmentScheduleRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RoleAssignmentScheduleRequestData)PersistableModelCreateCore(data, options);
+        RoleAssignmentScheduleContentData IPersistableModel<RoleAssignmentScheduleContentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RoleAssignmentScheduleContentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoleAssignmentScheduleRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RoleAssignmentScheduleContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="roleAssignmentScheduleRequestData"> The <see cref="RoleAssignmentScheduleRequestData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RoleAssignmentScheduleRequestData roleAssignmentScheduleRequestData)
+        /// <param name="roleAssignmentScheduleContentData"> The <see cref="RoleAssignmentScheduleContentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RoleAssignmentScheduleContentData roleAssignmentScheduleContentData)
         {
-            if (roleAssignmentScheduleRequestData == null)
+            if (roleAssignmentScheduleContentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(roleAssignmentScheduleRequestData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(roleAssignmentScheduleContentData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoleAssignmentScheduleRequestData"/> from. </param>
-        internal static RoleAssignmentScheduleRequestData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoleAssignmentScheduleContentData"/> from. </param>
+        internal static RoleAssignmentScheduleContentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRoleAssignmentScheduleRequestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRoleAssignmentScheduleContentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoleAssignmentScheduleRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoleAssignmentScheduleContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentScheduleContentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Authorization
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleAssignmentScheduleRequestData IJsonModel<RoleAssignmentScheduleRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RoleAssignmentScheduleRequestData)JsonModelCreateCore(ref reader, options);
+        RoleAssignmentScheduleContentData IJsonModel<RoleAssignmentScheduleContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RoleAssignmentScheduleContentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentScheduleContentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoleAssignmentScheduleRequestData(document.RootElement, options);
+            return DeserializeRoleAssignmentScheduleContentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoleAssignmentScheduleRequestData DeserializeRoleAssignmentScheduleRequestData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RoleAssignmentScheduleContentData DeserializeRoleAssignmentScheduleContentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Authorization
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoleAssignmentScheduleRequestData(
+            return new RoleAssignmentScheduleContentData(
                 id,
                 name,
                 resourceType,

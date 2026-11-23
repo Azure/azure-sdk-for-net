@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RoleEligibilityScheduleRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RoleEligibilityScheduleRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleContentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
             Argument.AssertNotNull(data, nameof(data));
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData.ToRequestContent(data), context);
+                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleContentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                Response<RoleEligibilityScheduleContentData> response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AuthorizationArmOperation<RoleEligibilityScheduleRequestResource> operation = new AuthorizationArmOperation<RoleEligibilityScheduleRequestResource>(Response.FromValue(new RoleEligibilityScheduleRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RoleEligibilityScheduleRequestResource> CreateOrUpdate(WaitUntil waitUntil, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RoleEligibilityScheduleRequestResource> CreateOrUpdate(WaitUntil waitUntil, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleContentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
             Argument.AssertNotNull(data, nameof(data));
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData.ToRequestContent(data), context);
+                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleContentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                Response<RoleEligibilityScheduleContentData> response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AuthorizationArmOperation<RoleEligibilityScheduleRequestResource> operation = new AuthorizationArmOperation<RoleEligibilityScheduleRequestResource>(Response.FromValue(new RoleEligibilityScheduleRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                Response<RoleEligibilityScheduleContentData> response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                Response<RoleEligibilityScheduleContentData> response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleEligibilityScheduleRequestData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleRequestDataAsyncCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
+            return new AsyncPageableWrapper<RoleEligibilityScheduleContentData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleContentDataAsyncCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleEligibilityScheduleRequestData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleRequestDataCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
+            return new PageableWrapper<RoleEligibilityScheduleContentData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleContentDataCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
         }
 
         /// <summary>
@@ -344,14 +344,14 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RoleEligibilityScheduleRequestData> response = default;
+                Response<RoleEligibilityScheduleContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                        response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RoleEligibilityScheduleRequestData)null, result);
+                        response = Response.FromValue((RoleEligibilityScheduleContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -401,14 +401,14 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RoleEligibilityScheduleRequestData> response = default;
+                Response<RoleEligibilityScheduleContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                        response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RoleEligibilityScheduleRequestData)null, result);
+                        response = Response.FromValue((RoleEligibilityScheduleContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -458,14 +458,14 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RoleEligibilityScheduleRequestData> response = default;
+                Response<RoleEligibilityScheduleContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                        response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RoleEligibilityScheduleRequestData)null, result);
+                        response = Response.FromValue((RoleEligibilityScheduleContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -519,14 +519,14 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RoleEligibilityScheduleRequestData> response = default;
+                Response<RoleEligibilityScheduleContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
+                        response = Response.FromValue(RoleEligibilityScheduleContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RoleEligibilityScheduleRequestData)null, result);
+                        response = Response.FromValue((RoleEligibilityScheduleContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

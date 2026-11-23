@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestListResult"/>. </summary>
         /// <param name="value"> The RoleEligibilityScheduleRequest items on this page. </param>
-        internal RoleEligibilityScheduleRequestListResult(IEnumerable<RoleEligibilityScheduleRequestData> value)
+        internal RoleEligibilityScheduleRequestListResult(IEnumerable<RoleEligibilityScheduleContentData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="value"> The RoleEligibilityScheduleRequest items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleEligibilityScheduleRequestListResult(IList<RoleEligibilityScheduleRequestData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleEligibilityScheduleRequestListResult(IList<RoleEligibilityScheduleContentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The RoleEligibilityScheduleRequest items on this page. </summary>
         [WirePath("value")]
-        public IList<RoleEligibilityScheduleRequestData> Value { get; }
+        public IList<RoleEligibilityScheduleContentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
