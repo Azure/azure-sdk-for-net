@@ -16,6 +16,19 @@
 
 - Fixed SAS builder/client file system and path name validation to use ordinal comparisons in `DataLakeFileSystemClient`, `DataLakeDirectoryClient`, and `DataLakePathClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
 
+## 12.28.1 (2026-11-19)
+
+### Bugs Fixed
+
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `DataLakeFileSystemClient.GenerateSasUri(...)`
+  - `DataLakeFileSystemClient.GenerateUserDelegationSasUri(...)`
+  - `DataLakePathClient.GenerateSasUri(...)`
+  - `DataLakePathClient.GenerateUserDelegationSasUri(...)`
+  - `DataLakeServiceClient.GenerateAccountSasUri(...)`
+  - `DataLakeSasBuilder`
+- Fixed SAS builder/client file system and path name validation to use ordinal comparisons in `DataLakeFileSystemClient`, `DataLakeDirectoryClient`, and `DataLakePathClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+
 ## 12.29.0-beta.1 (2026-11-05)
 
 ### Features Added
