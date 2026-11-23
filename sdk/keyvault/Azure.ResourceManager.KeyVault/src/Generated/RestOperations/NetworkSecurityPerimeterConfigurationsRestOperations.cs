@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetConfigurationRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string networkSecurityPerimeterConfigurationName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string networkSecurityPerimeterConfigurationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        internal HttpMessage CreateNextGetConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context)
+        internal HttpMessage CreateNextGetNetworkSecurityPerimeterConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        internal HttpMessage CreateReconcileConfigurationRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string networkSecurityPerimeterConfigurationName, RequestContext context)
+        internal HttpMessage CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string networkSecurityPerimeterConfigurationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

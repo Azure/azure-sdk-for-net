@@ -12,25 +12,25 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Network security configuration properties. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationProperties
+    public partial class KeyVaultNetworkSecurityPerimeterConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        internal KeyVaultNetworkSecurityPerimeterConfigurationProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterProvisioningIssue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
         /// <param name="resourceAssociation"> Information about the resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<KeyVaultNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, KeyVaultNetworkSecurityPerimeterResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultNetworkSecurityPerimeterConfigurationProperties(KeyVaultNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<KeyVaultNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, KeyVaultNetworkSecurityPerimeter networkSecurityPerimeter, KeyVaultNetworkSecurityPerimeterResourceAssociation resourceAssociation, KeyVaultNetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Provisioning state of the network security perimeter configuration. </summary>
         [WirePath("provisioningState")]
-        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
+        public KeyVaultNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of provisioning issues, if any. </summary>
         [WirePath("provisioningIssues")]
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Information about the network security perimeter (NSP). </summary>
         [WirePath("networkSecurityPerimeter")]
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
+        public KeyVaultNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Information about the resource association. </summary>
         [WirePath("resourceAssociation")]
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Network security perimeter configuration profile. </summary>
         [WirePath("profile")]
-        public NetworkSecurityProfile Profile { get; }
+        public KeyVaultNetworkSecurityProfile Profile { get; }
     }
 }

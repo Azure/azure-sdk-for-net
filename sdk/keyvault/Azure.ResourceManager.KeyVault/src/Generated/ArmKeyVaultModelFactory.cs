@@ -224,32 +224,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.WrappingKeyValue"/> instance for mocking. </returns>
         public static WrappingKeyValue WrappingKeyValue(Uri uri = default)
         {
-            return new WrappingKeyValue(uri, default, default);
-        }
-
-        /// <summary> Parameters for creating or updating a vault. </summary>
-        /// <param name="identity"> Managed service identity assigned to the vault. </param>
-        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
-        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(ManagedServiceIdentity identity = default, AzureLocation location = default, IDictionary<string, string> tags = default, KeyVaultProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyVaultCreateOrUpdateContent(identity, location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <summary> Parameters for creating or updating a vault. </summary>
-        /// <param name="identity"> Managed service identity assigned to the vault. </param>
-        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultPatch"/> instance for mocking. </returns>
-        public static KeyVaultPatch KeyVaultPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, KeyVaultPatchProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyVaultPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new WrappingKeyValue(uri, "oct", default);
         }
 
         /// <summary> Properties of the vault. </summary>
@@ -413,10 +388,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Network security configuration properties. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        /// <returns> A new <see cref="Models.KeyVaultNetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
+        public static KeyVaultNetworkSecurityPerimeterConfiguration KeyVaultNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultNetworkSecurityPerimeterConfigurationProperties properties = default)
         {
-            return new NetworkSecurityPerimeterConfiguration(
+            return new KeyVaultNetworkSecurityPerimeterConfiguration(
                 id,
                 name,
                 resourceType,
@@ -431,12 +406,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
         /// <param name="resourceAssociation"> Information about the resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<KeyVaultNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, KeyVaultNetworkSecurityPerimeterResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
+        /// <returns> A new <see cref="Models.KeyVaultNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static KeyVaultNetworkSecurityPerimeterConfigurationProperties KeyVaultNetworkSecurityPerimeterConfigurationProperties(KeyVaultNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<KeyVaultNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default, KeyVaultNetworkSecurityPerimeter networkSecurityPerimeter = default, KeyVaultNetworkSecurityPerimeterResourceAssociation resourceAssociation = default, KeyVaultNetworkSecurityProfile profile = default)
         {
             provisioningIssues ??= new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterProvisioningIssue>();
 
-            return new NetworkSecurityPerimeterConfigurationProperties(
+            return new KeyVaultNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
                 (provisioningIssues ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterProvisioningIssue>()).ToList(),
                 networkSecurityPerimeter,
@@ -493,11 +468,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <returns> A new <see cref="Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties"/> instance for mocking. </returns>
-        public static KeyVaultNetworkSecurityPerimeterAccessRuleProperties KeyVaultNetworkSecurityPerimeterAccessRuleProperties(KeyVaultNetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        public static KeyVaultNetworkSecurityPerimeterAccessRuleProperties KeyVaultNetworkSecurityPerimeterAccessRuleProperties(KeyVaultNetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = default, IEnumerable<KeyVaultNetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
             subscriptions ??= new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>();
-            networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
+            networkSecurityPerimeters ??= new ChangeTrackingList<KeyVaultNetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
             emailAddresses ??= new ChangeTrackingList<string>();
             phoneNumbers ??= new ChangeTrackingList<string>();
@@ -506,7 +481,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 direction,
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
                 (subscriptions ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>()).ToList(),
-                (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>()).ToList(),
+                (networkSecurityPerimeters ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeter>()).ToList(),
                 (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
                 (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
                 (phoneNumbers ?? new ChangeTrackingList<string>()).ToList(),
@@ -525,10 +500,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Models.KeyVaultNetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static KeyVaultNetworkSecurityPerimeter KeyVaultNetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
         {
-            return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
+            return new KeyVaultNetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
         /// <summary> Information about resource association. </summary>
@@ -546,13 +521,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<KeyVaultNetworkSecurityPerimeterAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        /// <returns> A new <see cref="Models.KeyVaultNetworkSecurityProfile"/> instance for mocking. </returns>
+        public static KeyVaultNetworkSecurityProfile KeyVaultNetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<KeyVaultNetworkSecurityPerimeterAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
         {
             accessRules ??= new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRule>();
             enabledLogCategories ??= new ChangeTrackingList<string>();
 
-            return new NetworkSecurityProfile(
+            return new KeyVaultNetworkSecurityProfile(
                 name,
                 accessRulesVersion,
                 (accessRules ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRule>()).ToList(),

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeterConfiguration item in Value)
+                foreach (KeyVaultNetworkSecurityPerimeterConfiguration item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            IList<NetworkSecurityPerimeterConfiguration> value = default;
+            IList<KeyVaultNetworkSecurityPerimeterConfiguration> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterConfiguration> array = new List<NetworkSecurityPerimeterConfiguration>();
+                    List<KeyVaultNetworkSecurityPerimeterConfiguration> array = new List<KeyVaultNetworkSecurityPerimeterConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(item, options));
+                        array.Add(KeyVaultNetworkSecurityPerimeterConfiguration.DeserializeKeyVaultNetworkSecurityPerimeterConfiguration(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfiguration>(), nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterConfiguration>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

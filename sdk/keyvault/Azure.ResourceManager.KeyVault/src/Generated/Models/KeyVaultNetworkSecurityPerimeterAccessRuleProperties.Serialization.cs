@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeter item in NetworkSecurityPerimeters)
+                foreach (KeyVaultNetworkSecurityPerimeter item in NetworkSecurityPerimeters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             KeyVaultNetworkSecurityPerimeterAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = default;
-            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IList<KeyVaultNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> emailAddresses = default;
             IList<string> phoneNumbers = default;
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    List<KeyVaultNetworkSecurityPerimeter> array = new List<KeyVaultNetworkSecurityPerimeter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item, options));
+                        array.Add(KeyVaultNetworkSecurityPerimeter.DeserializeKeyVaultNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
                 phoneNumbers ?? new ChangeTrackingList<string>(),

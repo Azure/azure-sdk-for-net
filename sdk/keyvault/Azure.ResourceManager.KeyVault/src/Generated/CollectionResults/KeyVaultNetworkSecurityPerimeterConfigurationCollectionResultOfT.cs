@@ -14,7 +14,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal partial class NetworkSecurityPerimeterConfigurationCollectionResultOfT : Pageable<NetworkSecurityPerimeterConfiguration>
+    internal partial class KeyVaultNetworkSecurityPerimeterConfigurationCollectionResultOfT : Pageable<KeyVaultNetworkSecurityPerimeterConfiguration>
     {
         private readonly NetworkSecurityPerimeterConfigurations _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KeyVault
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfigurationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of KeyVaultNetworkSecurityPerimeterConfigurationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NetworkSecurityPerimeterConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetworkSecurityPerimeterConfigurationCollectionResultOfT(NetworkSecurityPerimeterConfigurations client, Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public KeyVaultNetworkSecurityPerimeterConfigurationCollectionResultOfT(NetworkSecurityPerimeterConfigurations client, Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.KeyVault
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NetworkSecurityPerimeterConfigurationCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of KeyVaultNetworkSecurityPerimeterConfigurationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NetworkSecurityPerimeterConfigurationCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetworkSecurityPerimeterConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of KeyVaultNetworkSecurityPerimeterConfigurationCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<KeyVaultNetworkSecurityPerimeterConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<KeyVaultNetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<KeyVaultNetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetConfigurationsRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetConfigurationsRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNetworkSecurityPerimeterConfigurationsRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetNetworkSecurityPerimeterConfigurationsRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
