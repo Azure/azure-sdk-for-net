@@ -44,6 +44,7 @@ Documentation is available to help you learn how to use this package:
 
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+- [Querying firmware analysis results](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/samples/Sample1_QueryingAnalysisResults.md)
 
 ## Troubleshooting
 
