@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="AgentInsightOverviewSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentInsightOverviewSource?(string value) => value == null ? null : new AgentInsightOverviewSource(value);
+        public static implicit operator AgentInsightOverviewSource?(string value) => value == null ? (AgentInsightOverviewSource?)null : new AgentInsightOverviewSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

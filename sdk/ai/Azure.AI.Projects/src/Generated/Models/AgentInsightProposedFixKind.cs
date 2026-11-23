@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="AgentInsightProposedFixKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentInsightProposedFixKind?(string value) => value == null ? null : new AgentInsightProposedFixKind(value);
+        public static implicit operator AgentInsightProposedFixKind?(string value) => value == null ? (AgentInsightProposedFixKind?)null : new AgentInsightProposedFixKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

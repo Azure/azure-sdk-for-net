@@ -11,11 +11,11 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Whether or not public endpoint access is allowed for this Mongo cluster.  Value is optional and default value is 'Enabled'. </summary>
+    /// <summary> Whether or not public endpoint access is allowed for this DocumentDB cluster.  Value is optional and default value is 'Enabled'. </summary>
     public readonly partial struct MongoClusterPublicNetworkAccess : IEquatable<MongoClusterPublicNetworkAccess>
     {
         private readonly string _value;
-        /// <summary> If set, mongo cluster can be accessed through private and public methods. </summary>
+        /// <summary> If set, DocumentDB cluster can be accessed through private and public methods. </summary>
         private const string EnabledValue = "Enabled";
         /// <summary> If set, the private endpoints are the exclusive access method. </summary>
         private const string DisabledValue = "Disabled";
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             _value = value;
         }
 
-        /// <summary> If set, mongo cluster can be accessed through private and public methods. </summary>
+        /// <summary> If set, DocumentDB cluster can be accessed through private and public methods. </summary>
         public static MongoClusterPublicNetworkAccess Enabled { get; } = new MongoClusterPublicNetworkAccess(EnabledValue);
 
         /// <summary> If set, the private endpoints are the exclusive access method. </summary>

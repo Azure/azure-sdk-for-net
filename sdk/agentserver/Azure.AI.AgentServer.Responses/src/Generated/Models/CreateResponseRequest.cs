@@ -50,11 +50,11 @@ namespace Azure.AI.AgentServer.Responses
         private bool _storeIsDefined;
         private string _instructions;
         private bool _instructionsIsDefined;
-        private ModerationParam _moderation;
+        private object _moderation;
         private bool _moderationIsDefined;
         private bool? _stream;
         private bool _streamIsDefined;
-        private ResponseStreamOptions _streamOptions;
+        private object _streamOptions;
         private bool _streamOptionsIsDefined;
 #pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         private ResponseConversationOptions _conversation;
@@ -70,7 +70,7 @@ namespace Azure.AI.AgentServer.Responses
             Tools = new ChangeTrackingList<Tool>();
 #pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             Include = new ChangeTrackingList<IncludeEnum>();
-            ContextManagement = new ChangeTrackingList<ContextManagementParam>();
+            ContextManagement = new ChangeTrackingList<object>();
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -129,7 +129,7 @@ namespace Azure.AI.AgentServer.Responses
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
 #pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
-        internal CreateResponseRequest(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, bool? background, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, ResponsePromptCacheOptionsParam promptCacheOptions, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestTruncation? truncation, Reasoning reasoning, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, ModerationParam moderation, bool? stream, ResponseStreamOptions streamOptions, ResponseConversationOptions conversation, IList<ContextManagementParam> contextManagement, long? maxOutputTokens, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, AzureUserSecurityContext userSecurityContext, RoutingConfiguration routingConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateResponseRequest(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, bool? background, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, object promptCacheOptions, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestTruncation? truncation, Reasoning reasoning, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, object moderation, bool? stream, object streamOptions, ConversationReference conversation, IList<object> contextManagement, long? maxOutputTokens, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, object userSecurityContext, object routingConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _metadata = metadata;
             _topLogprobs = topLogprobs;
@@ -289,10 +289,10 @@ namespace Azure.AI.AgentServer.Responses
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="ToolChoiceOptions"/>. </description>
+        /// <description> <see cref="object"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ToolChoiceParam"/>. </description>
+        /// <description> <see cref="ResponseToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -325,7 +325,7 @@ namespace Azure.AI.AgentServer.Responses
         public Prompt Prompt { get; }
 
         /// <summary> Gets the PromptCacheOptions. </summary>
-        public ResponsePromptCacheOptionsParam PromptCacheOptions { get; }
+        public object PromptCacheOptions { get; }
 
         /// <summary> Gets the ServiceTier. </summary>
         public CreateResponseRequestServiceTier? ServiceTier
@@ -428,7 +428,7 @@ namespace Azure.AI.AgentServer.Responses
         }
 
         /// <summary> Gets the Moderation. </summary>
-        public ModerationParam Moderation
+        public object Moderation
         {
             get
             {
@@ -446,7 +446,7 @@ namespace Azure.AI.AgentServer.Responses
         }
 
         /// <summary> Gets the StreamOptions. </summary>
-        public ResponseStreamOptions StreamOptions
+        public object StreamOptions
         {
             get
             {
@@ -466,7 +466,7 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Context management configuration for this request. </summary>
-        public IList<ContextManagementParam> ContextManagement { get; }
+        public IList<object> ContextManagement { get; }
 
         /// <summary> Gets the MaxOutputTokens. </summary>
         public long? MaxOutputTokens
@@ -522,13 +522,13 @@ namespace Azure.AI.AgentServer.Responses
         public IDictionary<string, BinaryData> StructuredInputs { get; }
 
         /// <summary> User security context contains several parameters that describe the application itself, and the end user that interacts with the application. These fields assist your security operations teams to investigate and mitigate security incidents by providing a comprehensive approach to protecting your AI applications. [Learn more](https://aka.ms/TP4AI/Documentation/EndUserContext) about protecting AI applications using Microsoft Defender for Cloud. </summary>
-        public AzureUserSecurityContext UserSecurityContext { get; }
+        public object UserSecurityContext { get; }
 
         /// <summary>
         /// Per-request configuration for Model Router inference calls.
         /// Supported on Model Router endpoints (deployed or instant if supported).
         /// Returns a 400 (Bad Request) error when the target is not a Model Router endpoint.
         /// </summary>
-        public RoutingConfiguration RoutingConfig { get; }
+        public object RoutingConfig { get; }
     }
 }

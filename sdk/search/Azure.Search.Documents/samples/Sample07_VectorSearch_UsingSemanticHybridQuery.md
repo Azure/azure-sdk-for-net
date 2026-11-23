@@ -8,7 +8,7 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch_Index
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 int modelDimensions = 1536;
@@ -59,10 +59,9 @@ SearchIndex searchIndex = new(indexName)
 
 After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search_Create_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-AzureKeyCredential credential = new(key);
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);
@@ -72,7 +71,7 @@ await indexClient.CreateIndexAsync(searchIndex);
 
 Let's create a simple model type for `Hotel`:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Model
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchCommons_Model
 public class Hotel
 {
     public string HotelId { get; set; }
@@ -88,12 +87,11 @@ Next, we will create sample hotel documents. The vector field requires submittin
 
 ### Get Embeddings using `Azure.AI.OpenAI`
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchCommons_GetEmbeddings
 public static ReadOnlyMemory<float> GetEmbeddings(string input)
 {
     Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-    AzureKeyCredential credential = new AzureKeyCredential(key);
+    TokenCredential credential = new DefaultAzureCredential();
 
     AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
     EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
@@ -105,7 +103,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
 
 In the sample code below, we are using `GetEmbeddings` method mentioned above to get embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Hotel_Document
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchCommons_Hotel_Document
 public static Hotel[] GetHotelDocuments()
 {
     return new[]
@@ -141,7 +139,7 @@ public static Hotel[] GetHotelDocuments()
 
 Now, we can instantiate the `SearchClient` and upload the documents to the `Hotel` index we created earlier:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search_Upload_Documents
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch_Upload_Documents
 SearchClient searchClient = new(endpoint, indexName, credential);
 Hotel[] hotelDocuments = GetHotelDocuments();
 await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
@@ -161,7 +159,7 @@ For semantic search, we will specify `SemanticSearch.SemanticConfigurationName` 
 
 With these settings in place, we're ready to execute a vector semantic hybrid query:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch
 ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(

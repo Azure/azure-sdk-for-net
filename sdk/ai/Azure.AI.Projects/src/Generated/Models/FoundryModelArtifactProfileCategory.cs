@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="FoundryModelArtifactProfileCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FoundryModelArtifactProfileCategory?(string value) => value == null ? null : new FoundryModelArtifactProfileCategory(value);
+        public static implicit operator FoundryModelArtifactProfileCategory?(string value) => value == null ? (FoundryModelArtifactProfileCategory?)null : new FoundryModelArtifactProfileCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

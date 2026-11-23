@@ -38,15 +38,18 @@ public class ApiErrorSerializationTests
 
         var error = response.Error;
         Assert.That(error.Misalignment, Is.Not.Null);
+
+        using var document = JsonDocument.Parse(ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json));
+        var misalignment = document.RootElement.GetProperty("misalignment");
         Assert.Multiple(() =>
         {
             Assert.That(error.Code, Is.EqualTo("misaligned"));
             Assert.That(error.Message, Is.EqualTo("The request was blocked."));
             Assert.That(error.Param, Is.EqualTo("input"));
             Assert.That(error.Type, Is.EqualTo("invalid_request_error"));
-            Assert.That(error.Misalignment.ErrorType, Is.EqualTo(MisalignmentErrorType.PotentiallyUnintendedDataTransfer));
-            Assert.That(error.Misalignment.DetailedExplanation, Is.EqualTo("The agent tried to send data outside the approved boundary."));
-            Assert.That(error.Misalignment.Steer.Message, Is.EqualTo("Use an approved destination."));
+            Assert.That(misalignment.GetProperty("error_type").GetString(), Is.EqualTo("potentially_unintended_data_transfer"));
+            Assert.That(misalignment.GetProperty("detailed_explanation").GetString(), Is.EqualTo("The agent tried to send data outside the approved boundary."));
+            Assert.That(misalignment.GetProperty("steer").GetProperty("message").GetString(), Is.EqualTo("Use an approved destination."));
         });
     }
 

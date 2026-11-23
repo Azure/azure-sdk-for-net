@@ -51,7 +51,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="ScheduleTaskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleTaskType?(string value) => value == null ? null : new ScheduleTaskType(value);
+        public static implicit operator ScheduleTaskType?(string value) => value == null ? (ScheduleTaskType?)null : new ScheduleTaskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

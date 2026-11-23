@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Converts a string to a <see cref="MemoryOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MemoryOperationKind?(string value) => value == null ? null : new MemoryOperationKind(value);
+        public static implicit operator MemoryOperationKind?(string value) => value == null ? (MemoryOperationKind?)null : new MemoryOperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

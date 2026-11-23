@@ -69,6 +69,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal ITransmitter Transmitter => _transmitter;
 
+        /// <summary>
+        /// Set when trace-based log sampling filters this exporter's logs. The sample rate stamped on a
+        /// shared <see cref="LogRecord"/> describes that filtering, so only such an exporter applies it.
+        /// </summary>
+        internal bool IsTraceBasedLogSampled { get; set; }
+
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<LogRecord> batch)
         {
@@ -84,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                (var telemetryItems, var telemetrySchemaTypeCounter) = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                (var telemetryItems, var telemetrySchemaTypeCounter) = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, IsTraceBasedLogSampled);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
@@ -106,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, LogResource, routeBatch);
+                LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, LogResource, routeBatch, IsTraceBasedLogSampled);
 
                 if (routeBatch.Count == 0)
                 {

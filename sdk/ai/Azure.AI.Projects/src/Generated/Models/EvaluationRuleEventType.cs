@@ -49,7 +49,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="EvaluationRuleEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluationRuleEventType?(string value) => value == null ? null : new EvaluationRuleEventType(value);
+        public static implicit operator EvaluationRuleEventType?(string value) => value == null ? (EvaluationRuleEventType?)null : new EvaluationRuleEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

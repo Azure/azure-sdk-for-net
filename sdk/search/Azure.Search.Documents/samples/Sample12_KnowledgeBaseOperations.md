@@ -4,9 +4,16 @@ This sample demonstrates CRUD (Create, Read, Update, Delete) operations for know
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
+Authenticate to Search using Microsoft Entra ID. The identity running the sample
+needs the Search Service Contributor and Search Index Data Contributor roles.
+For the Azure OpenAI model, enable the Search service's system-assigned managed
+identity and grant it Cognitive Services OpenAI User on the OpenAI resource.
+No Search or OpenAI API keys are required.
+
 ## Required Namespaces
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Namespaces
+```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseOperations_Namespaces
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Newtonsoft.Json;
@@ -16,10 +23,9 @@ using Newtonsoft.Json;
 
 Create a knowledge base that references one or more knowledge sources and optionally includes an Azure OpenAI model for query planning.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Create
+```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseOperations_Create
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+DefaultAzureCredential credential = new DefaultAzureCredential();
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -42,20 +48,16 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
 {
     Description = "Knowledge base for hotel information"
 };
-knowledgeBase.Tags.Add("environment", "sample");
-knowledgeBase.Tags.Add("owner", "search-team");
 
 // Add an Azure OpenAI model for query planning
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
     knowledgeBase.Models.Add(
         new KnowledgeBaseAzureOpenAIModel(
             new AzureOpenAIVectorizerParameters
             {
                 ResourceUri = new Uri(openAIEndpoint),
-                ApiKey = openAIKey,
-                DeploymentName = "gpt-5-mini",
-                ModelName = AzureOpenAIModelName.Gpt5Mini
+                DeploymentName = "gpt-5.4-mini",
+                ModelName = AzureOpenAIModelName.Gpt54Mini
             }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
@@ -65,10 +67,9 @@ KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledge
 
 Retrieve a specific knowledge base by name and inspect its properties.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Get
+```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseOperations_Get
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+DefaultAzureCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -82,20 +83,15 @@ foreach (KnowledgeSourceReference sourceRef in knowledgeBase.KnowledgeSources)
 {
     Console.WriteLine($"    - {sourceRef.Name}");
 }
-foreach (KeyValuePair<string, string> tag in knowledgeBase.Tags)
-{
-    Console.WriteLine($"  Tag: {tag.Key} = {tag.Value}");
-}
 ```
 
 ## List Knowledge Bases
 
 Enumerate all knowledge bases in a search service.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_List
+```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseOperations_List
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+DefaultAzureCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
@@ -110,10 +106,9 @@ await foreach (KnowledgeBase kb in indexClient.GetKnowledgeBasesAsync())
 
 Get an existing knowledge base, modify it, and save the changes back.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Update
+```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseOperations_Update
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+DefaultAzureCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -123,21 +118,18 @@ KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeB
 
 // Update its description and application metadata.
 knowledgeBase.Description = "Updated description for hotel knowledge base";
-knowledgeBase.Tags.Add("lifecycle", "updated");
 
 KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Updated knowledge base '{updatedBase.Name}': {updatedBase.Description}");
-Console.WriteLine($"  Lifecycle tag: {updatedBase.Tags["lifecycle"]}");
 ```
 
 ## Delete a Knowledge Base
 
 Delete a knowledge base by name.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Delete
+```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseOperations_Delete
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+DefaultAzureCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);

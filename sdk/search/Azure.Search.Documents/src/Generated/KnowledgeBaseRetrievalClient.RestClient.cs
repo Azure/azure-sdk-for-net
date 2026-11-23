@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.KnowledgeBases
 
         private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
-        internal HttpMessage CreateRetrieveRequest(RequestContent content, string querySourceAuthorization, string queryWorkIQSourceAuthorization, RequestContext context)
+        internal HttpMessage CreateRetrieveRequest(RequestContent content, string querySourceAuthorization, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -43,16 +43,12 @@ namespace Azure.Search.Documents.KnowledgeBases
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
             }
-            if (queryWorkIQSourceAuthorization != null)
-            {
-                request.Headers.SetValue("x-ms-query-work-iq-source-authorization", queryWorkIQSourceAuthorization);
-            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateRetrieveStreamRequest(RequestContent content, string querySourceAuthorization, string queryWorkIQSourceAuthorization, RequestContext context)
+        internal HttpMessage CreateRetrieveStreamRequest(RequestContent content, string querySourceAuthorization, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -71,10 +67,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             if (querySourceAuthorization != null)
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
-            }
-            if (queryWorkIQSourceAuthorization != null)
-            {
-                request.Headers.SetValue("x-ms-query-work-iq-source-authorization", queryWorkIQSourceAuthorization);
             }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;

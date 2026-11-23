@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("driver"u8);
                 writer.WriteStringValue(Driver.Value.ToString());
             }
+            if (Optional.IsDefined(DriverType))
+            {
+                writer.WritePropertyName("driverType"u8);
+                writer.WriteStringValue(DriverType.Value.ToString());
+            }
             if (Optional.IsDefined(Nvidia))
             {
                 writer.WritePropertyName("nvidia"u8);
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             AgentPoolGpuDriver? driver = default;
+            AgentPoolGpuDriverType? driverType = default;
             AgentPoolNvidiaGpuProfile nvidia = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,6 +144,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     driver = new AgentPoolGpuDriver(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("driverType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    driverType = new AgentPoolGpuDriverType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nvidia"u8))
@@ -154,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentPoolGpuProfile(driver, nvidia, additionalBinaryDataProperties);
+            return new AgentPoolGpuProfile(driver, driverType, nvidia, additionalBinaryDataProperties);
         }
     }
 }

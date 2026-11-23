@@ -16,14 +16,41 @@ reflect changes caused by recent indexing operations.
 ```C# Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
 // Create a new SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 // Get and report the Search Service statistics
 Response<SearchServiceStatistics> stats = await indexClient.GetServiceStatisticsAsync();
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {stats.Value.Counters.IndexCounter.Quota} indexes.");
 ```
+
+## List Resources with Paging Controls
+
+Use `GetAllIndexers`, `GetAllDataSourceConnections`, or `GetAllSkillsets` on `SearchIndexerClient`, or
+`GetAllSynonymMaps` on `SearchIndexClient`, to select properties, narrow a listing by name prefix, and process one page at a time.
+Each method also has an async counterpart. The existing list-returning methods remain available and continue
+to buffer all pages.
+
+Given a `SearchIndexerClient` named `indexerClient`:
+
+```C# Snippet:Azure_Search_Tests_Samples_ListIndexers
+await foreach (Page<SearchIndexer> page in indexerClient.GetAllIndexersAsync(
+    select: new[] { "name" },
+    search: "hotel",
+    pageSize: 10,
+    searchType: ListingSearchType.Prefix).AsPages())
+{
+    foreach (SearchIndexer indexer in page.Values)
+    {
+        Console.WriteLine(indexer.Name);
+    }
+    Console.WriteLine($"Continuation token: {page.ContinuationToken}");
+}
+```
+
+Use `AsPages(continuationToken)` with a saved continuation token to resume a listing.
+`AsPages(pageSizeHint: 20)` overrides the method-level `pageSize` on initial and continuation requests.
+Continuation requests preserve the service-provided cursor and other query parameters.
 
 ## Connect a Data Source to an Index
 
@@ -53,8 +80,7 @@ a file you may have downloaded or have stored elsewhere.
 ```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateSynonymMap
 // Create a new SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 // Create a synonym map from a file containing country names and abbreviations
@@ -204,8 +230,8 @@ SearchIndexerSkillset skillset = new SearchIndexerSkillset(
     skillsetName,
     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
 {
-    CognitiveServicesAccount = new CognitiveServicesAccountKey(
-        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
+    CognitiveServicesAccount = new AIServicesAccountIdentity(
+        new Uri(Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_ENDPOINT"))),
     KnowledgeStore = new KnowledgeStore(
         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
         new List<KnowledgeStoreProjection>()),

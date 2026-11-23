@@ -171,7 +171,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 gatewayPublicIPPrefixSize: gatewayPublicIPPrefixSize,
                 isArtifactStreamingEnabled: isArtifactStreamingEnabled,
                 virtualMachinesScale: virtualMachinesScale,
-                statusProvisioningError: statusProvisioningError);
+                statusProvisioningError: statusProvisioningError,
+                upgradeStrategy: default,
+                isOSDiskFullCachingEnabled: default,
+                upgradeSettingsBlueGreen: default,
+                nodeInitializationTaints: default,
+                preparedImageSpecificationId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfileProperties"/> for mocking. </summary>
@@ -291,7 +296,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachinesScale: virtualMachinesScale,
                 virtualMachineNodesStatus: virtualMachineNodesStatus,
                 statusProvisioningError: statusProvisioningError,
-                localDnsProfile: localDnsProfile);
+                localDnsProfile: localDnsProfile,
+                upgradeStrategy: default,
+                isOSDiskFullCachingEnabled: default,
+                upgradeSettingsBlueGreen: default,
+                nodeInitializationTaints: default,
+                preparedImageSpecificationId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfile"/> for mocking. </summary>
@@ -413,7 +423,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachineNodesStatus: virtualMachineNodesStatus,
                 statusProvisioningError: statusProvisioningError,
                 localDnsProfile: localDnsProfile,
-                name: name);
+                name: name,
+                upgradeStrategy: default,
+                isOSDiskFullCachingEnabled: default,
+                upgradeSettingsBlueGreen: default,
+                nodeInitializationTaints: default,
+                preparedImageSpecificationId: default);
         }
         /// <summary> Initializes a new instance of <see cref="Models.AgentPoolGpuProfile"/>. </summary>
         /// <param name="driver"> Whether to install GPU drivers. </param>
@@ -487,6 +502,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     kubernetesVersion,
                     osType,
                     (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(),
+                    new List<KubernetesVersionComponents>(),
                     (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(),
                     latestNodeImageVersion,
                     additionalBinaryDataProperties: null),

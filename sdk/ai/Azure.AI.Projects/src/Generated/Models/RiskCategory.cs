@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="RiskCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RiskCategory?(string value) => value == null ? null : new RiskCategory(value);
+        public static implicit operator RiskCategory?(string value) => value == null ? (RiskCategory?)null : new RiskCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

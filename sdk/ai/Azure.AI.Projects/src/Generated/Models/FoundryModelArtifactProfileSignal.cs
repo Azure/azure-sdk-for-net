@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="FoundryModelArtifactProfileSignal"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FoundryModelArtifactProfileSignal?(string value) => value == null ? null : new FoundryModelArtifactProfileSignal(value);
+        public static implicit operator FoundryModelArtifactProfileSignal?(string value) => value == null ? (FoundryModelArtifactProfileSignal?)null : new FoundryModelArtifactProfileSignal(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

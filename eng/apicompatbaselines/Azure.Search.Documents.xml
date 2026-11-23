@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- Remove only duplicate extension metadata to fix ambiguous registration calls.
+       All six public static methods, CLR signatures, and forwarding behavior remain.
+       Extension syntax resolves to the equivalent SearchClientBuilderExtensions methods.
+       https://github.com/Azure/azure-sdk-for-net/pull/63555#discussion_r4568371141 -->
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchClient``1(``0,System.Uri,System.String,Azure.AzureKeyCredential)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchClient``2(``0,``1)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchIndexClient``1(``0,System.Uri,Azure.AzureKeyCredential)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchIndexClient``2(``0,``1)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchIndexerClient``1(``0,System.Uri,Azure.AzureKeyCredential)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchIndexerClient``2(``0,``1)</Target>
+  </Suppression>
+</Suppressions>
