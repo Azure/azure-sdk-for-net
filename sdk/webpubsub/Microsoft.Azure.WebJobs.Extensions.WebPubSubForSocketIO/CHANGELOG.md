@@ -1,16 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2026-11-23)
 
 ### Bugs Fixed
 
 - Fixed OData filter operator precedence when sending to multiple rooms with `ExceptRooms`.
-
-### Other Changes
 
 ## 1.0.0 (2025-11-15)
 
