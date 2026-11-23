@@ -1,3 +1,0 @@
-[VolumeProperties{,.Serialization}.cs]
-# The custom property and generated serializer retain the obsolete subvolume flag for compatibility.
-dotnet_diagnostic.CS0618.severity = none

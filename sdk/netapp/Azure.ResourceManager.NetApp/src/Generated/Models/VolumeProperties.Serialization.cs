@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool inheritedSizeInBytesIsDefined = false;
             long? inheritedSizeInBytes = default;
             BreakthroughMode? breakthroughMode = default;
-            EnableNetAppSubvolume? enableSubvolumes = default;
+            SubvolumeEnablement? enableSubvolumes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

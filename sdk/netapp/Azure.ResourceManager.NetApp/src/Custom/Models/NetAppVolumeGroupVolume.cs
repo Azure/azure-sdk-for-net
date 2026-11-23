@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.NetApp.Models
         [Obsolete("This property is obsolete and will be removed in a future version.")]
         public EnableNetAppSubvolume? EnableSubvolumes
         {
-            get => Properties?.EnableSubvolumes;
-            set => (Properties ??= new VolumeProperties()).EnableSubvolumes = value;
+            get => SubvolumeEnablement.ToLegacy(Properties?.EnableSubvolumes);
+            set => (Properties ??= new VolumeProperties()).EnableSubvolumes = SubvolumeEnablement.FromLegacy(value);
         }
 
         /// <summary> Restoring. </summary>

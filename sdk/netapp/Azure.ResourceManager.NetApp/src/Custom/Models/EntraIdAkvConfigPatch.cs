@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure;
 
@@ -16,6 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
     // The 2026 TypeSpec model removed the legacy Entra ID patch wrapper.
     // Keep the old source surface for compatibility with prior SDK releases.
     /// <summary> Entra ID Azure Key Vault configuration patch. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class EntraIdAkvConfigPatch : IJsonModel<EntraIdAkvConfigPatch>, IPersistableModel<EntraIdAkvConfigPatch>
     {
         /// <summary> Initializes a new instance of <see cref="EntraIdAkvConfigPatch"/>. </summary>

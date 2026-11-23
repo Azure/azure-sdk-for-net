@@ -416,24 +416,28 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public static EntraIdAkvConfig EntraIdAkvConfig(Uri azureKeyVaultUri, string certificateName, Azure.Core.ResourceIdentifier userAssignedIdentity = null)
         {
             return new EntraIdAkvConfig(azureKeyVaultUri, certificateName) { UserAssignedIdentity = userAssignedIdentity };
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public static EntraIdAkvConfigPatch EntraIdAkvConfigPatch(Uri azureKeyVaultUri, string certificateName, Azure.Core.ResourceIdentifier userAssignedIdentity = null)
         {
             return new EntraIdAkvConfigPatch { AzureKeyVaultUri = azureKeyVaultUri, CertificateName = certificateName, UserAssignedIdentity = userAssignedIdentity };
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public static EntraIdConfig EntraIdConfig(string applicationId, string domain, string serverNamePrefix, EntraIdAkvConfig entraIdAkvConfig = null)
         {
             return new EntraIdConfig(applicationId, domain, serverNamePrefix) { EntraIdAkvConfig = entraIdAkvConfig };
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public static EntraIdConfigPatch EntraIdConfigPatch(string applicationId, string domain, string serverNamePrefix, EntraIdAkvConfigPatch entraIdAkvConfig = null)
         {
             return new EntraIdConfigPatch { ApplicationId = applicationId, Domain = domain, ServerNamePrefix = serverNamePrefix, EntraIdAkvConfig = entraIdAkvConfig };
@@ -474,6 +478,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Please use an overload without entraIdConfig instead.")]
         public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, EntraIdConfig entraIdConfig = null, LdapConfiguration ldapConfiguration = null)
         {
             var account = NetAppAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, identity: identity, provisioningState: provisioningState, activeDirectories: activeDirectories, encryption: encryption, disableShowmount: disableShowmount);
@@ -483,6 +488,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Please use an overload without entraIdConfig instead.")]
         public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, EntraIdConfigPatch entraIdConfig = null, LdapConfiguration ldapConfiguration = null)
         {
             var patch = NetAppAccountPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, activeDirectories: activeDirectories, encryption: encryption, disableShowmount: disableShowmount);
@@ -492,6 +498,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Please use an overload without entraIdConfig instead.")]
         public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, ETag? etag, ManagedServiceIdentity identity)
         {
             _ = multiAdStatus;
@@ -501,6 +508,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Please use an overload without entraIdConfig instead.")]
         public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfiguration ldapConfiguration, EntraIdConfigPatch entraIdConfig)
         {
             var patch = CreateNetAppAccountPatchCompat(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain);
@@ -512,15 +520,27 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, ETag? eTag, ManagedServiceIdentity identity)
         {
-            return NetAppAccountData(id, name, resourceType, systemData, tags, location, provisioningState, activeDirectories, (EntraIdConfig)null, encryption, disableShowmount, nfsV4IdDomain, multiAdStatus, ldapConfiguration, eTag, identity);
+            _ = multiAdStatus;
+            var account = NetAppAccountData(id, name, resourceType, systemData, tags, location, eTag, identity, provisioningState, activeDirectories, encryption, disableShowmount);
+            account.NfsV4IdDomain = nfsV4IdDomain;
+            account.LdapConfiguration = ldapConfiguration;
+            return account;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration)
-            => NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain, null, ldapConfiguration);
+        {
+            var patch = CreateNetAppAccountPatchCompat(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain);
+            if (ldapConfiguration != null)
+            {
+                (patch.Properties ??= new AccountPropertiesPatch()).LdapConfiguration = ldapConfiguration;
+            }
+            return patch;
+        }
 
         // The current service API omits Entra ID configuration, so this earlier factory signature is no longer generated.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Please use an overload without entraIdConfig instead.")]
         public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, EntraIdConfigPatch entraIdConfig, LdapConfigurationPatch ldapConfiguration)
         {
             var patch = CreateNetAppAccountPatchCompat(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain);

@@ -16,7 +16,7 @@
 ### Other Changes
 
 - Marked the legacy subvolume types, operations, volume properties, and model factory overloads as obsolete. They remain callable for existing applications.
-- Entra ID account configuration is still available in the SDK for callers that opt into a preview API version that supports it.
+- Marked the legacy Entra ID configuration models, account properties, and model factory overloads as obsolete. They remain callable with a service API version that supports Entra ID configuration.
 
 ## 1.20.0-beta.1 (2026-10-30)
 

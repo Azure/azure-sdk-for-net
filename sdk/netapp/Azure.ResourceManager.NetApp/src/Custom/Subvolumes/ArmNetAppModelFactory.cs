@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     inheritedSizeInBytes,
                     breakthroughMode,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     inheritedSizeInBytes,
                     breakthroughMode,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 eTag,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     inheritedSizeInBytes,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     inheritedSizeInBytes,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 eTag,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     inheritedSizeInBytes,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     default,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     default,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     default,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     originatingResourceId,
                     default,
                     default,
-                    enableSubvolumes,
+                    SubvolumeEnablement.FromLegacy(enableSubvolumes),
                     default),
                 default);
         }

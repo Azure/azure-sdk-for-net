@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.NetApp.Models
     internal partial class VolumeProperties
     {
         // The current service version omits this member, but callers can still opt into the legacy version.
-        public EnableNetAppSubvolume? EnableSubvolumes { get; set; }
+        public SubvolumeEnablement? EnableSubvolumes { get; set; }
 
         private void WriteEnableSubvolumes(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => writer.WriteStringValue(EnableSubvolumes.Value.ToString());
+            => writer.WriteStringValue(EnableSubvolumes.Value.Value);
 
-        private static void ReadEnableSubvolumes(JsonProperty property, ref EnableNetAppSubvolume? value)
+        private static void ReadEnableSubvolumes(JsonProperty property, ref SubvolumeEnablement? value)
         {
-            value = property.Value.ValueKind == JsonValueKind.Null ? null : new EnableNetAppSubvolume(property.Value.GetString());
+            value = property.Value.GetString() is string text ? new SubvolumeEnablement(text) : null;
         }
     }
 }

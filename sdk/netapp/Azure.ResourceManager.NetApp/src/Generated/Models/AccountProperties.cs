@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="entraIdConfig"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, EntraIdConfig entraIdConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, object entraIdConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;

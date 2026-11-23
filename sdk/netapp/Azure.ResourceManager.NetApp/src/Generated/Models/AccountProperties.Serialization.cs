@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(EntraIdConfig))
             {
                 writer.WritePropertyName("entraIdConfig"u8);
-                writer.WriteObjectValue(EntraIdConfig, options);
+                WriteEntraIdConfig(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
             LdapConfiguration ldapConfiguration = default;
-            EntraIdConfig entraIdConfig = default;
+            object entraIdConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -257,11 +257,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("entraIdConfig"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(prop.Value, options);
+                    ReadEntraIdConfig(prop, ref entraIdConfig, options);
                     continue;
                 }
                 if (options.Format != "W")
