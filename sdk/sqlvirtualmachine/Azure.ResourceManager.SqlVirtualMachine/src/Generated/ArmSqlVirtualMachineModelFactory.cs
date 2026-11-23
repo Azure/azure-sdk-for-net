@@ -404,9 +404,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="clusterManagerType"> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </param>
         /// <param name="clusterConfiguration"> Cluster type. </param>
         /// <param name="windowsServerFailoverClusterDomainProfile"> Cluster Active Directory domain profile. </param>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <returns> A new <see cref="SqlVirtualMachine.SqlVmGroupData"/> instance for mocking. </returns>
-        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string sqlImageOffer = default, SqlVmGroupImageSku? sqlImageSku = default, SqlVmGroupScaleType? scaleType = default, SqlVmClusterManagerType? clusterManagerType = default, SqlVmClusterConfiguration? clusterConfiguration = default, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default, string sqlVmGroupName = default)
+        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string sqlImageOffer = default, SqlVmGroupImageSku? sqlImageSku = default, SqlVmGroupScaleType? scaleType = default, SqlVmClusterManagerType? clusterManagerType = default, SqlVmClusterConfiguration? clusterConfiguration = default, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -426,7 +425,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     clusterConfiguration,
                     windowsServerFailoverClusterDomainProfile,
                     default),
-                sqlVmGroupName,
                 default);
         }
 
@@ -513,7 +511,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="additionalVmPatch"> Additional VM Patching solution enabled on the Virtual Machine. </param>
         /// <param name="virtualMachineIdentitySettings"> Virtual Machine Identity details used for Sql IaaS extension configurations. </param>
         /// <param name="osType"> Operating System of the current SQL Virtual Machine. </param>
-        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"></param>
         /// <param name="identity"> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </param>
         /// <returns> A new <see cref="SqlVirtualMachine.SqlVmData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -549,7 +547,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     virtualMachineIdentitySettings,
                     osType,
                     default),
-                sqlVmName,
                 identity,
                 default);
         }
@@ -568,9 +565,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="clusterManagerType"> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </param>
         /// <param name="clusterConfiguration"> Cluster type. </param>
         /// <param name="windowsServerFailoverClusterDomainProfile"> Cluster Active Directory domain profile. </param>
+        /// <param name="sqlVmGroupName"></param>
         /// <returns> A new <see cref="SqlVirtualMachine.SqlVmGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string sqlImageOffer, SqlVmGroupImageSku? sqlImageSku, SqlVmGroupScaleType? scaleType, SqlVmClusterManagerType? clusterManagerType, SqlVmClusterConfiguration? clusterConfiguration, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile)
+        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string sqlImageOffer, SqlVmGroupImageSku? sqlImageSku, SqlVmGroupScaleType? scaleType, SqlVmClusterManagerType? clusterManagerType, SqlVmClusterConfiguration? clusterConfiguration, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile, string sqlVmGroupName)
         {
             return new SqlVmGroupData(
                 id,
@@ -588,7 +586,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     clusterConfiguration,
                     windowsServerFailoverClusterDomainProfile,
                     default),
-                default,
                 default);
         }
 
@@ -649,7 +646,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     default,
                     default,
                     default),
-                default,
                 identity,
                 default);
         }
