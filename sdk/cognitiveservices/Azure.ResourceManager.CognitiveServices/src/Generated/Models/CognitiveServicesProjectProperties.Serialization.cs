@@ -110,6 +110,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
+            if (Optional.IsDefined(CapabilitySettings))
+            {
+                writer.WritePropertyName("capabilitySettings"u8);
+                writer.WriteObjectValue(CapabilitySettings, options);
+            }
+            if (Optional.IsDefined(ToolControls, _toolControlsIsDefined))
+            {
+                if (ToolControls != null)
+                {
+                    writer.WritePropertyName("toolControls"u8);
+                    writer.WriteObjectValue(ToolControls, options);
+                }
+                else
+                {
+                    writer.WriteNull("toolControls"u8);
+                }
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +174,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string description = default;
             IReadOnlyDictionary<string, string> endpoints = default;
             bool? isDefault = default;
+            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
+            bool toolControlsIsDefined = false;
+            ToolControls toolControls = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,6 +229,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     isDefault = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("capabilitySettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("toolControls"u8))
+                {
+                    toolControlsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        toolControls = null;
+                        continue;
+                    }
+                    toolControls = ToolControls.DeserializeToolControls(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -220,7 +260,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 description,
                 endpoints ?? new ChangeTrackingDictionary<string, string>(),
                 isDefault,
-                additionalBinaryDataProperties);
+                capabilitySettings,
+                toolControls,
+                additionalBinaryDataProperties)
+            {
+                _toolControlsIsDefined = toolControlsIsDefined
+            };
         }
     }
 }

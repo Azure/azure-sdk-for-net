@@ -280,6 +280,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(FoundryAutoUpgrade))
+            {
+                writer.WritePropertyName("foundryAutoUpgrade"u8);
+                writer.WriteObjectValue(FoundryAutoUpgrade, options);
+            }
             if (Optional.IsDefined(AllowProjectManagement))
             {
                 writer.WritePropertyName("allowProjectManagement"u8);
@@ -305,6 +310,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(CapabilitySettings))
+            {
+                writer.WritePropertyName("capabilitySettings"u8);
+                writer.WriteObjectValue(CapabilitySettings, options);
+            }
+            if (Optional.IsCollectionDefined(AgentHostingConfigurations))
+            {
+                writer.WritePropertyName("agentHostingConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (AgentHostingConfiguration item in AgentHostingConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(TrustedCertificateSources))
             {
                 if (TrustedCertificateSources != null)
@@ -320,6 +340,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 else
                 {
                     writer.WriteNull("trustedCertificateSources"u8);
+                }
+            }
+            if (Optional.IsDefined(CostControlConnections, _costControlConnectionsIsDefined))
+            {
+                if (CostControlConnections != null)
+                {
+                    writer.WritePropertyName("costControlConnections"u8);
+                    writer.WriteObjectValue(CostControlConnections, options);
+                }
+                else
+                {
+                    writer.WriteNull("costControlConnections"u8);
                 }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -396,10 +428,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
             IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default;
+            FoundryAutoUpgrade foundryAutoUpgrade = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
+            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
+            IList<AgentHostingConfiguration> agentHostingConfigurations = default;
             IList<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>();
+            bool costControlConnectionsIsDefined = false;
+            CostControlConnections costControlConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -724,6 +761,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aiFoundryNetworkInjections = array;
                     continue;
                 }
+                if (prop.NameEquals("foundryAutoUpgrade"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    foundryAutoUpgrade = FoundryAutoUpgrade.DeserializeFoundryAutoUpgrade(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("allowProjectManagement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -759,6 +805,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     associatedProjects = array;
                     continue;
                 }
+                if (prop.NameEquals("capabilitySettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agentHostingConfigurations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AgentHostingConfiguration> array = new List<AgentHostingConfiguration>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AgentHostingConfiguration.DeserializeAgentHostingConfiguration(item, options));
+                    }
+                    agentHostingConfigurations = array;
+                    continue;
+                }
                 if (prop.NameEquals("trustedCertificateSources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -772,6 +841,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         array.Add(CognitiveServicesTrustedCertificateSource.DeserializeCognitiveServicesTrustedCertificateSource(item, options));
                     }
                     trustedCertificateSources = array;
+                    continue;
+                }
+                if (prop.NameEquals("costControlConnections"u8))
+                {
+                    costControlConnectionsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        costControlConnections = null;
+                        continue;
+                    }
+                    costControlConnections = CostControlConnections.DeserializeCostControlConnections(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -812,11 +892,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
+                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
+                capabilitySettings,
+                agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
                 trustedCertificateSources,
-                additionalBinaryDataProperties);
+                costControlConnections,
+                additionalBinaryDataProperties)
+            {
+                _costControlConnectionsIsDefined = costControlConnectionsIsDefined
+            };
         }
     }
 }

@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("contextCacheContainerId"u8);
                 writer.WriteStringValue(ContextCacheContainerId);
             }
+            if (Optional.IsDefined(SpeculativeDecoding))
+            {
+                writer.WritePropertyName("speculativeDecoding"u8);
+                writer.WriteObjectValue(SpeculativeDecoding, options);
+            }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
@@ -235,6 +240,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
             CognitiveServicesAccountDeploymentModel model = default;
             ResourceIdentifier contextCacheContainerId = default;
+            DeploymentSpeculativeDecoding speculativeDecoding = default;
             CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
             IReadOnlyDictionary<string, string> capabilities = default;
             string raiPolicyName = default;
@@ -279,6 +285,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     contextCacheContainerId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("speculativeDecoding"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    speculativeDecoding = DeploymentSpeculativeDecoding.DeserializeDeploymentSpeculativeDecoding(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scaleSettings"u8))
@@ -425,6 +440,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 provisioningState,
                 model,
                 contextCacheContainerId,
+                speculativeDecoding,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,

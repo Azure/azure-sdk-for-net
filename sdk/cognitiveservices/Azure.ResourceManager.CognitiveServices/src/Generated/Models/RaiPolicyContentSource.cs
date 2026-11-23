@@ -21,6 +21,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string PostToolCallValue = "PostToolCall";
         private const string PreRunValue = "PreRun";
         private const string PostRunValue = "PostRun";
+        /// <summary> Content evaluated when an agent execution session starts. </summary>
+        private const string AgentStartupValue = "AgentStartup";
+        /// <summary> Content evaluated before a model call is made. </summary>
+        private const string PreModelCallValue = "PreModelCall";
+        /// <summary> Content evaluated after a model call returns. </summary>
+        private const string PostModelCallValue = "PostModelCall";
+        /// <summary> Content evaluated when an agent execution session shuts down. </summary>
+        private const string AgentShutdownValue = "AgentShutdown";
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyContentSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,6 +57,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the PostRun. </summary>
         public static RaiPolicyContentSource PostRun { get; } = new RaiPolicyContentSource(PostRunValue);
+
+        /// <summary> Content evaluated when an agent execution session starts. </summary>
+        public static RaiPolicyContentSource AgentStartup { get; } = new RaiPolicyContentSource(AgentStartupValue);
+
+        /// <summary> Content evaluated before a model call is made. </summary>
+        public static RaiPolicyContentSource PreModelCall { get; } = new RaiPolicyContentSource(PreModelCallValue);
+
+        /// <summary> Content evaluated after a model call returns. </summary>
+        public static RaiPolicyContentSource PostModelCall { get; } = new RaiPolicyContentSource(PostModelCallValue);
+
+        /// <summary> Content evaluated when an agent execution session shuts down. </summary>
+        public static RaiPolicyContentSource AgentShutdown { get; } = new RaiPolicyContentSource(AgentShutdownValue);
 
         /// <summary> Determines if two <see cref="RaiPolicyContentSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
