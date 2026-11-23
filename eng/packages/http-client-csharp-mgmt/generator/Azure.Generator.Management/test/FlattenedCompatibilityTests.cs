@@ -730,6 +730,37 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void DerivedWithOwnFlattenedPropertyCompilesAndInitializesFlattenedBase()
+        {
+            var state = InputFactory.StringEnum("DataTypeState", [("Enabled", "Enabled"), ("Disabled", "Disabled")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var common = InputFactory.Model("DataConnectorDataTypeCommon", properties:
+                [InputFactory.Property("state", state, isRequired: true)]);
+            var baseModel = InputFactory.Model("AlertsDataTypeOfDataConnector", properties:
+                [InputFactory.Property("alerts", common, isRequired: true)]);
+            var derivedModel = InputFactory.Model("McasDataConnectorDataTypes", baseModel: baseModel, properties:
+                [InputFactory.Property("discoveryLogs", common)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [common, baseModel, derivedModel], inputEnums: () => [state]);
+            var baseProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            _ = baseProvider.Constructors;
+            _ = derivedProvider.Constructors;
+            Visit(derivedProvider);
+
+            var assembly = Compile(plugin.Object);
+            var stateType = assembly.GetType("Samples.Models.DataTypeState")!;
+            var derivedType = assembly.GetType("Samples.Models.McasDataConnectorDataTypes")!;
+            var constructor = derivedType.GetConstructor([stateType]);
+            Assert.That(constructor, Is.Not.Null);
+            var enabled = Activator.CreateInstance(stateType, ["Enabled"]);
+            var instance = constructor!.Invoke([enabled]);
+            Assert.That(derivedType.GetProperty("AlertsState")!.GetValue(instance)!.ToString(), Is.EqualTo("Enabled"));
+            var disabled = Activator.CreateInstance(stateType, ["Disabled"]);
+            derivedType.GetProperty("DiscoveryLogsState")!.SetValue(instance, disabled);
+            Assert.That(derivedType.GetProperty("DiscoveryLogsState")!.GetValue(instance)!.ToString(), Is.EqualTo("Disabled"));
+        }
+
+        [Test]
         public void RestoredFlattenedEnumConstructorDoesNotRequireMapping()
         {
             var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],

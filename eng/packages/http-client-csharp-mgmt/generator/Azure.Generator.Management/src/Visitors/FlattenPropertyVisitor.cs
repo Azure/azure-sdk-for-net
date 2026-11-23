@@ -628,15 +628,14 @@ namespace Azure.Generator.Management.Visitors
                 var flattenedProperties = propertyMap.Values.SelectMany(x => x.Select(item => item.FlattenedProperty));
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
-                UpdatePublicConstructor(model, propertyNameMap);
             }
-            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+
+            // A derived model can flatten properties of its own while also inheriting a
+            // flattened constructor parameter. Transform both sets together so its base
+            // initializer agrees with the flattened base constructor.
+            if (TryGetFlattenPropertyInfo(model.Type, out var constructorPropertyNameMap))
             {
-                // This model has no flattenable properties of its own, but its base model was
-                // safe-flattened. The base's public constructor signature changed (e.g. an
-                // ExportDeliveryInfo param became ExportDeliveryDestination), so update this
-                // model's public constructor params and base initializer call to match.
-                UpdatePublicConstructor(model, basePropertyNameMap);
+                UpdatePublicConstructor(model, constructorPropertyNameMap);
             }
         }
 
