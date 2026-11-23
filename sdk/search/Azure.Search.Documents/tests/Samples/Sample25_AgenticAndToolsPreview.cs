@@ -16,8 +16,7 @@ namespace Azure.Search.Documents.Tests.Samples
 {
     public partial class NovemberPreviewSamples
     {
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task AgenticSearchAndMicrosoftRetriever()
         {
             await using PreviewResources resources = CreatePreviewResources();
@@ -93,8 +92,7 @@ namespace Azure.Search.Documents.Tests.Samples
             AssertPreviewReferences(retrieved, "hotel-ca-1", "hotel-ca-2", "hotel-us-1");
         }
 
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task KnowledgeBaseToolsSelectAndClear()
         {
             await using PreviewResources resources = CreatePreviewResources();

@@ -121,13 +121,13 @@ Retrieve content from the knowledge base. Work IQ queries M365 data and may take
 Use a pipeline policy to supply the preview Work IQ authorization header without changing the GA retrieval overloads:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_AuthorizationPolicy
-private sealed class WorkIQAuthorizationPolicy(string userAssertion) : HttpPipelineSynchronousPolicy
+internal sealed class WorkIQAuthorizationPolicy(string userAssertion) : HttpPipelineSynchronousPolicy
 {
     public override void OnSendingRequest(HttpMessage message)
     {
         if (!string.IsNullOrEmpty(userAssertion))
         {
-            message.Request.Headers.SetValue("x-ms-query-workiq-source-authorization", userAssertion);
+            message.Request.Headers.SetValue("x-ms-query-work-iq-source-authorization", userAssertion);
         }
     }
 }

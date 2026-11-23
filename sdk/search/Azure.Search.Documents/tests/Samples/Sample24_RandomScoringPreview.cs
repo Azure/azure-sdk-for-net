@@ -16,8 +16,7 @@ namespace Azure.Search.Documents.Tests.Samples
 {
     public partial class NovemberPreviewSamples
     {
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task RandomScoringEndToEnd()
         {
             await using PreviewResources resources = CreatePreviewResources();

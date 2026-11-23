@@ -53,6 +53,33 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("user-token", authorization);
         }
 
+        [TestCase("user-assertion")]
+        [TestCase(null)]
+        [TestCase("")]
+        public async Task WorkIqSamplePolicyUsesContractAuthorizationHeader(string userAssertion)
+        {
+            var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200,
+                "{\"response\":[],\"references\":[],\"activity\":[]}"));
+            var options = new SearchClientOptions { Transport = transport };
+            options.AddPolicy(new Samples.KnowledgeSourceWorkIqPreview.WorkIQAuthorizationPolicy(userAssertion),
+                HttpPipelinePosition.PerCall);
+            var client = InstrumentClient(new KnowledgeBaseRetrievalClient(
+                new Uri("https://fake-search.search.windows.net"), "knowledge-base",
+                new AzureKeyCredential("fake-key"), options));
+
+            await client.RetrieveAsync(new KnowledgeBaseRetrievalRequest());
+
+            MockRequest request = transport.Requests.Single();
+            bool hasAuthorization = request.Headers.TryGetValue(
+                "x-ms-query-work-iq-source-authorization", out string authorization);
+            Assert.AreEqual(!string.IsNullOrEmpty(userAssertion), hasAuthorization);
+            if (hasAuthorization)
+            {
+                Assert.AreEqual(userAssertion, authorization);
+            }
+            Assert.IsFalse(request.Headers.TryGetValue("x-ms-query-workiq-source-authorization", out _));
+        }
+
         [Test]
         public void BaseStreamEventRetainsModelReaderWriterBehavior()
         {

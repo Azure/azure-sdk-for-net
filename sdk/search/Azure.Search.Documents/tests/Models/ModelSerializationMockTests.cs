@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -536,8 +537,9 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(completedState.GraphStatistics);
         }
 
-        [Test]
-        public void ScoringFunctionsSupportGaNamedConstructors()
+        [TestCase("J")]
+        [TestCase("W")]
+        public void ScoringFunctionsSupportGaNamedConstructors(string format)
         {
             ScoringFunction[] functions =
             {
@@ -553,12 +555,64 @@ namespace Azure.Search.Documents.Tests.Models
 
             foreach (ScoringFunction function in functions)
             {
-                BinaryData json = ModelReaderWriter.Write(function, SearchTestHelpers.WireOptions);
+                var options = new ModelReaderWriterOptions(format);
+                BinaryData json = ModelReaderWriter.Write(function, options);
                 using JsonDocument document = JsonDocument.Parse(json);
                 Assert.AreEqual("field", document.RootElement.GetProperty("fieldName").GetString());
                 Assert.AreEqual(2.0, document.RootElement.GetProperty("boost").GetDouble());
+                Assert.AreEqual(1, document.RootElement.EnumerateObject().Count(property => property.Name == "fieldName"));
+                Assert.AreEqual(1, document.RootElement.EnumerateObject().Count(property => property.Name == "boost"));
                 Assert.AreEqual(function.GetType(),
-                    ModelReaderWriter.Read<ScoringFunction>(json, SearchTestHelpers.WireOptions).GetType());
+                    ModelReaderWriter.Read<ScoringFunction>(json, options).GetType());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void CustomerScoringFunctionPreservesCommonFields(string format)
+        {
+            ScoringFunction function = new CustomerScoringFunction();
+            using var stream = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(stream))
+            {
+                ((IJsonModel<ScoringFunction>)function).Write(writer, new ModelReaderWriterOptions(format));
+            }
+            using JsonDocument document = JsonDocument.Parse(stream.ToArray());
+            JsonElement root = document.RootElement;
+            Assert.AreEqual("rating", root.GetProperty("fieldName").GetString());
+            Assert.AreEqual(2.0, root.GetProperty("boost").GetDouble());
+            Assert.AreEqual("magnitude", root.GetProperty("type").GetString());
+            Assert.AreEqual(5, root.GetProperty("magnitude").GetProperty("boostingRangeEnd").GetInt32());
+            Assert.AreEqual(1, root.EnumerateObject().Count(property => property.Name == "fieldName"));
+            Assert.AreEqual(1, root.EnumerateObject().Count(property => property.Name == "boost"));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RandomScoringFunctionOmitsCommonFields(string format)
+        {
+            ScoringFunction function = new RandomScoringFunction { FieldName = "rating", Boost = 2.0 };
+            using JsonDocument document = JsonDocument.Parse(
+                ModelReaderWriter.Write(function, new ModelReaderWriterOptions(format)));
+            Assert.AreEqual("random", document.RootElement.GetProperty("type").GetString());
+            Assert.IsFalse(document.RootElement.TryGetProperty("fieldName", out _));
+            Assert.IsFalse(document.RootElement.TryGetProperty("boost", out _));
+        }
+
+        private sealed class CustomerScoringFunction : ScoringFunction
+        {
+            public CustomerScoringFunction() : base("rating", 2.0, "magnitude")
+            {
+            }
+
+            protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                base.JsonModelWriteCore(writer, options);
+                writer.WritePropertyName("magnitude");
+                writer.WriteStartObject();
+                writer.WriteNumber("boostingRangeStart", 0);
+                writer.WriteNumber("boostingRangeEnd", 5);
+                writer.WriteEndObject();
             }
         }
 

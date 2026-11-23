@@ -234,13 +234,13 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         #region Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_AuthorizationPolicy
-        private sealed class WorkIQAuthorizationPolicy(string userAssertion) : HttpPipelineSynchronousPolicy
+        internal sealed class WorkIQAuthorizationPolicy(string userAssertion) : HttpPipelineSynchronousPolicy
         {
             public override void OnSendingRequest(HttpMessage message)
             {
                 if (!string.IsNullOrEmpty(userAssertion))
                 {
-                    message.Request.Headers.SetValue("x-ms-query-workiq-source-authorization", userAssertion);
+                    message.Request.Headers.SetValue("x-ms-query-work-iq-source-authorization", userAssertion);
                 }
             }
         }

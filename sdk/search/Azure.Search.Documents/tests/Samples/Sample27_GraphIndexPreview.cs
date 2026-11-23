@@ -15,8 +15,7 @@ namespace Azure.Search.Documents.Tests.Samples
 {
     public partial class NovemberPreviewSamples
     {
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task GraphIndexRelationshipsAndProvenance()
         {
             await using PreviewResources resources = CreatePreviewResources();
@@ -68,14 +67,19 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 graphIndex.Fields.Add(new SimpleField(fieldName, SearchFieldDataType.String)
                 {
-                    IsKey = fieldName == "id", IsFilterable = true, IsFacetable = true, IsSortable = true
+                    IsKey = fieldName == "id",
+                    IsFilterable = true,
+                    IsFacetable = true,
+                    IsSortable = true
                 });
             }
             foreach (string fieldName in new[] { "object_double", "edge_confidence", "s_confidence", "p_confidence", "o_confidence" })
             {
                 graphIndex.Fields.Add(new SimpleField(fieldName, SearchFieldDataType.Double)
                 {
-                    IsFilterable = true, IsFacetable = true, IsSortable = true
+                    IsFilterable = true,
+                    IsFacetable = true,
+                    IsSortable = true
                 });
             }
             graphIndex.Fields.Add(new SimpleField("object_bool", SearchFieldDataType.Boolean) { IsFilterable = true });
@@ -95,13 +99,25 @@ namespace Azure.Search.Documents.Tests.Samples
             };
             SearchDocument assertion = new SearchDocument
             {
-                ["id"] = "assertion-1", ["edge_hash"] = "fact-1",
-                ["subject"] = "Historic Harbor Hotel", ["subject_type"] = "Hotel", ["subject_id"] = "hotel:harbor",
-                ["predicate"] = "operatedBy", ["object"] = "Contoso Hospitality", ["object_string"] = "Contoso Hospitality",
-                ["object_type"] = "Organization", ["object_id"] = "organization:contoso", ["graph_name"] = "hotels",
-                ["edge_confidence"] = 1.0, ["s_confidence"] = 1.0, ["p_confidence"] = 1.0, ["o_confidence"] = 1.0,
-                ["chunk_id"] = "harbor-operator", ["parent_id"] = "harbor-brochure",
-                ["subject_id_display_name"] = "Historic Harbor Hotel", ["object_id_display_name"] = "Contoso Hospitality"
+                ["id"] = "assertion-1",
+                ["edge_hash"] = "fact-1",
+                ["subject"] = "Historic Harbor Hotel",
+                ["subject_type"] = "Hotel",
+                ["subject_id"] = "hotel:harbor",
+                ["predicate"] = "operatedBy",
+                ["object"] = "Contoso Hospitality",
+                ["object_string"] = "Contoso Hospitality",
+                ["object_type"] = "Organization",
+                ["object_id"] = "organization:contoso",
+                ["graph_name"] = "hotels",
+                ["edge_confidence"] = 1.0,
+                ["s_confidence"] = 1.0,
+                ["p_confidence"] = 1.0,
+                ["o_confidence"] = 1.0,
+                ["chunk_id"] = "harbor-operator",
+                ["parent_id"] = "harbor-brochure",
+                ["subject_id_display_name"] = "Historic Harbor Hotel",
+                ["object_id_display_name"] = "Contoso Hospitality"
             };
             SearchClient sourceClient = new SearchClient(endpoint, sourceIndexName, credential);
             SearchClient graphClient = new SearchClient(endpoint, graphIndexName, credential);

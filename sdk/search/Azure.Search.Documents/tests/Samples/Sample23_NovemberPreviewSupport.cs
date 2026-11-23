@@ -23,13 +23,14 @@ namespace Azure.Search.Documents.Tests.Samples
         public NovemberPreviewSamples(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion)
         {
+            CompareBodies = true;
         }
 
         private PreviewResources CreatePreviewResources()
         {
             Uri endpoint = new Uri($"https://{TestEnvironment.SearchServiceName}.{TestEnvironment.SearchEndpointSuffix}");
             string expectedEndpoint = Environment.GetEnvironmentVariable("SEARCH_PREVIEW_EXPECTED_ENDPOINT");
-            if (expectedEndpoint != null && !endpoint.Equals(new Uri(expectedEndpoint)))
+            if (Mode != RecordedTestMode.Playback && expectedEndpoint != null && !endpoint.Equals(new Uri(expectedEndpoint)))
             {
                 throw new InvalidOperationException("The effective test configuration does not target SEARCH_PREVIEW_EXPECTED_ENDPOINT.");
             }

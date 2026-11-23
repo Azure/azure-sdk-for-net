@@ -1,6 +1,6 @@
 # Release History
 
-## 12.1.0-beta.4 (Unreleased)
+## 12.1.0-beta.4 (2026-11-20)
 
 ### Features Added
 
@@ -13,6 +13,21 @@
 - Carried forward the `2026-10-01` GA service version, knowledge base streaming contracts, document lookup authorization options, and token-credential client registration overloads.
 
 ### Breaking Changes
+
+- Removed the preview-only `SearchClient.GetDocument<T>` and `GetDocumentAsync<T>` overloads that accepted `querySourceAuthorization` and `enableElevatedRead` directly (present in `12.1.0-beta.2`). Set `GetDocumentOptions.QuerySourceAuthorization` and `GetDocumentOptions.EnableElevatedRead` instead. The GA overloads accepting `GetDocumentOptions` remain unchanged. For example:
+
+  ```csharp
+  // Before (earlier preview):
+  await client.GetDocumentAsync<SearchDocument>(
+      "hotel-1", querySourceAuthorization: userToken, enableElevatedRead: false);
+
+  // After (the same options also work with synchronous GetDocument<T>):
+  await client.GetDocumentAsync<SearchDocument>("hotel-1", new GetDocumentOptions
+  {
+      QuerySourceAuthorization = userToken,
+      EnableElevatedRead = false
+  });
+  ```
 
 - Renamed the preview `GetIndexStatsSummary` and `GetKnowledgeSourceFiles` pageable methods to `GetAllIndexStatsSummary` and `GetAllKnowledgeSourceFiles`. Generated pageable APIs for synonym maps, indexers, data sources, and skillsets now use `GetAll*` names; the existing buffered list APIs remain available.
 - Updated preview knowledge source query-hint and retrieval models to match the `2026-11-01-preview` contract.
@@ -27,6 +42,8 @@
 - Restored the October GA optional and partial positional arguments on vector query, knowledge source, synchronization state, facet result, and enumerable-based search index model factories.
 - Preserved October GA model factory signatures, defaults, and scoring values while exposing preview-only response properties through additional factory overloads. Corrected selected-index listing forwarding, indexing configuration serialization, semantic and vector option roundtripping, and culture-sensitive numeric conversions.
 - Preserved named-argument calls to October GA scoring function constructors.
+- Preserved `fieldName` and `boost` when serializing customer-derived scoring functions.
+- Corrected the Work IQ sample's authorization header.
 - Fixed the source-name and file-ID argument order in the file knowledge source update and delete samples.
 - Carried forward the latest October GA reasoning factory's optional, positional, and null argument behavior while retaining November reasoning effort fields.
 
