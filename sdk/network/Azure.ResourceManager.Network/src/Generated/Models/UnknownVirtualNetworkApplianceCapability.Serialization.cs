@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Network.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             VirtualNetworkApplianceCapabilityProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VirtualNetworkApplianceCapabilityKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 systemData,
                 properties,
-                additionalBinaryDataProperties,
-                kind);
+                kind,
+                additionalBinaryDataProperties);
         }
     }
 }
