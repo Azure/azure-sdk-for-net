@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Visitors;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
@@ -88,20 +87,6 @@ namespace Azure.Generator.Management
         /// </summary>
         protected override void Configure()
         {
-            // MTG allocates model names during base.Configure, before NameVisitor applies namespace overrides.
-            // Use the final namespace for contract/custom-code lookup so ResourcesHistoryRequest is not
-            // normalized into the separate ResourcesHistoryContent customization before its contract is found.
-            var modelNamespace = $"{TypeFactory.PrimaryNamespace}.Models";
-            foreach (var model in InputLibrary.InputNamespace.Models)
-            {
-                if (!InputLibrary.IsResourceModel(model) &&
-                    !KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out _) &&
-                    !KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
-                {
-                    model.Update(@namespace: modelNamespace);
-                }
-            }
-
             AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
             AddCustomCodeAttributeProvider(OutputLibrary.CodeGenTagPatchHookAttributeDefinition);
             base.Configure();
