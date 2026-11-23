@@ -377,7 +377,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
         public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ContainerAppDetectorPropertyResource.ValidateResourceId(id);
+            if (id.ResourceType == ContainerAppDetectorPropertyResource.ResourceType && !string.Equals(id.Name, "rootApi", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "rootApi"), nameof(id));
+            }
             return new ContainerAppDetectorPropertyResource(Client, id);
         }
 
@@ -395,7 +403,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
+            if (id.ResourceType == ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ResourceType && !string.Equals(id.Name, "rootApi", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "rootApi"), nameof(id));
+            }
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, id);
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
@@ -121,7 +122,15 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsUpgradePreferencesResource"/> object. </returns>
         public virtual EventHubsUpgradePreferencesResource GetEventHubsUpgradePreferencesResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             EventHubsUpgradePreferencesResource.ValidateResourceId(id);
+            if (id.ResourceType == EventHubsUpgradePreferencesResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new EventHubsUpgradePreferencesResource(Client, id);
         }
 
@@ -139,7 +148,15 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
         public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSetResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             EventHubsNetworkRuleSetResource.ValidateResourceId(id);
+            if (id.ResourceType == EventHubsNetworkRuleSetResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new EventHubsNetworkRuleSetResource(Client, id);
         }
 

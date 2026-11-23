@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevCenter;
@@ -238,7 +239,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="HealthCheckStatusDetailResource"/> object. </returns>
         public virtual HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             HealthCheckStatusDetailResource.ValidateResourceId(id);
+            if (id.ResourceType == HealthCheckStatusDetailResource.ResourceType && !string.Equals(id.Name, "latest", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "latest"), nameof(id));
+            }
             return new HealthCheckStatusDetailResource(Client, id);
         }
 

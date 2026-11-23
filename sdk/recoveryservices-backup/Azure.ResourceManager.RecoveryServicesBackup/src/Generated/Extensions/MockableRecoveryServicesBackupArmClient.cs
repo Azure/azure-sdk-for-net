@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
         public virtual BackupResourceConfigResource GetBackupResourceConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BackupResourceConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == BackupResourceConfigResource.ResourceType && !string.Equals(id.Name, "vaultstorageconfig", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "vaultstorageconfig"), nameof(id));
+            }
             return new BackupResourceConfigResource(Client, id);
         }
 
@@ -49,7 +58,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
         public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BackupResourceVaultConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == BackupResourceVaultConfigResource.ResourceType && !string.Equals(id.Name, "vaultconfig", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "vaultconfig"), nameof(id));
+            }
             return new BackupResourceVaultConfigResource(Client, id);
         }
 
@@ -58,7 +75,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceEncryptionConfigExtendedResource"/> object. </returns>
         public virtual BackupResourceEncryptionConfigExtendedResource GetBackupResourceEncryptionConfigExtendedResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BackupResourceEncryptionConfigExtendedResource.ValidateResourceId(id);
+            if (id.ResourceType == BackupResourceEncryptionConfigExtendedResource.ResourceType && !string.Equals(id.Name, "backupResourceEncryptionConfig", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "backupResourceEncryptionConfig"), nameof(id));
+            }
             return new BackupResourceEncryptionConfigExtendedResource(Client, id);
         }
 

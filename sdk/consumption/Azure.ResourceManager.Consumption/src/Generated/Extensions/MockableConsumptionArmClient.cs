@@ -122,7 +122,15 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="PriceSheetResource"/> object. </returns>
         public virtual PriceSheetResource GetPriceSheetResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             PriceSheetResource.ValidateResourceId(id);
+            if (id.ResourceType == PriceSheetResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new PriceSheetResource(Client, id);
         }
 
@@ -139,7 +147,15 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="PriceSheetResultResource"/> object. </returns>
         public virtual PriceSheetResultResource GetPriceSheetResultResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             PriceSheetResultResource.ValidateResourceId(id);
+            if (id.ResourceType == PriceSheetResultResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new PriceSheetResultResource(Client, id);
         }
 
@@ -193,7 +209,15 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="ConsumptionCreditSummaryResource"/> object. </returns>
         public virtual ConsumptionCreditSummaryResource GetConsumptionCreditSummaryResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ConsumptionCreditSummaryResource.ValidateResourceId(id);
+            if (id.ResourceType == ConsumptionCreditSummaryResource.ResourceType && !string.Equals(id.Name, "balanceSummary", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "balanceSummary"), nameof(id));
+            }
             return new ConsumptionCreditSummaryResource(Client, id);
         }
 

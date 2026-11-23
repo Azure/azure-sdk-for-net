@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOperator;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.EdgeOperator.Mocking
         /// <returns> Returns a <see cref="SystemReadinessResource"/> object. </returns>
         public virtual SystemReadinessResource GetSystemReadinessResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SystemReadinessResource.ValidateResourceId(id);
+            if (id.ResourceType == SystemReadinessResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SystemReadinessResource(Client, id);
         }
     }

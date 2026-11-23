@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise;
@@ -49,7 +50,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
         public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             RedisEnterpriseMigrationResource.ValidateResourceId(id);
+            if (id.ResourceType == RedisEnterpriseMigrationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new RedisEnterpriseMigrationResource(Client, id);
         }
 

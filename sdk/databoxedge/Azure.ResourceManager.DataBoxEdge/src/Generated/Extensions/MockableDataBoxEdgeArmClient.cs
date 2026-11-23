@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataBoxEdge;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DataBoxEdgeDeviceNetworkSettingsResource.ValidateResourceId(id);
+            if (id.ResourceType == DataBoxEdgeDeviceNetworkSettingsResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DataBoxEdgeDeviceNetworkSettingsResource(Client, id);
         }
 
@@ -49,7 +58,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceUpdateSummaryResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DataBoxEdgeDeviceUpdateSummaryResource.ValidateResourceId(id);
+            if (id.ResourceType == DataBoxEdgeDeviceUpdateSummaryResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DataBoxEdgeDeviceUpdateSummaryResource(Client, id);
         }
 
@@ -76,7 +93,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DiagnosticProactiveLogCollectionSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == DiagnosticProactiveLogCollectionSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DiagnosticProactiveLogCollectionSettingResource(Client, id);
         }
 
@@ -85,7 +110,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DiagnosticRemoteSupportSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == DiagnosticRemoteSupportSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DiagnosticRemoteSupportSettingResource(Client, id);
         }
 
@@ -103,7 +136,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DataBoxEdgeOrderResource.ValidateResourceId(id);
+            if (id.ResourceType == DataBoxEdgeOrderResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DataBoxEdgeOrderResource(Client, id);
         }
 
@@ -184,7 +225,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceCapacityInfoResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DataBoxEdgeDeviceCapacityInfoResource.ValidateResourceId(id);
+            if (id.ResourceType == DataBoxEdgeDeviceCapacityInfoResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DataBoxEdgeDeviceCapacityInfoResource(Client, id);
         }
 
@@ -193,7 +242,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MonitoringMetricConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == MonitoringMetricConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new MonitoringMetricConfigurationResource(Client, id);
         }
     }

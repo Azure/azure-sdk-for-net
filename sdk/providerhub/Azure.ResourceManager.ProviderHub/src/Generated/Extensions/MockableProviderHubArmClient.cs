@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ProviderHub;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
         public virtual OperationsPutContentResource GetOperationsPutContentResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             OperationsPutContentResource.ValidateResourceId(id);
+            if (id.ResourceType == OperationsPutContentResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new OperationsPutContentResource(Client, id);
         }
 

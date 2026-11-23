@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DurableTask;
@@ -85,7 +86,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
         public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DurableTaskRetentionPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == DurableTaskRetentionPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DurableTaskRetentionPolicyResource(Client, id);
         }
 
@@ -94,7 +103,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="TransparentDataEncryptionResource"/> object. </returns>
         public virtual TransparentDataEncryptionResource GetTransparentDataEncryptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TransparentDataEncryptionResource.ValidateResourceId(id);
+            if (id.ResourceType == TransparentDataEncryptionResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TransparentDataEncryptionResource(Client, id);
         }
 
@@ -103,7 +120,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="FailoverInstanceResource"/> object. </returns>
         public virtual FailoverInstanceResource GetFailoverInstanceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             FailoverInstanceResource.ValidateResourceId(id);
+            if (id.ResourceType == FailoverInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FailoverInstanceResource(Client, id);
         }
     }

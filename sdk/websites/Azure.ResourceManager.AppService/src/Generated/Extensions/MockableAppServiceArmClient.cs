@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
@@ -58,7 +59,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServiceEnvironmentAddressResource"/> object. </returns>
         public virtual AppServiceEnvironmentAddressResource GetAppServiceEnvironmentAddressResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             AppServiceEnvironmentAddressResource.ValidateResourceId(id);
+            if (id.ResourceType == AppServiceEnvironmentAddressResource.ResourceType && !string.Equals(id.Name, "virtualip", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "virtualip"), nameof(id));
+            }
             return new AppServiceEnvironmentAddressResource(Client, id);
         }
 
@@ -67,7 +76,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="CustomDnsSuffixConfigurationResource"/> object. </returns>
         public virtual CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CustomDnsSuffixConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == CustomDnsSuffixConfigurationResource.ResourceType && !string.Equals(id.Name, "customdnssuffix", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "customdnssuffix"), nameof(id));
+            }
             return new CustomDnsSuffixConfigurationResource(Client, id);
         }
 
@@ -76,7 +93,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource"/> object. </returns>
         public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             AseV3NetworkingConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == AseV3NetworkingConfigurationResource.ResourceType && !string.Equals(id.Name, "networking", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "networking"), nameof(id));
+            }
             return new AseV3NetworkingConfigurationResource(Client, id);
         }
 
@@ -85,7 +110,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource"/> object. </returns>
         public virtual HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             HostingEnvironmentMultiRolePoolResource.ValidateResourceId(id);
+            if (id.ResourceType == HostingEnvironmentMultiRolePoolResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HostingEnvironmentMultiRolePoolResource(Client, id);
         }
 
@@ -175,7 +208,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HybridConnectionLimitResource"/> object. </returns>
         public virtual HybridConnectionLimitResource GetHybridConnectionLimitResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             HybridConnectionLimitResource.ValidateResourceId(id);
+            if (id.ResourceType == HybridConnectionLimitResource.ResourceType && !string.Equals(id.Name, "limit", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "limit"), nameof(id));
+            }
             return new HybridConnectionLimitResource(Client, id);
         }
 
@@ -382,7 +423,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteResourceHealthMetadataResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteResourceHealthMetadataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new WebSiteResourceHealthMetadataResource(Client, id);
         }
 
@@ -391,7 +440,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSlotResourceHealthMetadataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new WebSiteSlotResourceHealthMetadataResource(Client, id);
         }
 
@@ -409,7 +466,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
         public virtual PublishingUserResource GetPublishingUserResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             PublishingUserResource.ValidateResourceId(id);
+            if (id.ResourceType == PublishingUserResource.ResourceType && !string.Equals(id.Name, "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "web"), nameof(id));
+            }
             return new PublishingUserResource(Client, id);
         }
 
@@ -544,7 +609,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteFtpPublishingCredentialsPolicyResource.ResourceType && !string.Equals(id.Name, "ftp", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "ftp"), nameof(id));
+            }
             return new WebSiteFtpPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -553,7 +626,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == ScmSiteBasicPublishingCredentialsPolicyResource.ResourceType && !string.Equals(id.Name, "scm", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "scm"), nameof(id));
+            }
             return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -562,7 +643,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSlotFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSlotFtpPublishingCredentialsPolicyResource.ResourceType && !string.Equals(id.Name, "ftp", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "ftp"), nameof(id));
+            }
             return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -571,7 +660,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == ScmSiteSlotBasicPublishingCredentialsPolicyResource.ResourceType && !string.Equals(id.Name, "scm", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "scm"), nameof(id));
+            }
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -580,7 +677,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteAuthSettingsV2Resource"/> object. </returns>
         public virtual WebSiteAuthSettingsV2Resource GetWebSiteAuthSettingsV2Resource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteAuthSettingsV2Resource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteAuthSettingsV2Resource.ResourceType && !string.Equals(id.Name, "authsettingsV2", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "authsettingsV2"), nameof(id));
+            }
             return new WebSiteAuthSettingsV2Resource(Client, id);
         }
 
@@ -589,7 +694,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotAuthSettingsV2Resource"/> object. </returns>
         public virtual WebSiteSlotAuthSettingsV2Resource GetWebSiteSlotAuthSettingsV2Resource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSlotAuthSettingsV2Resource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSlotAuthSettingsV2Resource.ResourceType && !string.Equals(id.Name, "authsettingsV2", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "authsettingsV2"), nameof(id));
+            }
             return new WebSiteSlotAuthSettingsV2Resource(Client, id);
         }
 
@@ -634,7 +747,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="LogsSiteConfigResource"/> object. </returns>
         public virtual LogsSiteConfigResource GetLogsSiteConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             LogsSiteConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == LogsSiteConfigResource.ResourceType && !string.Equals(id.Name, "logs", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "logs"), nameof(id));
+            }
             return new LogsSiteConfigResource(Client, id);
         }
 
@@ -643,7 +764,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource"/> object. </returns>
         public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             LogsSiteSlotConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == LogsSiteSlotConfigResource.ResourceType && !string.Equals(id.Name, "logs", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "logs"), nameof(id));
+            }
             return new LogsSiteSlotConfigResource(Client, id);
         }
 
@@ -652,7 +781,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SlotConfigNamesResource"/> object. </returns>
         public virtual SlotConfigNamesResource GetSlotConfigNamesResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SlotConfigNamesResource.ValidateResourceId(id);
+            if (id.ResourceType == SlotConfigNamesResource.ResourceType && !string.Equals(id.Name, "slotConfigNames", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "slotConfigNames"), nameof(id));
+            }
             return new SlotConfigNamesResource(Client, id);
         }
 
@@ -661,7 +798,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteConfigResource"/> object. </returns>
         public virtual WebSiteConfigResource GetWebSiteConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteConfigResource.ResourceType && !string.Equals(id.Name, "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "web"), nameof(id));
+            }
             return new WebSiteConfigResource(Client, id);
         }
 
@@ -679,7 +824,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource"/> object. </returns>
         public virtual WebSiteSlotConfigResource GetWebSiteSlotConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSlotConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSlotConfigResource.ResourceType && !string.Equals(id.Name, "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "web"), nameof(id));
+            }
             return new WebSiteSlotConfigResource(Client, id);
         }
 
@@ -769,7 +922,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteExtensionResource"/> object. </returns>
         public virtual SiteExtensionResource GetSiteExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteExtensionResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteExtensionResource.ResourceType && !string.Equals(id.Name, "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "MSDeploy"), nameof(id));
+            }
             return new SiteExtensionResource(Client, id);
         }
 
@@ -778,7 +939,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteInstanceExtensionResource"/> object. </returns>
         public virtual SiteInstanceExtensionResource GetSiteInstanceExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteInstanceExtensionResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteInstanceExtensionResource.ResourceType && !string.Equals(id.Name, "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "MSDeploy"), nameof(id));
+            }
             return new SiteInstanceExtensionResource(Client, id);
         }
 
@@ -787,7 +956,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotExtensionResource"/> object. </returns>
         public virtual SiteSlotExtensionResource GetSiteSlotExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteSlotExtensionResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteSlotExtensionResource.ResourceType && !string.Equals(id.Name, "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "MSDeploy"), nameof(id));
+            }
             return new SiteSlotExtensionResource(Client, id);
         }
 
@@ -796,7 +973,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource"/> object. </returns>
         public virtual SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteSlotInstanceExtensionResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteSlotInstanceExtensionResource.ResourceType && !string.Equals(id.Name, "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "MSDeploy"), nameof(id));
+            }
             return new SiteSlotInstanceExtensionResource(Client, id);
         }
 
@@ -949,7 +1134,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteMigrateMySqlStatusResource"/> object. </returns>
         public virtual SiteMigrateMySqlStatusResource GetSiteMigrateMySqlStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteMigrateMySqlStatusResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteMigrateMySqlStatusResource.ResourceType && !string.Equals(id.Name, "status", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "status"), nameof(id));
+            }
             return new SiteMigrateMySqlStatusResource(Client, id);
         }
 
@@ -958,7 +1151,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource"/> object. </returns>
         public virtual MigrateMySqlStatusResource GetMigrateMySqlStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MigrateMySqlStatusResource.ValidateResourceId(id);
+            if (id.ResourceType == MigrateMySqlStatusResource.ResourceType && !string.Equals(id.Name, "status", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "status"), nameof(id));
+            }
             return new MigrateMySqlStatusResource(Client, id);
         }
 
@@ -967,7 +1168,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteNetworkConfigResource"/> object. </returns>
         public virtual SiteNetworkConfigResource GetSiteNetworkConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteNetworkConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteNetworkConfigResource.ResourceType && !string.Equals(id.Name, "virtualNetwork", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "virtualNetwork"), nameof(id));
+            }
             return new SiteNetworkConfigResource(Client, id);
         }
 
@@ -976,7 +1185,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource"/> object. </returns>
         public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SiteSlotNetworkConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == SiteSlotNetworkConfigResource.ResourceType && !string.Equals(id.Name, "virtualNetwork", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "virtualNetwork"), nameof(id));
+            }
             return new SiteSlotNetworkConfigResource(Client, id);
         }
 
@@ -1021,7 +1238,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSitePrivateAccessResource"/> object. </returns>
         public virtual WebSitePrivateAccessResource GetWebSitePrivateAccessResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSitePrivateAccessResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSitePrivateAccessResource.ResourceType && !string.Equals(id.Name, "virtualNetworks", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "virtualNetworks"), nameof(id));
+            }
             return new WebSitePrivateAccessResource(Client, id);
         }
 
@@ -1030,7 +1255,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource"/> object. </returns>
         public virtual WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccessResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSlotPrivateAccessResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSlotPrivateAccessResource.ResourceType && !string.Equals(id.Name, "virtualNetworks", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "virtualNetworks"), nameof(id));
+            }
             return new WebSiteSlotPrivateAccessResource(Client, id);
         }
 
@@ -1093,7 +1326,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource"/> object. </returns>
         public virtual WebSiteSlotSourceControlResource GetWebSiteSlotSourceControlResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSlotSourceControlResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSlotSourceControlResource.ResourceType && !string.Equals(id.Name, "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "web"), nameof(id));
+            }
             return new WebSiteSlotSourceControlResource(Client, id);
         }
 
@@ -1102,7 +1343,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSourceControlResource"/> object. </returns>
         public virtual WebSiteSourceControlResource GetWebSiteSourceControlResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WebSiteSourceControlResource.ValidateResourceId(id);
+            if (id.ResourceType == WebSiteSourceControlResource.ResourceType && !string.Equals(id.Name, "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "web"), nameof(id));
+            }
             return new WebSiteSourceControlResource(Client, id);
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService;
@@ -49,7 +50,15 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ManagedClusterUpgradeProfileResource.ValidateResourceId(id);
+            if (id.ResourceType == ManagedClusterUpgradeProfileResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ManagedClusterUpgradeProfileResource(Client, id);
         }
 
@@ -121,7 +130,15 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public virtual AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             AgentPoolUpgradeProfileResource.ValidateResourceId(id);
+            if (id.ResourceType == AgentPoolUpgradeProfileResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new AgentPoolUpgradeProfileResource(Client, id);
         }
 

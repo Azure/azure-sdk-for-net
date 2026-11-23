@@ -83,7 +83,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
         public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             FooConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == FooConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FooConfigurationResource(Client, id);
         }
 
@@ -92,7 +100,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
         public virtual BarSettingsResource GetBarSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BarSettingsResource.ValidateResourceId(id);
+            if (id.ResourceType == BarSettingsResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new BarSettingsResource(Client, id);
         }
 
@@ -245,7 +261,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             HciVmInstanceResource.ValidateResourceId(id);
+            if (id.ResourceType == HciVmInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmInstanceResource(Client, id);
         }
 
@@ -837,6 +861,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             AcronymWidgetResource.ValidateResourceId(id);
             return new AcronymWidgetResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LocationSingletonResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationSingletonResource"/> object. </returns>
+        public virtual LocationSingletonResource GetLocationSingletonResource(ResourceIdentifier id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            LocationSingletonResource.ValidateResourceId(id);
+            if (id.ResourceType == LocationSingletonResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
+            return new LocationSingletonResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
