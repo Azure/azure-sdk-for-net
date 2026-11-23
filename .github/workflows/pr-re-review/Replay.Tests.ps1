@@ -171,6 +171,16 @@ Describe 'Invoke-PrReReviewInputExport.ps1 replay' {
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly
     }
 
+    It 'names every invalid replay input in one error, before calling GitHub' {
+        $env:REPLAY_PULL_REQUEST = '1/../2'
+        $env:REPLAY_HEAD_SHA = 'main'
+        $env:REPLAY_BASE_SHA = 'abc1234'
+        $env:REPLAY_HISTORY_CUTOFF = '2026-11-10 19:43'
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } |
+            Should -Throw -ExpectedMessage '*not a pull request number*REPLAY_HEAD_SHA*40-character*REPLAY_BASE_SHA*40-character*ISO 8601*'
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly
+    }
+
     It 'fails rather than replay a comparison GitHub may have cut off at 300 files' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/compare/*' } {
             ConvertTo-Json -Depth 5 -Compress -InputObject @{ merge_base_commit = @{ sha = 'c' * 40 }; files = @(1..300 | ForEach-Object { @{ filename = "f$_.cs"; status = 'added'; patch = '+x' } }) }

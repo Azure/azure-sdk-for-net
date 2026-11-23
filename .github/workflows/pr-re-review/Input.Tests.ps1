@@ -445,6 +445,16 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         }
     }
 
+    It 'names every missing input in one error' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { throw "Unexpected gh api $($Arguments -join ' ')" }
+        $env:GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'
+        $env:PR_NUMBER = '1'
+        $env:PR_BASE_SHA = 'base'
+        $env:REVIEW_INPUT_DIR = Join-Path $TestDrive 'input'
+        foreach ($envName in 'PR_HEAD_SHA', 'REVIEW_INPUT_MARKERS') { [Environment]::SetEnvironmentVariable($envName, $null) }
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } | Should -Throw -ExpectedMessage 'Missing PR_HEAD_SHA, REVIEW_INPUT_MARKERS.'
+    }
+
     It 'exports the old text when a binary modification has no patch or line counts' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
             '[[{"filename":"src/Changed.cs","status":"modified","sha":"2222222222222222222222222222222222222222","additions":0,"deletions":0}]]'

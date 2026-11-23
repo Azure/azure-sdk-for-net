@@ -16,22 +16,29 @@ $required = if ($replay) {
 } else {
     'GITHUB_REPOSITORY', 'PR_NUMBER', 'PR_HEAD_SHA', 'PR_BASE_SHA', 'REVIEW_INPUT_DIR', 'REVIEW_INPUT_MARKERS'
 }
-foreach ($name in $required) {
-    if (![Environment]::GetEnvironmentVariable($name)) {
-        throw "Missing $name."
-    }
+$missing = @($required | Where-Object { ![Environment]::GetEnvironmentVariable($_) })
+if ($missing.Count -gt 0) {
+    throw "Missing $($missing -join ', ')."
 }
 
 if ($replay) {
+    $invalid = [System.Collections.Generic.List[string]]::new()
     if ($env:REPLAY_PULL_REQUEST -cnotmatch '^[1-9][0-9]{0,9}$') {
-        throw "REPLAY_PULL_REQUEST '$env:REPLAY_PULL_REQUEST' is not a pull request number."
+        $invalid.Add("REPLAY_PULL_REQUEST '$env:REPLAY_PULL_REQUEST' is not a pull request number.")
     }
     foreach ($name in 'REPLAY_HEAD_SHA', 'REPLAY_BASE_SHA') {
         if ([Environment]::GetEnvironmentVariable($name) -cnotmatch '^[0-9a-f]{40}$') {
-            throw "$name must be a full 40-character commit SHA."
+            $invalid.Add("$name must be a full 40-character commit SHA.")
         }
     }
-    $cutoff = ConvertTo-PrReReviewReplayCutoff $env:REPLAY_HISTORY_CUTOFF
+    try {
+        $cutoff = ConvertTo-PrReReviewReplayCutoff $env:REPLAY_HISTORY_CUTOFF
+    } catch {
+        $invalid.Add($_.Exception.Message)
+    }
+    if ($invalid.Count -gt 0) {
+        throw ($invalid -join ' ')
+    }
     $pullRequest = Get-PrReReviewReplayInput -Repository $env:GITHUB_REPOSITORY -HeadSha $env:REPLAY_HEAD_SHA -BaseSha $env:REPLAY_BASE_SHA
 } else {
     $pullRequest = Get-PrReReviewPullRequestInput -Repository $env:GITHUB_REPOSITORY -Number ([int]$env:PR_NUMBER) -ExpectedHeadSha $env:PR_HEAD_SHA -ExpectedBaseSha $env:PR_BASE_SHA
