@@ -37,15 +37,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="shortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kindProperty"> GeoJSON FeatureCollection type. </param>
         /// <param name="features"> Array of STAC Items in the collection. </param>
         /// <param name="boundingBox"> Bounding box of all items in format [west, south, east, north]. </param>
         /// <param name="context"> Context information for the search response. </param>
-        internal StacItemCollection(StacModelKind kind, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<StacItem> features, IList<float> boundingBox, StacContextExtension context) : base(kind, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal StacItemCollection(StacModelKind kind, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, StacModelKind kindProperty, IList<StacItem> features, IList<float> boundingBox, StacContextExtension context) : base(kind, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
+            KindProperty = kindProperty;
             Features = features;
             BoundingBox = boundingBox;
             Context = context;
         }
+
+        /// <summary> GeoJSON FeatureCollection type. </summary>
+        internal StacModelKind KindProperty { get; set; } = "FeatureCollection";
 
         /// <summary> Array of STAC Items in the collection. </summary>
         public IList<StacItem> Features { get; }

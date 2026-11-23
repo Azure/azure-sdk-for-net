@@ -49,7 +49,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="ProjectsEvaluationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProjectsEvaluationLevel?(string value) => value == null ? null : new ProjectsEvaluationLevel(value);
+        public static implicit operator ProjectsEvaluationLevel?(string value) => value == null ? (ProjectsEvaluationLevel?)null : new ProjectsEvaluationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

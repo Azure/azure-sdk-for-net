@@ -39,8 +39,5 @@ namespace Azure.AI.Projects.Agents
             AllowedCallers = allowedCallers;
             InternalContainer = internalContainer;
         }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
     }
 }

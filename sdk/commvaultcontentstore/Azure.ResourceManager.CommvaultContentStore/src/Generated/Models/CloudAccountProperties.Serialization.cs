@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
+            CommvaultMarketplaceDetails marketplace = default;
             CommvaultUserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
             string ssoUri = default;
-            CompanyProfile company = default;
+            CommvaultCompanyProfile company = default;
             IList<CommvaultRoleAssignment> roleAssignmentsOnCreate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("marketplace"u8))
                 {
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    marketplace = CommvaultMarketplaceDetails.DeserializeCommvaultMarketplaceDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
+                    company = CommvaultCompanyProfile.DeserializeCommvaultCompanyProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("roleAssignmentsOnCcaCreate"u8))

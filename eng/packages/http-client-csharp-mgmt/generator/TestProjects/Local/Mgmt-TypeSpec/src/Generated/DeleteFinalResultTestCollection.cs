@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, DeleteFinalResultTestData.ToRequestContent(data), context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, DeleteFinalResultTestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<DeleteFinalResultTestResource> operation = new TestsArmOperation<DeleteFinalResultTestResource>(
                     new DeleteFinalResultTestResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, DeleteFinalResultTestData.ToRequestContent(data), context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, DeleteFinalResultTestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<DeleteFinalResultTestResource> operation = new TestsArmOperation<DeleteFinalResultTestResource>(
                     new DeleteFinalResultTestResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeleteFinalResultTestData> response = Response.FromValue(DeleteFinalResultTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeleteFinalResultTestData> response = Response.FromValue(DeleteFinalResultTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -301,7 +301,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeleteFinalResultTestData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeleteFinalResultTestData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeleteFinalResultTestData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
+                HttpMessage message = _deleteFinalResultTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteFinalResultTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeleteFinalResultTestData> response = default;

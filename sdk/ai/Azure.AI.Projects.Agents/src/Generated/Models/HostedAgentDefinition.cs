@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <param name="sessionConfiguration"> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </param>
         /// <param name="enableMemorySnapshot"> Whether this agent version uses memory snapshots. Sessions for a snapshot-enabled version start from a snapshot of the agent's initialized process rather than starting the process from its image. Defaults to false. </param>
-        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig, SessionConfiguration sessionConfiguration, bool? enableMemorySnapshot) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfiguration telemetryConfig, SessionConfiguration sessionConfiguration, bool? enableMemorySnapshot) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Cpu = cpu;
             Memory = memory;
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Agents
         public CodeConfiguration CodeConfiguration { get; set; }
 
         /// <summary> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
-        public TelemetryConfig TelemetryConfig { get; set; }
+        public TelemetryConfiguration TelemetryConfig { get; set; }
 
         /// <summary> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </summary>
         public SessionConfiguration SessionConfiguration { get; set; }

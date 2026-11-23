@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="AnalyzeTextInputKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeTextInputKind?(string value) => value == null ? null : new AnalyzeTextInputKind(value);
+        public static implicit operator AnalyzeTextInputKind?(string value) => value == null ? (AnalyzeTextInputKind?)null : new AnalyzeTextInputKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

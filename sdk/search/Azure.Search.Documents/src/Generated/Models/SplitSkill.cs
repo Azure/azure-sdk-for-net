@@ -20,10 +20,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private bool _pageOverlapLengthIsDefined;
         private int? _maximumPagesToTake;
         private bool _maximumPagesToTakeIsDefined;
-        private SplitSkillUnit? _unit;
-        private bool _unitIsDefined;
-        private AzureOpenAITokenizerParameters _azureOpenAITokenizerParameters;
-        private bool _azureOpenAITokenizerParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SplitSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
@@ -49,17 +45,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maximumPageLength"> The desired maximum page length. Default is 10000. </param>
         /// <param name="pageOverlapLength"> Only applicable when textSplitMode is set to 'pages'. If specified, n+1th chunk will start with this number of characters/tokens from the end of the nth chunk. </param>
         /// <param name="maximumPagesToTake"> Only applicable when textSplitMode is set to 'pages'. If specified, the SplitSkill will discontinue splitting after processing the first 'maximumPagesToTake' pages, in order to improve performance when only a few initial pages are needed from each document. </param>
-        /// <param name="unit"> Only applies if textSplitMode is set to pages. There are two possible values. The choice of the values will decide the length (maximumPageLength and pageOverlapLength) measurement. The default is 'characters', which means the length will be measured by character. </param>
-        /// <param name="azureOpenAITokenizerParameters"> Only applies if the unit is set to azureOpenAITokens. If specified, the splitSkill will use these parameters when performing the tokenization. The parameters are a valid 'encoderModelName' and an optional 'allowedSpecialTokens' property. </param>
-        internal SplitSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, SplitSkillLanguage? defaultLanguageCode, TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake, SplitSkillUnit? unit, AzureOpenAITokenizerParameters azureOpenAITokenizerParameters) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal SplitSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, SplitSkillLanguage? defaultLanguageCode, TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
             TextSplitMode = textSplitMode;
             _maximumPageLength = maximumPageLength;
             _pageOverlapLength = pageOverlapLength;
             _maximumPagesToTake = maximumPagesToTake;
-            _unit = unit;
-            _azureOpenAITokenizerParameters = azureOpenAITokenizerParameters;
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
@@ -107,34 +99,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 _maximumPagesToTake = value;
                 _maximumPagesToTakeIsDefined = true;
-            }
-        }
-
-        /// <summary> Only applies if textSplitMode is set to pages. There are two possible values. The choice of the values will decide the length (maximumPageLength and pageOverlapLength) measurement. The default is 'characters', which means the length will be measured by character. </summary>
-        public SplitSkillUnit? Unit
-        {
-            get
-            {
-                return _unit;
-            }
-            set
-            {
-                _unit = value;
-                _unitIsDefined = true;
-            }
-        }
-
-        /// <summary> Only applies if the unit is set to azureOpenAITokens. If specified, the splitSkill will use these parameters when performing the tokenization. The parameters are a valid 'encoderModelName' and an optional 'allowedSpecialTokens' property. </summary>
-        public AzureOpenAITokenizerParameters AzureOpenAITokenizerParameters
-        {
-            get
-            {
-                return _azureOpenAITokenizerParameters;
-            }
-            set
-            {
-                _azureOpenAITokenizerParameters = value;
-                _azureOpenAITokenizerParametersIsDefined = true;
             }
         }
     }

@@ -14,7 +14,7 @@ If when using `FieldBuilder` you see the following exception, use the following 
 Consider the following model, which declares a property of an `enum` type,
 which are not currently supported.
 
-```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_Types
+```C# Snippet:Azure_Search_Tests_FieldBuilderIgnore_Types
 public class Movie
 {
     [SimpleField(IsKey = true)]
@@ -63,9 +63,8 @@ After creating the index using `FieldBuilder`, you can add fields manually.
 For the `Genre` property we declare that the serializer should convert the `MovieGenre` enum
 to a string, and define the `genre` index field ourselves.
 
-```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_CreateIndex
+```C# Snippet:Azure_Search_Tests_FieldBuilderIgnore_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Define client options to use camelCase when serializing property names.
 SearchClientOptions options = new SearchClientOptions(ServiceVersion)
@@ -78,7 +77,7 @@ SearchClientOptions options = new SearchClientOptions(ServiceVersion)
 };
 
 // Create a service client.
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential, options);
 
 // Create the FieldBuilder using the same serializer.
@@ -117,7 +116,7 @@ indexClient.CreateIndex(index);
 When a `Movie` is serialized, the `Genre` property is converted to a string and
 populates the index's `genre` field.
 
-```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_UploadDocument
+```C# Snippet:Azure_Search_Tests_FieldBuilderIgnore_UploadDocument
 Movie movie = new Movie
 {
     Id = Guid.NewGuid().ToString("n"),

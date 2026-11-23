@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
@@ -24,13 +25,13 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitorListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunAt = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedAt = default)
         {
             return new AgentInsightMonitorListItem(
                 id,
@@ -38,10 +39,10 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
@@ -57,15 +58,15 @@ namespace Azure.AI.Projects
         /// <summary> Structured reason why scheduled generation is suspended for a monitor. </summary>
         /// <param name="code"> Stable, machine-readable suspension category. </param>
         /// <param name="message"> Human-readable description of the suspension. </param>
-        /// <param name="occurredOn"> The time when the suspension occurred. </param>
+        /// <param name="occurredAt"> The time when the suspension occurred. </param>
         /// <param name="details"> Additional reason-specific suspension details. </param>
         /// <returns> A new <see cref="Projects.AgentInsightSuspension"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredOn = default, IDictionary<string, BinaryData> details = default)
+        public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredAt = default, IDictionary<string, BinaryData> details = default)
         {
             details ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new AgentInsightSuspension(code, message, occurredOn, details, additionalBinaryDataProperties: null);
+            return new AgentInsightSuspension(code, message, occurredAt, details, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
@@ -86,14 +87,14 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
         /// <param name="overview"> The effective overview, or null before an overview is available. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitor"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunAt = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedAt = default)
         {
             return new AgentInsightMonitor(
                 id,
@@ -101,23 +102,23 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
                 overview,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> The effective overview for an Agent Insights monitor. </summary>
         /// <param name="content"> The overview content. </param>
         /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
+        /// <param name="updatedAt"> The time when this overview was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightsOverview"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedAt = default)
         {
-            return new AgentInsightsOverview(content, source, updatedOn, additionalBinaryDataProperties: null);
+            return new AgentInsightsOverview(content, source, updatedAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Inputs used when creating an agent insight run. </summary>
@@ -172,13 +173,13 @@ namespace Azure.AI.Projects
         /// <param name="category"> An open, service-generated category label for the issue. Clients must accept previously unseen values. </param>
         /// <param name="status"> The lifecycle status of the insight. </param>
         /// <param name="traceCount"> The number of traces that provide evidence for this insight. </param>
-        /// <param name="createdOn"> The time when this insight was created. </param>
-        /// <param name="updatedOn"> The time when this insight was last updated. </param>
+        /// <param name="createdAt"> The time when this insight was created. </param>
+        /// <param name="updatedAt"> The time when this insight was last updated. </param>
         /// <param name="description"> The root-cause diagnosis for the issue. </param>
         /// <param name="details"> Additional insight details. Omitted unless details are requested. </param>
         /// <returns> A new <see cref="Projects.AgentInsight"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, string description = default, AgentInsightDetails details = default)
+        public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string description = default, AgentInsightDetails details = default)
         {
             return new AgentInsight(
                 id,
@@ -190,8 +191,8 @@ namespace Azure.AI.Projects
                 category,
                 status,
                 traceCount,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 description,
                 details,
                 additionalBinaryDataProperties: null);
@@ -742,11 +743,11 @@ namespace Azure.AI.Projects
         /// <summary> Represents a request for a pending upload of a model version. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <returns> A new <see cref="Projects.ModelPendingUploadRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelPendingUploadRequest ModelPendingUploadRequest(string pendingUploadId = default, string connectionName = default)
+        public static ModelPendingUploadContent ModelPendingUploadContent(string pendingUploadId = default, string connectionName = default)
         {
-            return new ModelPendingUploadRequest(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadContent(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a model pending upload request. </summary>
@@ -762,11 +763,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Request to fetch credentials for a model asset. </summary>
         /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
-        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelCredentialContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        public static ModelCredentialContent ModelCredentialContent(Uri blobUri = default)
         {
-            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+            return new ModelCredentialContent(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1014,22 +1015,11 @@ namespace Azure.AI.Projects
         /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
         /// </summary>
         /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
+        /// <param name="samplingParameters"> The parameters used to control the sampling behavior of the model during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
-        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
+        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParameters = default)
         {
-            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
-        }
-
-        /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
-        /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
-        /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
-        /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
-        public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
-        {
-            return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
+            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParameters);
         }
 
         /// <summary>
@@ -1160,7 +1150,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Projects.RubricBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Evaluation.RubricBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
@@ -1246,7 +1236,7 @@ namespace Azure.AI.Projects
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="dimensions"> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </param>
         /// <param name="passThreshold"> Pass/fail threshold for the aggregate rubric score, on the same normalized 0.0-1.0 scale as the emitted `score`. When the runtime weighted average meets or exceeds this value, the result is `pass`. Defaults to 0.5 (equivalent to a raw 1-5 weighted average of 3.0). The 'any dimension scored 1 → fail' rule still applies regardless of this threshold. </param>
-        /// <returns> A new <see cref="Projects.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
         public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<EvaluationsDimension> dimensions = default, float? passThreshold = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
@@ -1268,7 +1258,7 @@ namespace Azure.AI.Projects
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
-        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? isAlwaysApplicable = default)
+        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int? weight = default, bool? isAlwaysApplicable = default)
         {
             return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties: null);
         }
@@ -1297,7 +1287,7 @@ namespace Azure.AI.Projects
         /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
-        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(VersionedDatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
         {
             datasetRowKinds ??= new ChangeTrackingList<string>();
 
@@ -1307,10 +1297,10 @@ namespace Azure.AI.Projects
         /// <summary> Reference to a versioned Foundry Dataset. </summary>
         /// <param name="name"> Dataset name. </param>
         /// <param name="version"> Dataset version. </param>
-        /// <returns> A new <see cref="Projects.DatasetReference"/> instance for mocking. </returns>
-        public static DatasetReference DatasetReference(string name = default, string version = default)
+        /// <returns> A new <see cref="Evaluation.VersionedDatasetReference"/> instance for mocking. </returns>
+        public static VersionedDatasetReference VersionedDatasetReference(string name = default, string version = default)
         {
-            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+            return new VersionedDatasetReference(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for getting evaluator credentials. </summary>
@@ -1343,7 +1333,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The base source model for evaluator generation jobs. Polymorphic over `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>, <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, and <see cref="Projects.TracesEvaluatorGenerationJobSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>, <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, and <see cref="Evaluation.TracesEvaluatorGenerationJobSource"/>.
         /// </summary>
         /// <param name="type"> The type of source. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationJobSource"/> instance for mocking. </returns>
@@ -1376,10 +1366,10 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <returns> A new <see cref="Evaluation.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsAt = default, DateTimeOffset? endsAt = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -1388,8 +1378,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startsOn,
-                endsOn);
+                startsAt,
+                endsAt);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -2359,11 +2349,11 @@ namespace Azure.AI.Projects
         /// <param name="isEnabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
-        /// <param name="createdOn"> The time when the routine was created. </param>
-        /// <param name="updatedOn"> The time when the routine was last updated. </param>
+        /// <param name="createdAt"> The time when the routine was created. </param>
+        /// <param name="updatedAt"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
 
@@ -2373,8 +2363,8 @@ namespace Azure.AI.Projects
                 isEnabled,
                 triggers,
                 action,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2391,10 +2381,10 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> The legacy endpoint-scoped agent identifier recorded for the routine attempt. </param>
         /// <param name="conversationId"> The conversation identifier used by a responses API dispatch. </param>
         /// <param name="sessionId"> The hosted-agent session identifier used by an invocations API dispatch. </param>
-        /// <param name="triggeredOn"> The logical trigger time recorded for the routine attempt. </param>
-        /// <param name="scheduledFireOn"> The scheduled fire time recorded for timer and schedule deliveries. </param>
-        /// <param name="startedOn"> The time when the underlying run started. </param>
-        /// <param name="endedOn"> The time when the underlying run reached a terminal state. </param>
+        /// <param name="triggeredAt"> The logical trigger time recorded for the routine attempt. </param>
+        /// <param name="scheduledFireAt"> The scheduled fire time recorded for timer and schedule deliveries. </param>
+        /// <param name="startedAt"> The time when the underlying run started. </param>
+        /// <param name="endedAt"> The time when the underlying run reached a terminal state. </param>
         /// <param name="dispatchId"> The dispatch identifier associated with the routine attempt. </param>
         /// <param name="actionCorrelationId"> The downstream action correlation identifier, when available. </param>
         /// <param name="responseId"> The downstream response or invocation identifier, when available. </param>
@@ -2404,7 +2394,7 @@ namespace Azure.AI.Projects
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredOn = default, DateTimeOffset? scheduledFireOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -2421,10 +2411,10 @@ namespace Azure.AI.Projects
                 agentEndpointId,
                 conversationId,
                 sessionId,
-                triggeredOn,
-                scheduledFireOn,
-                startedOn,
-                endedOn,
+                triggeredAt,
+                scheduledFireAt,
+                startedAt,
+                endedAt,
                 dispatchId,
                 actionCorrelationId,
                 responseId,
@@ -2576,11 +2566,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsAt = default, DateTimeOffset? endsAt = default, IEnumerable<string> traceIds = default)
         {
             traceIds ??= new ChangeTrackingList<string>();
 
@@ -2591,8 +2581,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startsOn,
-                endsOn,
+                startsAt,
+                endsAt,
                 traceIds.ToList());
         }
 

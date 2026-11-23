@@ -81,11 +81,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(MaxAllowedFailures))
-            {
-                writer.WritePropertyName("maxAllowedFailures"u8);
-                writer.WriteStringValue(MaxAllowedFailures);
-            }
             if (Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             string name = default;
-            string maxAllowedFailures = default;
             string maxConcurrency = default;
             MemberSelector memberSelector = default;
             IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
@@ -170,11 +164,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("maxAllowedFailures"u8))
-                {
-                    maxAllowedFailures = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrency"u8))
@@ -226,7 +215,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             return new ContainerServiceFleetUpdateGroup(
                 name,
-                maxAllowedFailures,
                 maxConcurrency,
                 memberSelector,
                 beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),

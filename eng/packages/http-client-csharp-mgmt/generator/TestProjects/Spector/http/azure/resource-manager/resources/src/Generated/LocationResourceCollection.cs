@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, LocationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _locationResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, LocationResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, LocationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _locationResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, LocationResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocationResourceData> response = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocationResourceData> response = default;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocationResourceData> response = default;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, locationResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocationResourceData> response = default;

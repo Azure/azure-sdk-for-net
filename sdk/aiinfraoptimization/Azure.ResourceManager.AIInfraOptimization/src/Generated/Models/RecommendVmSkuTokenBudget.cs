@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuTokenBudget"/>. </summary>
-        /// <param name="promptTokens"> The number of prompt, or input, tokens per inference request. Must be supplied together with `maxOutputTokens`, and the two must total from 1 through 131072. </param>
-        /// <param name="maxOutputTokens"> The maximum number of generated output tokens per inference request. Must be supplied together with `promptTokens`, and the two must total from 1 through 131072. </param>
+        /// <param name="promptTokens"> The number of prompt, or input, tokens per inference request. Must be supplied together with `maxOutputTokens`, and the two must total from 1 through 2147483647 without exceeding the model's maximum context length. </param>
+        /// <param name="maxOutputTokens"> The maximum number of generated output tokens per inference request. Must be supplied together with `promptTokens`, and the two must total from 1 through 2147483647 without exceeding the model's maximum context length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RecommendVmSkuTokenBudget(int? promptTokens, int? maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The number of prompt, or input, tokens per inference request. Must be supplied together with `maxOutputTokens`, and the two must total from 1 through 131072. </summary>
+        /// <summary> The number of prompt, or input, tokens per inference request. Must be supplied together with `maxOutputTokens`, and the two must total from 1 through 2147483647 without exceeding the model's maximum context length. </summary>
         public int? PromptTokens { get; set; }
 
-        /// <summary> The maximum number of generated output tokens per inference request. Must be supplied together with `promptTokens`, and the two must total from 1 through 131072. </summary>
+        /// <summary> The maximum number of generated output tokens per inference request. Must be supplied together with `promptTokens`, and the two must total from 1 through 2147483647 without exceeding the model's maximum context length. </summary>
         public int? MaxOutputTokens { get; set; }
     }
 }

@@ -369,7 +369,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<SealedAttestationResult> AttestAzureGuest(string attestationInfo = default, CancellationToken cancellationToken = default)
         {
-            AttestAzureGuestRequest spreadModel = new AttestAzureGuestRequest(attestationInfo, default);
+            AttestAzureGuestContent spreadModel = new AttestAzureGuestContent(attestationInfo, default);
             Response result = AttestAzureGuest(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((SealedAttestationResult)result, result);
         }
@@ -386,7 +386,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<SealedAttestationResult>> AttestAzureGuestAsync(string attestationInfo = default, CancellationToken cancellationToken = default)
         {
-            AttestAzureGuestRequest spreadModel = new AttestAzureGuestRequest(attestationInfo, default);
+            AttestAzureGuestContent spreadModel = new AttestAzureGuestContent(attestationInfo, default);
             Response result = await AttestAzureGuestAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SealedAttestationResult)result, result);
         }
@@ -461,7 +461,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<TpmAttestationResponse> AttestTpm(BinaryData data = default, CancellationToken cancellationToken = default)
         {
-            AttestTpmRequest spreadModel = new AttestTpmRequest(data, default);
+            AttestTpmContent spreadModel = new AttestTpmContent(data, default);
             Response result = AttestTpm(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((TpmAttestationResponse)result, result);
         }
@@ -476,7 +476,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<TpmAttestationResponse>> AttestTpmAsync(BinaryData data = default, CancellationToken cancellationToken = default)
         {
-            AttestTpmRequest spreadModel = new AttestTpmRequest(data, default);
+            AttestTpmContent spreadModel = new AttestTpmContent(data, default);
             Response result = await AttestTpmAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TpmAttestationResponse)result, result);
         }
@@ -688,7 +688,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<AttestationResponse> AttestTdxVm(BinaryData quote = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string nonce = default, CancellationToken cancellationToken = default)
         {
-            AttestTdxVmRequest spreadModel = new AttestTdxVmRequest(quote, runtimeData, initTimeData, nonce, default);
+            AttestTdxVmContent spreadModel = new AttestTdxVmContent(quote, runtimeData, initTimeData, nonce, default);
             Response result = AttestTdxVm(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((AttestationResponse)result, result);
         }
@@ -712,7 +712,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<AttestationResponse>> AttestTdxVmAsync(BinaryData quote = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string nonce = default, CancellationToken cancellationToken = default)
         {
-            AttestTdxVmRequest spreadModel = new AttestTdxVmRequest(quote, runtimeData, initTimeData, nonce, default);
+            AttestTdxVmContent spreadModel = new AttestTdxVmContent(quote, runtimeData, initTimeData, nonce, default);
             Response result = await AttestTdxVmAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AttestationResponse)result, result);
         }

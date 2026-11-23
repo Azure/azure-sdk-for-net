@@ -10,7 +10,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
 ```
 2. Create the helper method to get tha Agent definition.
 

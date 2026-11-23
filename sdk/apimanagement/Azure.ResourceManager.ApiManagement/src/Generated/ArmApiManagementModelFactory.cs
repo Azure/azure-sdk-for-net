@@ -5227,7 +5227,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 isSubscriptionRequired,
                 isApprovalRequired,
                 subscriptionsLimit,
-                default,
+                new ChangeTrackingList<ProductAuthType>(),
                 default,
                 state,
                 default);
@@ -5342,7 +5342,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 isSubscriptionRequired,
                 isApprovalRequired,
                 subscriptionsLimit,
-                default,
+                new ChangeTrackingList<ProductAuthType>(),
                 default,
                 state,
                 default,

@@ -50,7 +50,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationClaimProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationClaimProtocol?(string value) => value == null ? null : new ApplicationClaimProtocol(value);
+        public static implicit operator ApplicationClaimProtocol?(string value) => value == null ? (ApplicationClaimProtocol?)null : new ApplicationClaimProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

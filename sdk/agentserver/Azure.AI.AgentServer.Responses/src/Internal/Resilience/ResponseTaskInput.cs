@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -12,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// survive a process crash so the response can be re-invoked in a subsequent process lifetime.
 /// <para>
 /// Core serializes task inputs with plain <see cref="System.Text.Json.JsonSerializer"/>, whereas the
-/// <see cref="Models.CreateResponse"/> model serializes via <c>ModelReaderWriter</c>. This type
+/// <see cref="CreateResponse"/> model serializes via <c>ModelReaderWriter</c>. This type
 /// therefore carries a <see cref="JsonConverterAttribute"/> that emits/parses the exact 9-field
 /// wire schema shared with Python (<c>ResilientResponseInput.to_task_input()</c>) by delegating to
 /// the tested <see cref="ResponseRecoveryPayload.ToTaskInput"/> /
@@ -21,6 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// </para>
 /// </summary>
 [JsonConverter(typeof(ResponseTaskInputJsonConverter))]
+[Experimental("OPENAI001")]
 internal sealed class ResponseTaskInput
 {
     /// <summary>Initializes a new instance of the <see cref="ResponseTaskInput"/> class.</summary>
@@ -39,6 +41,7 @@ internal sealed class ResponseTaskInput
 /// 9-field wire schema, delegating to <see cref="ResponseRecoveryPayload"/>'s fail-closed
 /// serialization so the Core task input is byte-identical to Python's <c>ResilientResponseInput</c>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseTaskInputJsonConverter : JsonConverter<ResponseTaskInput>
 {
     /// <inheritdoc/>

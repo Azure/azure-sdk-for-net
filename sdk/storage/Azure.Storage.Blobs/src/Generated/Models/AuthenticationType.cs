@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="AuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthenticationType?(string value) => value == null ? null : new AuthenticationType(value);
+        public static implicit operator AuthenticationType?(string value) => value == null ? (AuthenticationType?)null : new AuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

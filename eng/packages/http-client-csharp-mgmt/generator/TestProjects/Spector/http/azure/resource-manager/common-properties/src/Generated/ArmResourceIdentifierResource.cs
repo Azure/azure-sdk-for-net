@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _armResourceIdentifiersRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArmResourceIdentifierResourceData.ToRequestContent(data), context);
+                HttpMessage message = _armResourceIdentifiersRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArmResourceIdentifierResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _armResourceIdentifiersRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArmResourceIdentifierResourceData.ToRequestContent(data), context);
+                HttpMessage message = _armResourceIdentifiersRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArmResourceIdentifierResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                     return Response.FromValue(new ArmResourceIdentifierResource(Client, response.Value), response.GetRawResponse());
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                     return Response.FromValue(new ArmResourceIdentifierResource(Client, response.Value), response.GetRawResponse());
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                     return Response.FromValue(new ArmResourceIdentifierResource(Client, response.Value), response.GetRawResponse());
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                     return Response.FromValue(new ArmResourceIdentifierResource(Client, response.Value), response.GetRawResponse());
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                     return Response.FromValue(new ArmResourceIdentifierResource(Client, response.Value), response.GetRawResponse());
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _armResourceIdentifiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ArmResourceIdentifierResourceData> response = Response.FromValue(ArmResourceIdentifierResourceData.FromResponse(result), result);
                     return Response.FromValue(new ArmResourceIdentifierResource(Client, response.Value), response.GetRawResponse());

@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class VoiceAgentLlmGeneratedGreetingConfig
+public partial class VoiceAgentLlmGeneratedGreetingConfiguration
 {
     [CodeGenMember("ToolChoice")]
     internal BinaryData InternalToolChoice { get; set; }

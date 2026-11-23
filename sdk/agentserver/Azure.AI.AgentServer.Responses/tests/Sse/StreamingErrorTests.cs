@@ -110,8 +110,8 @@ public class StreamingErrorTests : IDisposable
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await Task.Yield();
         throw new InvalidOperationException("Simulated handler failure");
     }
@@ -120,13 +120,13 @@ public class StreamingErrorTests : IDisposable
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await Task.Yield();
 
         // Handler explicitly yields a ResponseFailedEvent
         response.SetFailed(ResponseErrorCode.ServerError, "Handler-reported failure");
-        yield return new ResponseFailedEvent(0, response);
+        yield return new ResponseFailedEvent { SequenceNumber = (int)(0), Response = response };
         await Task.Yield();
 
         throw new InvalidOperationException("Post-failure throw");

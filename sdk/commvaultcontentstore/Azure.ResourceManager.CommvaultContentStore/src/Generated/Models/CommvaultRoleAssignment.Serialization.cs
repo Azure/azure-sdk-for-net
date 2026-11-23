@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WriteStringValue(RoleName.ToString());
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
-            foreach (CommvaultEntityInfo item in Entities)
+            foreach (CommvaultRolePrincipal item in Principals)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             CommvaultRoleName roleName = default;
-            IList<CommvaultEntityInfo> entities = default;
+            IList<CommvaultRolePrincipal> principals = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    List<CommvaultEntityInfo> array = new List<CommvaultEntityInfo>();
+                    List<CommvaultRolePrincipal> array = new List<CommvaultRolePrincipal>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CommvaultEntityInfo.DeserializeCommvaultEntityInfo(item, options));
+                        array.Add(CommvaultRolePrincipal.DeserializeCommvaultRolePrincipal(item, options));
                     }
-                    entities = array;
+                    principals = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultRoleAssignment(roleName, entities ?? new ChangeTrackingList<CommvaultEntityInfo>(), additionalBinaryDataProperties);
+            return new CommvaultRoleAssignment(roleName, principals ?? new ChangeTrackingList<CommvaultRolePrincipal>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _singletonRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _singletonRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourcesArmOperation<SingletonTrackedResource> operation = new ResourcesArmOperation<SingletonTrackedResource>(
                     new SingletonTrackedResourceOperationSource(Client),
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _singletonRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _singletonRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourcesArmOperation<SingletonTrackedResource> operation = new ResourcesArmOperation<SingletonTrackedResource>(
                     new SingletonTrackedResourceOperationSource(Client),
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _singletonRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _singletonRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _singletonRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _singletonRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SingletonTrackedResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                    HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                     return Response.FromValue(new SingletonTrackedResource(Client, response.Value), response.GetRawResponse());
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                    HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                     return Response.FromValue(new SingletonTrackedResource(Client, response.Value), response.GetRawResponse());
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                    HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                     return Response.FromValue(new SingletonTrackedResource(Client, response.Value), response.GetRawResponse());
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                    HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                     return Response.FromValue(new SingletonTrackedResource(Client, response.Value), response.GetRawResponse());
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                    HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                     return Response.FromValue(new SingletonTrackedResource(Client, response.Value), response.GetRawResponse());
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                    HttpMessage message = _singletonRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SingletonTrackedResourceData> response = Response.FromValue(SingletonTrackedResourceData.FromResponse(result), result);
                     return Response.FromValue(new SingletonTrackedResource(Client, response.Value), response.GetRawResponse());

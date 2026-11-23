@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, Order.ToRequestContent(resource), context);
+                HttpMessage message = LroRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, Order.ToRequestContent(resource), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<Order> operation = new OperationTemplatesArmOperation<Order>(
                     new OrderOperationSource(),
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, Order.ToRequestContent(resource), context);
+                HttpMessage message = LroRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, Order.ToRequestContent(resource), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<Order> operation = new OperationTemplatesArmOperation<Order>(
                     new OrderOperationSource(),
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<ExportResult> operation = new OperationTemplatesArmOperation<ExportResult>(
                     new ExportResultOperationSource(),
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<ExportResult> operation = new OperationTemplatesArmOperation<ExportResult>(
                     new ExportResultOperationSource(),
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, context);
+                HttpMessage message = LroRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation operation = new OperationTemplatesArmOperation(LroClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, context);
+                HttpMessage message = LroRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation operation = new OperationTemplatesArmOperation(LroClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroPagingRestClient.CreatePostPagingLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, context);
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
                     new ProductListResultOperationSource(),
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroPagingRestClient.CreatePostPagingLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, context);
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
                     new ProductListResultOperationSource(),
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroPagingRestClient.CreatePostPagingLroWithBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, VnetProfile.ToRequestContent(body), context);
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroWithBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, VnetProfile.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
                     new ProductListResultOperationSource(),
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroPagingRestClient.CreatePostPagingLroWithBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, VnetProfile.ToRequestContent(body), context);
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroWithBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, VnetProfile.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
                     new ProductListResultOperationSource(),
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LegacyRestClient.CreateRoutedGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, diagnosticName, context);
+                HttpMessage message = LegacyRestClient.CreateRoutedGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, diagnosticName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiagnosticInfo> response = Response.FromValue(DiagnosticInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LegacyRestClient.CreateRoutedGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, diagnosticName, context);
+                HttpMessage message = LegacyRestClient.CreateRoutedGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, diagnosticName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiagnosticInfo> response = Response.FromValue(DiagnosticInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LegacyRestClient.CreateCreateOrReplaceOptionalBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationName, Configuration.ToRequestContent(resource), context);
+                HttpMessage message = LegacyRestClient.CreateCreateOrReplaceOptionalBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationName, Configuration.ToRequestContent(resource), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Configuration> response = Response.FromValue(Configuration.FromResponse(result), result);
                 if (response.Value == null)
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LegacyRestClient.CreateCreateOrReplaceOptionalBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationName, Configuration.ToRequestContent(resource), context);
+                HttpMessage message = LegacyRestClient.CreateCreateOrReplaceOptionalBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationName, Configuration.ToRequestContent(resource), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Configuration> response = Response.FromValue(Configuration.FromResponse(result), result);
                 if (response.Value == null)

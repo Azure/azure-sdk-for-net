@@ -91,9 +91,9 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
                 ModelType = Azure.AI.Projects.Agents.VoiceModelType.SelfDeployed,
                 Model = TestEnvironment.FOUNDRY_REALTIME_MODEL_NAME,
                 Instructions = "Respond briefly and helpfully.",
-                Audio = new Azure.AI.Projects.Agents.VoiceAgentAudioConfig
+                Audio = new Azure.AI.Projects.Agents.VoiceAgentAudioConfiguration
                 {
-                    Input = new Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig
+                    Input = new Azure.AI.Projects.Agents.VoiceAgentAudioInputConfiguration
                     {
                         Format = new RealtimePcmAudioFormat { Rate = 24000 },
                     },

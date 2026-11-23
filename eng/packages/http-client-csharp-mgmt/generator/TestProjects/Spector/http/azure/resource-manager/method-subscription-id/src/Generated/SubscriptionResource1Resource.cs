@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription1OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _subscription1OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResource1Data> response = Response.FromValue(SubscriptionResource1Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription1OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _subscription1OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResource1Data> response = Response.FromValue(SubscriptionResource1Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription1OperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _subscription1OperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription1OperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _subscription1OperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription1OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SubscriptionResource1Data.ToRequestContent(data), context);
+                HttpMessage message = _subscription1OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SubscriptionResource1Data.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResource1Data> response = Response.FromValue(SubscriptionResource1Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription1OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SubscriptionResource1Data.ToRequestContent(data), context);
+                HttpMessage message = _subscription1OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SubscriptionResource1Data.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResource1Data> response = Response.FromValue(SubscriptionResource1Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

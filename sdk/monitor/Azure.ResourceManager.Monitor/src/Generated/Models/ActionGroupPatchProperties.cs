@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An Azure action group for patch operations. </summary>
+    /// <summary> Action group settings for patch operations. </summary>
     internal partial class ActionGroupPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

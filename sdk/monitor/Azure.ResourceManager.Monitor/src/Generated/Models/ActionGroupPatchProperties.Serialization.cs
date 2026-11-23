@@ -13,7 +13,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An Azure action group for patch operations. </summary>
+    /// <summary> Action group settings for patch operations. </summary>
     internal partial class ActionGroupPatchProperties : IJsonModel<ActionGroupPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>

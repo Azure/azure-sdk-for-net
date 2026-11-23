@@ -1137,6 +1137,11 @@ namespace Azure.Generator.Mgmt.Tests
         public void FactoryReportsNewlyDiscardedHistoricalValue(bool historicallyConsumed, bool metadataOnly)
             => AssertHistoricalFactoryValue(historicallyConsumed, metadataOnly);
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FactoryReportsNewlyDiscardedHistoricalValueWithFixedLiteral(bool metadataOnly)
+            => AssertHistoricalFactoryValue(true, metadataOnly, includeFixedLiteral: true);
+
         [Test]
         public void SkippingUnsafeFactoryKeepsSafeHistoricalOverload()
             => AssertHistoricalFactoryValue(true, true, "safe-sibling");
@@ -1157,7 +1162,7 @@ namespace Azure.Generator.Mgmt.Tests
         public void HistoricalFactoryValidationRespectsExemptionsAndUnknownEvidence(string resolution)
             => AssertHistoricalFactoryValue(true, true, resolution);
 
-        private static void AssertHistoricalFactoryValue(bool historicallyConsumed, bool metadataOnly, string? resolution = null)
+        private static void AssertHistoricalFactoryValue(bool historicallyConsumed, bool metadataOnly, string? resolution = null, bool includeFixedLiteral = false)
         {
             using var baselineProject = new FactoryBaselineProject(resolution switch
             {
@@ -1232,7 +1237,9 @@ namespace Azure.Generator.Mgmt.Tests
             ]);
             var wrapper = InputFactory.Property("properties", properties);
             Flatten(wrapper);
-            var input = InputFactory.Model("VolumePatch", properties: [wrapper]);
+            var input = InputFactory.Model("VolumePatch", properties: includeFixedLiteral
+                ? [wrapper, InputFactory.Property("mode", InputFactory.Literal.String("Fixed"), isRequired: true)]
+                : [wrapper]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [input, properties, managed],
                 configurationJson: """{"package-name":"Samples"}""",

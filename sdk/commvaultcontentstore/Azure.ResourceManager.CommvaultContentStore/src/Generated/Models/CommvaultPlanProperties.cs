@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public ResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> Number of Snapshots. </summary>
-        public int? RetentionNumberOfSnapshots
+        public int? RetentionSnapshotCount
         {
             get
             {
-                return Retention is null ? default : Retention.NumberOfSnapshots;
+                return Retention is null ? default : Retention.SnapshotCount;
             }
             set
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 {
                     Retention = new Retention();
                 }
-                Retention.NumberOfSnapshots = value;
+                Retention.SnapshotCount = value;
             }
         }
     }

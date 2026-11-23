@@ -74,7 +74,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorDefinitionType?(string value) => value == null ? null : new EvaluatorDefinitionType(value);
+        public static implicit operator EvaluatorDefinitionType?(string value) => value == null ? (EvaluatorDefinitionType?)null : new EvaluatorDefinitionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

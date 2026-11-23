@@ -61,7 +61,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="AssetResponseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssetResponseType?(string value) => value == null ? null : new AssetResponseType(value);
+        public static implicit operator AssetResponseType?(string value) => value == null ? (AssetResponseType?)null : new AssetResponseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

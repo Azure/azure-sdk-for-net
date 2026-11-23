@@ -14,13 +14,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class SumMetricDefinition : ExperimentMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="SumMetricDefinition"/>. </summary>
-        /// <param name="value"> The value to aggregate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SumMetricDefinition(AggregatedValue value) : base(ExperimentMetricType.Sum)
+        public SumMetricDefinition() : base(ExperimentMetricType.Sum)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="SumMetricDefinition"/>. </summary>

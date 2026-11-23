@@ -17,11 +17,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a STAC Item, which is a GeoJSON Feature with additional metadata. </summary>
     public partial class StacItem : StacItemOrStacItemCollection, IJsonModel<StacItem>
     {
-        /// <summary> Initializes a new instance of <see cref="StacItem"/> for deserialization. </summary>
-        internal StacItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override StacItemOrStacItemCollection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -102,6 +97,8 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteObjectValue(Geometry, options);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(KindProperty.ToString());
             if (Optional.IsDefined(Collection))
             {
                 writer.WritePropertyName("collection"u8);
@@ -171,6 +168,7 @@ namespace Azure.Analytics.PlanetaryComputer
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GeoJsonGeometry geometry = default;
             string id = default;
+            StacModelKind kindProperty = default;
             string collection = default;
             IList<float> boundingBox = default;
             StacItemProperties properties = default;
@@ -257,6 +255,11 @@ namespace Azure.Analytics.PlanetaryComputer
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    kindProperty = new StacModelKind(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("collection"u8))
                 {
                     collection = prop.Value.GetString();
@@ -321,6 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties,
                 geometry,
                 id,
+                kindProperty,
                 collection,
                 boundingBox ?? new ChangeTrackingList<float>(),
                 properties,

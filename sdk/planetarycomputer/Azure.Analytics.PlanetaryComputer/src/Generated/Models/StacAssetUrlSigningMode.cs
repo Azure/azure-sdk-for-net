@@ -51,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="StacAssetUrlSigningMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacAssetUrlSigningMode?(string value) => value == null ? null : new StacAssetUrlSigningMode(value);
+        public static implicit operator StacAssetUrlSigningMode?(string value) => value == null ? (StacAssetUrlSigningMode?)null : new StacAssetUrlSigningMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

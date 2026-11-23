@@ -60,7 +60,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RoutineRunPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineRunPhase?(string value) => value == null ? null : new RoutineRunPhase(value);
+        public static implicit operator RoutineRunPhase?(string value) => value == null ? (RoutineRunPhase?)null : new RoutineRunPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

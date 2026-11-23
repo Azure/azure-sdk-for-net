@@ -47,7 +47,7 @@ public class SessionIdDerivationTests
     [Test]
     public void Derive_SameInputs_ReturnsSameSessionId()
     {
-        var agentRef = new AgentReference("my-agent") { Version = "1.0.0" };
+        var agentRef = new AgentReference("my-agent", "1.0.0");
 
         var result1 = SessionIdDerivation.Derive("conv-abc", null, ResponseId, agentRef);
         var result2 = SessionIdDerivation.Derive("conv-abc", null, ResponseId, agentRef);
@@ -67,8 +67,8 @@ public class SessionIdDerivationTests
     [Test]
     public void Derive_DifferentAgentVersion_ReturnsDifferentSessionId()
     {
-        var agentV1 = new AgentReference("my-agent") { Version = "1.0.0" };
-        var agentV2 = new AgentReference("my-agent") { Version = "2.0.0" };
+        var agentV1 = new AgentReference("my-agent", "1.0.0");
+        var agentV2 = new AgentReference("my-agent", "2.0.0");
 
         var result1 = SessionIdDerivation.Derive("conv-abc", null, ResponseId, agentV1);
         var result2 = SessionIdDerivation.Derive("conv-abc", null, ResponseId, agentV2);
@@ -157,7 +157,7 @@ public class SessionIdDerivationTests
     {
         var withNull = SessionIdDerivation.Derive("conv-abc", null, ResponseId, null);
         var withEmptyName = SessionIdDerivation.Derive("conv-abc", null, ResponseId,
-            new AgentReference("") { Version = "" });
+            new AgentReference("", ""));
 
         // Both should use the default agent name, producing the same result
         Assert.That(withNull, Is.EqualTo(withEmptyName));
@@ -170,7 +170,7 @@ public class SessionIdDerivationTests
     {
         // Verify the hash matches the cross-language contract for the same seed.
         // SHA-256("my-agent:1.0:partition_hint") truncated to 63 hex chars
-        var agentRef = new AgentReference("my-agent") { Version = "1.0" };
+        var agentRef = new AgentReference("my-agent", "1.0");
 
         // Use a raw conversation_id that will be used as-is (not a valid ID for partition extraction)
         var result = SessionIdDerivation.Derive("partition_hint", null, ResponseId, agentRef);
