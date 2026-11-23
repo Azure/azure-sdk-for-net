@@ -17,6 +17,7 @@ namespace Azure.Core
     public abstract class ClientOptions
     {
         private HttpPipelineTransport _transport;
+        private ModelProxyCollection? _modelProxies;
         internal bool IsCustomTransportSet { get; private set; }
 
         /// <summary>
@@ -55,7 +56,10 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
-                ModelReaderWriterOptions = clientOptions.ModelReaderWriterOptions;
+                if (clientOptions._modelProxies is { Count: > 0 } modelProxies)
+                {
+                    _modelProxies = new ModelProxyCollection(modelProxies);
+                }
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -139,38 +143,16 @@ namespace Azure.Core
         public HttpPipelinePolicy? RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets the <see cref="System.ClientModel.Primitives.ModelReaderWriterOptions"/> containing proxies registered
-        /// with <see cref="AddProxy{T}(IPersistableModel{T})"/> for clients constructed with these options.
+        /// Gets the model proxies used to read and write models for clients constructed with these options.
         /// </summary>
         /// <remarks>
-        /// PROTOTYPE (MRW proxy E2E): this mirrors the equivalent property on
-        /// <see cref="System.ClientModel.Primitives.ClientPipelineOptions"/> so the same injection mechanism is
-        /// available to Azure SDK clients (e.g. Foundry, which builds on Azure.Core). It exists to validate the
-        /// end-to-end scenario locally and is pending API review before it becomes part of the public surface.
+        /// A client adds these proxies to the <see cref="ModelReaderWriterOptions.Proxies"/> of the
+        /// <see cref="ModelReaderWriterOptions"/> it uses to read and write models. See
+        /// <see cref="ModelReaderWriterOptions.Proxies"/> for how proxies are matched to models.
+        /// Add proxies before constructing a client with these options; changes made afterwards might not be
+        /// observed by that client.
         /// </remarks>
-        public ModelReaderWriterOptions? ModelReaderWriterOptions { get; private set; }
-
-        /// <summary>
-        /// Registers a proxy for models handled by clients constructed with these options.
-        /// </summary>
-        /// <typeparam name="T">The model type to proxy.</typeparam>
-        /// <param name="proxy">The proxy implementation.</param>
-        public void AddProxy<T>(IPersistableModel<T> proxy)
-        {
-            Argument.AssertNotNull(proxy, nameof(proxy));
-            (ModelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
-        }
-
-        /// <summary>
-        /// Registers a conditional proxy for models handled by clients constructed with these options.
-        /// </summary>
-        /// <typeparam name="T">The model type to proxy.</typeparam>
-        /// <param name="proxy">The conditional proxy implementation.</param>
-        public void AddProxy<T>(ConditionalModelProxy<T> proxy) where T : IPersistableModel<T>
-        {
-            Argument.AssertNotNull(proxy, nameof(proxy));
-            (ModelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
-        }
+        public IList<ModelProxy> ModelProxies => _modelProxies ??= new ModelProxyCollection();
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.
