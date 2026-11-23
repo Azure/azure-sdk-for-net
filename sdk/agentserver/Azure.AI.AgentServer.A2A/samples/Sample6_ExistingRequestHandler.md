@@ -14,7 +14,6 @@ extensions are in `Microsoft.Extensions.DependencyInjection`.
 var card = CreateCard();
 var services = new ServiceCollection();
 services.AddLogging();
-services.AddSingleton<ITaskStore, InMemoryTaskStore>();
 services.AddA2AAgent<TaskAgent>(card);
 
 await using var nativeServices = services.BuildServiceProvider();

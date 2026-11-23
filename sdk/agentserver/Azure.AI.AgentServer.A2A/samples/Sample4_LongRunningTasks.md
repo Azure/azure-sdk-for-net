@@ -61,8 +61,12 @@ builder.Build().Run();
 
 ## Return immediately and poll
 
-The native request's `configuration.returnImmediately` selects detached
-execution. This is different from the HTTP client abandoning a normal request.
+The native request's `configuration.returnImmediately` option controls when the
+server answers. When it is `true`, the server returns the Task as soon as it is
+created (typically in the submitted or working state) while the work keeps running,
+and the client polls with `GetTask`. When it is omitted or `false`, the server
+waits for the Task to finish or reach an interrupted state before responding.
+This is different from the HTTP client abandoning a normal request.
 
 ```powershell
 function Invoke-A2ARpc($method, $parameters) {

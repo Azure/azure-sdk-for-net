@@ -1,7 +1,6 @@
 # Sample 5: Customize the build
 
-Inject application dependencies, choose a native task store, and configure native
-A2A server options.
+Inject application dependencies and configure native A2A server options.
 
 ## Define an application dependency
 
@@ -25,7 +24,7 @@ public class GreetingAgent(GreetingSettings settings) : IAgentHandler
 }
 ```
 
-## Register dependencies and storage
+## Register dependencies
 
 Use `A2A` and `Microsoft.Extensions.DependencyInjection`:
 
@@ -33,13 +32,12 @@ Use `A2A` and `Microsoft.Extensions.DependencyInjection`:
 public static void ConfigureServices(IServiceCollection services)
 {
     services.AddSingleton(new GreetingSettings("Welcome"));
-    services.AddSingleton<ITaskStore, InMemoryTaskStore>();
 }
 ```
 
-Explicitly registering a native `ITaskStore` preserves the application's storage
-selection, including when hosted. This example deliberately uses in-memory
-storage and does not persist Tasks across restarts.
+Native A2A provides an in-memory task store by default, so this sample does not
+register one. To keep Tasks across restarts, register your own `ITaskStore`; see
+[task persistence](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample11_TaskPersistence.md).
 
 ## Configure native server options
 

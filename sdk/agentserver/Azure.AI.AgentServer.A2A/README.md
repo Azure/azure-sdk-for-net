@@ -143,6 +143,7 @@ ensure shared dependencies are thread-safe.
 | GET | `/readiness` | Core readiness probe |
 
 The library maps JSON-RPC and the public Agent Card, not HTTP+JSON/REST or gRPC.
+Those transports are out of scope for the initial preview release.
 Cards advertising push notifications or extended cards are rejected at startup
 rather than silently rewritten. Native method support and errors remain owned
 by the supplied request handler.
@@ -186,13 +187,10 @@ The per-request call ID does not change the storage partition.
 Explicit local persistence uses Core's file-backed state store. Local partitions
 are a development convenience, not an authentication boundary. Persisting a task
 does not restart an interrupted executor, restore subscriptions, or enable
-resilient background execution. The default local in-memory store loses tasks
+resilient background execution. Resuming interrupted tasks after a host restart
+is out of scope for the initial preview release; a task left in progress stays in
+its last persisted state. The default local in-memory store loses tasks
 when the process stops.
-
-Automated coverage against real hosted storage, including service limits and
-brokered user isolation, is a pre-GA requirement tracked in
-[issue #64972](https://github.com/Azure/azure-sdk-for-net/issues/64972).
-The current offline tests do not establish live-service behavior.
 
 ### Errors
 

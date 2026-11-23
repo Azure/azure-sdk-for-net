@@ -2,6 +2,13 @@
 
 Add A2A endpoints to an application-owned ASP.NET Core host.
 
+**Tier 3** is for an existing ASP.NET Core web application that must keep
+control of its own host, for example one that already serves its own routes
+(like the `/` route below), authentication, logging and telemetry setup, and
+only needs to add the A2A endpoints to it. If you want the library to own the
+host, use [Tier 1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample8_Tier1HostingCustomize.md) or
+[Tier 2](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample9_Tier2HostingBuilder.md).
+
 ## Register and map the application
 
 Use `CreateCard` and `EchoAgent` from

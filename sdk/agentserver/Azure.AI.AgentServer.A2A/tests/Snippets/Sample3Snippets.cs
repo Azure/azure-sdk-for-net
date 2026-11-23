@@ -18,7 +18,7 @@ public class Sample3Snippets
             CancellationToken cancellationToken)
         {
             var task = new TaskUpdater(eventQueue, context.TaskId, context.ContextId);
-            if (context.Task is null)
+            if (!context.IsContinuation)
             {
                 await task.SubmitAsync(cancellationToken: cancellationToken);
                 await task.RequireInputAsync(new Message

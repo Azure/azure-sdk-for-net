@@ -96,10 +96,6 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         var key = Key(taskId, owner);
         var store = await GetStoreAsync(cancellationToken).ConfigureAwait(false);
         var item = await store.GetItemAsync(key, cancellationToken).ConfigureAwait(false);
-        if (item is null && !FoundryEnvironment.IsHosted && key != LegacyKey(taskId, owner))
-        {
-            item = await store.GetItemAsync(LegacyKey(taskId, owner), cancellationToken).ConfigureAwait(false);
-        }
         return item is null ? null : Deserialize(item, owner);
     }
 
@@ -139,10 +135,6 @@ public class FoundryTaskStore : ITaskStore, IDisposable
             new Dictionary<string, BinaryData> { ["task"] = BinaryData.FromBytes(payload) },
             tags: tags,
             cancellationToken: cancellationToken).ConfigureAwait(false);
-        if (!FoundryEnvironment.IsHosted && key != LegacyKey(taskId, owner))
-        {
-            await DeleteItemIfExistsAsync(store, LegacyKey(taskId, owner), cancellationToken).ConfigureAwait(false);
-        }
     }
 
     /// <summary>Deletes a task snapshot in the current caller's scope.</summary>
@@ -155,10 +147,6 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         var key = Key(taskId, owner);
         var store = await GetStoreAsync(cancellationToken).ConfigureAwait(false);
         await DeleteItemIfExistsAsync(store, key, cancellationToken).ConfigureAwait(false);
-        if (!FoundryEnvironment.IsHosted && key != LegacyKey(taskId, owner))
-        {
-            await DeleteItemIfExistsAsync(store, LegacyKey(taskId, owner), cancellationToken).ConfigureAwait(false);
-        }
     }
 
     private static async Task DeleteItemIfExistsAsync(
@@ -334,20 +322,18 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     private static string Key(string taskId, string owner)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(taskId);
-        string legacy = LegacyKey(taskId, owner);
-        if (legacy.Length <= 128)
+        string encoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(taskId))
+            .TrimEnd('=').Replace('+', '-').Replace('/', '_');
+        string key = $"{owner}:{encoded}";
+        if (key.Length <= 128)
         {
-            return legacy;
+            return key;
         }
 
         string digest = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(taskId)))
             .TrimEnd('=').Replace('+', '-').Replace('/', '_');
         return $"{owner}:sha256:{digest}";
     }
-
-    // Published alpha 20261028.1 used this format for local snapshots, including oversized keys.
-    private static string LegacyKey(string taskId, string owner) =>
-        $"{owner}:{Convert.ToBase64String(Encoding.UTF8.GetBytes(taskId)).TrimEnd('=').Replace('+', '-').Replace('/', '_')}";
 
     private static AgentTask Deserialize(StateStoreItem item, string owner)
     {
@@ -363,7 +349,7 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     {
         var task = JsonSerializer.Deserialize<AgentTask>(payload.ToMemory().Span, A2AJsonUtilities.DefaultOptions)
             ?? throw new InvalidDataException("The stored A2A task snapshot is null.");
-        if (key != Key(task.Id, owner) && key != LegacyKey(task.Id, owner))
+        if (key != Key(task.Id, owner))
         {
             throw new InvalidDataException("The stored A2A task identity does not match its storage key.");
         }

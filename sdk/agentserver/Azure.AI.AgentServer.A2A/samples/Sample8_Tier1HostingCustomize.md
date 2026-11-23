@@ -3,6 +3,18 @@
 Configure the library-owned host without replacing the one-call server entry
 point.
 
+The library offers three hosting levels. **Tier 1** is the simplest:
+`A2AAgentServer.Run<THandler>()` builds and starts the whole server for you.
+Tier 2 gives you the host builder, and Tier 3 lets your own ASP.NET Core
+application own the host (see the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/README.md)).
+
+Use this sample when Tier 1 is enough but you still need a few settings. For
+example, a greeting agent that needs a configured greeting prefix, a longer
+shutdown timeout so in-flight requests can finish, an application health check
+that must pass before the agent reports ready, and an application tracing
+source. You pass these in the `configure` callback instead of building the host
+yourself.
+
 ## Define the host configuration
 
 Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) and

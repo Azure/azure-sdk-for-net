@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using System.Text;
-using global::A2A;
+using System.Text.Json;
 using Azure.AI.AgentServer.A2A.Internal;
 using Azure.AI.AgentServer.A2A.Tests.Snippets;
 using Azure.AI.AgentServer.Core.Storage;
+using global::A2A;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -83,72 +83,72 @@ public class FoundryTaskStoreTests
         }
     }
 
-        [Test]
-        public async Task SmallPagesReadOnlySelectedSnapshotsAndPreserveNativeProjection()
+    [Test]
+    public async Task SmallPagesReadOnlySelectedSnapshotsAndPreserveNativeProjection()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("paging");
+        var tracking = new TrackingStateStore(backing);
+        using var store = new FoundryTaskStore(tracking);
+        var native = new InMemoryTaskStore();
+        for (int index = 0; index < 105; index++)
         {
-            var backing = await FoundryStateStore.GetOrCreateAsync("paging");
-            var tracking = new TrackingStateStore(backing);
-            using var store = new FoundryTaskStore(tracking);
-            var native = new InMemoryTaskStore();
-            for (int index = 0; index < 105; index++)
-            {
-                var task = CreateTask($"t{index:D3}");
-                task.ContextId = index % 2 == 0 ? "even" : "odd";
-                task.Status.Timestamp = DateTimeOffset.UnixEpoch.AddSeconds(index);
-                task.Status.State = index % 3 == 0 ? TaskState.Working : TaskState.Completed;
-                task.Artifacts = [new Artifact { ArtifactId = $"a{index}", Parts = [Part.FromText(new string('x', 10000))] }];
-                task.History =
-                [
-                    new Message { MessageId = $"m{index}-1", Role = Role.User, Parts = [Part.FromText("first")] },
+            var task = CreateTask($"t{index:D3}");
+            task.ContextId = index % 2 == 0 ? "even" : "odd";
+            task.Status.Timestamp = DateTimeOffset.UnixEpoch.AddSeconds(index);
+            task.Status.State = index % 3 == 0 ? TaskState.Working : TaskState.Completed;
+            task.Artifacts = [new Artifact { ArtifactId = $"a{index}", Parts = [Part.FromText(new string('x', 10000))] }];
+            task.History =
+            [
+                new Message { MessageId = $"m{index}-1", Role = Role.User, Parts = [Part.FromText("first")] },
                     new Message { MessageId = $"m{index}-2", Role = Role.Agent, Parts = [Part.FromText("second")] },
                 ];
-                await store.SaveTaskAsync(task.Id, task);
-                await native.SaveTaskAsync(task.Id, task);
-            }
+            await store.SaveTaskAsync(task.Id, task);
+            await native.SaveTaskAsync(task.Id, task);
+        }
 
-            foreach (var projection in new[]
-            {
+        foreach (var projection in new[]
+        {
                 new ListTasksRequest { ContextId = "even", Status = TaskState.Completed, PageSize = 1, IncludeArtifacts = true, HistoryLength = 1 },
                 new ListTasksRequest { PageSize = 1, IncludeArtifacts = false, HistoryLength = 0 },
                 new ListTasksRequest { PageSize = 1, IncludeArtifacts = true },
             })
-            {
-                var request = projection;
-                request.StatusTimestampAfter = DateTimeOffset.UnixEpoch.AddSeconds(10);
-                for (int page = 0; page < 2; page++)
-                {
-                    tracking.Reads = 0;
-                    var actual = await store.ListTasksAsync(request);
-                    var expected = await native.ListTasksAsync(request);
-                    Assert.That(JsonSerializer.Serialize(actual, A2AJsonUtilities.DefaultOptions),
-                        Is.EqualTo(JsonSerializer.Serialize(expected, A2AJsonUtilities.DefaultOptions)));
-                    Assert.That(tracking.Reads, Is.EqualTo(1));
-                    request.PageToken = actual.NextPageToken;
-                }
-            }
-
-            tracking.Reads = 0;
-            var empty = await store.ListTasksAsync(new() { ContextId = "absent" });
-            Assert.That(empty.Tasks, Is.Empty);
-            Assert.That(tracking.Reads, Is.Zero);
-        }
-
-        [Test]
-        public async Task ListingFallsBackForLegacySnapshotsWithoutSummaryTags()
         {
-            var backing = await FoundryStateStore.GetOrCreateAsync("legacy");
-            var tracking = new TrackingStateStore(backing);
-            using var store = new FoundryTaskStore(tracking);
-            await store.SaveTaskAsync("t1", CreateTask("t1"));
-            string key = tracking.LastKey!;
-            var item = await backing.GetItemAsync(key);
-            await backing.SetItemAsync(key, item!.Value,
-                tags: new Dictionary<string, string> { ["a2a-owner"] = item.Tags["a2a-owner"] });
-            tracking.Reads = 0;
-            var page = await store.ListTasksAsync(new() { PageSize = 1 });
-            Assert.That(page.Tasks.Single().Id, Is.EqualTo("t1"));
-            Assert.That(tracking.Reads, Is.EqualTo(1));
+            var request = projection;
+            request.StatusTimestampAfter = DateTimeOffset.UnixEpoch.AddSeconds(10);
+            for (int page = 0; page < 2; page++)
+            {
+                tracking.Reads = 0;
+                var actual = await store.ListTasksAsync(request);
+                var expected = await native.ListTasksAsync(request);
+                Assert.That(JsonSerializer.Serialize(actual, A2AJsonUtilities.DefaultOptions),
+                    Is.EqualTo(JsonSerializer.Serialize(expected, A2AJsonUtilities.DefaultOptions)));
+                Assert.That(tracking.Reads, Is.EqualTo(1));
+                request.PageToken = actual.NextPageToken;
+            }
         }
+
+        tracking.Reads = 0;
+        var empty = await store.ListTasksAsync(new() { ContextId = "absent" });
+        Assert.That(empty.Tasks, Is.Empty);
+        Assert.That(tracking.Reads, Is.Zero);
+    }
+
+    [Test]
+    public async Task ListingFallsBackForLegacySnapshotsWithoutSummaryTags()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("legacy");
+        var tracking = new TrackingStateStore(backing);
+        using var store = new FoundryTaskStore(tracking);
+        await store.SaveTaskAsync("t1", CreateTask("t1"));
+        string key = tracking.LastKey!;
+        var item = await backing.GetItemAsync(key);
+        await backing.SetItemAsync(key, item!.Value,
+            tags: new Dictionary<string, string> { ["a2a-owner"] = item.Tags["a2a-owner"] });
+        tracking.Reads = 0;
+        var page = await store.ListTasksAsync(new() { PageSize = 1 });
+        Assert.That(page.Tasks.Single().Id, Is.EqualTo("t1"));
+        Assert.That(tracking.Reads, Is.EqualTo(1));
+    }
 
     [Test]
     public async Task ListingSummariesTrackUpdatesAndValidateTaskIdentity()
@@ -256,28 +256,27 @@ public class FoundryTaskStoreTests
         Assert.That((await store.ListTasksAsync(new())).Tasks.Single().Id, Is.EqualTo(task.Id));
     }
 
-    [TestCase(32)]
-    [TestCase(128)]
-    public async Task ExistingTaskKeysRemainReadableAndCanBeUpdatedAndDeleted(int length)
+    [TestCase(32, false)]
+    [TestCase(128, true)]
+    public async Task TaskKeysUseEncodedIdsOrADigestWhenOversized(int length, bool digested)
     {
-        var backing = await FoundryStateStore.GetOrCreateAsync("legacy-keys");
-        var tracking = new TrackingStateStore(backing);
+        var backing = await FoundryStateStore.GetOrCreateAsync("task-keys");
+        var tracking = new TrackingStateStore(backing) { EnforceHostedLimits = true };
         using var store = new FoundryTaskStore(tracking);
         var task = CreateTask(new string('t', length));
         await store.SaveTaskAsync(task.Id, task);
-        var item = await backing.GetItemAsync(tracking.LastKey!);
-        string legacyKey = item!.Tags["a2a-owner"] + ":" +
-            Convert.ToBase64String(Encoding.UTF8.GetBytes(task.Id)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
-        await backing.DeleteItemAsync(item.Key);
-        await backing.SetItemAsync(legacyKey, item.Value, new Dictionary<string, string>(item.Tags));
+        string key = tracking.LastKey!;
+        Assert.That(key.Length, Is.LessThanOrEqualTo(128));
+        Assert.That(key.Contains(":sha256:", StringComparison.Ordinal), Is.EqualTo(digested));
         Assert.That((await store.GetTaskAsync(task.Id))!.Id, Is.EqualTo(task.Id));
         Assert.That((await store.ListTasksAsync(new() { PageSize = 1 })).Tasks.Single().Id, Is.EqualTo(task.Id));
         task.ContextId = "updated";
         await store.SaveTaskAsync(task.Id, task);
+        Assert.That(tracking.LastKey, Is.EqualTo(key));
         Assert.That((await store.ListTasksAsync(new() { ContextId = "updated" })).Tasks.Single().Id, Is.EqualTo(task.Id));
         await store.DeleteTaskAsync(task.Id);
         Assert.That(await store.GetTaskAsync(task.Id), Is.Null);
-        Assert.That(await backing.GetItemAsync(legacyKey), Is.Null);
+        Assert.That(await backing.GetItemAsync(key), Is.Null);
     }
 
     [Test]
@@ -295,45 +294,46 @@ public class FoundryTaskStoreTests
         Assert.That(tracking.Reads, Is.EqualTo(1));
     }
 
-        private sealed class TrackingStateStore(FoundryStateStore inner) : FoundryStateStore
+    private sealed class TrackingStateStore(FoundryStateStore inner) : FoundryStateStore
+    {
+        public int Reads { get; set; }
+        public string? LastKey { get; private set; }
+        public string? MissingKey { get; set; }
+        public bool EnforceHostedLimits { get; set; }
+        public override Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default)
         {
-            public int Reads { get; set; }
-            public string? LastKey { get; private set; }
-            public string? MissingKey { get; set; }
-            public bool EnforceHostedLimits { get; set; }
-            public override Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default)
-            {
-                Reads++;
-                return key == MissingKey ? Task.FromResult<StateStoreItem?>(null) : inner.GetItemAsync(key, cancellationToken);
-            }
-
-            public override Task<StateStoreItemRef> SetItemAsync(
-                string key, IDictionary<string, BinaryData> value, IReadOnlyDictionary<string, string>? tags = null,
-                ETag ifMatch = default, bool requireExists = false, CancellationToken cancellationToken = default)
-            {
-                LastKey = key;
-                if (EnforceHostedLimits)
-                {
-                    Assert.That(key.Length, Is.LessThanOrEqualTo(128), "Hosted item key limit");
-                    Assert.That(tags?.Values.All(value => value.Length <= 256), Is.True, "Hosted tag-value limit");
-                }
-                return inner.SetItemAsync(key, value, tags, ifMatch, requireExists, cancellationToken);
-            }
-
-            public bool RejectTagQueries { get; set; }
-
-            public override Task<DeletedStateStoreItem> DeleteItemAsync(
-                string key, ETag ifMatch = default, CancellationToken cancellationToken = default) =>
-                inner.DeleteItemAsync(key, ifMatch, cancellationToken);
-
-            public override Task<StateStoreItemKeyPage> ListKeysAsync(
-                IReadOnlyDictionary<string, string>? tags = null, int? limit = null, string? after = null,
-                string? before = null, ListRequestOrder order = ListRequestOrder.Desc, CancellationToken cancellationToken = default)
-            {
-                if (RejectTagQueries && tags is not null) { throw new InvalidOperationException("Tag queries are not supported."); }
-                return inner.ListKeysAsync(tags, limit, after, before, order, cancellationToken);
-            }
+            Reads++;
+            return key == MissingKey ? Task.FromResult<StateStoreItem?>(null) : inner.GetItemAsync(key, cancellationToken);
         }
+
+        public override Task<StateStoreItemRef> SetItemAsync(
+            string key, IDictionary<string, BinaryData> value, IReadOnlyDictionary<string, string>? tags = null,
+            ETag ifMatch = default, bool requireExists = false, CancellationToken cancellationToken = default)
+        {
+            LastKey = key;
+            if (EnforceHostedLimits)
+            {
+                Assert.That(key.Length, Is.LessThanOrEqualTo(128), "Hosted item key limit");
+                Assert.That(tags?.Values.All(value => value.Length <= 256), Is.True, "Hosted tag-value limit");
+            }
+            return inner.SetItemAsync(key, value, tags, ifMatch, requireExists, cancellationToken);
+        }
+
+        public bool RejectTagQueries { get; set; }
+
+        public override Task<DeletedStateStoreItem> DeleteItemAsync(
+            string key, ETag ifMatch = default, CancellationToken cancellationToken = default) =>
+            inner.DeleteItemAsync(key, ifMatch, cancellationToken);
+
+        public override Task<StateStoreItemKeyPage> ListKeysAsync(
+            IReadOnlyDictionary<string, string>? tags = null, int? limit = null, string? after = null,
+            string? before = null, ListRequestOrder order = ListRequestOrder.Desc, CancellationToken cancellationToken = default)
+        {
+            if (RejectTagQueries && tags is not null)
+            { throw new InvalidOperationException("Tag queries are not supported."); }
+            return inner.ListKeysAsync(tags, limit, after, before, order, cancellationToken);
+        }
+    }
 
     [Test]
     public async Task ListingFiltersCallerSummariesBeforeHydratingWithoutTagQueries()

@@ -11,7 +11,6 @@ Use `CreateCard` and `EchoAgent` from
 ```C# Snippet:A2A_Sample7_Registration
 public static void RegisterNativeAgent(IServiceCollection services, AgentCard card)
 {
-    services.AddSingleton<ITaskStore, InMemoryTaskStore>();
     services.AddA2AAgent<EchoAgent>(card);
 }
 ```

@@ -19,7 +19,6 @@ public class Sample6Snippets
         var card = CreateCard();
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddSingleton<ITaskStore, InMemoryTaskStore>();
         services.AddA2AAgent<TaskAgent>(card);
 
         await using var nativeServices = services.BuildServiceProvider();

@@ -30,7 +30,6 @@ public class Sample5Snippets
     public static void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(new GreetingSettings("Welcome"));
-        services.AddSingleton<ITaskStore, InMemoryTaskStore>();
     }
     #endregion
 

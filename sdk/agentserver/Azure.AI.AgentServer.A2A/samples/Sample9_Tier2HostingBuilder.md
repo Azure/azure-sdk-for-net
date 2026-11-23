@@ -3,6 +3,13 @@
 Compose a native A2A agent and an independent Invocations handler on the same
 Core host.
 
+**Tier 2** gives you the host builder (`AgentHost.CreateBuilder()`) instead of
+the one-call `A2AAgentServer.Run`. Use it when one container must serve more
+than one protocol. For example, an agent that answers native A2A requests at
+`/a2a` and also exposes a plain HTTP status endpoint at `/invocations`, both
+sharing one port, one readiness probe and one set of Core middleware. If you
+only need a single A2A agent with a few settings, [Tier 1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample8_Tier1HostingCustomize.md) is simpler.
+
 ## Prerequisites
 
 Install the additional protocol library:
