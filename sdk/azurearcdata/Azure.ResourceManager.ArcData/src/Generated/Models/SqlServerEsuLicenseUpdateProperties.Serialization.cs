@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ArcData.Models
             SqlServerEsuLicenseVersion? version = default;
             string uniqueId = default;
             int? physicalCores = default;
-            State? activationState = default;
+            SqlServerEsuLicenseActivationState? activationState = default;
             SqlServerLicenseScopeType? scopeType = default;
             DateTimeOffset? activatedOn = default;
             DateTimeOffset? terminatedOn = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    activationState = new State(prop.Value.GetString());
+                    activationState = new SqlServerEsuLicenseActivationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scopeType"u8))
