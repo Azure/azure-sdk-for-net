@@ -2,6 +2,12 @@
 
 `FoundryStateStore` is a durable store for agent state. Each store holds items — keyed JSON values — that you read, write, and list by key. Use it to persist checkpoints, conversation state, counters, or any small state your agent needs to survive across requests and restarts.
 
+> **Note:** The state store API is experimental and may change or be removed. Using it without suppressing the `AAAS004` diagnostic is a compile error:
+>
+> ```C#
+> #pragma warning disable AAAS004
+> ```
+
 > **Note:** Outside Foundry hosting, State Store always uses a local JSON file under `${AGENTSERVER_STATE_ROOT:-~/.agentserver}/state_stores`, even when an endpoint is supplied. In Foundry hosting, the endpoint is resolved from `FOUNDRY_PROJECT_ENDPOINT` and a token credential is required.
 
 ## Prerequisites
