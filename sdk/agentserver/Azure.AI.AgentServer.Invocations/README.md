@@ -180,7 +180,7 @@ CE-declaring agent version. Local library tests do not establish deployment read
 
 Caller interruptions use `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`. Voice Live senders must use the same event contract. Generic raw WebSocket handlers and application-owned cancellation/history are unchanged.
 
-The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+The typed Voice relay is experimental and may change or be removed. Its `AAAS001` diagnostic is a compile-time error unless suppressed:
 
 ```C#
 #pragma warning disable AAAS001
