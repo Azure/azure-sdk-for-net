@@ -2042,6 +2042,78 @@ namespace Azure.Generator.Mgmt.Tests
                 $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DerivedConstructorUsesFlattenedBaseParameterWhenDerivedAlsoFlattens(bool flattenDerivedProperty)
+        {
+            var state = InputFactory.StringEnum("DataTypeState", [("Enabled", "Enabled"), ("Disabled", "Disabled")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var common = InputFactory.Model("DataConnectorDataTypeCommon", properties:
+                [InputFactory.Property("state", state, isRequired: true)]);
+            var baseModel = InputFactory.Model("AlertsDataTypeOfDataConnector", properties:
+                [InputFactory.Property("alerts", common, isRequired: true)]);
+            var derivedProperties = flattenDerivedProperty
+                ? new[] { InputFactory.Property("discoveryLogs", common) }
+                : Array.Empty<InputModelProperty>();
+            var derivedModel = InputFactory.Model("McasDataConnectorDataTypes", baseModel: baseModel, properties: derivedProperties);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [common, baseModel, derivedModel], inputEnums: () => [state]);
+            var baseProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            _ = baseProvider.Constructors;
+            var before = derivedProvider.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(before.Signature.Parameters.Any(p => p.Name == "alerts" && p.Type.Name == "DataConnectorDataTypeCommon"), Is.True,
+                "The reproduction must start with the inherited wrapper parameter.");
+
+            var visitor = new FlattenPropertyVisitor();
+            var visit = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visit.Invoke(visitor, [derivedProvider]);
+
+            var baseConstructor = baseProvider.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            var constructor = derivedProvider.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(baseConstructor.Signature.Parameters.Any(p => p.Name == "alertsState" && p.Type.Name == "DataTypeState"), Is.True);
+            Assert.That(constructor.Signature.Parameters.Any(p => p.Name == "alertsState" && p.Type.Name == "DataTypeState"), Is.True,
+                "The derived constructor must accept the same flattened parameter as its base.");
+            Assert.That(constructor.Signature.Parameters.Any(p => p.Name == "alerts"), Is.False);
+            Assert.That(constructor.Signature.Initializer, Is.Not.Null);
+            var initializerArguments = constructor.Signature.Initializer!.Arguments.OfType<VariableExpression>()
+                .Select(argument => argument.Declaration.RequestedName).ToArray();
+            Assert.That(initializerArguments, Does.Contain("alertsState"));
+            Assert.That(initializerArguments, Does.Not.Contain("alerts"));
+            if (flattenDerivedProperty)
+            {
+                Assert.That(derivedProvider.Properties.Any(p => p.Name == "DiscoveryLogsState"), Is.True);
+            }
+        }
+
+        [Test]
+        public void DerivedConstructorCombinesOwnAndGrandparentFlattening()
+        {
+            var common = InputFactory.Model("CommonState", properties:
+                [InputFactory.Property("value", InputPrimitiveType.String, isRequired: true)]);
+            var grandparent = InputFactory.Model("Grandparent", properties:
+                [InputFactory.Property("alerts", common, isRequired: true)]);
+            var parent = InputFactory.Model("Intermediate", baseModel: grandparent, properties: []);
+            var child = InputFactory.Model("Child", baseModel: parent, properties:
+                [InputFactory.Property("logs", common, isRequired: true)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [common, grandparent, parent, child]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parent)!;
+            var childProvider = plugin.Object.TypeFactory.CreateModel(child)!;
+            _ = parentProvider.Constructors;
+            _ = childProvider.Constructors;
+            var visitor = new FlattenPropertyVisitor();
+            var visit = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visit.Invoke(visitor, [childProvider]);
+
+            var parentConstructor = parentProvider.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            var childConstructor = childProvider.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(parentConstructor.Signature.Parameters.Select(p => p.Name), Does.Contain("alertsValue"));
+            Assert.That(childConstructor.Signature.Parameters.Select(p => p.Name), Does.Contain("alertsValue").And.Contain("logsValue"));
+            var initializerArguments = childConstructor.Signature.Initializer!.Arguments.OfType<VariableExpression>()
+                .Select(argument => argument.Declaration.RequestedName).ToArray();
+            Assert.That(initializerArguments, Does.Contain("alertsValue"));
+            Assert.That(initializerArguments, Does.Not.Contain("alerts"));
+        }
+
         /// <summary>
         /// Verifies that <see cref="FlattenPropertyVisitor.FilterAttributesForFlatten"/> drops any
         /// WirePath attribute attached to the inner property while preserving other attributes.
