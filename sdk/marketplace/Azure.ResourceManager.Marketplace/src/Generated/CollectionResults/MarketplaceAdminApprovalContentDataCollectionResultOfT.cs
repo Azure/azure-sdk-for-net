@@ -14,19 +14,19 @@ using Azure.ResourceManager.Marketplace.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    internal partial class MarketplaceApprovalRequestDataCollectionResultOfT : Pageable<MarketplaceApprovalRequestData>
+    internal partial class MarketplaceAdminApprovalContentDataCollectionResultOfT : Pageable<MarketplaceAdminApprovalContentData>
     {
         private readonly PrivateStore _client;
         private readonly Guid _privateStoreId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MarketplaceApprovalRequestDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MarketplaceAdminApprovalContentDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateStore client used to send requests. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MarketplaceApprovalRequestDataCollectionResultOfT(PrivateStore client, Guid privateStoreId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MarketplaceAdminApprovalContentDataCollectionResultOfT(PrivateStore client, Guid privateStoreId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _privateStoreId = privateStoreId;
@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Marketplace
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MarketplaceApprovalRequestDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MarketplaceAdminApprovalContentDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MarketplaceApprovalRequestDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<MarketplaceApprovalRequestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MarketplaceAdminApprovalContentDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<MarketplaceAdminApprovalContentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            RequestApprovalsList result = RequestApprovalsList.FromResponse(response);
-            yield return Page<MarketplaceApprovalRequestData>.FromValues((IReadOnlyList<MarketplaceApprovalRequestData>)result.Value, null, response);
+            MarketplaceAdminApprovalRequestList result = MarketplaceAdminApprovalRequestList.FromResponse(response);
+            yield return Page<MarketplaceAdminApprovalContentData>.FromValues((IReadOnlyList<MarketplaceAdminApprovalContentData>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetApprovalRequestsListRequest(_privateStoreId, _context);
+            HttpMessage message = _client.CreateAdminRequestApprovalsListRequest(_privateStoreId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

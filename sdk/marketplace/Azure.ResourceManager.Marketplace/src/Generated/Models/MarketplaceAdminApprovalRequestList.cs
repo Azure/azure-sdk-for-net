@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         internal MarketplaceAdminApprovalRequestList()
         {
-            Value = new ChangeTrackingList<MarketplaceAdminApprovalRequestData>();
+            Value = new ChangeTrackingList<MarketplaceAdminApprovalContentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceAdminApprovalRequestList(IList<MarketplaceAdminApprovalRequestData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceAdminApprovalRequestList(IList<MarketplaceAdminApprovalContentData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IList<MarketplaceAdminApprovalRequestData> Value { get; }
+        public IList<MarketplaceAdminApprovalContentData> Value { get; }
 
         /// <summary> URL to get the next set of notifications list results if there are any. </summary>
         public string NextLink { get; }

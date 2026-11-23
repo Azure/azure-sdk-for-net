@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MarketplaceApprovalRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MarketplaceApprovalRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string requestApprovalId, MarketplaceApprovalContentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalContentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceApprovalContentData> response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MarketplaceArmOperation<MarketplaceApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MarketplaceApprovalRequestResource> CreateOrUpdate(WaitUntil waitUntil, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MarketplaceApprovalRequestResource> CreateOrUpdate(WaitUntil waitUntil, string requestApprovalId, MarketplaceApprovalContentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalContentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceApprovalContentData> response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MarketplaceArmOperation<MarketplaceApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceApprovalContentData> response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceApprovalContentData> response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MarketplaceApprovalRequestData, MarketplaceApprovalRequestResource>(new MarketplaceApprovalRequestDataAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
+            return new AsyncPageableWrapper<MarketplaceApprovalContentData, MarketplaceApprovalRequestResource>(new MarketplaceApprovalContentDataAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MarketplaceApprovalRequestData, MarketplaceApprovalRequestResource>(new MarketplaceApprovalRequestDataCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
+            return new PageableWrapper<MarketplaceApprovalContentData, MarketplaceApprovalRequestResource>(new MarketplaceApprovalContentDataCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
         }
 
         /// <summary>
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
+                Response<MarketplaceApprovalContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                        response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
+                        response = Response.FromValue((MarketplaceApprovalContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
+                Response<MarketplaceApprovalContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                        response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
+                        response = Response.FromValue((MarketplaceApprovalContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -468,14 +468,14 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
+                Response<MarketplaceApprovalContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                        response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
+                        response = Response.FromValue((MarketplaceApprovalContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -529,14 +529,14 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
+                Response<MarketplaceApprovalContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                        response = Response.FromValue(MarketplaceApprovalContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
+                        response = Response.FromValue((MarketplaceApprovalContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

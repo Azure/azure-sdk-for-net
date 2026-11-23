@@ -459,10 +459,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
         /// <param name="isClosed"> Gets a value indicating whether the request is closed. </param>
         /// <param name="messageCode"> Gets or sets the request approval message code. </param>
-        /// <returns> A new <see cref="Marketplace.MarketplaceApprovalRequestData"/> instance for mocking. </returns>
-        public static MarketplaceApprovalRequestData MarketplaceApprovalRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string offerDisplayName = default, string publisherId = default, IEnumerable<PrivateStorePlanDetails> plansDetails = default, bool? isClosed = default, long? messageCode = default)
+        /// <returns> A new <see cref="Marketplace.MarketplaceApprovalContentData"/> instance for mocking. </returns>
+        public static MarketplaceApprovalContentData MarketplaceApprovalContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string offerDisplayName = default, string publisherId = default, IEnumerable<PrivateStorePlanDetails> plansDetails = default, bool? isClosed = default, long? messageCode = default)
         {
-            return new MarketplaceApprovalRequestData(
+            return new MarketplaceApprovalContentData(
                 id,
                 name,
                 resourceType,
@@ -541,10 +541,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="plans"> Gets list of plans with requesters details. </param>
         /// <param name="collectionIds"> Gets or sets list of associated collection ids. </param>
         /// <param name="iconUri"> The offer icon url. </param>
-        /// <returns> A new <see cref="Marketplace.MarketplaceAdminApprovalRequestData"/> instance for mocking. </returns>
-        public static MarketplaceAdminApprovalRequestData MarketplaceAdminApprovalRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string displayName = default, string publisherId = default, MarketplaceAdminAction? adminAction = default, IEnumerable<string> approvedPlans = default, string comment = default, string administrator = default, IEnumerable<PlanRequesterDetails> plans = default, IEnumerable<Guid> collectionIds = default, Uri iconUri = default)
+        /// <returns> A new <see cref="Marketplace.MarketplaceAdminApprovalContentData"/> instance for mocking. </returns>
+        public static MarketplaceAdminApprovalContentData MarketplaceAdminApprovalContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string displayName = default, string publisherId = default, MarketplaceAdminAction? adminAction = default, IEnumerable<string> approvedPlans = default, string comment = default, string administrator = default, IEnumerable<PlanRequesterDetails> plans = default, IEnumerable<Guid> collectionIds = default, Uri iconUri = default)
         {
-            return new MarketplaceAdminApprovalRequestData(
+            return new MarketplaceAdminApprovalContentData(
                 id,
                 name,
                 resourceType,

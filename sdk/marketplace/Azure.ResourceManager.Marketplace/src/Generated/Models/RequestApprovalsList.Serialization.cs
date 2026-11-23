@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (MarketplaceApprovalRequestData item in Value)
+                foreach (MarketplaceApprovalContentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            IList<MarketplaceApprovalRequestData> value = default;
+            IList<MarketplaceApprovalContentData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<MarketplaceApprovalRequestData> array = new List<MarketplaceApprovalRequestData>();
+                    List<MarketplaceApprovalContentData> array = new List<MarketplaceApprovalContentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(item, options));
+                        array.Add(MarketplaceApprovalContentData.DeserializeMarketplaceApprovalContentData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RequestApprovalsList(value ?? new ChangeTrackingList<MarketplaceApprovalRequestData>(), nextLink, additionalBinaryDataProperties);
+            return new RequestApprovalsList(value ?? new ChangeTrackingList<MarketplaceApprovalContentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

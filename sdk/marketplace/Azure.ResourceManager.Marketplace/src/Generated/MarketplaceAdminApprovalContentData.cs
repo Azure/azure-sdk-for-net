@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary> Admin request approval resource. </summary>
-    public partial class MarketplaceAdminApprovalRequestData : ResourceData
+    public partial class MarketplaceAdminApprovalContentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
-        public MarketplaceAdminApprovalRequestData()
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalContentData"/>. </summary>
+        public MarketplaceAdminApprovalContentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalContentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The privateStore admin Approval request data structure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceAdminApprovalRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRequestApprovalProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal MarketplaceAdminApprovalContentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRequestApprovalProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
