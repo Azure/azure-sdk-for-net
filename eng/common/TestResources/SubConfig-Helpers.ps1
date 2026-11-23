@@ -19,20 +19,6 @@ function GetUserName() {
     return $UserName
 }
 
-function AddTestResourceGroupPrefix([string] $ResourceGroupName, [string] $TenantId, [string] $SubscriptionId) {
-    $tmeTenantIds = @('70a036f6-8e4d-4615-bad6-149c02e7720d')
-    $tmeSubscriptionId = '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4'
-
-    if ($ResourceGroupName -and
-        (($TenantId -and $tmeTenantIds -contains $TenantId) -or
-         ($SubscriptionId -and $SubscriptionId -ieq $tmeSubscriptionId)) -and
-        !$ResourceGroupName.StartsWith("SSS3PT_", [System.StringComparison]::OrdinalIgnoreCase)) {
-        return "SSS3PT_" + $ResourceGroupName
-    }
-
-    return $ResourceGroupName
-}
-
 function GetBaseAndResourceGroupNames(
     [string]$baseNameDefault,
     [string]$resourceGroupNameDefault,

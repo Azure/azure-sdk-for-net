@@ -206,8 +206,6 @@ if ($SubscriptionId -and $context.Subscription.Id -ne $SubscriptionId) {
     throw "Unable to select subscription '$SubscriptionId'. Verify that you have access to the subscription."
 }
 
-$ResourceGroupName = AddTestResourceGroupPrefix $ResourceGroupName $context.Subscription.TenantId $SubscriptionId
-
 # Use cache of well-known team subs without having to be authenticated.
 $wellKnownSubscriptions = @{
     'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
