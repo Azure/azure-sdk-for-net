@@ -1,8 +1,8 @@
 # Populate and query a graph index with provenance
 
-Use the [common preview setup](Sample23_NovemberPreview.md). The complete
+Use the [common preview setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md). The complete
 `GraphIndexRelationshipsAndProvenance` flow is in
-[`Sample27_GraphIndexPreview.cs`](../tests/Samples/Sample27_GraphIndexPreview.cs).
+[`Sample27_GraphIndexPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample27_GraphIndexPreview.cs).
 It needs graph-query support but no customer model deployment.
 
 ## Define the provenance and edge-list indexes
@@ -144,4 +144,4 @@ human-readable messages. Explain plans are diagnostics, not executable contracts
 Delete the graph index before its provenance index.
 
 For model-extracted relationships and graph-backed KB retrieval, see the
-[managed graph walkthrough](Sample30_GraphExtractionPreview.md).
+[managed graph walkthrough](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample30_GraphExtractionPreview.md).

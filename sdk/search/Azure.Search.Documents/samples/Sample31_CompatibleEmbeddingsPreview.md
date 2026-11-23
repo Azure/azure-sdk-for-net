@@ -1,8 +1,8 @@
 # Compatible embeddings for index queries and managed ingestion
 
-Use the [common preview setup](Sample23_NovemberPreview.md) and the existing,
+Use the [common preview setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md) and the existing,
 authorized provider. The executable methods are in
-[`Sample31_CompatibleEmbeddingsPreview.cs`](../tests/Samples/Sample31_CompatibleEmbeddingsPreview.cs).
+[`Sample31_CompatibleEmbeddingsPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample31_CompatibleEmbeddingsPreview.cs).
 Add `Azure.AI.OpenAI`, `OpenAI.Embeddings`, `System.Globalization` and
 `System.Text.Json` namespaces used by the full source.
 
@@ -69,9 +69,9 @@ string[] texts =
     "Airport hotel with shuttle buses for early flights.",
     "Downtown business hotel with meeting rooms and conference facilities."
 };
-EmbeddingClient embeddingClient = new AzureOpenAIClient(
-    new Uri(openAIEndpoint), new AzureKeyCredential(openAIKey))
-    .GetEmbeddingClient(embeddingDeployment);
+AzureOpenAIClient openAIClient = new AzureOpenAIClient(
+    new Uri(openAIEndpoint), new DefaultAzureCredential());
+EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient(embeddingDeployment);
 var embeddings = (await embeddingClient.GenerateEmbeddingsAsync(texts,
     new EmbeddingGenerationOptions { Dimensions = parameters.Dimensions })).Value;
 string[] keys = { "spa", "airport", "business" };
@@ -115,10 +115,10 @@ This flow also checks stored authentication headers are not returned.
 `CompatibleManagedBlobIngestionAndRetrieval` additionally requires
 `AZURE_SEARCH_COMPATIBLE_BLOB_CONNECTION_STRING`, `_CONTAINER`, `_FOLDER`, and
 `_SOURCE_APPROVED=true`. Use only the approved synthetic fixture described in the
-[graph walkthrough](Sample30_GraphExtractionPreview.md), never a container root.
-The [bundled fictional file](data/hotel_graph.txt) must be uploaded to your own
+[graph walkthrough](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample30_GraphExtractionPreview.md), never a container root.
+The [bundled fictional file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/data/hotel_graph.txt) must be uploaded to your own
 container; do not point at the sample authors' storage.
-Select `chat` using the [compatible chat configuration](Sample29_ModelProvidersPreview.md).
+Select `chat` using the [compatible chat configuration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample29_ModelProvidersPreview.md).
 
 ```C# Snippet:Azure_Search_Documents_Sample31_CompatibleManagedIngestion
 await indexClient.CreateKnowledgeSourceAsync(new AzureBlobKnowledgeSource(sourceName,

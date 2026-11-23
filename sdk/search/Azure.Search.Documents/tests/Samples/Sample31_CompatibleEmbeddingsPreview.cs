@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -35,7 +36,6 @@ namespace Azure.Search.Documents.Tests.Samples
             Uri endpoint = resources.Endpoint;
             AzureKeyCredential credential = resources.Credential;
             string openAIEndpoint = TestEnvironment.OpenAIEndpoint;
-            string openAIKey = TestEnvironment.OpenAIKey;
             string embeddingDeployment = RequiredPreviewSetting("AZURE_OPENAI_EMBEDDING_DEPLOYMENT");
             SearchIndex index = PreviewHotelIndex(indexName);
             index.Fields.Add(new SearchField("content_vector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
@@ -63,9 +63,12 @@ namespace Azure.Search.Documents.Tests.Samples
                 "Airport hotel with shuttle buses for early flights.",
                 "Downtown business hotel with meeting rooms and conference facilities."
             };
-            EmbeddingClient embeddingClient = new AzureOpenAIClient(
-                new Uri(openAIEndpoint), new AzureKeyCredential(openAIKey))
-                .GetEmbeddingClient(embeddingDeployment);
+            AzureOpenAIClient openAIClient = new AzureOpenAIClient(
+                new Uri(openAIEndpoint), new DefaultAzureCredential());
+#if !SNIPPET
+            openAIClient = new AzureOpenAIClient(new Uri(openAIEndpoint), TestEnvironment.Credential);
+#endif
+            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient(embeddingDeployment);
             var embeddings = (await embeddingClient.GenerateEmbeddingsAsync(texts,
                 new EmbeddingGenerationOptions { Dimensions = parameters.Dimensions })).Value;
             string[] keys = { "spa", "airport", "business" };

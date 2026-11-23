@@ -85,35 +85,49 @@ namespace Azure.Search.Documents.Tests
                 dataSource.Name,
                 resources.IndexName);
 
-            await serviceClient.CreateIndexerAsync(indexer);
+            try
+            {
+                await serviceClient.CreateIndexerAsync(indexer);
 
-            // Wait till the indexer is done.
-            await WaitForIndexingAsync(serviceClient, indexer.Name);
+                // Wait till the indexer is done.
+                await WaitForIndexingAsync(serviceClient, indexer.Name);
 
-            // Remove this workaround once the service issue is fixed: https://github.com/Azure/azure-sdk-for-net/issues/39104#issuecomment-1749469582
-            // Tracking issue: https://msdata.visualstudio.com/Azure%20Search/_workitems/edit/2737454
-            SearchIndexer actualIndexer = await serviceClient.GetIndexerAsync(indexer.Name);
+                // Remove this workaround once the service issue is fixed: https://github.com/Azure/azure-sdk-for-net/issues/39104#issuecomment-1749469582
+                // Tracking issue: https://msdata.visualstudio.com/Azure%20Search/_workitems/edit/2737454
+                SearchIndexer actualIndexer = await serviceClient.GetIndexerAsync(indexer.Name);
 
-            // Update the indexer.
-            actualIndexer.Description = "Updated description";
-            await serviceClient.CreateOrUpdateIndexerAsync(
-                actualIndexer,
-                onlyIfUnchanged: true,
-                CancellationToken.None);
+                // Update the indexer.
+                actualIndexer.Description = "Updated description";
+                await serviceClient.CreateOrUpdateIndexerAsync(
+                    actualIndexer,
+                    onlyIfUnchanged: true,
+                    CancellationToken.None);
 
-            // Run the indexer.
-            await serviceClient.RunIndexerAsync(
-                indexer.Name);
+                // Run the indexer.
+                await serviceClient.RunIndexerAsync(
+                    indexer.Name);
 
-            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
+                await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
-            // Query the index.
-            SearchClient client = resources.GetSearchClient();
+                // Query the index.
+                SearchClient client = resources.GetSearchClient();
 
-            long count = await client.GetDocumentCountAsync();
+                long count = await client.GetDocumentCountAsync();
 
-            // This should be equal, but sometimes reports double despite logs showing no shared resources.
-            Assert.That(count, Is.GreaterThanOrEqualTo(SearchResources.TestDocuments.Length));
+                // This should be equal, but sometimes reports double despite logs showing no shared resources.
+                Assert.That(count, Is.GreaterThanOrEqualTo(SearchResources.TestDocuments.Length));
+            }
+            finally
+            {
+                try
+                {
+                    await serviceClient.DeleteIndexerAsync(indexer.Name, CancellationToken.None);
+                }
+                finally
+                {
+                    await serviceClient.DeleteDataSourceConnectionAsync(dataSource.Name, CancellationToken.None);
+                }
+            }
         }
 
         [Test]

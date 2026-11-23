@@ -1,13 +1,13 @@
 # Execute a chat completion skill and inspect enriched hotel facts
 
-Use the [common preview setup](Sample23_NovemberPreview.md). The complete
+Use the [common preview setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md). The complete
 `ChatCompletionSkillIndexesGroundedHotelFacts` example is in
-[`Sample32_ChatCompletionSkillPreview.cs`](../tests/Samples/Sample32_ChatCompletionSkillPreview.cs).
+[`Sample32_ChatCompletionSkillPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample32_ChatCompletionSkillPreview.cs).
 It requires the approved one-file synthetic Blob fixture and approval variables
-from the [compatible-ingestion walkthrough](Sample31_CompatibleEmbeddingsPreview.md).
-Upload [`data/hotel_graph.txt`](data/hotel_graph.txt) as the only file under a
+from the [compatible-ingestion walkthrough](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample31_CompatibleEmbeddingsPreview.md).
+Upload [`data/hotel_graph.txt`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/data/hotel_graph.txt) as the only file under a
 dedicated prefix in your own container; see the
-[sample-data setup](Sample23_NovemberPreview.md#supply-your-own-resources-and-sample-data).
+[sample-data setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md#supply-your-own-resources-and-sample-data).
 The sample reads the fixture; it does not upload/delete source files.
 
 Set `SEARCH_SKILL_CHAT_URI` to the full existing HTTPS `/chat/completions` route

@@ -1,8 +1,8 @@
 # Managed graph extraction, enrichment cache, status and KB retrieval
 
-Use the [common preview setup](Sample23_NovemberPreview.md). The full
+Use the [common preview setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md). The full
 `ManagedGraphExtractionCacheStatusAndRetrieval` example is in
-[`Sample30_GraphExtractionPreview.cs`](../tests/Samples/Sample30_GraphExtractionPreview.cs).
+[`Sample30_GraphExtractionPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample30_GraphExtractionPreview.cs).
 
 ## Existing-resource prerequisites
 
@@ -10,9 +10,9 @@ Use an explicitly approved nonempty synthetic Blob prefix ending in `/`.
 `AZURE_STORAGE_CONNECTION_STRING`, `AZURE_STORAGE_CONTAINER` and
 `AZURE_STORAGE_FOLDER` identify it; set `SEARCH_GRAPH_SOURCE_APPROVED=true` only
 after verifying its contents. The sample reads, but never uploads/deletes, source
-blobs. Upload the bundled fictional [`data/hotel_graph.txt`](data/hotel_graph.txt)
+blobs. Upload the bundled fictional [`data/hotel_graph.txt`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/data/hotel_graph.txt)
 to a dedicated prefix in your own container as described in the
-[sample-data setup](Sample23_NovemberPreview.md#supply-your-own-resources-and-sample-data).
+[sample-data setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md#supply-your-own-resources-and-sample-data).
 It contains Historic Harbor Hotel operated by Contoso Hospitality, and Mountain
 View Inn operated by Alpine Hospitality. No access to the sample authors' storage
 is needed.
@@ -226,4 +226,4 @@ foreach (KnowledgeBaseGraphSearchActivityRecord activity in response.Activity.Of
 
 The full sample checks the generated graph's provenance-index binding, known
 hotel/operator evidence, graph references, generated GQL and activity errors.
-This is distinct from [manually uploading an edge-list graph](Sample27_GraphIndexPreview.md).
+This is distinct from [manually uploading an edge-list graph](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample27_GraphIndexPreview.md).

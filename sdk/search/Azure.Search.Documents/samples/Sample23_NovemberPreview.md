@@ -13,21 +13,21 @@ or upload/delete shared Blob or OneLake fixture files.
 
 | Walkthrough | Integrated operations |
 |---|---|
-| [Random scoring](Sample24_RandomScoringPreview.md) | Create an index, upload documents, seed and rotate ordering, page and filter results |
-| [Agentic search, Microsoft Retriever, tools and hints](Sample25_AgenticAndToolsPreview.md) | Search with usage/debugging; create sources and KBs; retrieve with tools or grounded filters |
-| [Topic Graph](Sample26_TopicGraphPreview.md) | Create corpus and sidecar, generate real embeddings, compare modes, retrieve through a KB |
-| [Graph index](Sample27_GraphIndexPreview.md) | Define graph/provenance indexes, upload assertions, inspect a query plan and execute relationships |
-| [File ingestion operations](Sample28_FileIngestionLroPreview.md) | Start/poll upload and replacement operations, inspect retained operations, retrieve the replacement |
-| [Compatible chat and native GPT-6](Sample29_ModelProvidersPreview.md) | Use existing models with a newly created index/source/KB and inspect actual seeded references |
-| [Compatible embeddings and ingestion](Sample31_CompatibleEmbeddingsPreview.md) | Compare provider-vectorized text with real control embeddings; ingest an approved Blob folder |
-| [Managed graph extraction](Sample30_GraphExtractionPreview.md) | Configure ontology/cache, wait for synchronization, inspect status, query and retrieve the extracted graph |
-| [Chat completion skill](Sample32_ChatCompletionSkillPreview.md) | Run a skillset/indexer over approved synthetic text and inspect indexed model output |
+| [Random scoring](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample24_RandomScoringPreview.md) | Create an index, upload documents, seed and rotate ordering, page and filter results |
+| [Agentic search, Microsoft Retriever, tools and hints](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample25_AgenticAndToolsPreview.md) | Search with usage/debugging; create sources and KBs; retrieve with tools or grounded filters |
+| [Topic Graph](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample26_TopicGraphPreview.md) | Create corpus and sidecar, generate real embeddings, compare modes, retrieve through a KB |
+| [Graph index](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample27_GraphIndexPreview.md) | Define graph/provenance indexes, upload assertions, inspect a query plan and execute relationships |
+| [File ingestion operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample28_FileIngestionLroPreview.md) | Start/poll upload and replacement operations, inspect retained operations, retrieve the replacement |
+| [Compatible chat and native GPT-6](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample29_ModelProvidersPreview.md) | Use existing models with a newly created index/source/KB and inspect actual seeded references |
+| [Compatible embeddings and ingestion](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample31_CompatibleEmbeddingsPreview.md) | Compare provider-vectorized text with real control embeddings; ingest an approved Blob folder |
+| [Managed graph extraction](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample30_GraphExtractionPreview.md) | Configure ontology/cache, wait for synchronization, inspect status, query and retrieve the extracted graph |
+| [Chat completion skill](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample32_ChatCompletionSkillPreview.md) | Run a skillset/indexer over approved synthetic text and inspect indexed model output |
 
 ### Run the compiled samples
 
 The complete executable samples are the `NovemberPreviewSamples` partial fixture
-in [`tests/Samples`](../tests/Samples), including
-[`Sample23_NovemberPreviewSupport.cs`](../tests/Samples/Sample23_NovemberPreviewSupport.cs).
+in [`tests/Samples`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Azure.Search.Documents/tests/Samples), including
+[`Sample23_NovemberPreviewSupport.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample23_NovemberPreviewSupport.cs).
 They run in both synchronous and asynchronous client modes. These timing-sensitive,
 model-dependent walkthroughs are live-only; a playback skip is not a live pass.
 Coordinate an exclusive testing window before using a shared service.
@@ -62,7 +62,7 @@ recovery. Never use service-wide cleanup on a shared service.
 Use your own Search endpoint, credentials, model deployments and storage
 configuration. No walkthrough requires access to the environment used to validate
 these samples. The common hotel records are embedded below; the Blob examples use
-the bundled, entirely fictional [`data/hotel_graph.txt`](data/hotel_graph.txt).
+the bundled, entirely fictional [`data/hotel_graph.txt`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/data/hotel_graph.txt).
 
 For Blob examples, upload that file to a new dedicated prefix in a container you
 own, for example `preview-hotels/hotel_graph.txt`. Keep only this file under that

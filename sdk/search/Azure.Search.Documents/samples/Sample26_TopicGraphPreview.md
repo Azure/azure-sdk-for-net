@@ -1,8 +1,8 @@
 # Topic Graph: build the corpus, sidecar and retrieval flow
 
-Use the [common preview setup and hotel helpers](Sample23_NovemberPreview.md).
+Use the [common preview setup and hotel helpers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md).
 `TopicGraphSetupSearchAndRetrieve` in
-[`Sample26_TopicGraphPreview.cs`](../tests/Samples/Sample26_TopicGraphPreview.cs)
+[`Sample26_TopicGraphPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample26_TopicGraphPreview.cs)
 is the complete executable example. It requires existing native
 `text-embedding-3-small` or `text-embedding-3-large` embeddings, with matching
 dimensions (1536 or 3072). Add `Azure.AI.OpenAI`, `OpenAI.Embeddings`, LINQ and

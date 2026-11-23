@@ -1,8 +1,8 @@
 # File ingestion and replacement as long-running operations
 
-Use the [common preview and native embedding setup](Sample23_NovemberPreview.md).
+Use the [common preview and native embedding setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md).
 The complete `FileIngestionLroUploadReplaceAndRetrieve` flow is in
-[`Sample28_FileIngestionLroPreview.cs`](../tests/Samples/Sample28_FileIngestionLroPreview.cs).
+[`Sample28_FileIngestionLroPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample28_FileIngestionLroPreview.cs).
 Create a unique `sourceName`/`baseName` and a ten-minute
 `CancellationTokenSource timeout`.
 

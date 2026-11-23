@@ -268,7 +268,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         {
             string openAIEndpoint = TestEnvironment.OpenAIEndpoint;
             string openAIKey = TestEnvironment.OpenAIKey;
-            if (string.IsNullOrEmpty(openAIEndpoint) || string.IsNullOrEmpty(openAIKey))
+            if (string.IsNullOrEmpty(openAIEndpoint))
             {
                 Assert.Ignore("OpenAI was not deployed");
             }

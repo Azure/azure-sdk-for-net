@@ -342,9 +342,17 @@ namespace Azure.Search.Documents.Tests
             // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
 
-            // Keep them ordered or records may not match seeded random names.
-            await resources.CreateSearchServiceAndIndexAsync(isSample);
-            await resources.CreateHotelsBlobContainerAsync(populate, isSample);
+            try
+            {
+                // Keep them ordered or records may not match seeded random names.
+                await resources.CreateSearchServiceAndIndexAsync(isSample);
+                await resources.CreateHotelsBlobContainerAsync(populate, isSample);
+            }
+            catch
+            {
+                await resources.DisposeAsync();
+                throw;
+            }
 
             return resources;
         }

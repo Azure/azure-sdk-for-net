@@ -1,9 +1,9 @@
 # Compatible chat models and native GPT-6 retrieval
 
-Use the [common preview setup and hotel corpus](Sample23_NovemberPreview.md).
+Use the [common preview setup and hotel corpus](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md).
 The complete examples are `CompatibleChatRetrievesSeededEvidence` and
 `NativeGpt6RetrievesSeededEvidence` in
-[`Sample29_ModelProvidersPreview.cs`](../tests/Samples/Sample29_ModelProvidersPreview.cs).
+[`Sample29_ModelProvidersPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample29_ModelProvidersPreview.cs).
 They use existing deployments, never provision them.
 
 ## Select an OpenAI-compatible provider

@@ -1,8 +1,8 @@
 # Random scoring from index creation to paging
 
-Use the [common preview setup](Sample23_NovemberPreview.md). This flow needs no
+Use the [common preview setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md). This flow needs no
 OpenAI model. The complete compiled method is `RandomScoringEndToEnd` in
-[`Sample24_RandomScoringPreview.cs`](../tests/Samples/Sample24_RandomScoringPreview.cs).
+[`Sample24_RandomScoringPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample24_RandomScoringPreview.cs).
 
 ## Create scoring profiles before querying
 

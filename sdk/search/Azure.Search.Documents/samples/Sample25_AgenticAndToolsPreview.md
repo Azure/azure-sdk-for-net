@@ -1,8 +1,8 @@
 # Agentic search, Microsoft Retriever, KB tools and automatic filter hints
 
-Start with the [common hotel setup](Sample23_NovemberPreview.md) and a service
+Start with the [common hotel setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md) and a service
 supporting these November preview capabilities. The complete three test methods
-are in [`Sample25_AgenticAndToolsPreview.cs`](../tests/Samples/Sample25_AgenticAndToolsPreview.cs).
+are in [`Sample25_AgenticAndToolsPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample25_AgenticAndToolsPreview.cs).
 Each creates and cleans up its own index, source and knowledge base.
 
 ## Agentic search and model-free minimal retrieval
