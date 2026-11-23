@@ -6,12 +6,6 @@
 
 - Updated the default API version to `2026-11-01`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0-beta.3 (2026-08-31)
 
 ### Features Added
