@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.NetApp.Models
         internal static EnableNetAppSubvolume? ToLegacy(SubvolumeEnablement? value)
             => value.HasValue
                 ? value.Value.Value is string text ? new EnableNetAppSubvolume(text) : default(EnableNetAppSubvolume)
-                : null;
+                : default(EnableNetAppSubvolume?);
     }
 }

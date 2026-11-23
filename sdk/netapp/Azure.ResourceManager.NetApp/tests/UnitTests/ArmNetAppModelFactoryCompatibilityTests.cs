@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private const string ResourceGroupId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/test";
 
+        [Test]
+        public void VolumePatchFactoryAcceptsOmittedArguments()
+        {
+            NetAppVolumePatch emptyPatch = ArmNetAppModelFactory.NetAppVolumePatch();
+            NetAppVolumePatch patch = ArmNetAppModelFactory.NetAppVolumePatch(name: "volume", usageThreshold: 1024);
+
+            Assert.That(emptyPatch.UsageThreshold, Is.Null);
+            Assert.That(patch.Name, Is.EqualTo("volume"));
+            Assert.That(patch.UsageThreshold, Is.EqualTo(1024));
+        }
+
         private static IEnumerable<TestCaseData> ElasticFactoryTagDefaults()
         {
             yield return new TestCaseData(

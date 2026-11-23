@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private const string SubscriptionId = "00000000-0000-0000-0000-000000000001";
 
+        [Test]
+        public void VolumeFactoriesAcceptOmittedArguments()
+        {
+            NetAppVolumeData volume = ArmNetAppModelFactory.NetAppVolumeData(location: AzureLocation.WestUS2, enableSubvolumes: EnableNetAppSubvolume.Enabled);
+            NetAppVolumeGroupVolume groupVolume = ArmNetAppModelFactory.NetAppVolumeGroupVolume();
+
+            Assert.That(volume.Location, Is.EqualTo(AzureLocation.WestUS2));
+            Assert.That(volume.EnableSubvolumes, Is.EqualTo(EnableNetAppSubvolume.Enabled));
+            Assert.That(groupVolume.EnableSubvolumes, Is.Null);
+        }
+
         [TestCase(null, "2026-08-01")]
         [TestCase("2026-08-15-preview", "2026-08-15-preview")]
         public async Task SubvolumeGetUsesLegacyVersionUnlessOverridden(string apiVersion, string expectedVersion)

@@ -25,6 +25,19 @@ namespace Azure.ResourceManager.NetApp.Models
     [CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
     public static partial class ArmNetAppModelFactory
     {
+        // Keep the 1.19.0 parameter defaults that the generated compatibility overload omits.
+        /// <summary> Initializes a volume patch model for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, float? throughputMibps = default, NetAppVolumePatchDataProtection dataProtection = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, string unixPermissions = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, bool? isSnapshotDirectoryVisible = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        {
+            return NetAppVolumePatch(
+                id, name, resourceType, systemData, tags, location, serviceLevel, usageThreshold,
+                protocolTypes, throughputMibps, dataProtection, isDefaultQuotaEnabled, defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs, unixPermissions, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy, isSnapshotDirectoryVisible, smbAccessBasedEnumeration, smbNonBrowsable,
+                smbOplocks: default, exportRules: exportRules);
+        }
+
         /// <summary> Migrate Backups Request. </summary>
         /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
