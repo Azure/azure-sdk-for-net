@@ -33,6 +33,13 @@ namespace Azure.Generator.Visitors
             ClientProvider client,
             ScmMethodProviderCollection? methods)
         {
+            if (serviceMethod is InputLongRunningPagingServiceMethod { LongRunningServiceMetadata.StatusMetadata.Count: > 0 } paging)
+            {
+                AzureClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "AZLRO001",
+                    $"Selected LRO status metadata is not supported for paged operation '{paging.Name}'.",
+                    paging.CrossLanguageDefinitionId);
+            }
             if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
             {
                 AddFromLroResponseMethod(responseModel, lroServiceMethod, client);
@@ -166,6 +173,11 @@ namespace Azure.Generator.Visitors
                 (not null, ScmMethodKind.Protocol) => new CSharpType(typeof(Operation<>), typeof(BinaryData)),
                 _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType)!),
             };
+            // The status-metadata operation is internal by default; it becomes the return type only when custom code makes it public.
+            if (GetLroOperation(method) is { } operation && operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public))
+            {
+                returnType = operation.Type;
+            }
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
 
             // Update the method signature
@@ -228,7 +240,7 @@ namespace Azure.Generator.Visitors
                     else
                     {
                         // Return the result of the protocol method directly for convenience methods having no response body
-                        return new KeywordExpression("return", assignmentExpression.Value).Terminate();
+                        return Return(WrapWithMetadata(assignmentExpression.Value, scmMethod));
                     }
 
                     break;
@@ -236,6 +248,9 @@ namespace Azure.Generator.Visitors
                 // Remove the extra return statement for convenience methods having no response body
                 case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } } when serviceMethod.Response.Type == null:
                     return null;
+                case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression protocolCallExpression }
+                    when serviceMethod.Response.Type == null && GetLroOperation(scmMethod) is not null:
+                    return Return(WrapWithMetadata(protocolCallExpression, scmMethod));
                 case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } invokeMethodExpression }:
                 {
                     // The generated FromValue convenience method body is
@@ -261,6 +276,7 @@ namespace Azure.Generator.Visitors
                             diagnosticsProperty,
                             Literal(scopeName),
                         ]);
+                    UpdateMetadataConversion(invokeMethodExpression, scmMethod);
                     break;
                 }
                 // Wrap typed LRO convenience methods that directly forward to the protocol method.
@@ -270,14 +286,15 @@ namespace Azure.Generator.Visitors
                     var (conversionExpression, response, diagnosticsProperty, scopeName) =
                         BuildConvertCallComponents(serviceMethod, scmMethod);
 
-                    return new KeywordExpression("return",
-                        Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
+                    var conversion = Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
                         [
                             protocolCallExpression,
                             new FuncExpression([response.Declaration], conversionExpression),
                             diagnosticsProperty,
                             Literal(scopeName),
-                        ])).Terminate();
+                        ]);
+                    UpdateMetadataConversion(conversion, scmMethod);
+                    return Return(conversion);
                 }
             }
 
@@ -305,6 +322,26 @@ namespace Azure.Generator.Visitors
                 : new CastExpression(response, responseType);
 
             return (conversionExpression, response, diagnosticsProperty, scopeName);
+        }
+
+        private static LroOperationProvider? GetLroOperation(ScmMethodProvider method) =>
+            method.Kind == ScmMethodKind.Protocol || method.ServiceMethod is null
+                ? null
+                : ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(method.ServiceMethod, (ClientProvider)method.EnclosingType);
+
+        private static ValueExpression WrapWithMetadata(ValueExpression protocolResult, ScmMethodProvider method) =>
+            GetLroOperation(method) is { } operation
+                ? Static(typeof(ProtocolOperationHelpers)).Invoke("WrapWithMetadata", [protocolResult, operation.CreateFactory()], [operation.Type], false)
+                : protocolResult;
+
+        private static void UpdateMetadataConversion(InvokeMethodExpression conversion, ScmMethodProvider method)
+        {
+            if (GetLroOperation(method) is { } operation)
+            {
+                conversion.Update(methodName: "ConvertWithMetadata",
+                    arguments: [.. conversion.Arguments, operation.CreateFactory()],
+                    typeArguments: [typeof(BinaryData), operation.ResultType!, operation.Type]);
+            }
         }
 
         protected override InvokeMethodExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
