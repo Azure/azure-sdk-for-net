@@ -29,6 +29,7 @@ namespace Azure.Core
         private readonly OperationFinalStateVia _finalStateVia;
         private readonly HttpPipeline _pipeline;
         private readonly string? _apiVersion;
+        private readonly Action<Response>? _statusMonitorResponseReceived;
 
         private string? _lastKnownLocation;
         private string _nextRequestUri;
@@ -39,6 +40,31 @@ namespace Azure.Core
         public string OperationId { get; private set; } = NotSet;
         public RequestMethod RequestMethod { get; }
 
+        /// <summary>
+        /// Gets the URI the operation polls, or null when it was not obtained from <paramref name="pollingLinkHeader"/>.
+        /// A null header name selects the initial request URI, as used by operations that poll their own resource.
+        /// </summary>
+        internal static Uri? GetPollingUri(IOperation operation, string? pollingLinkHeader)
+        {
+            var nextLink = operation switch
+            {
+                NextLinkOperationImplementation pending => pending,
+                CompletedOperation completed => completed._operation,
+                _ => null
+            };
+            var expectedSource = pollingLinkHeader?.ToLowerInvariant() switch
+            {
+                null => HeaderSource.None,
+                "operation-location" => HeaderSource.OperationLocation,
+                "azure-asyncoperation" => HeaderSource.AzureAsyncOperation,
+                "location" => HeaderSource.Location,
+                _ => (HeaderSource?)null
+            };
+            return nextLink is null || nextLink._headerSource != expectedSource
+                ? null
+                : new Uri(nextLink._startRequestUri, nextLink._nextRequestUri);
+        }
+
         public static IOperation Create(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -46,7 +72,8 @@ namespace Azure.Core
             Response response,
             OperationFinalStateVia finalStateVia,
             bool skipApiVersionOverride = false,
-            string? apiVersionOverrideValue = null)
+            string? apiVersionOverrideValue = null,
+            Action<Response>? statusMonitorResponseReceived = null)
         {
             string? apiVersionStr = null;
             if (apiVersionOverrideValue is not null)
@@ -65,7 +92,7 @@ namespace Azure.Core
                 lastKnownLocation = null;
             }
 
-            NextLinkOperationImplementation operation = new(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling: isNextRequestPolling);
+            NextLinkOperationImplementation operation = new(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling: isNextRequestPolling, statusMonitorResponseReceived: statusMonitorResponseReceived);
 
             if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
             {
@@ -155,7 +182,8 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion,
             string? operationId = null,
-            bool isNextRequestPolling = false)
+            bool isNextRequestPolling = false,
+            Action<Response>? statusMonitorResponseReceived = null)
         {
             AssertNotNull(pipeline, nameof(pipeline));
             AssertNotNull(requestMethod, nameof(requestMethod));
@@ -172,6 +200,7 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
+            _statusMonitorResponseReceived = statusMonitorResponseReceived;
             if (operationId is not null)
             {
                 OperationId = operationId;
@@ -243,6 +272,11 @@ namespace Azure.Core
                 ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
                 : GetResponse(_nextRequestUri, cancellationToken);
 
+            // A DELETE poll's 404 is surfaced as an empty 204; it is not a status-monitor response.
+            if (response.Status is >= 200 and < 300 && response is not EmptyResponse)
+            {
+                _statusMonitorResponseReceived?.Invoke(response);
+            }
             var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
             if (failureState != null)
             {
@@ -651,7 +685,7 @@ namespace Azure.Core
         {
             private readonly OperationState _operationState;
 
-            private readonly NextLinkOperationImplementation _operation;
+            internal readonly NextLinkOperationImplementation _operation;
 
             public CompletedOperation(OperationState operationState, NextLinkOperationImplementation operation)
             {

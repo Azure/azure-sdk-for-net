@@ -1003,11 +1003,55 @@
                 "$ref": "17"
               }
             },
-            "resultPath": "result"
+            "resultPath": "result",
+            "operationId": [
+              {
+                "$id": "66",
+                "kind": "path",
+                "source": {
+                  "location": "ResponseHeader",
+                  "property": {
+                    "$id": "67",
+                    "kind": "property",
+                    "name": "operationLocation",
+                    "apiVersions": [],
+                    "serializedName": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "68",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "69",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "optional": false,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId..anonymous.operationLocation",
+                    "serializationOptions": {},
+                    "isHttpMetadata": true,
+                    "isExactName": false
+                  }
+                },
+                "pathParameter": {
+                  "$ref": "43"
+                },
+                "pollingPath": "/azure/client-generator-core/lro/operation-id/documentModels/{modelId}/analyzeResults/{resultId}"
+              }
+            ]
           }
         },
         {
-          "$id": "66",
+          "$id": "70",
           "kind": "basic",
           "name": "getTranslationStatus",
           "isExactName": false,
@@ -1016,19 +1060,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "67",
+            "$id": "71",
             "name": "getTranslationStatus",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "68",
+                "$id": "72",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "69",
+                  "$id": "73",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1038,7 +1082,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "70",
+                    "$id": "74",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1058,7 +1102,7 @@
                 "isExactName": false
               },
               {
-                "$id": "71",
+                "$id": "75",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1074,7 +1118,7 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "72",
+                    "$id": "76",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1127,7 +1171,7 @@
           },
           "parameters": [
             {
-              "$ref": "72"
+              "$ref": "76"
             }
           ],
           "response": {
@@ -1141,7 +1185,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus"
         },
         {
-          "$id": "73",
+          "$id": "77",
           "kind": "lro",
           "name": "startTranslation",
           "isExactName": false,
@@ -1150,19 +1194,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "74",
+            "$id": "78",
             "name": "startTranslation",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "75",
+                "$id": "79",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "76",
+                  "$id": "80",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1172,7 +1216,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "77",
+                    "$id": "81",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1203,12 +1247,12 @@
                     "nameInResponse": "Operation-Location",
                     "doc": "The location for monitoring the operation state.",
                     "type": {
-                      "$id": "78",
+                      "$id": "82",
                       "kind": "url",
                       "name": "ResourceLocation",
                       "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                       "baseType": {
-                        "$id": "79",
+                        "$id": "83",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -1255,11 +1299,25 @@
                 "$ref": "23"
               }
             },
-            "resultPath": "result"
+            "resultPath": "result",
+            "operationId": [
+              {
+                "$id": "84",
+                "kind": "property",
+                "property": {
+                  "$ref": "24"
+                },
+                "propertySegments": [
+                  {
+                    "$ref": "24"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
-          "$id": "80",
+          "$id": "85",
           "kind": "basic",
           "name": "getTranslationWithPathStatus",
           "isExactName": false,
@@ -1268,18 +1326,18 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "81",
+            "$id": "86",
             "name": "getTranslationWithPathStatus",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "82",
+                "$id": "87",
                 "kind": "path",
                 "name": "operationId",
                 "serializedName": "operationId",
                 "type": {
-                  "$id": "83",
+                  "$id": "88",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1297,12 +1355,12 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.operationId",
                 "methodParameterSegments": [
                   {
-                    "$id": "84",
+                    "$id": "89",
                     "kind": "method",
                     "name": "operationId",
                     "serializedName": "operationId",
                     "type": {
-                      "$id": "85",
+                      "$id": "90",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1322,13 +1380,13 @@
                 "isExactName": false
               },
               {
-                "$id": "86",
+                "$id": "91",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "87",
+                  "$id": "92",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1338,7 +1396,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "88",
+                    "$id": "93",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1358,7 +1416,7 @@
                 "isExactName": false
               },
               {
-                "$id": "89",
+                "$id": "94",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1374,7 +1432,7 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "90",
+                    "$id": "95",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1427,10 +1485,10 @@
           },
           "parameters": [
             {
-              "$ref": "84"
+              "$ref": "89"
             },
             {
-              "$ref": "90"
+              "$ref": "95"
             }
           ],
           "response": {
@@ -1444,7 +1502,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus"
         },
         {
-          "$id": "91",
+          "$id": "96",
           "kind": "lro",
           "name": "startTranslationWithPath",
           "isExactName": false,
@@ -1453,19 +1511,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "92",
+            "$id": "97",
             "name": "startTranslationWithPath",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "93",
+                "$id": "98",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "94",
+                  "$id": "99",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1475,7 +1533,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "95",
+                    "$id": "100",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1506,12 +1564,12 @@
                     "nameInResponse": "Operation-Location",
                     "doc": "The location for monitoring the operation state.",
                     "type": {
-                      "$id": "96",
+                      "$id": "101",
                       "kind": "url",
                       "name": "ResourceLocation",
                       "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                       "baseType": {
-                        "$id": "97",
+                        "$id": "102",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -1558,19 +1616,75 @@
                 "$ref": "31"
               }
             },
-            "resultPath": "result"
+            "resultPath": "result",
+            "operationId": [
+              {
+                "$id": "103",
+                "kind": "path",
+                "source": {
+                  "location": "ResponseHeader",
+                  "property": {
+                    "$id": "104",
+                    "kind": "property",
+                    "name": "operationLocation",
+                    "apiVersions": [],
+                    "serializedName": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "105",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "106",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "optional": false,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId..anonymous.operationLocation",
+                    "serializationOptions": {},
+                    "isHttpMetadata": true,
+                    "isExactName": false
+                  }
+                },
+                "pathParameter": {
+                  "$ref": "87"
+                },
+                "pollingPath": "/azure/client-generator-core/lro/operation-id/translations/operations/{operationId}"
+              },
+              {
+                "$id": "107",
+                "kind": "property",
+                "property": {
+                  "$ref": "32"
+                },
+                "propertySegments": [
+                  {
+                    "$ref": "32"
+                  }
+                ]
+              }
+            ]
           }
         }
       ],
       "parameters": [
         {
-          "$id": "98",
+          "$id": "108",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "99",
+            "$id": "109",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1581,7 +1695,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "100",
+              "$id": "110",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
