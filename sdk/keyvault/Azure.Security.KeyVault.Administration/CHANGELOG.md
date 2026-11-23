@@ -10,9 +10,14 @@
 
 ### Breaking Changes
 
-> These changes do not impact the API of stable versions such as 4.8.0. Only code written against a beta version such as 4.9.0-beta.3 may be affected.
+> These changes do not impact the API of stable versions such as 4.8.2. Only code written against a 4.9.0 beta version (4.9.0-beta.1 through 4.9.0-beta.5) may be affected.
 
 - Removed `KeyVaultAdministrationClientOptions.ServiceVersion.V2026_01_01_Preview`; use `V2026_04_01` instead.
+- Removed `KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview`, the default service version in 4.9.0-beta.4 and 4.9.0-beta.5; use `V2026_04_01` instead.
+- Removed the `KeyVaultEkmConnection(string, IEnumerable<byte[]>)` constructor; use `KeyVaultEkmConnection(string, IEnumerable<BinaryData>)` with `BinaryData.FromBytes` instead.
+- Removed External Key Manager (EKM) proxy private endpoint support added in 4.9.0-beta.4, including the `CreateEkmPrivateEndpoint`, `GetEkmPrivateEndpoint`, `GetEkmPrivateEndpoints`, `DeleteEkmPrivateEndpoint`, and `GetEkmPrivateEndpointOperationStatus` methods (and their async counterparts) in `KeyVaultEkmClient`, the `KeyVaultEkmPrivateEndpoint*` models, the `KeyVaultEkmConnectivityMode` type, and the `KeyVaultEkmConnection.ConnectivityMode` property.
+- Removed `IDisposable` and the `Dispose()` methods from `KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient`, added in 4.9.0-beta.3.
+- Removed support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy, added in 4.9.0-beta.2.
 
 ### Bugs Fixed
 
@@ -24,18 +29,54 @@
 
 - The default service version is now `2026-04-01`.
 
+## 4.9.0-beta.5 (2026-11-11)
+
+### Other Changes
+
+- Updated the `Azure.Core` dependency to `1.65.0`, which includes the MSAL `4.92.0` update.
+
+## 4.8.2 (2026-10-02)
+
+### Bugs Fixed
+
+- Fixed handling of claims challenges when the authentication challenge cache is empty or cleared while a request is in flight.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
+- Improved authentication challenge resource validation.
+
+## 4.9.0-beta.4 (2026-09-30)
+
+### Features Added
+- Added External Key Manager (EKM) proxy private endpoint support to `KeyVaultEkmClient`, including `CreateEkmPrivateEndpoint`, `GetEkmPrivateEndpoint`, `GetEkmPrivateEndpoints`, `DeleteEkmPrivateEndpoint`, and `GetEkmPrivateEndpointOperationStatus` operations.
+- Added `KeyVaultEkmConnectivityMode` to `KeyVaultEkmConnection` to route an EKM connection through an EKM proxy private endpoint.
+
+### Other Changes
+- The default service version is now `2026-07-01-preview`.
+
 ## 4.9.0-beta.3 (2026-09-27)
 
 ### Features Added
 
-### Breaking Changes
+- Added `IDisposable` to `KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient` to release internally owned HTTP pipelines and transports. Reuse clients and dispose them after all operations and polling have completed; caller-provided transports are not disposed.
+- Added a narrowly scoped bearer-token fallback for attested managed-identity tenant eligibility denials, with the decision remembered by the Key Vault client for subsequent token acquisitions.
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ### Bugs Fixed
 
+- Fixed intermittent authentication failures by retrying requests rejected because the mTLS Proof-of-Possession certificate did not match the token binding.
 - Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
 
-### Other Changes
+## 4.8.1 (2026-09-02)
+
+### Bugs Fixed
+
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
+## 4.9.0-beta.2 (2026-06-10)
+
+### Features Added
+
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ## 4.9.0-beta.1 (2026-06-04)
 

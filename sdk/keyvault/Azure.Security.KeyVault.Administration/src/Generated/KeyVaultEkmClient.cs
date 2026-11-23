@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -23,13 +22,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Initializes a new instance of KeyVaultEkmClient for mocking. </summary>
         protected KeyVaultEkmClient()
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultEkmClient from a <see cref="KeyVaultEkmClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KeyVaultEkmClient. </param>
-        [Experimental("SCME0002")]
-        public KeyVaultEkmClient(KeyVaultEkmClientSettings settings) : this(null, settings?.VaultBaseUrl, settings?.Options)
         {
         }
 

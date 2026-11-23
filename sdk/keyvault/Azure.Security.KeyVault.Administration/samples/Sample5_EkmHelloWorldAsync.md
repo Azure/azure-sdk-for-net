@@ -20,7 +20,7 @@ Configure the Managed HSM to talk to your External Key Manager proxy by creating
 
 ```C# Snippet:EkmCreateConnectionAsync
 // Read the EKM proxy's CA certificate bytes.
-byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
+BinaryData serverCaCertificate = BinaryData.FromBytes(File.ReadAllBytes("ekm-proxy-ca.cer"));
 
 // Build the EKM connection with the EKM proxy's HostName
 KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", new[] { serverCaCertificate })

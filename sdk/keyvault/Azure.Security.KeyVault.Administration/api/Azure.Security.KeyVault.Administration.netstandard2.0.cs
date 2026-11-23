@@ -265,13 +265,12 @@ namespace Azure.Security.KeyVault.Administration
     {
         public KeyVaultEkmClientSettings() { }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions Options { get { throw null; } set { } }
-        public System.Uri VaultBaseUrl { get { throw null; } set { } }
+        public System.Uri VaultUri { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class KeyVaultEkmConnection : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>
     {
         public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<System.BinaryData> serverCaCertificates) { }
-        public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<byte[]> serverCaCertificates) { }
         public string HostName { get { throw null; } set { } }
         public string PathPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> ServerCaCertificates { get { throw null; } }

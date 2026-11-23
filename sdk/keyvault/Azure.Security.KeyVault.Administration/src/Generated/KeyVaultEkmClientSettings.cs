@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
@@ -16,25 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     [Experimental("SCME0002")]
     public partial class KeyVaultEkmClientSettings : ClientSettings
     {
-        /// <summary> Gets or sets the VaultBaseUrl. </summary>
-        public Uri VaultBaseUrl { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public KeyVaultAdministrationClientOptions Options { get; set; }
-
-        /// <summary> Binds configuration values from the given section. </summary>
-        /// <param name="section"> The configuration section. </param>
-        protected override void BindCore(IConfigurationSection section)
-        {
-            if (Uri.TryCreate(section["VaultBaseUrl"], UriKind.Absolute, out Uri vaultBaseUrl))
-            {
-                VaultBaseUrl = vaultBaseUrl;
-            }
-            IConfigurationSection optionsSection = section.GetSection("Options");
-            if (optionsSection.Exists())
-            {
-                Options = new KeyVaultAdministrationClientOptions(optionsSection);
-            }
-        }
     }
 }
