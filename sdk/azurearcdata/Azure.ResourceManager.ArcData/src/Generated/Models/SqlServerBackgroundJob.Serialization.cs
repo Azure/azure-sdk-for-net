@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            BackgroundJobState? state = default;
+            State? state = default;
             SqlServerBackgroundJobExecutionState? executionState = default;
             DateTimeOffset? startsOn = default;
             DateTimeOffset? endsOn = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    state = new BackgroundJobState(prop.Value.GetString());
+                    state = new State(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("executionState"u8))

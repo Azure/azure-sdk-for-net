@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastExecutionOn"> The last execution time of the background job in ISO 8601 date-time format. </param>
         /// <param name="nextExecutionOn"> The next execution time of the background job in ISO 8601 date-time format. </param>
         /// <returns> A new <see cref="Models.SqlServerBackgroundJob"/> instance for mocking. </returns>
-        public static SqlServerBackgroundJob SqlServerBackgroundJob(BackgroundJobState? state = default, SqlServerBackgroundJobExecutionState? executionState = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, SqlServerBackgroundJobLastExecutionStatus? lastExecutionStatus = default, DateTimeOffset? lastExecutionOn = default, DateTimeOffset? nextExecutionOn = default)
+        public static SqlServerBackgroundJob SqlServerBackgroundJob(State? state = default, SqlServerBackgroundJobExecutionState? executionState = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, SqlServerBackgroundJobLastExecutionStatus? lastExecutionStatus = default, DateTimeOffset? lastExecutionOn = default, DateTimeOffset? nextExecutionOn = default)
         {
             return new SqlServerBackgroundJob(
                 state,
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="terminatedOn"> The timestamp of the termination of the SqlServerEsuLicense in ISO 8601 date-time format. </param>
         /// <param name="tenantId"> The tenantId the SQL Server ESU license resource subscription resides in. </param>
         /// <returns> A new <see cref="Models.SqlServerEsuLicenseProperties"/> instance for mocking. </returns>
-        public static SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(SqlServerLicenseBillingPlan billingPlan = default, SqlServerEsuLicenseVersion version = default, string uniqueId = default, int physicalCores = default, SqlServerEsuLicenseActivationState activationState = default, SqlServerLicenseScopeType scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
+        public static SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(SqlServerLicenseBillingPlan billingPlan = default, SqlServerEsuLicenseVersion version = default, string uniqueId = default, int physicalCores = default, State activationState = default, SqlServerLicenseScopeType scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
         {
             return new SqlServerEsuLicenseProperties(
                 billingPlan,
@@ -1813,7 +1813,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="terminatedOn"> The timestamp of the termination of the SqlServerEsuLicense in ISO 8601 date-time format. </param>
         /// <param name="tenantId"> The tenantId the SQL Server ESU license resource subscription resides in. </param>
         /// <returns> A new <see cref="Models.SqlServerEsuLicenseUpdateProperties"/> instance for mocking. </returns>
-        public static SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan = default, SqlServerEsuLicenseVersion? version = default, string uniqueId = default, int? physicalCores = default, SqlServerEsuLicenseActivationState? activationState = default, SqlServerLicenseScopeType? scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
+        public static SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan = default, SqlServerEsuLicenseVersion? version = default, string uniqueId = default, int? physicalCores = default, State? activationState = default, SqlServerLicenseScopeType? scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
         {
             return new SqlServerEsuLicenseUpdateProperties(
                 billingPlan,
