@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. </param>
         /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? shouldAddProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyAgentSettings(bool? enabled, int? keyIncarnationId, ProxyAgentHostEndpointSettings wireServer, ProxyAgentHostEndpointSettings imds, bool? shouldAddProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             KeyIncarnationId = keyIncarnationId;
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public int? KeyIncarnationId { get; set; }
 
         /// <summary> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. </summary>
-        public HostEndpointSettings WireServer { get; set; }
+        public ProxyAgentHostEndpointSettings WireServer { get; set; }
 
         /// <summary> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. </summary>
-        public HostEndpointSettings Imds { get; set; }
+        public ProxyAgentHostEndpointSettings Imds { get; set; }
 
         /// <summary> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </summary>
         public bool? ShouldAddProxyAgentExtension { get; set; }
