@@ -107,7 +107,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="AreaUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AreaUnit?(string value) => value == null ? null : new AreaUnit(value);
+        public static implicit operator AreaUnit?(string value) => value == null ? (AreaUnit?)null : new AreaUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

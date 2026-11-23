@@ -65,13 +65,13 @@ public class Sample_AgentsEndpoint : SamplesBase
         #region Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
             }
         };
-        AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+        AgentCard card = new() { Version = "1", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
@@ -122,13 +122,13 @@ public class Sample_AgentsEndpoint : SamplesBase
 
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
             }
         };
-        AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+        AgentCard card = new() { Version = "1", Skills = { new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL) } };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,

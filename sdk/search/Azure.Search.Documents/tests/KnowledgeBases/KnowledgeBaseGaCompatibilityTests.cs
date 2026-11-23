@@ -51,6 +51,37 @@ namespace Azure.Search.Documents.Tests
             Assert.IsTrue(transport.Requests.Single().Headers.TryGetValue(
                 "x-ms-query-source-authorization", out string authorization));
             Assert.AreEqual("user-token", authorization);
+            Assert.IsFalse(transport.Requests.Single().Headers.TryGetValue(
+                "x-ms-query-work-iq-source-authorization", out _));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task GeneratedRetrieveSendsBothAuthorizationHeaders(bool protocol)
+        {
+            var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200,
+                "{\"response\":[],\"references\":[],\"activity\":[]}"));
+            var client = InstrumentClient(new KnowledgeBaseRetrievalClient(
+                new Uri("https://fake-search.search.windows.net"), "knowledge-base",
+                new AzureKeyCredential("fake-key"), new SearchClientOptions { Transport = transport }));
+
+            if (protocol)
+            {
+                using RequestContent content = RequestContent.Create(new { });
+                await client.RetrieveAsync(content, querySourceAuthorization: "user-token",
+                    queryWorkIQSourceAuthorization: "work-iq-token");
+            }
+            else
+            {
+                await client.RetrieveAsync(new KnowledgeBaseRetrievalRequest(),
+                    querySourceAuthorization: "user-token", queryWorkIQSourceAuthorization: "work-iq-token");
+            }
+
+            MockRequest request = transport.Requests.Single();
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-source-authorization", out string userToken));
+            Assert.AreEqual("user-token", userToken);
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqToken));
+            Assert.AreEqual("work-iq-token", workIqToken);
         }
 
         [TestCase("user-assertion")]

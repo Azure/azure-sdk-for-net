@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
@@ -25,6 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// bespoke Responses recovery/steering machinery.
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponsesResilientTaskHandler
     : IResilientTaskHandler<ResponseTaskInput, ResponseTaskOutput>
 {
@@ -73,9 +75,9 @@ internal sealed class ResponsesResilientTaskHandler
         CreateResponse request = payload.Request;
         string responseId = payload.ResponseId;
 
-        bool isBackground = request.Background == true;
-        bool isStreaming = request.Stream == true;
-        bool store = request.Store != false;
+        bool isBackground = request.BackgroundModeEnabled == true;
+        bool isStreaming = request.StreamingEnabled == true;
+        bool store = request.StoredOutputEnabled != false;
         bool isRecovery = ctx.EntryMode == EntryMode.Recovered;
 
         var platformContext = new PlatformContext(payload.UserIdKey, payload.CallId);
@@ -160,6 +162,7 @@ internal sealed class ResponsesResilientTaskHandler
             && _tracker.TryGet(responseId, platformContext, out ResponseExecution? existing)
             && existing is not null)
         {
+            platformContext = existing.InboundPlatformContext ?? platformContext;
             // The endpoint pre-created this execution to bridge response.created back to the caller.
             // Reuse its Context when present (one-shot); otherwise build the steering-aware context
             // now (multi-turn dispatch leaves Context unset so Core's ctx drives steering state).
@@ -182,7 +185,7 @@ internal sealed class ResponsesResilientTaskHandler
         execution.AgentSessionId = payload.AgentSessionId;
         if (persisted is not null)
         {
-            execution.RecoveredOutputWatermark = persisted.Output?.Count ?? 0;
+            execution.RecoveredOutputWatermark = persisted.OutputItems?.Count ?? 0;
         }
 
         ResponseContextImpl context = BuildContext();

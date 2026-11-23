@@ -60,6 +60,9 @@ internal static class OpenTelemetryExtensions
         // SQL, and AI instrumentation while suppressing noisy outbound dependency spans.
         var otelBuilder = services.AddOpenTelemetry();
 
+        // Enrich before the distro registers exporters, including synchronous exporters.
+        otelBuilder.WithTracing(tracing => tracing.AddProcessor(new FoundryEnrichmentProcessor()));
+
         // Ensure W3C Trace Context and Baggage propagators are active on all TFMs.
         // On net9+, ASP.NET Core natively respects OTel's propagator for incoming
         // requests. On net8.0, the W3CBaggagePropagator middleware handles extraction.
@@ -126,10 +129,6 @@ internal static class OpenTelemetryExtensions
             {
                 tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
                 tracing.AddSource(AgentHostTelemetry.InvocationsSourceName);
-
-                // Foundry enrichment processor — stamps agent identity and project ID
-                // on every span so protocol packages get it automatically.
-                tracing.AddProcessor(new FoundryEnrichmentProcessor());
 
                 configureTracing?.Invoke(tracing);
             })
@@ -208,8 +207,8 @@ internal static class OpenTelemetryExtensions
         }
 
         options.Exporters |= ExportTarget.Agent365;
-        options.Agent365.Exporter.UseS2SEndpoint = true;
-        options.Agent365.Exporter.TokenResolver = CreateTokenResolver();
+        options.Agent365.UseS2SEndpoint = true;
+        options.Agent365.TokenResolver = CreateTokenResolver();
     }
 
     /// <summary>

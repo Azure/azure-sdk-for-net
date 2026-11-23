@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _etherType;
         private BicepList<ExpressRouteLagLink> _links;
         private BicepList<NetworkSubResource> _circuits;
+        private BicepList<ExpressRouteLagAuthorization> _authorizations;
         private BicepValue<string> _allocationDate;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<string> _resourceGuid;
@@ -134,6 +135,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Authorizations. </summary>
+        public BicepList<ExpressRouteLagAuthorization> Authorizations
+        {
+            get
+            {
+                Initialize();
+                return _authorizations;
+            }
+            set
+            {
+                Initialize();
+                _authorizations.Assign(value);
+            }
+        }
+
         /// <summary> Gets the AllocationDate. </summary>
         public BicepValue<string> AllocationDate
         {
@@ -236,6 +252,7 @@ namespace Azure.Provisioning.Network
             _etherType = DefineProperty<string>(nameof(EtherType), new string[] { "etherType" }, isOutput: true);
             _links = DefineListProperty<ExpressRouteLagLink>(nameof(Links), new string[] { "links" });
             _circuits = DefineListProperty<NetworkSubResource>(nameof(Circuits), new string[] { "circuits" }, isOutput: true);
+            _authorizations = DefineListProperty<ExpressRouteLagAuthorization>(nameof(Authorizations), new string[] { "authorizations" });
             _allocationDate = DefineProperty<string>(nameof(AllocationDate), new string[] { "allocationDate" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _resourceGuid = DefineProperty<string>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);

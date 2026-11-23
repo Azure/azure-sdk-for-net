@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Version indicator determining which agent version backs the session.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VersionRefIndicator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VersionReferenceIndicator"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVersionIndicator))]
     public abstract partial class VersionIndicator : IJsonModel<VersionIndicator>
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Agents
                 switch (discriminator.GetString())
                 {
                     case "version_ref":
-                        return VersionRefIndicator.DeserializeVersionRefIndicator(element, options);
+                        return VersionReferenceIndicator.DeserializeVersionReferenceIndicator(element, options);
                 }
             }
             return UnknownVersionIndicator.DeserializeUnknownVersionIndicator(element, options);

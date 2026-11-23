@@ -600,6 +600,37 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void DerivedWithOwnFlattenedPropertyCompilesAndInitializesFlattenedBase()
+        {
+            var state = InputFactory.StringEnum("DataTypeState", [("Enabled", "Enabled"), ("Disabled", "Disabled")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var common = InputFactory.Model("DataConnectorDataTypeCommon", properties:
+                [InputFactory.Property("state", state, isRequired: true)]);
+            var baseModel = InputFactory.Model("AlertsDataTypeOfDataConnector", properties:
+                [InputFactory.Property("alerts", common, isRequired: true)]);
+            var derivedModel = InputFactory.Model("McasDataConnectorDataTypes", baseModel: baseModel, properties:
+                [InputFactory.Property("discoveryLogs", common)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [common, baseModel, derivedModel], inputEnums: () => [state]);
+            var baseProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            _ = baseProvider.Constructors;
+            _ = derivedProvider.Constructors;
+            Visit(derivedProvider);
+
+            var assembly = Compile(plugin.Object);
+            var stateType = assembly.GetType("Samples.Models.DataTypeState")!;
+            var derivedType = assembly.GetType("Samples.Models.McasDataConnectorDataTypes")!;
+            var constructor = derivedType.GetConstructor([stateType]);
+            Assert.That(constructor, Is.Not.Null);
+            var enabled = Activator.CreateInstance(stateType, ["Enabled"]);
+            var instance = constructor!.Invoke([enabled]);
+            Assert.That(derivedType.GetProperty("AlertsState")!.GetValue(instance)!.ToString(), Is.EqualTo("Enabled"));
+            var disabled = Activator.CreateInstance(stateType, ["Disabled"]);
+            derivedType.GetProperty("DiscoveryLogsState")!.SetValue(instance, disabled);
+            Assert.That(derivedType.GetProperty("DiscoveryLogsState")!.GetValue(instance)!.ToString(), Is.EqualTo("Disabled"));
+        }
+
+        [Test]
         public void RestoredFlattenedEnumConstructorDoesNotRequireMapping()
         {
             var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
@@ -1137,6 +1168,11 @@ namespace Azure.Generator.Mgmt.Tests
         public void FactoryReportsNewlyDiscardedHistoricalValue(bool historicallyConsumed, bool metadataOnly)
             => AssertHistoricalFactoryValue(historicallyConsumed, metadataOnly);
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FactoryReportsNewlyDiscardedHistoricalValueWithFixedLiteral(bool metadataOnly)
+            => AssertHistoricalFactoryValue(true, metadataOnly, includeFixedLiteral: true);
+
         [Test]
         public void SkippingUnsafeFactoryKeepsSafeHistoricalOverload()
             => AssertHistoricalFactoryValue(true, true, "safe-sibling");
@@ -1157,7 +1193,7 @@ namespace Azure.Generator.Mgmt.Tests
         public void HistoricalFactoryValidationRespectsExemptionsAndUnknownEvidence(string resolution)
             => AssertHistoricalFactoryValue(true, true, resolution);
 
-        private static void AssertHistoricalFactoryValue(bool historicallyConsumed, bool metadataOnly, string? resolution = null)
+        private static void AssertHistoricalFactoryValue(bool historicallyConsumed, bool metadataOnly, string? resolution = null, bool includeFixedLiteral = false)
         {
             using var baselineProject = new FactoryBaselineProject(resolution switch
             {
@@ -1166,8 +1202,7 @@ namespace Azure.Generator.Mgmt.Tests
                 "missing-selection" => null,
                 _ => "1.0.0"
             });
-            using var baselineFile = new FileStream(Path.Combine(Path.GetTempPath(), $"factory-baseline-{Guid.NewGuid():N}.dll"),
-                FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read | FileShare.Delete, 4096, FileOptions.DeleteOnClose);
+            var baselinePath = Path.Combine(baselineProject.Path, "factory-baseline.dll");
             Compilation? lastContract = null;
             Compilation? metadataContract = null;
             Compilation GetLastContract() => lastContract ??= Helpers.BuildCompilation(
@@ -1206,11 +1241,14 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 if (!metadataOnly) return GetLastContract();
                 if (metadataContract is not null) return metadataContract;
-                var baselineEmit = GetLastContract().Emit(baselineFile);
-                Assert.That(baselineEmit.Success, Is.True, string.Join(Environment.NewLine, baselineEmit.Diagnostics));
-                baselineFile.Flush();
+                using (var baselineFile = new FileStream(baselinePath, FileMode.Create, FileAccess.Write, FileShare.Read))
+                {
+                    var baselineEmit = GetLastContract().Emit(baselineFile);
+                    Assert.That(baselineEmit.Success, Is.True, string.Join(Environment.NewLine, baselineEmit.Diagnostics));
+                    baselineFile.Flush();
+                }
                 metadataContract = GetLastContract().RemoveAllSyntaxTrees().WithAssemblyName("MetadataContract")
-                    .AddReferences(MetadataReference.CreateFromFile(baselineFile.Name));
+                    .AddReferences(MetadataReference.CreateFromFile(baselinePath));
                 Assert.That(metadataContract.SyntaxTrees, Is.Empty,
                     "Exercise the production metadata-only baseline path without historical source.");
                 return metadataContract;
@@ -1230,7 +1268,9 @@ namespace Azure.Generator.Mgmt.Tests
             ]);
             var wrapper = InputFactory.Property("properties", properties);
             Flatten(wrapper);
-            var input = InputFactory.Model("VolumePatch", properties: [wrapper]);
+            var input = InputFactory.Model("VolumePatch", properties: includeFixedLiteral
+                ? [wrapper, InputFactory.Property("mode", InputFactory.Literal.String("Fixed"), isRequired: true)]
+                : [wrapper]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [input, properties, managed],
                 configurationJson: """{"package-name":"Samples"}""",

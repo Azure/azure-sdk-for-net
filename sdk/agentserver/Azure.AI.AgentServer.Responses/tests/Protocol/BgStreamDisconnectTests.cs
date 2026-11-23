@@ -97,7 +97,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
         var completedTask = await Task.WhenAny(
             handlerCompleted.Task,
             handlerCancelled.Task,
-            Task.Delay(TimeSpan.FromSeconds(3)));
+            Task.Delay(TimeSpan.FromSeconds(10)));
 
         // Handler should have COMPLETED, not been CANCELLED
         Assert.That(handlerCompleted.Task.IsCompleted, Is.True, "Handler should complete normally, not be cancelled by SSE disconnect");

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal interface IWebPubSubTriggerDispatcher
     {
-        void AddListener(string key, WebPubSubListener listener);
+        void AddListener(WebPubSubTriggerKey key, WebPubSubListener listener);
 
         Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req, CancellationToken token = default);
     }

@@ -1,6 +1,18 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`. This fixes the `MissingMethodException` that hosted agents hit at startup when Agent365 export is enabled.
+
+## 1.0.0-beta.1 (2026-11-04)
 
 ### Features Added
 

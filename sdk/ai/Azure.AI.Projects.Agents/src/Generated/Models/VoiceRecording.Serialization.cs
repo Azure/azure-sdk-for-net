@@ -103,7 +103,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("channel_layout"u8);
             writer.WriteObjectValue(ChannelLayout, options);
             writer.WritePropertyName("duration_ms"u8);
-            writer.WriteNumberValue(Convert.ToInt32(Math.Round(DurationMs.TotalMilliseconds)));
+            writer.WriteNumberValue(Convert.ToInt32(Math.Round(Duration.TotalMilliseconds)));
             if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blob_uri"u8);
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
             int sampleRate = default;
             int channels = default;
             VoiceRecordingChannelLayout channelLayout = default;
-            TimeSpan durationMs = default;
+            TimeSpan duration = default;
             Uri blobUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("duration_ms"u8))
                 {
-                    durationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    duration = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("blob_uri"u8))
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects.Agents
                 sampleRate,
                 channels,
                 channelLayout,
-                durationMs,
+                duration,
                 blobUri,
                 additionalBinaryDataProperties);
         }

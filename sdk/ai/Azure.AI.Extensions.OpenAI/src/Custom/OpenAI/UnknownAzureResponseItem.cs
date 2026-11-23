@@ -28,8 +28,8 @@ namespace Azure.AI.Extensions.OpenAI
         // (DeserializeFromDiscriminator) and to decide whether an already materialized item still needs
         // normalization (TryGetAzureItemType), so the two never drift apart.
         [Experimental("AAIP001")]
-        private static readonly IReadOnlyDictionary<ResponseItemKind, (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize)> AzureItemDispatch =
-            new Dictionary<ResponseItemKind, (Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem>)>
+        private static readonly IReadOnlyDictionary<ResponseItemKind, (Type Type, Func<JsonElement, BinaryData, ModelReaderWriterOptions, ResponseItem> Deserialize)> AzureItemDispatch =
+            new Dictionary<ResponseItemKind, (Type, Func<JsonElement, BinaryData, ModelReaderWriterOptions, ResponseItem>)>
             {
                 [ResponseItemKind.A2APreviewCall] = (typeof(A2AToolCall), A2AToolCall.DeserializeA2AToolCall),
                 [ResponseItemKind.A2APreviewCallOutput] = (typeof(A2AToolCallOutput), A2AToolCallOutput.DeserializeA2AToolCallOutput),
@@ -68,7 +68,7 @@ namespace Azure.AI.Extensions.OpenAI
         [Experimental("AAIP001")]
         internal static bool TryGetAzureItemType(ResponseItemKind kind, out Type type)
         {
-            if (AzureItemDispatch.TryGetValue(kind, out (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
+            if (AzureItemDispatch.TryGetValue(kind, out (Type Type, Func<JsonElement, BinaryData, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
             {
                 type = dispatch.Type;
                 return true;
@@ -82,24 +82,24 @@ namespace Azure.AI.Extensions.OpenAI
         protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFromDiscriminator(document.RootElement, options);
+            return DeserializeFromDiscriminator(document.RootElement, null, options);
         }
 
         [Experimental("AAIP001")]
         protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFromDiscriminator(document.RootElement, options);
+            return DeserializeFromDiscriminator(document.RootElement, null, options);
         }
 
         [Experimental("AAIP001")]
-        private static ResponseItem DeserializeFromDiscriminator(JsonElement element, ModelReaderWriterOptions options)
+        private static ResponseItem DeserializeFromDiscriminator(JsonElement element, BinaryData patch, ModelReaderWriterOptions options)
         {
             if (element.TryGetProperty("type"u8, out JsonElement typeProperty)
                 && typeProperty.ValueKind == JsonValueKind.String
-                && AzureItemDispatch.TryGetValue(new ResponseItemKind(typeProperty.GetString()), out (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
+                && AzureItemDispatch.TryGetValue(new ResponseItemKind(typeProperty.GetString()), out (Type Type, Func<JsonElement, BinaryData, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
             {
-                return dispatch.Deserialize(element, options);
+                return dispatch.Deserialize(element, patch, options);
             }
 
             // Not an Azure-specific kind; defer to OpenAI's own deserialization (which yields either a

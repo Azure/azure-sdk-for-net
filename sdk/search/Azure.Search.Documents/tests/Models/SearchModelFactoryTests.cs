@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -14,6 +15,45 @@ namespace Azure.Search.Documents.Tests.Models
 {
     public class SearchModelFactoryTests
     {
+        [TestCase(typeof(VectorizableImageBinaryQuery), "imageBinary", "base64Image", "aW1hZ2U=")]
+        [TestCase(typeof(VectorizableImageUrlQuery), "imageUrl", "url", "https://example.com/image.png")]
+        public void NovemberImageQueriesDeserializeThroughVectorQuery(Type expectedType, string kind, string propertyName, string value)
+        {
+            var data = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+            {
+                ["kind"] = kind,
+                [propertyName] = value
+            });
+            VectorQuery query = ModelReaderWriter.Read<VectorQuery>(data);
+
+            Assert.That(query, Is.TypeOf(expectedType));
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(query));
+            Assert.AreEqual(value, document.RootElement.GetProperty(propertyName).GetString());
+        }
+
+        [Test]
+        public void NovemberAmlVectorizerDeserializesThroughVectorizer()
+        {
+            VectorSearchVectorizer vectorizer = ModelReaderWriter.Read<VectorSearchVectorizer>(
+                BinaryData.FromString("{\"name\":\"aml\",\"kind\":\"aml\",\"amlParameters\":{\"uri\":\"https://example.com/score\",\"modelName\":\"Cohere-embed-v3-english\"}}"));
+
+            Assert.IsInstanceOf<AzureMachineLearningVectorizer>(vectorizer);
+            Assert.AreEqual(AIFoundryModelCatalogName.CohereEmbedV3English,
+                ((AzureMachineLearningVectorizer)vectorizer).AMLParameters.ModelName);
+        }
+
+        [Test]
+        public void NovemberActivityRetainsBothReasoningEfforts()
+        {
+            KnowledgeBaseActivityRecord activity = ModelReaderWriter.Read<KnowledgeBaseActivityRecord>(
+                BinaryData.FromString("{\"id\":1,\"type\":\"agenticReasoning\",\"retrievalReasoningEffort\":{\"kind\":\"low\"},\"logicalReasoningEffort\":{\"kind\":\"medium\"}}"));
+
+            Assert.IsInstanceOf<KnowledgeBaseAgenticReasoningActivityRecord>(activity);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(activity));
+            Assert.AreEqual("low", document.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+            Assert.AreEqual("medium", document.RootElement.GetProperty("logicalReasoningEffort").GetProperty("kind").GetString());
+        }
+
         [Test]
         public void StatisticsFactoriesPreserveGaOptionalArguments()
         {

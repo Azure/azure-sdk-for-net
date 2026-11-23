@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing a collection of <see cref="EdgeMachineSecuritySettingsResource"/> and their operations.
     /// Each <see cref="EdgeMachineSecuritySettingsResource"/> in the collection will belong to the same instance of <see cref="EdgeMachineResource"/>.
-    /// To get a <see cref="EdgeMachineSecuritySettingsCollection"/> instance call the GetEdgeMachineSecuritySettings method from an instance of <see cref="EdgeMachineResource"/>.
+    /// To get a <see cref="EdgeMachineSecuritySettingsCollection"/> instance call the GetAllEdgeMachineSecuritySettings method from an instance of <see cref="EdgeMachineResource"/>.
     /// </summary>
     public partial class EdgeMachineSecuritySettingsCollection : ArmCollection, IEnumerable<EdgeMachineSecuritySettingsResource>, IAsyncEnumerable<EdgeMachineSecuritySettingsResource>
     {

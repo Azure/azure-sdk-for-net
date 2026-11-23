@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _azureFirewall;
         private NetworkSubResource _securityPartnerProvider;
         private BicepValue<string> _addressPrefix;
-        private VirtualHubRouteTable _routeTable;
+        private VirtualHubRouteTable _route;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<string> _securityProviderName;
         private BicepList<VirtualHubRouteTableV2> _virtualHubRouteTableV2S;
@@ -148,18 +148,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the RouteTable. </summary>
-        internal VirtualHubRouteTable RouteTable
+        /// <summary> Gets or sets the Route. </summary>
+        internal VirtualHubRouteTable Route
         {
             get
             {
                 Initialize();
-                return _routeTable;
+                return _route;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _routeTable, value);
+                AssignOrReplace(ref _route, value);
             }
         }
 
@@ -471,19 +471,19 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Routes. </summary>
-        public BicepList<VirtualHubRoute> RouteTableRoutes
+        public BicepList<VirtualHubRoute> RouteRoutes
         {
             get
             {
-                return RouteTable is null ? default : RouteTable.Routes;
+                return Route is null ? default : Route.Routes;
             }
             set
             {
-                if (RouteTable is null)
+                if (Route is null)
                 {
-                    RouteTable = new VirtualHubRouteTable();
+                    Route = new VirtualHubRouteTable();
                 }
-                RouteTable.Routes = value;
+                Route.Routes = value;
             }
         }
 
@@ -515,7 +515,7 @@ namespace Azure.Provisioning.Network
             _azureFirewall = DefineModelProperty<NetworkSubResource>(nameof(AzureFirewall), new string[] { "azureFirewall" });
             _securityPartnerProvider = DefineModelProperty<NetworkSubResource>(nameof(SecurityPartnerProvider), new string[] { "securityPartnerProvider" });
             _addressPrefix = DefineProperty<string>(nameof(AddressPrefix), new string[] { "addressPrefix" });
-            _routeTable = DefineModelProperty<VirtualHubRouteTable>(nameof(RouteTable), new string[] { "routeTable" });
+            _route = DefineModelProperty<VirtualHubRouteTable>(nameof(Route), new string[] { "routeTable" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _securityProviderName = DefineProperty<string>(nameof(SecurityProviderName), new string[] { "securityProviderName" });
             _virtualHubRouteTableV2S = DefineListProperty<VirtualHubRouteTableV2>(nameof(VirtualHubRouteTableV2S), new string[] { "virtualHubRouteTableV2s" });

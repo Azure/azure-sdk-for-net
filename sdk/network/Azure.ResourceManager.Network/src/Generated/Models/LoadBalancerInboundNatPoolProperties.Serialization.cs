@@ -112,20 +112,17 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -163,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? enableFloatingIP = default;
             bool? enableTcpReset = default;
             NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("frontendIPConfiguration"u8))
@@ -231,10 +228,7 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState = new NetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new LoadBalancerInboundNatPoolProperties(
                 frontendIPConfiguration,
@@ -246,7 +240,7 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalProperties);
         }
     }
 }

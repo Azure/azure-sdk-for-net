@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of <see cref="BlobAccessPointQumuloSourceProperties"/>. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
-        /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connection"/> or <paramref name="auth"/> is null. </exception>
-        public BlobAccessPointQumuloSourceProperties(BlobAccessPointConnectionProperties connection, BlobAccessPointRemoteAuthProperties auth) : base(BlobAccessPointSourceType.Qumulo)
+        /// <param name="authentication"> Details for authenticating to the backing data source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connection"/> or <paramref name="authentication"/> is null. </exception>
+        public BlobAccessPointQumuloSourceProperties(BlobAccessPointConnectionProperties connection, BlobAccessPointRemoteAuthenticationProperties authentication) : base(BlobAccessPointSourceType.Qumulo)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            Argument.AssertNotNull(auth, nameof(auth));
+            Argument.AssertNotNull(authentication, nameof(authentication));
 
             Connection = connection;
-            Auth = auth;
+            Authentication = authentication;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobAccessPointQumuloSourceProperties"/>. </summary>
         /// <param name="sourceType"> The source type. This value determines the remaining shape of the source object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
-        /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        internal BlobAccessPointQumuloSourceProperties(BlobAccessPointSourceType sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobAccessPointConnectionProperties connection, BlobAccessPointRemoteAuthProperties auth) : base(sourceType, additionalBinaryDataProperties)
+        /// <param name="authentication"> Details for authenticating to the backing data source. </param>
+        internal BlobAccessPointQumuloSourceProperties(BlobAccessPointSourceType sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobAccessPointConnectionProperties connection, BlobAccessPointRemoteAuthenticationProperties authentication) : base(sourceType, additionalBinaryDataProperties)
         {
             Connection = connection;
-            Auth = auth;
+            Authentication = authentication;
         }
 
         /// <summary> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </summary>
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Details for authenticating to the backing data source. </summary>
         [WirePath("auth")]
-        public BlobAccessPointRemoteAuthProperties Auth { get; set; }
+        public BlobAccessPointRemoteAuthenticationProperties Authentication { get; set; }
     }
 }

@@ -273,6 +273,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultEkmConnection : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>
     {
+        public KeyVaultEkmConnection() { }
         public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<byte[]> serverCaCertificates) { }
         public string HostName { get { throw null; } set { } }
         public string PathPrefix { get { throw null; } set { } }

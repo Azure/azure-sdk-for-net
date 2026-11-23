@@ -101,7 +101,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
                     "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
             }
         };
-        await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate update in await responseClient.CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(update);
         }
@@ -109,71 +109,6 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_BrowserAutomotion_Async
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        #endregion
-    }
-
-    [Test]
-    [SyncOnly]
-    public void BrowserAutomotion()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.BROWSER_AUTOMATION_NAME;
-#endif
-        AIProjectClientOptions options = new()
-        {
-            NetworkTimeout = TimeSpan.FromMinutes(5)
-        };
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
-        AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-        BrowserAutomationTool playwrightTool = new(
-            new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
-            ));
-
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are an Agent helping with browser automation tasks.\n" +
-            "You can answer questions, provide information, and assist with various tasks\n" +
-            "related to web browsing using the Browser Automation tool available to you.",
-            Tools = { playwrightTool }
-        };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        #endregion
-        #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
-            new AgentReference(agentVersion.Name, agentVersion.Version));
-        CreateResponseOptions responseOptions = new()
-        {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            StreamingEnabled = true,
-            InputItems =
-            {
-                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-                    "To do that, go to the website finance.yahoo.com.\n" +
-                    "At the top of the page, you will find a search bar.\n" +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
-            }
-        };
-        foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
-        {
-            ParseResponse(update);
-        }
-        #endregion
-
-        #region Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 12.1.0-beta.4 (2026-11-20)
+## 12.2.0-beta.1 (2026-11-20)
 
 ### Features Added
 
@@ -10,6 +10,7 @@
 - Added facet-based filter-hint `AutoConfiguration`, knowledge source enrichment caching, and the `Gpt6Astra`, `Gpt6Sol`, `Gpt6Luna`, and `Gpt61Sol` model names.
 - Added random scoring profiles with optional query-time seeds and agentic search options.
 - Restored preview indexer cache, query, and knowledge retrieval capabilities from the full preview specification.
+- Restored preview image vector queries, Azure Machine Learning vectorizers, and reported retrieval reasoning effort, removing the GA-only obsolete annotations from these APIs and their model factories.
 - Carried forward the `2026-10-01` GA service version, knowledge base streaming contracts, document lookup authorization options, and token-credential client registration overloads.
 
 ### Breaking Changes
@@ -46,6 +47,51 @@
 - Corrected the Work IQ sample's authorization header.
 - Fixed the source-name and file-ID argument order in the file knowledge source update and delete samples.
 - Carried forward the latest October GA reasoning factory's optional, positional, and null argument behavior while retaining November reasoning effort fields.
+
+## 12.1.0 (2026-11-13)
+
+### Features Added
+
+- Added support for the `2026-10-01` service version, which is now the default.
+- Added `SearchOptions.MoreLikeThis` to search for documents similar to an existing document.
+- Added `querySourceAuthorization` and `enableElevatedRead` overloads for document search, `GetDocumentOptions.QuerySourceAuthorization` and `EnableElevatedRead` for document retrieval, and `querySourceAuthorization` on knowledge base retrieval.
+- Added document-level permission configuration through `SearchField.PermissionFilter`, `OrganizationAccessExpiration`, and `SharepointSiteUrl`; `SearchIndex.PermissionFilterOption`; and `SharePointConnectorAppRegistration`. Permission filters can also be configured through `SimpleField` and `SimpleFieldAttribute`.
+- Added `SearchIndexerDataSourceConnection.IndexerPermissionOptions`, `IndexingParametersConfiguration.RefreshAllAcls`, and `SearchIndexerDataUserAssignedIdentity.FederatedIdentityClientId` for permission ingestion and federated identity configuration.
+- Added `SearchIndexerClient.Resync` and `ResyncAsync`, with `IndexerResyncBody` and `IndexerResyncOption.Permissions`, to resynchronize indexed permissions.
+- Added `SearchIndexerStatus.Runtime` and `SearchServiceStatistics.IndexersRuntime`, exposing used and remaining runtime and the associated reporting period.
+- Added `GetAllIndexers`, `GetAllDataSourceConnections`, `GetAllSkillsets`, and `GetAllSynonymMaps`, with async counterparts, to expose pageable resource listings with property selection, prefix search, and page-size controls without changing the existing list-returning APIs.
+- Added `GetAllIndexStatsSummary` and `GetAllKnowledgeSourceFiles`, with async counterparts, for pageable index statistics and knowledge source file listings.
+- Added `search`, `pageSize`, and `searchType` controls to the existing pageable `GetIndexes`, `GetIndexesWithSelectedProperties`, `GetAliases`, `GetKnowledgeBases`, and `GetKnowledgeSources` methods, with async counterparts. `ListingSearchType.Prefix` supports filtering listings by name prefix.
+- Added file knowledge sources through `FileKnowledgeSource`, `FileKnowledgeSourceParameters`, and `FileKnowledgeSourceParams`, including ingestion and CORS configuration.
+- Added multipart file upload, update, and deletion through `UploadKnowledgeSourceFileMultipart`, `UpdateKnowledgeSourceFile`, and `DeleteKnowledgeSourceFile`, with async counterparts. `FileUploadMetadata` and `KnowledgeSourceFile` expose file metadata, prefixes, parsing and extraction modes, timestamps, and processing errors. Multipart request constructors and content properties are experimental (`SCME0004`).
+- Added `KnowledgeSourceFileCapacity` and `KnowledgeSourceStatus.FileCapacity` for maximum file size, maximum file count, and remaining file count.
+- Added indexed SQL and indexed SharePoint knowledge sources, their retrieval parameter and reference models, SQL content and embedding column mappings, and SharePoint container selection.
+- Added `KnowledgeSourceIngestionParameters.IngestionPermissionOptions` and `NetworkAccessMode`, and `SearchIndexKnowledgeSourceParameters.BaseFilter`, to configure knowledge source access and filtering.
+- Added low and medium retrieval reasoning effort, answer-synthesis and extractive-data output modes, retrieval and answer instructions, and CORS configuration on knowledge bases. Retrieval requests now support messages, reasoning effort, output mode, and maximum output document counts.
+- Added `AlwaysQuerySource`, `FailOnError`, and `MaxOutputDocuments` controls to knowledge source retrieval parameters, and `Language`, `Market`, `Count`, and `Freshness` to web knowledge source configuration.
+- Added typed knowledge base retrieval activity records for search index, Azure Blob, indexed OneLake, web, file, indexed SharePoint, and indexed SQL sources; model query-planning and answer-synthesis activity records; activity timestamps and warnings; model and deployment details; and citation URLs on supported references.
+- Added `KnowledgeBaseRetrievalClient.RetrieveStreamAsync` for typed or protocol server-sent event streaming, with retrieval, activity, answer, reference, response-completion, error, and unknown-event models sharing `KnowledgeBaseRetrievalStreamEvent`.
+- Added `ContentUnderstandingSkill.ModelName`, `ModelDeployment`, and chunking method selection through `ContentUnderstandingSkillChunkingProperties.Method` and `ContentUnderstandingSkillChunkingMethod`, including fixed-size and semantic chunking. Chunking units now include tokens.
+- Added `Gpt54`, `Gpt55`, `Gpt56Sol`, `Gpt56Terra`, and `Gpt56Luna` to `AzureOpenAIModelName`.
+
+### Bugs Fixed
+
+- Fixed ambiguous API key and configuration-based client registration extension calls while retaining the legacy static registration methods.
+- Restored the 12.0.0 optional arguments on the `VectorQuery`, `KnowledgeSource`, `FacetResult`, and enumerable-based `SearchIndex` model factories.
+- Restored the 12.0.0 optional arguments on `SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord`. The overload accepting activity timestamps and a warning requires all arguments to avoid ambiguity with existing calls.
+- Fixed explicit `AddSearchClient`, `AddSearchIndexClient`, and `AddSearchIndexerClient` registrations with `TokenCredential`, including `DefaultAzureCredential`. ([#63072](https://github.com/Azure/azure-sdk-for-net/issues/63072))
+- Resource listing methods now honor `AsPages(pageSizeHint)` on initial and continuation requests while preserving the service-provided cursor.
+- Fixed indexing configuration round trips, including `RefreshAllAcls`, markdown settings, custom dictionary entries, and the legacy `IndexingParameters.Configuration` adapter on deserialized models.
+- Fixed semantic and vector search options being lost during deserialization and continuation-token round trips.
+- Fixed query-answer thresholds using culture-dependent formatting and parsing, and value facets failing to convert compatible numeric types.
+- Fixed settings-based clients ignoring custom document serializers and the `QueryAnswerResult` model factory rejecting read-only-only dictionaries.
+
+### Other Changes
+
+- `AzureMachineLearningVectorizer`, `AzureMachineLearningParameters`, `AIFoundryModelCatalogName`, `VectorizableImageUrlQuery`, `VectorizableImageBinaryQuery`, `KnowledgeBaseAgenticReasoningActivityRecord.RetrievalReasoningEffort`, and their `SearchModelFactory` methods are now obsolete. They shipped in 12.0.0 because of an error in the service specification and are not supported by any service version this library targets.
+- The obsolete AML vectorizer and image query models retain request serialization and typed deserialization, but deserialize as unknown models through their polymorphic base types. The obsolete activity record's `RetrievalReasoningEffort` property is retained for mocking and is not populated from JSON.
+- Added experimental (`SCME0002`) generic-host registration extensions, including keyed registration, for `SearchClient`, `SearchIndexClient`, `SearchIndexerClient`, and `KnowledgeBaseRetrievalClient`.
+- Added constructors and setters that allow knowledge base message roles, text content, image content, and image URLs to be updated.
 
 ## 12.1.0-beta.3 (2026-09-14)
 

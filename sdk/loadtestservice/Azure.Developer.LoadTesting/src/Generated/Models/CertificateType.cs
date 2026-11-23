@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="CertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateType?(string value) => value == null ? null : new CertificateType(value);
+        public static implicit operator CertificateType?(string value) => value == null ? (CertificateType?)null : new CertificateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

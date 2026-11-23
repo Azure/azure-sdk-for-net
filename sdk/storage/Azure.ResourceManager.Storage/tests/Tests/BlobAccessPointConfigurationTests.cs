@@ -75,7 +75,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(location, configuration.Data.Location);
             Assert.AreEqual(BlobAccessPointConfigurationState.Active, configuration.Data.Properties.State);
             Assert.AreEqual("Test Blob Access Point configuration", configuration.Data.Properties.Description);
-            Assert.IsNotEmpty(configuration.Data.Properties.UniqueId);
+            Assert.IsTrue(configuration.Data.Properties.UniqueId.HasValue);
+            Guid uniqueId = configuration.Data.Properties.UniqueId.Value;
             Assert.AreEqual(StorageResourceProvisioningState.Succeeded, configuration.Data.Properties.ProvisioningState);
             Assert.AreEqual("test", configuration.Data.Tags["environment"]);
             AssertSource(configuration.Data.Properties.Source);
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             BlobAccessPointConnectionTestResult existingConnectionResult = (await configuration.TestExistingConnectionAsync(
                 WaitUntil.Completed,
-                new BlobAccessPointConnectionTestContent(configuration.Data.Properties.UniqueId))).Value;
+                new BlobAccessPointConnectionTestContent(uniqueId))).Value;
             Assert.IsNotEmpty(existingConnectionResult.MethodName);
 
             string containerName = Recording.GenerateAssetName("container");
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 BlobAccessPointConfiguration = new BlobAccessPointConfigurationConnection
                 {
                     BlobAccessPointConfigurationName = configurationName,
-                    BlobAccessPointConfigurationUniqueId = configuration.Data.Properties.UniqueId
+                    BlobAccessPointConfigurationUniqueId = uniqueId.ToString("D")
                 }
             };
             BlobContainerResource container = (await account.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 containerName,
                 containerData)).Value;
             Assert.AreEqual(configurationName, container.Data.BlobAccessPointConfiguration.BlobAccessPointConfigurationName);
-            Assert.AreEqual(configuration.Data.Properties.UniqueId, container.Data.BlobAccessPointConfiguration.BlobAccessPointConfigurationUniqueId);
+            Assert.AreEqual(uniqueId, Guid.Parse(container.Data.BlobAccessPointConfiguration.BlobAccessPointConfigurationUniqueId));
             await container.DeleteAsync(WaitUntil.Completed);
 
             BlobAccessPointConfigurationPatch patch = new BlobAccessPointConfigurationPatch
@@ -138,13 +139,13 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 TlsVerification = BlobAccessPointTlsVerification.Skip
             };
-            BlobAccessPointAccessKeyAuthProperties auth = new BlobAccessPointAccessKeyAuthProperties(
+            BlobAccessPointAccessKeyAuthenticationProperties authentication = new BlobAccessPointAccessKeyAuthenticationProperties(
                 "00000000000001f44038",
                 TestEnvironment.BlobAccessPointSecretAccessKey)
             {
                 SigningRegion = "us-east-1"
             };
-            return new BlobAccessPointQumuloSourceProperties(connection, auth);
+            return new BlobAccessPointQumuloSourceProperties(connection, authentication);
         }
 
         private static void AssertSource(BlobAccessPointSourceProperties source)
@@ -153,10 +154,10 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobAccessPointQumuloSourceProperties qumuloSource = (BlobAccessPointQumuloSourceProperties)source;
             Assert.IsInstanceOf<BlobAccessPointEndpointConnectionProperties>(qumuloSource.Connection);
             BlobAccessPointEndpointConnectionProperties connection = (BlobAccessPointEndpointConnectionProperties)qumuloSource.Connection;
-            Assert.IsInstanceOf<BlobAccessPointAccessKeyAuthProperties>(qumuloSource.Auth);
-            BlobAccessPointAccessKeyAuthProperties auth = (BlobAccessPointAccessKeyAuthProperties)qumuloSource.Auth;
-            Assert.AreEqual("00000000000001f44038", auth.AccessKeyId);
-            Assert.AreEqual("us-east-1", auth.SigningRegion);
+            Assert.IsInstanceOf<BlobAccessPointAccessKeyAuthenticationProperties>(qumuloSource.Authentication);
+            BlobAccessPointAccessKeyAuthenticationProperties authentication = (BlobAccessPointAccessKeyAuthenticationProperties)qumuloSource.Authentication;
+            Assert.AreEqual("00000000000001f44038", authentication.AccessKeyId);
+            Assert.AreEqual("us-east-1", authentication.SigningRegion);
         }
     }
 }

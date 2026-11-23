@@ -14,7 +14,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Outbound rule of the load balancer. </summary>
     internal partial class OutboundRulePropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="OutboundRulePropertiesFormat"/>. </summary>
         /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
         /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurations"/> is null. </exception>
         public OutboundRulePropertiesFormat(IEnumerable<WritableSubResource> frontendIPConfigurations, LoadBalancerOutboundRuleProtocol protocol)
         {
-            Argument.AssertNotNull(frontendIPConfigurations, nameof(frontendIPConfigurations));
-
             FrontendIPConfigurations = frontendIPConfigurations.ToList();
             Protocol = protocol;
         }

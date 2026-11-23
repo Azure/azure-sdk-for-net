@@ -1,14 +1,58 @@
 # Release History
 
-## 1.0.0-beta.31 (Unreleased)
+## 1.0.0 (Unreleased)
 
 ### Features Added
 
+- Added experimental (`AAAS005`) [original-subject attribution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/ORIGINAL_SUBJECT.md) snapshots and an explicit per-call model header helper.
+- Added memory-snapshot activation for resilient tasks. When
+  `FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, enabled task definitions remain registered
+  during capture without constructing task storage or recovery workers. Restore
+  prepares the session-bound runtime before the application callback, then starts
+  automatic recovery after the callback completes.
+
 ### Breaking Changes
+
+- `FoundryStateStore` and the `FoundryStorage*Exception` types are now experimental
+  (`AAAS004`), and `AgentRestoreContext` joins the experimental snapshot lifecycle
+  contract (`AAAS002`). Existing code that uses these types fails to compile until the
+  corresponding diagnostic is suppressed (for example, `#pragma warning disable AAAS004`
+  or `<NoWarn>$(NoWarn);AAAS004</NoWarn>`).
 
 ### Bugs Fixed
 
+- Fixed hosted startup failing with `MissingMethodException` when Agent365 trace export
+  was enabled and a stable `Microsoft.OpenTelemetry` distro was resolved.
+- Ensured snapshot rollback and host disposal join owned workers before releasing
+  stores, bound cleanup waits to the host shutdown timeout, and retained failed
+  cleanup for safe retry without blocking disposal of unrelated services.
+- Paused automatic recovery and external task admission before restored
+  configuration is published, while preserving protocol scope for nested task
+  calls made by already-running workers.
+- Resolved implicit file-replay storage roots after restoration and compared
+  effective task-provider bindings so equivalent hosted endpoints and irrelevant
+  local endpoint changes do not reject a restore.
+
 ### Other Changes
+
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`.
+
+## 1.0.0-beta.31 (2026-11-04)
+
+### Features Added
+
+- Added the `microsoft.foundry = "True"` string attribute to all collected spans and log records. The default telemetry processors override conflicting marker values without changing `gen_ai.provider.name`.
+- Added protocol-scoped task access for composed hosts and per-task activation
+  checks, stamping the owning protocol on new task records so a disabled
+  protocol cannot start or recover its tasks merely because another protocol
+  enabled the shared runtime. Legacy unmarked application tasks require the
+  explicit Core switch for recovery; existing Invocations chains continue under
+  that opt-in. The new public protocol-scoping helpers and per-task activation
+  option are experimental (`AAAS003`).
+
+### Bugs Fixed
+
+- Prevented a stale steering nudge from canceling a promoted turn after its pending-input queue has drained. Pending-input publication now follows the same turn as the cancellation signal.
 
 ## 1.0.0-beta.30 (2026-10-15)
 

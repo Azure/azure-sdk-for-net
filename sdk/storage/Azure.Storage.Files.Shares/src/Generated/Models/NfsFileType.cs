@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Converts a string to a <see cref="NfsFileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NfsFileType?(string value) => value == null ? null : new NfsFileType(value);
+        public static implicit operator NfsFileType?(string value) => value == null ? (NfsFileType?)null : new NfsFileType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

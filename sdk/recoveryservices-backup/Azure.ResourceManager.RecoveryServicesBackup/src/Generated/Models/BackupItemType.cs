@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapHanaDatabaseValue = "SAPHanaDatabase";
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
+        /// <summary> A SQL Server instance. </summary>
+        private const string SQLInstanceValue = "SQLInstance";
 
         /// <summary> Initializes a new instance of <see cref="BackupItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -89,6 +91,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Gets the SapHanaDBInstance. </summary>
         public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
+
+        /// <summary> A SQL Server instance. </summary>
+        public static BackupItemType SQLInstance { get; } = new BackupItemType(SQLInstanceValue);
 
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

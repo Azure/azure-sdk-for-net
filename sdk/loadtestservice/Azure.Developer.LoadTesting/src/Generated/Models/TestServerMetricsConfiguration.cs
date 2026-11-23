@@ -17,17 +17,9 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
-        /// <param name="metrics">
-        /// Azure resource metrics collection {metric id : metrics object} (Refer :
-        /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
-        /// for metric id).
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public TestServerMetricsConfiguration(IDictionary<string, ResourceMetric> metrics)
+        public TestServerMetricsConfiguration()
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            Metrics = metrics;
+            Metrics = new ChangeTrackingDictionary<string, ResourceMetric>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>

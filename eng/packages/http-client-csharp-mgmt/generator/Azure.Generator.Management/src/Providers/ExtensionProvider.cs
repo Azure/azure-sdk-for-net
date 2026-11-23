@@ -132,10 +132,16 @@ namespace Azure.Generator.Management.Providers
 
             return method;
 
-            static ParameterProvider DuplicateParameter(ParameterProvider original)
+            ParameterProvider DuplicateParameter(ParameterProvider original, int index)
             {
-                return new ParameterProvider(
-                    original.Name,
+                var name = original.Name;
+                if (original.Location is ParameterLocation.Body or ParameterLocation.Path && original.InputParameter?.IsExactName != true)
+                {
+                    name = SynthesizedParameterNameHelper.GetExistingParameterName(
+                        this, target.Name, [coreType, .. target.Parameters.Select(p => p.Type)], index + 1) ?? name;
+                }
+                var parameter = new ParameterProvider(
+                    name,
                     original.Description,
                     original.Type,
                     defaultValue: original.DefaultValue,
@@ -145,7 +151,12 @@ namespace Azure.Generator.Management.Providers
                     attributes: original.Attributes,
                     initializationValue: original.InitializationValue,
                     location: original.Location,
-                    validation: null);
+                    wireInfo: original.WireInfo,
+                    validation: null,
+                    inputParameter: original.InputParameter);
+                return original.Location is ParameterLocation.Body or ParameterLocation.Path
+                    ? SynthesizedParameterNameHelper.PreserveName(parameter)
+                    : parameter;
             }
         }
 

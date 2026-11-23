@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Compute
     {
         private BicepValue<HostEndpointSettingsMode> _mode;
         private BicepValue<string> _inVmAccessControlProfileReferenceId;
+        private BicepValue<bool> _useLocalFileRules;
 
         /// <summary> Creates a new HostEndpointSettings. </summary>
         public HostEndpointSettings()
@@ -51,12 +52,28 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the UseLocalFileRules. </summary>
+        public BicepValue<bool> UseLocalFileRules
+        {
+            get
+            {
+                Initialize();
+                return _useLocalFileRules;
+            }
+            set
+            {
+                Initialize();
+                _useLocalFileRules.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for HostEndpointSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _mode = DefineProperty<HostEndpointSettingsMode>(nameof(Mode), new string[] { "mode" });
             _inVmAccessControlProfileReferenceId = DefineProperty<string>(nameof(InVmAccessControlProfileReferenceId), new string[] { "inVMAccessControlProfileReferenceId" });
+            _useLocalFileRules = DefineProperty<bool>(nameof(UseLocalFileRules), new string[] { "useLocalFileRules" });
             DefineAdditionalProperties();
         }
 

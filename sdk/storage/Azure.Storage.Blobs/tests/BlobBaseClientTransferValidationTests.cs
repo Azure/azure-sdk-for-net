@@ -75,6 +75,7 @@ namespace Azure.Storage.Blobs.Tests
             {
                 TransferValidation = transferValidation,
                 TransferOptions = transferOptions,
+                LayoutAwareRouting = LayoutAwareRouting.Disabled,
             });
 
         protected override async Task<Stream> OpenReadAsync(
@@ -84,7 +85,8 @@ namespace Azure.Storage.Blobs.Tests
             => await client.OpenReadAsync(new BlobOpenReadOptions(false)
             {
                 BufferSize = internalBufferSize,
-                TransferValidation = transferValidation
+                TransferValidation = transferValidation,
+                LayoutAwareRouting = LayoutAwareRouting.Disabled
             });
 
         [Test]

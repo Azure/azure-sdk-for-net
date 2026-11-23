@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -129,7 +129,7 @@ public partial class StorageAccount : ProvisionableResource
     [CodeGenMember("CustomDomain")]
     public StorageCustomDomain CustomDomain
     {
-        get => Properties is null ? default! : Properties.CustomDomain;
+        get => Properties is null ? default : Properties.CustomDomain;
         set
         {
             Properties ??= new StorageAccountProperties();
@@ -142,7 +142,7 @@ public partial class StorageAccount : ProvisionableResource
     [CodeGenMember("SasPolicy")]
     public StorageAccountSasPolicy SasPolicy
     {
-        get => Properties is null ? default! : Properties.SasPolicy;
+        get => Properties is null ? default : Properties.SasPolicy;
         set
         {
             Properties ??= new StorageAccountProperties();
@@ -155,7 +155,7 @@ public partial class StorageAccount : ProvisionableResource
     [CodeGenMember("Encryption")]
     public StorageAccountEncryption Encryption
     {
-        get => Properties is null ? default! : Properties.Encryption;
+        get => Properties is null ? default : Properties.Encryption;
         set
         {
             Properties ??= new StorageAccountProperties();
@@ -185,7 +185,7 @@ public partial class StorageAccount : ProvisionableResource
     [CodeGenMember("NetworkRuleSet")]
     public StorageAccountNetworkRuleSet NetworkRuleSet
     {
-        get => Properties is null ? default! : Properties.NetworkRuleSet;
+        get => Properties is null ? default : Properties.NetworkRuleSet;
         set
         {
             Properties ??= new StorageAccountProperties();

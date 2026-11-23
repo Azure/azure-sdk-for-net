@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="source"> Information about the backing data source. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobAccessPointConfigurationProperties(string uniqueId, BlobAccessPointConfigurationState? state, string description, BlobAccessPointConnectionTestStatus? lastConnectionTestStatus, DateTimeOffset? lastConnectionTestOn, string lastConnectionTestErrorMessage, BlobAccessPointSourceProperties source, StorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobAccessPointConfigurationProperties(Guid? uniqueId, BlobAccessPointConfigurationState? state, string description, BlobAccessPointConnectionTestStatus? lastConnectionTestStatus, DateTimeOffset? lastConnectionTestOn, string lastConnectionTestErrorMessage, BlobAccessPointSourceProperties source, StorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueId = uniqueId;
             State = state;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The system-generated unique identifier of the configuration. </summary>
         [WirePath("uniqueId")]
-        public string UniqueId { get; }
+        public Guid? UniqueId { get; }
 
         /// <summary> The configuration state. A configuration is created in the Active state when this value is not specified. </summary>
         [WirePath("state")]

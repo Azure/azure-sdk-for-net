@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -18,13 +17,10 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-
-using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
-using MockPlatform = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.MockPlatform;
-
 using OpenTelemetry;
-
 using Xunit;
+using MockPlatform = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.MockPlatform;
+using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {

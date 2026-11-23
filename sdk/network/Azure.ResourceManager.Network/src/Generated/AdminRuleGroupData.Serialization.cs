@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Network
     /// <summary> Defines the admin rule collection. </summary>
     public partial class AdminRuleGroupData : ResourceData, IJsonModel<AdminRuleGroupData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdminRuleGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdminRuleGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AdminRuleGroupData IPersistableModel<AdminRuleGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AdminRuleGroupData IPersistableModel<AdminRuleGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdminRuleGroupData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AdminRuleGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,6 +101,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,7 +125,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AdminRuleGroupData IJsonModel<AdminRuleGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AdminRuleGroupData IJsonModel<AdminRuleGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AdminRuleGroupData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdminRuleGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdminRuleGroupData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -118,6 +153,7 @@ namespace Azure.ResourceManager.Network
             ResourceType resourceType = default;
             SystemData systemData = default;
             AdminRuleCollectionPropertiesFormat properties = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,6 +198,15 @@ namespace Azure.ResourceManager.Network
                     properties = AdminRuleCollectionPropertiesFormat.DeserializeAdminRuleCollectionPropertiesFormat(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -173,6 +218,7 @@ namespace Azure.ResourceManager.Network
                 resourceType,
                 systemData,
                 properties,
+                eTag,
                 additionalBinaryDataProperties);
         }
     }

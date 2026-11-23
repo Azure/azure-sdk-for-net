@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,8 +13,8 @@ namespace Azure.Provisioning.Storage;
 /// <summary> The Storage Account Local User keys. </summary>
 public partial class LocalUserKeys : ProvisionableConstruct
 {
-    private BicepList<StorageSshPublicKey>? _sshAuthorizedKeys;
-    private BicepValue<string>? _sharedKey;
+    private BicepList<StorageSshPublicKey> _sshAuthorizedKeys;
+    private BicepValue<string> _sharedKey;
 
     // Provisioning generation omits the listKeys result model; retain the shipped SshAuthorizedKeys output property.
     /// <summary>
@@ -22,7 +22,7 @@ public partial class LocalUserKeys : ProvisionableConstruct
     /// </summary>
     public BicepList<StorageSshPublicKey> SshAuthorizedKeys
     {
-        get { Initialize(); return _sshAuthorizedKeys!; }
+        get { Initialize(); return _sshAuthorizedKeys; }
     }
 
     // Provisioning generation omits the listKeys result model; retain the shipped SharedKey output property.
@@ -31,7 +31,7 @@ public partial class LocalUserKeys : ProvisionableConstruct
     /// </summary>
     public BicepValue<string> SharedKey
     {
-        get { Initialize(); return _sharedKey!; }
+        get { Initialize(); return _sharedKey; }
     }
 
     /// <summary>

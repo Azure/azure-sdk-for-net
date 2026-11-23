@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Interval))
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("interval"u8);
-                writer.WriteNumberValue(Interval.Value);
+                writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(UnhealthyThreshold))
             {
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match, options);
             }
-            if (Optional.IsDefined(EnableProbeProxyProtocolHeader))
+            if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
             {
                 writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
-                writer.WriteBooleanValue(EnableProbeProxyProtocolHeader.Value);
+                writer.WriteBooleanValue(IsProbeProxyProtocolHeaderEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayProtocol? protocol = default;
             string host = default;
             string path = default;
-            int? interval = default;
-            int? timeout = default;
+            int? intervalInSeconds = default;
+            int? timeoutInSeconds = default;
             int? unhealthyThreshold = default;
             bool? pickHostNameFromBackendHttpSettings = default;
             bool? pickHostNameFromBackendSettings = default;
             int? minServers = default;
             ApplicationGatewayProbeHealthResponseMatch match = default;
-            bool? enableProbeProxyProtocolHeader = default;
+            bool? isProbeProxyProtocolHeaderEnabled = default;
             NetworkProvisioningState? provisioningState = default;
             int? port = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    interval = prop.Value.GetInt32();
+                    intervalInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("timeout"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    timeout = prop.Value.GetInt32();
+                    timeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("unhealthyThreshold"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enableProbeProxyProtocolHeader = prop.Value.GetBoolean();
+                    isProbeProxyProtocolHeaderEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.Network.Models
                 protocol,
                 host,
                 path,
-                interval,
-                timeout,
+                intervalInSeconds,
+                timeoutInSeconds,
                 unhealthyThreshold,
                 pickHostNameFromBackendHttpSettings,
                 pickHostNameFromBackendSettings,
                 minServers,
                 match,
-                enableProbeProxyProtocolHeader,
+                isProbeProxyProtocolHeaderEnabled,
                 provisioningState,
                 port,
                 additionalBinaryDataProperties);

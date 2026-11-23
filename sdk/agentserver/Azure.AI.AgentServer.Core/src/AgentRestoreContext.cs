@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core.Internal;
 
 namespace Azure.AI.AgentServer.Core;
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Core;
 /// <summary>
 /// Describes the session context supplied by the platform after restoring an agent process.
 /// </summary>
+[Experimental("AAAS002")]
 public sealed class AgentRestoreContext
 {
     /// <summary>

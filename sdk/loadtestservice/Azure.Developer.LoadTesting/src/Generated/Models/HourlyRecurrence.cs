@@ -14,10 +14,8 @@ namespace Azure.Developer.LoadTesting
     public partial class HourlyRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/>. </summary>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </param>
-        public HourlyRecurrence(int interval) : base(Frequency.Hourly)
+        public HourlyRecurrence() : base(Frequency.Hourly)
         {
-            Interval = interval;
         }
 
         /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/>. </summary>

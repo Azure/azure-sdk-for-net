@@ -56,7 +56,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="MessagePlatformKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessagePlatformKind?(string value) => value == null ? null : new MessagePlatformKind(value);
+        public static implicit operator MessagePlatformKind?(string value) => value == null ? (MessagePlatformKind?)null : new MessagePlatformKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

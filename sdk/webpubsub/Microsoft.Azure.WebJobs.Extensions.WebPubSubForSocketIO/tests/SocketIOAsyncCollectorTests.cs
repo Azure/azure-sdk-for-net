@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         [Test]
         public async Task SendToRoomTest()
         {
-            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new string[] {"abc"}, @namespace: "/ns"));
+            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new string[] { "abc" }, @namespace: "/ns"));
             _service.Verify(x => x.SendToGroupAsync("0~L25z~cm0", It.Is<RequestContent>(c =>
             AssertContentData(c, "42/ns,[\"event\",\"abc\"]")),
             ContentType.TextPlain, It.IsAny<IList<string>>(), "", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         [Test]
         public async Task SendToRoomExcludeTest()
         {
-            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new string[] { "abc" }, new[] {"sid"}, @namespace: "/ns"));
+            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new string[] { "abc" }, new[] { "sid" }, @namespace: "/ns"));
             _service.Verify(x => x.SendToGroupAsync("0~L25z~cm0", It.Is<RequestContent>(c =>
             AssertContentData(c, "42/ns,[\"event\",\"abc\"]")),
             ContentType.TextPlain, It.IsAny<IList<string>>(), "not ('0~L25z~c2lk' in groups)", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         [Test]
         public async Task SendToRoomWithComplexTest()
         {
-            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new object[] { 1, "abc" , new { a=1, b=true } }, @namespace: "/ns"));
+            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new object[] { 1, "abc", new { a = 1, b = true } }, @namespace: "/ns"));
             _service.Verify(x => x.SendToGroupAsync("0~L25z~cm0", It.Is<RequestContent>(c =>
             AssertContentData(c, "42/ns,[\"event\",1,\"abc\",{\"a\":1,\"b\":true}]")),
             ContentType.TextPlain, It.IsAny<IList<string>>(), "", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
@@ -109,10 +109,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         [Test]
         public async Task SendToRoomsExceptTest()
         {
-            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm", "rm2" }, "ev", new string[] { "abc" }, new[] {"ex1"}, @namespace: "/ns"));
+            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm", "rm2" }, "ev", new string[] { "abc" }, new[] { "ex1" }, @namespace: "/ns"));
             _service.Verify(x => x.SendToAllAsync(It.Is<RequestContent>(c =>
             AssertContentData(c, "42/ns,[\"ev\",\"abc\"]")),
-            ContentType.TextPlain, It.IsAny<IList<string>>(), It.Is<string>(f => f == "'0~L25z~cm0' in groups or '0~L25z~cm0y' in groups and not ('0~L25z~ZXgx' in groups)"), It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
+            ContentType.TextPlain, It.IsAny<IList<string>>(), It.Is<string>(f => f == "('0~L25z~cm0' in groups or '0~L25z~cm0y' in groups) and not ('0~L25z~ZXgx' in groups)"), It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
+        }
+
+        [Test]
+        public async Task SendToRoomsMultipleExceptTest()
+        {
+            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm", "rm2" }, "ev", new string[] { "abc" }, new[] { "ex1", "ex2" }, @namespace: "/ns"));
+            _service.Verify(x => x.SendToAllAsync(It.Is<RequestContent>(c =>
+            AssertContentData(c, "42/ns,[\"ev\",\"abc\"]")),
+            ContentType.TextPlain, It.IsAny<IList<string>>(), It.Is<string>(f => f == "('0~L25z~cm0' in groups or '0~L25z~cm0y' in groups) and not ('0~L25z~ZXgx' in groups) and not ('0~L25z~ZXgy' in groups)"), It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
         }
 
         [Test]

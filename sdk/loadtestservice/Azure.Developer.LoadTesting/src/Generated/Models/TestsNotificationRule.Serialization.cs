@@ -15,11 +15,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Tests Notification rule model. </summary>
     public partial class TestsNotificationRule : NotificationRule, IJsonModel<TestsNotificationRule>
     {
-        /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/> for deserialization. </summary>
-        internal TestsNotificationRule()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NotificationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

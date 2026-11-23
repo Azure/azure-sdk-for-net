@@ -54,7 +54,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="nextAllowedProvisionedIopsDowngradeOn"> The next allowed provisioned IOPS downgrade time. </param>
         /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> The next allowed provisioned bandwidth downgrade time. </param>
         /// <param name="enableSmbDirectoryLease"> Whether SMB directory lease is enabled. </param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, ETag eTag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? deletedOn, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangedOn, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, bool? enableSmbDirectoryLease)
+        /// <param name="createdOn"> The creation time. </param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, ETag eTag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? deletedOn, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangedOn, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, bool? enableSmbDirectoryLease, DateTimeOffset? createdOn)
         {
             LastModified = lastModified;
             ETag = eTag;
@@ -83,6 +84,7 @@ namespace Azure.Storage.Files.Shares.Models
             NextAllowedProvisionedIopsDowngradeOn = nextAllowedProvisionedIopsDowngradeOn;
             NextAllowedProvisionedBandwidthDowngradeOn = nextAllowedProvisionedBandwidthDowngradeOn;
             EnableSmbDirectoryLease = enableSmbDirectoryLease;
+            CreatedOn = createdOn;
         }
 
         /// <summary> The last modified time. </summary>
@@ -168,5 +170,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Whether SMB directory lease is enabled. </summary>
         public bool? EnableSmbDirectoryLease { get; }
+
+        /// <summary> The creation time. </summary>
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

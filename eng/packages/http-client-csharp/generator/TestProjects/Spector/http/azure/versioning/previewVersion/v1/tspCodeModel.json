@@ -335,7 +335,8 @@
             }
           },
           "isHttpMetadata": false,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         }
       ]
     },

@@ -54,7 +54,9 @@ await indexers.CreateIndexerAsync(new SearchIndexer(name, name, name)
     SkillsetName = name,
     Parameters = new IndexingParameters
     {
-        BatchSize = 1, MaxFailedItems = 0, MaxFailedItemsPerBatch = 0,
+        BatchSize = 1,
+        MaxFailedItems = 0,
+        MaxFailedItemsPerBatch = 0,
         IndexingParametersConfiguration = new IndexingParametersConfiguration
         {
             IndexedFileNameExtensions = ".txt",

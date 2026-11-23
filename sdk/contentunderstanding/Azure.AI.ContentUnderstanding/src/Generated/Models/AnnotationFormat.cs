@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="AnnotationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnnotationFormat?(string value) => value == null ? null : new AnnotationFormat(value);
+        public static implicit operator AnnotationFormat?(string value) => value == null ? (AnnotationFormat?)null : new AnnotationFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         #region Snippet:Sample_CreateTheEndpoint_HostedAgentSessionsAgents_Async
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -85,7 +85,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         // If we have occasionally disabled the Agent, enable it again.
         await agentsClient.EnableAgentAsync(agentVersion.Name);
         #region Snippet:Sample_CreateSession_HostedAgentSessionsAgents_Async
-        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         Console.WriteLine($"The session {session1.AgentSessionId} was created.");
         #endregion
         #region Snippet:Sample_DisableTheAgent_HostedAgentSessionsAgents_Async
@@ -93,7 +93,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         // The new session cannot be created.
         try
         {
-            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -107,7 +107,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         #endregion
         #region Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Async
         await agentsClient.EnableAgentAsync(agentVersion.Name);
-        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         Console.WriteLine($"The session {session2.AgentSessionId} was created.");
         #endregion
         #region Snippet:DeleteHostedAgentSessionsAgents_HostedAgentSessionsAgents_Async
@@ -152,7 +152,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         #region Snippet:Sample_CreateTheEndpoint_HostedAgentSessionsAgents_Sync
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -170,7 +170,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         // If we have occasionally disabled the Agent, enable it again.
         agentsClient.EnableAgent(agentVersion.Name);
         #region Snippet:Sample_CreateSession_HostedAgentSessionsAgents_Sync
-        ProjectAgentSession session1 = agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = agentsClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         Console.WriteLine($"The session {session1.AgentSessionId} was created.");
         #endregion
         #region Snippet:Sample_DisableTheAgent_HostedAgentSessionsAgents_Sync
@@ -178,7 +178,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         // The new session cannot be created.
         try
         {
-            agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            agentsClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -192,7 +192,7 @@ public class Sample_HostedAgentDisable : SamplesBase
         #endregion
         #region Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Sync
         agentsClient.EnableAgent(agentVersion.Name);
-        ProjectAgentSession session2 = agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = agentsClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         Console.WriteLine($"The session {session2.AgentSessionId} was created.");
         #endregion
         #region Snippet:DeleteHostedAgentSessionsAgents_HostedAgentSessionsAgents_Sync

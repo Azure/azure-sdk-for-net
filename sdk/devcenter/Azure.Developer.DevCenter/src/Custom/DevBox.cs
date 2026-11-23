@@ -11,6 +11,13 @@ namespace Azure.Developer.DevCenter.Models
     [CodeGenSuppress("DevBox", typeof(string))]
     public partial class DevBox
     {
+        // The generator emits a public parameterless constructor because the spec has no required
+        // constructor parameters, but Name is get-only and is required by CreateDevBox.
+        // Keep it internal so it remains available for ModelReaderWriter without exposing an unusable constructor.
+        internal DevBox()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>

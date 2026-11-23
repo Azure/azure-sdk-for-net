@@ -85,9 +85,10 @@ public partial class AIProjectModels
     /// <param name="name">Model name. </param>
     /// <param name="version">Model version. </param>
     /// <returns>Uploaded model URI</returns>
+    /// <param name="cancellationToken">Cancelation token</param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or  is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-    public virtual Uri UploadModel(string path, string name, string version)
+    public virtual Uri UploadModel(string path, string name, string version, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -96,10 +97,15 @@ public partial class AIProjectModels
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
         }
+        if (cancellationToken.IsCancellationRequested)
+        {
+            throw new OperationCanceledException("The model upload was canceled.", cancellationToken);
+        }
         ModelPendingUploadResult uploadResponse = StartModelPendingUpload(
             name: name,
             version: version,
-            pendingUploadRequest: new()
+            pendingUploadRequest: new(),
+            cancellationToken: cancellationToken
         );
         BlobContainerClient client = GetContainerClientOrRaise(uploadResponse);
 
@@ -111,7 +117,7 @@ public partial class AIProjectModels
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 blobClient = client.GetBlobClient(fileName);
-                blobClient.Upload(fileStream);
+                blobClient.Upload(fileStream, cancellationToken);
                 filesUploaded = true;
             }
         }
@@ -129,10 +135,11 @@ public partial class AIProjectModels
     /// <param name="path">The path to the directory, containing model. </param>
     /// <param name="name">Model name. </param>
     /// <param name="version">Model version. </param>
+    /// <param name="cancellationToken">Cancelation token</param>
     /// <returns>Uploaded model URI</returns>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or  is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-    public virtual async Task<Uri> UploadModelAsync(string path, string name, string version)
+    public virtual async Task<Uri> UploadModelAsync(string path, string name, string version, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -141,10 +148,15 @@ public partial class AIProjectModels
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
         }
+        if (cancellationToken.IsCancellationRequested)
+        {
+            throw new OperationCanceledException("The model upload was canceled.", cancellationToken);
+        }
         ModelPendingUploadResult uploadResponse = await StartModelPendingUploadAsync(
             name: name,
             version: version,
-            pendingUploadRequest: new()
+            pendingUploadRequest: new(),
+            cancellationToken: cancellationToken
         ).ConfigureAwait(false);
         BlobContainerClient client = GetContainerClientOrRaise(uploadResponse);
 
@@ -156,7 +168,7 @@ public partial class AIProjectModels
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 blobClient = client.GetBlobClient(fileName);
-                await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
+                await blobClient.UploadAsync(fileStream, cancellationToken).ConfigureAwait(false);
                 filesUploaded = true;
             }
         }
@@ -202,5 +214,41 @@ public partial class AIProjectModels
         BlobContainerClient containerClient;
         containerClient = new BlobContainerClient(pendingUploadResult.BlobReference.Credential.SasUri);
         return containerClient;
+    }
+
+    /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
+    /// <param name="name"> Name of the model. </param>
+    /// <param name="version"> Version of the model. </param>
+    /// <param name="credentialContent"> The credential request request body. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialContent"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult<DatasetCredential> GetModelCredentials(string name, string version, ModelCredentialContent credentialContent, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNull(credentialContent, nameof(credentialContent));
+
+        ClientResult result = GetModelCredentials(name, version, credentialContent, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+    }
+
+    /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
+    /// <param name="name"> Name of the model. </param>
+    /// <param name="version"> Version of the model. </param>
+    /// <param name="credentialContent"> The credential request request body. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialContent"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult<DatasetCredential>> GetModelCredentialsAsync(string name, string version, ModelCredentialContent credentialContent, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNull(credentialContent, nameof(credentialContent));
+
+        ClientResult result = await GetModelCredentialsAsync(name, version, credentialContent, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
     }
 }

@@ -155,25 +155,25 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("session_id"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(TriggeredOn))
+            if (Optional.IsDefined(TriggeredAt))
             {
                 writer.WritePropertyName("triggered_at"u8);
-                writer.WriteNumberValue(TriggeredOn.Value, "U");
+                writer.WriteNumberValue(TriggeredAt.Value, "U");
             }
-            if (Optional.IsDefined(ScheduledFireOn))
+            if (Optional.IsDefined(ScheduledFireAt))
             {
                 writer.WritePropertyName("scheduled_fire_at"u8);
-                writer.WriteNumberValue(ScheduledFireOn.Value, "U");
+                writer.WriteNumberValue(ScheduledFireAt.Value, "U");
             }
-            if (Optional.IsDefined(StartedOn))
+            if (Optional.IsDefined(StartedAt))
             {
                 writer.WritePropertyName("started_at"u8);
-                writer.WriteNumberValue(StartedOn.Value, "U");
+                writer.WriteNumberValue(StartedAt.Value, "U");
             }
-            if (Optional.IsDefined(EndedOn))
+            if (Optional.IsDefined(EndedAt))
             {
                 writer.WritePropertyName("ended_at"u8);
-                writer.WriteNumberValue(EndedOn.Value, "U");
+                writer.WriteNumberValue(EndedAt.Value, "U");
             }
             if (Optional.IsDefined(DispatchId))
             {
@@ -264,10 +264,10 @@ namespace Azure.AI.Projects
             string agentEndpointId = default;
             string conversationId = default;
             string sessionId = default;
-            DateTimeOffset? triggeredOn = default;
-            DateTimeOffset? scheduledFireOn = default;
-            DateTimeOffset? startedOn = default;
-            DateTimeOffset? endedOn = default;
+            DateTimeOffset? triggeredAt = default;
+            DateTimeOffset? scheduledFireAt = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? endedAt = default;
             string dispatchId = default;
             string actionCorrelationId = default;
             string responseId = default;
@@ -380,7 +380,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    triggeredOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    triggeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("scheduled_fire_at"u8))
@@ -389,7 +389,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    scheduledFireOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    scheduledFireAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("started_at"u8))
@@ -398,7 +398,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    startedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("ended_at"u8))
@@ -407,7 +407,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("dispatch_id"u8))
@@ -467,10 +467,10 @@ namespace Azure.AI.Projects
                 agentEndpointId,
                 conversationId,
                 sessionId,
-                triggeredOn,
-                scheduledFireOn,
-                startedOn,
-                endedOn,
+                triggeredAt,
+                scheduledFireAt,
+                startedAt,
+                endedAt,
                 dispatchId,
                 actionCorrelationId,
                 responseId,

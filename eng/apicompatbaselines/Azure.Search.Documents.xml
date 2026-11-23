@@ -29,4 +29,51 @@
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Microsoft.Extensions.Azure.DocumentsClientBuilderExtensions.AddSearchIndexerClient``2(``0,``1)</Target>
   </Suppression>
+  <!-- November preview reinstates image queries, AML vectorizers, and retrieval reasoning effort.
+       Permit only removal of their obsolete annotations, not removal of the APIs themselves.
+       https://github.com/Azure/azure-rest-api-specs/pull/47300 -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.AzureMachineLearningParameters(System.Uri,System.String,System.String,System.Nullable{System.TimeSpan},System.String,System.Nullable{Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName}):[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.AzureMachineLearningVectorizer(System.String,Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters):[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(System.Int32,System.Nullable{System.Int32},Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail,System.Nullable{System.Int32},Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort):[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.VectorizableImageBinaryQuery(System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Single},System.String):[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.VectorizableImageUrlQuery(System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Single},System.Uri):[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord.RetrievalReasoningEffort:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Models.VectorizableImageBinaryQuery:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Models.VectorizableImageUrlQuery:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
 </Suppressions>

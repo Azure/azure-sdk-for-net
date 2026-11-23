@@ -54,6 +54,13 @@ internal static partial class ItemMessageValidator
             }
         }
 
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
+        {
+            if (idProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
         // Optional: phase
         if (element.TryGetProperty("phase", out var phaseProp) && phaseProp.ValueKind != JsonValueKind.Null)
         {
@@ -72,6 +79,15 @@ internal static partial class ItemMessageValidator
                 errors.Add(new ValidationError("$.role", $"Expected string, got {roleProp.ValueKind}"));
             else if (roleProp.GetString() is not ("unknown" or "user" or "assistant" or "system" or "critic" or "discriminator" or "developer" or "tool"))
                 errors.Add(new ValidationError("$.role", $"Value '{roleProp.GetString()}' is not valid. Allowed: unknown, user, assistant, system, critic, discriminator, developer, tool"));
+        }
+
+        // Optional: status
+        if (element.TryGetProperty("status", out var statusProp) && statusProp.ValueKind != JsonValueKind.Null)
+        {
+            if (statusProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.status", $"Expected string, got {statusProp.ValueKind}"));
+            else if (statusProp.GetString() is not ("in_progress" or "completed" or "incomplete"))
+                errors.Add(new ValidationError("$.status", $"Value '{statusProp.GetString()}' is not valid. Allowed: in_progress, completed, incomplete"));
         }
 
         // Optional: type

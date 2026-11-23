@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2025-08-01-preview",
+            "2026-08-01-preview",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ManagedInstancesClientDiagnostics => _managedInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -69,31 +70,31 @@ namespace Azure.ResourceManager.Sql.Mocking
 
         private ClientDiagnostics InstancePoolsClientDiagnostics => _instancePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InstancePools InstancePoolsRestClient => _instancePoolsRestClient ??= new InstancePools(InstancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/instancePools", out string apiVersion0) ? apiVersion0 : "2025-08-01-preview");
+        private InstancePools InstancePoolsRestClient => _instancePoolsRestClient ??= new InstancePools(InstancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/instancePools", out string apiVersion0) ? apiVersion0 : "2026-08-01-preview");
 
         private ClientDiagnostics VirtualClustersClientDiagnostics => _virtualClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualClusters VirtualClustersRestClient => _virtualClustersRestClient ??= new VirtualClusters(VirtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/virtualClusters", out string apiVersion1) ? apiVersion1 : "2025-08-01-preview");
+        private VirtualClusters VirtualClustersRestClient => _virtualClustersRestClient ??= new VirtualClusters(VirtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/virtualClusters", out string apiVersion1) ? apiVersion1 : "2026-08-01-preview");
 
         private ClientDiagnostics DeletedServersClientDiagnostics => _deletedServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedServers DeletedServersRestClient => _deletedServersRestClient ??= new DeletedServers(DeletedServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private DeletedServers DeletedServersRestClient => _deletedServersRestClient ??= new DeletedServers(DeletedServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LongTermRetentionBackups LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackups(LongTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private LongTermRetentionBackups LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackups(LongTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LongTermRetentionManagedInstanceBackups LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackups(LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private LongTermRetentionManagedInstanceBackups LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackups(LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics SyncGroupsClientDiagnostics => _syncGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SyncGroups SyncGroupsRestClient => _syncGroupsRestClient ??= new SyncGroups(SyncGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private SyncGroups SyncGroupsRestClient => _syncGroupsRestClient ??= new SyncGroups(SyncGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics CapabilitiesClientDiagnostics => _capabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Capabilities CapabilitiesRestClient => _capabilitiesRestClient ??= new Capabilities(CapabilitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private Capabilities CapabilitiesRestClient => _capabilitiesRestClient ??= new Capabilities(CapabilitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         /// <summary> Gets a collection of DeletedServers in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="locationName"> The locationName for the resource. </param>
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +293,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +401,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,7 +431,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +461,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -489,7 +490,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +519,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -547,7 +548,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -576,7 +577,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -604,7 +605,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -632,7 +633,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -660,7 +661,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -688,7 +689,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -736,7 +737,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -784,7 +785,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -812,7 +813,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -840,16 +841,18 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, string skiptoken = default, long? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -861,6 +864,8 @@ namespace Azure.ResourceManager.Sql.Mocking
                 locationName,
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
+                skiptoken,
+                top,
                 context,
                 "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation");
         }
@@ -878,16 +883,18 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, string skiptoken = default, long? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -899,6 +906,8 @@ namespace Azure.ResourceManager.Sql.Mocking
                 locationName,
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
+                skiptoken,
+                top,
                 context,
                 "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation");
         }
@@ -916,7 +925,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -924,11 +933,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, string skiptoken = default, long? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -943,6 +954,8 @@ namespace Azure.ResourceManager.Sql.Mocking
                 longTermRetentionServerName,
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
+                skiptoken,
+                top,
                 context,
                 "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer");
         }
@@ -960,7 +973,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -968,11 +981,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, string skiptoken = default, long? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -987,6 +1002,8 @@ namespace Azure.ResourceManager.Sql.Mocking
                 longTermRetentionServerName,
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
+                skiptoken,
+                top,
                 context,
                 "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer");
         }
@@ -1004,7 +1021,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1048,7 +1065,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1092,7 +1109,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1136,7 +1153,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1180,7 +1197,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1209,7 +1226,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1238,7 +1255,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1284,7 +1301,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1316,5 +1333,135 @@ namespace Azure.ResourceManager.Sql.Mocking
                 throw;
             }
         }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LongTermRetentionBackupsOperationGroup_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        {
+            return GetLongTermRetentionBackupsWithLocationAsync(locationName: locationName, onlyLatestPerDatabase: onlyLatestPerDatabase, databaseState: databaseState, skiptoken: default, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the long term retention backups for a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LongTermRetentionBackupsOperationGroup_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        {
+            return GetLongTermRetentionBackupsWithLocation(locationName: locationName, onlyLatestPerDatabase: onlyLatestPerDatabase, databaseState: databaseState, skiptoken: default, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the long term retention backups for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LongTermRetentionBackupsOperationGroup_ListByServer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        {
+            return GetLongTermRetentionBackupsWithServerAsync(locationName: locationName, longTermRetentionServerName: longTermRetentionServerName, onlyLatestPerDatabase: onlyLatestPerDatabase, databaseState: databaseState, skiptoken: default, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the long term retention backups for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LongTermRetentionBackupsOperationGroup_ListByServer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        {
+            return GetLongTermRetentionBackupsWithServer(locationName: locationName, longTermRetentionServerName: longTermRetentionServerName, onlyLatestPerDatabase: onlyLatestPerDatabase, databaseState: databaseState, skiptoken: default, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

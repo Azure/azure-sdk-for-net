@@ -39,8 +39,9 @@ namespace Azure.Generator.Management.Utilities
         /// When true, Humanizer assumes the input is singular and always pluralizes it.
         /// When false, Humanizer checks if the word might already be plural and leaves it unchanged if so.
         /// </param>
+        /// <param name="preserveCasing">Preserve casing when pluralization changes only the case of the last word.</param>
         /// <returns>The pluralized string.</returns>
-        public static string PluralizeLastWord(this string value, bool inputIsKnownToBeSingular)
+        public static string PluralizeLastWord(this string value, bool inputIsKnownToBeSingular, bool preserveCasing = false)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -50,7 +51,9 @@ namespace Azure.Generator.Management.Utilities
             var words = value.SplitByCamelCase().ToArray();
 
             // Pluralize only the last word
-            words[words.Length - 1] = words[words.Length - 1].Pluralize(inputIsKnownToBeSingular);
+            var lastWord = words[words.Length - 1];
+            var plural = lastWord.Pluralize(inputIsKnownToBeSingular);
+            words[words.Length - 1] = preserveCasing && string.Equals(lastWord, plural, StringComparison.OrdinalIgnoreCase) ? lastWord : plural;
 
             return string.Concat(words);
         }
@@ -62,8 +65,9 @@ namespace Azure.Generator.Management.Utilities
         /// Otherwise, returns "Get{pluralizedName}" (e.g., "GetVirtualMachines").
         /// </summary>
         /// <param name="resourceName">The PascalCase resource name.</param>
+        /// <param name="preserveCasing">Preserve casing when pluralization changes only the case of the last word.</param>
         /// <returns>The collection method name.</returns>
-        public static string GetCollectionMethodName(this string resourceName)
+        public static string GetCollectionMethodName(this string resourceName, bool preserveCasing = false)
         {
             if (string.IsNullOrEmpty(resourceName))
             {
@@ -73,7 +77,7 @@ namespace Azure.Generator.Management.Utilities
             // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
             // are treated by Humanizer as already plural (from Latin), and we want to preserve
             // them unchanged rather than incorrectly pluralizing them (e.g., "Quotas" would be wrong).
-            var pluralOfResourceName = resourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
+            var pluralOfResourceName = resourceName.PluralizeLastWord(inputIsKnownToBeSingular: false, preserveCasing: preserveCasing);
 
             // If the pluralized name is the same as the original (e.g., "Quota" -> "Quota"),
             // use "GetAll{ResourceName}" to avoid having a method named "GetQuota" for a collection

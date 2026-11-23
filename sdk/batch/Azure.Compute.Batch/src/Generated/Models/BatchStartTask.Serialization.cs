@@ -29,11 +29,6 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchStartTask : IJsonModel<BatchStartTask>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchStartTask"/> for deserialization. </summary>
-        internal BatchStartTask()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchStartTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

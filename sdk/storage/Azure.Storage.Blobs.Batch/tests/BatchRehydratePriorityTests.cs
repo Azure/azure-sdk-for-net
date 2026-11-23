@@ -106,8 +106,7 @@ namespace Azure.Storage.Blobs.Batch.Tests
         public void ImplicitConversion_FromNull_ToNullable()
         {
             BatchRehydratePriority? priority = (string)null;
-            Assert.IsTrue(priority.HasValue);
-            Assert.IsNull(priority.Value.ToString());
+            Assert.IsFalse(priority.HasValue);
         }
         #endregion
 

@@ -4,17 +4,24 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.Json;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents.Telemetry;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Legacy;
 using OpenAI.Responses;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 #pragma warning disable AAIP001
 #pragma warning disable SCME0006
@@ -22,6 +29,10 @@ namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTests : AgentsTestBase
 {
+    private const string SourceName = "Azure.AI.Projects.Agents.AgentsClient";
+    private const string EnableSwitch = "Azure.Experimental.EnableGenAITracing";
+    private const string MessageEventsSwitch = "Azure.Experimental.UseMessageEvents";
+    private const string ContentSwitch = "Azure.Experimental.TraceGenAIMessageContent";
     public AgentsTests(bool isAsync) : base(isAsync)
     {
     }
@@ -141,7 +152,7 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteAsync("mcp2");
         }
         catch { }
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
@@ -209,7 +220,7 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteAsync("mcp");
         }
         catch { }
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
@@ -390,7 +401,7 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxRecord> records = await toolboxClient.GetAllAsync().ToListAsync();
         int created = 0;
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
@@ -441,7 +452,7 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxVersion> records = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
         int created = 0;
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
@@ -486,6 +497,24 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestToolboxUpdateCancelation()
+    {
+        var transport = new MockPipelineTransport(_ =>
+            new MockPipelineResponse(200).WithContent("{}"))
+        {
+            ExpectSyncPipeline = false
+        };
+        var client = new AgentAdministrationClient(
+            new Uri("https://example.test/api/projects/p"),
+            new AgentAdministrationClientOptions { Transport = transport });
+        using var cancellation = new CancellationTokenSource();
+        cancellation.Cancel();
+        var options = new RequestOptions { CancellationToken = cancellation.Token };
+        Assert.CatchAsync<OperationCanceledException>(async () =>
+            await client.GetAgentToolboxes().UpdateDefaultVersionAsync("box", "v1", options));
+    }
+
+    [RecordedTest]
     public async Task TestPatchHostedAgent()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
@@ -493,7 +522,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -513,7 +542,7 @@ public class AgentsTests : AgentsTestBase
                 """
         );
         SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: SKILL, inlineContent: content);
-        AgentCard card = new(version: "42", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+        AgentCard card = new() { Version = "42", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
@@ -542,10 +571,10 @@ public class AgentsTests : AgentsTestBase
         // Create
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
-        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
-        Assert.That(((VersionRefIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionReferenceIndicator)));
+        Assert.That(((VersionReferenceIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -555,10 +584,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session1.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
         ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
-        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
-        Assert.That(((VersionRefIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionReferenceIndicator>());
+        Assert.That(((VersionReferenceIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -569,8 +598,8 @@ public class AgentsTests : AgentsTestBase
         // Get
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         Assert.That(session.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
-        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
-        Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionReferenceIndicator>());
+        Assert.That(((VersionReferenceIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         // Stop
         await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
@@ -623,7 +652,7 @@ public class AgentsTests : AgentsTestBase
                 await agentsClient.CreateSessionAsync(
                     agentName: agentVersion.Name,
                     agentSessionId: $"{sessionIdBase}_{PAGE_SIZE - i}",
-                    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
                 );
             }
             catch
@@ -677,7 +706,7 @@ public class AgentsTests : AgentsTestBase
             ProjectAgentSession session = await agentsClient.CreateSessionAsync(
                 agentName: agentVersion.Name,
                 agentSessionId: sessionName,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
             );
         }
         finally
@@ -694,7 +723,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("weather_openapi.json");
@@ -723,21 +752,21 @@ public class AgentsTests : AgentsTestBase
         // Download
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        BinaryData dataBin = await filesClient.DownloadAsync(
+        BinaryData dataBin = (await filesClient.DownloadAsync(
             sessionStoragePath: $"storage/{file2}",
             localPath: temporaryFile
-        );
+        ));
         string data = File.ReadAllText(temporaryFile);
         Assert.That(data, Is.EqualTo("The test file\n"));
         data = dataBin.ToString();
         Assert.That(data, Is.EqualTo("The test file\n"));
         // Delete
-        await filesClient.DeleteAsync(localPath: $"storage/{file2}");
+        await filesClient.DeleteAsync(sessionStoragePath: $"storage/{file2}");
         response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Has.Count.EqualTo(1));
         Assert.That(lstEntries[0], Is.EqualTo(file1));
-        await filesClient.DeleteAsync(localPath: $"storage/{file1}");
+        await filesClient.DeleteAsync(sessionStoragePath: $"storage/{file1}");
         response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         Assert.That(await response.ToListAsync(), Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(
@@ -753,7 +782,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("test.txt");
@@ -970,7 +999,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
-        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -980,7 +1009,7 @@ public class AgentsTests : AgentsTestBase
         await agentsClient.DisableAgentAsync(agentVersion.Name);
         try
         {
-            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             Assert.Fail("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -988,7 +1017,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ex.Status, Is.EqualTo(403));
         }
         await agentsClient.EnableAgentAsync(agentVersion.Name);
-        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -1002,7 +1031,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
         ProjectsAgentVersion newAgentVersion = await GetAgentVersion(agentsClient);
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
         string opId = IsAsync ? "bdb68305-c2a7-11f1-8f16-f4289d3215d4" : "c58cf2b5-c2a7-11f1-96e3-f4289d3215d4";
@@ -1120,6 +1149,154 @@ public class AgentsTests : AgentsTestBase
         versions = [.. await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME, includeDrafts: true).Select(x => x.Version).ToListAsync()];
         Assert.That(versions, Does.Contain(newAgentVersion.Version));
         Assert.That(versions, Does.Contain(agentVersionDraft.Version));
+    }
+
+    [Test]
+    [TestCase(false, null, false)]
+    [TestCase(false, null, true)]
+    [TestCase(false, "foo bar", false)]
+    [TestCase(false, "foo } bar", false)]
+    [TestCase(false, "foo } bar", false)]
+    [TestCase(false, "} -- {", false)]
+    [TestCase(true, null, false)]
+    [TestCase(true, null, true)]
+    [TestCase(true, "foo bar", false)]
+    [TestCase(true, "foo } bar", false)]
+    [TestCase(true, "foo } bar", false)]
+    [TestCase(true, "} -- {", false)]
+    public void TestScopeWithMultipartData(bool metaFirst, string malformedJson, bool longInput)
+    {
+        BinaryData dataZip = default;
+        // Create the metadata.
+        string cpu = "0.425";
+        string memory = "100500Gi";
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: cpu,
+            memory: memory
+        );
+        // Generate some zipped contents.
+        string subdir = Path.GetRandomFileName();
+        string tempDirectory = Path.Combine(Path.GetTempPath(), subdir.Substring(0, subdir.Length - 4));
+        Directory.CreateDirectory(tempDirectory);
+        try
+        {
+            if (longInput)
+            {
+                Random rv = new Random(42);
+                byte[] randomBytes = new byte[14360];
+                for (int i = 0; i < randomBytes.Length; i++)
+                {
+                    randomBytes[i] = (byte)rv.Next(32, 126);
+                }
+                File.WriteAllBytes(Path.Combine(tempDirectory, Path.GetRandomFileName()), randomBytes);
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(tempDirectory, Path.GetRandomFileName()), "E = m * c ^ 2");
+            }
+            dataZip = FileHelper.CreateAndReadZipFileFromDirectory(tempDirectory);
+            if (longInput)
+            {
+                Assert.That(dataZip.Length > 1000);
+            }
+        }
+        finally
+        {
+            Directory.Delete(tempDirectory, true);
+        }
+        Assert.That(dataZip, Is.Not.Null, "Unable to create or read the zip archive.");
+        // Serialize code Agent to multipart content.
+        using MultiPartFormDataBinaryContent content = new();
+        BinaryData metadataPart = string.IsNullOrEmpty(malformedJson) ? ModelReaderWriter.Write(new ProjectsAgentVersionCreationOptions(agentDefinition), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default) : BinaryData.FromString(malformedJson);
+        if (metaFirst)
+        {
+            content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+            content.Add(dataZip, name: "code", filename: $"{Path.GetFileName(tempDirectory)}.zip", contentType: "application/zip");
+        }
+        else
+        {
+            content.Add(dataZip, name: "code", filename: $"{Path.GetFileName(tempDirectory)}.zip", contentType: "application/zip");
+            content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+        }
+        // Initialize telemetry
+        TracerProvider _tracerProvider = null;
+        MemoryTraceExporter _exporter = new();
+        string oldTracesEnabledInitialValue = Environment.GetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", EnvironmentVariableTarget.Process);
+        string oldContentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", EnvironmentVariableTarget.Process);
+        string oldUseMessageEventsInitialValue = Environment.GetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", EnvironmentVariableTarget.Process);
+        bool hadEnableSwitch = AppContext.TryGetSwitch(EnableSwitch, out bool originalEnableSwitch);
+        bool hadContentSwitch = AppContext.TryGetSwitch(ContentSwitch, out bool originalContentSwitch);
+        bool hadMessageEventsSwitch = AppContext.TryGetSwitch(MessageEventsSwitch, out bool originalMessageEventsSwitch);
+        try
+        {
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", "true", EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true", EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", "true", EnvironmentVariableTarget.Process);
+            // Re initiate tracing.
+            Assembly assembly = typeof(AgentAdministrationClient).Assembly;
+            Assert.That(assembly, Is.Not.Null);
+            Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Agents.Telemetry.OpenTelemetryScope");
+            Assert.That(openTelemetryScopeType, Is.Not.Null);
+            MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+            Assert.That(reinitializeConfigurationMethod, Is.Not.Null);
+            reinitializeConfigurationMethod.Invoke(null, null);
+            // Switch on traces.
+            _tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("*")
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingTest"))
+                .AddProcessor(new SimpleActivityExportProcessor(_exporter))
+                .Build();
+            OpenTelemetryScope scope = OpenTelemetryScope.StartCreateAgentVersion(
+                endpoint: new("https://www.microsoftagents.com"),
+                agentName: AGENT_NAME2,
+                content: content
+            );
+            if (string.IsNullOrEmpty(malformedJson))
+            {
+                scope.Dispose();
+                _exporter.ForceFlush();
+                Activity createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {AGENT_NAME2}");
+                Assert.That(createAgentSpan, Is.Not.Null);
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentType, OpenTelemetryConstants.AgentTypeHosted)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentNameKey, AGENT_NAME2)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedCpu, cpu)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedMemory, memory)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedProtocol, "responses")));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedProtocolVersion, "1.0.0")));
+                Assert.That(createAgentSpan.Tags.All(x => x.Key != OpenTelemetryConstants.GenAiAgentHostedImage), Is.True);
+            }
+            else
+            {
+                Assert.That(scope, Is.Null);
+            }
+        }
+        finally
+        {
+            // Set the environment variable back.
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", oldTracesEnabledInitialValue, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", oldContentRecordingEnabledInitialValue, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", oldUseMessageEventsInitialValue, EnvironmentVariableTarget.Process);
+            if (hadEnableSwitch)
+            {
+                AppContext.SetSwitch(EnableSwitch, originalEnableSwitch);
+            }
+            if (hadContentSwitch)
+            {
+                AppContext.SetSwitch(ContentSwitch, originalContentSwitch);
+            }
+            if (hadMessageEventsSwitch)
+            {
+                AppContext.SetSwitch(MessageEventsSwitch, originalMessageEventsSwitch);
+            }
+            Assembly assembly = typeof(AgentAdministrationClient).Assembly;
+            Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Agents.Telemetry.OpenTelemetryScope");
+            MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+            reinitializeConfigurationMethod.Invoke(null, null);
+            // Cleanup after telemetry test.
+            _tracerProvider?.Dispose();
+            _exporter.Clear();
+        }
     }
 
     #region Helpers

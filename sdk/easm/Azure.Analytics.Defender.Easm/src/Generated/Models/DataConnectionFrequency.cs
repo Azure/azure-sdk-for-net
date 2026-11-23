@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="DataConnectionFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataConnectionFrequency?(string value) => value == null ? null : new DataConnectionFrequency(value);
+        public static implicit operator DataConnectionFrequency?(string value) => value == null ? (DataConnectionFrequency?)null : new DataConnectionFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

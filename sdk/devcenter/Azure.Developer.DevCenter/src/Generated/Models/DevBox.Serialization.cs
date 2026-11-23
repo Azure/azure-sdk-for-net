@@ -19,11 +19,6 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A Dev Box. </summary>
     public partial class DevBox : IJsonModel<DevBox>
     {
-        /// <summary> Initializes a new instance of <see cref="DevBox"/> for deserialization. </summary>
-        internal DevBox()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevBox PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

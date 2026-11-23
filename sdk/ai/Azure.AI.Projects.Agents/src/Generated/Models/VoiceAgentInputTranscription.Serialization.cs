@@ -12,6 +12,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary>
     /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
     /// and phrase hints.
+    /// When `model` is `azure-speech-streaming`, transcription is supported for cascaded text-model
+    /// conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as
+    /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
+    /// `profanity_filter`.
     /// </summary>
     public partial class VoiceAgentInputTranscription : IJsonModel<VoiceAgentInputTranscription>
     {
@@ -121,7 +125,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-                writer.WriteStringValue(Delay.Value.ToSerialString());
+                writer.WriteStringValue(Delay.Value.ToString());
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToString());
@@ -273,7 +277,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    delay = prop.Value.GetString().ToVoiceAgentAudioInputConfigTranscriptionDelay();
+                    delay = new VoiceAgentAudioInputConfigTranscriptionDelay(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))

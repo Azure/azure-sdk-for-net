@@ -36,6 +36,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<DateTimeOffset> _timeCreated;
         private BicepValue<ResourceIdentifier> _virtualMachineResourceId;
         private InterconnectBlockProfile _interconnectBlockProfile;
+        private CapacityReservationProfile _capacityReservation;
 
         /// <summary> Creates a new VirtualMachineScaleSetVmProperties. </summary>
         public VirtualMachineScaleSetVmProperties()
@@ -322,6 +323,21 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the CapacityReservation. </summary>
+        public CapacityReservationProfile CapacityReservation
+        {
+            get
+            {
+                Initialize();
+                return _capacityReservation;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _capacityReservation, value);
+            }
+        }
+
         /// <summary> Gets or sets the BootDiagnostics. </summary>
         public BootDiagnostics BootDiagnostics
         {
@@ -398,6 +414,7 @@ namespace Azure.Provisioning.Compute
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             _virtualMachineResourceId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineResourceId), new string[] { "virtualMachineResourceId" }, isOutput: true);
             _interconnectBlockProfile = DefineModelProperty<InterconnectBlockProfile>(nameof(InterconnectBlockProfile), new string[] { "interconnectBlockProfile" });
+            _capacityReservation = DefineModelProperty<CapacityReservationProfile>(nameof(CapacityReservation), new string[] { "capacityReservation" });
             DefineAdditionalProperties();
         }
 

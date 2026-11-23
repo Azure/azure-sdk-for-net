@@ -65,7 +65,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="DiscoverySourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoverySourceKind?(string value) => value == null ? null : new DiscoverySourceKind(value);
+        public static implicit operator DiscoverySourceKind?(string value) => value == null ? (DiscoverySourceKind?)null : new DiscoverySourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

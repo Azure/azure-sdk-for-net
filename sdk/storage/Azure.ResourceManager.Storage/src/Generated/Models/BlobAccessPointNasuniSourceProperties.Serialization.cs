@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("connection"u8);
             writer.WriteObjectValue(Connection, options);
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(Auth, options);
+            writer.WriteObjectValue(Authentication, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Models
             BlobAccessPointSourceType sourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BlobAccessPointConnectionProperties connection = default;
-            BlobAccessPointRemoteAuthProperties auth = default;
+            BlobAccessPointRemoteAuthenticationProperties authentication = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("auth"u8))
                 {
-                    auth = BlobAccessPointRemoteAuthProperties.DeserializeBlobAccessPointRemoteAuthProperties(prop.Value, options);
+                    authentication = BlobAccessPointRemoteAuthenticationProperties.DeserializeBlobAccessPointRemoteAuthenticationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BlobAccessPointNasuniSourceProperties(sourceType, additionalBinaryDataProperties, connection, auth);
+            return new BlobAccessPointNasuniSourceProperties(sourceType, additionalBinaryDataProperties, connection, authentication);
         }
     }
 }

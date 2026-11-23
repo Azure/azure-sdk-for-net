@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Converts a string to a <see cref="ConversationAuthoringProjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationAuthoringProjectKind?(string value) => value == null ? null : new ConversationAuthoringProjectKind(value);
+        public static implicit operator ConversationAuthoringProjectKind?(string value) => value == null ? (ConversationAuthoringProjectKind?)null : new ConversationAuthoringProjectKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

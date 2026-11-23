@@ -74,7 +74,9 @@ namespace Azure.Search.Documents.Tests.Samples
                 SkillsetName = name,
                 Parameters = new IndexingParameters
                 {
-                    BatchSize = 1, MaxFailedItems = 0, MaxFailedItemsPerBatch = 0,
+                    BatchSize = 1,
+                    MaxFailedItems = 0,
+                    MaxFailedItemsPerBatch = 0,
                     IndexingParametersConfiguration = new IndexingParametersConfiguration
                     {
                         IndexedFileNameExtensions = ".txt",

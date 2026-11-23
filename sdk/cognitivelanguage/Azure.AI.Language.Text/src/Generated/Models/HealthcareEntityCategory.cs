@@ -221,7 +221,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="HealthcareEntityCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthcareEntityCategory?(string value) => value == null ? null : new HealthcareEntityCategory(value);
+        public static implicit operator HealthcareEntityCategory?(string value) => value == null ? (HealthcareEntityCategory?)null : new HealthcareEntityCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Converts a string to a <see cref="MatchingPolicyFieldsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchingPolicyFieldsType?(string value) => value == null ? null : new MatchingPolicyFieldsType(value);
+        public static implicit operator MatchingPolicyFieldsType?(string value) => value == null ? (MatchingPolicyFieldsType?)null : new MatchingPolicyFieldsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

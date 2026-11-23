@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the GA typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -62,6 +63,50 @@ namespace Azure.Search.Documents.KnowledgeBases
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
+
+        // Preserve GA signatures while generated operations handle the new Work IQ header.
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="context"> The request context. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Retrieve(RequestContent content, string querySourceAuthorization, RequestContext context) =>
+            Retrieve(content, querySourceAuthorization, queryWorkIQSourceAuthorization: null, context);
+
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="context"> The request context. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization, RequestContext context) =>
+            RetrieveAsync(content, querySourceAuthorization, queryWorkIQSourceAuthorization: null, context);
+
+        // Required tokens keep these GA adapters unambiguous with the generated Work IQ overloads.
+#pragma warning disable AZC0002
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization, CancellationToken cancellationToken) =>
+            Retrieve(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization: null, cancellationToken);
+
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization, CancellationToken cancellationToken) =>
+            RetrieveAsync(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization: null, cancellationToken);
+#pragma warning restore AZC0002
+
+        /// <summary> Retrieves relevant data as server-sent events. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="context"> The request context. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<AsyncStreamingResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization, RequestContext context) =>
+            RetrieveStreamAsync(content, querySourceAuthorization, queryWorkIQSourceAuthorization: null, context);
 
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
