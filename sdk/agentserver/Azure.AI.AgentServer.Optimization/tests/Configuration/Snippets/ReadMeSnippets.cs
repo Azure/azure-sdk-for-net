@@ -49,7 +49,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         [Test]
         public void MultiAgent()
         {
-            #region Snippet:Configuration_ReadMe_MultiAgent
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddOptimizationConfigSource("triage-agent", "AgentOptimizationSettings")
                 .AddOptimizationConfigSource("billing-agent", "AgentOptimizationSettings")
@@ -59,8 +58,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             services.AddSingleton(configuration);
             CandidateDeployConfig? triage = configuration.GetOptimizationConfig("triage-agent");
             CandidateDeployConfig? billing = configuration.GetOptimizationConfig("billing-agent");
-            #endregion
-
             Assert.That(services, Is.Not.Null);
             Assert.That(triage, Is.Not.Null.Or.Null);
             Assert.That(billing, Is.Not.Null.Or.Null);
@@ -69,7 +66,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         [Test]
         public void ConfigureOptions()
         {
-            #region Snippet:Configuration_ReadMe_ConfigureOptions
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddOptimizationConfigSource("AgentOptimization", settings =>
                 {
@@ -77,15 +73,12 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
                     settings.CredentialProvider = ResolveMyCredential();
                 })
                 .Build();
-            #endregion
-
             Assert.That(configuration, Is.Not.Null);
         }
 
         [Test]
         public void WithoutDI()
         {
-            #region Snippet:Configuration_ReadMe_WithoutDI
             // No DI container — just build IConfiguration and bind to a POCO.
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddOptimizationConfigSource("AgentOptimization")
@@ -97,15 +90,12 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             {
                 Console.WriteLine($"Loaded model: {options.Model}");
             }
-            #endregion
-
             Assert.That(options, Is.Not.Null.Or.Null);
         }
 
         [Test]
         public void DirectLoader()
         {
-            #region Snippet:Configuration_ReadMe_DirectLoader
             // Skip Microsoft.Extensions.Configuration entirely and call the client
             // directly. Useful for console apps, AWS Lambdas, or anywhere you do
             // not have an IConfiguration pipeline.
@@ -117,7 +107,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             {
                 Console.WriteLine($"Model: {options.Model}");
             }
-            #endregion
         }
 
         private static TokenCredential ResolveMyCredential() => new NoOpCredential();

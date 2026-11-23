@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="EchoCancellationReferenceSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EchoCancellationReferenceSource?(string value) => value == null ? null : new EchoCancellationReferenceSource(value);
+        public static implicit operator EchoCancellationReferenceSource?(string value) => value == null ? (EchoCancellationReferenceSource?)null : new EchoCancellationReferenceSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

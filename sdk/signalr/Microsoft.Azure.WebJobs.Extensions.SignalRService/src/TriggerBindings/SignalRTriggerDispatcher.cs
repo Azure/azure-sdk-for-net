@@ -80,12 +80,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                         ReasonPhrase = ex.Message
                     };
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                    {
-                        ReasonPhrase = ex.Message
-                    };
+                    // Exception messages can expose sensitive data and contain invalid reason-phrase characters.
+                    return new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 }
             }
 

@@ -46,7 +46,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="ErrorEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ErrorEvent?(string value) => value == null ? null : new ErrorEvent(value);
+        public static implicit operator ErrorEvent?(string value) => value == null ? (ErrorEvent?)null : new ErrorEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -442,7 +442,7 @@ public void TestPreviewOnlyFeature() { ... }
 
 // Class-level: all tests in the class require V2026_04_01+
 [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
-public partial class Sample01_HelloWorld : SearchTestBase { ... }
+public partial class HelloWorld : SearchTestBase { ... }
 ```
 
 ### Updating Versions After Regeneration

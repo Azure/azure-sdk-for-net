@@ -209,13 +209,13 @@ Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateSession_HostedAgentSessionsAgents_Sync
-ProjectAgentSession session1 = agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session1 = agentsClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 Console.WriteLine($"The session {session1.AgentSessionId} was created.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSession_HostedAgentSessionsAgents_Async
-ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 Console.WriteLine($"The session {session1.AgentSessionId} was created.");
 ```
 
@@ -227,7 +227,7 @@ agentsClient.DisableAgent(agentVersion.Name);
 // The new session cannot be created.
 try
 {
-    agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    agentsClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
     throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
 }
 catch (ClientResultException ex)
@@ -246,7 +246,7 @@ await agentsClient.DisableAgentAsync(agentVersion.Name);
 // The new session cannot be created.
 try
 {
-    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
     throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
 }
 catch (ClientResultException ex)
@@ -264,14 +264,14 @@ catch (ClientResultException ex)
 Synchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Sync
 agentsClient.EnableAgent(agentVersion.Name);
-ProjectAgentSession session2 = agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session2 = agentsClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 Console.WriteLine($"The session {session2.AgentSessionId} was created.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Async
 await agentsClient.EnableAgentAsync(agentVersion.Name);
-ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 Console.WriteLine($"The session {session2.AgentSessionId} was created.");
 ```
 

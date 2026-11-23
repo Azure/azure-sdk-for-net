@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
             {
                 QuickAttachDetach = new ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach
                 {
-                    Enabled = true
+                    IsEnabled = true
                 }
             };
             using var diskJson = JsonDocument.Parse(ModelReaderWriter.Write(disk).ToString());

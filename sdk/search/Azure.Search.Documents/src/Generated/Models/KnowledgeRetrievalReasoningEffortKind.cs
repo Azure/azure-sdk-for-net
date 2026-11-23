@@ -21,8 +21,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string LowValue = "low";
         /// <summary> Use a moderate amount of reasoning during retrieval. </summary>
         private const string MediumValue = "medium";
-        /// <summary> Automatically select the reasoning effort during retrieval, escalating from the cheapest tier only as far as needed. </summary>
-        private const string AutoValue = "auto";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -43,9 +41,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Use a moderate amount of reasoning during retrieval. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Medium { get; } = new KnowledgeRetrievalReasoningEffortKind(MediumValue);
 
-        /// <summary> Automatically select the reasoning effort during retrieval, escalating from the cheapest tier only as far as needed. </summary>
-        public static KnowledgeRetrievalReasoningEffortKind Auto { get; } = new KnowledgeRetrievalReasoningEffortKind(AutoValue);
-
         /// <summary> Determines if two <see cref="KnowledgeRetrievalReasoningEffortKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
@@ -62,7 +57,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeRetrievalReasoningEffortKind?(string value) => value == null ? null : new KnowledgeRetrievalReasoningEffortKind(value);
+        public static implicit operator KnowledgeRetrievalReasoningEffortKind?(string value) => value == null ? (KnowledgeRetrievalReasoningEffortKind?)null : new KnowledgeRetrievalReasoningEffortKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

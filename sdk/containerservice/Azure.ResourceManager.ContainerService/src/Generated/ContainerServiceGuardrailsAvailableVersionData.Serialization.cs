@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            GuardrailsAvailableVersionsProperties properties = default;
+            ContainerServiceGuardrailsAvailableVersionsProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = GuardrailsAvailableVersionsProperties.DeserializeGuardrailsAvailableVersionsProperties(prop.Value, options);
+                    properties = ContainerServiceGuardrailsAvailableVersionsProperties.DeserializeContainerServiceGuardrailsAvailableVersionsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

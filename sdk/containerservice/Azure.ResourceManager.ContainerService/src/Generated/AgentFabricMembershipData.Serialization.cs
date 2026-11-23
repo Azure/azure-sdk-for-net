@@ -106,6 +106,8 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            writer.WritePropertyName("sku"u8);
+            writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("managedBy"u8);
             writer.WriteStringValue(ManagedBy);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceType resourceType = default;
             SystemData systemData = default;
             AgentFabricMembershipProperties properties = default;
+            AgentFabricMembershipSku sku = default;
             ResourceIdentifier managedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,6 +203,11 @@ namespace Azure.ResourceManager.ContainerService
                     properties = AgentFabricMembershipProperties.DeserializeAgentFabricMembershipProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("sku"u8))
+                {
+                    sku = AgentFabricMembershipSku.DeserializeAgentFabricMembershipSku(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("managedBy"u8))
                 {
                     managedBy = new ResourceIdentifier(prop.Value.GetString());
@@ -216,6 +224,7 @@ namespace Azure.ResourceManager.ContainerService
                 resourceType,
                 systemData,
                 properties,
+                sku,
                 managedBy,
                 additionalBinaryDataProperties);
         }

@@ -152,7 +152,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="SkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuName?(string value) => value == null ? null : new SkuName(value);
+        public static implicit operator SkuName?(string value) => value == null ? (SkuName?)null : new SkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="OutboundDeliveryStrategyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutboundDeliveryStrategyKind?(string value) => value == null ? null : new OutboundDeliveryStrategyKind(value);
+        public static implicit operator OutboundDeliveryStrategyKind?(string value) => value == null ? (OutboundDeliveryStrategyKind?)null : new OutboundDeliveryStrategyKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -705,6 +705,9 @@
 # ServiceLabel: %Datadog %Mgmt
 # ServiceOwners: @jbhanuchand
 
+# PRLabel: %KoreAIArtemis
+/sdk/koreaiartemis/Azure.ResourceManager.*/                        @poshett
+
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @jobeland @chgennar @vascoveigams @siongithub
 
@@ -927,48 +930,48 @@
 /eng/centralpackagemanagement/Directory.Generation.Packages.props  @Azure/azure-sdk-write-net-core @JonathanGiles @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
-/eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
-/eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
-/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
-/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
-/eng/http-client-csharp-emitter-package.json                            @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/azure-typespec-http-client-csharp-emitter-package.json             @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/http-client-csharp-emitter-package.json                            @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package-lock.json                       @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
 
 # PRLabel: %CodeGen
-/sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
+/sdk/tools/Azure.GeneratorAgent/                                   @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @JonathanGiles @alzimmermsft
+/eng/packages/http-client-csharp/                                  @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @JonathanGiles @alzimmermsft
 
 #PRLabel: %CodeGen %Mgmt
-/eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/packages/http-client-csharp-mgmt/                             @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 #PRLabel: %CodeGen %Provisioning
 /eng/packages/http-client-csharp-provisioning/                     @ArcturusZhang @m-nash @live1206 @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
-/eng/packages/plugins/client/                                      @JoshLove-msft @m-nash @jorgerangel-msft @JonathanGiles
+/eng/packages/plugins/client/                                      @m-nash @jorgerangel-msft @JonathanGiles
 
 # ServiceLabel: %CodeGen
-# AzureSdkOwners:                                                  @JoshLove-msft @jorgerangel-msft @live1206
+# AzureSdkOwners:                                                  @jorgerangel-msft @live1206
 
 # ServiceLabel: %CodeGen %Mgmt
 # AzureSdkOwners:                                                  @live1206 @ArcturusZhang @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @JonathanGiles @live1206 @ArcturusZhang @ArthurMa1978
+/eng/scripts/typespec/                                             @m-nash @jorgerangel-msft @JonathanGiles @live1206 @ArcturusZhang @ArthurMa1978
 
 ################
 # Automation
 ################
 
 # GitHub integration, CODEOWNERS, and bot rules
-/.github/                                                          @JonathanGiles @m-nash @JoshLove-msft @ArthurMa1978
-/.github/workflows/                                                @JonathanGiles @m-nash @JoshLove-msft @ArthurMa1978
-/.github/CODEOWNERS                                                @JonathanGiles @m-nash @JoshLove-msft @ArthurMa1978
-/.github/copilot-instructions.md                                   @JonathanGiles @m-nash @JoshLove-msft @ArthurMa1978
+/.github/                                                          @JonathanGiles @m-nash @ArthurMa1978
+/.github/workflows/                                                @JonathanGiles @m-nash @ArthurMa1978
+/.github/CODEOWNERS                                                @JonathanGiles @m-nash @ArthurMa1978
+/.github/copilot-instructions.md                                   @JonathanGiles @m-nash @ArthurMa1978
 
 ###########################
 # Repository configuration
@@ -976,9 +979,9 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @JonathanGiles @Azure/azure-sdk-write-net-core
-/.vscode/                                                          @JonathanGiles @m-nash @JoshLove-msft
-/.devcontainer/                                                    @JonathanGiles @m-nash @JoshLove-msft
-/doc/                                                              @JonathanGiles @m-nash @JoshLove-msft
+/.vscode/                                                          @JonathanGiles @m-nash
+/.devcontainer/                                                    @JonathanGiles @m-nash
+/doc/                                                              @JonathanGiles @m-nash
 
 # Repository configuration that should not be overridden
 /sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @JonathanGiles
@@ -992,12 +995,12 @@
 /sdk/**/ci*.yml                                                    @Azure/azure-sdk-write-net-core @JonathanGiles
 
 # Code standards and common mistakes
-/sdk/**/.gitignore                                                 @JonathanGiles @m-nash @JoshLove-msft
-/sdk/**/.gitattributes                                             @JonathanGiles @m-nash @JoshLove-msft
-/sdk/**/*.sh                                                       @JonathanGiles @m-nash @JoshLove-msft
-/sdk/**/*.tsp                                                      @JonathanGiles @m-nash @JoshLove-msft
-/**/*.py                                                           @JonathanGiles @m-nash @JoshLove-msft
+/sdk/**/.gitignore                                                 @JonathanGiles @m-nash
+/sdk/**/.gitattributes                                             @JonathanGiles @m-nash
+/sdk/**/*.sh                                                       @JonathanGiles @m-nash
+/sdk/**/*.tsp                                                      @JonathanGiles @m-nash
+/**/*.py                                                           @JonathanGiles @m-nash
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @JonathanGiles @ArcturusZhang @ArthurMa1978
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @JonathanGiles @ArcturusZhang @ArthurMa1978
+/**/package.json                                                   @m-nash @jorgerangel-msft @JonathanGiles @ArcturusZhang @ArthurMa1978
+/**/package-lock.json                                              @m-nash @jorgerangel-msft @JonathanGiles @ArcturusZhang @ArthurMa1978

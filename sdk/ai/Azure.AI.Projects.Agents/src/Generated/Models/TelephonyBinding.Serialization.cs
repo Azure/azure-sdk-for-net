@@ -101,7 +101,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("incoming_call_url"u8);
-            writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
+            writer.WriteStringValue(IncomingCallUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

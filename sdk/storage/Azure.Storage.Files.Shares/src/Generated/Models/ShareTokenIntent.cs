@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Converts a string to a <see cref="ShareTokenIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShareTokenIntent?(string value) => value == null ? null : new ShareTokenIntent(value);
+        public static implicit operator ShareTokenIntent?(string value) => value == null ? (ShareTokenIntent?)null : new ShareTokenIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -71,7 +71,7 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> Converts a string to a <see cref="ChatPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChatPermission?(string value) => value == null ? null : new ChatPermission(value);
+        public static implicit operator ChatPermission?(string value) => value == null ? (ChatPermission?)null : new ChatPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

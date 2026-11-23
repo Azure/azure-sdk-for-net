@@ -111,7 +111,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="WarpKernelResampling"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WarpKernelResampling?(string value) => value == null ? null : new WarpKernelResampling(value);
+        public static implicit operator WarpKernelResampling?(string value) => value == null ? (WarpKernelResampling?)null : new WarpKernelResampling(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

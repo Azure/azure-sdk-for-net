@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string containerServiceAgentPoolApiVersion);
             _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceAgentPoolApiVersion ?? "2026-08-02-preview");
+            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceAgentPoolApiVersion ?? "2026-09-02-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -733,13 +733,9 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AgentPoolBootstrapInfo>> GetBootstrapDataAsync(AgentPoolBootstrapDataContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolBootstrapInfo>> GetBootstrapDataAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerServiceAgentPoolResource.GetBootstrapData");
             scope.Start();
             try
@@ -748,7 +744,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentPoolBootstrapDataContent.ToRequestContent(content), context);
+                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentPoolBootstrapInfo> response = Response.FromValue(AgentPoolBootstrapInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -777,7 +773,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -785,13 +781,9 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AgentPoolBootstrapInfo> GetBootstrapData(AgentPoolBootstrapDataContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolBootstrapInfo> GetBootstrapData(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerServiceAgentPoolResource.GetBootstrapData");
             scope.Start();
             try
@@ -800,7 +792,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentPoolBootstrapDataContent.ToRequestContent(content), context);
+                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentPoolBootstrapInfo> response = Response.FromValue(AgentPoolBootstrapInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -829,7 +821,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -878,7 +870,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

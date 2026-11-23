@@ -66,7 +66,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="ScheduleProvisioningStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleProvisioningStatus?(string value) => value == null ? null : new ScheduleProvisioningStatus(value);
+        public static implicit operator ScheduleProvisioningStatus?(string value) => value == null ? (ScheduleProvisioningStatus?)null : new ScheduleProvisioningStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

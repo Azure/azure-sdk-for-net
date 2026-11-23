@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="ProjectsJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProjectsJobStatus?(string value) => value == null ? null : new ProjectsJobStatus(value);
+        public static implicit operator ProjectsJobStatus?(string value) => value == null ? (ProjectsJobStatus?)null : new ProjectsJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

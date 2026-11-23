@@ -20,12 +20,14 @@ namespace Azure.ResourceManager.ContainerService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentFabricMembershipData"/>. </summary>
+        /// <param name="skuName"> The SKU name that determines which AgentFabric components are deployed to the cluster. </param>
         /// <param name="managedBy"> Resource ID of the AgentFabric that this cluster is a member of. The AgentFabric must be in the same tenant and subscription as the managed cluster. As the ARM envelope property, it also stops a complete mode deployment from deleting the membership and silently detaching the cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedBy"/> is null. </exception>
-        public AgentFabricMembershipData(ResourceIdentifier managedBy)
+        public AgentFabricMembershipData(AgentFabricMembershipSkuName skuName, ResourceIdentifier managedBy)
         {
             Argument.AssertNotNull(managedBy, nameof(managedBy));
 
+            Sku = new AgentFabricMembershipSku(skuName);
             ManagedBy = managedBy;
         }
 
@@ -35,21 +37,51 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="sku"> The SKU of the AgentFabric membership. Determines which AgentFabric components are deployed to the cluster. </param>
         /// <param name="managedBy"> Resource ID of the AgentFabric that this cluster is a member of. The AgentFabric must be in the same tenant and subscription as the managed cluster. As the ARM envelope property, it also stops a complete mode deployment from deleting the membership and silently detaching the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentFabricMembershipData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AgentFabricMembershipProperties properties, ResourceIdentifier managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal AgentFabricMembershipData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AgentFabricMembershipProperties properties, AgentFabricMembershipSku sku, ResourceIdentifier managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Sku = sku;
             ManagedBy = managedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public AgentFabricMembershipProperties Properties { get; set; }
+        internal AgentFabricMembershipProperties Properties { get; set; }
+
+        /// <summary> The SKU of the AgentFabric membership. Determines which AgentFabric components are deployed to the cluster. </summary>
+        [WirePath("sku")]
+        internal AgentFabricMembershipSku Sku { get; set; }
 
         /// <summary> Resource ID of the AgentFabric that this cluster is a member of. The AgentFabric must be in the same tenant and subscription as the managed cluster. As the ARM envelope property, it also stops a complete mode deployment from deleting the membership and silently detaching the cluster. </summary>
         [WirePath("managedBy")]
         public ResourceIdentifier ManagedBy { get; set; }
+
+        /// <summary> The current provisioning state of the AgentFabric membership. </summary>
+        [WirePath("properties.provisioningState")]
+        public AgentFabricMembershipProvisioningState? AgentFabricMembershipProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The SKU name that determines which AgentFabric components are deployed to the cluster. </summary>
+        [WirePath("sku.name")]
+        public AgentFabricMembershipSkuName SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new AgentFabricMembershipSku(value);
+            }
+        }
     }
 }
