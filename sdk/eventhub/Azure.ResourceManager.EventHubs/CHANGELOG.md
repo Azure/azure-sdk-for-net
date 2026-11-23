@@ -1,16 +1,10 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.2 (2026-11-25)
 
 ### Features Added
 
 - Added long-running namespace update overloads accepting `WaitUntil` for API version `2026-07-01-preview`. Existing `Update` and `UpdateAsync` overloads remain supported and wait for completion.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.4.0-beta.1 (2026-09-01)
 
