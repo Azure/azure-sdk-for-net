@@ -3,6 +3,7 @@
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
+    /// <summary> The resources and their associated context for a bulk action. </summary>
     public partial class ResourcesWithContext
     {
         // Keep this wrapper distinct from UserRequestResources to avoid duplicate Resources members on request models.
