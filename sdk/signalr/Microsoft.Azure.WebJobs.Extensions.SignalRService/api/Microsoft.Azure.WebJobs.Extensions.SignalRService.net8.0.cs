@@ -175,15 +175,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
-    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
-    public partial class SignalRRefreshAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
-    {
-        public SignalRRefreshAttribute() { }
-        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
-        public string ConnectionToken { get { throw null; } set { } }
-        public int TokenLifetimeSeconds { get { throw null; } set { } }
-    }
-    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
     public partial class SignalREndpointsAttribute : System.Attribute
     {
@@ -272,6 +263,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRParameterAttribute : System.Attribute
     {
         public SignalRParameterAttribute() { }
+    }
+    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
+    public partial class SignalRRefreshAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
+    {
+        public SignalRRefreshAttribute() { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string ConnectionToken { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
