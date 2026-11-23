@@ -15,6 +15,11 @@
       and '$(IsStressProject)' != 'true'
       and '$(IsSamplesProject)' != 'true'">
     <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
+    <!--
+      Remove once Microsoft.AspNetCore.WebUtilities >= 2.3.14 is guaranteed upstream by Microsoft.AspNetCore.Http:
+      https://github.com/Azure/azure-sdk-for-net/issues/64941
+    -->
+    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="$(MicrosoftAspNetCoreWebUtilitiesVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />

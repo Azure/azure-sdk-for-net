@@ -32,7 +32,11 @@
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="1.1.2" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard1.4' ">
+  <!--
+    Guard with IsClientLibrary != true while Microsoft.AspNetCore.WebUtilities is also defined in
+    Directory.Extensions.Packages.props (https://github.com/Azure/azure-sdk-for-net/issues/64941).
+  -->
+  <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard1.4' and '$(IsClientLibrary)' != 'true' ">
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
 

@@ -1,14 +1,10 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.10.3 (2026-11-23)
 
 ### Other Changes
+
+- Updated `Microsoft.AspNetCore.WebUtilities` dependency to 2.3.14.
 
 ## 1.10.2 (2026-06-01)
 
