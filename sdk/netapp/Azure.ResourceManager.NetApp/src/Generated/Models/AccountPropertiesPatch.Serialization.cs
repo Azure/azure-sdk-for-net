@@ -7,11 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    /// <summary> NetApp account patch properties. </summary>
     internal partial class AccountPropertiesPatch : IJsonModel<AccountPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
@@ -63,6 +65,64 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccountPropertiesPatch)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsCollectionDefined(ActiveDirectories))
+            {
+                writer.WritePropertyName("activeDirectories"u8);
+                writer.WriteStartArray();
+                foreach (NetAppAccountActiveDirectory item in ActiveDirectories)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
+            {
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain"u8);
+                }
+            }
+            if (Optional.IsDefined(LdapConfiguration))
+            {
+                writer.WritePropertyName("ldapConfiguration"u8);
+                writer.WriteObjectValue(LdapConfiguration, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AccountPropertiesPatch IJsonModel<AccountPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -78,6 +138,76 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAccountPropertiesPatch(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AccountPropertiesPatch DeserializeAccountPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
+            NetAppAccountEncryption encryption = default;
+            bool nfsV4IdDomainIsDefined = false;
+            string nfsV4IdDomain = default;
+            LdapConfigurationPatch ldapConfiguration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("activeDirectories"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
+                    }
+                    activeDirectories = array;
+                    continue;
+                }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("nfsV4IDDomain"u8))
+                {
+                    nfsV4IdDomainIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nfsV4IdDomain = null;
+                        continue;
+                    }
+                    nfsV4IdDomain = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ldapConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ldapConfiguration = LdapConfigurationPatch.DeserializeLdapConfigurationPatch(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
+            }
+            return new AccountPropertiesPatch(activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption, nfsV4IdDomain, ldapConfiguration, additionalBinaryDataProperties)
+            {
+                _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
+            };
         }
     }
 }

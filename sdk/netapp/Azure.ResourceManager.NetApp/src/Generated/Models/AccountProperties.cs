@@ -11,6 +11,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    /// <summary> NetApp account properties. </summary>
     internal partial class AccountProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
