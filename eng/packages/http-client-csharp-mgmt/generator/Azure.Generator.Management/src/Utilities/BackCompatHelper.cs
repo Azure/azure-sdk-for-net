@@ -694,7 +694,7 @@ namespace Azure.Generator.Management.Utilities
             => (modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected))
                 && !modifiers.HasFlag(MethodSignatureModifiers.Private);
 
-        private static bool IsMethodRemovalAcceptedInBaseline(TypeProvider enclosingType, MethodSignature previousSignature)
+        internal static bool IsMethodRemovalAcceptedInBaseline(TypeProvider enclosingType, MethodSignature previousSignature)
         {
             var parameterTypes = previousSignature.Parameters.Select(parameter => parameter.Type).ToArray();
             return CodeModelGenerator.Instance.SourceInputModel?.ApiCompatBaseline.IsMethodRemovalSuppressed(

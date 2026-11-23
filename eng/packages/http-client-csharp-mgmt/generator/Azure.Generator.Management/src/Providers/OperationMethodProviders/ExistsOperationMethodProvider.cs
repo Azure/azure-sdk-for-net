@@ -7,9 +7,11 @@ using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -19,17 +21,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         ParameterContextRegistry parameterMappings,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        bool isAsync
+        ResourceOperationKind operationKind,
+        bool isAsync,
+        IReadOnlyList<ParameterProvider>? signatureParameters = null
         )
         : ResourceOperationMethodProvider(
             collection,
             parameterMappings,
             restClientInfo,
             method,
-            ResourceOperationKind.CheckExistence,
+            operationKind,
             isAsync,
             methodName: isAsync ? "ExistsAsync" : "Exists",
-            description: $"Checks to see if the resource exists in azure.")
+            description: $"Checks to see if the resource exists in azure.",
+            signatureParameters: signatureParameters)
     {
         protected override bool ShouldApplyLroHandling => false;
 
@@ -41,7 +46,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
-            if (_serviceMethod.Operation.HttpMethod == "HEAD")
+            if (_resourceOperationKind == ResourceOperationKind.CheckExistence)
             {
                 return [Return(ResponseSnippets.FromValue(responseVariable.Property(nameof(Response.Status)).NotEqual(Literal(404)), responseVariable))];
             }
@@ -64,7 +69,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            if (_serviceMethod.Operation.HttpMethod != "HEAD")
+            if (_resourceOperationKind != ResourceOperationKind.CheckExistence)
             {
                 return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
             }
@@ -78,10 +83,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var status = response.Property(nameof(Response.Status));
             var isNotSuccess = new BinaryOperatorExpression("<", status, Literal(200)).As<bool>()
                 .Or(new BinaryOperatorExpression(">=", status, Literal(300)));
+            var isFailure = isNotSuccess.And(status.NotEqual(Literal(404)));
+            if (_serviceMethod.Operation.Responses.Any(response => !response.IsErrorResponse && response.StatusCodes.Contains(304)))
+            {
+                isFailure = isFailure.And(status.NotEqual(Literal(304)));
+            }
             return [
                 send,
                 declaration,
-                new IfStatement(isNotSuccess.And(status.NotEqual(Literal(404))))
+                new IfStatement(isFailure)
                 {
                     Throw(New.Instance(typeof(RequestFailedException), response))
                 }

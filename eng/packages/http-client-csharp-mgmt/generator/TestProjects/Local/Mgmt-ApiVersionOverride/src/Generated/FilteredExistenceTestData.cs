@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
 {
-    /// <summary> A resource whose GET supports a query parameter that its HEAD cannot carry. </summary>
+    /// <summary> A resource whose read and existence operations have different request selectors. </summary>
     public partial class FilteredExistenceTestData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

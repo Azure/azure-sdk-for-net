@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             return message;
         }
 
-        internal HttpMessage CreateCheckExistenceRequest(Guid subscriptionId, string resourceGroupName, string filteredExistenceTestName, RequestContext context)
+        internal HttpMessage CreateCheckExistenceRequest(Guid subscriptionId, string resourceGroupName, string filteredExistenceTestName, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -94,6 +94,10 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             request.Method = RequestMethod.Head;
             _userAgent.Apply(message);
             request.Headers.SetValue("x-ms-partition", "secondary");
+            if (requestConditions != null)
+            {
+                request.Headers.Add(requestConditions, "R");
+            }
             return message;
         }
     }

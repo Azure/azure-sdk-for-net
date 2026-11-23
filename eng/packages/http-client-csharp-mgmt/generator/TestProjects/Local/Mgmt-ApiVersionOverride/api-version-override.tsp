@@ -47,7 +47,7 @@ interface WireVersionProviderActions {
   checkWireVersion is ArmProviderActionSync<Request = void, Response = string, Scope = SubscriptionActionScope>;
 }
 
-/** A resource whose GET supports a query parameter that its HEAD cannot carry. */
+/** A resource whose read and existence operations have different request selectors. */
 model FilteredExistenceTest is TrackedResource<WireVersionTestProperties> {
   ...ResourceNameParameter<FilteredExistenceTest>;
 }
@@ -61,7 +61,8 @@ interface FilteredExistenceOperations {
   checkExistence is ArmResourceCheckExistence<FilteredExistenceTest, Parameters = {
     @query partition: "secondary";
     @header("x-ms-partition") partitionHeader: "secondary";
-  }>;
+    @header("If-Modified-Since") ifModifiedSince?: utcDateTime;
+  }, Response = ArmResourceExistsResponse | ArmResourceNotFoundResponse | TypeSpec.Http.NotModifiedResponse>;
 }
 
 /** A resource with ordinary service-version defaults and no override decorators. */

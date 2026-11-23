@@ -12,6 +12,9 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ManagementGroups;
 using Humanizer;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -41,8 +44,6 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceMethod? _get;
         private readonly ResourceMethod? _checkExistence;
         private readonly IReadOnlyList<ResourceMethod> _resourceMethods;
-        private ResourceMethod? _selectedExists;
-        private bool _selectedExistsInitialized;
 
         // Cached Get method providers
         private MethodProvider? _getAsyncMethodProvider;
@@ -73,291 +74,8 @@ namespace Azure.Generator.Management.Providers
 
         private Dictionary<InputClient, RestClientInfo> BuildClientInfos()
         {
-            var selected = SelectExistsMethod();
-            // Only include the selected HEAD client; other check-existence operations do not emit methods.
             return _resourceMetadata.CreateClientInfosMap(this,
-                _resourceMethods.Where(method => method.Kind != ResourceOperationKind.CheckExistence || ReferenceEquals(method, selected)));
-        }
-
-        private ResourceMethod? SelectExistsMethod()
-        {
-            if (!_selectedExistsInitialized)
-            {
-                _selectedExists = _checkExistence ?? _get;
-                if (_get is not null && _checkExistence is not null && !HasCompatibleExistenceParameters(_get, _checkExistence))
-                {
-                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                        "general-warning",
-                        $"The HEAD existence operation for '{_resourceMetadata.ResourceIdPattern}' is incompatible with the GET operation's API or request mapping. The collection's Exists methods will continue to use GET to preserve their API and arguments.");
-                    _selectedExists = _get;
-                }
-                _selectedExistsInitialized = true;
-            }
-            return _selectedExists;
-        }
-
-        private bool HasCompatibleExistenceParameters(ResourceMethod get, ResourceMethod head)
-        {
-            // Contextual arguments are not present in the public signature, but the HEAD
-            // request must accept the same values extracted from the resource identifier.
-            if (get.InputMethod.Operation.Path != head.InputMethod.Operation.Path ||
-                get.InputMethod.Operation.Uri != head.InputMethod.Operation.Uri ||
-                !HasCompatiblePathParameters(get, head) || !HasCompatibleContextualParameters(get, head) ||
-                !HasCompatibleQueries(get, head) || !HasCompatibleHeaders(get, head) || !HasCompatibleConditionalHeaders(get, head) ||
-                (get.InputMethod is InputLongRunningPagingServiceMethod) != (head.InputMethod is InputLongRunningPagingServiceMethod))
-            {
-                return false;
-            }
-
-            foreach (var isAsync in new[] { false, true })
-            {
-                var (getParameters, getModifiers) = GetExistenceShape(get, isAsync);
-                var (headParameters, headModifiers) = GetExistenceShape(head, isAsync);
-                if (getModifiers != headModifiers || getParameters.Count != headParameters.Count)
-                {
-                    return false;
-                }
-
-                for (var i = 0; i < getParameters.Count; i++)
-                {
-                    var left = getParameters[i];
-                    var right = headParameters[i];
-                    if (left.Name != right.Name || !left.Type.Equals(right.Type) || left.Location != right.Location ||
-                        left.WireInfo.SerializedName != right.WireInfo.SerializedName ||
-                        left.WireInfo.SerializationFormat != right.WireInfo.SerializationFormat ||
-                        !Equals(left.DefaultValue, right.DefaultValue) || left.Validation != right.Validation ||
-                        left.IsRef != right.IsRef || left.IsOut != right.IsOut || left.IsIn != right.IsIn || left.IsParams != right.IsParams)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        private static bool HasCompatiblePathParameters(ResourceMethod get, ResourceMethod head)
-        {
-            var getParameters = get.InputMethod.Operation.Parameters.OfType<InputPathParameter>()
-                .OrderBy(parameter => parameter.SerializedName, StringComparer.Ordinal).ToArray();
-            var headParameters = head.InputMethod.Operation.Parameters.OfType<InputPathParameter>()
-                .OrderBy(parameter => parameter.SerializedName, StringComparer.Ordinal).ToArray();
-            if (getParameters.Length != headParameters.Length)
-            {
-                return false;
-            }
-
-            for (var i = 0; i < getParameters.Length; i++)
-            {
-                var left = getParameters[i];
-                var right = headParameters[i];
-                if (left.SerializedName != right.SerializedName || left.SkipUrlEncoding != right.SkipUrlEncoding ||
-                    left.AllowReserved != right.AllowReserved || left.Explode != right.Explode ||
-                    left.IsRequired != right.IsRequired || left.Scope != right.Scope || left.ServerUrlTemplate != right.ServerUrlTemplate ||
-                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value) ||
-                    (left.Scope == InputParameterScope.Constant && !HaveMatchingLiteralValues(left, right)))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private static bool HasCompatibleQueries(ResourceMethod get, ResourceMethod head)
-        {
-            static InputQueryParameter[] GetQueries(ResourceMethod method) => method.InputMethod.Operation.Parameters
-                .OfType<InputQueryParameter>()
-                .Where(parameter => !parameter.IsApiVersion && !parameter.SerializedName.Equals("api-version", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(parameter => parameter.SerializedName, StringComparer.Ordinal).ToArray();
-
-            var getQueries = GetQueries(get);
-            var headQueries = GetQueries(head);
-            if (getQueries.Length != headQueries.Length)
-            {
-                return false;
-            }
-
-            for (var i = 0; i < getQueries.Length; i++)
-            {
-                var left = getQueries[i];
-                var right = headQueries[i];
-                var typeFactory = ManagementClientGenerator.Instance.TypeFactory;
-                if (left.SerializedName != right.SerializedName || left.Scope != right.Scope || left.IsRequired != right.IsRequired ||
-                    left.CollectionFormat != right.CollectionFormat || left.Explode != right.Explode ||
-                    left.ArraySerializationDelimiter != right.ArraySerializationDelimiter ||
-                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value))
-                {
-                    return false;
-                }
-                if (left.Scope == InputParameterScope.Constant)
-                {
-                    if (!HaveMatchingLiteralValues(left, right))
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    var leftType = typeFactory.CreateCSharpType(left.Type);
-                    var rightType = typeFactory.CreateCSharpType(right.Type);
-                    if (leftType is null || rightType is null || !leftType.Equals(rightType) ||
-                        typeFactory.GetSerializationFormat(left.Type) != typeFactory.GetSerializationFormat(right.Type))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        private static bool HasCompatibleHeaders(ResourceMethod get, ResourceMethod head)
-        {
-            static InputHeaderParameter[] GetHeaders(ResourceMethod method) => method.InputMethod.Operation.Parameters
-                .OfType<InputHeaderParameter>()
-                .Where(parameter => !parameter.IsApiVersion && !parameter.IsContentType &&
-                    !parameter.SerializedName.Equals("Accept", StringComparison.OrdinalIgnoreCase) &&
-                    !parameter.SerializedName.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(parameter => parameter.SerializedName, StringComparer.OrdinalIgnoreCase).ToArray();
-
-            var getHeaders = GetHeaders(get);
-            var headHeaders = GetHeaders(head);
-            if (getHeaders.Length != headHeaders.Length)
-            {
-                return false;
-            }
-
-            for (var i = 0; i < getHeaders.Length; i++)
-            {
-                var left = getHeaders[i];
-                var right = headHeaders[i];
-                if (!left.SerializedName.Equals(right.SerializedName, StringComparison.OrdinalIgnoreCase) ||
-                    left.Scope != right.Scope || left.IsRequired != right.IsRequired ||
-                    left.CollectionFormat != right.CollectionFormat || left.ArraySerializationDelimiter != right.ArraySerializationDelimiter ||
-                    left.CollectionHeaderPrefix != right.CollectionHeaderPrefix ||
-                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value))
-                {
-                    return false;
-                }
-                if (left.Scope == InputParameterScope.Constant)
-                {
-                    if (!HaveMatchingLiteralValues(left, right))
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    var typeFactory = ManagementClientGenerator.Instance.TypeFactory;
-                    var leftType = typeFactory.CreateCSharpType(left.Type);
-                    var rightType = typeFactory.CreateCSharpType(right.Type);
-                    if (leftType is null || rightType is null || !leftType.Equals(rightType) ||
-                        typeFactory.GetSerializationFormat(left.Type) != typeFactory.GetSerializationFormat(right.Type))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        private static bool HaveMatchingLiteralValues(InputParameter left, InputParameter right) =>
-            left.Type is InputLiteralType leftLiteral && right.Type is InputLiteralType rightLiteral &&
-            Equals(leftLiteral.Value, rightLiteral.Value) && leftLiteral.ValueType.Kind == rightLiteral.ValueType.Kind &&
-            leftLiteral.ValueType.Encode == rightLiteral.ValueType.Encode;
-
-        private static bool HasCompatibleConditionalHeaders(ResourceMethod get, ResourceMethod head)
-        {
-            // Conditions can be collapsed into a single RequestConditions parameter, hiding
-            // which headers each operation actually accepts from the public signature.
-            return HasMatchingConditionalHeaders(get.InputMethod.Operation.Parameters, head.InputMethod.Operation.Parameters) &&
-                HasMatchingConditionalHeaders(get.InputMethod.Parameters, head.InputMethod.Parameters);
-        }
-
-        private static bool HasMatchingConditionalHeaders(IEnumerable<InputParameter> get, IEnumerable<InputParameter> head)
-        {
-            static string HeaderKey(string name) => name.Replace("-", "", StringComparison.Ordinal).ToUpperInvariant();
-            static bool IsConditionalHeader(InputParameter parameter)
-            {
-                if (parameter is not InputHeaderParameter && parameter is not InputMethodParameter { Location: InputRequestLocation.Header })
-                {
-                    return false;
-                }
-                return HeaderKey(parameter.SerializedName) is "IFMATCH" or "IFNONEMATCH" or "IFMODIFIEDSINCE" or "IFUNMODIFIEDSINCE";
-            }
-            static InputParameter[] GetHeaders(IEnumerable<InputParameter> parameters) => parameters
-                .Where(IsConditionalHeader).OrderBy(parameter => HeaderKey(parameter.SerializedName), StringComparer.Ordinal).ToArray();
-
-            var getHeaders = GetHeaders(get);
-            var headHeaders = GetHeaders(head);
-            if (getHeaders.Length != headHeaders.Length)
-            {
-                return false;
-            }
-
-            for (var i = 0; i < getHeaders.Length; i++)
-            {
-                var left = getHeaders[i];
-                var right = headHeaders[i];
-                var typeFactory = ManagementClientGenerator.Instance.TypeFactory;
-                var leftType = typeFactory.CreateCSharpType(left.Type);
-                var rightType = typeFactory.CreateCSharpType(right.Type);
-                if (HeaderKey(left.SerializedName) != HeaderKey(right.SerializedName) || leftType is null || rightType is null ||
-                    !leftType.Equals(rightType) || typeFactory.GetSerializationFormat(left.Type) != typeFactory.GetSerializationFormat(right.Type) ||
-                    left.IsRequired != right.IsRequired || left.Scope != right.Scope ||
-                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value))
-                {
-                    return false;
-                }
-                if (left is InputHeaderParameter leftHeader && right is InputHeaderParameter rightHeader &&
-                    (leftHeader.CollectionFormat != rightHeader.CollectionFormat || leftHeader.ArraySerializationDelimiter != rightHeader.ArraySerializationDelimiter ||
-                     leftHeader.IsContentType != rightHeader.IsContentType || leftHeader.CollectionHeaderPrefix != rightHeader.CollectionHeaderPrefix))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private bool HasCompatibleContextualParameters(ResourceMethod get, ResourceMethod head)
-        {
-            var getParameters = GetContextualRequestParameters(get);
-            var headParameters = GetContextualRequestParameters(head);
-            if (getParameters.Count != headParameters.Count)
-            {
-                return false;
-            }
-
-            for (var i = 0; i < getParameters.Count; i++)
-            {
-                var left = getParameters[i];
-                var right = headParameters[i];
-                if (left.WireInfo.SerializedName != right.WireInfo.SerializedName ||
-                    !left.Type.Equals(right.Type) || left.Location != right.Location ||
-                    left.WireInfo.SerializationFormat != right.WireInfo.SerializationFormat)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private IReadOnlyList<ParameterProvider> GetContextualRequestParameters(ResourceMethod method)
-        {
-            var restClient = ManagementClientGenerator.Instance.TypeFactory.CreateClient(method.InputClient)!;
-            var requestMethod = restClient.GetRequestMethodByOperation(method.InputMethod.Operation);
-            var mapping = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
-            return requestMethod.Signature.Parameters
-                .Where(parameter => mapping.TryGetValue(parameter.WireInfo.SerializedName, out var context) && context.ContextualParameter is not null)
-                .OrderBy(parameter => parameter.WireInfo.SerializedName, StringComparer.Ordinal)
-                .ToArray();
-        }
-
-        private (IReadOnlyList<ParameterProvider> Parameters, MethodSignatureModifiers Modifiers) GetExistenceShape(ResourceMethod method, bool isAsync)
-        {
-            var restClient = ManagementClientGenerator.Instance.TypeFactory.CreateClient(method.InputClient)!;
-            var convenienceMethod = restClient.GetConvenienceMethodByOperation(method.InputMethod.Operation, isAsync, this);
-            var mapping = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
-            var parameters = OperationMethodParameterHelper.GetOperationMethodParameters(method.InputMethod, convenienceMethod, mapping, this, methodName: isAsync ? "ExistsAsync" : "Exists");
-            return (parameters, convenienceMethod.Signature.Modifiers);
+                _resourceMethods.Where(method => method.Kind != ResourceOperationKind.CheckExistence || ReferenceEquals(method, _checkExistence)));
         }
 
         private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
@@ -791,10 +509,294 @@ namespace Azure.Generator.Management.Providers
                 return [.. originalMethods];
             }
 
-            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var originalMethodList = originalMethods.ToList();
+            if (_get is not null && _checkExistence is not null)
+            {
+                var restClientInfo = _clientInfos[_get.InputClient];
+                var parameterMappings = BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path));
+                foreach (var isAsync in new[] { false, true })
+                {
+                    MethodProvider candidate = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, _get.InputMethod, _get.Kind, isAsync);
+                    var checkClient = _clientInfos[_checkExistence.InputClient];
+                    var checkMappings = BuildParameterMapping(new RequestPathPattern(_checkExistence.InputMethod.Operation.Path));
+                    MethodProvider checkMethod = new ExistsOperationMethodProvider(this, checkMappings, checkClient, _checkExistence.InputMethod, _checkExistence.Kind, isAsync);
+                    var primary = originalMethodList.Concat(CustomCodeView?.Methods ?? [])
+                        .FirstOrDefault(method => MethodSignature.MethodSignatureComparer.Equals(method.Signature, checkMethod.Signature));
+                    foreach (var previous in LastContractView.Methods.Where(method =>
+                        method.Signature.Name == candidate.Signature.Name &&
+                        method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                        !BackCompatHelper.IsMethodRemovalAcceptedInBaseline(this, method.Signature)))
+                    {
+                        var custom = CustomCodeView?.Methods.FirstOrDefault(method => MethodSignature.MethodSignatureComparer.Equals(method.Signature, previous.Signature));
+                        var existing = custom ?? originalMethodList.FirstOrDefault(method => MethodSignature.MethodSignatureComparer.Equals(method.Signature, previous.Signature));
+                        if (existing is not null)
+                        {
+                            if (ReferenceEquals(existing, primary) && originalMethodList.Contains(existing))
+                            {
+                                var publishedParameters = GetPublishedCheckParameters(existing.Signature, previous.Signature);
+                                if (publishedParameters is null)
+                                {
+                                    ReportExistsCompatibilityError(previous.Signature.Name, "requires a parameter that was previously optional or cannot preserve its published parameter names");
+                                }
+                                else
+                                {
+                                    MethodProvider replacement = new ExistsOperationMethodProvider(this, checkMappings, checkClient, _checkExistence.InputMethod, _checkExistence.Kind, isAsync, publishedParameters);
+                                    replacement.Signature.Update(modifiers: (replacement.Signature.Modifiers & ~MethodSignatureModifiers.Internal & ~MethodSignatureModifiers.Private & ~MethodSignatureModifiers.Protected)
+                                        | MethodSignatureModifiers.Public | (previous.Signature.Modifiers & MethodSignatureModifiers.Virtual));
+                                    originalMethodList[originalMethodList.IndexOf(existing)] = replacement;
+                                    primary = replacement;
+                                }
+                            }
+                            else if (primary is not null && !MethodSignature.MethodSignatureComparer.Equals(primary.Signature, existing.Signature))
+                            {
+                                ReportAmbiguousExistsOverload(primary, existing);
+                            }
+                            continue;
+                        }
+
+                        var parameters = GetPublishedReadParameters(candidate.Signature, previous.Signature);
+                        if (parameters is null)
+                        {
+                            ReportExistsCompatibilityError(previous.Signature.Name, "cannot be reconstructed from the current read operation");
+                            continue;
+                        }
+
+                        MethodProvider legacy = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, _get.InputMethod, _get.Kind, isAsync, parameters);
+                        legacy.Signature.Update(modifiers: (legacy.Signature.Modifiers & ~MethodSignatureModifiers.Internal & ~MethodSignatureModifiers.Private & ~MethodSignatureModifiers.Protected)
+                            | MethodSignatureModifiers.Public | (previous.Signature.Modifiers & MethodSignatureModifiers.Virtual));
+                        originalMethodList.Add(legacy);
+                        if (primary is not null)
+                        {
+                            ReportAmbiguousExistsOverload(primary, legacy);
+                        }
+                    }
+                }
+            }
             var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
 
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
+
+        private static IReadOnlyList<ParameterProvider>? GetPublishedReadParameters(MethodSignature current, MethodSignature previous)
+        {
+            if (current.ReturnType is not { } returnType || previous.ReturnType is not { } previousReturnType ||
+                !returnType.AreNamesEqual(previousReturnType))
+            {
+                return null;
+            }
+
+            var parameters = new List<ParameterProvider>();
+            foreach (var oldParameter in previous.Parameters)
+            {
+                var parameter = current.Parameters.SingleOrDefault(p => p.Name == oldParameter.Name && p.Type.AreNamesEqual(oldParameter.Type));
+                if (parameter is null || (parameter.DefaultValue is null && oldParameter.DefaultValue is not null) ||
+                    parameter.IsRef != oldParameter.IsRef || parameter.IsOut != oldParameter.IsOut || parameter.IsIn != oldParameter.IsIn)
+                {
+                    return null;
+                }
+                var becameOptional = parameter.DefaultValue is not null && oldParameter.DefaultValue is null;
+                var validation = becameOptional && !oldParameter.Type.IsValueType && !oldParameter.Type.IsNullable
+                    ? oldParameter.Type.AreNamesEqual(typeof(string)) ? ParameterValidationType.AssertNotNullOrEmpty : ParameterValidationType.AssertNotNull
+                    : parameter.Validation;
+                parameters.Add(CopyParameter(parameter, oldParameter.DefaultValue, type: oldParameter.Type, validation: validation));
+            }
+
+            if (current.Parameters.Any(p => !previous.Parameters.Any(old => p.Name == old.Name && p.Type.AreNamesEqual(old.Type)) &&
+                (p.DefaultValue is null || (!ReferenceEquals(p.DefaultValue, Default) && !ReferenceEquals(p.DefaultValue, Null)))))
+            {
+                return null;
+            }
+            return parameters;
+        }
+
+        private static IReadOnlyList<ParameterProvider>? GetPublishedCheckParameters(MethodSignature current, MethodSignature previous)
+        {
+            var parameters = new List<ParameterProvider>();
+            for (var i = 0; i < current.Parameters.Count; i++)
+            {
+                var parameter = current.Parameters[i];
+                var oldParameter = previous.Parameters[i];
+                if ((oldParameter.DefaultValue is not null && parameter.DefaultValue is null) ||
+                    (parameter.Type.Equals(typeof(System.Threading.CancellationToken)) && parameter.Name != oldParameter.Name))
+                {
+                    return null;
+                }
+                parameters.Add(CopyParameter(parameter, oldParameter.DefaultValue ?? parameter.DefaultValue, oldParameter.Name));
+            }
+            return parameters;
+        }
+
+        private static ParameterProvider CopyParameter(ParameterProvider parameter, ValueExpression? defaultValue, string? name = null, CSharpType? type = null, ParameterValidationType? validation = null)
+            => new(name ?? parameter.Name, parameter.Description, type ?? parameter.Type, defaultValue,
+                isRef: parameter.IsRef, isOut: parameter.IsOut, isIn: parameter.IsIn, isParams: parameter.IsParams,
+                attributes: parameter.Attributes, property: parameter.Property, field: parameter.Field,
+                initializationValue: parameter.InitializationValue, location: parameter.Location, wireInfo: parameter.WireInfo,
+                validation: validation ?? parameter.Validation, inputParameter: parameter.InputParameter);
+
+        private void ReportExistsCompatibilityError(string methodName, string reason)
+        {
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-error",
+                $"The published '{methodName}' overload on '{Name}' {reason}. A custom compatibility implementation is required.",
+                severity: Microsoft.TypeSpec.Generator.EmitterRpc.EmitterDiagnosticSeverity.Error);
+        }
+
+        private void ReportAmbiguousExistsOverload(MethodProvider primary, MethodProvider previous)
+        {
+            if (!primary.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) ||
+                !previous.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+            {
+                return;
+            }
+
+            var resolution = CheckDefaultLiteralResolution(primary.Signature, previous.Signature);
+            if (resolution != ExistsOverloadResolution.Published)
+            {
+                var reason = resolution switch
+                {
+                    ExistsOverloadResolution.Ambiguous => "has ambiguous optional parameters with the check-existence method",
+                    ExistsOverloadResolution.CheckExistence => "would rebind previously valid calls to the check-existence method",
+                    _ => "cannot be checked for default-literal overload ambiguity"
+                };
+                ReportExistsCompatibilityError(primary.Signature.Name, reason);
+            }
+        }
+
+        private enum ExistsOverloadResolution { Published, CheckExistence, Ambiguous, Unknown }
+
+        private static ExistsOverloadResolution CheckDefaultLiteralResolution(MethodSignature current, MethodSignature previous)
+        {
+            if (ManagementClientGenerator.Instance.SourceInputModel?.LastContract is not CSharpCompilation compilation)
+            {
+                return ExistsOverloadResolution.Unknown;
+            }
+
+            ITypeSymbol? ResolveType(CSharpType type)
+            {
+                if (type.IsArray)
+                {
+                    var element = ResolveType(type.ElementType);
+                    return element is null ? null : compilation.CreateArrayTypeSymbol(element,
+                        type.IsFrameworkType ? type.FrameworkType.GetArrayRank() : 1);
+                }
+                var metadataName = type.IsFrameworkType ? type.FrameworkType.FullName :
+                    type.FullyQualifiedName + (type.Arguments.Count == 0 ? string.Empty : $"`{type.Arguments.Count}");
+                var symbol = metadataName is null ? null : compilation.GetTypeByMetadataName(metadataName);
+                if (symbol is null)
+                {
+                    return null;
+                }
+                if (type.Arguments.Count > 0)
+                {
+                    var arguments = type.Arguments.Select(ResolveType).ToArray();
+                    if (arguments.Any(argument => argument is null))
+                    {
+                        return null;
+                    }
+                    symbol = symbol.Construct(arguments.Select(argument => argument!).ToArray());
+                }
+                if (symbol.IsValueType && type.IsNullable)
+                {
+                    symbol = compilation.GetSpecialType(SpecialType.System_Nullable_T).Construct(symbol);
+                }
+                return symbol;
+            }
+
+            string? FormatParameters(MethodSignature signature)
+            {
+                var parameters = new List<string>();
+                for (var i = 0; i < signature.Parameters.Count; i++)
+                {
+                    var parameter = signature.Parameters[i];
+                    if (parameter.IsRef || parameter.IsIn || parameter.IsOut || parameter.IsParams || ResolveType(parameter.Type) is not { } symbol)
+                    {
+                        return null;
+                    }
+                    var type = symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+                    parameters.Add($"{type} {EscapeName(parameter.Name)}{(parameter.DefaultValue is null ? string.Empty : " = default")}");
+                }
+                return string.Join(", ", parameters);
+            }
+
+            const int maximumCallShapes = 256;
+            var calls = new HashSet<string>(StringComparer.Ordinal);
+            var requiredCount = Math.Max(current.Parameters.Count(parameter => parameter.DefaultValue is null), previous.Parameters.Count(parameter => parameter.DefaultValue is null));
+            var maximumCount = Math.Min(current.Parameters.Count, previous.Parameters.Count);
+            for (var count = requiredCount; count <= maximumCount; count++)
+            {
+                calls.Add(string.Join(", ", Enumerable.Repeat("default", count)));
+            }
+            for (var positionalCount = 0; positionalCount <= maximumCount; positionalCount++)
+            {
+                var currentRemaining = current.Parameters.Skip(positionalCount).ToDictionary(parameter => parameter.Name, StringComparer.Ordinal);
+                var previousRemaining = previous.Parameters.Skip(positionalCount).ToDictionary(parameter => parameter.Name, StringComparer.Ordinal);
+                if (currentRemaining.Values.Any(parameter => parameter.DefaultValue is null && !previousRemaining.ContainsKey(parameter.Name)) ||
+                    previousRemaining.Values.Any(parameter => parameter.DefaultValue is null && !currentRemaining.ContainsKey(parameter.Name)))
+                {
+                    continue;
+                }
+                var common = previousRemaining.Values.Where(parameter => currentRemaining.ContainsKey(parameter.Name)).ToArray();
+                var optional = common.Where(parameter => parameter.DefaultValue is not null && currentRemaining[parameter.Name].DefaultValue is not null).ToArray();
+                if (optional.Length >= 9)
+                {
+                    return ExistsOverloadResolution.Unknown;
+                }
+                for (var mask = 0; mask < (1 << optional.Length); mask++)
+                {
+                    var named = common.Where(parameter => parameter.DefaultValue is null || currentRemaining[parameter.Name].DefaultValue is null ||
+                        (mask & (1 << Array.IndexOf(optional, parameter))) != 0).ToArray();
+                    if (named.Length == 0)
+                    {
+                        continue;
+                    }
+                    var arguments = Enumerable.Repeat("default", positionalCount)
+                        .Concat(named.Select(parameter => $"{EscapeName(parameter.Name)}: default"));
+                    calls.Add(string.Join(", ", arguments));
+                    if (calls.Count > maximumCallShapes)
+                    {
+                        return ExistsOverloadResolution.Unknown;
+                    }
+                }
+            }
+            if (calls.Count == 0)
+            {
+                return ExistsOverloadResolution.Published;
+            }
+            var currentParameters = FormatParameters(current);
+            var previousParameters = FormatParameters(previous);
+            if (currentParameters is null || previousParameters is null)
+            {
+                return ExistsOverloadResolution.Unknown;
+            }
+            var invocations = string.Join(" ", calls.Select(arguments => $"Check({arguments});"));
+            var source = $"namespace __ExistsCompatibilityProbe {{ internal class Probe {{ void Check({currentParameters}) {{ }} void Check({previousParameters}) {{ }} void Call() {{ {invocations} }} }} }}";
+            var tree = CSharpSyntaxTree.ParseText(source);
+            var model = compilation.AddSyntaxTrees(tree).GetSemanticModel(tree);
+            var diagnostics = model.GetDiagnostics();
+            if (diagnostics.Any(diagnostic => diagnostic.Id == "CS0121"))
+            {
+                return ExistsOverloadResolution.Ambiguous;
+            }
+            if (diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error))
+            {
+                return ExistsOverloadResolution.Unknown;
+            }
+            var root = tree.GetRoot();
+            var currentMethod = model.GetDeclaredSymbol(root.DescendantNodes().OfType<MethodDeclarationSyntax>().First());
+            foreach (var invocation in root.DescendantNodes().OfType<InvocationExpressionSyntax>())
+            {
+                var selected = model.GetSymbolInfo(invocation).Symbol;
+                if (SymbolEqualityComparer.Default.Equals(currentMethod, selected))
+                {
+                    return ExistsOverloadResolution.CheckExistence;
+                }
+                if (selected is null)
+                {
+                    return ExistsOverloadResolution.Unknown;
+                }
+            }
+            return ExistsOverloadResolution.Published;
+
+            static string EscapeName(string name) => name.StartsWith('@') ? name : $"@{name}";
         }
 
         internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
@@ -981,7 +983,7 @@ namespace Azure.Generator.Management.Providers
 
         private List<MethodProvider> BuildExistsMethods()
         {
-            var method = SelectExistsMethod();
+            var method = _checkExistence ?? _get;
             if (method is null)
             {
                 return [];
@@ -992,7 +994,7 @@ namespace Azure.Generator.Management.Providers
             var parameterMappings = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, method.InputMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, method.InputMethod, method.Kind, isAsync);
                 result.Add(existsMethodProvider);
             }
 

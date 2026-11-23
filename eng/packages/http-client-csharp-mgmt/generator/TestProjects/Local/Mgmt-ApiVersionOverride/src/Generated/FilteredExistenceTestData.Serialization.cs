@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
 {
-    /// <summary> A resource whose GET supports a query parameter that its HEAD cannot carry. </summary>
+    /// <summary> A resource whose read and existence operations have different request selectors. </summary>
     public partial class FilteredExistenceTestData : TrackedResourceData, IJsonModel<FilteredExistenceTestData>
     {
         /// <summary> Initializes a new instance of <see cref="FilteredExistenceTestData"/> for deserialization. </summary>

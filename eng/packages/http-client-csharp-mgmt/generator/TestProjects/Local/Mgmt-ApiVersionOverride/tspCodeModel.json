@@ -570,7 +570,7 @@
       "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.FilteredExistenceTest",
       "usage": "Output,Json",
-      "doc": "A resource whose GET supports a query parameter that its HEAD cannot carry.",
+      "doc": "A resource whose read and existence operations have different request selectors.",
       "decorators": [
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
@@ -3447,6 +3447,67 @@
                       }
                     ],
                     "isExactName": false
+                  },
+                  {
+                    "$id": "238",
+                    "kind": "header",
+                    "name": "ifModifiedSince",
+                    "serializedName": "If-Modified-Since",
+                    "type": {
+                      "$id": "239",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc7231",
+                      "wireType": {
+                        "$id": "240",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "optional": true,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.FilteredExistenceOperations.checkExistence.ifModifiedSince",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "241",
+                        "kind": "method",
+                        "name": "ifModifiedSince",
+                        "serializedName": "If-Modified-Since",
+                        "type": {
+                          "$id": "242",
+                          "kind": "utcDateTime",
+                          "name": "utcDateTime",
+                          "encode": "rfc7231",
+                          "wireType": {
+                            "$id": "243",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.FilteredExistenceOperations.checkExistence.ifModifiedSince",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3461,6 +3522,14 @@
                   {
                     "statusCodes": [
                       404
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  },
+                  {
+                    "statusCodes": [
+                      304
                     ],
                     "headers": [],
                     "isErrorResponse": false,
@@ -3491,7 +3560,10 @@
                   "$ref": "237"
                 },
                 {
-                  "$id": "238",
+                  "$ref": "241"
+                },
+                {
+                  "$id": "244",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
@@ -3516,13 +3588,13 @@
           ],
           "parameters": [
             {
-              "$id": "239",
+              "$id": "245",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "240",
+                "$id": "246",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3533,7 +3605,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "241",
+                  "$id": "247",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3563,14 +3635,14 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "242",
+          "$id": "248",
           "kind": "client",
           "name": "EscapedWireVersionReads",
           "isExactName": false,
           "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
           "methods": [
             {
-              "$id": "243",
+              "$id": "249",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -3581,20 +3653,20 @@
               ],
               "doc": "Get a EscapedWireVersionTest",
               "operation": {
-                "$id": "244",
+                "$id": "250",
                 "name": "get",
                 "isExactName": false,
                 "doc": "Get a EscapedWireVersionTest",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "245",
+                    "$id": "251",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "246",
+                      "$id": "252",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3604,7 +3676,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "247",
+                        "$id": "253",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3627,13 +3699,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "248",
+                        "$id": "254",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "249",
+                          "$id": "255",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3643,7 +3715,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "250",
+                            "$id": "256",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3671,18 +3743,18 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "251",
+                    "$id": "257",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "252",
+                      "$id": "258",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "253",
+                        "$id": "259",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3711,18 +3783,18 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "254",
+                        "$id": "260",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "255",
+                          "$id": "261",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "256",
+                            "$id": "262",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3753,13 +3825,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "257",
+                    "$id": "263",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "258",
+                      "$id": "264",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3800,13 +3872,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "259",
+                        "$id": "265",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "260",
+                          "$id": "266",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3849,13 +3921,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "261",
+                    "$id": "267",
                     "kind": "path",
                     "name": "escapedWireVersionTestName",
                     "serializedName": "escapedWireVersionTestName",
                     "doc": "The name of the EscapedWireVersionTest",
                     "type": {
-                      "$id": "262",
+                      "$id": "268",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3880,13 +3952,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.get.escapedWireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "263",
+                        "$id": "269",
                         "kind": "method",
                         "name": "escapedWireVersionTestName",
                         "serializedName": "escapedWireVersionTestName",
                         "doc": "The name of the EscapedWireVersionTest",
                         "type": {
-                          "$id": "264",
+                          "$id": "270",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3913,7 +3985,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "265",
+                    "$id": "271",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -3929,7 +4001,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "266",
+                        "$id": "272",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -3991,21 +4063,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "259"
+                  "$ref": "265"
                 },
                 {
-                  "$ref": "263"
+                  "$ref": "269"
                 },
                 {
-                  "$ref": "266"
+                  "$ref": "272"
                 },
                 {
-                  "$id": "267",
+                  "$id": "273",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "252"
+                    "$ref": "258"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4027,7 +4099,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.get"
             },
             {
-              "$id": "268",
+              "$id": "274",
               "kind": "paging",
               "name": "listBySubscription",
               "isExactName": false,
@@ -4038,20 +4110,20 @@
               ],
               "doc": "List EscapedWireVersionTest resources by subscription ID",
               "operation": {
-                "$id": "269",
+                "$id": "275",
                 "name": "listBySubscription",
                 "isExactName": false,
                 "doc": "List EscapedWireVersionTest resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "270",
+                    "$id": "276",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "271",
+                      "$id": "277",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4061,7 +4133,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "272",
+                        "$id": "278",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4084,24 +4156,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "248"
+                        "$ref": "254"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "273",
+                    "$id": "279",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "274",
+                      "$id": "280",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "275",
+                        "$id": "281",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4130,13 +4202,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.listBySubscription.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "254"
+                        "$ref": "260"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "276",
+                    "$id": "282",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -4152,7 +4224,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.listBySubscription.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "277",
+                        "$id": "283",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -4214,15 +4286,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "277"
+                  "$ref": "283"
                 },
                 {
-                  "$id": "278",
+                  "$id": "284",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "274"
+                    "$ref": "280"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4260,7 +4332,7 @@
               }
             },
             {
-              "$id": "279",
+              "$id": "285",
               "kind": "paging",
               "name": "listByResourceGroup",
               "isExactName": false,
@@ -4271,20 +4343,20 @@
               ],
               "doc": "List EscapedWireVersionTest resources by resource group",
               "operation": {
-                "$id": "280",
+                "$id": "286",
                 "name": "listByResourceGroup",
                 "isExactName": false,
                 "doc": "List EscapedWireVersionTest resources by resource group",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "281",
+                    "$id": "287",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "282",
+                      "$id": "288",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4294,7 +4366,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "283",
+                        "$id": "289",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4317,24 +4389,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "248"
+                        "$ref": "254"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "284",
+                    "$id": "290",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "285",
+                      "$id": "291",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "286",
+                        "$id": "292",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4363,19 +4435,19 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.listByResourceGroup.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "254"
+                        "$ref": "260"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "287",
+                    "$id": "293",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "288",
+                      "$id": "294",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4416,13 +4488,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.listByResourceGroup.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "289",
+                        "$id": "295",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "290",
+                          "$id": "296",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4465,7 +4537,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "291",
+                    "$id": "297",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -4481,7 +4553,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads.listByResourceGroup.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "292",
+                        "$id": "298",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -4543,18 +4615,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "289"
+                  "$ref": "295"
                 },
                 {
-                  "$ref": "292"
+                  "$ref": "298"
                 },
                 {
-                  "$id": "293",
+                  "$id": "299",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "285"
+                    "$ref": "291"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4594,13 +4666,13 @@
           ],
           "parameters": [
             {
-              "$id": "294",
+              "$id": "300",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "295",
+                "$id": "301",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -4611,7 +4683,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "296",
+                  "$id": "302",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4625,7 +4697,7 @@
               "isExactName": false
             },
             {
-              "$ref": "248"
+              "$ref": "254"
             }
           ],
           "initializedBy": 0,
@@ -4641,14 +4713,14 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "297",
+          "$id": "303",
           "kind": "client",
           "name": "WireVersionOperations",
           "isExactName": false,
           "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
           "methods": [
             {
-              "$id": "298",
+              "$id": "304",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -4659,20 +4731,20 @@
               ],
               "doc": "Get a WireVersionTest",
               "operation": {
-                "$id": "299",
+                "$id": "305",
                 "name": "get",
                 "isExactName": false,
                 "doc": "Get a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "300",
+                    "$id": "306",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "301",
+                      "$id": "307",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4682,7 +4754,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "302",
+                        "$id": "308",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4705,13 +4777,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "303",
+                        "$id": "309",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "304",
+                          "$id": "310",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4721,7 +4793,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "305",
+                            "$id": "311",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4749,18 +4821,18 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "306",
+                    "$id": "312",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "307",
+                      "$id": "313",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "308",
+                        "$id": "314",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4789,18 +4861,18 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "309",
+                        "$id": "315",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "310",
+                          "$id": "316",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "311",
+                            "$id": "317",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4831,13 +4903,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "312",
+                    "$id": "318",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "313",
+                      "$id": "319",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4878,13 +4950,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "314",
+                        "$id": "320",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "315",
+                          "$id": "321",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4927,13 +4999,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "316",
+                    "$id": "322",
                     "kind": "path",
                     "name": "wireVersionTestName",
                     "serializedName": "wireVersionTestName",
                     "doc": "The name of the WireVersionTest",
                     "type": {
-                      "$id": "317",
+                      "$id": "323",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4958,13 +5030,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.wireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "318",
+                        "$id": "324",
                         "kind": "method",
                         "name": "wireVersionTestName",
                         "serializedName": "wireVersionTestName",
                         "doc": "The name of the WireVersionTest",
                         "type": {
-                          "$id": "319",
+                          "$id": "325",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4991,7 +5063,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "320",
+                    "$id": "326",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5007,7 +5079,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "321",
+                        "$id": "327",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5069,21 +5141,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "314"
+                  "$ref": "320"
                 },
                 {
-                  "$ref": "318"
+                  "$ref": "324"
                 },
                 {
-                  "$ref": "321"
+                  "$ref": "327"
                 },
                 {
-                  "$id": "322",
+                  "$id": "328",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "307"
+                    "$ref": "313"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5105,7 +5177,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get"
             },
             {
-              "$id": "323",
+              "$id": "329",
               "kind": "paging",
               "name": "listBySubscription",
               "isExactName": false,
@@ -5116,20 +5188,20 @@
               ],
               "doc": "List WireVersionTest resources by subscription ID",
               "operation": {
-                "$id": "324",
+                "$id": "330",
                 "name": "listBySubscription",
                 "isExactName": false,
                 "doc": "List WireVersionTest resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "325",
+                    "$id": "331",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "326",
+                      "$id": "332",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5139,7 +5211,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "327",
+                        "$id": "333",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5162,24 +5234,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "303"
+                        "$ref": "309"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "328",
+                    "$id": "334",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "329",
+                      "$id": "335",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "330",
+                        "$id": "336",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5208,13 +5280,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "309"
+                        "$ref": "315"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "331",
+                    "$id": "337",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5230,7 +5302,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "332",
+                        "$id": "338",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5292,15 +5364,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "332"
+                  "$ref": "338"
                 },
                 {
-                  "$id": "333",
+                  "$id": "339",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "329"
+                    "$ref": "335"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5338,7 +5410,7 @@
               }
             },
             {
-              "$id": "334",
+              "$id": "340",
               "kind": "paging",
               "name": "listByResourceGroup",
               "isExactName": false,
@@ -5349,20 +5421,20 @@
               ],
               "doc": "List WireVersionTest resources by resource group",
               "operation": {
-                "$id": "335",
+                "$id": "341",
                 "name": "listByResourceGroup",
                 "isExactName": false,
                 "doc": "List WireVersionTest resources by resource group",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "336",
+                    "$id": "342",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "337",
+                      "$id": "343",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5372,7 +5444,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "338",
+                        "$id": "344",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5395,24 +5467,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "303"
+                        "$ref": "309"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "339",
+                    "$id": "345",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "340",
+                      "$id": "346",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "341",
+                        "$id": "347",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5441,19 +5513,19 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "309"
+                        "$ref": "315"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "342",
+                    "$id": "348",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "343",
+                      "$id": "349",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5494,13 +5566,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "344",
+                        "$id": "350",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "345",
+                          "$id": "351",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5543,7 +5615,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "346",
+                    "$id": "352",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5559,7 +5631,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "347",
+                        "$id": "353",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5621,18 +5693,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "344"
+                  "$ref": "350"
                 },
                 {
-                  "$ref": "347"
+                  "$ref": "353"
                 },
                 {
-                  "$id": "348",
+                  "$id": "354",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "340"
+                    "$ref": "346"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5670,7 +5742,7 @@
               }
             },
             {
-              "$id": "349",
+              "$id": "355",
               "kind": "basic",
               "name": "createOrUpdate",
               "isExactName": false,
@@ -5681,20 +5753,20 @@
               ],
               "doc": "Create a WireVersionTest",
               "operation": {
-                "$id": "350",
+                "$id": "356",
                 "name": "createOrUpdate",
                 "isExactName": false,
                 "doc": "Create a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "351",
+                    "$id": "357",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "352",
+                      "$id": "358",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5704,7 +5776,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "353",
+                        "$id": "359",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5727,24 +5799,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "303"
+                        "$ref": "309"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "354",
+                    "$id": "360",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "355",
+                      "$id": "361",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "356",
+                        "$id": "362",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5773,19 +5845,19 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "309"
+                        "$ref": "315"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "357",
+                    "$id": "363",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "358",
+                      "$id": "364",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5826,13 +5898,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "359",
+                        "$id": "365",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "360",
+                          "$id": "366",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5875,13 +5947,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "361",
+                    "$id": "367",
                     "kind": "path",
                     "name": "wireVersionTestName",
                     "serializedName": "wireVersionTestName",
                     "doc": "The name of the WireVersionTest",
                     "type": {
-                      "$id": "362",
+                      "$id": "368",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5906,13 +5978,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.wireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "363",
+                        "$id": "369",
                         "kind": "method",
                         "name": "wireVersionTestName",
                         "serializedName": "wireVersionTestName",
                         "doc": "The name of the WireVersionTest",
                         "type": {
-                          "$id": "364",
+                          "$id": "370",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5939,7 +6011,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "365",
+                    "$id": "371",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -5956,7 +6028,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "366",
+                        "$id": "372",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -5978,7 +6050,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "367",
+                    "$id": "373",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5994,7 +6066,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "368",
+                        "$id": "374",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -6015,7 +6087,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "369",
+                    "$id": "375",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
@@ -6035,7 +6107,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "370",
+                        "$id": "376",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
@@ -6124,27 +6196,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "359"
+                  "$ref": "365"
                 },
                 {
-                  "$ref": "363"
+                  "$ref": "369"
                 },
                 {
-                  "$ref": "370"
+                  "$ref": "376"
                 },
                 {
-                  "$ref": "366"
+                  "$ref": "372"
                 },
                 {
-                  "$ref": "368"
+                  "$ref": "374"
                 },
                 {
-                  "$id": "371",
+                  "$id": "377",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "355"
+                    "$ref": "361"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -6166,7 +6238,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate"
             },
             {
-              "$id": "372",
+              "$id": "378",
               "kind": "basic",
               "name": "update",
               "isExactName": false,
@@ -6177,20 +6249,20 @@
               ],
               "doc": "Update a WireVersionTest",
               "operation": {
-                "$id": "373",
+                "$id": "379",
                 "name": "update",
                 "isExactName": false,
                 "doc": "Update a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "374",
+                    "$id": "380",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "375",
+                      "$id": "381",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6200,7 +6272,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "376",
+                        "$id": "382",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6223,24 +6295,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "303"
+                        "$ref": "309"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "377",
+                    "$id": "383",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "378",
+                      "$id": "384",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "379",
+                        "$id": "385",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6269,19 +6341,19 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "309"
+                        "$ref": "315"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "380",
+                    "$id": "386",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "381",
+                      "$id": "387",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6322,13 +6394,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "382",
+                        "$id": "388",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "383",
+                          "$id": "389",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6371,13 +6443,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "384",
+                    "$id": "390",
                     "kind": "path",
                     "name": "wireVersionTestName",
                     "serializedName": "wireVersionTestName",
                     "doc": "The name of the WireVersionTest",
                     "type": {
-                      "$id": "385",
+                      "$id": "391",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6402,13 +6474,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.wireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "386",
+                        "$id": "392",
                         "kind": "method",
                         "name": "wireVersionTestName",
                         "serializedName": "wireVersionTestName",
                         "doc": "The name of the WireVersionTest",
                         "type": {
-                          "$id": "387",
+                          "$id": "393",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6435,7 +6507,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "388",
+                    "$id": "394",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -6452,7 +6524,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "389",
+                        "$id": "395",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -6474,7 +6546,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "390",
+                    "$id": "396",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -6490,7 +6562,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "391",
+                        "$id": "397",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -6511,7 +6583,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "392",
+                    "$id": "398",
                     "kind": "body",
                     "name": "properties",
                     "serializedName": "properties",
@@ -6531,7 +6603,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.properties",
                     "methodParameterSegments": [
                       {
-                        "$id": "393",
+                        "$id": "399",
                         "kind": "method",
                         "name": "properties",
                         "serializedName": "properties",
@@ -6602,27 +6674,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "382"
+                  "$ref": "388"
                 },
                 {
-                  "$ref": "386"
+                  "$ref": "392"
                 },
                 {
-                  "$ref": "393"
+                  "$ref": "399"
                 },
                 {
-                  "$ref": "389"
+                  "$ref": "395"
                 },
                 {
-                  "$ref": "391"
+                  "$ref": "397"
                 },
                 {
-                  "$id": "394",
+                  "$id": "400",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "378"
+                    "$ref": "384"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -6644,7 +6716,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update"
             },
             {
-              "$id": "395",
+              "$id": "401",
               "kind": "basic",
               "name": "ping",
               "isExactName": false,
@@ -6655,20 +6727,20 @@
               ],
               "doc": "A synchronous resource action.",
               "operation": {
-                "$id": "396",
+                "$id": "402",
                 "name": "ping",
                 "isExactName": false,
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "397",
+                    "$id": "403",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "398",
+                      "$id": "404",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6678,7 +6750,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "399",
+                        "$id": "405",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6701,24 +6773,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "303"
+                        "$ref": "309"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "400",
+                    "$id": "406",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "401",
+                      "$id": "407",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "402",
+                        "$id": "408",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6747,19 +6819,19 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "309"
+                        "$ref": "315"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "403",
+                    "$id": "409",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "404",
+                      "$id": "410",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6800,13 +6872,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "405",
+                        "$id": "411",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "406",
+                          "$id": "412",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6849,13 +6921,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "407",
+                    "$id": "413",
                     "kind": "path",
                     "name": "wireVersionTestName",
                     "serializedName": "wireVersionTestName",
                     "doc": "The name of the WireVersionTest",
                     "type": {
-                      "$id": "408",
+                      "$id": "414",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6880,13 +6952,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.wireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "409",
+                        "$id": "415",
                         "kind": "method",
                         "name": "wireVersionTestName",
                         "serializedName": "wireVersionTestName",
                         "doc": "The name of the WireVersionTest",
                         "type": {
-                          "$id": "410",
+                          "$id": "416",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6913,7 +6985,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "411",
+                    "$id": "417",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -6929,7 +7001,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "412",
+                        "$id": "418",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -6987,21 +7059,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "405"
+                  "$ref": "411"
                 },
                 {
-                  "$ref": "409"
+                  "$ref": "415"
                 },
                 {
-                  "$ref": "412"
+                  "$ref": "418"
                 },
                 {
-                  "$id": "413",
+                  "$id": "419",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "401"
+                    "$ref": "407"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -7023,7 +7095,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping"
             },
             {
-              "$id": "414",
+              "$id": "420",
               "kind": "basic",
               "name": "checkWireVersion",
               "isExactName": false,
@@ -7034,20 +7106,20 @@
               ],
               "doc": "",
               "operation": {
-                "$id": "415",
+                "$id": "421",
                 "name": "checkWireVersion",
                 "isExactName": false,
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "416",
+                    "$id": "422",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "417",
+                      "$id": "423",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7057,7 +7129,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "418",
+                        "$id": "424",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7080,24 +7152,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "303"
+                        "$ref": "309"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "419",
+                    "$id": "425",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "420",
+                      "$id": "426",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "421",
+                        "$id": "427",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7126,13 +7198,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "309"
+                        "$ref": "315"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "422",
+                    "$id": "428",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -7148,7 +7220,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "423",
+                        "$id": "429",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -7175,7 +7247,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "424",
+                      "$id": "430",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7206,15 +7278,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "423"
+                  "$ref": "429"
                 },
                 {
-                  "$id": "425",
+                  "$id": "431",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "420"
+                    "$ref": "426"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -7227,7 +7299,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "424"
+                  "$ref": "430"
                 }
               },
               "isOverride": false,
@@ -7238,13 +7310,13 @@
           ],
           "parameters": [
             {
-              "$id": "426",
+              "$id": "432",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "427",
+                "$id": "433",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -7255,7 +7327,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "428",
+                  "$id": "434",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7269,7 +7341,7 @@
               "isExactName": false
             },
             {
-              "$ref": "303"
+              "$ref": "309"
             }
           ],
           "initializedBy": 0,
@@ -7285,14 +7357,14 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "429",
+          "$id": "435",
           "kind": "client",
           "name": "WireVersionExistenceOperations",
           "isExactName": false,
           "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
           "methods": [
             {
-              "$id": "430",
+              "$id": "436",
               "kind": "basic",
               "name": "checkExistence",
               "isExactName": false,
@@ -7303,20 +7375,20 @@
               ],
               "doc": "Check for the existence of a WireVersionTest",
               "operation": {
-                "$id": "431",
+                "$id": "437",
                 "name": "checkExistence",
                 "isExactName": false,
                 "doc": "Check for the existence of a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "432",
+                    "$id": "438",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "433",
+                      "$id": "439",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7326,7 +7398,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "434",
+                        "$id": "440",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7349,13 +7421,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "435",
+                        "$id": "441",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "436",
+                          "$id": "442",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7365,7 +7437,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "437",
+                            "$id": "443",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7393,18 +7465,18 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "438",
+                    "$id": "444",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "439",
+                      "$id": "445",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "440",
+                        "$id": "446",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7433,18 +7505,18 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionExistence.checkExistence.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "441",
+                        "$id": "447",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "442",
+                          "$id": "448",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "443",
+                            "$id": "449",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7475,13 +7547,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "444",
+                    "$id": "450",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "445",
+                      "$id": "451",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7522,13 +7594,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionExistence.checkExistence.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "446",
+                        "$id": "452",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "447",
+                          "$id": "453",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7571,13 +7643,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "448",
+                    "$id": "454",
                     "kind": "path",
                     "name": "wireVersionTestName",
                     "serializedName": "wireVersionTestName",
                     "doc": "The name of the WireVersionTest",
                     "type": {
-                      "$id": "449",
+                      "$id": "455",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7602,13 +7674,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionExistence.checkExistence.wireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "450",
+                        "$id": "456",
                         "kind": "method",
                         "name": "wireVersionTestName",
                         "serializedName": "wireVersionTestName",
                         "doc": "The name of the WireVersionTest",
                         "type": {
-                          "$id": "451",
+                          "$id": "457",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7670,18 +7742,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "446"
+                  "$ref": "452"
                 },
                 {
-                  "$ref": "450"
+                  "$ref": "456"
                 },
                 {
-                  "$id": "452",
+                  "$id": "458",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "439"
+                    "$ref": "445"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -7701,13 +7773,13 @@
           ],
           "parameters": [
             {
-              "$id": "453",
+              "$id": "459",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "454",
+                "$id": "460",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -7718,7 +7790,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "455",
+                  "$id": "461",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7732,7 +7804,7 @@
               "isExactName": false
             },
             {
-              "$ref": "435"
+              "$ref": "441"
             }
           ],
           "initializedBy": 0,
@@ -7748,14 +7820,14 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "456",
+          "$id": "462",
           "kind": "client",
           "name": "OrdinaryWireVersionOperations",
           "isExactName": false,
           "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
           "methods": [
             {
-              "$id": "457",
+              "$id": "463",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -7766,20 +7838,20 @@
               ],
               "doc": "Get a OrdinaryWireVersionTest",
               "operation": {
-                "$id": "458",
+                "$id": "464",
                 "name": "get",
                 "isExactName": false,
                 "doc": "Get a OrdinaryWireVersionTest",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "459",
+                    "$id": "465",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "460",
+                      "$id": "466",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7789,7 +7861,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "461",
+                        "$id": "467",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7812,13 +7884,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "462",
+                        "$id": "468",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "463",
+                          "$id": "469",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7828,7 +7900,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "464",
+                            "$id": "470",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7856,18 +7928,18 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "465",
+                    "$id": "471",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "466",
+                      "$id": "472",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "467",
+                        "$id": "473",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7896,18 +7968,18 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "468",
+                        "$id": "474",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "469",
+                          "$id": "475",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "470",
+                            "$id": "476",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7938,13 +8010,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "471",
+                    "$id": "477",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "472",
+                      "$id": "478",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7985,13 +8057,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "473",
+                        "$id": "479",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "474",
+                          "$id": "480",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8034,13 +8106,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "475",
+                    "$id": "481",
                     "kind": "path",
                     "name": "ordinaryWireVersionTestName",
                     "serializedName": "ordinaryWireVersionTestName",
                     "doc": "The name of the OrdinaryWireVersionTest",
                     "type": {
-                      "$id": "476",
+                      "$id": "482",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8065,13 +8137,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.get.ordinaryWireVersionTestName",
                     "methodParameterSegments": [
                       {
-                        "$id": "477",
+                        "$id": "483",
                         "kind": "method",
                         "name": "ordinaryWireVersionTestName",
                         "serializedName": "ordinaryWireVersionTestName",
                         "doc": "The name of the OrdinaryWireVersionTest",
                         "type": {
-                          "$id": "478",
+                          "$id": "484",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8098,7 +8170,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "479",
+                    "$id": "485",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -8114,7 +8186,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "480",
+                        "$id": "486",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -8172,21 +8244,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "473"
+                  "$ref": "479"
                 },
                 {
-                  "$ref": "477"
+                  "$ref": "483"
                 },
                 {
-                  "$ref": "480"
+                  "$ref": "486"
                 },
                 {
-                  "$id": "481",
+                  "$id": "487",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "466"
+                    "$ref": "472"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -8208,7 +8280,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.get"
             },
             {
-              "$id": "482",
+              "$id": "488",
               "kind": "paging",
               "name": "listBySubscription",
               "isExactName": false,
@@ -8219,20 +8291,20 @@
               ],
               "doc": "List OrdinaryWireVersionTest resources by subscription ID",
               "operation": {
-                "$id": "483",
+                "$id": "489",
                 "name": "listBySubscription",
                 "isExactName": false,
                 "doc": "List OrdinaryWireVersionTest resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "484",
+                    "$id": "490",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "485",
+                      "$id": "491",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8242,7 +8314,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "486",
+                        "$id": "492",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8265,24 +8337,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "462"
+                        "$ref": "468"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "487",
+                    "$id": "493",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "488",
+                      "$id": "494",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "489",
+                        "$id": "495",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8311,13 +8383,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.listBySubscription.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "468"
+                        "$ref": "474"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "490",
+                    "$id": "496",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -8333,7 +8405,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionReads.listBySubscription.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "491",
+                        "$id": "497",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -8391,15 +8463,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "491"
+                  "$ref": "497"
                 },
                 {
-                  "$id": "492",
+                  "$id": "498",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "488"
+                    "$ref": "494"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -8439,13 +8511,13 @@
           ],
           "parameters": [
             {
-              "$id": "493",
+              "$id": "499",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "494",
+                "$id": "500",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -8456,7 +8528,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "495",
+                  "$id": "501",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8470,7 +8542,7 @@
               "isExactName": false
             },
             {
-              "$ref": "462"
+              "$ref": "468"
             }
           ],
           "initializedBy": 0,
@@ -8486,14 +8558,14 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "496",
+          "$id": "502",
           "kind": "client",
           "name": "OrdinaryProviderOperations",
           "isExactName": false,
           "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
           "methods": [
             {
-              "$id": "497",
+              "$id": "503",
               "kind": "basic",
               "name": "checkOrdinaryWireVersion",
               "isExactName": false,
@@ -8504,20 +8576,20 @@
               ],
               "doc": "",
               "operation": {
-                "$id": "498",
+                "$id": "504",
                 "name": "checkOrdinaryWireVersion",
                 "isExactName": false,
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "499",
+                    "$id": "505",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "500",
+                      "$id": "506",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8527,7 +8599,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "501",
+                        "$id": "507",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8550,13 +8622,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "502",
+                        "$id": "508",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "503",
+                          "$id": "509",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8566,7 +8638,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "504",
+                            "$id": "510",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8594,18 +8666,18 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "505",
+                    "$id": "511",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "506",
+                      "$id": "512",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "507",
+                        "$id": "513",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8634,18 +8706,18 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionProviderActions.checkOrdinaryWireVersion.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "508",
+                        "$id": "514",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "509",
+                          "$id": "515",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "510",
+                            "$id": "516",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8676,7 +8748,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "511",
+                    "$id": "517",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -8692,7 +8764,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.OrdinaryWireVersionProviderActions.checkOrdinaryWireVersion.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "512",
+                        "$id": "518",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -8719,7 +8791,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "513",
+                      "$id": "519",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8745,15 +8817,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "512"
+                  "$ref": "518"
                 },
                 {
-                  "$id": "514",
+                  "$id": "520",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "506"
+                    "$ref": "512"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -8766,7 +8838,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "513"
+                  "$ref": "519"
                 }
               },
               "isOverride": false,
@@ -8777,13 +8849,13 @@
           ],
           "parameters": [
             {
-              "$id": "515",
+              "$id": "521",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "516",
+                "$id": "522",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -8794,7 +8866,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "517",
+                  "$id": "523",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8808,7 +8880,7 @@
               "isExactName": false
             },
             {
-              "$ref": "502"
+              "$ref": "508"
             }
           ],
           "initializedBy": 0,

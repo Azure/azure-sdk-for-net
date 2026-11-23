@@ -40,6 +40,8 @@ public class HeadExistenceWireTests
         AssertHeadRequest(transport);
     }
 
+    [TestCase(false, 304)]
+    [TestCase(true, 304)]
     [TestCase(false, 403)]
     [TestCase(true, 403)]
     [TestCase(false, 500)]
@@ -59,7 +61,7 @@ public class HeadExistenceWireTests
 
     [TestCase(false)]
     [TestCase(true)]
-    public async Task GetOnlyParameterRetainsGetAndItsWireValue(bool async)
+    public async Task GetIfExistsRetainsGetAndItsWireValues(bool async)
     {
         var id = FilteredExistenceTestResource.CreateResourceIdentifier(SubscriptionId, "group", "test");
         var content = $"{{\"id\":\"{id}\",\"name\":\"test\",\"type\":\"MgmtTypeSpec/filteredExistenceTests\",\"location\":\"westus\",\"properties\":{{}}}}";
@@ -69,9 +71,9 @@ public class HeadExistenceWireTests
         var client = new ArmClient(new TestCredential(), SubscriptionId, options);
         var collection = client.GetResourceGroupResource(id.Parent).GetFilteredExistenceTests();
 
-        var response = async ? await collection.ExistsAsync("test", "details") : collection.Exists("test", "details");
+        var response = async ? await collection.GetIfExistsAsync("test", "details") : collection.GetIfExists("test", "details");
 
-        Assert.That(response.Value, Is.True);
+        Assert.That(response.HasValue, Is.True);
         Assert.That(transport.Requests, Has.Count.EqualTo(1));
         Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
         Assert.That(transport.Requests[0].Uri.AbsolutePath, Is.EqualTo(id.ToString()));
@@ -79,6 +81,50 @@ public class HeadExistenceWireTests
         Assert.That(transport.Requests[0].Uri.Query, Does.Contain("partition=primary"));
         Assert.That(transport.Requests[0].Uri.Query, Does.Not.Contain("partition=secondary"));
         Assert.That(transport.Requests[0].Partition, Is.EqualTo("primary"));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ExistsUsesCheckExistenceWireValues(bool async)
+    {
+        var id = FilteredExistenceTestResource.CreateResourceIdentifier(SubscriptionId, "group", "test");
+        var transport = new ExistenceTransport(204);
+        var options = new ArmClientOptions { Transport = transport };
+        options.Retry.MaxRetries = 0;
+        var client = new ArmClient(new TestCredential(), SubscriptionId, options);
+        var collection = client.GetResourceGroupResource(id.Parent).GetFilteredExistenceTests();
+
+        var response = async ? await collection.ExistsAsync("test") : collection.Exists("test");
+
+        Assert.That(response.Value, Is.True);
+        Assert.That(response.GetRawResponse(), Is.SameAs(transport.LastResponse));
+        Assert.That(transport.Requests, Has.Count.EqualTo(1));
+        Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Head));
+        Assert.That(transport.Requests[0].Uri.AbsolutePath, Is.EqualTo(id.ToString()));
+        Assert.That(transport.Requests[0].Uri.Query, Does.Contain("partition=secondary"));
+        Assert.That(transport.Requests[0].Uri.Query, Does.Not.Contain("expand="));
+        Assert.That(transport.Requests[0].Partition, Is.EqualTo("secondary"));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ExistsAcceptsModeledNotModifiedResponse(bool async)
+    {
+        var id = FilteredExistenceTestResource.CreateResourceIdentifier(SubscriptionId, "group", "test");
+        var transport = new ExistenceTransport(304);
+        var options = new ArmClientOptions { Transport = transport };
+        options.Retry.MaxRetries = 0;
+        var client = new ArmClient(new TestCredential(), SubscriptionId, options);
+        var collection = client.GetResourceGroupResource(id.Parent).GetFilteredExistenceTests();
+        var conditions = new RequestConditions { IfModifiedSince = DateTimeOffset.Parse("2024-01-01T00:00:00Z") };
+
+        var response = async ? await collection.ExistsAsync("test", conditions) : collection.Exists("test", conditions);
+
+        Assert.That(response.Value, Is.True);
+        Assert.That(response.GetRawResponse(), Is.SameAs(transport.LastResponse));
+        Assert.That(transport.Requests, Has.Count.EqualTo(1));
+        Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Head));
+        Assert.That(transport.Requests[0].IfModifiedSince, Is.Not.Null.And.Not.Empty);
     }
 
     private static WireVersionTestCollection CreateCollection(ExistenceTransport transport)
@@ -107,13 +153,14 @@ public class HeadExistenceWireTests
 
     private sealed class ExistenceTransport(int status, string? content = null) : HttpPipelineTransport
     {
-        public List<(RequestMethod Method, Uri Uri, string? Partition)> Requests { get; } = new();
+        public List<(RequestMethod Method, Uri Uri, string? Partition, string? IfModifiedSince)> Requests { get; } = new();
         public Response? LastResponse { get; private set; }
         public override Request CreateRequest() => HttpClientTransport.Shared.CreateRequest();
         public override void Process(HttpMessage message)
         {
             message.Request.Headers.TryGetValue("x-ms-partition", out var partition);
-            Requests.Add((message.Request.Method, message.Request.Uri.ToUri(), partition));
+            message.Request.Headers.TryGetValue("If-Modified-Since", out var ifModifiedSince);
+            Requests.Add((message.Request.Method, message.Request.Uri.ToUri(), partition, ifModifiedSince));
             LastResponse = new HeadResponse(status)
             {
                 ContentStream = content is null ? null : new MemoryStream(Encoding.UTF8.GetBytes(content))
