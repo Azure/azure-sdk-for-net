@@ -272,7 +272,9 @@ namespace Azure.ResourceManager.Batch
         Azure.ResourceManager.Batch.BatchAccountPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.BatchAccountPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.BatchAccountPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.BatchAccountPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> Update(Azure.ResourceManager.Batch.BatchAccountPoolData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> Update(Azure.ResourceManager.Batch.Models.BatchAccountPoolPatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> UpdateAsync(Azure.ResourceManager.Batch.BatchAccountPoolData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> UpdateAsync(Azure.ResourceManager.Batch.Models.BatchAccountPoolPatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.BatchAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.BatchAccountData>
@@ -1245,6 +1247,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         SharedKey = 0,
         Aad = 1,
+        TaskAuthenticationToken = 2,
     }
     public enum BatchAutoStorageAuthenticationMode
     {

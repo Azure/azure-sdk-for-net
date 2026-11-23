@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Updated the default Batch management API version to `2026-10-01`, which adds Instance Mix, hardware settings, and zone placement and resiliency policies for pools.
+- Added `BatchAccountPoolPatch` overloads for updating pools. The existing `BatchAccountPoolData` overloads remain supported.
+
 ### Breaking Changes
 
 ### Bugs Fixed
