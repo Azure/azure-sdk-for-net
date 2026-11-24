@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
 using Moq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
@@ -52,11 +53,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => await _collector.AddAsync(null));
         }
 
-        [Test]
-        public async Task SendToRoomTest()
+        [TestCase("rm", "0~L25z~cm0")]
+        [TestCase("\uFFFD", "0~L25z~77-9")]
+        public async Task SendToRoomTest(string room, string group)
         {
-            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { "rm" }, "event", new string[] { "abc" }, @namespace: "/ns"));
-            _service.Verify(x => x.SendToGroupAsync("0~L25z~cm0", It.Is<RequestContent>(c =>
+            await _collector.AddAsync(SocketIOAction.CreateSendToRoomsAction(new[] { room }, "event", new string[] { "abc" }, @namespace: "/ns"));
+            _service.Verify(x => x.SendToGroupAsync(group, It.Is<RequestContent>(c =>
             AssertContentData(c, "42/ns,[\"event\",\"abc\"]")),
             ContentType.TextPlain, It.IsAny<IList<string>>(), "", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
         }
@@ -170,19 +172,75 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             _service.Verify(x => x.AddConnectionToGroupAsync("0~L25z~cm0x", "conn1", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
         }
 
-        [Test]
-        public async Task AddGlobalSocketToRoomTest()
+        [TestCase("rm1", "0~L25z~cm0x")]
+        [TestCase("房间\U0001F600", "0~L25z~5oi_6Ze08J-YgA")]
+        public async Task AddGlobalSocketToRoomTest(string room, string group)
         {
-            await _collector.AddAsync(SocketIOAction.CreateAddSocketToRoomAction("socket1", "rm1", "/ns"));
-            _service.Verify(x => x.AddConnectionsToGroupsAsync(It.Is<IEnumerable<string>>(x => x.Contains("0~L25z~cm0x")), "'0~L25z~c29ja2V0MQ' in groups", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
+            await _collector.AddAsync(SocketIOAction.CreateAddSocketToRoomAction("socket1", room, "/ns"));
+            _service.Verify(x => x.AddConnectionsToGroupsAsync(It.Is<IEnumerable<string>>(x => x.Contains(group)), "'0~L25z~c29ja2V0MQ' in groups", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
+        }
+
+        [TestCase("\uFFFD", "/ns", "socket1", "Room")]
+        [TestCase("rm1", "/\uFFFD", "socket1", "Namespace")]
+        [TestCase("rm1", "/ns", "socket\uFFFD", "SocketId")]
+        public void AddSocketToRoomRejectsReplacementCharacter(string room, string socketNamespace, string socketId, string parameterName)
+        {
+            var action = SocketIOAction.CreateAddSocketToRoomAction(socketId, room, socketNamespace);
+
+            var exception = Assert.ThrowsAsync<ArgumentException>(() => _collector.AddAsync(action));
+
+            Assert.AreEqual(parameterName, exception.ParamName);
+            _service.VerifyNoOtherCalls();
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void AddSocketToRoomRejectsUnpairedSurrogate(bool cached)
+        {
+            if (cached)
+            {
+                _socketLifetimeStore.AddSocket("socket1", "/ns", "conn1");
+            }
+            var action = SocketIOAction.CreateAddSocketToRoomAction("socket1", "\uD800", "/ns");
+
+            var exception = Assert.ThrowsAsync<ArgumentException>(() => _collector.AddAsync(action));
+
+            Assert.AreEqual("Room", exception.ParamName);
+            _service.VerifyNoOtherCalls();
+        }
+
+        [TestCase('\uFFFD')]
+        [TestCase('\uD800')]
+        public void AddSocketToRoomRejectsInvalidCachedNamespace(char character)
+        {
+            _socketLifetimeStore.AddSocket("socket1", "/" + character, "conn1");
+            var action = SocketIOAction.CreateAddSocketToRoomAction("socket1", "rm1", "/ns");
+
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(() => _collector.AddAsync(action));
+
+            StringAssert.Contains("cached namespace", exception.Message);
+            _service.VerifyNoOtherCalls();
         }
 
         [Test]
-        public async Task RemoveLocalSocketToRoomTest()
+        public void AddSocketToRoomValidatesChangesAfterConversion()
+        {
+            var input = JObject.Parse(@"{ actionName: ""addSocketToRoom"", socketId: ""socket1"", room: ""rm1"" }");
+            var action = (AddSocketToRoomAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(input);
+            action.Room = "\uFFFD";
+
+            Assert.ThrowsAsync<ArgumentException>(() => _collector.AddAsync(action));
+
+            _service.VerifyNoOtherCalls();
+        }
+
+        [TestCase("rm1", "0~L25z~cm0x")]
+        [TestCase("\uFFFD", "0~L25z~77-9")]
+        public async Task RemoveLocalSocketToRoomTest(string room, string group)
         {
             _socketLifetimeStore.AddSocket("socket1", "/ns", "conn1");
-            await _collector.AddAsync(SocketIOAction.CreateRemoveSocketFromRoomAction("socket1", "rm1", "/ns"));
-            _service.Verify(x => x.RemoveConnectionFromGroupAsync("0~L25z~cm0x", "conn1", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
+            await _collector.AddAsync(SocketIOAction.CreateRemoveSocketFromRoomAction("socket1", room, "/ns"));
+            _service.Verify(x => x.RemoveConnectionFromGroupAsync(group, "conn1", It.Is<RequestContext>(x => x.CancellationToken == default)), Times.Once);
         }
 
         [Test]

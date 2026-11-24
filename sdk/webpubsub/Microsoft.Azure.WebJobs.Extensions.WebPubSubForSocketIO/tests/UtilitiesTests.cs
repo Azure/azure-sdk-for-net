@@ -12,6 +12,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 {
     public class UtilitiesTests
     {
+        [TestCase('\uFFFD')]
+        [TestCase('\uD800')]
+        [TestCase('\uDC00')]
+        public void ValidateRoomJoinIdentifierRejectsInvalidCharacters(char character)
+        {
+            var exception = Assert.Throws<ArgumentException>(() =>
+                Utilities.ValidateRoomJoinIdentifier("room-" + character + "-suffix", "Room"));
+
+            Assert.AreEqual("Room", exception.ParamName);
+        }
+
+        [TestCase("房间\U0001F600")]
+        [TestCase(@"literal-\ud800")]
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidateRoomJoinIdentifierAllowsValidNames(string name)
+        {
+            Assert.DoesNotThrow(() => Utilities.ValidateRoomJoinIdentifier(name, "Room"));
+        }
+
         public static IEnumerable<TestCaseData> GenerateRoomFilterTestCases()
         {
             const string ns = "ns/";
