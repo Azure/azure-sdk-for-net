@@ -1,5 +1,34 @@
 # Release History
 
+## 1.8.0-beta.1 (2026-11-25)
+
+### Features Added
+
+- Upgraded API version to `2026-11-15-preview`.
+- Added management of attached AKS clusters through `CognitiveServicesAccountResource.GetAttachedAksClusters`, `AttachedAksClusterResource`, and related status and configuration models.
+- Added `CognitiveServicesProjectCostControlResource` for project-level cost controls and budget settings for cost or token usage, filters, grouping, notifications, and enforcement actions.
+- Added `CognitiveServicesProjectProperties.ToolControls` to configure the default tool access policy and explicitly allowed tools.
+- Added RAI ACS intervention points for agent startup and shutdown and before and after model calls, along with new policy targets.
+- Added `CognitiveServicesManagedComputeUsage.ScopeId`.
+- Added `ArcDeploymentModel.AssetId` and read-only `Version`, and a `force` option for deleting an Arc deployment when its extension is disconnected.
+
+### Breaking Changes
+
+- Compared to `1.7.0-beta.1`, `ArcDeploymentModel` now requires a `Uri` asset ID instead of format and name; `Format` and `Name` are read-only.
+- Compared to `1.7.0-beta.1`, `ArcDeploymentProperties` no longer accepts `runtime` or `compute` in its constructor, and its `Runtime` and `Compute` properties are read-only.
+- Compared to `1.7.0-beta.1`, `ArcDeploymentResource.Delete` and `DeleteAsync` take a `force` parameter before `cancellationToken`; callers passing the token positionally must update their calls.
+- Compared to `1.7.0-beta.1`, changed `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId` from `string` to `Azure.Core.ResourceIdentifier`. Already included in `1.7.0`.
+- Compared to `1.7.0-beta.1`, renamed the subscription capacity-listing methods `GetAll` and `GetAllAsync` to `GetCognitiveServicesManagedComputeCapacities` and `GetCognitiveServicesManagedComputeCapacitiesAsync`. The `deploymentId` parameter changed from `string` to `Azure.Core.ResourceIdentifier`, and a nullable `Azure.Core.AzureLocation` `location` parameter was added. The mockable subscription methods changed accordingly. Already included in `1.7.0`.
+- Compared to `1.7.0-beta.1`, renamed `DeploymentSizeCapacity` to `CognitiveServicesManagedComputeDeploymentSizeCapacity`, including its use in `CognitiveServicesManagedComputeCapacityProperties.DeploymentSizeCapacities` and `ArmCognitiveServicesModelFactory`. The `CognitiveServicesManagedComputeCapacityProperties` factory overload also changed. Already included in `1.7.0`.
+- Compared to `1.7.0-beta.1`, replaced the `CostControlProperties(IEnumerable<CostControlRule> rules)` constructor with one taking `category`, `amount`, `timeGrain`, and `timePeriod`. `CostControlProperties` and `CostControlPatchProperties` no longer expose `Rules` or `DisplayName`.
+- Compared to `1.7.0-beta.1`, replaced `CognitiveServicesAccountCostControlPatch` with `CostControlPatch` for `CognitiveServicesAccountCostControlResource.Update` and `UpdateAsync`.
+- Compared to `1.7.0-beta.1`, removed `CostControlIds` from `CognitiveServicesAccountProperties` and `CognitiveServicesAccountDeploymentProperties`.
+- Compared to `1.7.0-beta.1`, removed `CognitiveServicesAccountProperties.CostControlConnections` and the `CostControlConnections` model. Use `CostControlConnectionsAppInsightsConnectionId` for Application Insights and `CostControlNotification.EventGridConnectionId` for notification destinations.
+- Compared to `1.7.0-beta.1`, removed `CostControlDimension`, `CostControlDimensionType`, `CostControlMatch`, `CostControlPeriod`, `CostControlRule`, `CostControlThreshold`, `CostControlThresholdAction`, and `CostControlUnit` in favor of the redesigned cost-control models.
+- Compared to `1.7.0-beta.1`, `RaiAcsManifest.Annotators` now exposes a getter-only `IDictionary<string, RaiAcsAnnotatorConfiguration>`. The `Annotations` properties on `RaiAcsInterventionPoint` and `RaiAcsToolInterventionPoint` now expose getter-only `IDictionary<string, RaiAcsAnnotationBinding>` collections. These replace settable `RaiAcsEmptyObject` properties, and `RaiAcsEmptyObject` was removed.
+- Compared to `1.7.0-beta.1`, renamed `RaiEgressHeaderValueRef`, `RaiEgressManagedIdentityRef`, and `RaiEgressSecretRef` to `RaiEgressHeaderValueReference`, `RaiEgressManagedIdentityReference`, and `RaiEgressSecretReference`. Renamed `RaiEgressHeaderTransform.ValueRef` to `ValueReference` and the header value's `ManagedIdentityRef` and `SecretRef` properties to `ManagedIdentityReference` and `SecretReference`. Related model-factory methods also changed. Already included in `1.7.0`.
+- Compared to `1.7.0-beta.1`, changed `ArmCognitiveServicesModelFactory` overloads for `ArcDeploymentModel`, `CognitiveServicesAccountProperties`, `CognitiveServicesAccountDeploymentProperties`, `CognitiveServicesManagedComputeUsage`, `CognitiveServicesProjectProperties`, `CostControlProperties`, `CostControlPatchProperties`, `RaiAcsInterventionPoint`, `RaiAcsInterventionPoints`, `RaiAcsManifest`, and `RaiAcsToolInterventionPoint`. Other factory methods for removed and renamed models were also removed or renamed.
+
 ## 1.7.0 (2026-11-13)
 
 ### Features Added
