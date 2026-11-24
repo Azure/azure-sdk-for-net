@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
@@ -60,6 +63,49 @@ internal class SerializationVisitor : ScmLibraryVisitor
         }
         return base.VisitMethod(method);
     }
+
+    protected override MethodBodyStatement? VisitStatements(MethodBodyStatements statements, MethodProvider method)
+    {
+        if (method.EnclosingType is MrwSerializationTypeDefinition serializationType
+            && method.Signature.Name == "JsonModelWriteCore"
+            && method.Signature.Parameters is [_, var options]
+            && ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(serializationType.Type, out var provider)
+            && provider is ManagementModelProvider { HasPersistenceOnlyExtensions: true } model
+            && statements.Statements.Any(statement => IsStatusExtensionWrite(statement, model)))
+        {
+            // Closed ARM ErrorDetail accepts extension data from responses for JSON persistence,
+            // but these extensions are not fields in the request contract.
+            var persist = ((VariableExpression)options).Property(nameof(ModelReaderWriterOptions.Format)).NotEqual(Literal("W"));
+            return new MethodBodyStatements(statements.Statements.Select(statement =>
+                IsStatusExtensionWrite(statement, model) && statement is ForEachStatement loop
+                    ? GuardStatusExtensionWrite(loop, model, persist)
+                    : statement).ToArray());
+        }
+
+        return base.VisitStatements(statements, method);
+    }
+
+    private static IfStatement GuardStatusExtensionWrite(ForEachStatement loop, ManagementModelProvider model, ValueExpression persist)
+    {
+        // A caller can populate the synthetic extension bag. Only the typed property
+        // owns its wire name, even if its value is absent.
+        var declaredNames = model.CanonicalView.Properties
+            .Where(property => !property.IsAdditionalProperties && property.WireInfo is { IsHttpMetadata: false })
+            .Select(property => (property.WireInfo!.SerializationOptions as ScmSerializationOptions)?.Json?.Name ?? property.WireInfo.SerializedName)
+            .Distinct(StringComparer.Ordinal);
+        var key = loop.ItemVariable.Property("Key");
+        var filter = declaredNames.Select(name => key.Equal(Literal(name)))
+            .Aggregate((ValueExpression?)null, (condition, equal) => condition is null ? equal : condition.As<bool>().Or(equal));
+        if (filter is not null)
+        {
+            loop.Body.Insert(0, new IfStatement(filter) { Continue });
+        }
+        return new IfStatement(persist) { loop };
+    }
+
+    private static bool IsStatusExtensionWrite(MethodBodyStatement statement, ManagementModelProvider model)
+        => statement is ForEachStatement { Enumerable: DictionaryExpression { Original: MemberExpression { Inner: null, MemberName: var name } } }
+            && model.Properties.Any(property => property.IsAdditionalProperties && property.Name == name);
 
     private static bool HasBaseFromResponse(MrwSerializationTypeDefinition serializationType)
     {

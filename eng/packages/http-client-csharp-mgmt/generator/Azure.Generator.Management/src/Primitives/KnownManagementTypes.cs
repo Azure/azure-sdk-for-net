@@ -25,6 +25,8 @@ namespace Azure.Generator.Management.Primitives
     {
         public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
         public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
+        internal const string OperationStatusResultModelId = "Azure.ResourceManager.CommonTypes.OperationStatusResult";
+        internal const string ErrorDetailModelId = "Azure.ResourceManager.CommonTypes.ErrorDetail";
 
         public delegate MethodBodyStatement SerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
@@ -44,13 +46,12 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
-            ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
             ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
             ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
-            ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
+            [ErrorDetailModelId] = typeof(ResponseError),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
@@ -64,6 +65,9 @@ namespace Azure.Generator.Management.Primitives
             CreateFrameworkTypeMapping(typeof(ArmClientOptions)),
             CreateFrameworkTypeMapping(typeof(ArmCollection)),
             CreateFrameworkTypeMapping(typeof(ArmResource)),
+            // Resolve explicit SDK customizations by CLR name, without mapping the incompatible
+            // TypeSpec status schema (float64 progress and full ARM error payload) to this type.
+            CreateFrameworkTypeMapping(typeof(OperationStatusResult)),
             CreateFrameworkTypeMapping(typeof(ResourceData), "Azure.ResourceManager.Resources.Models.ResourceData"),
             CreateFrameworkTypeMapping(typeof(TrackedResourceData), "Azure.ResourceManager.Resources.Models.TrackedResourceData"),
         }.ToDictionary(mapping => mapping.Key, mapping => mapping.Value);
@@ -122,7 +126,8 @@ namespace Azure.Generator.Management.Primitives
         private static readonly CSharpType[] _inheritableSystemTypes =
             [.. _idToInheritableSystemTypeMap.Values.Distinct(new CSharpFullNameComparer())];
 
-        private static readonly HashSet<CSharpType> _knownTypes = _inheritableSystemTypes.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());
+        private static readonly HashSet<CSharpType> _knownTypes = _inheritableSystemTypes.Concat(_idToSystemTypeMap.Values)
+            .Append(new CSharpType(typeof(OperationStatusResult))).ToHashSet(new CSharpFullNameComparer());
 
         public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 

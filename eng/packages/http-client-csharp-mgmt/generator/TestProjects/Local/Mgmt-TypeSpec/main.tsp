@@ -34,6 +34,7 @@ import "./testcertificate.tsp";
 import "./sharedmodel.tsp";
 import "./entityresource.tsp";
 import "./sharedparamrepro.tsp";
+import "./operation-status-payload.tsp";
 import "./discriminatedextensionresource.tsp";
 import "./inherited-flatten-grandparent.tsp";
 import "./basetype-cycle-proxy-resource.tsp";

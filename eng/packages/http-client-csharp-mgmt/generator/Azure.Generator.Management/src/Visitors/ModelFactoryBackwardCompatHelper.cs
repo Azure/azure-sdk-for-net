@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -769,7 +770,10 @@ namespace Azure.Generator.Management.Visitors
             if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter))
             {
                 argument = new CompatibilityArgument(
-                    BuildParameterArgument(directParameter, constructorParameter.Type),
+                    constructorParameter.Property is { EnclosingType: ManagementModelProvider { IsOperationStatusPayload: true },
+                        WireInfo: { IsRequired: false, IsNullable: false } } && AreCompatibleListTypes(directParameter.Type, constructorParameter.Type)
+                        ? BuildStatusListArgument(directParameter)
+                        : BuildParameterArgument(directParameter, constructorParameter.Type),
                     [directParameter],
                     [new ParameterDocumentation(directParameter, constructorParameter.Description)]);
                 return true;
@@ -1036,6 +1040,17 @@ namespace Azure.Generator.Management.Visitors
             && expectedType.IsDictionary
             && parameterType.Arguments.Count == expectedType.Arguments.Count
             && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
+
+        private static ValueExpression BuildStatusListArgument(ParameterProvider parameter)
+        {
+            // Do not materialize an omitted tracking list as a defined empty list.
+            // Continue to copy explicitly supplied sequences.
+            var trackingList = New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments));
+            var optional = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<OptionalDefinition>().Single();
+            var sequence = (VariableExpression)parameter;
+            var defined = sequence.NotEqual(Null).As<bool>().And(Static(optional.Type).Invoke("IsCollectionDefined", sequence));
+            return new TernaryConditionalExpression(defined, sequence.ToList(), trackingList);
+        }
 
         /// <summary>
         /// Converts an old overload parameter into an expression suitable for a current constructor parameter.

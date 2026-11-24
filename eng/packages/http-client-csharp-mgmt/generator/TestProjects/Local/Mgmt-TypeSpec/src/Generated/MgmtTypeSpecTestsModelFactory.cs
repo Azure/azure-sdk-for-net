@@ -12,6 +12,7 @@ using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests.ServiceModels;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -1850,6 +1851,86 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="properties"> Additional operation properties. </param>
+        /// <param name="classification"> A service-specific error classification. </param>
+        /// <param name="serviceError"> Service error metadata. </param>
+        /// <param name="serviceOptionalValue"> Gets or sets the Value. </param>
+        /// <returns> A new <see cref="Models.ExtendedOperationStatus"/> instance for mocking. </returns>
+        public static ExtendedOperationStatus ExtendedOperationStatus(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<AzureGeneratorMgmtTypeSpecTestsOperationStatusResult> operations = default, OperationStatusError3 error = default, ResourceIdentifier resourceId = default, IDictionary<string, BinaryData> properties = default, OperationStatusError? classification = default, OperationStatusError2 serviceError = default, string serviceOptionalValue = default)
+        {
+            operations ??= new ChangeTrackingList<AzureGeneratorMgmtTypeSpecTestsOperationStatusResult>();
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ExtendedOperationStatus(
+                id,
+                name,
+                status,
+                percentComplete,
+                startsOn,
+                endsOn,
+                operations != null && Tests.Optional.IsCollectionDefined(operations) ? operations.ToList() : new global::Azure.Generator.MgmtTypeSpec.Tests.ChangeTrackingList<global::Azure.Generator.MgmtTypeSpec.Tests.Models.AzureGeneratorMgmtTypeSpecTestsOperationStatusResult>(),
+                error,
+                resourceId,
+                default,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                classification,
+                serviceError,
+                serviceOptionalValue is null ? default : new ServiceModels.Optional(serviceOptionalValue, default));
+        }
+
+        /// <summary> Service error metadata renamed in a C# customization. </summary>
+        /// <param name="serviceCode"></param>
+        /// <returns> A new <see cref="Models.OperationStatusError2"/> instance for mocking. </returns>
+        public static OperationStatusError2 OperationStatusError2(string serviceCode = default)
+        {
+            return new OperationStatusError2(serviceCode, default);
+        }
+
+        /// <summary> Service metadata with a C# name matching an internal helper's simple name. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="ServiceModels.Optional"/> instance for mocking. </returns>
+        public static ServiceModels.Optional Optional(string value = default)
+        {
+            return new ServiceModels.Optional(value, default);
+        }
+
+        /// <summary> The current status of an async operation. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecTestsOperationStatusResult"/> instance for mocking. </returns>
+        public static AzureGeneratorMgmtTypeSpecTestsOperationStatusResult AzureGeneratorMgmtTypeSpecTestsOperationStatusResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<AzureGeneratorMgmtTypeSpecTestsOperationStatusResult> operations = default, OperationStatusError3 error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<AzureGeneratorMgmtTypeSpecTestsOperationStatusResult>();
+
+            return new AzureGeneratorMgmtTypeSpecTestsOperationStatusResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startsOn,
+                endsOn,
+                operations != null && Tests.Optional.IsCollectionDefined(operations) ? operations.ToList() : new global::Azure.Generator.MgmtTypeSpec.Tests.ChangeTrackingList<global::Azure.Generator.MgmtTypeSpec.Tests.Models.AzureGeneratorMgmtTypeSpecTestsOperationStatusResult>(),
+                error,
+                resourceId,
+                default);
+        }
+
         /// <summary>
         /// A polymorphic extension resource that uses DiscriminatedExtensionResource with 'kind' as the discriminator.
         /// This tests that the generator correctly handles abstract resource data types in serialization.
@@ -2200,6 +2281,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static IPv4Address IPv4Address(string address = default)
         {
             return new IPv4Address(address, default);
+        }
+
+        /// <summary> The error detail. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.OperationStatusError3"/> instance for mocking. </returns>
+        public static OperationStatusError3 OperationStatusError3(string code = default, string message = default, string target = default, IEnumerable<OperationStatusError3> details = default, IEnumerable<OperationStatusErrorAdditionalInfo> additionalInfo = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            details ??= new ChangeTrackingList<OperationStatusError3>();
+            additionalInfo ??= new ChangeTrackingList<OperationStatusErrorAdditionalInfo>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OperationStatusError3(
+                code,
+                message,
+                target,
+                details != null && Tests.Optional.IsCollectionDefined(details) ? details.ToList() : new global::Azure.Generator.MgmtTypeSpec.Tests.ChangeTrackingList<global::Azure.Generator.MgmtTypeSpec.Tests.Models.OperationStatusError3>(),
+                additionalInfo != null && Tests.Optional.IsCollectionDefined(additionalInfo) ? additionalInfo.ToList() : new global::Azure.Generator.MgmtTypeSpec.Tests.ChangeTrackingList<global::Azure.Generator.MgmtTypeSpec.Tests.Models.OperationStatusErrorAdditionalInfo>(),
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <summary> The resource management error additional info. </summary>
+        /// <param name="type"> The additional info type. </param>
+        /// <param name="info"> The additional info. </param>
+        /// <returns> A new <see cref="Models.OperationStatusErrorAdditionalInfo"/> instance for mocking. </returns>
+        public static OperationStatusErrorAdditionalInfo OperationStatusErrorAdditionalInfo(string @type = default, BinaryData info = default)
+        {
+            return new OperationStatusErrorAdditionalInfo(@type, info, default);
         }
     }
 }

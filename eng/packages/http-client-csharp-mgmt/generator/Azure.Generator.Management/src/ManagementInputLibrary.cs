@@ -31,6 +31,10 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
         internal Dictionary<InputClient, (string ResourceType, string DefaultVersion)?> ConstructorApiVersions { get; } = [];
 
+        private IReadOnlyDictionary<InputModelType, string>? _operationStatusOutputNames;
+        internal IReadOnlyDictionary<InputModelType, string> OperationStatusOutputNames =>
+            _operationStatusOutputNames ??= OperationStatusErrorModel.BuildOutputNames(InputNamespace);
+
         private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate, bool IsNameExplicit)>? _resourceUpdateModelToResourceNameMap;
 
         internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
@@ -277,7 +281,7 @@ namespace Azure.Generator.Management
                 inputNamespace.ApiVersions,
                 inputNamespace.Constants,
                 inputNamespace.Enums,
-                inputNamespace.Models,
+                OperationStatusErrorModel.AddStatusErrorModels(inputNamespace.Models, inputNamespace.Enums),
                 rootClients,
                 inputNamespace.Auth)
             {
