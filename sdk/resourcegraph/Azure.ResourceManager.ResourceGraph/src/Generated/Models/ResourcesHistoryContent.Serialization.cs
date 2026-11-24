@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ResourceGraph;
@@ -46,6 +47,16 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourcesHistoryContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourcesHistoryContent IPersistableModel<ResourcesHistoryContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourcesHistoryContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="resourcesHistoryContent"> The <see cref="ResourcesHistoryContent"/> to serialize into <see cref="RequestContent"/>. </param>
         internal static RequestContent ToRequestContent(ResourcesHistoryContent resourcesHistoryContent)
         {
@@ -55,6 +66,85 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             return RequestContent.Create(resourcesHistoryContent, ModelSerializationExtensions.WireOptions);
         }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ResourcesHistoryContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcesHistoryContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourcesHistoryContent)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsCollectionDefined(Subscriptions))
+            {
+                writer.WritePropertyName("subscriptions"u8);
+                writer.WriteStartArray();
+                foreach (string item in Subscriptions)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options"u8);
+                writer.WriteObjectValue(Options, options);
+            }
+            if (Optional.IsCollectionDefined(ManagementGroups))
+            {
+                writer.WritePropertyName("managementGroups"u8);
+                writer.WriteStartArray();
+                foreach (string item in ManagementGroups)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourcesHistoryContent IJsonModel<ResourcesHistoryContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -67,6 +157,85 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourcesHistoryContent(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourcesHistoryContent DeserializeResourcesHistoryContent(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> subscriptions = default;
+            string query = default;
+            ResourcesHistoryRequestOptions options0 = default;
+            IList<string> managementGroups = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("subscriptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    subscriptions = array;
+                    continue;
+                }
+                if (prop.NameEquals("query"u8))
+                {
+                    query = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("options"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    options0 = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("managementGroups"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    managementGroups = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
+            }
+            return new ResourcesHistoryContent(subscriptions ?? new ChangeTrackingList<string>(), query, options0, managementGroups ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

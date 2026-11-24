@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use GetResourcesHistoryAsync with ResourcesHistoryContent instead. The replacement returns the response body as BinaryData.")]
         public virtual async Task<Response<IDictionary<string, BinaryData>>> GetResourcesHistoryAsync(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -87,6 +89,8 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use GetResourcesHistory with ResourcesHistoryContent instead. The replacement returns the response body as BinaryData.")]
         public virtual Response<IDictionary<string, BinaryData>> GetResourcesHistory(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

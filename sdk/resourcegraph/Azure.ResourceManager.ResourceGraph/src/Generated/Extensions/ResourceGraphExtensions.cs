@@ -45,6 +45,186 @@ namespace Azure.ResourceManager.ResourceGraph
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="OfferingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetOfferingResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OfferingResource"/> object. </returns>
+        public static OfferingResource GetOfferingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetOfferingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="OntologyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetOntologyResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OntologyResource"/> object. </returns>
+        public static OntologyResource GetOntologyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetOntologyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataOnboardingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetDataOnboardingResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataOnboardingResource"/> object. </returns>
+        public static DataOnboardingResource GetDataOnboardingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetDataOnboardingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataOnboardingLocationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetDataOnboardingLocationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataOnboardingLocationResource"/> object. </returns>
+        public static DataOnboardingLocationResource GetDataOnboardingLocationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetDataOnboardingLocationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataOnboardingActivationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetDataOnboardingActivationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataOnboardingActivationResource"/> object. </returns>
+        public static DataOnboardingActivationResource GetDataOnboardingActivationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetDataOnboardingActivationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="QueryEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetQueryEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="QueryEndpointResource"/> object. </returns>
+        public static QueryEndpointResource GetQueryEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetQueryEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="OntologyLocationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetOntologyLocationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OntologyLocationResource"/> object. </returns>
+        public static OntologyLocationResource GetOntologyLocationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetOntologyLocationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="QueryEndpointLocationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetQueryEndpointLocationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="QueryEndpointLocationResource"/> object. </returns>
+        public static QueryEndpointLocationResource GetQueryEndpointLocationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetQueryEndpointLocationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="OntologyActivationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetOntologyActivationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OntologyActivationResource"/> object. </returns>
+        public static OntologyActivationResource GetOntologyActivationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetOntologyActivationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="QueryEndpointActivationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphArmClient.GetQueryEndpointActivationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="QueryEndpointActivationResource"/> object. </returns>
+        public static QueryEndpointActivationResource GetQueryEndpointActivationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceGraphArmClient(client).GetQueryEndpointActivationResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ResourceGraphQueryResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -115,6 +295,61 @@ namespace Azure.ResourceManager.ResourceGraph
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableResourceGraphResourceGroupResource(resourceGroupResource).GetResourceGraphQuery(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Offerings in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphSubscriptionResource.GetOfferings()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of Offerings and their operations over a OfferingResource. </returns>
+        public static OfferingCollection GetOfferings(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableResourceGraphSubscriptionResource(subscriptionResource).GetOfferings();
+        }
+
+        /// <summary>
+        /// Gets an offering.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphSubscriptionResource.GetOfferingAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="offeringName"> The name of the Offering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<OfferingResource>> GetOfferingAsync(this SubscriptionResource subscriptionResource, string offeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableResourceGraphSubscriptionResource(subscriptionResource).GetOfferingAsync(offeringName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an offering.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphSubscriptionResource.GetOffering(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="offeringName"> The name of the Offering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<OfferingResource> GetOffering(this SubscriptionResource subscriptionResource, string offeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableResourceGraphSubscriptionResource(subscriptionResource).GetOffering(offeringName, cancellationToken);
         }
 
         /// <summary>
