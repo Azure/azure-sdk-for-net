@@ -146,21 +146,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             };
         }
 
-        /// <summary>
-        /// Reads the current application claim set of a live client connection.
-        /// Wraps the Management SDK's <c>GetConnectionClaimsAsync</c>.
-        /// </summary>
-        public async Task<IList<Claim>> GetConnectionClaimsAsync(string connectionToken)
-        {
-            if (string.IsNullOrEmpty(connectionToken))
-            {
-                throw new ArgumentException($"{nameof(connectionToken)} cannot be null or empty");
-            }
-
-            var result = await _serviceHubContext.GetConnectionClaimsAsync(connectionToken).ConfigureAwait(false);
-            return result.Claims == null ? new List<Claim>() : result.Claims.ToList();
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Breaking change")]
         public IList<Claim> GetCustomClaims(string idToken, string[] claimTypeList)
         {

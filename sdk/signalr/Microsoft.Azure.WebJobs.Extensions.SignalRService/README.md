@@ -73,33 +73,60 @@ Please follow the [Azure SignalR Connection Info input binding tutorial](https:/
 
 ### Authentication refresh
 
-Authentication refresh lets a refresh-aware SignalR client update a live connection's application authentication deadline and claims without reconnecting. Opt in during negotiate and expose a sibling refresh endpoint that returns `SignalRConnectionInfo`:
+Authentication refresh lets a refresh-aware SignalR client update a live connection's application authentication deadline and claims without reconnecting. In your in-process Functions startup, call `ConfigureAuthentication(builder.Services, configureTokenValidation)` with your application's bearer token validation settings. This example assumes a single trusted issuer and uses the same configurer for both negotiate and refresh. It maps the validated subject to `UserId` and forwards only the role claims used by the application.
+
+```C# Snippet:AuthenticationRefreshConfigure
+public static void ConfigureAuthentication(
+    IServiceCollection services,
+    Action<TokenValidationParameters> configureTokenValidation)
+{
+    services.AddDefaultAuth(configureTokenValidation, (token, _, connection) =>
+    {
+        var userId = token.Principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            throw new SecurityTokenValidationException("The validated token does not identify a user.");
+        }
+
+        connection.UserId = userId;
+        connection.Claims = token.Principal.FindAll(ClaimTypes.Role).ToList();
+        return connection;
+    });
+}
+```
+
+The default bearer validator rejects a token once its `exp` is reached. The configurer above rejects a validated token that lacks a user ID by throwing `SecurityTokenValidationException`.
+
+Opt in during negotiate and expose a sibling refresh endpoint. The function specifies the connection token source through `ConnectionToken`. This example binds it to the client's `X-SignalR-Connection-Token` request header. If the header is missing, the binding expression can fail before the refresh handler runs. Both handlers return `401 Unauthorized` when the binding returns no connection info:
 
 ```C# Snippet:AuthenticationRefresh
 [FunctionName("Negotiate")]
-public static SignalRConnectionInfo Negotiate(
+public static IActionResult Negotiate(
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/negotiate")] HttpRequest req,
     [SignalRConnectionInfo(
         HubName = "chat",
-        UserId = "{headers.x-ms-client-principal-id}",
         EnableAuthenticationRefresh = true,
         CloseOnAuthenticationExpiration = true,
         TokenLifetimeSeconds = 3600)] SignalRConnectionInfo connectionInfo)
 {
-    return connectionInfo;
+    return connectionInfo is null ? new UnauthorizedResult() : new OkObjectResult(connectionInfo);
 }
 
 [FunctionName("Refresh")]
-public static SignalRConnectionInfo Refresh(
+public static IActionResult Refresh(
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/refresh")] HttpRequest req,
     [SignalRRefresh(
         HubName = "chat",
-        ConnectionToken = "{query.id}",
+        ConnectionToken = "{headers.X-SignalR-Connection-Token}",
         TokenLifetimeSeconds = 3600)] SignalRConnectionInfo connectionInfo)
 {
-    return connectionInfo;
+    return connectionInfo is null ? new UnauthorizedResult() : new OkObjectResult(connectionInfo);
 }
 ```
+
+SignalR rejects the refresh if the projected `UserId` does not match the live connection's user ID. The projected claims replace the previous application claims, so roles no longer present in the new bearer token are removed. If you supply claims through `IdToken` and `ClaimTypeList` instead, validate the separate `IdToken` before the binding uses it.
+
+If `UserId` is supplied but the application claims are omitted or empty, refresh clears the existing application claims after the service verifies the user ID. To refresh only the authentication expiration and preserve the existing claims, omit both `UserId` and application claims from the refresh binding and its configurer.
 
 ### SignalR output binding
 

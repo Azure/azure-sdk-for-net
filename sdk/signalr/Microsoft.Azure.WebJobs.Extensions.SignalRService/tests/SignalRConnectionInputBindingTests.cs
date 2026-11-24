@@ -17,6 +17,7 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
+using SecurityTokenValidationException = Microsoft.IdentityModel.Tokens.SecurityTokenValidationException;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -102,6 +103,32 @@ namespace SignalRServiceExtension.Tests
             var claim = Assert.Single(capturedOptions.Value.Claims);
             Assert.Equal("name", claim.Type);
             Assert.Equal("John Doe", claim.Value);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task BuildAsync_ConfigurerFailure_RejectsIdentityAndPropagatesOtherErrors(bool rejectsIdentity)
+        {
+            var failure = rejectsIdentity
+                ? (Exception)new SecurityTokenValidationException("Missing user ID.")
+                : new InvalidOperationException("Configuration error.");
+            var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
+            configurer.SetupGet(c => c.Configure).Returns((_, _, _) => throw failure);
+            var (binding, capturedOptions) = CreateBinding(configurer.Object, DateTimeOffset.UtcNow.AddMinutes(10));
+            var attr = new SignalRConnectionInfoAttribute { HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
+
+            if (rejectsIdentity)
+            {
+                var provider = await binding.InvokeBuildAsync(attr, CreateBindingData());
+                Assert.Null(await provider.GetValueAsync());
+            }
+            else
+            {
+                Assert.Same(failure, await Assert.ThrowsAsync<InvalidOperationException>(() => binding.InvokeBuildAsync(attr, CreateBindingData())));
+            }
+
+            Assert.Null(capturedOptions.Value);
         }
 
         private static (TestableConnectionBinding Binding, StrongBox<NegotiationOptions> CapturedOptions) CreateBinding(

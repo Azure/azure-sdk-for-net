@@ -85,6 +85,51 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             Assert.Equal(expectedExpiresOn, result.ExpiresOn);
         }
 
+        [Fact]
+        public void ValidateToken_ExpiredTokenWithinClockSkew_ReturnsAuthenticationError()
+        {
+            var tokenString = GenerateJwtToken(IssuerToken, "issuer", "audience", DateTime.UtcNow.AddMinutes(-1));
+            var ctx = new DefaultHttpContext();
+            ctx.Request.Headers.Append("Authorization", new StringValues($"Bearer {tokenString}"));
+            var securityTokenValidator = new DefaultSecurityTokenValidator(parameters =>
+            {
+                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
+                parameters.RequireSignedTokens = true;
+                parameters.ValidateIssuerSigningKey = true;
+                parameters.ValidateLifetime = true;
+                parameters.ClockSkew = TimeSpan.FromMinutes(5);
+                parameters.ValidIssuer = "issuer";
+                parameters.ValidAudience = "audience";
+            });
+
+            var result = securityTokenValidator.ValidateToken(ctx.Request);
+
+            Assert.Equal(SecurityTokenStatus.Error, result.Status);
+            Assert.IsType<SecurityTokenExpiredException>(result.Exception);
+        }
+
+        [Theory]
+        [InlineData(true, typeof(SecurityTokenInvalidIssuerException))]
+        [InlineData(false, typeof(SecurityTokenSignatureKeyNotFoundException))]
+        public void ValidateToken_UntrustedIssuerOrUnresolvedSigningKey_ReturnsAuthenticationError(bool rejectIssuer, Type expectedExceptionType)
+        {
+            var token = GenerateJwtToken(IssuerToken, "issuer", "audience", 10);
+            var request = new DefaultHttpContext().Request;
+            request.Headers.Append("Authorization", new StringValues($"Bearer {token}"));
+            var validator = new DefaultSecurityTokenValidator(parameters =>
+            {
+                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
+                parameters.TryAllIssuerSigningKeys = rejectIssuer;
+                parameters.ValidIssuer = rejectIssuer ? "another-issuer" : "issuer";
+                parameters.ValidAudience = "audience";
+            });
+
+            var result = validator.ValidateToken(request);
+
+            Assert.Equal(SecurityTokenStatus.Error, result.Status);
+            Assert.IsType(expectedExceptionType, result.Exception);
+        }
+
         public static string GenerateJwtToken(string secretKey, string issuer, string audience, int expireMinutes)
         {
             return GenerateJwtToken(secretKey, issuer, audience, DateTime.UtcNow.AddMinutes(expireMinutes));

@@ -41,6 +41,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                             ? (DateTimeOffset?)null
                             : new DateTimeOffset(validatedToken.ValidTo.ToUniversalTime());
 
+                        // JWT clock skew does not extend the SignalR authentication deadline.
+                        if (expiresOn <= DateTimeOffset.UtcNow)
+                        {
+                            return SecurityTokenResult.Error(new SecurityTokenExpiredException("The bearer token has expired."));
+                        }
+
                         return SecurityTokenResult.Success(principal, expiresOn);
                     }
                 }
@@ -60,6 +66,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 // 1. TokenValidationParameters.ValidAudience is null or whitespace and TokenValidationParameters.ValidAudiences is null. Audience is not validated if TokenValidationParameters.ValidateAudience is set to false.
                 // 2. 'aud' claim did not match either TokenValidationParameters.ValidAudience or one of TokenValidationParameters.ValidAudiences.
                 ex is SecurityTokenInvalidAudienceException ||
+
+                ex is SecurityTokenInvalidIssuerException ||
+                ex is SecurityTokenSignatureKeyNotFoundException ||
 
                 // 'nbf' claim is greater than 'exp' claim
                 ex is SecurityTokenInvalidLifetimeException ||

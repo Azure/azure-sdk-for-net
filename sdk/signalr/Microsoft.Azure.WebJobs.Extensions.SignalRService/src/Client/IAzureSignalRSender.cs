@@ -18,8 +18,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             int tokenLifetimeSeconds,
             CancellationToken cancellationToken = default);
 
-        Task<IList<Claim>> GetConnectionClaimsAsync(string connectionToken);
-
         Task SendToAll(SignalRData data);
 
         Task SendToConnection(string connectionId, SignalRData data);
