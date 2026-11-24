@@ -100,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
 
             void AssertVersions(string? expected)
             {
-                Assert.Equal(7, versions.Count);
+                Assert.Equal(8, versions.Count);
                 Assert.All(versions, version => Assert.Equal(expected, version));
                 versions.Clear();
             }
@@ -168,6 +168,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         }
 
         [Fact]
+        public void SuccessfulItemsAreRecordedEvenIfRequestListenerThrows()
+        {
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000002");
+            using var listener = new MeterListener
+            {
+                InstrumentPublished = (instrument, l) =>
+                {
+                    if (manager.Owns(instrument))
+                    {
+                        l.EnableMeasurementEvents(instrument);
+                    }
+                }
+            };
+            long requests = 0;
+            long items = 0;
+            listener.SetMeasurementEventCallback<long>((instrument, value, _, _) =>
+            {
+                if (instrument.Name == "Request_Success_Count")
+                {
+                    requests += value;
+                    throw new InvalidOperationException("Test request listener failure.");
+                }
+                if (instrument.Name == "Item_Success_Count")
+                {
+                    items += value;
+                }
+            });
+            listener.Start();
+
+            manager.TrackRequest("eastus-1", 200, null, new ConfiguredNetworkStatsBatch("customer", 10));
+
+            Assert.Equal(1, requests);
+            Assert.Equal(10, items);
+        }
+
+        [Fact]
         public void TrackSuccess_RecordsRequestSuccessCount()
         {
             var connectionVars = ConnectionStringParser.GetValues(
@@ -208,7 +244,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         }
 
         [Fact]
-        public void TrackPartialSuccessAccepted_RecordsRequestSuccessCountWithAcceptedCount()
+        public void TrackPartialSuccessAccepted_RecordsOneSuccessfulRequest()
         {
             var connectionVars = ConnectionStringParser.GetValues(
                 "InstrumentationKey=00000000-0000-0000-0000-000000000003;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/");
@@ -231,7 +267,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
 
             manager.TrackPartialSuccessAccepted("westus-0.in.applicationinsights.azure.com", 7);
 
-            Assert.Equal(7, recorded);
+            Assert.Equal(1, recorded);
         }
 
         [Fact]

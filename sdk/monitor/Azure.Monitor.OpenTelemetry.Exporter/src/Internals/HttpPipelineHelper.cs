@@ -53,6 +53,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 : default;
         }
 
+        internal static bool IsPartialRetryableStatus(int? statusCode) =>
+            statusCode is ResponseStatusCodes.RequestTimeout or ResponseStatusCodes.ServiceUnavailable
+                or ResponseStatusCodes.InternalServerError or ResponseStatusCodes.ResponseCodeTooManyRequests
+                or ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache;
+
         internal static bool TryGetTrackResponse(HttpMessage message, [NotNullWhen(true)] out TrackResult? trackResponse)
         {
             if (message.Response.ContentStream == null)
@@ -175,11 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var (telemetryType, telemetrySuccess) = GetTelemetryDetailsFromJson(telemetryItems[errorIndex]);
                     DecrementCounterByType(successCounter, telemetryType, telemetrySuccess);
 
-                    if (error.StatusCode == ResponseStatusCodes.RequestTimeout
-                        || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
-                        || error.StatusCode == ResponseStatusCodes.InternalServerError
-                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
-                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
+                    if (IsPartialRetryableStatus(error.StatusCode))
                     {
                         if (string.IsNullOrEmpty(partialContent))
                         {
@@ -232,8 +233,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="origin">Origin of telemetry (Exporter vs Storage).</param>
         /// <param name="isAadEnabled">If AAD auth is enabled.</param>
         /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics.</param>
-        /// <param name="networkSdkStatsManager">Optional Network SDKStats manager for per-envelope tracking on 206 partial success responses.</param>
-        /// <param name="networkStatsBatch">Customer attribution for a routed request.</param>
+        /// <param name="networkSdkStatsManager">Optional Network SDKStats manager for transmission outcomes.</param>
+        /// <param name="networkStatsBatch">Item counts and customer attribution for this request.</param>
         /// <returns>TransmissionResult describing actions taken.</returns>
         internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter = null, NetworkSdkStatsManager? networkSdkStatsManager = null, INetworkSdkStatsBatch? networkStatsBatch = null)
         {
@@ -255,6 +256,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                 }
 
+                if (networkStatsBatch != null)
+                {
+                    networkSdkStatsManager?.TrackBatchDisposition(httpMessage.Request.Uri.Host, networkStatsBatch, origin == TelemetryItemOrigin.Storage || result.WillRetry);
+                }
                 AzureMonitorExporterEventSource.Log.TransmissionFailed(
                     origin: origin,
                     statusCode: result.StatusCode,
@@ -271,7 +276,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (result.StatusCode == ResponseStatusCodes.PartialSuccess)
             {
-                HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result, telemetrySchemaTypeCounter, networkSdkStatsManager, networkStatsBatch, connectionVars.InstrumentationKey);
+                var response = HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result, telemetrySchemaTypeCounter);
+                if (networkSdkStatsManager != null && networkStatsBatch != null)
+                {
+                    bool retainedOriginals = origin == TelemetryItemOrigin.Storage && !result.PartialSuccessHandled;
+                    if (response != null)
+                    {
+                        networkSdkStatsManager.TrackPartialSuccess(httpMessage.Request.Uri.Host, response, networkStatsBatch, result.SavedToStorage, retainedOriginals);
+                    }
+                    else
+                    {
+                        networkSdkStatsManager.TrackBatchDisposition(httpMessage.Request.Uri.Host, networkStatsBatch, retainedOriginals);
+                    }
+                }
             }
             else if (IsRetriableStatus(result.StatusCode))
             {
@@ -292,6 +309,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, result.StatusCode, CustomerSdkStatsHelper.CategorizeStatusCode(result.StatusCode));
             }
 
+            if (result.StatusCode != ResponseStatusCodes.PartialSuccess && networkStatsBatch != null)
+            {
+                networkSdkStatsManager?.TrackBatchDisposition(httpMessage.Request.Uri.Host, networkStatsBatch, result.WillRetry);
+            }
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
                 origin: origin,
                 statusCode: result.StatusCode,
@@ -372,49 +393,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, NetworkSdkStatsManager? networkSdkStatsManager, INetworkSdkStatsBatch? networkStatsBatch, string customerIkey)
+        private static TrackResult? HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter)
         {
             if (!TryGetTrackResponse(httpMessage, out TrackResult? trackResponse))
             {
-                return;
+                return null;
             }
 
             result.ItemsAccepted = trackResponse.ItemsAccepted;
 
-            if (networkStatsBatch != null)
+            if (telemetrySchemaTypeCounter == null && blobProvider == null)
             {
-                networkSdkStatsManager?.TrackPartialSuccess(httpMessage.Request.Uri.Host, trackResponse, networkStatsBatch);
-            }
-
-            // Accepted envelopes within a 206 response are
-            // counted toward Request_Success_Count.
-            if (networkStatsBatch == null && networkSdkStatsManager != null && trackResponse.ItemsAccepted is int acceptedCount && acceptedCount > 0)
-            {
-                networkSdkStatsManager.TrackPartialSuccessAccepted(httpMessage.Request.Uri.Host, acceptedCount, customerIkey);
-            }
-
-            // Per the Network SDKStats spec, rejected envelopes within a 206 response are
-            // classified per-envelope: retryable status codes increment Retry_Count, and
-            // non-retryable status codes increment Exception_Count.
-            if (networkStatsBatch == null && networkSdkStatsManager != null && trackResponse.Errors != null)
-            {
-                var partialHost = httpMessage.Request.Uri.Host;
-                foreach (var error in trackResponse.Errors)
-                {
-                    if (error?.StatusCode is not int envelopeStatusCode)
-                    {
-                        continue;
-                    }
-
-                    if (NetworkSdkStatsHelper.IsRetryable(envelopeStatusCode))
-                    {
-                        networkSdkStatsManager.TrackRetry(partialHost, envelopeStatusCode, customerIkey);
-                    }
-                    else
-                    {
-                        networkSdkStatsManager.TrackException(partialHost, exceptionType: envelopeStatusCode.ToString(System.Globalization.CultureInfo.InvariantCulture), customerIkey);
-                    }
-                }
+                // Network SDKStats can attribute the response by index without reading the payload again.
+                result.PartialSuccessHandled = true;
+                return trackResponse;
             }
 
             var (partialContent, successCounter, retryCounter, droppedCounter) = ProcessPartialSuccessWithCounting(trackResponse, httpMessage.Request.Content, telemetrySchemaTypeCounter);
@@ -443,7 +435,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
                 }
 
-                return;
+                return trackResponse;
             }
 
             if (origin == TelemetryItemOrigin.Storage && blob != null)
@@ -477,6 +469,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
             }
+            return trackResponse;
         }
 
         private static void HandleRetriableFailure(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, TelemetryItemOrigin origin, ref TransmissionResult result)

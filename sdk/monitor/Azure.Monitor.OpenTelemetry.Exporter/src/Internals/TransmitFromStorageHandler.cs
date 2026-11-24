@@ -294,8 +294,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             // Routed telemetry is excluded from customer SDK stats: a null counter suppresses both
             // the top-level count and the per-envelope counts synthesized for a 206.
-            var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload) : null;
-            var networkStatsBatch = _trackUri != null && _networkSdkStatsManager != null ? ReadNetworkStatsBatch(payload) : null;
+            int itemCount = 0;
+            var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload, out itemCount) : null;
+            INetworkSdkStatsBatch? networkStatsBatch = _networkSdkStatsManager == null ? null : _trackUri == null
+                ? new ConfiguredNetworkStatsBatch(_connectionVars.InstrumentationKey, itemCount) : ReadNetworkStatsBatch(payload);
 
             using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
             using var httpMessage = SendBatch(payload, networkStatsBatch, requestBudget.Token);
@@ -320,6 +322,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (batch.Count > 1 && httpMessage.HasResponse && statusCode != ResponseStatusCodes.PartialSuccess && !HttpPipelineHelper.IsRetriableStatus(statusCode))
             {
                 AzureMonitorExporterEventSource.Log.CoalescedBatchRejected(batch.Count, statusCode);
+                _networkSdkStatsManager?.TrackBatchDisposition(httpMessage.Request.Uri.Host, networkStatsBatch!, willRetry: true);
                 return TransmitIndividually(batch);
             }
 
@@ -341,7 +344,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             catch (Exception ex)
             {
                 _networkSdkStatsManager?.TrackRequest(httpMessage.Request.Uri.Host, statusCode: null, durationMs: null,
-                    networkStatsBatch, ex.GetType().FullName, customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                    networkStatsBatch!, ex.GetType().FullName);
+                _networkSdkStatsManager?.TrackBatchDisposition(httpMessage.Request.Uri.Host, networkStatsBatch!, willRetry: true);
                 _networkExceptionRecorded = true;
                 throw;
             }
@@ -382,15 +386,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 host = message.Request.Uri.Host;
                 stopwatch?.Stop();
                 _networkSdkStatsManager?.TrackRequest(host, message.HasResponse ? message.Response.Status : null,
-                    stopwatch?.Elapsed.TotalMilliseconds, networkStatsBatch,
-                    customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                    stopwatch?.Elapsed.TotalMilliseconds, networkStatsBatch!);
                 return message;
             }
             catch (Exception ex)
             {
                 stopwatch?.Stop();
                 _networkSdkStatsManager?.TrackRequest(host, statusCode: null, stopwatch?.Elapsed.TotalMilliseconds,
-                    networkStatsBatch, ex.GetType().FullName, customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                    networkStatsBatch!, ex.GetType().FullName);
+                _networkSdkStatsManager?.TrackBatchDisposition(host, networkStatsBatch!, willRetry: true);
                 _networkExceptionRecorded = true;
                 throw;
             }
@@ -442,8 +446,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             internal readonly Dictionary<string, int> Counts = new(StringComparer.Ordinal);
 
             public int Count => Keys.Count;
-            public IEnumerable<string> InstrumentationKeys => Counts.Keys;
-            public IReadOnlyDictionary<string, int> ItemCountsByInstrumentationKey => Counts;
+            public IReadOnlyCollection<KeyValuePair<string, int>> ItemCountsByInstrumentationKey => Counts;
             public string? GetInstrumentationKey(int index) => Keys[index];
         }
 
@@ -480,15 +483,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static TelemetrySchemaTypeCounter CountTelemetryTypes(byte[] payload)
+        private static TelemetrySchemaTypeCounter CountTelemetryTypes(byte[] payload, out int itemCount)
         {
             var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            itemCount = 0;
 
             try
             {
                 var telemetryItems = Encoding.UTF8.GetString(payload).Split('\n');
                 for (int i = 0; i < telemetryItems.Length; i++)
                 {
+                    if (telemetryItems[i].Length == 0)
+                    {
+                        continue;
+                    }
+                    itemCount++;
                     var (telemetryType, telemetrySuccess) = HttpPipelineHelper.GetTelemetryDetailsFromJson(telemetryItems[i]);
                     HttpPipelineHelper.IncrementCounterByType(telemetrySchemaTypeCounter, telemetryType, telemetrySuccess);
                 }

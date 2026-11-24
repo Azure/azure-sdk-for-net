@@ -236,7 +236,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem(DateTime time, AzureMonitorResource? resource, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
+        public TelemetryItem(DateTime time, AzureMonitorResource? resource, string instrumentationKey, string name = "Metric") : this(name, FormatUtcTimestamp(time))
         {
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }

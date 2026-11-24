@@ -9,14 +9,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
 {
     /// <summary>
     /// Provides the OpenTelemetry <see cref="Meter"/> and instruments used to publish
-    /// short-interval Network SDKStats (request success / failure / retry / throttle /
-    /// exception counts and request duration). Metric names follow the SDKStats specification.
+    /// short-interval Network SDKStats for requests and individual telemetry items.
     /// </summary>
     /// <remarks>
     /// Each stats owner has its own instruments so another owner's reader cannot export its counts.
     /// </remarks>
     internal sealed class NetworkSdkStatsMeters : IDisposable
     {
+        internal const string ItemSuccessName = "Item_Success_Count";
+        internal const string ItemDroppedName = "Item_Dropped_Count";
+        internal const string ItemRetryName = "Item_Retry_Count";
+
         public readonly Meter Meter = new(StatsbeatConstants.NetworkSdkStatsMeterName, "1.0.0");
 
         public Counter<long> RequestSuccessCount { get; }
@@ -25,6 +28,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         public Counter<long> RetryCount { get; }
         public Counter<long> ThrottleCount { get; }
         public Counter<long> ExceptionCount { get; }
+        public Counter<long> ItemSuccessCount { get; }
+        public Counter<long> ItemDroppedCount { get; }
+        public Counter<long> ItemRetryCount { get; }
 
         public NetworkSdkStatsMeters()
         {
@@ -52,6 +58,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             ExceptionCount = Meter.CreateCounter<long>(
                 "Exception_Count",
                 description: "Count of requests that failed with an exception (no response code received).");
+            ItemSuccessCount = Meter.CreateCounter<long>(ItemSuccessName, description: "Count of telemetry items accepted by ingestion.");
+            ItemDroppedCount = Meter.CreateCounter<long>(ItemDroppedName, description: "Count of telemetry items discarded without another send attempt.");
+            ItemRetryCount = Meter.CreateCounter<long>(ItemRetryName, description: "Count of telemetry items scheduled for another send attempt.");
         }
 
         public void Dispose() => Meter.Dispose();

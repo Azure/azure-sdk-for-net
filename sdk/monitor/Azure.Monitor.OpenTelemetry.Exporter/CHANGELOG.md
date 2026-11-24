@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Internal Network SDKStats now report accepted, retried, and dropped item counts alongside request counts. A shared regional POST counts once per participating customer, while item counts reflect each customer's delivery outcomes.
+
 ### Breaking Changes
 
 ### Bugs Fixed

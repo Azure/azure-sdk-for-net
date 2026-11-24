@@ -17,7 +17,7 @@ using OpenTelemetry.Metrics;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     // Warm recording cost with real OpenTelemetry aggregation. Excludes HTTP, serialization,
-    // response parsing, and metric export. EndpointOnly matches the previous unkeyed recording.
+    // response parsing, and metric export. Compare a configured customer with a shared regional batch.
     [MemoryDiagnoser]
     [CategoriesColumn]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         private NetworkSdkStatsManager _manager = null!;
         private MeterProvider _provider = null!;
         private EndpointRouteBatch.Group _group = null!;
+        private ConfiguredNetworkStatsBatch _configured = null!;
         private TrackResult _partialResponse = null!;
 
         [Params(1, 32, 512)]
@@ -54,6 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 keys[i] = $"00000000-0000-0000-0000-{i:D12}";
             }
             _group = new EndpointRouteBatch.Group();
+            _configured = new ConfiguredNetworkStatsBatch(keys[0], BatchSize);
             for (int i = 0; i < BatchSize; i++)
             {
                 _group.Add(new TelemetryItem(DateTime.UtcNow, resource: null, keys[i % CustomerCount]));
@@ -69,11 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
         [Benchmark(Baseline = true)]
         [BenchmarkCategory("Request")]
-        public void EndpointOnlyRequest()
-        {
-            _manager.TrackDuration(Host, 10);
-            _manager.TrackSuccess(Host);
-        }
+        public void EndpointOnlyRequest() => _manager.TrackRequest(Host, 200, 10, _configured);
 
         [Benchmark]
         [BenchmarkCategory("Request")]
@@ -81,18 +79,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
         [Benchmark(Baseline = true)]
         [BenchmarkCategory("Partial")]
-        public void EndpointOnlyPartial()
-        {
-            _manager.TrackPartialSuccessAccepted(Host, BatchSize - ErrorCount);
-            foreach (var error in _partialResponse.Errors)
-            {
-                _manager.TrackRetry(Host, error.StatusCode!.Value);
-            }
-        }
+        public void EndpointOnlyPartial() => _manager.TrackPartialSuccess(Host, _partialResponse, _configured, queuedRetrySubset: true);
 
         [Benchmark]
         [BenchmarkCategory("Partial")]
-        public void PerCustomerPartial() => _manager.TrackPartialSuccess(Host, _partialResponse, _group);
+        public void PerCustomerPartial() => _manager.TrackPartialSuccess(Host, _partialResponse, _group, queuedRetrySubset: true);
 
         [GlobalCleanup]
         public void Cleanup()

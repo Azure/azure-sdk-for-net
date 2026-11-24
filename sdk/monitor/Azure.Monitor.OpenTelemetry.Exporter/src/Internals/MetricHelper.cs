@@ -8,6 +8,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -30,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        var telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
+                        var telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey, GetEnvelopeName(metric, isInternalTelemetry))
                         {
                             Data = new MonitorBase
                             {
@@ -132,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             continue;
                         }
 
-                        var telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
+                        var telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey, GetEnvelopeName(metric, defaultMetricRoute != null))
                         {
                             Data = new MonitorBase
                             {
@@ -173,6 +174,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 AzureMonitorExporterEventSource.Log.RoutedExportSummary(routeBatch.Sequence, collected, routeBatch.Count, rejected);
             }
         }
+
+        private static string GetEnvelopeName(Metric metric, bool isInternalTelemetry) =>
+            isInternalTelemetry && metric.MeterName == StatsbeatConstants.NetworkSdkStatsMeterName
+                && metric.Name is NetworkSdkStatsMeters.ItemSuccessName or NetworkSdkStatsMeters.ItemDroppedName or NetworkSdkStatsMeters.ItemRetryName
+                ? "SDKStats" : "Metric";
 
         private static void RemoveNetworkStatsContext(TelemetryItem item, Metric metric)
         {

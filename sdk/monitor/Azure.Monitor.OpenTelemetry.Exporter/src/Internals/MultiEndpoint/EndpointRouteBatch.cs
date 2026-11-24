@@ -121,8 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             internal Dictionary<string, int>.KeyCollection InstrumentationKeys => _itemCountsByInstrumentationKey.Keys;
 
             int INetworkSdkStatsBatch.Count => _telemetryItems.Count;
-            IEnumerable<string> INetworkSdkStatsBatch.InstrumentationKeys => InstrumentationKeys;
-            IReadOnlyDictionary<string, int> INetworkSdkStatsBatch.ItemCountsByInstrumentationKey => ItemCountsByInstrumentationKey;
+            IReadOnlyCollection<KeyValuePair<string, int>> INetworkSdkStatsBatch.ItemCountsByInstrumentationKey => ItemCountsByInstrumentationKey;
             string? INetworkSdkStatsBatch.GetInstrumentationKey(int index) => _telemetryItems[index].InstrumentationKey;
 
             internal void Add(TelemetryItem telemetryItem)

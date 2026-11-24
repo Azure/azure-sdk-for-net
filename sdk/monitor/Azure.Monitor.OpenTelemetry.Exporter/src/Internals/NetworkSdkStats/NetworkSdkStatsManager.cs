@@ -15,9 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
 {
     /// <summary>
     /// Records short-interval Network SDKStats metrics for a single Azure Monitor exporter
-    /// transmitter: <c>Request_Success_Count</c>, <c>Request_Failure_Count</c>,
-    /// <c>Request_Duration</c>, <c>Retry_Count</c>, <c>Throttle_Count</c>, and
-    /// <c>Exception_Count</c>.
+    /// transmitter, including request outcomes, duration, and item delivery outcomes.
     /// </summary>
     /// <remarks>
     /// One <see cref="NetworkSdkStatsManager"/> is created per <see cref="Statsbeat.AzureMonitorStatsbeat"/>
@@ -69,21 +67,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         public void Dispose() => _meters.Dispose();
 
         // A shared regional request counts once for each participating customer, not once per envelope.
-        internal void TrackRequest(string? requestHost, int? statusCode, double? durationMs, INetworkSdkStatsBatch? batch, string? exceptionType = null, string? customerIkey = null)
+        internal void TrackRequest(string? requestHost, int? statusCode, double? durationMs, INetworkSdkStatsBatch batch, string? exceptionType = null)
         {
-            if (batch == null)
+            foreach (var pair in batch.ItemCountsByInstrumentationKey)
             {
-                TrackCustomerRequest(requestHost, statusCode, durationMs, customerIkey, exceptionType);
-                return;
-            }
-
-            foreach (var key in batch.InstrumentationKeys)
-            {
-                TrackCustomerRequest(requestHost, statusCode, durationMs, key, exceptionType);
+                TrackCustomerRequest(requestHost, statusCode, durationMs, pair.Key, exceptionType, pair.Value);
             }
         }
 
-        private void TrackCustomerRequest(string? requestHost, int? statusCode, double? durationMs, string? customerIkey, string? exceptionType)
+        private void TrackCustomerRequest(string? requestHost, int? statusCode, double? durationMs, string? customerIkey, string? exceptionType, int itemCount)
         {
             if (durationMs.HasValue)
             {
@@ -95,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             }
             else if (statusCode == ResponseStatusCodes.Success)
             {
-                TrackSuccess(requestHost, customerIkey);
+                TrackSuccess(requestHost, customerIkey, itemCount);
             }
             else
             {
@@ -103,7 +95,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             }
         }
 
-        internal void TrackPartialSuccess(string? requestHost, TrackResult response, INetworkSdkStatsBatch batch)
+        internal void TrackBatchDisposition(string? requestHost, INetworkSdkStatsBatch batch, bool willRetry)
+        {
+            var counter = willRetry ? _meters.ItemRetryCount : _meters.ItemDroppedCount;
+            if (!counter.Enabled)
+            {
+                return;
+            }
+            foreach (var pair in batch.ItemCountsByInstrumentationKey)
+            {
+                TrackItems(counter, requestHost, pair.Value, pair.Key);
+            }
+        }
+
+        internal void TrackPartialSuccess(string? requestHost, TrackResult response, INetworkSdkStatsBatch batch, bool queuedRetrySubset, bool retainedOriginals = false)
         {
             var errors = response.Errors;
             if (response.ItemsReceived != batch.Count || response.ItemsAccepted is not int accepted
@@ -114,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             }
 
             var indexes = new HashSet<int>();
-            var rejected = new Dictionary<string, int>(StringComparer.Ordinal);
+            var rejected = new Dictionary<string, (int Total, int Queued)>(StringComparer.Ordinal);
             foreach (var error in errors)
             {
                 if (error?.Index is not int index || index < 0 || index >= batch.Count
@@ -128,17 +133,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
                 var key = batch.GetInstrumentationKey(index);
                 if (key != null)
                 {
-                    rejected.TryGetValue(key, out var count);
-                    rejected[key] = count + 1;
+                    rejected.TryGetValue(key, out var counts);
+                    counts.Total++;
+                    if (queuedRetrySubset && HttpPipelineHelper.IsPartialRetryableStatus(error.StatusCode))
+                    {
+                        counts.Queued++;
+                    }
+                    rejected[key] = counts;
                 }
             }
 
             foreach (var pair in batch.ItemCountsByInstrumentationKey)
             {
-                rejected.TryGetValue(pair.Key, out var count);
-                TrackPartialSuccessAccepted(requestHost, pair.Value - count, pair.Key);
+                rejected.TryGetValue(pair.Key, out var counts);
+                TrackPartialSuccessAccepted(requestHost, pair.Value - counts.Total, pair.Key);
+                // If rewriting a replay blob failed, the entire original remains queued on disk.
+                TrackItems(_meters.ItemRetryCount, requestHost, retainedOriginals ? pair.Value : counts.Queued, pair.Key);
+                if (!retainedOriginals)
+                {
+                    TrackItems(_meters.ItemDroppedCount, requestHost, counts.Total - counts.Queued, pair.Key);
+                }
             }
 
+            var requestErrors = new HashSet<(string Key, int Status)>();
             foreach (var error in errors)
             {
                 var key = batch.GetInstrumentationKey(error.Index!.Value);
@@ -147,6 +164,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
                     continue;
                 }
                 var status = error.StatusCode!.Value;
+                if (status == ResponseStatusCodes.PartialSuccess || !requestErrors.Add((key, status)))
+                {
+                    continue;
+                }
                 if (NetworkSdkStatsHelper.IsRetryable(status))
                 {
                     TrackRetry(requestHost, status, key);
@@ -163,16 +184,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// </summary>
         /// <param name="requestHost">Host portion of the request URI (e.g. <c>westus-0.in.applicationinsights.azure.com</c>).</param>
         /// <param name="customerIkey">Routed customer key, or null to use the configured default.</param>
-        public void TrackSuccess(string? requestHost, string? customerIkey = null)
+        /// <param name="itemCount">Accepted items belonging to the customer.</param>
+        public void TrackSuccess(string? requestHost, string? customerIkey = null, int itemCount = 0)
         {
-            if (!_meters.RequestSuccessCount.Enabled)
+            if (!_meters.RequestSuccessCount.Enabled && !_meters.ItemSuccessCount.Enabled)
             {
                 return;
             }
 
             try
             {
-                _meters.RequestSuccessCount.Add(1, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), customerIkey));
+                var tags = BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), customerIkey);
+                RecordSuccessCounter(_meters.RequestSuccessCount, 1, in tags);
+                if (itemCount > 0)
+                {
+                    RecordSuccessCounter(_meters.ItemSuccessCount, itemCount, in tags);
+                }
             }
             catch
             {
@@ -182,21 +209,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             }
         }
 
+        private static void RecordSuccessCounter(Counter<long> counter, int count, in TagList tags)
+        {
+            try
+            {
+                counter.Add(count, in tags);
+            }
+            catch
+            {
+                // A failed listener must not suppress a different instrument.
+            }
+        }
+
         /// <summary>
-        /// Record accepted envelopes from a 206 Partial Success response. Per the Network
-        /// SDKStats specification, accepted envelopes within a 206 response are counted
-        /// toward <c>Request_Success_Count</c>.
+        /// A 206 with accepted items contributes one request success for their customer.
         /// </summary>
         public void TrackPartialSuccessAccepted(string? requestHost, int count, string? customerIkey = null)
         {
-            if (count <= 0 || !_meters.RequestSuccessCount.Enabled)
+            if (count > 0)
+            {
+                TrackSuccess(requestHost, customerIkey);
+                TrackItems(_meters.ItemSuccessCount, requestHost, count, customerIkey);
+            }
+        }
+
+        private void TrackItems(Counter<long> counter, string? requestHost, int count, string? customerIkey)
+        {
+            if (count <= 0 || !counter.Enabled)
             {
                 return;
             }
 
             try
             {
-                _meters.RequestSuccessCount.Add(count, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), customerIkey));
+                counter.Add(count, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost ?? _ingestionHost), customerIkey));
             }
             catch
             {
