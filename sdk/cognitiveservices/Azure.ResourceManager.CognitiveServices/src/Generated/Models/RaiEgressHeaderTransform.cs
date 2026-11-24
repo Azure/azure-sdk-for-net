@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// If omitted on update, the existing value is preserved. Use this for non-sensitive values;
         /// for credentials, use valueRef instead.
         /// </param>
-        /// <param name="valueRef"> A dynamic header value resolved at request time from a secret or managed identity. </param>
+        /// <param name="valueReference"> A dynamic header value resolved at request time from a secret or managed identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiEgressHeaderTransform(RaiEgressHeaderOperation operation, string name, string value, RaiEgressHeaderValueRef valueRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiEgressHeaderTransform(RaiEgressHeaderOperation operation, string name, string value, RaiEgressHeaderValueReference valueReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Operation = operation;
             Name = name;
             Value = value;
-            ValueRef = valueRef;
+            ValueReference = valueReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> A dynamic header value resolved at request time from a secret or managed identity. </summary>
         [WirePath("valueRef")]
-        public RaiEgressHeaderValueRef ValueRef { get; set; }
+        public RaiEgressHeaderValueReference ValueReference { get; set; }
     }
 }

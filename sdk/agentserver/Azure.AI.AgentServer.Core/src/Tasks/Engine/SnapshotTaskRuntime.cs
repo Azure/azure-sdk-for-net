@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
+#pragma warning disable AAAS002 // Internal implementation of the experimental snapshot lifecycle contract.
 internal sealed class SnapshotTaskRuntime :
     IHostedService,
     IAsyncDisposable,
@@ -516,6 +517,7 @@ internal sealed class SnapshotTaskRuntime :
             }
         }
     }
+#pragma warning restore AAAS002
 
     private void LogWarning(string message)
     {

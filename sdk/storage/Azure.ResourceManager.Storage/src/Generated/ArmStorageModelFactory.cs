@@ -980,6 +980,24 @@ namespace Azure.ResourceManager.Storage.Models
             return new GetServiceSasResult(serviceSasToken, default);
         }
 
+        /// <summary> Storage Tasks run report instance. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Storage task execution report for a run instance. </param>
+        /// <returns> A new <see cref="Models.StorageTaskReportInstance"/> instance for mocking. </returns>
+        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTaskReportProperties properties)
+        {
+            return new StorageTaskReportInstance(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> The StorageSignedIdentifier. </summary>
         /// <param name="id"> An unique identifier of the stored access policy. </param>
         /// <param name="accessPolicy"> Access policy. </param>
@@ -1090,6 +1108,24 @@ namespace Azure.ResourceManager.Storage.Models
                 kerberosTicketEncryption,
                 channelEncryption,
                 isRequired is null ? default : new EncryptionInTransit(isRequired, default),
+                default);
+        }
+
+        /// <summary> The usage of file service in storage account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </param>
+        /// <returns> A new <see cref="Storage.FileServiceUsageData"/> instance for mocking. </returns>
+        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FileServiceUsageProperties properties)
+        {
+            return new FileServiceUsageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

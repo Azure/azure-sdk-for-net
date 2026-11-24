@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary>Raised when the storage service rejects a request as invalid (HTTP 400).</summary>
+    [Experimental("AAAS004")]
     public class FoundryStorageBadRequestException : FoundryStorageException
     {
         /// <summary>Initializes a new instance of the <see cref="FoundryStorageBadRequestException"/> class.</summary>

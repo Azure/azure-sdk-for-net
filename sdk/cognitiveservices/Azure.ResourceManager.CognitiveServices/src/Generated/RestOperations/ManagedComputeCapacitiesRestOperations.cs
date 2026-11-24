@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetCognitiveServicesManagedComputeCapacitiesRequest(string subscriptionId, string offer, string acceleratorType, string deploymentId, string location, RequestContext context)
+        internal HttpMessage CreateGetCognitiveServicesManagedComputeCapacitiesRequest(string subscriptionId, string offer, string acceleratorType, ResourceIdentifier deploymentId, AzureLocation? location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.CognitiveServices
             }
             if (deploymentId != null)
             {
-                uri.AppendQuery("deploymentId", deploymentId, true);
+                uri.AppendQuery("deploymentId", TypeFormatters.ConvertToString(deploymentId), true);
             }
             if (location != null)
             {
-                uri.AppendQuery("location", location, true);
+                uri.AppendQuery("location", TypeFormatters.ConvertToString(location), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateNextGetCognitiveServicesManagedComputeCapacitiesRequest(Uri nextPage, string subscriptionId, string offer, string acceleratorType, string deploymentId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetCognitiveServicesManagedComputeCapacitiesRequest(Uri nextPage, string subscriptionId, string offer, string acceleratorType, ResourceIdentifier deploymentId, AzureLocation? location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

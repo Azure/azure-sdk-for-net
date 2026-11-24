@@ -14,56 +14,56 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A reference to a stored secret used as a header value. </summary>
-    public partial class RaiEgressSecretRef : IJsonModel<RaiEgressSecretRef>
+    public partial class RaiEgressSecretReference : IJsonModel<RaiEgressSecretReference>
     {
-        /// <summary> Initializes a new instance of <see cref="RaiEgressSecretRef"/> for deserialization. </summary>
-        internal RaiEgressSecretRef()
+        /// <summary> Initializes a new instance of <see cref="RaiEgressSecretReference"/> for deserialization. </summary>
+        internal RaiEgressSecretReference()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RaiEgressSecretRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RaiEgressSecretReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRaiEgressSecretRef(document.RootElement, options);
+                        return DeserializeRaiEgressSecretReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RaiEgressSecretRef)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiEgressSecretReference)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RaiEgressSecretRef)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiEgressSecretReference)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiEgressSecretRef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiEgressSecretReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiEgressSecretRef IPersistableModel<RaiEgressSecretRef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RaiEgressSecretReference IPersistableModel<RaiEgressSecretReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiEgressSecretRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiEgressSecretReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiEgressSecretRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiEgressSecretReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiEgressSecretRef)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiEgressSecretReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("secretId"u8);
             writer.WriteStringValue(SecretId);
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiEgressSecretRef IJsonModel<RaiEgressSecretRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RaiEgressSecretReference IJsonModel<RaiEgressSecretReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RaiEgressSecretRef JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RaiEgressSecretReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiEgressSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiEgressSecretRef)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiEgressSecretReference)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRaiEgressSecretRef(document.RootElement, options);
+            return DeserializeRaiEgressSecretReference(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RaiEgressSecretRef DeserializeRaiEgressSecretRef(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiEgressSecretReference DeserializeRaiEgressSecretReference(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiEgressSecretRef(secretId, secretKey, format, additionalBinaryDataProperties);
+            return new RaiEgressSecretReference(secretId, secretKey, format, additionalBinaryDataProperties);
         }
     }
 }
