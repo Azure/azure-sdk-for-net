@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Tests.ServiceModels;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -21,6 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(AcronymWidgetResource))]
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
+    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState))]
@@ -73,6 +75,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(EventGridTopicResource))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocationOptionalModel))]
+    [ModelReaderWriterBuildable(typeof(ExtendedOperationStatus))]
     [ModelReaderWriterBuildable(typeof(FooActionRequest))]
     [ModelReaderWriterBuildable(typeof(FooActionResult))]
     [ModelReaderWriterBuildable(typeof(FooConfigurationPatch))]
@@ -124,6 +127,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(NetworkSiblingSet))]
     [ModelReaderWriterBuildable(typeof(NetworkSiblingSetProperties))]
     [ModelReaderWriterBuildable(typeof(OfferDetails))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusError2))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusError3))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusErrorAdditionalInfo))]
+    [ModelReaderWriterBuildable(typeof(ServiceModels.Optional))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
