@@ -34,6 +34,14 @@ it is decorated.
 
 ## Detection algorithm
 
+Only operations present in the selected TCGC SDK package participate in resource
+detection. The ARM resolver returns language-neutral metadata, so its converter
+checks each operation's cross-language definition ID against the SDK method map
+before including it. This respects C# scope exclusions without duplicating
+TCGC's inclusion rules. A resource whose `Read` is excluded does not become an SDK
+resource; any remaining SDK operations follow the normal non-resource assignment
+rules.
+
 Detection runs in four stages:
 
 1. **Identify resource models** by their TypeSpec annotation.

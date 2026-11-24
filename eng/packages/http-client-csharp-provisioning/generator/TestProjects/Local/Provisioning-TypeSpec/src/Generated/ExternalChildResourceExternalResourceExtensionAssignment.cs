@@ -5,16 +5,15 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> An assignment applied to another Azure resource as an extension resource. </summary>
-    public partial class ExtensionAssignment : ProvisionableResource
+    public partial class ExternalChildResourceExternalResourceExtensionAssignment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +21,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private ExtensionAssignmentProperties _properties;
         private ProvisioningResourceReference<ProvisionableResource> _scope;
 
-        /// <summary> Creates a new ExtensionAssignment. </summary>
+        /// <summary> Creates a new ExternalChildResourceExternalResourceExtensionAssignment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ExtensionAssignment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/extensionAssignments", resourceVersion ?? "2024-03-01-preview")
+        public ExternalChildResourceExternalResourceExtensionAssignment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/extensionAssignments", resourceVersion ?? "2024-05-01")
         {
         }
 
@@ -111,7 +110,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionAssignment. </summary>
+        /// <summary> Define all the provisionable properties for ExternalChildResourceExternalResourceExtensionAssignment. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -123,25 +122,24 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ExtensionAssignment. </summary>
+        /// <summary> Creates a reference to an existing ExternalChildResourceExternalResourceExtensionAssignment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ExtensionAssignment FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ExternalChildResourceExternalResourceExtensionAssignment FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ExtensionAssignment result = new ExtensionAssignment(bicepIdentifier, resourceVersion);
+            ExternalChildResourceExternalResourceExtensionAssignment result = new ExternalChildResourceExternalResourceExtensionAssignment(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionAssignment that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ExternalChildResourceExternalResourceExtensionAssignment that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2024-03-01-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2024_03_01_PREVIEW = "2024-03-01-preview";
+            /// <summary> API version "2024-05-01". </summary>
+            public static readonly string V2024_05_01 = "2024-05-01";
             /// <summary> API version "2024-01-01". </summary>
             public static readonly string V2024_01_01 = "2024-01-01";
         }
