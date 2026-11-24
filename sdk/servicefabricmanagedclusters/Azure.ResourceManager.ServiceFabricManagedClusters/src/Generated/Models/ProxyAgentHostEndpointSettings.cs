@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies particular host endpoint settings. </summary>
-    public partial class HostEndpointSettings
+    public partial class ProxyAgentHostEndpointSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
-        public HostEndpointSettings()
+        /// <summary> Initializes a new instance of <see cref="ProxyAgentHostEndpointSettings"/>. </summary>
+        public ProxyAgentHostEndpointSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyAgentHostEndpointSettings"/>. </summary>
         /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
         /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(string mode, string inVMAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyAgentHostEndpointSettings(string mode, string inVMAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             InVMAccessControlProfileReferenceId = inVMAccessControlProfileReferenceId;
