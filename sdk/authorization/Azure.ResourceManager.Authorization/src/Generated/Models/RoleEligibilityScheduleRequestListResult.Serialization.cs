@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RoleEligibilityScheduleContentData item in Value)
+            foreach (RoleEligibilityScheduleRequestData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            IList<RoleEligibilityScheduleContentData> value = default;
+            IList<RoleEligibilityScheduleRequestData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RoleEligibilityScheduleContentData> array = new List<RoleEligibilityScheduleContentData>();
+                    List<RoleEligibilityScheduleRequestData> array = new List<RoleEligibilityScheduleRequestData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoleEligibilityScheduleContentData.DeserializeRoleEligibilityScheduleContentData(item, options));
+                        array.Add(RoleEligibilityScheduleRequestData.DeserializeRoleEligibilityScheduleRequestData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoleEligibilityScheduleRequestListResult(value ?? new ChangeTrackingList<RoleEligibilityScheduleContentData>(), nextLink, additionalBinaryDataProperties);
+            return new RoleEligibilityScheduleRequestListResult(value ?? new ChangeTrackingList<RoleEligibilityScheduleRequestData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

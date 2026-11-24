@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlanAsync(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
         {
-            return GetByBillingAccountAsync(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
+            return ListByBillingAccountAsync(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlan(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
         {
-            return GetByBillingAccount(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
+            return ListByBillingAccount(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
         }
     }
 }
