@@ -1,14 +1,33 @@
 # Release History
 
-## 1.2.0-beta.6 (Unreleased)
+## 1.2.0 (2026-11-30)
 
 ### Features Added
 
+The following capabilities are new since the `1.1.0` GA release and were introduced across the `1.2.0-beta.*` releases:
+
+- Added GA support for bulk virtual machine creation through `LocationBasedBulkCreateResource` and `LocationBasedBulkCreateCustomResource`. Bulk creation supports shared VM configuration; custom bulk creation also supports explicit VM names or generated name prefixes and per-VM overrides.
+- Added availability-zone placement policies, included and excluded zones, and extended-location targeting, with per-VM placement overrides for custom bulk creation.
+- Added Spot VM configuration through `BulkActionVMProperties.Priority`, `BillingMaxPrice`, and `EvictionPolicy`.
+- Added get and list operations for bulk-create resources, asynchronous operation-status polling, pageable per-VM operation status, and resolved VM details for custom bulk creation.
+- Added capacity and placement recommendations for bulk start operations through `BulkActionExecutionParameterDetail.CapacityRecommendationParameters`. When a VM fails to start due to an allocation failure, recommendations are returned in `ComputeBulkOperationDetails.CapacityRecommendation`.
+- Added optional VM guest-agent health verification after a start operation through `BulkActionExecutionParameterDetail.ShouldVerifyVmAgentHealth`.
+- Added `BulkActionExecutionParameterDetail.AdditionalCreateParameters` for supplying additional create configuration.
+
 ### Breaking Changes
 
-### Bugs Fixed
+The following changes affect preview APIs available in the `1.2.0-beta.*` releases:
+
+- Removed scheduled-action and occurrence APIs and their associated models from this release.
+- Removed `BulkReimageOperation`, `BulkListOperationErrors`, and `BulkAcknowledgeOperationErrors`, their asynchronous counterparts, and their associated models from this release.
+- Removed delete and cancel operations from `LocationBasedBulkCreateResource` and `LocationBasedBulkCreateCustomResource`, and removed `Tags` from `LocationBasedBulkCreateData` and `LocationBasedBulkCreateCustomData`.
+- Removed the single-argument constructors and the `Resources` setters from `ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, and `ExecuteDeleteContent`. Supply both `executionParameters` and `resources` when constructing these models.
+- Removed the `ResourcesWithContext` properties from the execute-content models, the `ResourceWithContext` model, and the `Resources` collection and serialization support from `ResourcesWithContext`. Use `UserRequestResources` through the execute-content models' `Resources` property instead.
+- Updated the corresponding `ArmComputeBulkActionsModelFactory` methods to reflect the removed models and properties.
 
 ### Other Changes
+
+- Updated the client to target the stable service API version `2026-10-16` instead of `2026-10-06-preview`.
 
 ## 1.2.0-beta.5 (2026-10-14)
 
