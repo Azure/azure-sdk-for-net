@@ -20,7 +20,6 @@ namespace Azure.Search.Documents.Tests
         [TestCase(V2024_07_01, "2024-07-01")]
         [TestCase(V2025_09_01, "2025-09-01")]
         [TestCase(V2026_04_01, "2026-04-01")]
-        [TestCase(V2026_08_01_Preview, "2026-08-01-preview")]
         [TestCase(V2026_10_01, "2026-10-01")]
         [TestCase(V2026_11_01_Preview, "2026-11-01-preview")]
         public void SupportedVersionsRoundtrip(SearchClientOptions.ServiceVersion version, string versionString)
@@ -73,6 +72,14 @@ namespace Azure.Search.Documents.Tests
             Assert.IsFalse(SearchClientOptions.TryGetServiceVersion("2026-09-01", out _));
             Assert.Throws<ArgumentOutOfRangeException>(() => "2026-09-01".ToServiceVersion());
             Assert.Throws<ArgumentOutOfRangeException>(() => new SearchClientOptions((SearchClientOptions.ServiceVersion)6));
+        }
+
+        [Test]
+        public void RejectsRetiredPreviewVersion()
+        {
+            Assert.IsFalse(SearchClientOptions.TryGetServiceVersion("2026-08-01-preview", out _));
+            Assert.Throws<ArgumentOutOfRangeException>(() => "2026-08-01-preview".ToServiceVersion());
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SearchClientOptions((SearchClientOptions.ServiceVersion)7));
         }
     }
 }

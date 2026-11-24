@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added support for `2026-11-01-preview`, now the default service version. Older supported service versions remain available.
+- Added support for `2026-11-01-preview`, now the default service version. Older supported GA service versions remain available.
 - Added graph queries with typed results, diagnostics, statistics, explain plans, and provenance, along with graph knowledge source extraction, grounding, and retrieval models.
 - Added topic-graph vector search profiles and discriminated `NoneVectorQueryTopicGraph`, `DiverseVectorQueryTopicGraph`, and `BalancedVectorQueryTopicGraph` query options.
 - Added facet-based filter-hint `AutoConfiguration`, knowledge source enrichment caching, and the `Gpt6Astra`, `Gpt6Sol`, `Gpt6Luna`, and `Gpt61Sol` model names.
@@ -15,6 +15,7 @@
 
 ### Breaking Changes
 
+- Removed the older preview service-version option; use `V2026_11_01_Preview` or a supported GA service version instead.
 - Removed the preview-only `SearchClient.GetDocument<T>` and `GetDocumentAsync<T>` overloads that accepted `querySourceAuthorization` and `enableElevatedRead` directly (present in `12.1.0-beta.2`). Set `GetDocumentOptions.QuerySourceAuthorization` and `GetDocumentOptions.EnableElevatedRead` instead. The GA overloads accepting `GetDocumentOptions` remain unchanged. For example:
 
   ```csharp

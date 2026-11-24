@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    // Populate the retained GA base properties instead of treating them as unknown JSON.
     [CodeGenSuppress("DeserializeUnknownScoringFunction", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     internal partial class UnknownScoringFunction
     {

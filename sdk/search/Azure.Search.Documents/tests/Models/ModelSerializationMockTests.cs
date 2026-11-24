@@ -290,7 +290,7 @@ namespace Azure.Search.Documents.Tests.Models
                 .SetName("Roundtrip_Skill_GatewayChatCompletion");
             // search-preview:2026-11-01-preview }
 
-            // --- 2026-08-01-preview: new knowledge source polymorphic subtypes ---
+            // --- Preview knowledge source polymorphic subtypes ---
             // Each carries the discriminator ("kind") and a nested parameters object; roundtrip exercises
             // the polymorphic dispatch in the KnowledgeSource base type plus the subtype's own serializer.
 
@@ -555,6 +555,7 @@ namespace Azure.Search.Documents.Tests.Models
 
             foreach (ScoringFunction function in functions)
             {
+                function.Interpolation = ScoringFunctionInterpolation.Linear;
                 var options = new ModelReaderWriterOptions(format);
                 BinaryData json = ModelReaderWriter.Write(function, options);
                 using JsonDocument document = JsonDocument.Parse(json);
@@ -562,8 +563,12 @@ namespace Azure.Search.Documents.Tests.Models
                 Assert.AreEqual(2.0, document.RootElement.GetProperty("boost").GetDouble());
                 Assert.AreEqual(1, document.RootElement.EnumerateObject().Count(property => property.Name == "fieldName"));
                 Assert.AreEqual(1, document.RootElement.EnumerateObject().Count(property => property.Name == "boost"));
-                Assert.AreEqual(function.GetType(),
-                    ModelReaderWriter.Read<ScoringFunction>(json, options).GetType());
+                Assert.AreEqual("linear", document.RootElement.GetProperty("interpolation").GetString());
+                ScoringFunction roundtrip = ModelReaderWriter.Read<ScoringFunction>(json, options);
+                Assert.AreEqual(function.GetType(), roundtrip.GetType());
+                Assert.AreEqual(function.FieldName, roundtrip.FieldName);
+                Assert.AreEqual(function.Boost, roundtrip.Boost);
+                Assert.AreEqual(function.Interpolation, roundtrip.Interpolation);
             }
         }
 

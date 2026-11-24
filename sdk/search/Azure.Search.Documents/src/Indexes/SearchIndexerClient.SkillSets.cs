@@ -247,6 +247,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
             CancellationToken cancellationToken = default)
         {
@@ -260,6 +261,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
             CancellationToken cancellationToken = default)
         {

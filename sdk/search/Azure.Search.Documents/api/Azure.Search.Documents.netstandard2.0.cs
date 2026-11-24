@@ -122,7 +122,6 @@ namespace Azure.Search.Documents
             V2024_07_01 = 3,
             V2025_09_01 = 4,
             V2026_04_01 = 5,
-            V2026_08_01_Preview = 7,
             V2026_10_01 = 8,
             V2026_11_01_Preview = 9,
         }
@@ -5642,7 +5641,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexKnowledgeSourceFilterHint : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceFilterHint>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceFilterHint>
     {
         public SearchIndexKnowledgeSourceFilterHint(string field) { }
-        public SearchIndexKnowledgeSourceFilterHint(string field, System.Collections.Generic.IEnumerable<string> fieldValues) { }
         public Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceFilterHintAutoConfiguration AutoConfiguration { get { throw null; } set { } }
         public string Field { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FieldValues { get { throw null; } }

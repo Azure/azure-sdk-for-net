@@ -342,17 +342,51 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(1, json.RootElement.EnumerateObject().Count(p => p.Name == "boost"));
         }
 
-        [Test]
-        public void UnknownScoringRetainsLegacyFieldAndBoost()
+        [TestCase("J", null)]
+        [TestCase("J", "linear")]
+        [TestCase("W", null)]
+        [TestCase("W", "linear")]
+        public void UnknownScoringRetainsLegacyFieldAndBoost(string format, string interpolation)
         {
+            var options = new ModelReaderWriterOptions(format);
             var function = ModelReaderWriter.Read<ScoringFunction>(
-                BinaryData.FromString("""{"type":"future","fieldName":"rating","boost":2,"futureOption":true}"""));
+                BinaryData.FromString($$$"""{"type":"future","fieldName":"rating","boost":2,"interpolation":{{{JsonSerializer.Serialize(interpolation)}}},"futureOption":{"enabled":true}}"""),
+                options);
+            Assert.IsInstanceOf<UnknownScoringFunction>(function);
             Assert.AreEqual("rating", function.FieldName);
             Assert.AreEqual(2, function.Boost);
-            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(function));
-            Assert.AreEqual("rating", json.RootElement.GetProperty("fieldName").GetString());
-            Assert.AreEqual(2, json.RootElement.GetProperty("boost").GetDouble());
-            Assert.IsTrue(json.RootElement.GetProperty("futureOption").GetBoolean());
+            Assert.AreEqual(interpolation, function.Interpolation?.ToSerialString());
+
+            BinaryData data = ModelReaderWriter.Write(function, options);
+            using JsonDocument json = JsonDocument.Parse(data);
+            JsonElement root = json.RootElement;
+            Assert.AreEqual("future", root.GetProperty("type").GetString());
+            Assert.AreEqual("rating", root.GetProperty("fieldName").GetString());
+            Assert.AreEqual(2, root.GetProperty("boost").GetDouble());
+            Assert.AreEqual(1, root.EnumerateObject().Count(p => p.Name == "fieldName"));
+            Assert.AreEqual(1, root.EnumerateObject().Count(p => p.Name == "boost"));
+            if (interpolation is null)
+            {
+                Assert.IsFalse(root.TryGetProperty("interpolation", out _));
+            }
+            else
+            {
+                Assert.AreEqual(interpolation, root.GetProperty("interpolation").GetString());
+            }
+            if (format == "J")
+            {
+                Assert.IsTrue(root.GetProperty("futureOption").GetProperty("enabled").GetBoolean());
+            }
+            else
+            {
+                Assert.IsFalse(root.TryGetProperty("futureOption", out _));
+            }
+
+            ScoringFunction roundtrip = ModelReaderWriter.Read<ScoringFunction>(data, options);
+            Assert.IsInstanceOf<UnknownScoringFunction>(roundtrip);
+            Assert.AreEqual(function.FieldName, roundtrip.FieldName);
+            Assert.AreEqual(function.Boost, roundtrip.Boost);
+            Assert.AreEqual(function.Interpolation, roundtrip.Interpolation);
         }
 
         [Test]

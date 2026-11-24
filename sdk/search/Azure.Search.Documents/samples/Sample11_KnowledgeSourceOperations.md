@@ -43,10 +43,9 @@ SearchIndexKnowledgeSource searchIndexSource = new SearchIndexKnowledgeSource(
         {
             Filters =
             {
-                new SearchIndexKnowledgeSourceFilterHint(
-                    "category",
-                    new[] { "Luxury", "Budget" })
+                new SearchIndexKnowledgeSourceFilterHint("category")
                 {
+                    FieldValues = { "Luxury", "Budget" },
                     FilterInstructions = "Use this field when the user specifies a hotel category."
                 }
             },

@@ -12,9 +12,11 @@ namespace Azure.Search.Documents.Indexes.Models
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     public partial class ScoringFunction
     {
+        // Preserve the GA base property; November declares it only on classic scoring subtypes.
         /// <summary> Gets or sets the name of the field used as input to the scoring function. </summary>
         public virtual string FieldName { get; set; }
 
+        // Preserve the GA base property without adding boost to random scoring payloads.
         /// <summary> Gets or sets a multiplier for the raw score. </summary>
         public virtual double Boost { get; set; }
 

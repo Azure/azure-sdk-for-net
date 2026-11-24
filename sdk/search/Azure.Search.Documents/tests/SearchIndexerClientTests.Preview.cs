@@ -25,9 +25,9 @@ namespace Azure.Search.Documents.Tests
     /// </summary>
     public partial class SearchIndexerClientTests
     {
-        // search-preview:2026-08-01-preview
+        // search-preview:2026-11-01-preview
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_11_01_Preview)]
         public async Task CreateOrUpdateSendsCacheControlParameters()
         {
             var transport = new MockTransport(

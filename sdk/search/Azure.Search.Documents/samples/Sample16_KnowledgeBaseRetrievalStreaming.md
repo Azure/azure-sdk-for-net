@@ -1,6 +1,6 @@
 # Stream Knowledge Base Retrieval
 
-This sample demonstrates how to consume typed server-sent events from a knowledge base retrieval using one streaming connection. The streaming API is asynchronous and available with the `2026-08-01-preview` service version.
+This sample demonstrates how to consume typed server-sent events from a knowledge base retrieval using one streaming connection. The streaming API is asynchronous. This sample uses the `2026-11-01-preview` service version and its intent-based retrieval request.
 
 The stream reports retrieval and activity progress, completed answers and references, and one terminal event. A successful terminal event can report either complete (`200`) or partial (`206`) results. An `error` event is also terminal. The service does not emit token-delta events.
 

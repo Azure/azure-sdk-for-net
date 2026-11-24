@@ -70,10 +70,9 @@ namespace Azure.Search.Documents.Tests.Samples
                         {
                             Filters =
                             {
-                                new SearchIndexKnowledgeSourceFilterHint(
-                                    "category",
-                                    new[] { "Luxury", "Budget" })
+                                new SearchIndexKnowledgeSourceFilterHint("category")
                                 {
+                                    FieldValues = { "Luxury", "Budget" },
                                     FilterInstructions = "Use this field when the user specifies a hotel category."
                                 }
                             },
@@ -111,7 +110,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
         public async Task CreatePrivateBlobKnowledgeSourceAndInspectAnalyzer()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(

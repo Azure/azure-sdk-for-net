@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_11_01_Preview)]
     public partial class KnowledgeSourceFabricOntologyPreview : SearchTestBase
     {
         public KnowledgeSourceFabricOntologyPreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)

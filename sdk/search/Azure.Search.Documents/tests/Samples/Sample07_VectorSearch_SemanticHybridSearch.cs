@@ -23,8 +23,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
-        [Ignore("Temporarily disabled pending PPE semantic reranker recovery: HTTP 206 Transient fallback or HTTP 503.")]
         public async Task SemanticHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
