@@ -220,17 +220,19 @@ What they cover:
   normally become `WidgetData` and `WidgetCollection`. Keep `Resource` when it is part of the
   domain name, such as `PrivateLinkResource`; this simplification does not apply to
   framework-owned types.
-- <a name="naming-data-collection-suffixes" href="#naming-data-collection-suffixes">§</a> **`Data` and `Collection` suffixes are reserved for the ARM resource trio.** `*Data` implies
-  `ResourceData`/`TrackedResourceData` inheritance; `*Collection` implies `ArmCollection`
-  inheritance. A handful of named domain terms are established exceptions —
-  `MongoDBCollection`, `CosmosDBSqlCollection`, `CassandraCollection` — because they name a real
-  collection/grouping concept from the service domain, not a resource collection. A plain
-  settings/config/payload model named `*Data` or `*Collection` without the matching base
-  misrepresents itself as resource-trio state.
-- <a name="naming-resource-collection-alternatives" href="#naming-resource-collection-alternatives">§</a> For an incorrectly named `*Resource` model, use a descriptive domain noun; use `Data` only
-  for a resource-data subtype, not a generic `Info` fallback. For a non-resource `*Collection`,
-  `Group` or `List` can be appropriate if it describes the domain and does not collide; retain
-  established domain terms such as `MongoDBCollection`.
+- <a name="naming-data-collection-suffixes" href="#naming-data-collection-suffixes">§</a> **In management-plane libraries, `Data` and `Collection` suffixes are reserved for the ARM
+  resource trio.** `*Data` implies `ResourceData`/`TrackedResourceData` inheritance;
+  `*Collection` implies `ArmCollection` inheritance. Established domain terms such as
+  `MongoDBCollection`, `CosmosDBSqlCollection`, and `CassandraCollection` are exceptions because
+  they name a real domain concept, not a resource collection. A plain settings/config/payload
+  model with either suffix and without the matching base misrepresents its ARM role.
+  In data-plane libraries, do not apply these ARM inheritance requirements; assess names by their
+  domain meaning, such as `EventData` for event payloads.
+- <a name="naming-resource-collection-alternatives" href="#naming-resource-collection-alternatives">§</a> For an incorrectly named `*Resource` model, use a descriptive domain noun rather than a
+  generic `Info` fallback. In management-plane libraries, use `Data` only for a resource-data
+  subtype. For a non-resource `*Collection`, `Group` or `List` can be appropriate if it
+  describes the domain and does not collide; retain established domain terms such as
+  `MongoDBCollection`. Do not apply ARM-specific replacement requirements to data-plane models.
 - <a name="naming-expand-abbreviations" href="#naming-expand-abbreviations">§</a> **Expand single-word and abbreviated names.** `AZC0012` only covers types — apply the same
   standard to public properties and parameters. Also expand abbreviations the analyzer never
   sees, on types *and* members: `auth` → `authentication`, `agentRef` → `agent`, `params` →
