@@ -1,6 +1,6 @@
 # Release History
 
-## 1.20.0-beta.2 (Unreleased)
+## 1.20.0-beta.2 (2026-11-24)
 
 ### Features Added
 
@@ -10,8 +10,6 @@
 
 - The `2026-09-01` service API no longer exposes the geographic namespace origin, asynchronous directory deletion, or bucket Key Vault user-assigned identity settings from `2026-08-15-preview`.
 - The wire value of `NetAppLdapServerType.OpenLdap` is now `OpenLdap` rather than `OpenLDAP`, matching the service specification.
-
-### Bugs Fixed
 
 ### Other Changes
 
