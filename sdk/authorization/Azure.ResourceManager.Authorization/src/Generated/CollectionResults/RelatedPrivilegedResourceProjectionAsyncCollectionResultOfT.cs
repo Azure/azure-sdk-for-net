@@ -17,14 +17,14 @@ using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    internal partial class RelatedResourceProjectionAsyncCollectionResultOfT : AsyncPageable<RelatedResourceProjection>
+    internal partial class RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT : AsyncPageable<RelatedPrivilegedResourceProjection>
     {
         private readonly PrivilegedResources _client;
         private readonly string _privilegedResourceId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RelatedResourceProjectionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivilegedResources client used to send requests. </param>
         /// <param name="privilegedResourceId">
         /// Opaque projection identifier of the parent privileged resource — the
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RelatedResourceProjectionAsyncCollectionResultOfT(PrivilegedResources client, string privilegedResourceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT(PrivilegedResources client, string privilegedResourceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _privilegedResourceId = privilegedResourceId;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Authorization
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RelatedResourceProjectionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RelatedResourceProjectionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<RelatedResourceProjection>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<RelatedPrivilegedResourceProjection>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<RelatedResourceProjection>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<RelatedPrivilegedResourceProjection>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 PagedRelatedResourceProjection result = PagedRelatedResourceProjection.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<RelatedResourceProjection>.FromValues((IReadOnlyList<RelatedResourceProjection>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RelatedPrivilegedResourceProjection>.FromValues((IReadOnlyList<RelatedPrivilegedResourceProjection>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

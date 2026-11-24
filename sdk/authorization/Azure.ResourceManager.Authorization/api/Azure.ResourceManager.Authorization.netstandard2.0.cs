@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.Authorization
         public static Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionCollection GetAccessReviewScheduleDefinitions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.Models.RoleManagementAlertOperationResult> GetAlertOperation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.Models.RoleManagementAlertOperationResult>> GetAlertOperationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.ResourceProjection> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Authorization.Models.AccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.AccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.ResourceProjection> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Authorization.Models.AccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.AccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataResource> GetAuthorizationProviderOperationsMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.Authorization
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteResource>> GetPrivilegedResourceFavoriteAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string favoriteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteResource GetPrivilegedResourceFavoriteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteCollection GetPrivilegedResourceFavorites(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection> GetRelatedResources(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection> GetRelatedResourcesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection> GetRelatedResources(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection> GetRelatedResourcesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.RoleAssignmentResource> GetRoleAssignment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.RoleAssignmentResource> GetRoleAssignment(this Azure.ResourceManager.ArmResource armResource, string roleAssignmentName, string tenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleAssignmentResource>> GetRoleAssignmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1853,9 +1853,9 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Authorization.AccessReviewInstancesAssignedForMyApprovalResource> GetAccessReviewInstancesAssignedForMyApproval(string scheduleDefinitionId, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AccessReviewInstancesAssignedForMyApprovalResource>> GetAccessReviewInstancesAssignedForMyApprovalAsync(string scheduleDefinitionId, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AccessReviewInstancesAssignedForMyApprovalCollection GetAccessReviewInstancesAssignedForMyApprovals(string scheduleDefinitionId) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.ResourceProjection> GetAll(Azure.ResourceManager.Authorization.Models.AccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.AccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection> GetAll(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.ResourceProjection> GetAllAsync(Azure.ResourceManager.Authorization.Models.AccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.AccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection> GetAllAsync(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter? accessScope = default(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter?), int? maxpagesize = default(int?), string filter = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataResource> GetAuthorizationProviderOperationsMetadata(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1863,8 +1863,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteResource> GetPrivilegedResourceFavorite(string favoriteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteResource>> GetPrivilegedResourceFavoriteAsync(string favoriteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteCollection GetPrivilegedResourceFavorites() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection> GetRelatedResources(string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection> GetRelatedResourcesAsync(string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection> GetRelatedResources(string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection> GetRelatedResourcesAsync(string privilegedResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAttributeNamespaceResource> GetRoleManagementAttributeNamespace(string attributeNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAttributeNamespaceResource>> GetRoleManagementAttributeNamespaceAsync(string attributeNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.RoleManagementAttributeNamespaceCollection GetRoleManagementAttributeNamespaces() { throw null; }
@@ -2561,23 +2561,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType left, Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AccessScopeFilter : System.IEquatable<Azure.ResourceManager.Authorization.Models.AccessScopeFilter>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AccessScopeFilter(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AccessScopeFilter AllAccessible { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.AccessScopeFilter PimOnly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.AccessScopeFilter other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.AccessScopeFilter left, Azure.ResourceManager.Authorization.Models.AccessScopeFilter right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.AccessScopeFilter (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.AccessScopeFilter? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.AccessScopeFilter left, Azure.ResourceManager.Authorization.Models.AccessScopeFilter right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmAuthorizationModelFactory
     {
         public static Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentity AccessReviewActorIdentity(string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null) { throw null; }
@@ -2615,27 +2598,30 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string denyAssignmentName, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> principals, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected) { throw null; }
         public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string denyAssignmentName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> deniedPermissions = null, string scope = null, bool? isAppliedToChildScopes = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> deniedPrincipals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludedPrincipals = null, bool? isSystemProtected = default(bool?), Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect? denyAssignmentEffect = default(Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission DenyAssignmentPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<string> dataActions = null, System.Collections.Generic.IEnumerable<string> notDataActions = null, string condition = null, string conditionVersion = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.DirectRoleSource DirectRoleSource() { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource DirectRoleAssignmentSource() { throw null; }
         public static Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertConfigurationProperties DuplicateRoleCreatedAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertIncidentProperties DuplicateRoleCreatedAlertIncidentProperties(string roleName = null, string duplicateRoles = null, string reason = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.EligibleChildResource EligibleChildResource(string id = null, string name = null, string resourceType = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.GroupReference GroupReference(string id = null, string displayName = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.GroupRoleSource GroupRoleSource(Azure.ResourceManager.Authorization.Models.GroupReference group = null, Azure.ResourceManager.Authorization.Models.GroupMembershipState membershipState = default(Azure.ResourceManager.Authorization.Models.GroupMembershipState)) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ParentResource ParentResource(Azure.ResourceManager.Authorization.Models.ScopeKind type = default(Azure.ResourceManager.Authorization.Models.ScopeKind), string scope = null, string displayName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null, Azure.ResourceManager.Authorization.Models.ParentResource parent = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource GroupRoleAssignmentSource(Azure.ResourceManager.Authorization.Models.GroupReference group = null, Azure.ResourceManager.Authorization.Models.GroupMembershipState membershipState = default(Azure.ResourceManager.Authorization.Models.GroupMembershipState)) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.ParentResourceScope ParentResourceScope(Azure.ResourceManager.Authorization.Models.ResourceScopeKind type = default(Azure.ResourceManager.Authorization.Models.ResourceScopeKind), string scope = null, string displayName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null, Azure.ResourceManager.Authorization.Models.ParentResourceScope parent = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings PimOnlyModeSettings(Azure.ResourceManager.Authorization.Models.PimOnlyMode? mode = default(Azure.ResourceManager.Authorization.Models.PimOnlyMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSet> excludes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType> excludedAssignmentTypes = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties PolicyAssignmentProperties(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier policyId, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy, System.DateTimeOffset? lastModifiedOn, Azure.Core.ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType, Azure.Core.ResourceIdentifier scopeId, string scopeDisplayName, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties PolicyAssignmentProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?), Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), Azure.Core.ResourceIdentifier policyId = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Authorization.PrivilegedResourceFavoriteData PrivilegedResourceFavoriteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privilegedResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection PrivilegedResourceProjection(string projectionId = null, Azure.Core.ResourceIdentifier scope = null, string displayName = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Authorization.Models.ParentResourceScope parent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> roles = null, bool isFavorite = false) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RecordAllDecisionsProperties RecordAllDecisionsProperties(string principalId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Authorization.Models.RecordAllDecisionsResult? decision = default(Azure.ResourceManager.Authorization.Models.RecordAllDecisionsResult?), string justification = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.RelatedResourceProjection RelatedResourceProjection(string projectionId = null, Azure.Core.ResourceIdentifier scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> roles = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ResourceProjection ResourceProjection(string projectionId = null, Azure.Core.ResourceIdentifier scope = null, string displayName = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Authorization.Models.ParentResource parent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> roles = null, bool isFavorite = false) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection RelatedPrivilegedResourceProjection(string projectionId = null, Azure.Core.ResourceIdentifier scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> roles = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateOrUpdateContent RoleAssignmentCreateOrUpdateContent(string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid principalId = default(System.Guid), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string description = null, string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null, Azure.Core.ResourceIdentifier delegatedManagedIdentityResourceId = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleAssignmentData RoleAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string description = null, string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null, Azure.Core.ResourceIdentifier delegatedManagedIdentityResourceId = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleAssignmentScheduleData RoleAssignmentScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.Core.ResourceIdentifier roleAssignmentScheduleRequestId = null, Azure.Core.ResourceIdentifier linkedRoleEligibilityScheduleId = null, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType? assignmentType = default(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? memberType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails RoleAssignmentScheduleDetails(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration expiration = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration RoleAssignmentScheduleExpiration(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType? type = default(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleAssignmentScheduleInstanceData RoleAssignmentScheduleInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.Core.ResourceIdentifier roleAssignmentScheduleId = null, Azure.Core.ResourceIdentifier originRoleAssignmentId = null, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier linkedRoleEligibilityScheduleId = null, Azure.Core.ResourceIdentifier linkedRoleEligibilityScheduleInstanceId = null, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType? assignmentType = default(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? memberType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleAssignmentScheduleRequestData RoleAssignmentScheduleRequestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType? requestType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), string approvalId = null, Azure.Core.ResourceIdentifier targetRoleAssignmentScheduleId = null, Azure.Core.ResourceIdentifier targetRoleAssignmentScheduleInstanceId = null, Azure.Core.ResourceIdentifier linkedRoleEligibilityScheduleId = null, string justification = null, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo ticketInfo = null, string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? requestorId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType? expirationType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo RoleAssignmentScheduleTicketInfo(string ticketNumber = null, string ticketSystem = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary RoleAssignmentSummary(string roleId = null, string parentRoleId = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDisplayName = null, Azure.Core.ResourceIdentifier scope = null, Azure.ResourceManager.Authorization.Models.AssignmentStatus assignmentStatus = default(Azure.ResourceManager.Authorization.Models.AssignmentStatus), Azure.ResourceManager.Authorization.Models.ScheduleInfo scheduleInfo = null, Azure.ResourceManager.Authorization.Models.RoleSource source = null, bool isLeastPrivilege = false) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentSource RoleAssignmentSource(string memberType = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary RoleAssignmentSummary(string roleId = null, string parentRoleId = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDisplayName = null, Azure.Core.ResourceIdentifier scope = null, Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus assignmentStatus = default(Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus), Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails scheduleInfo = null, Azure.ResourceManager.Authorization.Models.RoleAssignmentSource source = null, bool isLeastPrivilege = false) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission RoleDefinitionPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<string> dataActions = null, System.Collections.Generic.IEnumerable<string> notDataActions = null, string condition = null, string conditionVersion = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleData RoleEligibilityScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.Core.ResourceIdentifier roleEligibilityScheduleRequestId = null, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? memberType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleInstanceData RoleEligibilityScheduleInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.Core.ResourceIdentifier roleEligibilityScheduleId = null, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? memberType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null) { throw null; }
@@ -2667,31 +2653,11 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget RoleManagementPolicyRuleTarget(string caller = null, System.Collections.Generic.IEnumerable<string> operations = null, Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel? level = default(Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel?), System.Collections.Generic.IEnumerable<string> targetObjects = null, System.Collections.Generic.IEnumerable<string> inheritableSettings = null, System.Collections.Generic.IEnumerable<string> enforcedSettings = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal RoleManagementPrincipal(string id = null, string displayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string email = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementUserInfo RoleManagementUserInfo(Azure.ResourceManager.Authorization.Models.RoleManagementUserType? userType = default(Azure.ResourceManager.Authorization.Models.RoleManagementUserType?), bool? isBackup = default(bool?), string id = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.RoleSource RoleSource(string memberType = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ScheduleExpiration ScheduleExpiration(Azure.ResourceManager.Authorization.Models.ScheduleExpirationType? type = default(Azure.ResourceManager.Authorization.Models.ScheduleExpirationType?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ScheduleInfo ScheduleInfo(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.ScheduleExpiration expiration = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null, int? thresholdNumberOfOwners = default(int?), int? thresholdPercentageOfOwnersOutOfAllRoleMembers = default(int?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertIncidentProperties TooManyOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = null, string assigneeType = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null, int? thresholdNumberOfPermanentOwners = default(int?), int? thresholdPercentageOfPermanentOwnersOutOfAllOwners = default(int?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = null, string assigneeType = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSet UsersOrServicePrincipalSet(Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSetUserType? type = default(Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSetUserType?), string id = null, string displayName = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AssignmentStatus : System.IEquatable<Azure.ResourceManager.Authorization.Models.AssignmentStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AssignmentStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AssignmentStatus Active { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.AssignmentStatus Eligible { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.AssignmentStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.AssignmentStatus left, Azure.ResourceManager.Authorization.Models.AssignmentStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.AssignmentStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.AssignmentStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.AssignmentStatus left, Azure.ResourceManager.Authorization.Models.AssignmentStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class AuthorizationClassicAdministrator : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator>
     {
@@ -2832,18 +2798,18 @@ namespace Azure.ResourceManager.Authorization.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DirectRoleSource : Azure.ResourceManager.Authorization.Models.RoleSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>
+    public partial class DirectRoleAssignmentSource : Azure.ResourceManager.Authorization.Models.RoleAssignmentSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>
     {
-        internal DirectRoleSource() { }
-        protected override Azure.ResourceManager.Authorization.Models.RoleSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal DirectRoleAssignmentSource() { }
+        protected override Azure.ResourceManager.Authorization.Models.RoleAssignmentSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Authorization.Models.RoleSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Authorization.Models.RoleAssignmentSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.DirectRoleSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.DirectRoleSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DirectRoleAssignmentSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DuplicateRoleCreatedAlertConfigurationProperties : Azure.ResourceManager.Authorization.Models.RoleManagementAlertConfigurationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertConfigurationProperties>
     {
@@ -2939,20 +2905,20 @@ namespace Azure.ResourceManager.Authorization.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GroupRoleSource : Azure.ResourceManager.Authorization.Models.RoleSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>
+    public partial class GroupRoleAssignmentSource : Azure.ResourceManager.Authorization.Models.RoleAssignmentSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>
     {
-        internal GroupRoleSource() { }
+        internal GroupRoleAssignmentSource() { }
         public Azure.ResourceManager.Authorization.Models.GroupReference Group { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.GroupMembershipState MembershipState { get { throw null; } }
-        protected override Azure.ResourceManager.Authorization.Models.RoleSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Authorization.Models.RoleAssignmentSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Authorization.Models.RoleSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Authorization.Models.RoleAssignmentSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.GroupRoleSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.GroupRoleSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.GroupRoleAssignmentSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NotificationDeliveryType : System.IEquatable<Azure.ResourceManager.Authorization.Models.NotificationDeliveryType>
@@ -2970,23 +2936,23 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.NotificationDeliveryType left, Azure.ResourceManager.Authorization.Models.NotificationDeliveryType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ParentResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ParentResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResource>
+    public partial class ParentResourceScope : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>
     {
-        internal ParentResource() { }
+        internal ParentResourceScope() { }
         public string DisplayName { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.ParentResource Parent { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.ParentResourceScope Parent { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Properties { get { throw null; } }
         public string Scope { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.ScopeKind Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.Authorization.Models.ParentResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.Authorization.Models.ResourceScopeKind Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.Authorization.Models.ParentResourceScope JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.ParentResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Authorization.Models.ParentResourceScope PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.ParentResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ParentResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ParentResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.ParentResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.ParentResourceScope System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.ParentResourceScope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ParentResourceScope>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PimOnlyMode : System.IEquatable<Azure.ResourceManager.Authorization.Models.PimOnlyMode>
@@ -3044,6 +3010,45 @@ namespace Azure.ResourceManager.Authorization.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivilegedResourceAccessScopeFilter : System.IEquatable<Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivilegedResourceAccessScopeFilter(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter AllAccessible { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter PimOnly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter left, Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter left, Azure.ResourceManager.Authorization.Models.PrivilegedResourceAccessScopeFilter right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PrivilegedResourceProjection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>
+    {
+        internal PrivilegedResourceProjection() { }
+        public string DisplayName { get { throw null; } }
+        public bool IsFavorite { get { throw null; } }
+        public string Location { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.ParentResourceScope Parent { get { throw null; } }
+        public string ProjectionId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> Roles { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Scope { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PrivilegedResourceProjection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RecordAllDecisionsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RecordAllDecisionsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RecordAllDecisionsProperties>
     {
         public RecordAllDecisionsProperties() { }
@@ -3078,43 +3083,38 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.RecordAllDecisionsResult left, Azure.ResourceManager.Authorization.Models.RecordAllDecisionsResult right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RelatedResourceProjection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>
+    public partial class RelatedPrivilegedResourceProjection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>
     {
-        internal RelatedResourceProjection() { }
+        internal RelatedPrivilegedResourceProjection() { }
         public string ProjectionId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> Roles { get { throw null; } }
         public Azure.Core.ResourceIdentifier Scope { get { throw null; } }
-        protected virtual Azure.ResourceManager.Authorization.Models.RelatedResourceProjection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.RelatedResourceProjection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.RelatedResourceProjection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.RelatedResourceProjection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedResourceProjection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RelatedPrivilegedResourceProjection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceProjection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceScopeKind : System.IEquatable<Azure.ResourceManager.Authorization.Models.ResourceScopeKind>
     {
-        internal ResourceProjection() { }
-        public string DisplayName { get { throw null; } }
-        public bool IsFavorite { get { throw null; } }
-        public string Location { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.ParentResource Parent { get { throw null; } }
-        public string ProjectionId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary> Roles { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Scope { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.Authorization.Models.ResourceProjection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.ResourceProjection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.ResourceProjection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.ResourceProjection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ResourceProjection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceScopeKind(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.ResourceScopeKind ResourceGroup { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.ResourceScopeKind Subscription { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.ResourceScopeKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.ResourceScopeKind left, Azure.ResourceManager.Authorization.Models.ResourceScopeKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.ResourceScopeKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.ResourceScopeKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.ResourceScopeKind left, Azure.ResourceManager.Authorization.Models.ResourceScopeKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RoleAssignmentCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateOrUpdateContent>
     {
@@ -3176,6 +3176,55 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RoleAssignmentScheduleDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>
+    {
+        internal RoleAssignmentScheduleDetails() { }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration Expiration { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleAssignmentScheduleExpiration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>
+    {
+        internal RoleAssignmentScheduleExpiration() { }
+        public System.TimeSpan? Duration { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType? Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpiration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleAssignmentScheduleExpirationType : System.IEquatable<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleAssignmentScheduleExpirationType(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType AfterDateTime { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType AfterDuration { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType NoExpiration { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleExpirationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RoleAssignmentScheduleTicketInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo>
     {
         public RoleAssignmentScheduleTicketInfo() { }
@@ -3191,18 +3240,48 @@ namespace Azure.ResourceManager.Authorization.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class RoleAssignmentSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>
+    {
+        internal RoleAssignmentSource() { }
+        protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.RoleAssignmentSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.RoleAssignmentSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleAssignmentStatus : System.IEquatable<Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleAssignmentStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus Eligible { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus left, Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus left, Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RoleAssignmentSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary>
     {
         internal RoleAssignmentSummary() { }
-        public Azure.ResourceManager.Authorization.Models.AssignmentStatus AssignmentStatus { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentStatus AssignmentStatus { get { throw null; } }
         public bool IsLeastPrivilege { get { throw null; } }
         public string ParentRoleId { get { throw null; } }
         public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public string RoleDisplayName { get { throw null; } }
         public string RoleId { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.ScheduleInfo ScheduleInfo { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleDetails ScheduleInfo { get { throw null; } }
         public Azure.Core.ResourceIdentifier Scope { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.RoleSource Source { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentSource Source { get { throw null; } }
         protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Authorization.Models.RoleAssignmentSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3789,85 +3868,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementUserType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementUserType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleManagementUserType left, Azure.ResourceManager.Authorization.Models.RoleManagementUserType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class RoleSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleSource>
-    {
-        internal RoleSource() { }
-        protected virtual Azure.ResourceManager.Authorization.Models.RoleSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.RoleSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.RoleSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.RoleSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ScheduleExpiration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>
-    {
-        internal ScheduleExpiration() { }
-        public System.TimeSpan? Duration { get { throw null; } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.ScheduleExpirationType? Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.Authorization.Models.ScheduleExpiration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.ScheduleExpiration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.ScheduleExpiration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.ScheduleExpiration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleExpiration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScheduleExpirationType : System.IEquatable<Azure.ResourceManager.Authorization.Models.ScheduleExpirationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScheduleExpirationType(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ScheduleExpirationType AfterDateTime { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.ScheduleExpirationType AfterDuration { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.ScheduleExpirationType NoExpiration { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.ScheduleExpirationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.ScheduleExpirationType left, Azure.ResourceManager.Authorization.Models.ScheduleExpirationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.ScheduleExpirationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.ScheduleExpirationType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.ScheduleExpirationType left, Azure.ResourceManager.Authorization.Models.ScheduleExpirationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ScheduleInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>
-    {
-        internal ScheduleInfo() { }
-        public Azure.ResourceManager.Authorization.Models.ScheduleExpiration Expiration { get { throw null; } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.Authorization.Models.ScheduleInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.ScheduleInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.ScheduleInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.ScheduleInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.ScheduleInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScopeKind : System.IEquatable<Azure.ResourceManager.Authorization.Models.ScopeKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScopeKind(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ScopeKind ResourceGroup { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.ScopeKind Subscription { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.ScopeKind other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.ScopeKind left, Azure.ResourceManager.Authorization.Models.ScopeKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.ScopeKind (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.ScopeKind? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.ScopeKind left, Azure.ResourceManager.Authorization.Models.ScopeKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class TooManyOwnersAssignedToResourceAlertConfigurationProperties : Azure.ResourceManager.Authorization.Models.RoleManagementAlertConfigurationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties>

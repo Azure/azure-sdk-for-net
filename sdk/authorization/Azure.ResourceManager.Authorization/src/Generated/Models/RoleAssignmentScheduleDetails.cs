@@ -12,21 +12,21 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Schedule info backing a role grant — start time and expiration. </summary>
-    public partial class ScheduleInfo
+    public partial class RoleAssignmentScheduleDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleInfo"/>. </summary>
-        internal ScheduleInfo()
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleDetails"/>. </summary>
+        internal RoleAssignmentScheduleDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleDetails"/>. </summary>
         /// <param name="startsOn"> Start DateTime of the schedule. </param>
         /// <param name="expiration"> Expiration of the schedule. Absent implies no expiration is expressed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleInfo(DateTimeOffset? startsOn, ScheduleExpiration expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentScheduleDetails(DateTimeOffset? startsOn, RoleAssignmentScheduleExpiration expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartsOn = startsOn;
             Expiration = expiration;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Expiration of the schedule. Absent implies no expiration is expressed. </summary>
         [WirePath("expiration")]
-        public ScheduleExpiration Expiration { get; }
+        public RoleAssignmentScheduleExpiration Expiration { get; }
     }
 }

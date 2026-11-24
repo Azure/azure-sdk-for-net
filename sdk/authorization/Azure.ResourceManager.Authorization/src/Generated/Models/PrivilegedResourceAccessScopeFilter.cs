@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// Controls how broadly the response is scoped across the caller's readable
     /// subscriptions. Used by `PrivilegedResources.list#accessScope`.
     /// </summary>
-    public readonly partial struct AccessScopeFilter : IEquatable<AccessScopeFilter>
+    public readonly partial struct PrivilegedResourceAccessScopeFilter : IEquatable<PrivilegedResourceAccessScopeFilter>
     {
         private readonly string _value;
         /// <summary> Scope the response to subscriptions the caller has PIM assignments on. </summary>
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Expand the response to all subscriptions the caller can read. </summary>
         private const string AllAccessibleValue = "allAccessible";
 
-        /// <summary> Initializes a new instance of <see cref="AccessScopeFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivilegedResourceAccessScopeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AccessScopeFilter(string value)
+        public PrivilegedResourceAccessScopeFilter(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Scope the response to subscriptions the caller has PIM assignments on. </summary>
-        public static AccessScopeFilter PimOnly { get; } = new AccessScopeFilter(PimOnlyValue);
+        public static PrivilegedResourceAccessScopeFilter PimOnly { get; } = new PrivilegedResourceAccessScopeFilter(PimOnlyValue);
 
         /// <summary> Expand the response to all subscriptions the caller can read. </summary>
-        public static AccessScopeFilter AllAccessible { get; } = new AccessScopeFilter(AllAccessibleValue);
+        public static PrivilegedResourceAccessScopeFilter AllAccessible { get; } = new PrivilegedResourceAccessScopeFilter(AllAccessibleValue);
 
-        /// <summary> Determines if two <see cref="AccessScopeFilter"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PrivilegedResourceAccessScopeFilter"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AccessScopeFilter left, AccessScopeFilter right) => left.Equals(right);
+        public static bool operator ==(PrivilegedResourceAccessScopeFilter left, PrivilegedResourceAccessScopeFilter right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AccessScopeFilter"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PrivilegedResourceAccessScopeFilter"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AccessScopeFilter left, AccessScopeFilter right) => !left.Equals(right);
+        public static bool operator !=(PrivilegedResourceAccessScopeFilter left, PrivilegedResourceAccessScopeFilter right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AccessScopeFilter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivilegedResourceAccessScopeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessScopeFilter(string value) => new AccessScopeFilter(value);
+        public static implicit operator PrivilegedResourceAccessScopeFilter(string value) => new PrivilegedResourceAccessScopeFilter(value);
 
-        /// <summary> Converts a string to a <see cref="AccessScopeFilter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivilegedResourceAccessScopeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessScopeFilter?(string value) => value == null ? null : new AccessScopeFilter(value);
+        public static implicit operator PrivilegedResourceAccessScopeFilter?(string value) => value == null ? null : new PrivilegedResourceAccessScopeFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AccessScopeFilter other && Equals(other);
+        public override bool Equals(object obj) => obj is PrivilegedResourceAccessScopeFilter other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AccessScopeFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PrivilegedResourceAccessScopeFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

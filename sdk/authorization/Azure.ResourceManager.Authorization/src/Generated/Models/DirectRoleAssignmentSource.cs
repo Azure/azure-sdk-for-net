@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Direct user role assignment. </summary>
-    public partial class DirectRoleSource : RoleSource
+    public partial class DirectRoleAssignmentSource : RoleAssignmentSource
     {
-        /// <summary> Initializes a new instance of <see cref="DirectRoleSource"/>. </summary>
-        internal DirectRoleSource() : base(PrivilegedResourceMemberType.Direct)
+        /// <summary> Initializes a new instance of <see cref="DirectRoleAssignmentSource"/>. </summary>
+        internal DirectRoleAssignmentSource() : base(PrivilegedResourceMemberType.Direct)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DirectRoleSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectRoleAssignmentSource"/>. </summary>
         /// <param name="memberType">
         /// Membership type: `direct` (direct user assignment) or `group` (granted via
         /// a group the user is a member of).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DirectRoleSource(PrivilegedResourceMemberType memberType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memberType, additionalBinaryDataProperties)
+        internal DirectRoleAssignmentSource(PrivilegedResourceMemberType memberType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memberType, additionalBinaryDataProperties)
         {
         }
     }

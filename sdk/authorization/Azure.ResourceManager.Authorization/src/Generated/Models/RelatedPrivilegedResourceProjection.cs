@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// virtual machine, typically the NIC, NSG, public IP, or Bastion host),
     /// projected with its own scope and the roles the caller holds on it.
     /// </summary>
-    public partial class RelatedResourceProjection
+    public partial class RelatedPrivilegedResourceProjection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RelatedResourceProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelatedPrivilegedResourceProjection"/>. </summary>
         /// <param name="scope">
         /// Fully-qualified Azure resource path of the related (connect-enablement)
         /// resource — e.g. the virtual machine's NIC, NSG, public IP, or Bastion host.
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// `scope` field records the actual assignment scope. The caller activates the
         /// appropriate role here to enable connect to the primary resource.
         /// </param>
-        internal RelatedResourceProjection(ResourceIdentifier scope, IEnumerable<RoleAssignmentSummary> roles)
+        internal RelatedPrivilegedResourceProjection(ResourceIdentifier scope, IEnumerable<RoleAssignmentSummary> roles)
         {
             Scope = scope;
             Roles = roles.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelatedResourceProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelatedPrivilegedResourceProjection"/>. </summary>
         /// <param name="projectionId">
         /// Opaque server-generated identifier for this related-resource projection.
         /// Stable per (caller, related resource) pair. Clients MUST treat this as
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// appropriate role here to enable connect to the primary resource.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelatedResourceProjection(string projectionId, ResourceIdentifier scope, IList<RoleAssignmentSummary> roles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelatedPrivilegedResourceProjection(string projectionId, ResourceIdentifier scope, IList<RoleAssignmentSummary> roles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectionId = projectionId;
             Scope = scope;

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// types are non-breaking additions and clients SHOULD tolerate unknown
     /// values.
     /// </summary>
-    public partial class ResourceProjection
+    public partial class PrivilegedResourceProjection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivilegedResourceProjection"/>. </summary>
         /// <param name="scope">
         /// Fully-qualified Azure resource path (e.g.,
         /// `/subscriptions/{subId}/resourceGroups/my-rg/providers/Microsoft.Compute/virtualMachines/my-vm`).
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// Whether you have favorited this resource (see
         /// `privilegedResourceFavorites`). Always populated on every row.
         /// </param>
-        internal ResourceProjection(ResourceIdentifier scope, string displayName, string @type, string location, IDictionary<string, string> tags, ParentResource parent, IEnumerable<RoleAssignmentSummary> roles, bool isFavorite)
+        internal PrivilegedResourceProjection(ResourceIdentifier scope, string displayName, string @type, string location, IDictionary<string, string> tags, ParentResourceScope parent, IEnumerable<RoleAssignmentSummary> roles, bool isFavorite)
         {
             Scope = scope;
             DisplayName = displayName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Authorization.Models
             IsFavorite = isFavorite;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivilegedResourceProjection"/>. </summary>
         /// <param name="projectionId">
         /// Opaque server-generated identifier for this projection row. Stable per
         /// (caller, resource) pair. Clients MUST treat this as opaque — do not parse.
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// `privilegedResourceFavorites`). Always populated on every row.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProjection(string projectionId, ResourceIdentifier scope, string displayName, string @type, string location, IDictionary<string, string> tags, ParentResource parent, IList<RoleAssignmentSummary> roles, bool isFavorite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivilegedResourceProjection(string projectionId, ResourceIdentifier scope, string displayName, string @type, string location, IDictionary<string, string> tags, ParentResourceScope parent, IList<RoleAssignmentSummary> roles, bool isFavorite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectionId = projectionId;
             Scope = scope;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// do not need to walk `parentResource` to discover inherited roles.
         /// </summary>
         [WirePath("parentResource")]
-        public ParentResource Parent { get; }
+        public ParentResourceScope Parent { get; }
 
         /// <summary>
         /// Every role granting access to this resource — direct or inherited from

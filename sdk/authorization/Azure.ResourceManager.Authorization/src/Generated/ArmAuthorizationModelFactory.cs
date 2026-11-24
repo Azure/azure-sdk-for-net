@@ -1224,13 +1224,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// Whether you have favorited this resource (see
         /// `privilegedResourceFavorites`). Always populated on every row.
         /// </param>
-        /// <returns> A new <see cref="Models.ResourceProjection"/> instance for mocking. </returns>
-        public static ResourceProjection ResourceProjection(string projectionId = default, ResourceIdentifier scope = default, string displayName = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ParentResource parent = default, IEnumerable<RoleAssignmentSummary> roles = default, bool isFavorite = default)
+        /// <returns> A new <see cref="Models.PrivilegedResourceProjection"/> instance for mocking. </returns>
+        public static PrivilegedResourceProjection PrivilegedResourceProjection(string projectionId = default, ResourceIdentifier scope = default, string displayName = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ParentResourceScope parent = default, IEnumerable<RoleAssignmentSummary> roles = default, bool isFavorite = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             roles ??= new ChangeTrackingList<RoleAssignmentSummary>();
 
-            return new ResourceProjection(
+            return new PrivilegedResourceProjection(
                 projectionId,
                 scope,
                 displayName,
@@ -1287,12 +1287,12 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The next ancestor in the chain. Present on every entry except the
         /// outermost (root) scope, which omits the field.
         /// </param>
-        /// <returns> A new <see cref="Models.ParentResource"/> instance for mocking. </returns>
-        public static ParentResource ParentResource(ScopeKind @type = default, string scope = default, string displayName = default, IDictionary<string, BinaryData> properties = default, ParentResource parent = default)
+        /// <returns> A new <see cref="Models.ParentResourceScope"/> instance for mocking. </returns>
+        public static ParentResourceScope ParentResourceScope(ResourceScopeKind @type = default, string scope = default, string displayName = default, IDictionary<string, BinaryData> properties = default, ParentResourceScope parent = default)
         {
             properties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new ParentResource(
+            return new ParentResourceScope(
                 @type,
                 scope,
                 displayName,
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// option.
         /// </param>
         /// <returns> A new <see cref="Models.RoleAssignmentSummary"/> instance for mocking. </returns>
-        public static RoleAssignmentSummary RoleAssignmentSummary(string roleId = default, string parentRoleId = default, ResourceIdentifier roleDefinitionId = default, string roleDisplayName = default, ResourceIdentifier scope = default, AssignmentStatus assignmentStatus = default, ScheduleInfo scheduleInfo = default, RoleSource source = default, bool isLeastPrivilege = default)
+        public static RoleAssignmentSummary RoleAssignmentSummary(string roleId = default, string parentRoleId = default, ResourceIdentifier roleDefinitionId = default, string roleDisplayName = default, ResourceIdentifier scope = default, RoleAssignmentStatus assignmentStatus = default, RoleAssignmentScheduleDetails scheduleInfo = default, RoleAssignmentSource source = default, bool isLeastPrivilege = default)
         {
             return new RoleAssignmentSummary(
                 roleId,
@@ -1367,10 +1367,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Schedule info backing a role grant — start time and expiration. </summary>
         /// <param name="startsOn"> Start DateTime of the schedule. </param>
         /// <param name="expiration"> Expiration of the schedule. Absent implies no expiration is expressed. </param>
-        /// <returns> A new <see cref="Models.ScheduleInfo"/> instance for mocking. </returns>
-        public static ScheduleInfo ScheduleInfo(DateTimeOffset? startsOn = default, ScheduleExpiration expiration = default)
+        /// <returns> A new <see cref="Models.RoleAssignmentScheduleDetails"/> instance for mocking. </returns>
+        public static RoleAssignmentScheduleDetails RoleAssignmentScheduleDetails(DateTimeOffset? startsOn = default, RoleAssignmentScheduleExpiration expiration = default)
         {
-            return new ScheduleInfo(startsOn, expiration, default);
+            return new RoleAssignmentScheduleDetails(startsOn, expiration, default);
         }
 
         /// <summary> Expiration of a role grant schedule. </summary>
@@ -1384,31 +1384,31 @@ namespace Azure.ResourceManager.Authorization.Models
         /// Duration of the schedule as an ISO-8601 TimeSpan. Set when `type` is
         /// `AfterDuration`.
         /// </param>
-        /// <returns> A new <see cref="Models.ScheduleExpiration"/> instance for mocking. </returns>
-        public static ScheduleExpiration ScheduleExpiration(ScheduleExpirationType? @type = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
+        /// <returns> A new <see cref="Models.RoleAssignmentScheduleExpiration"/> instance for mocking. </returns>
+        public static RoleAssignmentScheduleExpiration RoleAssignmentScheduleExpiration(RoleAssignmentScheduleExpirationType? @type = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
         {
-            return new ScheduleExpiration(@type, endsOn, duration, default);
+            return new RoleAssignmentScheduleExpiration(@type, endsOn, duration, default);
         }
 
         /// <summary>
         /// Origin of a role grant. Discriminated by `memberType`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DirectRoleSource"/> and <see cref="Models.GroupRoleSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DirectRoleAssignmentSource"/> and <see cref="Models.GroupRoleAssignmentSource"/>.
         /// </summary>
         /// <param name="memberType">
         /// Membership type: `direct` (direct user assignment) or `group` (granted via
         /// a group the user is a member of).
         /// </param>
-        /// <returns> A new <see cref="Models.RoleSource"/> instance for mocking. </returns>
-        public static RoleSource RoleSource(string memberType = default)
+        /// <returns> A new <see cref="Models.RoleAssignmentSource"/> instance for mocking. </returns>
+        public static RoleAssignmentSource RoleAssignmentSource(string memberType = default)
         {
-            return new UnknownRoleSource(memberType is null ? default : new PrivilegedResourceMemberType(memberType), default);
+            return new UnknownRoleAssignmentSource(memberType is null ? default : new PrivilegedResourceMemberType(memberType), default);
         }
 
         /// <summary> Direct user role assignment. </summary>
-        /// <returns> A new <see cref="Models.DirectRoleSource"/> instance for mocking. </returns>
-        public static DirectRoleSource DirectRoleSource()
+        /// <returns> A new <see cref="Models.DirectRoleAssignmentSource"/> instance for mocking. </returns>
+        public static DirectRoleAssignmentSource DirectRoleAssignmentSource()
         {
-            return new DirectRoleSource(PrivilegedResourceMemberType.Direct, default);
+            return new DirectRoleAssignmentSource(PrivilegedResourceMemberType.Direct, default);
         }
 
         /// <summary>
@@ -1421,10 +1421,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <list type="bullet"><item><description>`active`   → one-step (activate the role).</description></item><item><description>`eligible` → two-step (activate your group membership first, then</description></item></list>
         /// activate the role).
         /// </param>
-        /// <returns> A new <see cref="Models.GroupRoleSource"/> instance for mocking. </returns>
-        public static GroupRoleSource GroupRoleSource(GroupReference @group = default, GroupMembershipState membershipState = default)
+        /// <returns> A new <see cref="Models.GroupRoleAssignmentSource"/> instance for mocking. </returns>
+        public static GroupRoleAssignmentSource GroupRoleAssignmentSource(GroupReference @group = default, GroupMembershipState membershipState = default)
         {
-            return new GroupRoleSource(PrivilegedResourceMemberType.Group, default, @group, membershipState);
+            return new GroupRoleAssignmentSource(PrivilegedResourceMemberType.Group, default, @group, membershipState);
         }
 
         /// <summary> A reference to a Microsoft Entra ID group through which a role is granted. </summary>
@@ -1460,12 +1460,12 @@ namespace Azure.ResourceManager.Authorization.Models
         /// `scope` field records the actual assignment scope. The caller activates the
         /// appropriate role here to enable connect to the primary resource.
         /// </param>
-        /// <returns> A new <see cref="Models.RelatedResourceProjection"/> instance for mocking. </returns>
-        public static RelatedResourceProjection RelatedResourceProjection(string projectionId = default, ResourceIdentifier scope = default, IEnumerable<RoleAssignmentSummary> roles = default)
+        /// <returns> A new <see cref="Models.RelatedPrivilegedResourceProjection"/> instance for mocking. </returns>
+        public static RelatedPrivilegedResourceProjection RelatedPrivilegedResourceProjection(string projectionId = default, ResourceIdentifier scope = default, IEnumerable<RoleAssignmentSummary> roles = default)
         {
             roles ??= new ChangeTrackingList<RoleAssignmentSummary>();
 
-            return new RelatedResourceProjection(projectionId, scope, (roles ?? new ChangeTrackingList<RoleAssignmentSummary>()).ToList(), default);
+            return new RelatedPrivilegedResourceProjection(projectionId, scope, (roles ?? new ChangeTrackingList<RoleAssignmentSummary>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

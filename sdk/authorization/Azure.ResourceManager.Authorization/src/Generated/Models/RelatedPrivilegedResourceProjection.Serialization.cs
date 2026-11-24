@@ -20,56 +20,56 @@ namespace Azure.ResourceManager.Authorization.Models
     /// virtual machine, typically the NIC, NSG, public IP, or Bastion host),
     /// projected with its own scope and the roles the caller holds on it.
     /// </summary>
-    public partial class RelatedResourceProjection : IJsonModel<RelatedResourceProjection>
+    public partial class RelatedPrivilegedResourceProjection : IJsonModel<RelatedPrivilegedResourceProjection>
     {
-        /// <summary> Initializes a new instance of <see cref="RelatedResourceProjection"/> for deserialization. </summary>
-        internal RelatedResourceProjection()
+        /// <summary> Initializes a new instance of <see cref="RelatedPrivilegedResourceProjection"/> for deserialization. </summary>
+        internal RelatedPrivilegedResourceProjection()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RelatedResourceProjection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RelatedPrivilegedResourceProjection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelatedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelatedPrivilegedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRelatedResourceProjection(document.RootElement, options);
+                        return DeserializeRelatedPrivilegedResourceProjection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelatedResourceProjection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelatedPrivilegedResourceProjection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelatedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelatedPrivilegedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RelatedResourceProjection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelatedPrivilegedResourceProjection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RelatedResourceProjection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RelatedPrivilegedResourceProjection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelatedResourceProjection IPersistableModel<RelatedResourceProjection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RelatedPrivilegedResourceProjection IPersistableModel<RelatedPrivilegedResourceProjection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RelatedResourceProjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RelatedPrivilegedResourceProjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RelatedResourceProjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RelatedPrivilegedResourceProjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelatedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelatedPrivilegedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelatedResourceProjection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RelatedPrivilegedResourceProjection)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelatedResourceProjection IJsonModel<RelatedResourceProjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RelatedPrivilegedResourceProjection IJsonModel<RelatedPrivilegedResourceProjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RelatedResourceProjection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RelatedPrivilegedResourceProjection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelatedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelatedPrivilegedResourceProjection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelatedResourceProjection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RelatedPrivilegedResourceProjection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRelatedResourceProjection(document.RootElement, options);
+            return DeserializeRelatedPrivilegedResourceProjection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RelatedResourceProjection DeserializeRelatedResourceProjection(JsonElement element, ModelReaderWriterOptions options)
+        internal static RelatedPrivilegedResourceProjection DeserializeRelatedPrivilegedResourceProjection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RelatedResourceProjection(projectionId, scope, roles ?? new ChangeTrackingList<RoleAssignmentSummary>(), additionalBinaryDataProperties);
+            return new RelatedPrivilegedResourceProjection(projectionId, scope, roles ?? new ChangeTrackingList<RoleAssignmentSummary>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RelatedResourceProjection item in Value)
+            foreach (RelatedPrivilegedResourceProjection item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            IList<RelatedResourceProjection> value = default;
+            IList<RelatedPrivilegedResourceProjection> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RelatedResourceProjection> array = new List<RelatedResourceProjection>();
+                    List<RelatedPrivilegedResourceProjection> array = new List<RelatedPrivilegedResourceProjection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RelatedResourceProjection.DeserializeRelatedResourceProjection(item, options));
+                        array.Add(RelatedPrivilegedResourceProjection.DeserializeRelatedPrivilegedResourceProjection(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedRelatedResourceProjection(value ?? new ChangeTrackingList<RelatedResourceProjection>(), nextLink, additionalBinaryDataProperties);
+            return new PagedRelatedResourceProjection(value ?? new ChangeTrackingList<RelatedPrivilegedResourceProjection>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

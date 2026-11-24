@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ResourceProjection item in Value)
+            foreach (PrivilegedResourceProjection item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            IList<ResourceProjection> value = default;
+            IList<PrivilegedResourceProjection> value = default;
             Uri nextLink = default;
             int? count = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ResourceProjection> array = new List<ResourceProjection>();
+                    List<PrivilegedResourceProjection> array = new List<PrivilegedResourceProjection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProjection.DeserializeResourceProjection(item, options));
+                        array.Add(PrivilegedResourceProjection.DeserializePrivilegedResourceProjection(item, options));
                     }
                     value = array;
                     continue;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedResourceProjection(value ?? new ChangeTrackingList<ResourceProjection>(), nextLink, count, additionalBinaryDataProperties);
+            return new PagedResourceProjection(value ?? new ChangeTrackingList<PrivilegedResourceProjection>(), nextLink, count, additionalBinaryDataProperties);
         }
     }
 }

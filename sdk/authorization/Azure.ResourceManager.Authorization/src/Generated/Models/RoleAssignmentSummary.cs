@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// a recommendation so clients can guide users toward the least-privilege
         /// option.
         /// </param>
-        internal RoleAssignmentSummary(string roleId, ResourceIdentifier roleDefinitionId, string roleDisplayName, ResourceIdentifier scope, AssignmentStatus assignmentStatus, ScheduleInfo scheduleInfo, RoleSource source, bool isLeastPrivilege)
+        internal RoleAssignmentSummary(string roleId, ResourceIdentifier roleDefinitionId, string roleDisplayName, ResourceIdentifier scope, RoleAssignmentStatus assignmentStatus, RoleAssignmentScheduleDetails scheduleInfo, RoleAssignmentSource source, bool isLeastPrivilege)
         {
             RoleId = roleId;
             RoleDefinitionId = roleDefinitionId;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// option.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentSummary(string roleId, string parentRoleId, ResourceIdentifier roleDefinitionId, string roleDisplayName, ResourceIdentifier scope, AssignmentStatus assignmentStatus, ScheduleInfo scheduleInfo, RoleSource source, bool isLeastPrivilege, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentSummary(string roleId, string parentRoleId, ResourceIdentifier roleDefinitionId, string roleDisplayName, ResourceIdentifier scope, RoleAssignmentStatus assignmentStatus, RoleAssignmentScheduleDetails scheduleInfo, RoleAssignmentSource source, bool isLeastPrivilege, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleId = roleId;
             ParentRoleId = parentRoleId;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// tolerate unknown values.
         /// </summary>
         [WirePath("assignmentStatus")]
-        public AssignmentStatus AssignmentStatus { get; }
+        public RoleAssignmentStatus AssignmentStatus { get; }
 
         /// <summary>
         /// Schedule (start time and expiration) backing this role grant. Populated for
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// by `AfterDuration` (with `duration`) or `AfterDateTime` (with `endDateTime`).
         /// </summary>
         [WirePath("scheduleInfo")]
-        public ScheduleInfo ScheduleInfo { get; }
+        public RoleAssignmentScheduleDetails ScheduleInfo { get; }
 
         /// <summary> Origin of the role grant — direct user assignment or via group membership. </summary>
         [WirePath("source")]
-        public RoleSource Source { get; }
+        public RoleAssignmentSource Source { get; }
 
         /// <summary>
         /// Whether this role is a least-privilege role for the resource. A value of

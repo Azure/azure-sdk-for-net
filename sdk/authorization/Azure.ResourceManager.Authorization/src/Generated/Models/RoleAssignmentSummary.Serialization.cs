@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceIdentifier roleDefinitionId = default;
             string roleDisplayName = default;
             ResourceIdentifier scope = default;
-            AssignmentStatus assignmentStatus = default;
-            ScheduleInfo scheduleInfo = default;
-            RoleSource source = default;
+            RoleAssignmentStatus assignmentStatus = default;
+            RoleAssignmentScheduleDetails scheduleInfo = default;
+            RoleAssignmentSource source = default;
             bool isLeastPrivilege = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("assignmentStatus"u8))
                 {
-                    assignmentStatus = new AssignmentStatus(prop.Value.GetString());
+                    assignmentStatus = new RoleAssignmentStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scheduleInfo"u8))
                 {
-                    scheduleInfo = ScheduleInfo.DeserializeScheduleInfo(prop.Value, options);
+                    scheduleInfo = RoleAssignmentScheduleDetails.DeserializeRoleAssignmentScheduleDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
                 {
-                    source = RoleSource.DeserializeRoleSource(prop.Value, options);
+                    source = RoleAssignmentSource.DeserializeRoleAssignmentSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isLeastPrivilege"u8))

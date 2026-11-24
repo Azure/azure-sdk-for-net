@@ -13,52 +13,52 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expiration of a role grant schedule. </summary>
-    public partial class ScheduleExpiration : IJsonModel<ScheduleExpiration>
+    /// <summary> Schedule info backing a role grant — start time and expiration. </summary>
+    public partial class RoleAssignmentScheduleDetails : IJsonModel<RoleAssignmentScheduleDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduleExpiration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RoleAssignmentScheduleDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleExpiration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScheduleExpiration(document.RootElement, options);
+                        return DeserializeRoleAssignmentScheduleDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleExpiration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleExpiration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleExpiration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduleExpiration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RoleAssignmentScheduleDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduleExpiration IPersistableModel<ScheduleExpiration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RoleAssignmentScheduleDetails IPersistableModel<RoleAssignmentScheduleDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduleExpiration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RoleAssignmentScheduleDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScheduleExpiration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoleAssignmentScheduleDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,20 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleExpiration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleExpiration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentScheduleDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(StartsOn))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndsOn))
+            if (Optional.IsDefined(Expiration))
             {
-                writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndsOn.Value, "O");
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value, "P");
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteObjectValue(Expiration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +103,50 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduleExpiration IJsonModel<ScheduleExpiration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RoleAssignmentScheduleDetails IJsonModel<RoleAssignmentScheduleDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduleExpiration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RoleAssignmentScheduleDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleExpiration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleExpiration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentScheduleDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduleExpiration(document.RootElement, options);
+            return DeserializeRoleAssignmentScheduleDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScheduleExpiration DeserializeScheduleExpiration(JsonElement element, ModelReaderWriterOptions options)
+        internal static RoleAssignmentScheduleDetails DeserializeRoleAssignmentScheduleDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ScheduleExpirationType? @type = default;
-            DateTimeOffset? endsOn = default;
-            TimeSpan? duration = default;
+            DateTimeOffset? startsOn = default;
+            RoleAssignmentScheduleExpiration expiration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("startDateTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @type = new ScheduleExpirationType(prop.Value.GetString());
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("endDateTime"u8))
+                if (prop.NameEquals("expiration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endsOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("duration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    duration = prop.Value.GetTimeSpan("P");
+                    expiration = RoleAssignmentScheduleExpiration.DeserializeRoleAssignmentScheduleExpiration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +154,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScheduleExpiration(@type, endsOn, duration, additionalBinaryDataProperties);
+            return new RoleAssignmentScheduleDetails(startsOn, expiration, additionalBinaryDataProperties);
         }
     }
 }

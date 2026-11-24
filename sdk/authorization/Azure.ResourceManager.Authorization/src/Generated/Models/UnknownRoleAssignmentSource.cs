@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class UnknownRoleSource : RoleSource
+    internal partial class UnknownRoleAssignmentSource : RoleAssignmentSource
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRoleSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRoleAssignmentSource"/>. </summary>
         /// <param name="memberType">
         /// Membership type: `direct` (direct user assignment) or `group` (granted via
         /// a group the user is a member of).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRoleSource(PrivilegedResourceMemberType memberType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memberType != default ? memberType : "unknown", additionalBinaryDataProperties)
+        internal UnknownRoleAssignmentSource(PrivilegedResourceMemberType memberType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memberType != default ? memberType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

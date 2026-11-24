@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Authorization.Models
     /// Group-sourced role assignment. The role is granted via `group`;
     /// the user's membership state in that group is recorded in `membershipState`.
     /// </summary>
-    public partial class GroupRoleSource : RoleSource
+    public partial class GroupRoleAssignmentSource : RoleAssignmentSource
     {
-        /// <summary> Initializes a new instance of <see cref="GroupRoleSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupRoleAssignmentSource"/>. </summary>
         /// <param name="group"> The group through which this role is granted. </param>
         /// <param name="membershipState">
         /// The user's membership state in the group. Drives client activation routing:
         /// <list type="bullet"><item><description>`active`   → one-step (activate the role).</description></item><item><description>`eligible` → two-step (activate your group membership first, then</description></item></list>
         /// activate the role).
         /// </param>
-        internal GroupRoleSource(GroupReference @group, GroupMembershipState membershipState) : base(PrivilegedResourceMemberType.Group)
+        internal GroupRoleAssignmentSource(GroupReference @group, GroupMembershipState membershipState) : base(PrivilegedResourceMemberType.Group)
         {
             Group = @group;
             MembershipState = membershipState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupRoleSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupRoleAssignmentSource"/>. </summary>
         /// <param name="memberType">
         /// Membership type: `direct` (direct user assignment) or `group` (granted via
         /// a group the user is a member of).
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <list type="bullet"><item><description>`active`   → one-step (activate the role).</description></item><item><description>`eligible` → two-step (activate your group membership first, then</description></item></list>
         /// activate the role).
         /// </param>
-        internal GroupRoleSource(PrivilegedResourceMemberType memberType, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupReference @group, GroupMembershipState membershipState) : base(memberType, additionalBinaryDataProperties)
+        internal GroupRoleAssignmentSource(PrivilegedResourceMemberType memberType, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupReference @group, GroupMembershipState membershipState) : base(memberType, additionalBinaryDataProperties)
         {
             Group = @group;
             MembershipState = membershipState;

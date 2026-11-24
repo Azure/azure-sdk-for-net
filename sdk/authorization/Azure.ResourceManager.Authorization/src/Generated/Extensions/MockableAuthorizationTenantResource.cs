@@ -543,14 +543,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// returns `400 InvalidCount`.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceProjection> GetAllAsync(AccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivilegedResourceProjection> GetAllAsync(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceProjectionAsyncCollectionResultOfT(
+            return new PrivilegedResourceProjectionAsyncCollectionResultOfT(
                 PrivilegedResourcesRestClient,
                 accessScope?.ToString(),
                 maxpagesize,
@@ -655,14 +655,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// returns `400 InvalidCount`.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceProjection> GetAll(AccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivilegedResourceProjection> GetAll(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceProjectionCollectionResultOfT(
+            return new PrivilegedResourceProjectionCollectionResultOfT(
                 PrivilegedResourcesRestClient,
                 accessScope?.ToString(),
                 maxpagesize,
@@ -709,8 +709,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privilegedResourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privilegedResourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="RelatedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RelatedResourceProjection> GetRelatedResourcesAsync(string privilegedResourceId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RelatedPrivilegedResourceProjection> GetRelatedResourcesAsync(string privilegedResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privilegedResourceId, nameof(privilegedResourceId));
 
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new RelatedResourceProjectionAsyncCollectionResultOfT(PrivilegedResourcesRestClient, privilegedResourceId, context, "MockableAuthorizationTenantResource.GetRelatedResources");
+            return new RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT(PrivilegedResourcesRestClient, privilegedResourceId, context, "MockableAuthorizationTenantResource.GetRelatedResources");
         }
 
         /// <summary>
@@ -757,8 +757,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privilegedResourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privilegedResourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="RelatedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RelatedResourceProjection> GetRelatedResources(string privilegedResourceId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RelatedPrivilegedResourceProjection> GetRelatedResources(string privilegedResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privilegedResourceId, nameof(privilegedResourceId));
 
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new RelatedResourceProjectionCollectionResultOfT(PrivilegedResourcesRestClient, privilegedResourceId, context, "MockableAuthorizationTenantResource.GetRelatedResources");
+            return new RelatedPrivilegedResourceProjectionCollectionResultOfT(PrivilegedResourcesRestClient, privilegedResourceId, context, "MockableAuthorizationTenantResource.GetRelatedResources");
         }
 
         /// <summary>

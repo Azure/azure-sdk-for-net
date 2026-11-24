@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="PagedResourceProjection"/>. </summary>
         /// <param name="value"> The ResourceProjection items on this page. </param>
-        internal PagedResourceProjection(IEnumerable<ResourceProjection> value)
+        internal PagedResourceProjection(IEnumerable<PrivilegedResourceProjection> value)
         {
             Value = value.ToList();
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// omitted otherwise.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedResourceProjection(IList<ResourceProjection> value, Uri nextLink, int? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedResourceProjection(IList<PrivilegedResourceProjection> value, Uri nextLink, int? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The ResourceProjection items on this page. </summary>
         [WirePath("value")]
-        public IList<ResourceProjection> Value { get; }
+        public IList<PrivilegedResourceProjection> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

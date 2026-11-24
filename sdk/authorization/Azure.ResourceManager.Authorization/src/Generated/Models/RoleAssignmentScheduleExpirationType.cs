@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Expiration kind of a role grant schedule. Extensible string union. </summary>
-    public readonly partial struct ScheduleExpirationType : IEquatable<ScheduleExpirationType>
+    public readonly partial struct RoleAssignmentScheduleExpirationType : IEquatable<RoleAssignmentScheduleExpirationType>
     {
         private readonly string _value;
         /// <summary> Time-bound assignment expiring after a duration — `duration` is set. </summary>
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Permanent assignment — no expiry. </summary>
         private const string NoExpirationValue = "NoExpiration";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleExpirationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleExpirationType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScheduleExpirationType(string value)
+        public RoleAssignmentScheduleExpirationType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -36,41 +36,41 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Time-bound assignment expiring after a duration — `duration` is set. </summary>
-        public static ScheduleExpirationType AfterDuration { get; } = new ScheduleExpirationType(AfterDurationValue);
+        public static RoleAssignmentScheduleExpirationType AfterDuration { get; } = new RoleAssignmentScheduleExpirationType(AfterDurationValue);
 
         /// <summary>
         /// Time-bound assignment expiring at an explicit end date — `endDateTime` is
         /// set.
         /// </summary>
-        public static ScheduleExpirationType AfterDateTime { get; } = new ScheduleExpirationType(AfterDateTimeValue);
+        public static RoleAssignmentScheduleExpirationType AfterDateTime { get; } = new RoleAssignmentScheduleExpirationType(AfterDateTimeValue);
 
         /// <summary> Permanent assignment — no expiry. </summary>
-        public static ScheduleExpirationType NoExpiration { get; } = new ScheduleExpirationType(NoExpirationValue);
+        public static RoleAssignmentScheduleExpirationType NoExpiration { get; } = new RoleAssignmentScheduleExpirationType(NoExpirationValue);
 
-        /// <summary> Determines if two <see cref="ScheduleExpirationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RoleAssignmentScheduleExpirationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ScheduleExpirationType left, ScheduleExpirationType right) => left.Equals(right);
+        public static bool operator ==(RoleAssignmentScheduleExpirationType left, RoleAssignmentScheduleExpirationType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScheduleExpirationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RoleAssignmentScheduleExpirationType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ScheduleExpirationType left, ScheduleExpirationType right) => !left.Equals(right);
+        public static bool operator !=(RoleAssignmentScheduleExpirationType left, RoleAssignmentScheduleExpirationType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScheduleExpirationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RoleAssignmentScheduleExpirationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleExpirationType(string value) => new ScheduleExpirationType(value);
+        public static implicit operator RoleAssignmentScheduleExpirationType(string value) => new RoleAssignmentScheduleExpirationType(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduleExpirationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RoleAssignmentScheduleExpirationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleExpirationType?(string value) => value == null ? null : new ScheduleExpirationType(value);
+        public static implicit operator RoleAssignmentScheduleExpirationType?(string value) => value == null ? null : new RoleAssignmentScheduleExpirationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScheduleExpirationType other && Equals(other);
+        public override bool Equals(object obj) => obj is RoleAssignmentScheduleExpirationType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ScheduleExpirationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RoleAssignmentScheduleExpirationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

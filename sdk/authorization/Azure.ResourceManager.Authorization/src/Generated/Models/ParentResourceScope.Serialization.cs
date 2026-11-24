@@ -21,56 +21,56 @@ namespace Azure.ResourceManager.Authorization.Models
     /// `parentResource` pointing at the next scope up. Present on every entry
     /// except the outermost (root) scope.
     /// </summary>
-    public partial class ParentResource : IJsonModel<ParentResource>
+    public partial class ParentResourceScope : IJsonModel<ParentResourceScope>
     {
-        /// <summary> Initializes a new instance of <see cref="ParentResource"/> for deserialization. </summary>
-        internal ParentResource()
+        /// <summary> Initializes a new instance of <see cref="ParentResourceScope"/> for deserialization. </summary>
+        internal ParentResourceScope()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ParentResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ParentResourceScope PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ParentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ParentResourceScope>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeParentResource(document.RootElement, options);
+                        return DeserializeParentResourceScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParentResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParentResourceScope)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ParentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ParentResourceScope>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ParentResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParentResourceScope)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ParentResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ParentResourceScope>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ParentResource IPersistableModel<ParentResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ParentResourceScope IPersistableModel<ParentResourceScope>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ParentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ParentResourceScope>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ParentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ParentResourceScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ParentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ParentResourceScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParentResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ParentResourceScope)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -136,40 +136,40 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ParentResource IJsonModel<ParentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ParentResourceScope IJsonModel<ParentResourceScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ParentResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ParentResourceScope JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ParentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ParentResourceScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParentResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ParentResourceScope)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeParentResource(document.RootElement, options);
+            return DeserializeParentResourceScope(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ParentResource DeserializeParentResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ParentResourceScope DeserializeParentResourceScope(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ScopeKind @type = default;
+            ResourceScopeKind @type = default;
             string scope = default;
             string displayName = default;
             IDictionary<string, BinaryData> properties = default;
-            ParentResource parent = default;
+            ParentResourceScope parent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ScopeKind(prop.Value.GetString());
+                    @type = new ResourceScopeKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    parent = DeserializeParentResource(prop.Value, options);
+                    parent = DeserializeParentResourceScope(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ParentResource(
+            return new ParentResourceScope(
                 @type,
                 scope,
                 displayName,

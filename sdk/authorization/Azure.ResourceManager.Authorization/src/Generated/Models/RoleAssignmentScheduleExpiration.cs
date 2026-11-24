@@ -12,17 +12,17 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Expiration of a role grant schedule. </summary>
-    public partial class ScheduleExpiration
+    public partial class RoleAssignmentScheduleExpiration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleExpiration"/>. </summary>
-        internal ScheduleExpiration()
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleExpiration"/>. </summary>
+        internal RoleAssignmentScheduleExpiration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleExpiration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleExpiration"/>. </summary>
         /// <param name="type">
         /// Type of expiration: `AfterDuration` (time-bound by `duration`),
         /// `AfterDateTime` (time-bound by `endDateTime`), or `NoExpiration`
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// `AfterDuration`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleExpiration(ScheduleExpirationType? @type, DateTimeOffset? endsOn, TimeSpan? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentScheduleExpiration(RoleAssignmentScheduleExpirationType? @type, DateTimeOffset? endsOn, TimeSpan? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             EndsOn = endsOn;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// (permanent).
         /// </summary>
         [WirePath("type")]
-        public ScheduleExpirationType? Type { get; }
+        public RoleAssignmentScheduleExpirationType? Type { get; }
 
         /// <summary> End DateTime of the schedule. Set when `type` is `AfterDateTime`. </summary>
         [WirePath("endDateTime")]

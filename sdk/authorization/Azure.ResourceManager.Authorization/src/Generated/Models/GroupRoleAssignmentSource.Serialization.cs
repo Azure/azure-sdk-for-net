@@ -17,56 +17,56 @@ namespace Azure.ResourceManager.Authorization.Models
     /// Group-sourced role assignment. The role is granted via `group`;
     /// the user's membership state in that group is recorded in `membershipState`.
     /// </summary>
-    public partial class GroupRoleSource : RoleSource, IJsonModel<GroupRoleSource>
+    public partial class GroupRoleAssignmentSource : RoleAssignmentSource, IJsonModel<GroupRoleAssignmentSource>
     {
-        /// <summary> Initializes a new instance of <see cref="GroupRoleSource"/> for deserialization. </summary>
-        internal GroupRoleSource()
+        /// <summary> Initializes a new instance of <see cref="GroupRoleAssignmentSource"/> for deserialization. </summary>
+        internal GroupRoleAssignmentSource()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RoleSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RoleAssignmentSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleAssignmentSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGroupRoleSource(document.RootElement, options);
+                        return DeserializeGroupRoleAssignmentSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupRoleSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupRoleAssignmentSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleAssignmentSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GroupRoleSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupRoleAssignmentSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupRoleSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GroupRoleAssignmentSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupRoleSource IPersistableModel<GroupRoleSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupRoleSource)PersistableModelCreateCore(data, options);
+        GroupRoleAssignmentSource IPersistableModel<GroupRoleAssignmentSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupRoleAssignmentSource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupRoleSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GroupRoleAssignmentSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GroupRoleSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GroupRoleAssignmentSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleAssignmentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupRoleSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupRoleAssignmentSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("group"u8);
@@ -91,24 +91,24 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupRoleSource IJsonModel<GroupRoleSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupRoleSource)JsonModelCreateCore(ref reader, options);
+        GroupRoleAssignmentSource IJsonModel<GroupRoleAssignmentSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupRoleAssignmentSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RoleSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RoleAssignmentSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupRoleAssignmentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupRoleSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupRoleAssignmentSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGroupRoleSource(document.RootElement, options);
+            return DeserializeGroupRoleAssignmentSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GroupRoleSource DeserializeGroupRoleSource(JsonElement element, ModelReaderWriterOptions options)
+        internal static GroupRoleAssignmentSource DeserializeGroupRoleAssignmentSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GroupRoleSource(memberType, additionalBinaryDataProperties, @group, membershipState);
+            return new GroupRoleAssignmentSource(memberType, additionalBinaryDataProperties, @group, membershipState);
         }
     }
 }

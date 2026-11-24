@@ -2417,7 +2417,7 @@ namespace Azure.ResourceManager.Authorization
         /// query parameters.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAllAsync(AccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAllAsync(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2494,8 +2494,8 @@ namespace Azure.ResourceManager.Authorization
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceProjection> GetAllAsync(this TenantResource tenantResource, AccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PrivilegedResourceProjection> GetAllAsync(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -2511,7 +2511,7 @@ namespace Azure.ResourceManager.Authorization
         /// query parameters.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAll(AccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAll(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2588,8 +2588,8 @@ namespace Azure.ResourceManager.Authorization
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceProjection> GetAll(this TenantResource tenantResource, AccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PrivilegedResourceProjection> GetAll(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -2622,8 +2622,8 @@ namespace Azure.ResourceManager.Authorization
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RelatedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RelatedResourceProjection> GetRelatedResourcesAsync(this TenantResource tenantResource, string privilegedResourceId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RelatedPrivilegedResourceProjection> GetRelatedResourcesAsync(this TenantResource tenantResource, string privilegedResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -2656,8 +2656,8 @@ namespace Azure.ResourceManager.Authorization
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RelatedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RelatedResourceProjection> GetRelatedResources(this TenantResource tenantResource, string privilegedResourceId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RelatedPrivilegedResourceProjection> GetRelatedResources(this TenantResource tenantResource, string privilegedResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

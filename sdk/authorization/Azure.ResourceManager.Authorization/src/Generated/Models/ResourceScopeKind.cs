@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// is a classification tag (NOT a strict schema discriminator); per-type
     /// metadata lives in the `properties` bag.
     /// </summary>
-    public readonly partial struct ScopeKind : IEquatable<ScopeKind>
+    public readonly partial struct ResourceScopeKind : IEquatable<ResourceScopeKind>
     {
         private readonly string _value;
         /// <summary> Azure resource group. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Azure subscription. </summary>
         private const string SubscriptionValue = "subscription";
 
-        /// <summary> Initializes a new instance of <see cref="ScopeKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceScopeKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScopeKind(string value)
+        public ResourceScopeKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Azure resource group. </summary>
-        public static ScopeKind ResourceGroup { get; } = new ScopeKind(ResourceGroupValue);
+        public static ResourceScopeKind ResourceGroup { get; } = new ResourceScopeKind(ResourceGroupValue);
 
         /// <summary> Azure subscription. </summary>
-        public static ScopeKind Subscription { get; } = new ScopeKind(SubscriptionValue);
+        public static ResourceScopeKind Subscription { get; } = new ResourceScopeKind(SubscriptionValue);
 
-        /// <summary> Determines if two <see cref="ScopeKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ResourceScopeKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ScopeKind left, ScopeKind right) => left.Equals(right);
+        public static bool operator ==(ResourceScopeKind left, ResourceScopeKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScopeKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ResourceScopeKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ScopeKind left, ScopeKind right) => !left.Equals(right);
+        public static bool operator !=(ResourceScopeKind left, ResourceScopeKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScopeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ResourceScopeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScopeKind(string value) => new ScopeKind(value);
+        public static implicit operator ResourceScopeKind(string value) => new ResourceScopeKind(value);
 
-        /// <summary> Converts a string to a <see cref="ScopeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ResourceScopeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScopeKind?(string value) => value == null ? null : new ScopeKind(value);
+        public static implicit operator ResourceScopeKind?(string value) => value == null ? null : new ResourceScopeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScopeKind other && Equals(other);
+        public override bool Equals(object obj) => obj is ResourceScopeKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ScopeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ResourceScopeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

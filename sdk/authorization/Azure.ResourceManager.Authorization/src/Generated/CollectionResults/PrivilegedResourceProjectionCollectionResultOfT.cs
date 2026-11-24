@@ -14,7 +14,7 @@ using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    internal partial class ResourceProjectionCollectionResultOfT : Pageable<ResourceProjection>
+    internal partial class PrivilegedResourceProjectionCollectionResultOfT : Pageable<PrivilegedResourceProjection>
     {
         private readonly PrivilegedResources _client;
         private readonly string _accessScope;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Authorization
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ResourceProjectionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of PrivilegedResourceProjectionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivilegedResources client used to send requests. </param>
         /// <param name="accessScope">
         /// Controls whether the response is scoped to subscriptions the caller has
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ResourceProjectionCollectionResultOfT(PrivilegedResources client, string accessScope, int? maxpagesize, string filter, string @orderby, bool? count, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PrivilegedResourceProjectionCollectionResultOfT(PrivilegedResources client, string accessScope, int? maxpagesize, string filter, string @orderby, bool? count, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _accessScope = accessScope;
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Authorization
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ResourceProjectionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivilegedResourceProjectionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ResourceProjectionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ResourceProjection>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of PrivilegedResourceProjectionCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<PrivilegedResourceProjection>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 PagedResourceProjection result = PagedResourceProjection.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ResourceProjection>.FromValues((IReadOnlyList<ResourceProjection>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<PrivilegedResourceProjection>.FromValues((IReadOnlyList<PrivilegedResourceProjection>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// `parentResource` pointing at the next scope up. Present on every entry
     /// except the outermost (root) scope.
     /// </summary>
-    public partial class ParentResource
+    public partial class ParentResourceScope
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ParentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParentResourceScope"/>. </summary>
         /// <param name="type">
         /// Scope tier classification. Allowed values today: `resourceGroup`,
         /// `subscription`. Future tiers (e.g., `managementGroup`, `tenant`, future
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// (ordered root-to-direct-parent).
         /// Clients SHOULD treat the bag as opaque unless they know the `type`.
         /// </param>
-        internal ParentResource(ScopeKind @type, string scope, string displayName, IDictionary<string, BinaryData> properties)
+        internal ParentResourceScope(ResourceScopeKind @type, string scope, string displayName, IDictionary<string, BinaryData> properties)
         {
             Type = @type;
             Scope = scope;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ParentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParentResourceScope"/>. </summary>
         /// <param name="type">
         /// Scope tier classification. Allowed values today: `resourceGroup`,
         /// `subscription`. Future tiers (e.g., `managementGroup`, `tenant`, future
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// outermost (root) scope, which omits the field.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ParentResource(ScopeKind @type, string scope, string displayName, IDictionary<string, BinaryData> properties, ParentResource parent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ParentResourceScope(ResourceScopeKind @type, string scope, string displayName, IDictionary<string, BinaryData> properties, ParentResourceScope parent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Scope = scope;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// bag carries their per-type metadata.
         /// </summary>
         [WirePath("type")]
-        public ScopeKind Type { get; }
+        public ResourceScopeKind Type { get; }
 
         /// <summary>
         /// Scope identifier for the parent scope. For Azure Resource Manager-addressable
@@ -186,6 +186,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// outermost (root) scope, which omits the field.
         /// </summary>
         [WirePath("parentResource")]
-        public ParentResource Parent { get; }
+        public ParentResourceScope Parent { get; }
     }
 }
