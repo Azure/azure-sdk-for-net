@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected ResourceIdentifier _id;
         private protected string _name;
-        private protected ResourceType _resourceType;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>
         public NetworkTrackedResourceData()
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
-        public ResourceType? ResourceType { get; }
+        public virtual ResourceType? ResourceType { get; }
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]

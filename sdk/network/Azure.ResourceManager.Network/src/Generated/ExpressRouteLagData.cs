@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The type of the resource. </summary>
         [WirePath("type")]
-        public string Type => _resourceType ?? default;
+        public string Type => base.ResourceType;
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
