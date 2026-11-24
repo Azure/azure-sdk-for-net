@@ -1,0 +1,6 @@
+directory: specification/digitalassets/resource-manager/Microsoft.DigitalAssets/DigitalAssets
+commit: 1112474efdc9ffe891994f177b1cc4fcf171e17b
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
