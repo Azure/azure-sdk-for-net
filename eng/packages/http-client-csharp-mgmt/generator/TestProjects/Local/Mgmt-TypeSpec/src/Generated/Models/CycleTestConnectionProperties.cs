@@ -45,5 +45,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Description of the connection. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
+        internal bool IsCycleTestConnectionPropertiesEmptyForFlattening()
+        {
+            return true && ProvisioningState is null && Description is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

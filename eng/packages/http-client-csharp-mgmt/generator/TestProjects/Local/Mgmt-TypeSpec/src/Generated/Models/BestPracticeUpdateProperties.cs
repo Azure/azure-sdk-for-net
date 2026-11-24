@@ -34,5 +34,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The description of the best practice. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
+        internal bool IsBestPracticeUpdatePropertiesEmptyForFlattening()
+        {
+            return true && Description is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

@@ -10,6 +10,74 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithRegionalSingleton()
+        {
+            const string path = "/subscriptions/{subscriptionId}/providers/Microsoft.HorizonDb/locations/{location}/capabilities/default";
+            var model = InputFactory.Model("HorizonDBCapabilityData", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true)]);
+            var locationType = InputFactory.Primitive.String("azureLocation", "Azure.Core.azureLocation");
+            var operation = InputFactory.Operation("get", path: path,
+                responses: [InputFactory.OperationResponse([200], model)],
+                parameters: [
+                    InputFactory.PathParameter("subscriptionId", InputPrimitiveType.String, isRequired: true),
+                    InputFactory.PathParameter("location", locationType, isRequired: true)]);
+            var method = InputFactory.BasicServiceMethod("get", operation, crossLanguageDefinitionId: Guid.NewGuid().ToString(),
+                parameters: [
+                    InputFactory.MethodParameter("subscriptionId", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true),
+                    InputFactory.MethodParameter("location", locationType, location: InputRequestLocation.Path, isRequired: true)]);
+            var resourceMethod = new ResourceMethod(ResourceOperationKind.Read, method, new RequestPathPattern(path),
+                new ArmScopeInfo(ResourceScope.Subscription, RequestPathPattern.Subscription, null), null!);
+            var decorator = BuildArmProviderSchema(model, [resourceMethod], new RequestPathPattern(path),
+                "Microsoft.HorizonDb/locations/capabilities", "default", ResourceScope.Subscription, "HorizonDBCapability", resourceNameIsExplicit: true);
+            return (InputFactory.Client("Capabilities", methods: [method], decorators: [decorator]), [model]);
+        }
+
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithChildListOnParentResource(bool separateListClient = false, bool unrelatedListRoute = false, bool pagingAction = false, bool nonListAction = false)
+        {
+            var (client, models) = ClientWithResource();
+            var read = client.Methods.Single(method => method.Name == "get");
+            var pageModel = InputFactory.Model("AuthenticationPage", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputFactory.Array(models[0])), InputFactory.Property("nextLink", InputPrimitiveType.Url)]);
+            var operation = InputFactory.Operation("getAuthentications",
+                path: unrelatedListRoute
+                    ? "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/authentications"
+                    : read.Operation.Path + "/authentications",
+                responses: [InputFactory.OperationResponse([200], pagingAction ? pageModel : models[0])],
+                parameters: [.. read.Operation.Parameters,
+                    InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isRequired: true, isApiVersion: true,
+                        serializedName: "api-version", scope: InputParameterScope.Client,
+                        defaultValue: new InputConstant("2023-01-01", InputPrimitiveType.String))]);
+            InputServiceMethod method = pagingAction
+                ? InputFactory.PagingServiceMethod("getAuthentications", operation, parameters: read.Parameters,
+                    pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body))
+                : InputFactory.BasicServiceMethod("getAuthentications", operation, parameters: read.Parameters,
+                    crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var path = new RequestPathPattern(read.Operation.Path);
+            var scope = new ArmScopeInfo(ResourceScope.ResourceGroup, RequestPathPattern.ResourceGroup, null);
+            var resourceMethods = new List<ResourceMethod> {
+                new(ResourceOperationKind.Read, read, path, scope, null!),
+                new(pagingAction || nonListAction ? ResourceOperationKind.Action : ResourceOperationKind.List,
+                    method, new RequestPathPattern(operation.Path), scope, null!)
+            };
+            foreach (var resourceMethod in resourceMethods)
+            {
+                resourceMethod.InputMethod.Operation.Update(parameters: [.. resourceMethod.InputMethod.Operation.Parameters.Where(p => !p.IsApiVersion),
+                    InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isRequired: true, isApiVersion: true,
+                        serializedName: "api-version", scope: InputParameterScope.Client,
+                        defaultValue: new InputConstant("2023-01-01", InputPrimitiveType.String))]);
+            }
+            var decorator = BuildArmProviderSchema(models[0], resourceMethods, path, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+            if (separateListClient)
+            {
+                var parent = InputFactory.Client("Clusters", methods: [read], decorators: [decorator]);
+                return (InputFactory.Client("Authentications", methods: [method], parent: parent), pagingAction ? [.. models, pageModel] : models);
+            }
+            return (InputFactory.Client("Authentications", methods: [read, method], decorators: [decorator]), pagingAction ? [.. models, pageModel] : models);
+        }
+
         public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null)
         {
             const string TestClientName = "TestClient";

@@ -38,6 +38,24 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBCapabilityResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public static HorizonDBCapabilityResource GetHorizonDBCapabilityResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBCapabilityResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HorizonDBClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -71,24 +89,6 @@ namespace Azure.ResourceManager.HorizonDB
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHorizonDBArmClient(client).GetHorizonDBPoolResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HorizonDBReplicaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBReplicaResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HorizonDBReplicaResource"/> object. </returns>
-        public static HorizonDBReplicaResource GetHorizonDBReplicaResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHorizonDBArmClient(client).GetHorizonDBReplicaResource(id);
         }
 
         /// <summary>
@@ -164,21 +164,237 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HorizonDBAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HorizonDBDefaultParameterGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBAdministratorResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBDefaultParameterGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HorizonDBAdministratorResource"/> object. </returns>
-        public static HorizonDBAdministratorResource GetHorizonDBAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBDefaultParameterGroupResource"/> object. </returns>
+        public static HorizonDBDefaultParameterGroupResource GetHorizonDBDefaultParameterGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHorizonDBArmClient(client).GetHorizonDBAdministratorResource(id);
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBDefaultParameterGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MicrosoftEntraAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetMicrosoftEntraAdministratorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MicrosoftEntraAdministratorResource"/> object. </returns>
+        public static MicrosoftEntraAdministratorResource GetMicrosoftEntraAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetMicrosoftEntraAdministratorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBPasswordAuthenticationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBPasswordAuthenticationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBPasswordAuthenticationResource"/> object. </returns>
+        public static HorizonDBPasswordAuthenticationResource GetHorizonDBPasswordAuthenticationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBPasswordAuthenticationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MicrosoftEntraAuthenticationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetMicrosoftEntraAuthenticationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MicrosoftEntraAuthenticationResource"/> object. </returns>
+        public static MicrosoftEntraAuthenticationResource GetMicrosoftEntraAuthenticationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetMicrosoftEntraAuthenticationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChangeDataCaptureCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetChangeDataCaptureCapabilityResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChangeDataCaptureCapabilityResource"/> object. </returns>
+        public static ChangeDataCaptureCapabilityResource GetChangeDataCaptureCapabilityResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetChangeDataCaptureCapabilityResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChangeDataCaptureDestinationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetChangeDataCaptureDestinationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChangeDataCaptureDestinationResource"/> object. </returns>
+        public static ChangeDataCaptureDestinationResource GetChangeDataCaptureDestinationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetChangeDataCaptureDestinationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChangeDataCaptureIdentityAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetChangeDataCaptureIdentityAssignmentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChangeDataCaptureIdentityAssignmentResource"/> object. </returns>
+        public static ChangeDataCaptureIdentityAssignmentResource GetChangeDataCaptureIdentityAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetChangeDataCaptureIdentityAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChangeDataCaptureConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetChangeDataCaptureConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChangeDataCaptureConfigurationResource"/> object. </returns>
+        public static ChangeDataCaptureConfigurationResource GetChangeDataCaptureConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetChangeDataCaptureConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBEndpointResource"/> object. </returns>
+        public static HorizonDBEndpointResource GetHorizonDBEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBMaintenanceEventResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBMaintenanceEventResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBMaintenanceEventResource"/> object. </returns>
+        public static HorizonDBMaintenanceEventResource GetHorizonDBMaintenanceEventResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBMaintenanceEventResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBNodeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBNodeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBNodeResource"/> object. </returns>
+        public static HorizonDBNodeResource GetHorizonDBNodeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBNodeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBLogCaptureConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBLogCaptureConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBLogCaptureConfigurationResource"/> object. </returns>
+        public static HorizonDBLogCaptureConfigurationResource GetHorizonDBLogCaptureConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBLogCaptureConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBLogFileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDBLogFileResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBLogFileResource"/> object. </returns>
+        public static HorizonDBLogFileResource GetHorizonDBLogFileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHorizonDBArmClient(client).GetHorizonDBLogFileResource(id);
         }
 
         /// <summary>
@@ -289,6 +505,99 @@ namespace Azure.ResourceManager.HorizonDB
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHorizonDBResourceGroupResource(resourceGroupResource).GetHorizonDBParameterGroup(parameterGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HorizonDBCapabilityResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBCapability(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public static HorizonDBCapabilityResource GetHorizonDBCapability(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHorizonDBSubscriptionResource(subscriptionResource).GetHorizonDBCapability(location);
+        }
+
+        /// <summary>
+        /// This resource requires path parameters. Use the GetHorizonDBCapability overload that supplies them.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBCapability()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public static HorizonDBCapabilityResource GetHorizonDBCapability(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHorizonDBSubscriptionResource(subscriptionResource).GetHorizonDBCapability();
+        }
+
+        /// <summary>
+        /// Gets a collection of HorizonDBDefaultParameterGroups in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBDefaultParameterGroups(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of HorizonDBDefaultParameterGroups and their operations over a HorizonDBDefaultParameterGroupResource. </returns>
+        public static HorizonDBDefaultParameterGroupCollection GetHorizonDBDefaultParameterGroups(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHorizonDBSubscriptionResource(subscriptionResource).GetHorizonDBDefaultParameterGroups(location);
+        }
+
+        /// <summary>
+        /// Gets a default parameter group available for a subscription in a specific region. Each PostgreSQL version has at most one default parameter group in a location.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBDefaultParameterGroupAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the DefaultParameterGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HorizonDBDefaultParameterGroupResource>> GetHorizonDBDefaultParameterGroupAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableHorizonDBSubscriptionResource(subscriptionResource).GetHorizonDBDefaultParameterGroupAsync(location, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a default parameter group available for a subscription in a specific region. Each PostgreSQL version has at most one default parameter group in a location.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBDefaultParameterGroup(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the DefaultParameterGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HorizonDBDefaultParameterGroupResource> GetHorizonDBDefaultParameterGroup(this SubscriptionResource subscriptionResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHorizonDBSubscriptionResource(subscriptionResource).GetHorizonDBDefaultParameterGroup(location, name, cancellationToken);
         }
 
         /// <summary>

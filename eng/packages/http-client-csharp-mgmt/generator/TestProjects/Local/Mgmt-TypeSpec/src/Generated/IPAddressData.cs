@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The address value. </summary>
         [WirePath("properties.address")]
-        public string IPAddress
+        public string Address
         {
             get
             {

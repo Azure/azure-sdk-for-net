@@ -11,15 +11,13 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The mode to create a new HorizonDB cluster. </summary>
+    /// <summary> Controls how a HorizonDB cluster PUT request is processed. </summary>
     public readonly partial struct HorizonDBClusterCreateMode : IEquatable<HorizonDBClusterCreateMode>
     {
         private readonly string _value;
-        /// <summary> Create a new cluster. </summary>
+        /// <summary> Process the request as a normal cluster creation. </summary>
         private const string CreateValue = "Create";
-        /// <summary> Update an existing cluster. </summary>
-        private const string UpdateValue = "Update";
-        /// <summary> Create cluster from point-in-time restore. </summary>
+        /// <summary> Create the cluster from a point-in-time restore. </summary>
         private const string PointInTimeRestoreValue = "PointInTimeRestore";
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterCreateMode"/>. </summary>
@@ -32,13 +30,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _value = value;
         }
 
-        /// <summary> Create a new cluster. </summary>
+        /// <summary> Process the request as a normal cluster creation. </summary>
         public static HorizonDBClusterCreateMode Create { get; } = new HorizonDBClusterCreateMode(CreateValue);
 
-        /// <summary> Update an existing cluster. </summary>
-        public static HorizonDBClusterCreateMode Update { get; } = new HorizonDBClusterCreateMode(UpdateValue);
-
-        /// <summary> Create cluster from point-in-time restore. </summary>
+        /// <summary> Create the cluster from a point-in-time restore. </summary>
         public static HorizonDBClusterCreateMode PointInTimeRestore { get; } = new HorizonDBClusterCreateMode(PointInTimeRestoreValue);
 
         /// <summary> Determines if two <see cref="HorizonDBClusterCreateMode"/> values are the same. </summary>

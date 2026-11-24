@@ -14,7 +14,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The response of a HorizonDbPrivateLinkResource list operation. </summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class HorizonDBPrivateLinkResourceListResult : IJsonModel<HorizonDBPrivateLinkResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceListResult"/> for deserialization. </summary>

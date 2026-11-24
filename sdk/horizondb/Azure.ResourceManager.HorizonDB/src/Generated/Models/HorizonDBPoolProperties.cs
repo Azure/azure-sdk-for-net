@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
@@ -18,45 +18,72 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolProperties"/>. </summary>
-        internal HorizonDBPoolProperties()
+        /// <param name="computeModel"> The required compute model for the HorizonDB pool. </param>
+        /// <param name="nodeCount"> The required number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. To deallocate runtime compute without changing the configured node count, stop the pool. </param>
+        /// <param name="highAvailabilityMode"> The high-availability mode. Disabled is required when nodeCount is 1. AnyZone or ZoneRedundant is required when nodeCount is 2 through 16. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeModel"/> is null. </exception>
+        public HorizonDBPoolProperties(PoolComputeModel computeModel, int nodeCount, PoolHighAvailabilityMode highAvailabilityMode)
         {
+            Argument.AssertNotNull(computeModel, nameof(computeModel));
+
+            ComputeModel = computeModel;
+            NodeCount = nodeCount;
+            HighAvailability = new PoolHighAvailability(highAvailabilityMode);
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolProperties"/>. </summary>
-        /// <param name="location"> The location of the HorizonDB pool. </param>
         /// <param name="state"> Current state of the pool. </param>
-        /// <param name="replicaCount"> Number of replicas in the pool. </param>
-        /// <param name="version"> The version of the HorizonDB pool. </param>
-        /// <param name="createMode"> The create mode for the pool. </param>
+        /// <param name="computeModel"> The required compute model for the HorizonDB pool. </param>
+        /// <param name="nodeCount"> The required number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. To deallocate runtime compute without changing the configured node count, stop the pool. </param>
+        /// <param name="highAvailability"> The required high-availability configuration for the pool. mode must be Disabled when nodeCount is 1, and must be AnyZone or ZoneRedundant when nodeCount is 2 through 16. </param>
+        /// <param name="parameterGroup"> The parameter group associated with the pool. When omitted during creation, the service applies the default parameter group compatible with the parent cluster's PostgreSQL version. When supplied during creation in this API version, it must reference the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </param>
+        /// <param name="scheduledMaintenance"> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBPoolProperties(AzureLocation? location, HorizonDBClusterState? state, int? replicaCount, string version, HorizonDBPoolCreateMode? createMode, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPoolProperties(HorizonDBPoolState? state, PoolComputeModel computeModel, int nodeCount, PoolHighAvailability highAvailability, PoolParameterGroupReference parameterGroup, HorizonDBScheduledMaintenanceProperties scheduledMaintenance, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Location = location;
             State = state;
-            ReplicaCount = replicaCount;
-            Version = version;
-            CreateMode = createMode;
+            ComputeModel = computeModel;
+            NodeCount = nodeCount;
+            HighAvailability = highAvailability;
+            ParameterGroup = parameterGroup;
+            ScheduledMaintenance = scheduledMaintenance;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The location of the HorizonDB pool. </summary>
-        public AzureLocation? Location { get; }
-
         /// <summary> Current state of the pool. </summary>
-        public HorizonDBClusterState? State { get; }
+        public HorizonDBPoolState? State { get; }
 
-        /// <summary> Number of replicas in the pool. </summary>
-        public int? ReplicaCount { get; }
+        /// <summary> The required compute model for the HorizonDB pool. </summary>
+        public PoolComputeModel ComputeModel { get; set; }
 
-        /// <summary> The version of the HorizonDB pool. </summary>
-        public string Version { get; }
+        /// <summary> The required number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. To deallocate runtime compute without changing the configured node count, stop the pool. </summary>
+        public int NodeCount { get; set; }
 
-        /// <summary> The create mode for the pool. </summary>
-        public HorizonDBPoolCreateMode? CreateMode { get; }
+        /// <summary> The required high-availability configuration for the pool. mode must be Disabled when nodeCount is 1, and must be AnyZone or ZoneRedundant when nodeCount is 2 through 16. </summary>
+        internal PoolHighAvailability HighAvailability { get; set; }
+
+        /// <summary> The parameter group associated with the pool. When omitted during creation, the service applies the default parameter group compatible with the parent cluster's PostgreSQL version. When supplied during creation in this API version, it must reference the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </summary>
+        public PoolParameterGroupReference ParameterGroup { get; set; }
+
+        /// <summary> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </summary>
+        public HorizonDBScheduledMaintenanceProperties ScheduledMaintenance { get; set; }
 
         /// <summary> The provisioning state of the pool. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The high-availability mode. Disabled is required when nodeCount is 1. AnyZone or ZoneRedundant is required when nodeCount is 2 through 16. </summary>
+        public PoolHighAvailabilityMode HighAvailabilityMode
+        {
+            get
+            {
+                return HighAvailability is null ? default : HighAvailability.Mode;
+            }
+            set
+            {
+                HighAvailability = new PoolHighAvailability(value);
+            }
+        }
     }
 }

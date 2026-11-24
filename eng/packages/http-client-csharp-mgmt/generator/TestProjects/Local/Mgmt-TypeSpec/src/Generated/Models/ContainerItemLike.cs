@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> A simple string property. </summary>
         [WirePath("properties.something")]
-        public string ContainerItemLikeSomething
+        public string Something
         {
             get
             {

@@ -92,7 +92,8 @@ namespace Azure.Generator.Management.Utilities
             var guardedDefault = publicPropertyType.IsNullable && innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable
                 ? Default.CastTo(innerProperty.Type.WithNullable(true))
                 : Default;
-            var shouldNullGuard = internalProperty.Type.IsNullable || internalProperty.WireInfo?.IsRequired == false || innerModel.Type.IsNullable;
+            var shouldNullGuard = internalProperty.Type.IsNullable || internalProperty.WireInfo?.IsRequired == false || innerModel.Type.IsNullable
+                || !internalProperty.Body.HasSetter;
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
@@ -237,7 +238,71 @@ namespace Azure.Generator.Management.Utilities
                 };
             }
 
+            if (internalProperty.WireInfo?.IsRequired == false
+                && (!innerProperty.Type.IsValueType || innerProperty.Type.IsNullable))
+            {
+                var setter = new List<MethodBodyStatement>
+                {
+                    // Clearing an absent optional leaf must not materialize its wrapper.
+                    new IfStatement((innerProperty.Type.IsValueType ? Value.CastTo(innerProperty.Type) : Value).Is(Null)
+                        .And(internalPropertyExpression.Is(Null)))
+                    {
+                        Return()
+                    },
+                    lazyCreateAndAssign
+                };
+                var isEmpty = GetEmptyWrapperCheck(innerModel);
+                if (isEmpty is not null)
+                {
+                    setter.Add(new IfStatement(internalPropertyExpression.Invoke(isEmpty.Signature.Name))
+                    {
+                        internalPropertyExpression.Assign(Null).Terminate()
+                    });
+                }
+                return setter;
+            }
+
             return lazyCreateAndAssign;
+        }
+
+        private static MethodProvider? GetEmptyWrapperCheck(ModelProvider model)
+        {
+            // Collection getters can initialize state, and polymorphic wrappers carry
+            // discriminator state. Do not treat either kind as an empty scalar wrapper.
+            var properties = GetAllProperties(model).Where(p => p.WireInfo is not null && p is not FlattenedPropertyProvider).ToArray();
+            if (properties.Any(p => p.IsDiscriminator || p.Type.IsCollection || (p.Type.IsValueType && !p.Type.IsNullable)))
+            {
+                return null;
+            }
+
+            var methodName = $"Is{model.Name}EmptyForFlattening";
+            var existing = model.Methods.FirstOrDefault(m => m.Signature.Name == methodName);
+            if (existing is not null)
+            {
+                return existing;
+            }
+
+            var isEmpty = True;
+            foreach (var property in properties)
+            {
+                isEmpty = isEmpty.And(This.Property(property.Name).Is(Null));
+            }
+
+            // The private-protected raw-data field is accessible inside the wrapper,
+            // not from its owner. Retain wrappers containing unknown service fields.
+            for (ModelProvider? current = model; current is not null; current = current.BaseModelProvider)
+            {
+                foreach (var field in current.Fields.Where(f => f.Type.IsDictionary))
+                {
+                    ValueExpression value = new MemberExpression(This, field.Name);
+                    isEmpty = isEmpty.And(value.Is(Null).Or(value.Property("Count").Equal(Literal(0))));
+                }
+            }
+
+            var method = new MethodProvider(new MethodSignature(methodName, null, MethodSignatureModifiers.Internal,
+                typeof(bool), null, []), Return(isEmpty), model);
+            model.Update(methods: [.. model.Methods, method]);
+            return method;
         }
 
         public static string GetCombinedPropertyName(PropertyProvider innerProperty, PropertyProvider immediateParentProperty, string? innerPropertyName = null)
