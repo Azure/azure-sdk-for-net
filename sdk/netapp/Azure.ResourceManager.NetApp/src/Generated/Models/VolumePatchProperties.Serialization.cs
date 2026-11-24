@@ -119,11 +119,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Optional.IsDefined(AsyncDirectoryDelete))
-            {
-                writer.WritePropertyName("asyncDirectoryDelete"u8);
-                writer.WriteObjectValue(AsyncDirectoryDelete, options);
-            }
             if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
@@ -193,11 +188,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbOplocks"u8);
                 writer.WriteStringValue(SmbOplocks.Value.ToString());
             }
-            if (Optional.IsDefined(GeoNamespaceProperties))
-            {
-                writer.WritePropertyName("geoNamespaceProperties"u8);
-                writer.WriteObjectValue(GeoNamespaceProperties, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -247,7 +237,6 @@ namespace Azure.ResourceManager.NetApp.Models
             float? throughputMibps = default;
             NetAppVolumePatchDataProtection dataProtection = default;
             bool? isDefaultQuotaEnabled = default;
-            AsyncDirectoryDelete asyncDirectoryDelete = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
             bool unixPermissionsIsDefined = false;
@@ -261,7 +250,6 @@ namespace Azure.ResourceManager.NetApp.Models
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
             SmbOplocks? smbOplocks = default;
-            VolumePatchNamespaceProperties geoNamespaceProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -338,15 +326,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     isDefaultQuotaEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("asyncDirectoryDelete"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    asyncDirectoryDelete = AsyncDirectoryDelete.DeserializeAsyncDirectoryDelete(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("defaultUserQuotaInKiBs"u8))
@@ -452,15 +431,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbOplocks = new SmbOplocks(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("geoNamespaceProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    geoNamespaceProperties = VolumePatchNamespaceProperties.DeserializeVolumePatchNamespaceProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -474,7 +444,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 throughputMibps,
                 dataProtection,
                 isDefaultQuotaEnabled,
-                asyncDirectoryDelete,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
                 unixPermissions,
@@ -486,7 +455,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
                 smbOplocks,
-                geoNamespaceProperties,
                 additionalBinaryDataProperties)
             {
                 _unixPermissionsIsDefined = unixPermissionsIsDefined,

@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eHNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
             EventHubCollection eventhubCollection = eHNamespace.GetEventHubs();
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            _eventHub = (await eventhubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
+            _eventHub = await CompleteAsync(await eventhubCollection.CreateOrUpdateAsync(WaitUntil.Started, eventhubName, new EventHubData()));
             _consumerGroupCollection = _eventHub.GetEventHubsConsumerGroups();
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create consumer group
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
-            EventHubsConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
+            EventHubsConsumerGroupResource consumerGroup = await CompleteAsync(await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, consumerGroupName, new EventHubsConsumerGroupData()));
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             consumerGroup = await _consumerGroupCollection.GetAsync(consumerGroupName);
 
             //delete consumer group
-            await consumerGroup.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await consumerGroup.DeleteAsync(WaitUntil.Started));
 
             //validate
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _consumerGroupCollection.GetAsync(consumerGroupName); });
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             for (int i = 0; i < 10; i++)
             {
                 string consumerGroupName = Recording.GenerateAssetName("testconsumergroup" + i.ToString());
-                _ = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
+                await CompleteAsync(await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, consumerGroupName, new EventHubsConsumerGroupData()));
             }
 
             //validate
-            List<EventHubsConsumerGroupResource> list = await _consumerGroupCollection.GetAllAsync().ToEnumerableAsync();
+            List<EventHubsConsumerGroupResource> list = await ReadAllAsync(_consumerGroupCollection.GetAllAsync());
             // the count should be 11 because there is a default consumergroup
             Assert.AreEqual(list.Count, 11);
-            list = await _consumerGroupCollection.GetAllAsync(5, 5).ToEnumerableAsync();
+            list = await ReadAllAsync(_consumerGroupCollection.GetAllAsync(5, 5));
             Assert.AreEqual(list.Count, 6);
         }
 
@@ -83,13 +83,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create consumer group
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
-            EventHubsConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
+            EventHubsConsumerGroupResource consumerGroup = await CompleteAsync(await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, consumerGroupName, new EventHubsConsumerGroupData()));
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
 
             //update consumer group and validate
             consumerGroup.Data.UserMetadata = "update the user meta data";
-            consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, consumerGroup.Data)).Value;
+            consumerGroup = await CompleteAsync(await consumerGroup.UpdateAsync(WaitUntil.Started, consumerGroup.Data));
+            consumerGroup = await consumerGroup.GetAsync();
             Assert.AreEqual(consumerGroup.Data.UserMetadata, "update the user meta data");
         }
     }

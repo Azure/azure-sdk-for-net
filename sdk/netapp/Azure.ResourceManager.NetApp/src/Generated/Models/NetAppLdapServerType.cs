@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private readonly string _value;
         /// <summary> The volume should use Active Directory for LDAP connections. </summary>
         private const string ActiveDirectoryValue = "ActiveDirectory";
-        /// <summary> The volume should use OpenLDAP for LDAP connections. </summary>
-        private const string OpenLdapValue = "OpenLDAP";
+        /// <summary> The volume should use OpenLdap for LDAP connections. </summary>
+        private const string OpenLdapValue = "OpenLdap";
 
         /// <summary> Initializes a new instance of <see cref="NetAppLdapServerType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The volume should use Active Directory for LDAP connections. </summary>
         public static NetAppLdapServerType ActiveDirectory { get; } = new NetAppLdapServerType(ActiveDirectoryValue);
 
-        /// <summary> The volume should use OpenLDAP for LDAP connections. </summary>
+        /// <summary> The volume should use OpenLdap for LDAP connections. </summary>
         public static NetAppLdapServerType OpenLdap { get; } = new NetAppLdapServerType(OpenLdapValue);
 
         /// <summary> Determines if two <see cref="NetAppLdapServerType"/> values are the same. </summary>

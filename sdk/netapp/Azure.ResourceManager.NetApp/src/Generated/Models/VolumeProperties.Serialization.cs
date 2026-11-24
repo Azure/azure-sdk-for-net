@@ -14,7 +14,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume properties. </summary>
     internal partial class VolumeProperties : IJsonModel<VolumeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/> for deserialization. </summary>
@@ -349,11 +348,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Optional.IsDefined(AsyncDirectoryDelete))
-            {
-                writer.WritePropertyName("asyncDirectoryDelete"u8);
-                writer.WriteObjectValue(AsyncDirectoryDelete, options);
-            }
             if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
@@ -409,15 +403,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-#pragma warning disable CS0612 // This generated code references obsolete functionality.
-#pragma warning disable CS0618 // This generated code references obsolete functionality.
-            if (Optional.IsDefined(EnableSubvolumes))
-            {
-                writer.WritePropertyName("enableSubvolumes"u8);
-                writer.WriteStringValue(EnableSubvolumes.Value.ToString());
-            }
-#pragma warning restore CS0618 // This generated code references obsolete functionality.
-#pragma warning restore CS0612 // This generated code references obsolete functionality.
             if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone, _provisionedAvailabilityZoneIsDefined))
             {
                 if (ProvisionedAvailabilityZone != null)
@@ -434,11 +419,6 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("isLargeVolume"u8);
                 writer.WriteBooleanValue(IsLargeVolume.Value);
-            }
-            if (Optional.IsDefined(LargeVolumeType))
-            {
-                writer.WritePropertyName("largeVolumeType"u8);
-                writer.WriteStringValue(LargeVolumeType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(OriginatingResourceId))
             {
@@ -457,20 +437,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("inheritedSizeInBytes"u8);
                 }
             }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language.Value.ToString());
-            }
             if (Optional.IsDefined(BreakthroughMode))
             {
                 writer.WritePropertyName("breakthroughMode"u8);
                 writer.WriteStringValue(BreakthroughMode.Value.ToString());
             }
-            if (Optional.IsDefined(GeoNamespaceProperties))
+            if (Optional.IsDefined(EnableSubvolumes))
             {
-                writer.WritePropertyName("geoNamespaceProperties"u8);
-                writer.WriteObjectValue(GeoNamespaceProperties, options);
+                writer.WritePropertyName("enableSubvolumes"u8);
+                WriteEnableSubvolumes(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -508,8 +483,6 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable CS0612 // This generated code references obsolete functionality.
-#pragma warning disable CS0618 // This generated code references obsolete functionality.
         internal static VolumeProperties DeserializeVolumeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -565,7 +538,6 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppAvsDataStore? avsDataStore = default;
             IReadOnlyList<ResourceIdentifier> dataStoreResourceId = default;
             bool? isDefaultQuotaEnabled = default;
-            AsyncDirectoryDelete asyncDirectoryDelete = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
             long? maximumNumberOfFiles = default;
@@ -576,17 +548,14 @@ namespace Azure.ResourceManager.NetApp.Models
             string volumeSpecName = default;
             bool? isEncrypted = default;
             IList<NetAppVolumePlacementRule> placementRules = default;
-            EnableNetAppSubvolume? enableSubvolumes = default;
             bool provisionedAvailabilityZoneIsDefined = false;
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
-            LargeVolumeType? largeVolumeType = default;
             ResourceIdentifier originatingResourceId = default;
             bool inheritedSizeInBytesIsDefined = false;
             long? inheritedSizeInBytes = default;
-            NetAppVolumeLanguage? language = default;
             BreakthroughMode? breakthroughMode = default;
-            VolumeNamespaceProperties geoNamespaceProperties = default;
+            SubvolumeEnablement? enableSubvolumes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1000,15 +969,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     isDefaultQuotaEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("asyncDirectoryDelete"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    asyncDirectoryDelete = AsyncDirectoryDelete.DeserializeAsyncDirectoryDelete(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("defaultUserQuotaInKiBs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1092,15 +1052,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     placementRules = array;
                     continue;
                 }
-                if (prop.NameEquals("enableSubvolumes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableSubvolumes = new EnableNetAppSubvolume(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("provisionedAvailabilityZone"u8))
                 {
                     provisionedAvailabilityZoneIsDefined = true;
@@ -1119,15 +1070,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     isLargeVolume = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("largeVolumeType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    largeVolumeType = new LargeVolumeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("originatingResourceId"u8))
@@ -1150,15 +1092,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("language"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    language = new NetAppVolumeLanguage(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("breakthroughMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1168,13 +1101,9 @@ namespace Azure.ResourceManager.NetApp.Models
                     breakthroughMode = new BreakthroughMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("geoNamespaceProperties"u8))
+                if (prop.NameEquals("enableSubvolumes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    geoNamespaceProperties = VolumeNamespaceProperties.DeserializeVolumeNamespaceProperties(prop.Value, options);
+                    ReadEnableSubvolumes(prop, ref enableSubvolumes);
                     continue;
                 }
                 if (options.Format != "W")
@@ -1228,7 +1157,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 avsDataStore,
                 dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
                 isDefaultQuotaEnabled,
-                asyncDirectoryDelete,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
                 maximumNumberOfFiles,
@@ -1239,15 +1167,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 volumeSpecName,
                 isEncrypted,
                 placementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
-                enableSubvolumes,
                 provisionedAvailabilityZone,
                 isLargeVolume,
-                largeVolumeType,
                 originatingResourceId,
                 inheritedSizeInBytes,
-                language,
                 breakthroughMode,
-                geoNamespaceProperties,
+                enableSubvolumes,
                 additionalBinaryDataProperties)
             {
                 _smbAccessBasedEnumerationIsDefined = smbAccessBasedEnumerationIsDefined,
@@ -1258,7 +1183,5 @@ namespace Azure.ResourceManager.NetApp.Models
                 _inheritedSizeInBytesIsDefined = inheritedSizeInBytesIsDefined
             };
         }
-#pragma warning restore CS0612 // This generated code references obsolete functionality.
-#pragma warning restore CS0618 // This generated code references obsolete functionality.
     }
 }

@@ -3,6 +3,7 @@
 
 parameters:
   - name: failOnFailedTests
+    # Only single-run evaluations support this gate; multi-run observations must leave it off.
     type: boolean
     default: false
   - name: createDashboardBundle
@@ -40,7 +41,6 @@ jobs:
         inputs:
           version: 24.x
 
-      # Allowlist result data only, excluding debug, MCP, SDL and signing artifacts.
       - task: DownloadPipelineArtifact@2
         displayName: 'Download all shard results'
         inputs:

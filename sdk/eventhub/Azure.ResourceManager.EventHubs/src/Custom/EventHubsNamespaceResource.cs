@@ -24,6 +24,34 @@ namespace Azure.ResourceManager.EventHubs
     public partial class EventHubsNamespaceResource : ArmResource
     {
         /// <summary>
+        /// Updates a namespace and waits for the operation to complete.
+        /// This method is preserved for backward compatibility.
+        /// </summary>
+        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<EventHubsNamespaceResource> Update(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
+        {
+            var operation = Update(WaitUntil.Completed, data, cancellationToken);
+            return Response.FromValue(operation.Value, operation.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Updates a namespace and waits for the operation to complete.
+        /// This method is preserved for backward compatibility.
+        /// </summary>
+        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<EventHubsNamespaceResource>> UpdateAsync(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
+        {
+            var operation = await UpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(operation.Value, operation.GetRawResponse());
+        }
+
+        /// <summary>
         /// Refreshes a Network Security Perimeter Configuration.
         /// This method is preserved for backward compatibility.
         /// </summary>

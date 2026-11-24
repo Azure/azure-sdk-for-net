@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
+    [Obsolete("Tests the obsolete Entra ID configuration APIs.")]
     public class EntraIdConfigurationSerializationTests
     {
         private const string Identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test";
