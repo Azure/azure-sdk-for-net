@@ -413,7 +413,9 @@ async function main(argv) {
 
   if (process.env.TF_BUILD) {
     console.log(`##vso[task.uploadsummary]${path.resolve(options.outputPath)}`);
-    if (selection) console.log(`##vso[task.setvariable variable=EvalSummaryComplete]${selection.complete}`);
+  }
+  if (process.env.TF_BUILD && selection) {
+    console.log(`##vso[task.setvariable variable=EvalSummaryComplete]${selection.complete}`);
   }
 
   // Completed evaluation failures remain governed by failOnFailedTests. Missing result

@@ -69,7 +69,6 @@ internal sealed class SnapshotLifecycleCoordinator
             _gate.Release();
         }
     }
-#pragma warning restore AAAS002
 
     public async Task<AfterRestoreResult> AfterRestoreAsync(AgentRestoreContext context)
     {

@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2026-11-23)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed OData filter operator precedence when sending to multiple rooms with `ExceptRooms`.
+- Fixed Socket.IO trigger routing to match namespaces using case-sensitive ordinal comparisons. Namespaces that differ only by case now require separate trigger bindings.
 
 ## 1.0.0 (2025-11-15)
 

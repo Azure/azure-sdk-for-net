@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,13 +30,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// "secret_access_key": "&lt;REDACTED&gt;"
         /// }
         /// </param>
-        /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, ResourceIdentifier userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialsKeyVaultUri = credentialsKeyVaultUri;
             SecretName = secretName;
-            UserAssignedIdentity = userAssignedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,8 +49,5 @@ namespace Azure.ResourceManager.NetApp.Models
         /// }
         /// </summary>
         public string SecretName { get; set; }
-
-        /// <summary> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </summary>
-        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

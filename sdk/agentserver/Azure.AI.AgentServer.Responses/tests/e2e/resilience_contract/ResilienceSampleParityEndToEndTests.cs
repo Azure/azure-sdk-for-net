@@ -20,6 +20,8 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
+#pragma warning disable AAAS004 // Exercise samples that use the experimental FoundryStateStore.
+
 namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 
 /// <summary>

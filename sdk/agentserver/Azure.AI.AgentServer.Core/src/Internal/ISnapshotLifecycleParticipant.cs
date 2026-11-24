@@ -3,6 +3,7 @@
 
 namespace Azure.AI.AgentServer.Core.Internal;
 
+#pragma warning disable AAAS002 // Internal transport for the experimental snapshot lifecycle contract.
 internal interface ISnapshotLifecycleParticipant
 {
     bool UsesTransactionalRestore { get; }
@@ -28,3 +29,4 @@ internal interface ISnapshotLifecycleParticipant
         AgentRestoreContext context,
         CancellationToken cancellationToken);
 }
+#pragma warning restore AAAS002

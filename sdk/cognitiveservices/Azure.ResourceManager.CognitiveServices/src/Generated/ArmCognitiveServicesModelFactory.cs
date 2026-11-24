@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
         /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, string contextCacheContainerId = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? isDynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, CognitiveServicesDeploymentServiceTier? serviceTier = default, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, ResourceIdentifier contextCacheContainerId = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? isDynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, CognitiveServicesDeploymentServiceTier? serviceTier = default, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
         {
             capabilities ??= new ChangeTrackingDictionary<string, string>();
             rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
@@ -1341,39 +1341,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// If omitted on update, the existing value is preserved. Use this for non-sensitive values;
         /// for credentials, use valueRef instead.
         /// </param>
-        /// <param name="valueRef"> A dynamic header value resolved at request time from a secret or managed identity. </param>
+        /// <param name="valueReference"> A dynamic header value resolved at request time from a secret or managed identity. </param>
         /// <returns> A new <see cref="Models.RaiEgressHeaderTransform"/> instance for mocking. </returns>
-        public static RaiEgressHeaderTransform RaiEgressHeaderTransform(RaiEgressHeaderOperation operation = default, string name = default, string value = default, RaiEgressHeaderValueRef valueRef = default)
+        public static RaiEgressHeaderTransform RaiEgressHeaderTransform(RaiEgressHeaderOperation operation = default, string name = default, string value = default, RaiEgressHeaderValueReference valueReference = default)
         {
-            return new RaiEgressHeaderTransform(operation, name, value, valueRef, default);
+            return new RaiEgressHeaderTransform(operation, name, value, valueReference, default);
         }
 
         /// <summary> A dynamic source for a header value. Exactly one of secretRef or managedIdentityRef must be set. </summary>
-        /// <param name="secretRef"> Resolve the value from a stored secret. </param>
-        /// <param name="managedIdentityRef"> Resolve the value from a managed-identity token. </param>
-        /// <returns> A new <see cref="Models.RaiEgressHeaderValueRef"/> instance for mocking. </returns>
-        public static RaiEgressHeaderValueRef RaiEgressHeaderValueRef(RaiEgressSecretRef secretRef = default, RaiEgressManagedIdentityRef managedIdentityRef = default)
+        /// <param name="secretReference"> Resolve the value from a stored secret. </param>
+        /// <param name="managedIdentityReference"> Resolve the value from a managed-identity token. </param>
+        /// <returns> A new <see cref="Models.RaiEgressHeaderValueReference"/> instance for mocking. </returns>
+        public static RaiEgressHeaderValueReference RaiEgressHeaderValueReference(RaiEgressSecretReference secretReference = default, RaiEgressManagedIdentityReference managedIdentityReference = default)
         {
-            return new RaiEgressHeaderValueRef(secretRef, managedIdentityRef, default);
+            return new RaiEgressHeaderValueReference(secretReference, managedIdentityReference, default);
         }
 
         /// <summary> A reference to a stored secret used as a header value. </summary>
         /// <param name="secretId"> Identifier of the secret to inject. </param>
         /// <param name="secretKey"> Optional key within the secret. </param>
         /// <param name="format"> Optional format for the resolved value; "{value}" is the placeholder, e.g. "Bearer {value}". </param>
-        /// <returns> A new <see cref="Models.RaiEgressSecretRef"/> instance for mocking. </returns>
-        public static RaiEgressSecretRef RaiEgressSecretRef(string secretId = default, string secretKey = default, string format = default)
+        /// <returns> A new <see cref="Models.RaiEgressSecretReference"/> instance for mocking. </returns>
+        public static RaiEgressSecretReference RaiEgressSecretReference(string secretId = default, string secretKey = default, string format = default)
         {
-            return new RaiEgressSecretRef(secretId, secretKey, format, default);
+            return new RaiEgressSecretReference(secretId, secretKey, format, default);
         }
 
         /// <summary> A reference to a managed-identity token used as a header value. </summary>
         /// <param name="resource"> The resource/audience the token is requested for. </param>
         /// <param name="format"> Optional format for the resolved token; "{value}" is the placeholder, e.g. "Bearer {value}". </param>
-        /// <returns> A new <see cref="Models.RaiEgressManagedIdentityRef"/> instance for mocking. </returns>
-        public static RaiEgressManagedIdentityRef RaiEgressManagedIdentityRef(string resource = default, string format = default)
+        /// <returns> A new <see cref="Models.RaiEgressManagedIdentityReference"/> instance for mocking. </returns>
+        public static RaiEgressManagedIdentityReference RaiEgressManagedIdentityReference(string resource = default, string format = default)
         {
-            return new RaiEgressManagedIdentityRef(resource, format, default);
+            return new RaiEgressManagedIdentityReference(resource, format, default);
         }
 
         /// <summary>
@@ -3071,7 +3071,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeCapacityProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedComputeCapacityProperties CognitiveServicesManagedComputeCapacityProperties(string acceleratorType = default, string offerScope = default, string scopeId = default, int? availableAccelerators = default, int? totalAvailableAccelerators = default, IEnumerable<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities = default)
+        public static CognitiveServicesManagedComputeCapacityProperties CognitiveServicesManagedComputeCapacityProperties(string acceleratorType = default, CognitiveServicesManagedComputeCapacityOfferScope? offerScope = default, string scopeId = default, int? availableAccelerators = default, int? totalAvailableAccelerators = default, IEnumerable<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities = default)
         {
             deploymentSizeCapacities ??= new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentSizeCapacity>();
 

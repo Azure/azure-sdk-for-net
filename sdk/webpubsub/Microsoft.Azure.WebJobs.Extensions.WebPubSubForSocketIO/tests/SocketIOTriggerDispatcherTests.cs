@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -55,6 +56,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, "/ns2", TestSocketId, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [TestCase("/Private", HttpStatusCode.OK)]
+        [TestCase("/private", HttpStatusCode.NotFound)]
+        public async Task TestProcessRequest_NamespaceIsCaseSensitive(string ns, HttpStatusCode expected)
+        {
+            var executor = new Mock<ITriggeredFunctionExecutor>();
+            var dispatcher = SetupDispatcher(@namespace: "/Private", type: WebPubSubEventType.User, eventName: "editguard", connectionString: TestConnectionString, executor: executor);
+            using var request = TestHelpers.CreateHttpRequestMessage(TestHub, ns, TestSocketId, WebPubSubEventType.User, "editguard", TestKey.ConnectionId, ValidSignature,
+                origin: new[] { TestOrigin }, payload: Encoding.UTF8.GetBytes($"42{ns},[\"editguard\"]"));
+
+            using var response = await dispatcher.ExecuteAsync(request);
+
+            Assert.AreEqual(expected, response.StatusCode);
+            executor.Verify(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()),
+                expected == HttpStatusCode.OK ? Times.Once() : Times.Never());
+        }
+
+        [Test]
+        public async Task TestProcessRequest_CaseDistinctNamespaces()
+        {
+            var upper = new Mock<ITriggeredFunctionExecutor>();
+            var dispatcher = SetupDispatcher(@namespace: "/Private", connectionString: TestConnectionString, executor: upper);
+            var lower = new Mock<ITriggeredFunctionExecutor>();
+            lower.Setup(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FunctionResult(true));
+            var key = new SocketIOTriggerKey(TestHub, "/private", TestType, TestEvent);
+            var listener = new WebPubSubForSocketIOListener(lower.Object, key, dispatcher, TestValidationOption);
+            dispatcher.AddListener(key, listener);
+            using var request = TestHelpers.CreateHttpRequestMessage(TestHub, "/private", TestSocketId, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new[] { TestOrigin });
+
+            using var response = await dispatcher.ExecuteAsync(request);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            lower.Verify(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()), Times.Once());
+            upper.Verify(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()), Times.Never());
+            Assert.Throws<ArgumentException>(() => dispatcher.AddListener(key, listener));
         }
 
         [TestCase]
@@ -146,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.AreEqual(expectedCode, response.StatusCode);
         }
 
-        private static WebPubSubForSocketIOTriggerDispatcher SetupDispatcher(string hub = TestHub, string @namespace = "/", WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null)
+        private static WebPubSubForSocketIOTriggerDispatcher SetupDispatcher(string hub = TestHub, string @namespace = "/", WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, Mock<ITriggeredFunctionExecutor> executor = null)
         {
             var funcKey = new SocketIOTriggerKey(hub, @namespace, type, eventName);
             var wpsOptions = new SocketIOFunctionsOptions
@@ -155,7 +193,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 DefaultConnectionInfo = new Config.SocketIOConnectionInfo(connectionString),
             };
             var dispatcher = new WebPubSubForSocketIOTriggerDispatcher(NullLogger.Instance, wpsOptions);
-            var executor = new Mock<ITriggeredFunctionExecutor>();
+            executor ??= new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
             var listener = new WebPubSubForSocketIOListener(executor.Object, funcKey, dispatcher, new WebPubSubValidationOptions(new Config.SocketIOConnectionInfo(connectionString)));
