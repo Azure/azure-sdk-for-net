@@ -203,7 +203,6 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         @{ Field = 'name'; Value = 'Azure .NET CI failure analysis' }
         @{ Field = 'head_sha'; Value = 'A' * 40 }
         @{ Field = 'external_id'; Value = 'CI-failure-analysis:789:42' }
-        @{ Field = 'details_url'; Value = 'https://github.com/Azure/azure-sdk-for-net/actions/runs/1000/attempts/2' }
     ) {
         $prepared = New-CiPrepared $Fixture
         $Fixture.State.claims[0][$Field] = $Value
@@ -222,6 +221,34 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         $Fixture.Context.runId++
         (Initialize-CiFailureAnalysis -Context $Fixture.Context).eligible | Should -BeFalse
         $Fixture.State.claims.Count | Should -Be 1
+    }
+
+    It 'rejects a claim with an absent or incorrect owner marker <Marker>' -ForEach @(
+        @{ Marker = $null }
+        @{ Marker = 'ci-failure-analysis-owner:1001:1' }
+        @{ Marker = 'ci-failure-analysis-owner:1000:2' }
+    ) {
+        $prepared = New-CiPrepared $Fixture
+        $Fixture.State.claims[0].output.text = $Marker
+        { Start-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared } | Should -Throw '*does not belong*'
+        { Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput (New-CiAgentOutput) } |
+            Should -Throw '*does not belong*'
+        { Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults @{ analyze = 'failure' } } |
+            Should -Throw '*does not belong*'
+        $Fixture.State.claims[0].status | Should -BeExactly 'in_progress'
+    }
+
+    It 'rejects another workflow <Field> even when its prepared context is altered to match' -ForEach @(
+        @{ Field = 'runId'; PreparedField = 'workflowRunId' }
+        @{ Field = 'runAttempt'; PreparedField = 'workflowRunAttempt' }
+    ) {
+        $prepared = New-CiPrepared $Fixture
+        $Fixture.Context[$Field]++
+        $prepared[$PreparedField] = $Fixture.Context[$Field]
+        { Start-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared } | Should -Throw '*does not belong*'
+        { Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults @{ analyze = 'failure' } } |
+            Should -Throw '*does not belong*'
+        $Fixture.State.claims[0].status | Should -BeExactly 'in_progress'
     }
 
     It 'blocks startup when the exact bot report was published after preparation' {
