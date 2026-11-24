@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Billing
     // TODO(#59539): drop the [CodeGenSuppress] + replacement once the upstream
     //               generator fix ships and regeneration no longer emits the broken call.
     //
-    // GetBillingRequests/GetReservations{Async}(Options): back-compat overloads
+    // GetBillingRequests/GetReservations/GetByBillingAccountSavingsPlan{Async}(Options): back-compat overloads
     // for GA 1.2.2 callers that pass an Options aggregate. The new MPG generator
     // emits methods with individual query parameters (Get*ByBillingAccount);
     // these shims forward the aggregate to the generated method so existing
@@ -58,6 +58,20 @@ namespace Azure.ResourceManager.Billing
         public virtual Pageable<BillingReservationResource> GetReservations(BillingAccountResourceGetReservationsOptions options, CancellationToken cancellationToken = default)
         {
             return GetByBillingAccount(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.RefreshSummary, options?.SelectedState, options?.Take, cancellationToken);
+        }
+
+        /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlanAsync(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
+        {
+            return GetByBillingAccountAsync(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
+        }
+
+        /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlan(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
+        {
+            return GetByBillingAccount(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
         }
 
         /// <summary> Cancels payment terms on a billing account. </summary>
@@ -124,66 +138,6 @@ namespace Azure.ResourceManager.Billing
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List savings plans by billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlanAsync(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
-        {
-            return ListByBillingAccountAsync(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
-        }
-
-        /// <summary>
-        /// List savings plans by billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlan(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
-        {
-            return ListByBillingAccount(options?.Filter, options?.OrderBy, options?.Skiptoken, options?.Take, options?.SelectedState, options?.RefreshSummary, cancellationToken);
         }
     }
 }

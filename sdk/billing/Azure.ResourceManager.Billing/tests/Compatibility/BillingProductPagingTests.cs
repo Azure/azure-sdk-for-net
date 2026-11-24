@@ -4,12 +4,38 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Billing.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Tests
 {
     public class BillingProductPagingTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task LegacySavingsPlanOptionsForwardToRenamedOperation(bool async)
+        {
+            var transport = new MockTransport(new MockResponse(200).SetContent("{\"value\":[]}"));
+            var client = new ArmClient(new MockCredential(), "00000000-0000-0000-0000-000000000001", new ArmClientOptions { Transport = transport });
+            var resource = client.GetBillingAccountResource(BillingAccountResource.CreateResourceIdentifier("account"));
+            var options = new BillingAccountResourceGetByBillingAccountSavingsPlanOptions { Filter = "active", Take = 5, SelectedState = "Succeeded" };
+
+            if (async)
+            {
+                await foreach (var page in resource.GetByBillingAccountSavingsPlanAsync(options).AsPages())
+                { }
+            }
+            else
+            {
+                foreach (var page in resource.GetByBillingAccountSavingsPlan(options).AsPages())
+                { }
+            }
+
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo("/providers/Microsoft.Billing/billingAccounts/account/savingsPlans"));
+            Assert.That(transport.Requests[0].Uri.ToUri().Query, Does.Contain("filter=active").And.Contain("take=5").And.Contain("selectedState=Succeeded"));
+        }
+
         [TestCase(false, false)]
         [TestCase(false, true)]
         [TestCase(true, false)]
