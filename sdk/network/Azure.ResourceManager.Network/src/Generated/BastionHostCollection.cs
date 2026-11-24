@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal BastionHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _bastionHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BastionHostResource.ResourceType.Namespace, Diagnostics);
-            _bastionHostsRestClient = new BastionHosts(_bastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _bastionHostsRestClient = new BastionHosts(_bastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/bastionHosts", out string bastionHostsApiVersionOverride) ? bastionHostsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

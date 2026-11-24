@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualWanApiVersion);
             _virtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualWans", out string virtualWansApiVersionOverride) ? virtualWansApiVersionOverride : "2026-03-01");
             _vpnSitesConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _vpnSitesConfigurationRestClient = new VpnSitesConfiguration(_vpnSitesConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWanApiVersion ?? "2026-03-01");
             _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);

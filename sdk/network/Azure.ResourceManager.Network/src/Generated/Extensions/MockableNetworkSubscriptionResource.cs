@@ -168,35 +168,35 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics ApplicationSecurityGroupsClientDiagnostics => _applicationSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/applicationSecurityGroups", out string apiVersion0) ? apiVersion0 : "2026-03-01");
 
         private ClientDiagnostics AuthenticationPoliciesClientDiagnostics => _authenticationPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AuthenticationPolicies AuthenticationPoliciesRestClient => _authenticationPoliciesRestClient ??= new AuthenticationPolicies(AuthenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private AuthenticationPolicies AuthenticationPoliciesRestClient => _authenticationPoliciesRestClient ??= new AuthenticationPolicies(AuthenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/authenticationPolicies", out string apiVersion1) ? apiVersion1 : "2026-03-01");
 
         private ClientDiagnostics AzureFirewallsClientDiagnostics => _azureFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/azureFirewalls", out string apiVersion2) ? apiVersion2 : "2026-03-01");
 
         private ClientDiagnostics BastionHostsClientDiagnostics => _bastionHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/bastionHosts", out string apiVersion3) ? apiVersion3 : "2026-03-01");
 
         private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkInterfaces", out string apiVersion4) ? apiVersion4 : "2026-03-01");
 
         private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/publicIPAddresses", out string apiVersion5) ? apiVersion5 : "2026-03-01");
 
         private ClientDiagnostics DdosCustomPoliciesClientDiagnostics => _ddosCustomPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ddosCustomPolicies", out string apiVersion6) ? apiVersion6 : "2026-03-01");
 
         private ClientDiagnostics DdosProtectionPlansClientDiagnostics => _ddosProtectionPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ddosProtectionPlans", out string apiVersion7) ? apiVersion7 : "2026-03-01");
 
         private ClientDiagnostics ExpressRouteCircuitsClientDiagnostics => _expressRouteCircuitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -208,27 +208,27 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics ExpressRoutePortsClientDiagnostics => _expressRoutePortsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ExpressRoutePorts", out string apiVersion8) ? apiVersion8 : "2026-03-01");
 
         private ClientDiagnostics ExpressRouteLagsClientDiagnostics => _expressRouteLagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteLags ExpressRouteLagsRestClient => _expressRouteLagsRestClient ??= new ExpressRouteLags(ExpressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private ExpressRouteLags ExpressRouteLagsRestClient => _expressRouteLagsRestClient ??= new ExpressRouteLags(ExpressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/expressRouteLags", out string apiVersion9) ? apiVersion9 : "2026-03-01");
 
         private ClientDiagnostics FirewallPoliciesClientDiagnostics => _firewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/firewallPolicies", out string apiVersion10) ? apiVersion10 : "2026-03-01");
 
         private ClientDiagnostics NetworkManagersClientDiagnostics => _networkManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkManagers", out string apiVersion11) ? apiVersion11 : "2026-03-01");
 
         private ClientDiagnostics IPAllocationsClientDiagnostics => _ipAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IPAllocations IPAllocationsRestClient => _ipAllocationsRestClient ??= new IPAllocations(IPAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private IPAllocations IPAllocationsRestClient => _ipAllocationsRestClient ??= new IPAllocations(IPAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/IpAllocations", out string apiVersion12) ? apiVersion12 : "2026-03-01");
 
         private ClientDiagnostics IPGroupsClientDiagnostics => _ipGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IPGroups IPGroupsRestClient => _ipGroupsRestClient ??= new IPGroups(IPGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private IPGroups IPGroupsRestClient => _ipGroupsRestClient ??= new IPGroups(IPGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ipGroups", out string apiVersion13) ? apiVersion13 : "2026-03-01");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -242,23 +242,23 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/natGateways", out string apiVersion14) ? apiVersion14 : "2026-03-01");
 
         private ClientDiagnostics NetworkProfilesClientDiagnostics => _networkProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkProfiles", out string apiVersion15) ? apiVersion15 : "2026-03-01");
 
         private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkSecurityGroups", out string apiVersion16) ? apiVersion16 : "2026-03-01");
 
         private ClientDiagnostics NetworkSecurityPerimetersClientDiagnostics => _networkSecurityPerimetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkSecurityPerimeters", out string apiVersion17) ? apiVersion17 : "2026-03-01");
 
         private ClientDiagnostics NetworkVirtualAppliancesClientDiagnostics => _networkVirtualAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkVirtualAppliances", out string apiVersion18) ? apiVersion18 : "2026-03-01");
 
         private ClientDiagnostics NetworkWatchersClientDiagnostics => _networkWatchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics PrivateEndpointsClientDiagnostics => _privateEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateEndpoints", out string apiVersion19) ? apiVersion19 : "2026-03-01");
 
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -280,91 +280,91 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics PublicIPPrefixesClientDiagnostics => _publicIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/publicIPPrefixes", out string apiVersion20) ? apiVersion20 : "2026-03-01");
 
         private ClientDiagnostics RouteFiltersClientDiagnostics => _routeFiltersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/routeFilters", out string apiVersion21) ? apiVersion21 : "2026-03-01");
 
         private ClientDiagnostics RouteTablesClientDiagnostics => _routeTablesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/routeTables", out string apiVersion22) ? apiVersion22 : "2026-03-01");
 
         private ClientDiagnostics SecurityPartnerProvidersClientDiagnostics => _securityPartnerProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/securityPartnerProviders", out string apiVersion23) ? apiVersion23 : "2026-03-01");
 
         private ClientDiagnostics ServiceEndpointPoliciesClientDiagnostics => _serviceEndpointPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/serviceEndpointPolicies", out string apiVersion24) ? apiVersion24 : "2026-03-01");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualNetworks", out string apiVersion25) ? apiVersion25 : "2026-03-01");
 
         private ClientDiagnostics VirtualNetworkTapsClientDiagnostics => _virtualNetworkTapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualNetworkTaps", out string apiVersion26) ? apiVersion26 : "2026-03-01");
 
         private ClientDiagnostics VirtualRoutersClientDiagnostics => _virtualRoutersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualRouters", out string apiVersion27) ? apiVersion27 : "2026-03-01");
 
         private ClientDiagnostics VirtualWansClientDiagnostics => _virtualWansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualWans", out string apiVersion28) ? apiVersion28 : "2026-03-01");
 
         private ClientDiagnostics VpnSitesClientDiagnostics => _vpnSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/vpnSites", out string apiVersion29) ? apiVersion29 : "2026-03-01");
 
         private ClientDiagnostics VpnServerConfigurationsClientDiagnostics => _vpnServerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/vpnServerConfigurations", out string apiVersion30) ? apiVersion30 : "2026-03-01");
 
         private ClientDiagnostics VirtualHubsClientDiagnostics => _virtualHubsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualHubs", out string apiVersion31) ? apiVersion31 : "2026-03-01");
 
         private ClientDiagnostics VpnGatewaysClientDiagnostics => _vpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/vpnGateways", out string apiVersion32) ? apiVersion32 : "2026-03-01");
 
         private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/expressRouteGateways", out string apiVersion33) ? apiVersion33 : "2026-03-01");
 
         private ClientDiagnostics WebApplicationFirewallPoliciesClientDiagnostics => _webApplicationFirewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies", out string apiVersion34) ? apiVersion34 : "2026-03-01");
 
         private ClientDiagnostics VirtualNetworkAppliancesClientDiagnostics => _virtualNetworkAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualNetworkAppliances", out string apiVersion35) ? apiVersion35 : "2026-03-01");
 
         private ClientDiagnostics ServiceGatewaysClientDiagnostics => _serviceGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/serviceGateways", out string apiVersion36) ? apiVersion36 : "2026-03-01");
 
         private ClientDiagnostics InterconnectGroupsClientDiagnostics => _interconnectGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/interconnectGroups", out string apiVersion37) ? apiVersion37 : "2026-03-01");
 
         private ClientDiagnostics FirstPartyServiceTagsClientDiagnostics => _firstPartyServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FirstPartyServiceTags FirstPartyServiceTagsRestClient => _firstPartyServiceTagsRestClient ??= new FirstPartyServiceTags(FirstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private FirstPartyServiceTags FirstPartyServiceTagsRestClient => _firstPartyServiceTagsRestClient ??= new FirstPartyServiceTags(FirstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/firstPartyServiceTags", out string apiVersion38) ? apiVersion38 : "2026-03-01");
 
         private ClientDiagnostics CustomIPPrefixesClientDiagnostics => _customIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/customIpPrefixes", out string apiVersion39) ? apiVersion39 : "2026-03-01");
 
         private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/dscpConfigurations", out string apiVersion40) ? apiVersion40 : "2026-03-01");
 
         private ClientDiagnostics P2sVpnGatewaysClientDiagnostics => _p2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/p2svpnGateways", out string apiVersion41) ? apiVersion41 : "2026-03-01");
 
         private ClientDiagnostics CheckDnsNameAvailabilityClientDiagnostics => _checkDnsNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

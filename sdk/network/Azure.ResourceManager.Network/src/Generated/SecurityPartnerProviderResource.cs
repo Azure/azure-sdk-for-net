@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal SecurityPartnerProviderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _securityPartnerProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _securityPartnerProvidersRestClient = new SecurityPartnerProviders(_securityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _securityPartnerProvidersRestClient = new SecurityPartnerProviders(_securityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/securityPartnerProviders", out string securityPartnerProvidersApiVersionOverride) ? securityPartnerProvidersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

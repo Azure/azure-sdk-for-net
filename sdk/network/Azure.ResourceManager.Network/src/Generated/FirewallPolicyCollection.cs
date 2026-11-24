@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/firewallPolicies", out string firewallPoliciesApiVersionOverride) ? firewallPoliciesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 
