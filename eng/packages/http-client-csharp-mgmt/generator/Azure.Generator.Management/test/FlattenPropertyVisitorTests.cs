@@ -1390,6 +1390,37 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void FlatteningPreservesHandwrittenAndGeneratedConstructorOverloads()
+        {
+            var wrapper = InputFactory.Model("Wrapper", properties:
+                [InputFactory.Property("value", InputPrimitiveType.String, isRequired: true)]);
+            var property = InputFactory.Property("wrapper", wrapper, isRequired: true);
+            ApplyFlattenDecorator(property);
+            var parent = InputFactory.Model("ParentModel", properties: [property]);
+            const string customization = """
+                namespace Samples.Models
+                {
+                    public partial class ParentModel
+                    {
+                        public ParentModel(Wrapper wrapper) { }
+                    }
+                }
+                """;
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parent, wrapper], customizationSources: [customization]);
+            var model = plugin.Object.TypeFactory.CreateModel(parent)!;
+            Assert.That(model.CustomCodeView!.Constructors, Has.Count.EqualTo(1));
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.False);
+
+            RunVisitors(model);
+
+            var generated = model.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(generated.Signature.Parameters.Single().Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(model.EffectiveConstructors.Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .Select(c => c.Signature.Parameters.Single().Type.Name), Is.EquivalentTo(new[] { "Wrapper", "String" }));
+        }
+
+        [Test]
         public void TestSafeFlattenCountsCustomizedReplacementProperty()
         {
             var nameProperty = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");

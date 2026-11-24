@@ -71,7 +71,7 @@ namespace Azure.Generator.Management.Utilities
             if (innerModel is null)
                 return false;
 
-            foreach (var ctor in innerModel.Constructors)
+            foreach (var ctor in innerModel.EffectiveConstructors)
             {
                 if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !ctor.Signature.Parameters.Any())
                     return true;
