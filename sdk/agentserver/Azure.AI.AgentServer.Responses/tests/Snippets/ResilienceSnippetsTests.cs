@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using OpenAI.Responses;
 
+#pragma warning disable AAAS004 // Samples persist state with the experimental FoundryStateStore.
+
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>

@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -24,6 +25,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     /// Prefer <c>GetOrCreateAsync</c> over constructing directly: it resolves (or
     /// creates) the server-side store resource in one call.
     /// </remarks>
+    [Experimental("AAAS004")]
     public class FoundryStateStore
     {
         /// <summary>The default per-item TTL (30 days, in seconds) applied at store creation.</summary>
