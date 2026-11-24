@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
+    /// <summary></summary>
     public partial class FirmwareAnalysisWorkspaceResource : IJsonModel<FirmwareAnalysisWorkspaceData>
     {
-        private static FirmwareAnalysisWorkspaceData s_dataDeserializationInstance;
-        private static FirmwareAnalysisWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FirmwareAnalysisWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FirmwareAnalysisWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FirmwareAnalysisWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirmwareAnalysisWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisWorkspaceData>)Data).Write(writer, options);
 
-        FirmwareAnalysisWorkspaceData IJsonModel<FirmwareAnalysisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirmwareAnalysisWorkspaceData IJsonModel<FirmwareAnalysisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FirmwareAnalysisWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirmwareAnalysisWorkspaceData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FirmwareAnalysisWorkspaceData IPersistableModel<FirmwareAnalysisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirmwareAnalysisWorkspaceData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        string IPersistableModel<FirmwareAnalysisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirmwareAnalysisWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FirmwareAnalysisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

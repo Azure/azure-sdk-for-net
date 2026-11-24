@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -14,80 +15,127 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public readonly partial struct CertificateUsage : IEquatable<CertificateUsage>
     {
         private readonly string _value;
+        /// <summary> This certificate can be used to add a signature to a message. </summary>
+        private const string DigitalSignatureValue = "digitalSignature";
+        /// <summary> This certificates provides a non-repudiation service that protects against false denial of a message. </summary>
+        private const string NonRepudiationValue = "nonRepudiation";
+        /// <summary> A synonym for NonRepudiation used in newer x509 certificates. </summary>
+        private const string ContentCommitmentValue = "contentCommitment";
+        /// <summary> This certificate can be used to encrypt a private or secret key. </summary>
+        private const string KeyEnciphermentValue = "keyEncipherment";
+        /// <summary> This certificate can be used to decrypt a private or secret key. </summary>
+        private const string DataEnciphermentValue = "dataEncipherment";
+        /// <summary> This certificate can be used to perform a key agreement, such as with a Diffie-Hellman key exchange. </summary>
+        private const string KeyAgreementValue = "keyAgreement";
+        /// <summary> This certificate can be used to verify a other public keys. </summary>
+        private const string KeyCertSignValue = "keyCertSign";
+        /// <summary> This certificate can be used to verify a certificate revocation list. </summary>
+        private const string CRLSignValue = "crlSign";
+        /// <summary> This certificate can be only be used to encrypt data. </summary>
+        private const string EncipherOnlyValue = "encipherOnly";
+        /// <summary> This certificate can only be used to decrypt data. </summary>
+        private const string DecipherOnlyValue = "decipherOnly";
+        /// <summary> This certificate can be used to authenticate a server in a TLS/SSL connection. </summary>
+        private const string ServerAuthenticationValue = "serverAuth";
+        /// <summary> This certificate can be used to authenticate a client in a TLS/SSL connection. </summary>
+        private const string ClientAuthenticationValue = "clientAuth";
+        /// <summary> This certificate can be used to authenticate a code object. </summary>
+        private const string CodeSigningValue = "codeSigning";
+        /// <summary> This certificate can be used to authenticate an email address. </summary>
+        private const string EmailProtectionValue = "emailProtection";
+        /// <summary> This certificate binds the hash of an object to a time. </summary>
+        private const string TimeStampingValue = "timeStamping";
+        /// <summary> This certificate can be used to sign OCSP responses. </summary>
+        private const string OcspSigningValue = "ocspSigning";
 
         /// <summary> Initializes a new instance of <see cref="CertificateUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateUsage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DigitalSignatureValue = "digitalSignature";
-        private const string NonRepudiationValue = "nonRepudiation";
-        private const string ContentCommitmentValue = "contentCommitment";
-        private const string KeyEnciphermentValue = "keyEncipherment";
-        private const string DataEnciphermentValue = "dataEncipherment";
-        private const string KeyAgreementValue = "keyAgreement";
-        private const string KeyCertSignValue = "keyCertSign";
-        private const string CRLSignValue = "crlSign";
-        private const string EncipherOnlyValue = "encipherOnly";
-        private const string DecipherOnlyValue = "decipherOnly";
-        private const string ServerAuthenticationValue = "serverAuth";
-        private const string ClientAuthenticationValue = "clientAuth";
-        private const string CodeSigningValue = "codeSigning";
-        private const string EmailProtectionValue = "emailProtection";
-        private const string TimeStampingValue = "timeStamping";
-        private const string OcspSigningValue = "ocspSigning";
+            _value = value;
+        }
 
         /// <summary> This certificate can be used to add a signature to a message. </summary>
         public static CertificateUsage DigitalSignature { get; } = new CertificateUsage(DigitalSignatureValue);
+
         /// <summary> This certificates provides a non-repudiation service that protects against false denial of a message. </summary>
         public static CertificateUsage NonRepudiation { get; } = new CertificateUsage(NonRepudiationValue);
+
         /// <summary> A synonym for NonRepudiation used in newer x509 certificates. </summary>
         public static CertificateUsage ContentCommitment { get; } = new CertificateUsage(ContentCommitmentValue);
+
         /// <summary> This certificate can be used to encrypt a private or secret key. </summary>
         public static CertificateUsage KeyEncipherment { get; } = new CertificateUsage(KeyEnciphermentValue);
+
         /// <summary> This certificate can be used to decrypt a private or secret key. </summary>
         public static CertificateUsage DataEncipherment { get; } = new CertificateUsage(DataEnciphermentValue);
+
         /// <summary> This certificate can be used to perform a key agreement, such as with a Diffie-Hellman key exchange. </summary>
         public static CertificateUsage KeyAgreement { get; } = new CertificateUsage(KeyAgreementValue);
+
         /// <summary> This certificate can be used to verify a other public keys. </summary>
         public static CertificateUsage KeyCertSign { get; } = new CertificateUsage(KeyCertSignValue);
+
         /// <summary> This certificate can be used to verify a certificate revocation list. </summary>
         public static CertificateUsage CRLSign { get; } = new CertificateUsage(CRLSignValue);
+
         /// <summary> This certificate can be only be used to encrypt data. </summary>
         public static CertificateUsage EncipherOnly { get; } = new CertificateUsage(EncipherOnlyValue);
+
         /// <summary> This certificate can only be used to decrypt data. </summary>
         public static CertificateUsage DecipherOnly { get; } = new CertificateUsage(DecipherOnlyValue);
+
         /// <summary> This certificate can be used to authenticate a server in a TLS/SSL connection. </summary>
         public static CertificateUsage ServerAuthentication { get; } = new CertificateUsage(ServerAuthenticationValue);
+
         /// <summary> This certificate can be used to authenticate a client in a TLS/SSL connection. </summary>
         public static CertificateUsage ClientAuthentication { get; } = new CertificateUsage(ClientAuthenticationValue);
+
         /// <summary> This certificate can be used to authenticate a code object. </summary>
         public static CertificateUsage CodeSigning { get; } = new CertificateUsage(CodeSigningValue);
+
         /// <summary> This certificate can be used to authenticate an email address. </summary>
         public static CertificateUsage EmailProtection { get; } = new CertificateUsage(EmailProtectionValue);
+
         /// <summary> This certificate binds the hash of an object to a time. </summary>
         public static CertificateUsage TimeStamping { get; } = new CertificateUsage(TimeStampingValue);
+
         /// <summary> This certificate can be used to sign OCSP responses. </summary>
         public static CertificateUsage OcspSigning { get; } = new CertificateUsage(OcspSigningValue);
+
         /// <summary> Determines if two <see cref="CertificateUsage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateUsage left, CertificateUsage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateUsage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateUsage left, CertificateUsage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateUsage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateUsage(string value) => new CertificateUsage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateUsage?(string value) => value == null ? null : new CertificateUsage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateUsage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateUsage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

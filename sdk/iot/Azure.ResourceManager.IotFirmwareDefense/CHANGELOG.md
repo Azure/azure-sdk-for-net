@@ -1,14 +1,20 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
+
+- Updated Microsoft.IoTFirmwareDefense API version to `2027-01-01`.
+- Added `$filter`, `$orderby`, `$search` and `$top` query parameters to list operations.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated the package from AutoRest to the TypeSpec-based generator, keeping the public API backward compatible.
+- The download URL operations continue to use API version `2024-01-10`.
 
 ## 1.1.1 (2026-06-13)
 

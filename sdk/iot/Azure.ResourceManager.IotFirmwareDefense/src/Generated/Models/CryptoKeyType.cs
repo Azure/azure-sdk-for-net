@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public readonly partial struct CryptoKeyType : IEquatable<CryptoKeyType>
     {
         private readonly string _value;
+        /// <summary> The key is an asymmetric public key. </summary>
+        private const string PublicValue = "Public";
+        /// <summary> The key is an asymmetric private key. </summary>
+        private const string PrivateValue = "Private";
 
         /// <summary> Initializes a new instance of <see cref="CryptoKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CryptoKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicValue = "Public";
-        private const string PrivateValue = "Private";
+            _value = value;
+        }
 
         /// <summary> The key is an asymmetric public key. </summary>
         public static CryptoKeyType Public { get; } = new CryptoKeyType(PublicValue);
+
         /// <summary> The key is an asymmetric private key. </summary>
         public static CryptoKeyType Private { get; } = new CryptoKeyType(PrivateValue);
+
         /// <summary> Determines if two <see cref="CryptoKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CryptoKeyType left, CryptoKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CryptoKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CryptoKeyType left, CryptoKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CryptoKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CryptoKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CryptoKeyType(string value) => new CryptoKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CryptoKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CryptoKeyType?(string value) => value == null ? null : new CryptoKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CryptoKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CryptoKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

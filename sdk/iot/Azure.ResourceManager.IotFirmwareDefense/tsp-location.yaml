@@ -1,0 +1,4 @@
+directory: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/IoTFirmwareDefense
+commit: a128ac7c70749d65950bd9da2f9753b7fda23947
+repo: Azure/azure-rest-api-specs-pr
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
