@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="caching"> Specifies the caching requirements for the managed data disk. Possible values include: None, ReadOnly, ReadWrite. </param>
         /// <param name="isWriteAcceleratorEnabled"> Specifies whether write accelerator should be enabled or disabled on the managed data disk. </param>
         /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed data disk. </param>
-        /// <param name="diskMbpsReadWrite"> Specifies the bandwidth in MB per second for the managed data disk. </param>
+        /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed data disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeVmssDataDisk(int lun, int diskSizeInGB, ServiceFabricManagedDataDiskType diskType, string diskLetter, ServiceFabricManagedDiskCachingType? caching, bool? isWriteAcceleratorEnabled, int? diskIopsReadWrite, int? diskMbpsReadWrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeTypeVmssDataDisk(int lun, int diskSizeInGB, ServiceFabricManagedDataDiskType diskType, string diskLetter, ServiceFabricManagedDiskCachingType? caching, bool? isWriteAcceleratorEnabled, int? diskIopsReadWrite, int? diskMBpsReadWrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             DiskSizeInGB = diskSizeInGB;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Caching = caching;
             IsWriteAcceleratorEnabled = isWriteAcceleratorEnabled;
             DiskIopsReadWrite = diskIopsReadWrite;
-            DiskMbpsReadWrite = diskMbpsReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public int? DiskIopsReadWrite { get; set; }
 
         /// <summary> Specifies the bandwidth in MB per second for the managed data disk. </summary>
-        public int? DiskMbpsReadWrite { get; set; }
+        public int? DiskMBpsReadWrite { get; set; }
     }
 }

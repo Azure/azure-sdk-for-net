@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskMbpsReadWrite))
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
-                writer.WriteNumberValue(DiskMbpsReadWrite.Value);
+                writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceFabricManagedDiskCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
             int? diskIopsReadWrite = default;
-            int? diskMbpsReadWrite = default;
+            int? diskMBpsReadWrite = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    diskMbpsReadWrite = prop.Value.GetInt32();
+                    diskMBpsReadWrite = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 caching,
                 isWriteAcceleratorEnabled,
                 diskIopsReadWrite,
-                diskMbpsReadWrite,
+                diskMBpsReadWrite,
                 additionalBinaryDataProperties);
         }
     }

@@ -451,10 +451,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("dataDiskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DataDiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DataDiskMbpsReadWrite))
+            if (Optional.IsDefined(DataDiskMBpsReadWrite))
             {
                 writer.WritePropertyName("dataDiskMBpsReadWrite"u8);
-                writer.WriteNumberValue(DataDiskMbpsReadWrite.Value);
+                writer.WriteNumberValue(DataDiskMBpsReadWrite.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceFabricManagedDiskCachingType? dataDiskCaching = default;
             bool? isDataDiskWriteAcceleratorEnabled = default;
             int? dataDiskIopsReadWrite = default;
-            int? dataDiskMbpsReadWrite = default;
+            int? dataDiskMBpsReadWrite = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    dataDiskMbpsReadWrite = prop.Value.GetInt32();
+                    dataDiskMBpsReadWrite = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 dataDiskCaching,
                 isDataDiskWriteAcceleratorEnabled,
                 dataDiskIopsReadWrite,
-                dataDiskMbpsReadWrite,
+                dataDiskMBpsReadWrite,
                 additionalBinaryDataProperties);
         }
     }

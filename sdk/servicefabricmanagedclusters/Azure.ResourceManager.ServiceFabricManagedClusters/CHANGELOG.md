@@ -7,6 +7,7 @@
 - Added Instance Mix support through `ServiceFabricManagedNodeTypeSkuProfile`, ranked VM sizes, and allocation strategies.
 - Added configurable caching, write acceleration, IOPS, and throughput for primary and additional data disks.
 - Added `ReimageAllDisks` for single-node recovery, including the OS disk and all data disks.
+- Disk throughput properties use `MBps` casing to indicate megabytes per second, consistent with the Compute SDK.
 
 ### Breaking Changes
 - Expanded the `NodeTypeVmssDataDisk` and `ServiceFabricManagedNodeTypeData` model factory methods with Instance Mix and data disk configuration parameters. Callers using positional arguments must update for the new parameter order; named arguments and object initializers are recommended.

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 Caching = ServiceFabricManagedDiskCachingType.ReadOnly,
                 IsWriteAcceleratorEnabled = true,
                 DiskIopsReadWrite = 5000,
-                DiskMbpsReadWrite = 200,
+                DiskMBpsReadWrite = 200,
             };
             var data = new ServiceFabricManagedNodeTypeData
             {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 DataDiskCaching = ServiceFabricManagedDiskCachingType.ReadWrite,
                 IsDataDiskWriteAcceleratorEnabled = true,
                 DataDiskIopsReadWrite = 10000,
-                DataDiskMbpsReadWrite = 400,
+                DataDiskMBpsReadWrite = 400,
             };
             data.AdditionalDataDisks.Add(dataDisk);
 
@@ -54,6 +55,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             Assert.That(json, Does.Contain("\"caching\":\"ReadOnly\""));
             Assert.That(json, Does.Contain("\"writeAcceleratorEnabled\":true"));
             Assert.That(json, Does.Contain("\"diskIOPSReadWrite\":5000"));
+            Assert.That(json, Does.Contain("\"diskMBpsReadWrite\":200"));
+
+            var roundTrip = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(BinaryData.FromString(json));
+
+            Assert.That(roundTrip.DataDiskMBpsReadWrite, Is.EqualTo(400));
+            Assert.That(roundTrip.AdditionalDataDisks[0].DiskMBpsReadWrite, Is.EqualTo(200));
+        }
+
+        [Test]
+        public void DiskThroughputFactoriesUseMegabytesPerSecond()
+        {
+            var disk = ArmServiceFabricManagedClustersModelFactory.NodeTypeVmssDataDisk(diskMBpsReadWrite: 200);
+            var data = ArmServiceFabricManagedClustersModelFactory.ServiceFabricManagedNodeTypeData(
+                dataDiskMBpsReadWrite: 400,
+                additionalDataDisks: new[] { disk });
+
+            string json = ModelReaderWriter.Write(data).ToString();
+
+            Assert.That(json, Does.Contain("\"dataDiskMBpsReadWrite\":400"));
             Assert.That(json, Does.Contain("\"diskMBpsReadWrite\":200"));
         }
 

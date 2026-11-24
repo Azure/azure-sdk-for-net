@@ -931,11 +931,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary> Specifies the bandwidth in MB per second for the primary Service Fabric data disk. </summary>
-        public int? DataDiskMbpsReadWrite
+        public int? DataDiskMBpsReadWrite
         {
             get
             {
-                return Properties is null ? default : Properties.DataDiskMbpsReadWrite;
+                return Properties is null ? default : Properties.DataDiskMBpsReadWrite;
             }
             set
             {
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.DataDiskMbpsReadWrite = value;
+                Properties.DataDiskMBpsReadWrite = value;
             }
         }
 

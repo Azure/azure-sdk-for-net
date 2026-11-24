@@ -1236,9 +1236,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="caching"> Specifies the caching requirements for the managed data disk. Possible values include: None, ReadOnly, ReadWrite. </param>
         /// <param name="isWriteAcceleratorEnabled"> Specifies whether write accelerator should be enabled or disabled on the managed data disk. </param>
         /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed data disk. </param>
-        /// <param name="diskMbpsReadWrite"> Specifies the bandwidth in MB per second for the managed data disk. </param>
+        /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed data disk. </param>
         /// <returns> A new <see cref="Models.NodeTypeVmssDataDisk"/> instance for mocking. </returns>
-        public static NodeTypeVmssDataDisk NodeTypeVmssDataDisk(int lun = default, int diskSizeInGB = default, ServiceFabricManagedDataDiskType diskType = default, string diskLetter = default, ServiceFabricManagedDiskCachingType? caching = default, bool? isWriteAcceleratorEnabled = default, int? diskIopsReadWrite = default, int? diskMbpsReadWrite = default)
+        public static NodeTypeVmssDataDisk NodeTypeVmssDataDisk(int lun = default, int diskSizeInGB = default, ServiceFabricManagedDataDiskType diskType = default, string diskLetter = default, ServiceFabricManagedDiskCachingType? caching = default, bool? isWriteAcceleratorEnabled = default, int? diskIopsReadWrite = default, int? diskMBpsReadWrite = default)
         {
             return new NodeTypeVmssDataDisk(
                 lun,
@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 caching,
                 isWriteAcceleratorEnabled,
                 diskIopsReadWrite,
-                diskMbpsReadWrite,
+                diskMBpsReadWrite,
                 default);
         }
 
