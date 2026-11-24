@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 - Fixed OData filter operator precedence when sending to multiple rooms with `ExceptRooms`.
+- Fixed Socket.IO trigger routing to match namespaces using case-sensitive ordinal comparisons. Namespaces that differ only by case now require separate trigger bindings.
 
 ## 1.0.0 (2025-11-15)
 
