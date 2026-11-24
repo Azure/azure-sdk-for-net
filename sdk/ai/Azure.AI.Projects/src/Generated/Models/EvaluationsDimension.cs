@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="description"/> is null. </exception>
-        public EvaluationsDimension(string id, string description, int weight)
+        public EvaluationsDimension(string id, string description, int? weight)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(description, nameof(description));
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationsDimension(string id, string description, int weight, bool? isAlwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationsDimension(string id, string description, int? weight, bool? isAlwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects.Evaluation
         public string Description { get; set; }
 
         /// <summary> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </summary>
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
 
         /// <summary> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </summary>
         public bool? IsAlwaysApplicable { get; set; }

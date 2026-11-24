@@ -78,17 +78,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName(item.Key);
                 writer.WriteStringValue(item.Value);
             }
-            foreach (var item in AdditionalBinaryDataProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
@@ -127,7 +130,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                         additionalProperties[prop.Name] = prop.Value.GetString();
                         continue;
                 }
-                additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
             }
             return new ResponsePromptVariables(additionalProperties, additionalBinaryDataProperties);
         }

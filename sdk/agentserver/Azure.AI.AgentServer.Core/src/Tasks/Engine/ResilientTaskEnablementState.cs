@@ -29,6 +29,25 @@ internal sealed class ResilientTaskEnablementState
 
     public bool IsReady => Volatile.Read(ref _ready) != 0;
 
+    public string ResolveHostProtocol()
+    {
+        if (IsExplicitlyEnabled)
+        {
+            return TaskWireKeys.ProtocolCore;
+        }
+
+        foreach (KeyValuePair<string, Func<bool>> protocol in
+            _protocols.OrderBy(pair => pair.Key, StringComparer.Ordinal))
+        {
+            if (protocol.Value())
+            {
+                return protocol.Key;
+            }
+        }
+
+        return TaskWireKeys.ProtocolCore;
+    }
+
     public void RegisterProtocol(string protocol, Func<bool> enabled)
     {
         if (!_protocols.TryAdd(protocol, enabled))

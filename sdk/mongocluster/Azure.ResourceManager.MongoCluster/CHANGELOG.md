@@ -1,5 +1,15 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0 (2026-11-20)
 
 ### Features Added
@@ -7,9 +17,9 @@
 - Upgraded API version to `2026-09-01`.
 - Added member `Planned` to enum `MongoClusterPromoteOption`.
 
-### Other Changes
+### Breaking Changes
 
-- Updated documentation for `MongoClusterStorageProperties.Type`: the service defaults to `PremiumSSDv2` when the storage type is omitted during cluster creation; omitting it during an update leaves the storage type unchanged.
+- With API version `2026-09-01`, creating a cluster without `MongoClusterStorageProperties.Type` provisions `PremiumSSDv2` storage (API version `2026-06-01` used `PremiumSSD`). Set `Type` explicitly to keep the previous storage type. Omitting `Type` in an update still leaves the storage type unchanged.
 
 ## 1.2.0-beta.1 (2026-09-20)
 

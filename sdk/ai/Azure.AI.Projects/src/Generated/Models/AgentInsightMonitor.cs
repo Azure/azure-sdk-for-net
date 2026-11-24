@@ -26,24 +26,24 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
         /// <param name="overview"> The effective overview, or null before an overview is available. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightMonitor(string id, string agentName, bool enabled, double runIntervalHours, string modelDeploymentName, DateTimeOffset? nextScheduledRunOn, AgentInsightEstimatedCost estimatedCost, AgentInsightSuspension suspension, AgentInsightsOverview overview, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightMonitor(string id, string agentName, bool enabled, double runIntervalHours, string modelDeploymentName, DateTimeOffset? nextScheduledRunAt, AgentInsightEstimatedCost estimatedCost, AgentInsightSuspension suspension, AgentInsightsOverview overview, DateTimeOffset updatedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             AgentName = agentName;
             Enabled = enabled;
             RunIntervalHours = runIntervalHours;
             ModelDeploymentName = modelDeploymentName;
-            NextScheduledRunOn = nextScheduledRunOn;
+            NextScheduledRunAt = nextScheduledRunAt;
             EstimatedCost = estimatedCost;
             Suspension = suspension;
             Overview = overview;
-            UpdatedOn = updatedOn;
+            UpdatedAt = updatedAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
         public string ModelDeploymentName { get; }
 
         /// <summary> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </summary>
-        public DateTimeOffset? NextScheduledRunOn { get; }
+        public DateTimeOffset? NextScheduledRunAt { get; }
 
         /// <summary> Estimated cost accumulated by Agent Insights for this monitor. </summary>
         public AgentInsightEstimatedCost EstimatedCost { get; }
@@ -75,6 +75,6 @@ namespace Azure.AI.Projects
         public AgentInsightsOverview Overview { get; }
 
         /// <summary> The time when this monitor was last updated. </summary>
-        public DateTimeOffset UpdatedOn { get; }
+        public DateTimeOffset UpdatedAt { get; }
     }
 }

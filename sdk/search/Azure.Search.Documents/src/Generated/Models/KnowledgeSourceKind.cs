@@ -27,18 +27,8 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string IndexedSqlValue = "indexedSql";
         /// <summary> A knowledge source that reads data from the web. </summary>
         private const string WebValue = "web";
-        /// <summary> A knowledge source that reads data from remote SharePoint. </summary>
-        private const string RemoteSharePointValue = "remoteSharePoint";
-        /// <summary> A knowledge source that reads data from work IQ. </summary>
-        private const string WorkIQValue = "workIQ";
         /// <summary> A knowledge source that supports direct file upload and indexing. </summary>
         private const string FileValue = "file";
-        /// <summary> A knowledge source backed by an MCP (Model Context Protocol) server. </summary>
-        private const string McpServerValue = "mcpServer";
-        /// <summary> A knowledge source that retrieves data from a Fabric Data Agent. </summary>
-        private const string FabricDataAgentValue = "fabricDataAgent";
-        /// <summary> A knowledge source that retrieves data from Microsoft Fabric Ontology ontologies. </summary>
-        private const string FabricOntologyValue = "fabricOntology";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -68,23 +58,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> A knowledge source that reads data from the web. </summary>
         public static KnowledgeSourceKind Web { get; } = new KnowledgeSourceKind(WebValue);
 
-        /// <summary> A knowledge source that reads data from remote SharePoint. </summary>
-        public static KnowledgeSourceKind RemoteSharePoint { get; } = new KnowledgeSourceKind(RemoteSharePointValue);
-
-        /// <summary> A knowledge source that reads data from work IQ. </summary>
-        public static KnowledgeSourceKind WorkIQ { get; } = new KnowledgeSourceKind(WorkIQValue);
-
         /// <summary> A knowledge source that supports direct file upload and indexing. </summary>
         public static KnowledgeSourceKind File { get; } = new KnowledgeSourceKind(FileValue);
-
-        /// <summary> A knowledge source backed by an MCP (Model Context Protocol) server. </summary>
-        public static KnowledgeSourceKind McpServer { get; } = new KnowledgeSourceKind(McpServerValue);
-
-        /// <summary> A knowledge source that retrieves data from a Fabric Data Agent. </summary>
-        public static KnowledgeSourceKind FabricDataAgent { get; } = new KnowledgeSourceKind(FabricDataAgentValue);
-
-        /// <summary> A knowledge source that retrieves data from Microsoft Fabric Ontology ontologies. </summary>
-        public static KnowledgeSourceKind FabricOntology { get; } = new KnowledgeSourceKind(FabricOntologyValue);
 
         /// <summary> Determines if two <see cref="KnowledgeSourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -190,6 +190,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("aiSecurityAddOn"u8);
                 writer.WriteBooleanValue(IsAISecurityAddOnEnabled.Value);
             }
+            if (Optional.IsDefined(TcpIdleTimeoutInMinutes))
+            {
+                writer.WritePropertyName("tcpIdleTimeoutInMinutes"u8);
+                writer.WriteNumberValue(TcpIdleTimeoutInMinutes.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -248,6 +253,7 @@ namespace Azure.ResourceManager.Network.Models
             AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
             AfcConfiguration afcConfiguration = default;
             bool? isAISecurityAddOnEnabled = default;
+            int? tcpIdleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -432,6 +438,15 @@ namespace Azure.ResourceManager.Network.Models
                     isAISecurityAddOnEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("tcpIdleTimeoutInMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tcpIdleTimeoutInMinutes = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -454,6 +469,7 @@ namespace Azure.ResourceManager.Network.Models
                 autoscaleConfiguration,
                 afcConfiguration,
                 isAISecurityAddOnEnabled,
+                tcpIdleTimeoutInMinutes,
                 additionalBinaryDataProperties);
         }
     }

@@ -1,17 +1,11 @@
 # Release History
 
-## 12.31.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.31.0-beta.2 (2026-11-19)
 
 ### Bugs Fixed
 
 - Fixed SAS builder/client resource-name validation to use ordinal comparisons in `BlobBaseClient` and `BlobContainerClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
 - Fixed an issue where `BlobClient.Upload(..., overwrite: false)` with upload checksum validation configured as `StorageChecksumAlgorithm.StorageCrc64` could throw `InvalidDataException` when the blob already existed. The operation now surfaces the expected `RequestFailedException` for `409 *AlreadyExists`.
-
-### Other Changes
 
 ## 12.31.0-beta.1 (2026-11-05)
 

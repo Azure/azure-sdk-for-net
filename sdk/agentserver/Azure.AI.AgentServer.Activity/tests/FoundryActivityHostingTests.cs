@@ -22,6 +22,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
+#pragma warning disable AAAS005 // Test experimental invocation attribution.
+
 namespace Azure.AI.AgentServer.Activity.Tests;
 
 /// <summary>
@@ -53,6 +55,42 @@ public class FoundryActivityHostingTests
         }
     }
 
+    private sealed class SubjectCapturingAgent : AgentApplication
+    {
+        public SubjectCapturingAgent(AgentApplicationOptions options, TaskCompletionSource<string?> captured) : base(options)
+        {
+            OnActivity(ActivityTypes.Invoke, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+            {
+                await Task.Yield();
+                captured.TrySetResult(Core.FoundryAgentRequestContext.Current.OriginalSubject?.ObjectId);
+            });
+        }
+    }
+
+    [Test]
+    public async Task NativeActivity_CapturesOriginalSubjectInHandler()
+    {
+        var captured = new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.AddAgent(sp => new SubjectCapturingAgent(sp.GetRequiredService<AgentApplicationOptions>(), captured));
+        builder.Services.AddSingleton<IStorage, MemoryStorage>();
+        builder.AddFoundryActivity();
+
+        using var app = builder.Build();
+        app.MapFoundryActivity();
+        await app.StartAsync();
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/activity/messages")
+        {
+            Content = new StringContent(
+                """{"type":"invoke","name":"test","from":{"id":"u1"},"recipient":{"id":"b1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:1/","id":"a3"}""",
+                System.Text.Encoding.UTF8, "application/json"),
+        };
+        request.Headers.TryAddWithoutValidation("x-ms-original-subject", "oid=\"activity-user\", tid=\"tenant\", idtype=\"user\"");
+        using var response = await app.GetTestClient().SendAsync(request);
+        Assert.That(await captured.Task.WaitAsync(TimeSpan.FromSeconds(5)), Is.EqualTo("activity-user"));
+        await app.StopAsync();
+    }
     private static WebApplication BuildApp()
     {
         var builder = WebApplication.CreateBuilder();

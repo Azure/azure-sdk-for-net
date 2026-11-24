@@ -16,11 +16,50 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
+#pragma warning disable AAAS005 // Test experimental invocation attribution.
+
 namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceConversationEngineEndpointTests
 {
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
+
+    [TestCase("/invocations_ws")]
+    [TestCase("/voice_conversation_engine")]
+    public async Task ConcurrentVoiceSessionsKeepOriginalSubjectsIsolated(string path)
+    {
+        var observer = new ConnectionObserver();
+        await using var app = BuildVoiceApp(observer);
+        await app.StartAsync();
+
+        async Task<WebSocket> ConnectSubjectAsync(string? subject)
+        {
+            var client = app.GetTestServer().CreateWebSocketClient();
+            if (subject is not null)
+            {
+                client.ConfigureRequest = request =>
+                    request.Headers["x-ms-original-subject"] = $"oid=\"{subject}\", tid=\"tenant\", idtype=\"user\"";
+            }
+            return await client.ConnectAsync(new Uri(app.GetTestServer().BaseAddress, path), CancellationToken.None)
+                .WaitAsync(TestTimeout);
+        }
+
+        using var one = await ConnectSubjectAsync("one");
+        await StartSessionAsync(one);
+        using var two = await ConnectSubjectAsync("two");
+        await StartSessionAsync(two);
+        using var none = await ConnectSubjectAsync(null);
+        await StartSessionAsync(none);
+        var handlers = observer.Handlers.ToArray();
+
+        Assert.That(handlers.Select(h => h.AmbientSubject), Is.EqualTo(new[] { "one", "two", null }));
+        Assert.That(handlers.Select(h => h.Session!.InvocationContext.PlatformContext.OriginalSubject?.ObjectId),
+            Is.EqualTo(new[] { "one", "two", null }));
+
+        await CloseAsync(one);
+        await CloseAsync(two);
+        await CloseAsync(none);
+    }
 
     [TestCase(true, "", "/invocations_ws")]
     [TestCase(true, "", "/voice_conversation_engine")]
@@ -360,6 +399,7 @@ public class VoiceConversationEngineEndpointTests
         public VoiceSessionStartEvent? Start { get; private set; }
         public TaskCompletionSource Terminating { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
         public int TerminationCount => _terminationCount;
+        public string? AmbientSubject { get; private set; }
 
         protected override Task OnSessionStartAsync(
             VoiceSession session,
@@ -368,6 +408,7 @@ public class VoiceConversationEngineEndpointTests
         {
             Session = session;
             Start = start;
+            AmbientSubject = FoundryAgentRequestContext.Current.OriginalSubject?.ObjectId;
             return session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
         }
 

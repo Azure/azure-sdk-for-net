@@ -17,8 +17,9 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         [Test]
         public async Task UseOptions()
         {
+            Azure.Core.TokenCredential credential = new StubCredential();
             #region Snippet:Optimization_Sample1_UseOptions
-            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), credential);
             string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
             CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 

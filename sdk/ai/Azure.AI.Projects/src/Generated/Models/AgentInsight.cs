@@ -30,12 +30,12 @@ namespace Azure.AI.Projects
         /// <param name="category"> An open, service-generated category label for the issue. Clients must accept previously unseen values. </param>
         /// <param name="status"> The lifecycle status of the insight. </param>
         /// <param name="traceCount"> The number of traces that provide evidence for this insight. </param>
-        /// <param name="createdOn"> The time when this insight was created. </param>
-        /// <param name="updatedOn"> The time when this insight was last updated. </param>
+        /// <param name="createdAt"> The time when this insight was created. </param>
+        /// <param name="updatedAt"> The time when this insight was last updated. </param>
         /// <param name="description"> The root-cause diagnosis for the issue. </param>
         /// <param name="details"> Additional insight details. Omitted unless details are requested. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsight(string id, string monitorId, string agentName, string agentVersion, string title, AgentInsightSeverity severity, string category, AgentInsightStatus status, int traceCount, DateTimeOffset createdOn, DateTimeOffset updatedOn, string description, AgentInsightDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsight(string id, string monitorId, string agentName, string agentVersion, string title, AgentInsightSeverity severity, string category, AgentInsightStatus status, int traceCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, AgentInsightDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             MonitorId = monitorId;
@@ -46,8 +46,8 @@ namespace Azure.AI.Projects
             Category = category;
             Status = status;
             TraceCount = traceCount;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
             Description = description;
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -81,10 +81,10 @@ namespace Azure.AI.Projects
         public int TraceCount { get; }
 
         /// <summary> The time when this insight was created. </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <summary> The time when this insight was last updated. </summary>
-        public DateTimeOffset UpdatedOn { get; }
+        public DateTimeOffset UpdatedAt { get; }
 
         /// <summary> The root-cause diagnosis for the issue. </summary>
         public string Description { get; }

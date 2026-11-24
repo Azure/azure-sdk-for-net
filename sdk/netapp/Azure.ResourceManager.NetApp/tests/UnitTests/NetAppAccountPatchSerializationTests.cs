@@ -204,6 +204,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
+        [Obsolete("Tests an obsolete account patch factory overload.")]
         public void AccountPatchFactoryPreservesMutableModelsAndNfsDomain()
         {
             var directory = new NetAppAccountActiveDirectory();

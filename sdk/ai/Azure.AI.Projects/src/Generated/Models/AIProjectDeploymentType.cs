@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="AIProjectDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AIProjectDeploymentType?(string value) => value == null ? null : new AIProjectDeploymentType(value);
+        public static implicit operator AIProjectDeploymentType?(string value) => value == null ? (AIProjectDeploymentType?)null : new AIProjectDeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
