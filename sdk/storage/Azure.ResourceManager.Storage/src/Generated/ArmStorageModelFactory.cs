@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Storage task execution report for a run instance. </param>
         /// <returns> A new <see cref="Models.StorageTaskReportInstance"/> instance for mocking. </returns>
-        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTaskReportProperties properties)
+        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageTaskReportProperties properties = default)
         {
             return new StorageTaskReportInstance(
                 id,
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </param>
         /// <returns> A new <see cref="Storage.FileServiceUsageData"/> instance for mocking. </returns>
-        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FileServiceUsageProperties properties)
+        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileServiceUsageProperties properties = default)
         {
             return new FileServiceUsageData(
                 id,
