@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -12,6 +13,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
     public partial class MockableNetAppArmClient : ArmResource
     {
         // These virtual methods back the ArmClient extension methods in NetAppExtensions.
+
+        /// <summary> Gets a subvolume resource by ID without making a service request. </summary>
+        /// <param name="id"> The ID of the subvolume. </param>
+        /// <returns> The subvolume resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
+        public virtual NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(ResourceIdentifier id)
+        {
+            NetAppSubvolumeInfoResource.ValidateResourceId(id);
+            return new NetAppSubvolumeInfoResource(Client, id);
+        }
 
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
