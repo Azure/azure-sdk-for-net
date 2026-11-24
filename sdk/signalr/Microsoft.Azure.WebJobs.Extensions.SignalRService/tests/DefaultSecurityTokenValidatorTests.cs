@@ -81,12 +81,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             var result = securityTokenValidator.ValidateToken(ctx.Request);
 
             Assert.Equal(SecurityTokenStatus.Valid, result.Status);
-            Assert.NotNull(result.ExpiresOn);
             Assert.Equal(expectedExpiresOn, result.ExpiresOn);
         }
 
         [Fact]
-        public void ValidateToken_ExpiredTokenWithinClockSkew_ReturnsAuthenticationError()
+        public void ValidateToken_ExpiredTokenWithinClockSkew_ReturnsValidWithActualExpiration()
         {
             var tokenString = GenerateJwtToken(IssuerToken, "issuer", "audience", DateTime.UtcNow.AddMinutes(-1));
             var ctx = new DefaultHttpContext();
@@ -104,14 +103,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
 
             var result = securityTokenValidator.ValidateToken(ctx.Request);
 
-            Assert.Equal(SecurityTokenStatus.Error, result.Status);
-            Assert.IsType<SecurityTokenExpiredException>(result.Exception);
+            Assert.Equal(SecurityTokenStatus.Valid, result.Status);
+            Assert.Equal(new DateTimeOffset(new JwtSecurityTokenHandler().ReadJwtToken(tokenString).ValidTo), result.ExpiresOn);
         }
 
         [Theory]
         [InlineData(true, typeof(SecurityTokenInvalidIssuerException))]
         [InlineData(false, typeof(SecurityTokenSignatureKeyNotFoundException))]
-        public void ValidateToken_UntrustedIssuerOrUnresolvedSigningKey_ReturnsAuthenticationError(bool rejectIssuer, Type expectedExceptionType)
+        public void ValidateToken_UntrustedIssuerOrUnresolvedSigningKey_PreservesLegacyResult(bool rejectIssuer, Type expectedExceptionType)
         {
             var token = GenerateJwtToken(IssuerToken, "issuer", "audience", 10);
             var request = new DefaultHttpContext().Request;
@@ -124,10 +123,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
                 parameters.ValidAudience = "audience";
             });
 
-            var result = validator.ValidateToken(request);
-
-            Assert.Equal(SecurityTokenStatus.Error, result.Status);
-            Assert.IsType(expectedExceptionType, result.Exception);
+            if (rejectIssuer)
+            {
+                Assert.Throws(expectedExceptionType, () => validator.ValidateToken(request));
+            }
+            else
+            {
+                var legacyResult = validator.ValidateToken(request);
+                Assert.Equal(SecurityTokenStatus.Error, legacyResult.Status);
+                Assert.IsType(expectedExceptionType, legacyResult.Exception);
+            }
         }
 
         public static string GenerateJwtToken(string secretKey, string issuer, string audience, int expireMinutes)

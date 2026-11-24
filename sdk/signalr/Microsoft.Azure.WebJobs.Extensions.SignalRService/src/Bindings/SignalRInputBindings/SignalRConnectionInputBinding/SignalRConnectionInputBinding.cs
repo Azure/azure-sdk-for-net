@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 {
                     UserId = attrResolved.UserId,
                     Claims = azureSignalRClient.GetCustomClaims(attrResolved.IdToken, attrResolved.ClaimTypeList),
-                    AuthenticationExpiresOn = tokenResult.ExpiresOn,
+                    AuthenticationExpiresOn = attrResolved.EnableAuthenticationRefresh ? tokenResult.ExpiresOn : null,
                 };
                 signalRConnectionDetail = _signalRConnectionInfoConfigurer.ConfigureAuthenticatedConnection(tokenResult, request, signalRConnectionDetail);
                 if (signalRConnectionDetail is null)

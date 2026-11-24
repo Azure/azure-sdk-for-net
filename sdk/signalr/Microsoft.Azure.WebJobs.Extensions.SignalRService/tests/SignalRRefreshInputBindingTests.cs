@@ -139,6 +139,25 @@ namespace SignalRServiceExtension.Tests
                 Times.Never);
         }
 
+        [Fact]
+        public async Task BuildAsync_ValidatedBearerPastActualExpiration_DoesNotRefresh()
+        {
+            var validator = new Mock<ISecurityTokenValidator>();
+            validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity()), DateTimeOffset.UtcNow.AddMinutes(-1)));
+            var configurer = new Mock<ISignalRConnectionInfoConfigurer>(MockBehavior.Strict);
+            var (binding, hubContext) = CreateBinding(out _, validator.Object, configurer.Object);
+            var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
+            var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
+
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
+
+            Assert.Null(await provider.GetValueAsync());
+            hubContext.Verify(
+                c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
         [Theory]
         [InlineData(null)]
         [InlineData("original-user")]

@@ -95,7 +95,7 @@ public static void ConfigureAuthentication(
 }
 ```
 
-The default bearer validator rejects a token once its `exp` is reached. The configurer above rejects a validated token that lacks a user ID by throwing `SecurityTokenValidationException`.
+`[SignalRRefresh]` rejects a token once its actual `exp` is reached. The configurer above rejects a validated token that lacks a user ID by throwing `SecurityTokenValidationException`.
 
 Opt in during negotiate and expose a sibling refresh endpoint. The function specifies the connection token source through `ConnectionToken`. This example binds it to the client's `X-SignalR-Connection-Token` request header. If the header is missing, the binding expression can fail before the refresh handler runs. Both handlers return `401 Unauthorized` when the binding returns no connection info:
 

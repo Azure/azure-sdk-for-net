@@ -79,7 +79,7 @@ namespace SignalRServiceExtension.Tests
         }
 
         [Fact]
-        public async Task BuildAsync_ConfigurerReturnsNull_RetainsOriginalUserClaimsAndExpiration()
+        public async Task BuildAsync_NoRefreshAndConfigurerReturnsNull_RetainsUserClaimsWithoutBearerDeadline()
         {
             var originalExpiresOn = new DateTimeOffset(2030, 1, 2, 3, 4, 5, TimeSpan.Zero);
             var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
@@ -99,7 +99,7 @@ namespace SignalRServiceExtension.Tests
 
             Assert.IsType<SignalRConnectionInfo>(value);
             Assert.Equal("original-user", capturedOptions.Value.UserId);
-            Assert.Equal(originalExpiresOn, capturedOptions.Value.AuthenticationExpiresOn);
+            Assert.Null(capturedOptions.Value.AuthenticationExpiresOn);
             var claim = Assert.Single(capturedOptions.Value.Claims);
             Assert.Equal("name", claim.Type);
             Assert.Equal("John Doe", claim.Value);

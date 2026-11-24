@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
 
             var tokenResult = _securityTokenValidator.ValidateToken(request);
-            if (tokenResult.Status != SecurityTokenStatus.Valid)
+            if (tokenResult.Status != SecurityTokenStatus.Valid || tokenResult.ExpiresOn <= DateTimeOffset.UtcNow)
             {
                 return new SignalRConnectionInfoValueProvider(null, _userType, "");
             }
