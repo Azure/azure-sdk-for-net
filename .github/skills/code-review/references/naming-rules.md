@@ -84,6 +84,15 @@ What they cover:
   Both are only partially covered by `AZC0030`–`AZC0033`, which is type-scoped and frequently
   suppressed via `DisableEnhancedAnalysis` (see above) — treat this as the hand-review backstop
   for exactly the projects where the analyzer can't help.
+- <a name="naming-extension-method-specificity" href="#naming-extension-method-specificity">§</a> **New public extension-method names must be specific to the RP or a resource in that RP.**
+  Name the RP, resource, or domain-specific operation clearly enough to avoid generic names
+  and cross-RP ambiguity, especially when extending shared types such as `ArmClient`,
+  `SubscriptionResource`, or `ResourceGroupResource`. A vague operation name alone is not
+  enough. For example, on `SubscriptionResource`, prefer `GetComputeUsages` over `GetUsages`;
+  on `ResourceGroupResource`, prefer `GetVirtualMachines` over `GetResources`. Do not rely on
+  the extension class or namespace to supply the missing context. Apply this to public APIs
+  the PR newly introduces; do **not** recommend renaming or removing an already-shipped API
+  solely to satisfy this rule.
 - <a name="naming-check-name-availability" href="#naming-check-name-availability">§</a> **`CheckNameAvailability` has a fixed naming triad.** Checking method:
   `Check<Resource/RP noun>NameAvailability`. Its request/response model follows the Content/
   Result convention below but keeps the resource/RP noun:
