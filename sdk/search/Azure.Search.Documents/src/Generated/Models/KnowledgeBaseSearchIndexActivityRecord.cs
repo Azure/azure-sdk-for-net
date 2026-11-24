@@ -31,17 +31,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
-        /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
-        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
-        internal KnowledgeBaseSearchIndexActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseSearchIndexActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryOn = queryOn;
             Count = count;
-            ImageServing = imageServing;
             SearchIndexArguments = searchIndexArguments;
-            QueryHintProcessing = queryHintProcessing;
         }
 
         /// <summary> The knowledge source for the retrieval activity. </summary>
@@ -53,13 +49,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </summary>
         public int? Count { get; }
 
-        /// <summary> Statistics about image serving for this retrieval activity. </summary>
-        public ImageServingStatistics ImageServing { get; }
-
         /// <summary> The search index arguments for the retrieval activity. </summary>
         public KnowledgeBaseSearchIndexActivityArguments SearchIndexArguments { get; }
-
-        /// <summary> Details about the expressions generated from query hints for this activity. </summary>
-        public KnowledgeBaseQueryHintProcessing QueryHintProcessing { get; }
     }
 }

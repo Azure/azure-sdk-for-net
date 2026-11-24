@@ -14,6 +14,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 
+#pragma warning disable AAAS004 // Local backend raises the experimental storage exceptions.
+
 namespace Azure.AI.AgentServer.Core.Storage;
 
 internal sealed class LocalStateStoreBackend

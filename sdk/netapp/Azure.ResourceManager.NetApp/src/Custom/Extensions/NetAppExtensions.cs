@@ -23,6 +23,18 @@ namespace Azure.ResourceManager.NetApp
         // These public ArmClient extensions are the static counterparts to the virtual methods
         // in MockableNetAppArmClient. Keep this block aligned 1:1 with that mockable surface.
 
+        /// <summary> Gets a subvolume resource by ID without making a service request. </summary>
+        /// <param name="client"> The ARM client. </param>
+        /// <param name="id"> The ID of the subvolume. </param>
+        /// <returns> The subvolume resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
+        public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return GetMockableNetAppArmClient(client).GetNetAppSubvolumeInfoResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -118,7 +130,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets a quota limit resource (old name, returns old resource type). </summary>
-#pragma warning disable CS0618 // signatures intentionally reference the obsolete NetAppSubscriptionQuotaItemResource for back-compat
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName)
         {
@@ -138,7 +149,6 @@ namespace Azure.ResourceManager.NetApp
         {
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitsAsync(location);
         }
-#pragma warning restore CS0618
 
         /// <summary> Lists quota limits (old name). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

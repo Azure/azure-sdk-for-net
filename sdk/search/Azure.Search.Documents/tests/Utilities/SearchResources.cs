@@ -64,7 +64,12 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account connection string.
         /// </summary>
-        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
+        public string StorageAccountConnectionString => $"ResourceId={TestFixture.TestEnvironment.StorageResourceId};";
+
+        private BlobContainerClient GetBlobContainerClient() =>
+            new BlobContainerClient(
+                new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}/{BlobContainerName}"),
+                TestFixture.TestEnvironment.Credential);
 
         /// <summary>
         /// The Cognitive Services key.
@@ -403,27 +408,25 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchIndexClient"/> instance.</returns>
-        public SearchIndexClient GetIndexClient(SearchClientOptions options = null) =>
-            TestFixture.InstrumentClient(
-                new SearchIndexClient(
-                    Endpoint,
-                    new AzureKeyCredential(PrimaryApiKey),
-                    TestFixture.GetSearchClientOptions(options)));
+        public SearchIndexClient GetIndexClient(SearchClientOptions options = null)
+        {
+            options = TestFixture.GetSearchClientOptions(options);
+            return TestFixture.InstrumentClient(new SearchIndexClient(Endpoint, TestFixture.TestEnvironment.Credential, options));
+        }
 
         /// <summary>
         /// Get a <see cref="SearchIndexerClient"/> to use for testing.
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchIndexerClient"/> instance.</returns>
-        public SearchIndexerClient GetIndexerClient(SearchClientOptions options = null) =>
-            TestFixture.InstrumentClient(
-                new SearchIndexerClient(
-                    Endpoint,
-                    new AzureKeyCredential(PrimaryApiKey),
-                    TestFixture.GetSearchClientOptions(options)));
+        public SearchIndexerClient GetIndexerClient(SearchClientOptions options = null)
+        {
+            options = TestFixture.GetSearchClientOptions(options);
+            return TestFixture.InstrumentClient(new SearchIndexerClient(Endpoint, TestFixture.TestEnvironment.Credential, options));
+        }
 
         /// <summary>
-        /// Get a <see cref="SearchClient"/> to use for testing with an Admin API key.
+        /// Get a <see cref="SearchClient"/> to use for testing with a token credential.
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchClient"/> instance.</returns>
@@ -435,19 +438,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Get a <see cref="SearchClient"/> to use for testing with a query API key.
+        /// Get a <see cref="SearchClient"/> to use for queries with the test identity.
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchClient"/> instance.</returns>
         public SearchClient GetQueryClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
-            return TestFixture.InstrumentClient(
-                new SearchClient(
-                    Endpoint,
-                    IndexName,
-                    new AzureKeyCredential(QueryApiKey),
-                    TestFixture.GetSearchClientOptions(options)));
+            return GetSearchClient(options);
         }
         #endregion Get Clients
 
@@ -545,7 +543,7 @@ namespace Azure.Search.Documents.Tests
         {
             if (RequiresBlobContainerCleanup)
             {
-                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
+                BlobContainerClient client = GetBlobContainerClient();
                 await client.DeleteIfExistsAsync();
                 RequiresBlobContainerCleanup = false;
 
@@ -571,7 +569,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random Index Name
                 IndexName = Random.GetName(8);
 
-                SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                SearchIndexClient client = new SearchIndexClient(Endpoint, TestFixture.TestEnvironment.Credential);
                 await client.CreateIndexAsync(getIndex(IndexName));
 
                 RequiresCleanup = true;
@@ -596,7 +594,7 @@ namespace Azure.Search.Documents.Tests
             // Upload the documents
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                SearchClient client = new SearchClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
+                SearchClient client = new SearchClient(Endpoint, IndexName, TestFixture.TestEnvironment.Credential);
 
                 if (isSample)
                 {
@@ -651,7 +649,6 @@ namespace Azure.Search.Documents.Tests
                         new AzureOpenAIVectorizerParameters
                         {
                             ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
-                            ApiKey = TestFixture.TestEnvironment.OpenAIKey,
                             DeploymentName = deploymentName,
                             ModelName = AzureOpenAIModelName.Gpt54Mini
                         }));
@@ -678,7 +675,7 @@ namespace Azure.Search.Documents.Tests
 
                 using CancellationTokenSource cts = new CancellationTokenSource(Timeout);
 
-                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
+                BlobContainerClient client = GetBlobContainerClient();
                 await client.CreateIfNotExistsAsync(cancellationToken: cts.Token);
 
                 RequiresBlobContainerCleanup = true;

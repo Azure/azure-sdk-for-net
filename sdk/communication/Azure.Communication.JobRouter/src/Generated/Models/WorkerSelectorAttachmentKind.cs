@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="WorkerSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkerSelectorAttachmentKind?(string value) => value == null ? null : new WorkerSelectorAttachmentKind(value);
+        public static implicit operator WorkerSelectorAttachmentKind?(string value) => value == null ? (WorkerSelectorAttachmentKind?)null : new WorkerSelectorAttachmentKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

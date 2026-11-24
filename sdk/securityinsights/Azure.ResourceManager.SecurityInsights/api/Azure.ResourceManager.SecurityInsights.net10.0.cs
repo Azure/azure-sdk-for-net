@@ -6182,7 +6182,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class McasDataConnectorDataTypes : Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertsDataTypeOfDataConnector, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.McasDataConnectorDataTypes>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.McasDataConnectorDataTypes>
     {
         public McasDataConnectorDataTypes() { }
-        public McasDataConnectorDataTypes(Azure.ResourceManager.SecurityInsights.Models.DataConnectorDataTypeCommon alerts) { }
+        public McasDataConnectorDataTypes(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState alertsState) { }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? DiscoveryLogsState { get { throw null; } set { } }
         protected override Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertsDataTypeOfDataConnector JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7582,7 +7582,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertsDataTypeOfDataConnector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertsDataTypeOfDataConnector>
     {
         public SecurityInsightsAlertsDataTypeOfDataConnector() { }
-        public SecurityInsightsAlertsDataTypeOfDataConnector(Azure.ResourceManager.SecurityInsights.Models.DataConnectorDataTypeCommon alerts) { }
+        public SecurityInsightsAlertsDataTypeOfDataConnector(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState alertsState) { }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? AlertsState { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertsDataTypeOfDataConnector JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

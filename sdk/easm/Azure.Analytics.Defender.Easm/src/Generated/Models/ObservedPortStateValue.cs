@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="ObservedPortStateValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObservedPortStateValue?(string value) => value == null ? null : new ObservedPortStateValue(value);
+        public static implicit operator ObservedPortStateValue?(string value) => value == null ? (ObservedPortStateValue?)null : new ObservedPortStateValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

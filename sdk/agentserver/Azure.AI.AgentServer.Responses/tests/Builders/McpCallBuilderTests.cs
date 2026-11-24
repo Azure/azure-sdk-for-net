@@ -48,7 +48,7 @@ public class McpCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemMcpToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(McpToolCallStatus.InProgress));
         Assert.That(item.ServerLabel, Is.EqualTo("my-server"));
         Assert.That(item.ToolName, Is.EqualTo("tool_name"));
     }
@@ -117,7 +117,7 @@ public class McpCallBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemMcpToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(McpToolCallStatus.Completed));
         Assert.That(item.ToolArguments.ToString(), Is.EqualTo("{\"key\":\"value\"}"));
     }
 

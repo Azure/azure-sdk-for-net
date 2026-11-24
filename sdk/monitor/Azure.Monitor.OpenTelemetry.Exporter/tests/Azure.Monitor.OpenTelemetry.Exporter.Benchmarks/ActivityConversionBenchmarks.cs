@@ -273,7 +273,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         public void ArrayValuedTags() => Convert(_arrayValuedTags);
 
         private static void Convert(Batch<Activity> batch)
-            => TraceHelper.OtelToAzureMonitorTrace(batch, s_resource, InstrumentationKey, sampleRate: 100F);
+            => TraceHelper.OtelToAzureMonitorTrace(batch, s_resource, InstrumentationKey, fallbackSampleRate: 100F);
 
         private static Batch<Activity> CreateBatch(ActivityKind kind, Dictionary<string, object?> tags)
         {

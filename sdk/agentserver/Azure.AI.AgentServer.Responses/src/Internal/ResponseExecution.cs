@@ -95,6 +95,8 @@ internal sealed class ResponseExecution : IDisposable
     /// </summary>
     public string? AgentSessionId { get; set; }
 
+    internal PlatformContext? InboundPlatformContext { get; set; }
+
     /// <summary>
     /// Gets or sets the user ID key that was present when this response was created.
     /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must

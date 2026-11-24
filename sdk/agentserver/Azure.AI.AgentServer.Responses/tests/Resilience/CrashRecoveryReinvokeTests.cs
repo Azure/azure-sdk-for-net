@@ -12,6 +12,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
+#pragma warning disable AAAS005 // Verify recovery does not invent experimental attribution.
+
 namespace Azure.AI.AgentServer.Responses.Tests.Resilience;
 
 /// <summary>
@@ -112,6 +114,8 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
             {
                 Assert.That(ctx.IsRecovery, Is.True, "recovered handler must observe IsRecovery == true");
                 Assert.That(ctx.PersistedResponse, Is.Not.Null, "recovered handler must see the prior snapshot");
+                Assert.That(ctx.PlatformContext.OriginalSubject, Is.Null);
+                Assert.That(FoundryAgentRequestContext.Current.OriginalSubject, Is.Null);
                 return CompletingLifecycle(ctx, reinvoked);
             },
         };

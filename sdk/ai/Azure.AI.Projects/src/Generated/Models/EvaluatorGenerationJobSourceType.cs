@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="EvaluatorGenerationJobSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorGenerationJobSourceType?(string value) => value == null ? null : new EvaluatorGenerationJobSourceType(value);
+        public static implicit operator EvaluatorGenerationJobSourceType?(string value) => value == null ? (EvaluatorGenerationJobSourceType?)null : new EvaluatorGenerationJobSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

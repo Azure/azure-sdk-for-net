@@ -11,13 +11,13 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The mode that the Mongo Cluster is created with. </summary>
+    /// <summary> The mode that the DocumentDB cluster is created with. </summary>
     public readonly partial struct MongoClusterCreateMode : IEquatable<MongoClusterCreateMode>
     {
         private readonly string _value;
-        /// <summary> Create a new mongo cluster. </summary>
+        /// <summary> Create a new DocumentDB cluster. </summary>
         private const string DefaultValue = "Default";
-        /// <summary> Create a mongo cluster from a restore point-in-time. </summary>
+        /// <summary> Create a DocumentDB cluster from a restore point-in-time. </summary>
         private const string PointInTimeRestoreValue = "PointInTimeRestore";
         /// <summary> Create a replica cluster in distinct geographic region from the source cluster. </summary>
         private const string GeoReplicaValue = "GeoReplica";
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             _value = value;
         }
 
-        /// <summary> Create a new mongo cluster. </summary>
+        /// <summary> Create a new DocumentDB cluster. </summary>
         public static MongoClusterCreateMode Default { get; } = new MongoClusterCreateMode(DefaultValue);
 
-        /// <summary> Create a mongo cluster from a restore point-in-time. </summary>
+        /// <summary> Create a DocumentDB cluster from a restore point-in-time. </summary>
         public static MongoClusterCreateMode PointInTimeRestore { get; } = new MongoClusterCreateMode(PointInTimeRestoreValue);
 
         /// <summary> Create a replica cluster in distinct geographic region from the source cluster. </summary>

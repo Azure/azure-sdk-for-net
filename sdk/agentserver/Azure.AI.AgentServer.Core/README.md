@@ -182,8 +182,9 @@ app.Run();
 
 Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`, with `POST /_before_snapshot` and `POST /_after_restore` as aliases. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:
 
-The snapshot lifecycle contract is experimental and may change or be removed. To implement it,
-suppress the `AAAS002` warning:
+The snapshot lifecycle contract, including `AgentRestoreContext`, is experimental and may
+change or be removed. Using it without suppressing
+the `AAAS002` diagnostic is a compile error:
 
 ```C#
 #pragma warning disable AAAS002
@@ -218,11 +219,35 @@ builder.Services.AddSingleton<IAgentSnapshotLifecycle, DatabaseSnapshotLifecycle
 
 Core serializes lifecycle calls and handles platform retries. A completed `before-snapshot` callback runs once, a repeated `restore_id` returns success without repeating work, and a new `restore_id` for the same session runs `after-restore` again. Session environment overrides are applied before `AfterRestoreAsync` is invoked. Callback implementations should still make their external side effects idempotent.
 
+When an enabled resilient-task host starts with
+`FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, task storage and recovery workers are
+deferred during capture. After restoration, Core prepares the task runtime with
+the restored session environment before calling `AfterRestoreAsync`, so the
+callback can submit registered tasks normally. Automatic recovery begins only
+after the callback completes. The variable accepts only `true` or `false`
+(case-insensitive, with surrounding whitespace); absence preserves ordinary
+cold-start activation.
+
+If snapshot-mode restoration fails, Core keeps the restored configuration in
+place until accepted task workers and owned storage finish cleanup; retries are
+bounded by the host shutdown timeout and continue retained cleanup safely.
+Ordinary cold-mode callbacks preserve their established behavior: a callback
+failure does not revert the restored environment while cold-start workers may
+still be using it. File-backed replay with an implicit directory resolves the
+state root after restoration; an explicitly configured directory remains fixed.
+
 ### Resilient tasks and streaming
 
 The library provides durable **task** and resumable **streaming** primitives for long-running agents. Durable tasks are opt-in: call `SetResilientTasksEnabled()` before host startup, then register tasks with `AddResilientTask()`/`AddResilientMultiTurnTask()`. Registration alone does not initialize task storage or recovery. Run work through the typed `TaskDefinition<TInput, TOutput>` handle returned at registration and emit progress through `AgentEventStreamRegistry`. Enabled tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
 
 ### Durable state store
+
+The state store API is experimental and may change or be removed. To use it, suppress the
+`AAAS004` diagnostic; otherwise it is a compile error:
+
+```C#
+#pragma warning disable AAAS004
+```
 
 `FoundryStateStore` is a durable, server-backed store for agent state. Each store is bound to a caller-chosen name and holds items — keyed JSON values — that you read, write, and list. Use it to persist checkpoints, conversation state, or counters across requests and restarts. `FoundryStateStore.GetOrCreateAsync` fetches or creates the store in one call, and items support tags, store-level TTL, and optimistic concurrency via `If-Match`. See the [state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md).
 

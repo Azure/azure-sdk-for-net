@@ -129,12 +129,12 @@ namespace Azure.AI.Projects.Evaluation
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedOn, "U");
+                writer.WriteNumberValue(CreatedAt, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            if (options.Format != "W" && Optional.IsDefined(FinishedAt))
             {
                 writer.WritePropertyName("finished_at"u8);
-                writer.WriteNumberValue(FinishedOn.Value, "U");
+                writer.WriteNumberValue(FinishedAt.Value, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(Usage))
             {
@@ -202,8 +202,8 @@ namespace Azure.AI.Projects.Evaluation
             string evaluatorName = default;
             string evaluatorDisplayName = default;
             string evaluatorDescription = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset? finishedOn = default;
+            DateTimeOffset createdAt = default;
+            DateTimeOffset? finishedAt = default;
             EvaluatorGenerationTokenUsage usage = default;
             IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -269,7 +269,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("finished_at"u8))
@@ -278,7 +278,7 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    finishedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    finishedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -319,8 +319,8 @@ namespace Azure.AI.Projects.Evaluation
                 evaluatorName,
                 evaluatorDisplayName,
                 evaluatorDescription,
-                createdOn,
-                finishedOn,
+                createdAt,
+                finishedAt,
                 usage,
                 inputQualityWarnings ?? new ChangeTrackingList<RubricGenerationInputQualityWarning>(),
                 additionalBinaryDataProperties);

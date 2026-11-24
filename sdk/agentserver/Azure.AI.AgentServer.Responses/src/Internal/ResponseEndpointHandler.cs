@@ -288,6 +288,7 @@ internal sealed class ResponseEndpointHandler
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
         execution.AgentSessionId = request.AgentSessionId;
+        execution.InboundPlatformContext = platformContext;
 
         var context = new ResponseContextImpl(
             responseId,

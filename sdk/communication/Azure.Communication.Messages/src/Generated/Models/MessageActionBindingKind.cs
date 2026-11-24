@@ -56,7 +56,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="MessageActionBindingKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageActionBindingKind?(string value) => value == null ? null : new MessageActionBindingKind(value);
+        public static implicit operator MessageActionBindingKind?(string value) => value == null ? (MessageActionBindingKind?)null : new MessageActionBindingKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -1,12 +1,7 @@
 # Azure.AI.AgentServer.Optimization client library for .NET
 
-Config loader for optimization-ready Azure AI Hosted Agents. Resolves optimized agent configurations from multiple sources using a priority waterfall:
-
-1. **Resolver API** — `OPTIMIZATION_CANDIDATE_ID` + `OPTIMIZATION_RESOLVE_ENDPOINT`
-2. **Inline JSON** — `OPTIMIZATION_CONFIG` environment variable
-3. **Local candidate directory** — `OPTIMIZATION_CANDIDATE_ID` set and `OPTIMIZATION_LOCAL_DIR/<candidate_id>/` exists on disk
-4. **Local baseline directory** — `OPTIMIZATION_LOCAL_DIR/baseline/` exists on disk
-5. Returns `null` when no source matches.
+Resolves optimized agent configurations from the optimization API, with an
+`OPTIMIZATION_CONFIG` environment variable fallback.
 
 ## Getting started
 
@@ -22,67 +17,34 @@ dotnet add package Azure.AI.AgentServer.Optimization --prerelease
 
 ## Key concepts
 
-### OptimizationOptionsLoader
+### AgentOptimizationClient
 
-The main entry point. Call `Load()` or `LoadAsync()` to resolve an `OptimizationOptions` from the highest-priority available source.
-
-### OptimizationOptions
-
-A mutable, binder-friendly options object containing:
-- `Instructions` — optimized system prompt
-- `Model` — model deployment name
-- `Temperature` — sampling temperature
-- `Skills` — list of learned skills
-- `ToolDefinitions` — tool definitions in OpenAI function-calling format
-
-### OptimizationSkill
-
-Represents a single learned skill with `Name`, `Description`, and `Body`.
+Call `ResolveOptions` or `ResolveOptionsAsync` with a candidate ID to resolve a
+`CandidateDeployConfig`. The config includes instructions, model, and temperature.
 
 ## Examples
 
-### Load options with defaults
+### Resolve a candidate
+
+The following example assumes a `TokenCredential` named `credential` (for example,
+an `Azure.Identity.DefaultAzureCredential`) and a project endpoint.
 
 ```C# Snippet:Optimization_ReadMe_Load
-OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync();
+AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), credential);
+string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
 if (options is not null)
 {
-    Console.WriteLine($"Source: {options.Source}");
     Console.WriteLine($"Instructions: {options.Instructions}");
     Console.WriteLine($"Model: {options.Model}");
 }
 ```
 
-### Load options with a custom token provider
-
-```C# Snippet:Optimization_ReadMe_LoadWithTokenProvider
-LoadOptions loadOptions = new LoadOptions
-{
-    TokenProvider = new MyTokenProvider(),
-};
-
-OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync(loadOptions);
-```
-
-Where `MyTokenProvider` is your `AuthenticationTokenProvider` implementation:
-
-```C# Snippet:Optimization_ReadMe_TokenProvider
-private sealed class MyTokenProvider : AuthenticationTokenProvider
-{
-    public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => new(properties);
-
-    public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
-
-    public override ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
-}
-```
-
 ## Troubleshooting
 
-When troubleshooting configuration resolution, set the environment variables for the source that you intend to use and inspect the `Source` property on the returned `OptimizationOptions` to confirm which source was selected.
+Check the project endpoint, credential, candidate ID, and `OPTIMIZATION_CONFIG`
+when troubleshooting configuration resolution.
 
 ## Contributing
 

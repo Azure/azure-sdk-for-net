@@ -95,8 +95,8 @@ public class Sample_Models : SamplesBase
             throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
-        ModelCredentialContent credentialRequest = new(dataUri);
-        DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
+        ModelCredentialContent credentialContent = new(dataUri);
+        DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialContent: credentialContent);
         Console.WriteLine($"Model SAS URI: {modelCredential.BlobReference.Credential.SasUri}.");
         #endregion
         #region Snippet:Sample_UpdateModel_Models_Async
@@ -195,8 +195,8 @@ public class Sample_Models : SamplesBase
             throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
-        ModelCredentialContent credentialRequest = new(dataUri);
-        DatasetCredential modelCredential = projectClient.Models.GetModelCredentials(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
+        ModelCredentialContent credentialContent = new(dataUri);
+        DatasetCredential modelCredential = projectClient.Models.GetModelCredentials(name: retrievedModel.Name, version: retrievedModel.Version, credentialContent: credentialContent);
         Console.WriteLine($"Model SAS URI: {modelCredential.BlobReference.Credential.SasUri}.");
         #endregion
         #region Snippet:Sample_UpdateModel_Models_Sync

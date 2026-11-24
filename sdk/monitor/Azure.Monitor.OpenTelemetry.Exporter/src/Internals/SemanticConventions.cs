@@ -261,6 +261,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         public const string AttributeMicrosoftMultiEndpointCloudRole = "microsoft.multi_endpoint_cloud_role";
 
+        /// <summary>
+        /// Sampling percentage stamped by the Azure Monitor samplers; exported as the envelope sampleRate.
+        /// </summary>
+        public const string AttributeMicrosoftSampleRate = "microsoft.sample_rate";
+
         // Context tag attributes set by the Application Insights shim (TelemetryClient.Context)
         public const string AttributeMicrosoftClientIp = "microsoft.client.ip";
         public const string AttributeMicrosoftSessionId = "microsoft.session.id";

@@ -63,7 +63,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseCodeInterpreterCallInterpretingUpdate EmitInterpreting() { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
-    public partial class OutputItemCustomToolCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
+    public partial class OutputItemCustomToolCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.CustomToolCallItem>
     {
         protected OutputItemCustomToolCallBuilder() { }
         public string CallId { get { throw null; } }
@@ -274,7 +274,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ComputerCallResponseItem> AddOutputItemComputerCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ComputerCallOutputResponseItem> AddOutputItemComputerCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemCustomToolCallBuilder AddOutputItemCustomToolCall(string callId, string name) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput> AddOutputItemCustomToolCallOutput() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.CustomToolCallOutputItem> AddOutputItemCustomToolCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemFileSearchCallBuilder AddOutputItemFileSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemFunctionCallBuilder AddOutputItemFunctionCall(string name, string callId) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemImageGenCallBuilder AddOutputItemImageGenCall() { throw null; }
@@ -328,37 +328,67 @@ namespace Azure.AI.AgentServer.Responses
         public static string? get_AgentSessionId(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static string? get_AgentSessionId(OpenAI.Responses.ResponseResult response) { throw null; }
         public static string? get_ApprovalRequestId(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
+        public static bool? get_Async(OpenAI.Responses.CustomToolCallItem customToolCall) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.ToolCallCaller? get_Caller(OpenAI.Responses.CustomToolCallItem customToolCall) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.ToolCallCaller? get_Caller(OpenAI.Responses.CustomToolCallOutputItem customToolCallOutput) { throw null; }
         public static System.DateTimeOffset? get_CompletedAt(OpenAI.Responses.ResponseResult response) { throw null; }
         public static System.BinaryData? get_CreatedBy(OpenAI.Responses.ResponseItem item) { throw null; }
         public static string? get_Delta(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_Input(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_ItemId(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
+        public static string? get_Namespace(OpenAI.Responses.CustomToolCallItem customToolCall) { throw null; }
         public static int? get_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_OutputText(OpenAI.Responses.ResponseResult response) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? get_Status(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
+        public static System.BinaryData? get_PromptCacheBreakpoint(OpenAI.Responses.ResponseContentPart part) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.McpToolCallStatus? get_Status(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
         public static string? get_Text(OpenAI.Responses.ReasoningSummaryPart part) { throw null; }
         public static void set_AgentReference(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference? value) { }
         public static void set_AgentReference(OpenAI.Responses.ResponseResult response, Azure.AI.Extensions.OpenAI.AgentReference? value) { }
         public static void set_AgentSessionId(OpenAI.Responses.CreateResponseOptions options, string? value) { }
         public static void set_AgentSessionId(OpenAI.Responses.ResponseResult response, string? value) { }
         public static void set_ApprovalRequestId(OpenAI.Responses.McpToolCallItem mcpCall, string? value) { }
+        public static void set_Async(OpenAI.Responses.CustomToolCallItem customToolCall, bool? value) { }
+        public static void set_Caller(OpenAI.Responses.CustomToolCallItem customToolCall, Azure.AI.AgentServer.Responses.Models.ToolCallCaller? value) { }
+        public static void set_Caller(OpenAI.Responses.CustomToolCallOutputItem customToolCallOutput, Azure.AI.AgentServer.Responses.Models.ToolCallCaller? value) { }
         public static void set_CompletedAt(OpenAI.Responses.ResponseResult response, System.DateTimeOffset? value) { }
         public static void set_CreatedBy(OpenAI.Responses.ResponseItem item, System.BinaryData? value) { }
         public static void set_Delta(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
         public static void set_Input(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
         public static void set_ItemId(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
+        public static void set_Namespace(OpenAI.Responses.CustomToolCallItem customToolCall, string? value) { }
         public static void set_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update, int? value) { }
-        public static void set_Status(OpenAI.Responses.McpToolCallItem mcpCall, Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? value) { }
+        public static void set_PromptCacheBreakpoint(OpenAI.Responses.ResponseContentPart part, System.BinaryData? value) { }
+        public static void set_Status(OpenAI.Responses.McpToolCallItem mcpCall, Azure.AI.AgentServer.Responses.Models.McpToolCallStatus? value) { }
         public sealed partial class <G>$18D35430E41928A72CE2C2B20C1EB7D6
         {
             internal <G>$18D35430E41928A72CE2C2B20C1EB7D6() { }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")]
             public string? ApprovalRequestId { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] set { } }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")]
-            public Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? Status { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] set { } }
+            public Azure.AI.AgentServer.Responses.Models.McpToolCallStatus? Status { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] set { } }
             public static partial class <M>$466DE5BA2CFD4B1CD21E5552E78A4323
             {
                 public static void <Extension>$(OpenAI.Responses.McpToolCallItem mcpCall) { }
+            }
+        }
+        public sealed partial class <G>$207B9ED4E777EC84C2EBC071F6C614CF
+        {
+            internal <G>$207B9ED4E777EC84C2EBC071F6C614CF() { }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$D68B7FE57ABE663C2F24BEBF949BEBD3")]
+            public System.BinaryData? PromptCacheBreakpoint { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$D68B7FE57ABE663C2F24BEBF949BEBD3")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$D68B7FE57ABE663C2F24BEBF949BEBD3")] set { } }
+            public static partial class <M>$D68B7FE57ABE663C2F24BEBF949BEBD3
+            {
+                public static void <Extension>$(OpenAI.Responses.ResponseContentPart part) { }
+            }
+        }
+        public sealed partial class <G>$242187800ACD70646A8495BC669A6D91
+        {
+            internal <G>$242187800ACD70646A8495BC669A6D91() { }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$941096F073334FD056F72102BF50FC27")]
+            public Azure.AI.AgentServer.Responses.Models.ToolCallCaller? Caller { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$941096F073334FD056F72102BF50FC27")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$941096F073334FD056F72102BF50FC27")] set { } }
+            public static partial class <M>$941096F073334FD056F72102BF50FC27
+            {
+                public static void <Extension>$(OpenAI.Responses.CustomToolCallOutputItem customToolCallOutput) { }
             }
         }
         public sealed partial class <G>$70FBCD44F28E7E26DFAD68FC496C4C09
@@ -369,6 +399,20 @@ namespace Azure.AI.AgentServer.Responses
             public static partial class <M>$C289646E3F041202A61C3FF992062108
             {
                 public static void <Extension>$(OpenAI.Responses.ReasoningSummaryPart part) { }
+            }
+        }
+        public sealed partial class <G>$8A543B4DC05A3D8AB7155DFFC9D3A249
+        {
+            internal <G>$8A543B4DC05A3D8AB7155DFFC9D3A249() { }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")]
+            public bool? Async { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")] set { } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")]
+            public Azure.AI.AgentServer.Responses.Models.ToolCallCaller? Caller { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")] set { } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")]
+            public string? Namespace { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$C30E968717CE6EA50D8682FC73243757")] set { } }
+            public static partial class <M>$C30E968717CE6EA50D8682FC73243757
+            {
+                public static void <Extension>$(OpenAI.Responses.CustomToolCallItem customToolCall) { }
             }
         }
         public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
@@ -566,82 +610,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCaller>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCaller>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DirectToolCallCallerParam : Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>
-    {
-        public DirectToolCallCallerParam() { }
-        protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum FunctionCallOutputStatusEnum
-    {
-        InProgress = 0,
-        Completed = 1,
-        Incomplete = 2,
-    }
-    public enum FunctionCallStatus
-    {
-        InProgress = 0,
-        Completed = 1,
-        Incomplete = 2,
-    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ItemExtensions
     {
         public static string GetInputText(this System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items) { throw null; }
     }
-    public enum MCPToolCallStatus
+    public enum McpToolCallStatus
     {
         InProgress = 0,
         Completed = 1,
         Incomplete = 2,
         Calling = 3,
         Failed = 4,
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
-    public partial class OutputItemCustomToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
-    {
-        public OutputItemCustomToolCall(string callId, string name, string input, Azure.AI.AgentServer.Responses.Models.FunctionCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
-        public bool? Async { get { throw null; } set { } }
-        public Azure.AI.AgentServer.Responses.Models.ToolCallCaller Caller { get { throw null; } set { } }
-        public string CallId { get { throw null; } set { } }
-        public string Input { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Namespace { get { throw null; } set { } }
-        public Azure.AI.AgentServer.Responses.Models.FunctionCallStatus Status { get { throw null; } set { } }
-        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
-    public partial class OutputItemCustomToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>
-    {
-        public OutputItemCustomToolCallOutput(string callId, System.BinaryData output, Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
-        public Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam Caller { get { throw null; } set { } }
-        public string CallId { get { throw null; } set { } }
-        public System.BinaryData Output { get { throw null; } set { } }
-        public Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum Status { get { throw null; } set { } }
-        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProgramToolCallCaller : Azure.AI.AgentServer.Responses.Models.ToolCallCaller, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCaller>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCaller>
     {
@@ -656,20 +636,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         Azure.AI.AgentServer.Responses.Models.ProgramToolCallCaller System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCaller>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCaller>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCaller>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProgramToolCallCallerParam : Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>
-    {
-        public ProgramToolCallCallerParam(string callerId) { }
-        public string CallerId { get { throw null; } set { } }
-        protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ResponseExtensions
@@ -703,18 +669,5 @@ namespace Azure.AI.AgentServer.Responses.Models
         Azure.AI.AgentServer.Responses.Models.ToolCallCaller System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCaller>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCaller>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCaller>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class ToolCallCallerParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>
-    {
-        internal ToolCallCallerParam() { }
-        protected virtual Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -57,7 +57,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="TurnDetectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TurnDetectionType?(string value) => value == null ? null : new TurnDetectionType(value);
+        public static implicit operator TurnDetectionType?(string value) => value == null ? (TurnDetectionType?)null : new TurnDetectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

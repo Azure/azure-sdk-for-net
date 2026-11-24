@@ -401,7 +401,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void IsRequestEligible_StructuredMessageRequest_IsFalse()
+        public void IsRequestEligible_StructuredMessageRequest_IsTrue()
         {
             var (provider, _) = CreateProvider(ServiceUri);
             HttpMessage message = CreateMessage(BlobUri);
@@ -409,8 +409,8 @@ namespace Azure.Storage.Blobs.Tests
                 Constants.StructuredMessage.StructuredMessageHeader,
                 Constants.StructuredMessage.CrcStructuredMessage);
 
-            Assert.IsFalse(provider.IsRequestEligible(message),
-                "Structured message requests are not eligible for session authentication.");
+            Assert.IsTrue(provider.IsRequestEligible(message),
+                "Structured message requests are eligible for session authentication.");
         }
         #endregion
     }

@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="PartitionKindScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartitionKindScheme?(string value) => value == null ? null : new PartitionKindScheme(value);
+        public static implicit operator PartitionKindScheme?(string value) => value == null ? (PartitionKindScheme?)null : new PartitionKindScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

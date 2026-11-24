@@ -17,7 +17,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     private readonly string _serverLabel;
     private readonly string _name;
     private string? _finalArguments;
-    private MCPToolCallStatus? _terminalStatus;
+    private McpToolCallStatus? _terminalStatus;
 
     /// <summary>
     /// Initializes a new instance of <see cref="OutputItemMcpCallBuilder"/>.
@@ -52,7 +52,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
         var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(string.Empty)) { Id = _itemId };
-        item.Status = MCPToolCallStatus.InProgress;
+        item.Status = McpToolCallStatus.InProgress;
         return EmitAdded(item);
     }
 
@@ -124,36 +124,36 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
 
     /// <summary>
     /// Produces a <c>response.mcp_call.completed</c> event and records the terminal
-    /// status so that <see cref="EmitDone"/> uses <see cref="MCPToolCallStatus.Completed"/> (S-060).
+    /// status so that <see cref="EmitDone"/> uses <see cref="McpToolCallStatus.Completed"/> (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseMCPCallCompletedEvent"/>.</returns>
     public virtual ResponseMCPCallCompletedEvent EmitCompleted()
     {
-        _terminalStatus = MCPToolCallStatus.Completed;
+        _terminalStatus = McpToolCallStatus.Completed;
         return new ResponseMCPCallCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
     /// Produces a <c>response.mcp_call.failed</c> event and records the terminal
-    /// status so that <see cref="EmitDone"/> uses <see cref="MCPToolCallStatus.Failed"/> (S-060).
+    /// status so that <see cref="EmitDone"/> uses <see cref="McpToolCallStatus.Failed"/> (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseMCPCallFailedEvent"/>.</returns>
     public virtual ResponseMCPCallFailedEvent EmitFailed()
     {
-        _terminalStatus = MCPToolCallStatus.Failed;
+        _terminalStatus = McpToolCallStatus.Failed;
         return new ResponseMCPCallFailedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
     /// Produces a <c>response.output_item.done</c> event with the completed MCP tool call item.
     /// Uses the terminal status recorded by <see cref="EmitCompleted"/> or <see cref="EmitFailed"/>,
-    /// defaulting to <see cref="MCPToolCallStatus.Completed"/> if neither was called (S-060).
+    /// defaulting to <see cref="McpToolCallStatus.Completed"/> if neither was called (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
         var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(_finalArguments ?? "{}")) { Id = _itemId };
-        item.Status = _terminalStatus ?? MCPToolCallStatus.Completed;
+        item.Status = _terminalStatus ?? McpToolCallStatus.Completed;
         return EmitDone(item);
     }
 }

@@ -15,8 +15,6 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private DebugInfo _debugInfo;
-        private bool _debugInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         public SearchDocumentsResult()
@@ -31,27 +29,23 @@ namespace Azure.Search.Documents.Models
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="facets"> The facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not include any facet expressions. </param>
         /// <param name="answers"> The answers query results for the search operation; null if the answers query parameter was not specified or set to 'none'. </param>
-        /// <param name="debugInfo"> Debug information that applies to the search results as a whole. </param>
         /// <param name="nextPageParameters"> Continuation JSON payload returned when the query can't return all the requested results in a single response. You can use this JSON along with. </param>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <param name="nextLink"> Continuation URL returned when the query can't return all the requested results in a single response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </param>
         /// <param name="semanticPartialResponseReason"> Reason that a partial response was returned for a semantic ranking request. </param>
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
-        /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Coverage = coverage;
             Facets = facets;
             Answers = answers;
-            _debugInfo = debugInfo;
             NextPageParameters = nextPageParameters;
             Results = results;
             NextLink = nextLink;
             SemanticPartialResponseReason = semanticPartialResponseReason;
             SemanticPartialResponseType = semanticPartialResponseType;
-            SemanticQueryRewritesResultType = semanticQueryRewritesResultType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,15 +61,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> The answers query results for the search operation; null if the answers query parameter was not specified or set to 'none'. </summary>
         public IReadOnlyList<QueryAnswerResult> Answers { get; }
 
-        /// <summary> Debug information that applies to the search results as a whole. </summary>
-        public DebugInfo DebugInfo
-        {
-            get
-            {
-                return _debugInfo;
-            }
-        }
-
         /// <summary> Continuation JSON payload returned when the query can't return all the requested results in a single response. You can use this JSON along with. </summary>
         public SearchOptions NextPageParameters { get; }
 
@@ -90,8 +75,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Type of partial response that was returned for a semantic ranking request. </summary>
         public SemanticSearchResultsType? SemanticPartialResponseType { get; }
-
-        /// <summary> Type of query rewrite that was used to retrieve documents. </summary>
-        public SemanticQueryRewritesResultType? SemanticQueryRewritesResultType { get; }
     }
 }

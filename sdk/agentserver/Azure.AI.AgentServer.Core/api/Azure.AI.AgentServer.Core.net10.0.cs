@@ -36,6 +36,7 @@ namespace Azure.AI.AgentServer.Core
         public string? AdditionalServerIdentity { get { throw null; } set { } }
         public System.TimeSpan ShutdownTimeout { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS002")]
     public sealed partial class AgentRestoreContext
     {
         public AgentRestoreContext(string sessionId, string restoreId, System.Collections.Generic.IReadOnlyDictionary<string, string>? sessionEnvironmentOverrides = null) { }
@@ -49,8 +50,14 @@ namespace Azure.AI.AgentServer.Core
         public string? CallId { get { throw null; } set { } }
         public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Current { get { throw null; } }
         public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Empty { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public Azure.AI.AgentServer.Core.FoundryOriginalSubject? OriginalSubject { get { throw null; } set { } }
         public string? SessionId { get { throw null; } set { } }
         public string? UserId { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public static System.IDisposable BeginScope(Azure.AI.AgentServer.Core.FoundryAgentRequestContext context) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public System.Collections.Generic.IDictionary<string, string> ModelAttributionHeaders(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>? headers = null) { throw null; }
         public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> PlatformHeaders() { throw null; }
     }
     public sealed partial class FoundryCallIdHandler : System.Net.Http.DelegatingHandler
@@ -81,6 +88,14 @@ namespace Azure.AI.AgentServer.Core
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+    public sealed partial class FoundryOriginalSubject
+    {
+        public FoundryOriginalSubject(string? objectId, string? tenantId, string? identityType) { }
+        public string? IdentityType { get { throw null; } }
+        public string? ObjectId { get { throw null; } }
+        public string? TenantId { get { throw null; } }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS002")]
     public partial interface IAgentSnapshotLifecycle
     {
@@ -91,8 +106,12 @@ namespace Azure.AI.AgentServer.Core
     {
         protected PlatformContext() { }
         public PlatformContext(string? userIdKey, string? callId) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public PlatformContext(string? userIdKey, string? callId, Azure.AI.AgentServer.Core.FoundryOriginalSubject? originalSubject) { }
         public virtual string? CallId { get { throw null; } }
         public static Azure.AI.AgentServer.Core.PlatformContext Empty { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public virtual Azure.AI.AgentServer.Core.FoundryOriginalSubject? OriginalSubject { get { throw null; } }
         public virtual string? UserIdKey { get { throw null; } }
         public static Azure.AI.AgentServer.Core.PlatformContext FromRequest(Microsoft.AspNetCore.Http.HttpRequest request) { throw null; }
     }
@@ -183,6 +202,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStateStore
     {
         public const int DefaultItemTtlSeconds = 2592000;
@@ -203,27 +223,33 @@ namespace Azure.AI.AgentServer.Core.Storage
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, Azure.ETag ifMatch = default(Azure.ETag), bool requireExists = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStore> UpdateAsync(Azure.AI.AgentServer.Core.Storage.StateStoreUpdateOptions update, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageApiException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStorageApiException(int status, string message, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageBadRequestException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStorageBadRequestException(string message, string? param = null, int status = 400, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
         public string? Param { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageConflictException : Azure.AI.AgentServer.Core.Storage.FoundryStorageBadRequestException
     {
         public FoundryStorageConflictException(string message, string? param = null, string? errorCode = null) : base (default(string), default(string), default(int), default(string)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageException : Azure.RequestFailedException
     {
         public FoundryStorageException(int status, string message, string? errorCode = null, System.Exception? innerException = null) : base (default(string)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageNotFoundException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStorageNotFoundException(string message, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStoragePreconditionException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStoragePreconditionException(string message, Azure.ETag currentETag = default(Azure.ETag), string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }

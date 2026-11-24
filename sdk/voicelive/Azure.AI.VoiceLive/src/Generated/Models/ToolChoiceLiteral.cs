@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ToolChoiceLiteral"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ToolChoiceLiteral?(string value) => value == null ? null : new ToolChoiceLiteral(value);
+        public static implicit operator ToolChoiceLiteral?(string value) => value == null ? (ToolChoiceLiteral?)null : new ToolChoiceLiteral(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

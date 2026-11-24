@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="AgeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgeUnit?(string value) => value == null ? null : new AgeUnit(value);
+        public static implicit operator AgeUnit?(string value) => value == null ? (AgeUnit?)null : new AgeUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -53,7 +53,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ResponseMessageRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponseMessageRole?(string value) => value == null ? null : new ResponseMessageRole(value);
+        public static implicit operator ResponseMessageRole?(string value) => value == null ? (ResponseMessageRole?)null : new ResponseMessageRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="EmbeddingUsageKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingUsageKind?(string value) => value == null ? null : new EmbeddingUsageKind(value);
+        public static implicit operator EmbeddingUsageKind?(string value) => value == null ? (EmbeddingUsageKind?)null : new EmbeddingUsageKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
