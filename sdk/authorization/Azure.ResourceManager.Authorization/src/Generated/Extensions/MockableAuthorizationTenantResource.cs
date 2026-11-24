@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivilegedResourceProjection> GetAllAsync(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PrivilegedResourceProjection> GetPrivilegedResourcesAsync(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 @orderby,
                 count,
                 context,
-                "MockableAuthorizationTenantResource.GetAll");
+                "MockableAuthorizationTenantResource.GetPrivilegedResources");
         }
 
         /// <summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivilegedResourceProjection> GetAll(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PrivilegedResourceProjection> GetPrivilegedResources(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 @orderby,
                 count,
                 context,
-                "MockableAuthorizationTenantResource.GetAll");
+                "MockableAuthorizationTenantResource.GetPrivilegedResources");
         }
 
         /// <summary>
@@ -1155,13 +1155,13 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="filter"> The filter to apply on the operation. One custom filter option is supported : 'assignedToMeToReview()'. When specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccessReviewScheduleDefinitionData> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionDataAsync1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionDataAsync1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApproval");
         }
 
         /// <summary>
@@ -1184,13 +1184,13 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="filter"> The filter to apply on the operation. One custom filter option is supported : 'assignedToMeToReview()'. When specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccessReviewScheduleDefinitionData> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApproval(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionData1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionData1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApproval");
         }
 
         /// <summary>

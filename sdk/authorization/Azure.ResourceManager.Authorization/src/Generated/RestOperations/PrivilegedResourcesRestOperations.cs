@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string accessScope, int? maxpagesize, string filter, string @orderby, bool? count, RequestContext context)
+        internal HttpMessage CreateGetPrivilegedResourcesRequest(string accessScope, int? maxpagesize, string filter, string @orderby, bool? count, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string accessScope, int? maxpagesize, string filter, string @orderby, bool? count, RequestContext context)
+        internal HttpMessage CreateNextGetPrivilegedResourcesRequest(Uri nextPage, string accessScope, int? maxpagesize, string filter, string @orderby, bool? count, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _accessScope, _maxpagesize, _filter, _orderby, _count, _context) : _client.CreateGetAllRequest(_accessScope, _maxpagesize, _filter, _orderby, _count, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPrivilegedResourcesRequest(nextLink, _accessScope, _maxpagesize, _filter, _orderby, _count, _context) : _client.CreateGetPrivilegedResourcesRequest(_accessScope, _maxpagesize, _filter, _orderby, _count, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

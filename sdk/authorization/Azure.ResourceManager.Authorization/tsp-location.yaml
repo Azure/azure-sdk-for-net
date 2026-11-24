@@ -1,5 +1,5 @@
 directory: specification/authorization/resource-manager/Microsoft.Authorization/Authorization
-commit: 3f2554baadc4b25aa4fac948611503f21a60e472
+commit: 9092fca0720d6e439018d9d2882dd3b4370a60a1
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 

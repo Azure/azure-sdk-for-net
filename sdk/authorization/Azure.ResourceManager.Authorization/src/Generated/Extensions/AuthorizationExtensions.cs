@@ -2417,7 +2417,7 @@ namespace Azure.ResourceManager.Authorization
         /// query parameters.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAllAsync(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResourcesAsync(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2495,11 +2495,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivilegedResourceProjection> GetAllAsync(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PrivilegedResourceProjection> GetPrivilegedResourcesAsync(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAllAsync(accessScope, maxpagesize, filter, @orderby, count, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResourcesAsync(accessScope, maxpagesize, filter, @orderby, count, cancellationToken);
         }
 
         /// <summary>
@@ -2511,7 +2511,7 @@ namespace Azure.ResourceManager.Authorization
         /// query parameters.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAll(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResources(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2589,11 +2589,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivilegedResourceProjection> GetAll(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        public static Pageable<PrivilegedResourceProjection> GetPrivilegedResources(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAll(accessScope, maxpagesize, filter, @orderby, count, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResources(accessScope, maxpagesize, filter, @orderby, count, cancellationToken);
         }
 
         /// <summary>
@@ -2794,7 +2794,7 @@ namespace Azure.ResourceManager.Authorization
         /// Get access review instances assigned for my approval.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2802,18 +2802,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccessReviewScheduleDefinitionData> GetAllAsync(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAllAsync(filter, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// Get access review instances assigned for my approval.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApproval(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2821,11 +2821,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccessReviewScheduleDefinitionData> GetAll(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApproval(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAll(filter, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetAccessReviewScheduleDefinitionsAssignedForMyApproval(filter, cancellationToken);
         }
 
         /// <summary>
