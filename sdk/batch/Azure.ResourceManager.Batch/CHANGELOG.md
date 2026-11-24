@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2026-12-01)
 
 ### Features Added
 
@@ -9,9 +9,7 @@
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- The default service API version `2026-10-01` no longer supports `TaskAuthenticationToken` authentication. `BatchAuthenticationMode.TaskAuthenticationToken` remains available for compatibility with older API versions. Use `BatchAuthenticationMode.Aad` or `BatchAuthenticationMode.SharedKey` when configuring authentication with the default API version.
 
 ## 1.7.0 (2026-06-02)
 
