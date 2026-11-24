@@ -108,11 +108,25 @@ The client discovers failover ledgers through the configured confidential ledger
 
 Failover occurs for HTTP 408, 429, and 5xx responses and for retryable transport failures such as connection failures and network timeouts. The primary endpoint first consumes its normal `Retry.MaxRetries` budget. Each discovered failover endpoint then receives a fresh, independent retry budget. Caller-requested cancellation stops immediately and never triggers discovery or failover. If discovery is unavailable, metadata is malformed, or every failover fails, the original primary response or exception is surfaced.
 
-With an explicit, nonempty `collectionId`, HTTP 404 (including `InvalidTransactionId` and `UnknownLedgerEntry`) also triggers failover. Missing entries on failover ledgers are skipped in the configured order. Without a collection id, 404 remains on the primary; transient failover behavior is unchanged.
+For `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync`, an explicit, nonempty `collectionId` also permits failover on HTTP 404 (including `InvalidTransactionId` and `UnknownLedgerEntry`). Missing entries on failover ledgers are skipped in the configured order. Without a collection id, 404 remains on the primary; transient failover behavior is unchanged.
 
-**Historical-read compatibility:** after a primary 404, `GetLedgerEntry` and `GetLedgerEntryAsync` restore the legacy collection-based behavior by querying **the current entry of that collection** on each failover ledger, not the requested transaction id. Transaction ids are local to a CCF network. The fallback is therefore **not an exact historical lookup** and can return a different value. Its response has `state: "Ready"` and an `entry` containing the full current-entry payload, including tags and **the actual returned transaction id**, never relabeled with the requested id. Applications that require exact historical reads should not rely on this collection-based fallback. Transient primary failures still retry the original historical request without converting it to a current-entry lookup.
+**Historical-read compatibility (opt-in):** `EnableHistoricalReadFallback` defaults to `false`. By default, `GetLedgerEntry` and `GetLedgerEntryAsync` surface a primary 404 after normal retries without querying a failover ledger. To restore the legacy collection-based behavior, explicitly set `EnableHistoricalReadFallback = true` and supply a nonempty `collectionId`. After a primary 404, the SDK then queries **the current entry of that collection** on each failover ledger, not the requested transaction id. Transaction ids are local to a CCF network. This fallback is **not an exact historical lookup** and can return different contents. Its response has `state: "Ready"` and an `entry` containing the full current-entry payload, including tags and **the actual returned transaction id**, never relabeled with the requested id. Applications that require exact historical reads should leave this option disabled. Transient primary failures still retry the original historical request without converting it to a current-entry lookup, regardless of this option.
 
-This cross-ledger missing-entry fallback is independent of `EnableArchivedCollectionFallback`. That option only controls the primary-ledger history search by `GetCurrentLedgerEntry` after its current-entry attempts fail with 404.
+`EnableHistoricalReadFallback` does not control current-entry failover or `EnableArchivedCollectionFallback`. For current-entry reads, cross-ledger 404 failover runs first. If it ultimately surfaces the primary 404 and `EnableArchivedCollectionFallback` is enabled, the client then searches the primary ledger's history. Enabling archived fallback does not enable historical-to-current substitution.
+
+**404 retry cost:** A 404 is retried on the same endpoint before the SDK moves to the next eligible failover ledger. This preserves tolerance for entries that become available during replication, but also increases latency and request volume for entries that genuinely do not exist. For a read eligible for 404 failover, if the primary and all attempted failover ledgers keep returning 404, each ledger can receive `Retry.MaxRetries + 1` requests. For example, with `Retry.MaxRetries = 2` and two failover ledgers, the read can issue nine ledger requests, excluding discovery and certificate requests. This does not include any subsequent archived-collection history search.
+
+End-to-end latency includes the request durations and retry backoff on every attempted ledger, plus discovery and certificate lookup overhead. `FailoverNetworkTimeout` is a per-attempt network timeout, not a deadline for the entire operation. Lowering `Retry.MaxRetries` reduces this cost but also reduces tolerance for other retryable failures. Supply a cancellation token through `RequestContext` when the operation needs an overall time budget; the SDK does not impose a single overall failover deadline.
+
+To opt in to historical-to-current substitution only when that behavior is acceptable:
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    EnableHistoricalReadFallback = true,
+};
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
 
 ```C#
 var options = new ConfidentialLedgerClientOptions

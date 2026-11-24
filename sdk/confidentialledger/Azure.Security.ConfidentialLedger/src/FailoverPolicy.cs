@@ -27,8 +27,9 @@ namespace Azure.Security.ConfidentialLedger
     /// the caller observes the primary error.
     /// </para>
     /// <para>
-    /// With an explicit nonempty collection id, a 404 also permits failover and traversal. A primary
-    /// historical-read 404 uses the legacy collection-based current-entry lookup on failovers, returning
+    /// With an explicit nonempty collection id, a current-entry 404 also permits failover and traversal.
+    /// Historical reads require EnableHistoricalReadFallback to opt in to 404 failover. A primary
+    /// historical-read 404 then uses the legacy collection-based current-entry lookup on failovers, returning
     /// that entry with state Ready and preserving its actual transaction id rather than the requested id.
     /// </para>
     /// <para>
@@ -53,10 +54,10 @@ namespace Azure.Security.ConfidentialLedger
         private readonly ConfidentialLedgerFailoverService _failoverService;
         private readonly TimeSpan? _failoverNetworkTimeout;
 
-        internal static void MarkEligible(HttpMessage message, string collectionId)
+        internal static void MarkEligible(HttpMessage message, string collectionId, bool enableCollectionFallback)
         {
             message.SetProperty(typeof(FailoverEligibleKey), true);
-            message.SetProperty(typeof(CollectionFallbackKey), !string.IsNullOrEmpty(collectionId));
+            message.SetProperty(typeof(CollectionFallbackKey), enableCollectionFallback && !string.IsNullOrEmpty(collectionId));
         }
 
         private static bool IsEligible(HttpMessage message) =>
@@ -249,11 +250,18 @@ namespace Azure.Security.ConfidentialLedger
 
             public override int Status => _original.Status;
             public override string ReasonPhrase => _original.ReasonPhrase;
+            public override bool IsError => _original.IsError;
             public override string ClientRequestId { get => _original.ClientRequestId; set => _original.ClientRequestId = value; }
             public override Stream ContentStream { get => _content; set => _content = value; }
             public override void Dispose()
             {
-                _content?.Dispose();
+                // Match Azure.Core's buffered-response lifetime: HttpMessage is disposed before
+                // the response reaches the caller, so keep its memory buffer readable.
+                if (_content is not MemoryStream)
+                {
+                    _content?.Dispose();
+                    _content = null;
+                }
                 _original.Dispose();
             }
             protected override bool ContainsHeader(string name) =>
