@@ -1,14 +1,23 @@
 # Release History
 
-## 1.18.0-beta.4 (Unreleased)
+## 1.18.0 (2026-11-23)
+
+This release ensures no breaking API changes compared with version 1.15.0 only. Versions 1.16.x and 1.17.x have been retracted; compatibility with those versions or previous preview releases is not guaranteed.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded the default Network API version from 2026-03-01 to 2026-05-01.
+- Added Application Gateway deployment tiers and confidential compute settings.
+- Added configurable TCP idle timeouts for Azure Firewall.
+- Added network adapter indices for network interfaces.
+- Added load-balancer configuration for network virtual appliances and their inbound security rules, including load distribution and idle timeout settings.
 
 ### Other Changes
+
+- Regenerated the library from the updated Network specification.
+- Updated the preview capability API: removed `VirtualNetworkApplianceCapabilityBaseData`. `VirtualNetworkApplianceCapabilityData` now derives directly from `ResourceData` and declares `Properties` itself.
+- Updated the preview Interconnect Group and Subgroup APIs: flattened properties onto their resource data types and updated the corresponding model factories. The property-envelope types are now internal.
+- Represented the Interconnect Group resource GUID as `Guid?` instead of `string`.
 
 ## 1.18.0-beta.3 (2026-10-30)
 
