@@ -232,6 +232,16 @@ public static async Task Run(
 }
 ```
 
+### Automatic lock renewal
+
+Batch triggers automatically renew message locks using `MaxAutoLockRenewalDuration`,
+which defaults to five minutes. Renewal starts when the listener receives each
+message, including time spent waiting to fill a batch. For session-enabled
+batches, the listener renews the session lock from the time it accepts the
+session. Set the duration to `TimeSpan.Zero` to disable renewal or
+`Timeout.InfiniteTimeSpan` to renew without a time limit. This setting does not
+change the function execution timeout or guarantee that a lock cannot be lost.
+
 ### Binding to ReceiveActions
 
 It's possible to receive additional messages from within your function invocation. This may be useful if you need more control over how many messages to process within a function invocation based on some characteristics of the initial message delivered to your function via the binding parameter. Any additional messages that you receive will be subject to the same `AutoCompleteMessages` and `MaxAutoLockRenewalDuration` configuration as the initial message delivered to your function. It is also possible to peek messages. Peeked messages are not subject to the `AutoCompleteMessages` and `MaxAutoLockRenewalDuration` configuration as these messages are not locked and therefore cannot be completed.
