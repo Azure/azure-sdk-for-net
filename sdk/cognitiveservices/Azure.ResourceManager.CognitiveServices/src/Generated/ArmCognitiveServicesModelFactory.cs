@@ -1271,12 +1271,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Evaluated health of an attachment. </summary>
         /// <param name="state"> Overall attachment health. </param>
         /// <param name="summary"> Summary of the evaluated health. </param>
-        /// <param name="lastObservedAtUtc"> Time at which health was last observed. </param>
+        /// <param name="lastObservedOn"> Time at which health was last observed. </param>
         /// <param name="newWorkAdmissionAllowed"> Whether the attachment can admit new workloads. </param>
         /// <param name="components"> Health of individual attachment components. </param>
         /// <param name="reasons"> Reasons contributing to the evaluated health. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterHealthStatus"/> instance for mocking. </returns>
-        public static AttachedAksClusterHealthStatus AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state = default, string summary = default, DateTimeOffset? lastObservedAtUtc = default, bool? newWorkAdmissionAllowed = default, IEnumerable<AttachedAksClusterHealthComponent> components = default, IEnumerable<AttachedAksClusterHealthReason> reasons = default)
+        public static AttachedAksClusterHealthStatus AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state = default, string summary = default, DateTimeOffset? lastObservedOn = default, bool? newWorkAdmissionAllowed = default, IEnumerable<AttachedAksClusterHealthComponent> components = default, IEnumerable<AttachedAksClusterHealthReason> reasons = default)
         {
             components ??= new ChangeTrackingList<AttachedAksClusterHealthComponent>();
             reasons ??= new ChangeTrackingList<AttachedAksClusterHealthReason>();
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new AttachedAksClusterHealthStatus(
                 state,
                 summary,
-                lastObservedAtUtc,
+                lastObservedOn,
                 newWorkAdmissionAllowed,
                 (components ?? new ChangeTrackingList<AttachedAksClusterHealthComponent>()).ToList(),
                 (reasons ?? new ChangeTrackingList<AttachedAksClusterHealthReason>()).ToList(),
@@ -1295,11 +1295,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="name"> Component name. </param>
         /// <param name="state"> Evaluated component health. </param>
         /// <param name="message"> Details of the component's health. </param>
-        /// <param name="lastObservedAtUtc"> Time at which component health was last observed. </param>
+        /// <param name="lastObservedOn"> Time at which component health was last observed. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterHealthComponent"/> instance for mocking. </returns>
-        public static AttachedAksClusterHealthComponent AttachedAksClusterHealthComponent(string name = default, AttachedAksClusterHealthState? state = default, string message = default, DateTimeOffset? lastObservedAtUtc = default)
+        public static AttachedAksClusterHealthComponent AttachedAksClusterHealthComponent(string name = default, AttachedAksClusterHealthState? state = default, string message = default, DateTimeOffset? lastObservedOn = default)
         {
-            return new AttachedAksClusterHealthComponent(name, state, message, lastObservedAtUtc, default);
+            return new AttachedAksClusterHealthComponent(name, state, message, lastObservedOn, default);
         }
 
         /// <summary> A reason contributing to attachment health. </summary>
@@ -1316,12 +1316,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> A lightweight attachment resource returned by LIST. </summary>
         /// <param name="id"> ARM resource ID of the attachment. </param>
         /// <param name="name"> Attachment name. </param>
-        /// <param name="type"> Resource type of the attachment. </param>
+        /// <param name="resourceType"> Resource type of the attachment. </param>
         /// <param name="properties"> Lightweight attachment properties. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterListItem"/> instance for mocking. </returns>
-        public static AttachedAksClusterListItem AttachedAksClusterListItem(ResourceIdentifier id = default, string name = default, string @type = default, AttachedAksClusterListProperties properties = default)
+        public static AttachedAksClusterListItem AttachedAksClusterListItem(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AttachedAksClusterListProperties properties = default)
         {
-            return new AttachedAksClusterListItem(id, name, @type, properties, default);
+            return new AttachedAksClusterListItem(id, name, resourceType, properties, default);
         }
 
         /// <summary> Lightweight attachment properties returned by LIST. </summary>

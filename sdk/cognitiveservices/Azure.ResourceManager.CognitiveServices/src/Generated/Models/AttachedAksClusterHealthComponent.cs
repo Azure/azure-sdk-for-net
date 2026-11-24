@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="name"> Component name. </param>
         /// <param name="state"> Evaluated component health. </param>
         /// <param name="message"> Details of the component's health. </param>
-        /// <param name="lastObservedAtUtc"> Time at which component health was last observed. </param>
+        /// <param name="lastObservedOn"> Time at which component health was last observed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterHealthComponent(string name, AttachedAksClusterHealthState? state, string message, DateTimeOffset? lastObservedAtUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterHealthComponent(string name, AttachedAksClusterHealthState? state, string message, DateTimeOffset? lastObservedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             State = state;
             Message = message;
-            LastObservedAtUtc = lastObservedAtUtc;
+            LastObservedOn = lastObservedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Time at which component health was last observed. </summary>
         [WirePath("lastObservedAtUtc")]
-        public DateTimeOffset? LastObservedAtUtc { get; }
+        public DateTimeOffset? LastObservedOn { get; }
     }
 }

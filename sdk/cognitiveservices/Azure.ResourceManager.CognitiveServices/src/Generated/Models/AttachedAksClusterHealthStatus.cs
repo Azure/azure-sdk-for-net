@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="AttachedAksClusterHealthStatus"/>. </summary>
         /// <param name="state"> Overall attachment health. </param>
         /// <param name="summary"> Summary of the evaluated health. </param>
-        /// <param name="lastObservedAtUtc"> Time at which health was last observed. </param>
+        /// <param name="lastObservedOn"> Time at which health was last observed. </param>
         /// <param name="newWorkAdmissionAllowed"> Whether the attachment can admit new workloads. </param>
         /// <param name="components"> Health of individual attachment components. </param>
         /// <param name="reasons"> Reasons contributing to the evaluated health. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state, string summary, DateTimeOffset? lastObservedAtUtc, bool? newWorkAdmissionAllowed, IList<AttachedAksClusterHealthComponent> components, IList<AttachedAksClusterHealthReason> reasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state, string summary, DateTimeOffset? lastObservedOn, bool? newWorkAdmissionAllowed, IList<AttachedAksClusterHealthComponent> components, IList<AttachedAksClusterHealthReason> reasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Summary = summary;
-            LastObservedAtUtc = lastObservedAtUtc;
+            LastObservedOn = lastObservedOn;
             NewWorkAdmissionAllowed = newWorkAdmissionAllowed;
             Components = components;
             Reasons = reasons;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Time at which health was last observed. </summary>
         [WirePath("lastObservedAtUtc")]
-        public DateTimeOffset? LastObservedAtUtc { get; }
+        public DateTimeOffset? LastObservedOn { get; }
 
         /// <summary> Whether the attachment can admit new workloads. </summary>
         [WirePath("newWorkAdmissionAllowed")]

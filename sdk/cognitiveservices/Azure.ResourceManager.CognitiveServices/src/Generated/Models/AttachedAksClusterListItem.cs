@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="AttachedAksClusterListItem"/>. </summary>
         /// <param name="id"> ARM resource ID of the attachment. </param>
         /// <param name="name"> Attachment name. </param>
-        /// <param name="type"> Resource type of the attachment. </param>
+        /// <param name="resourceType"> Resource type of the attachment. </param>
         /// <param name="properties"> Lightweight attachment properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterListItem(ResourceIdentifier id, string name, string @type, AttachedAksClusterListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterListItem(ResourceIdentifier id, string name, ResourceType? resourceType, AttachedAksClusterListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Resource type of the attachment. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> Lightweight attachment properties. </summary>
         [WirePath("properties")]

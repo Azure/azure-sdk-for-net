@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(LastObservedAtUtc))
+            if (Optional.IsDefined(LastObservedOn))
             {
                 writer.WritePropertyName("lastObservedAtUtc"u8);
-                writer.WriteStringValue(LastObservedAtUtc.Value, "O");
+                writer.WriteStringValue(LastObservedOn.Value, "O");
             }
             if (Optional.IsDefined(NewWorkAdmissionAllowed))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             AttachedAksClusterHealthState? state = default;
             string summary = default;
-            DateTimeOffset? lastObservedAtUtc = default;
+            DateTimeOffset? lastObservedOn = default;
             bool? newWorkAdmissionAllowed = default;
             IList<AttachedAksClusterHealthComponent> components = default;
             IList<AttachedAksClusterHealthReason> reasons = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    lastObservedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    lastObservedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("newWorkAdmissionAllowed"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new AttachedAksClusterHealthStatus(
                 state,
                 summary,
-                lastObservedAtUtc,
+                lastObservedOn,
                 newWorkAdmissionAllowed,
                 components ?? new ChangeTrackingList<AttachedAksClusterHealthComponent>(),
                 reasons ?? new ChangeTrackingList<AttachedAksClusterHealthReason>(),

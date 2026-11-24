@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(LastObservedAtUtc))
+            if (Optional.IsDefined(LastObservedOn))
             {
                 writer.WritePropertyName("lastObservedAtUtc"u8);
-                writer.WriteStringValue(LastObservedAtUtc.Value, "O");
+                writer.WriteStringValue(LastObservedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string name = default;
             AttachedAksClusterHealthState? state = default;
             string message = default;
-            DateTimeOffset? lastObservedAtUtc = default;
+            DateTimeOffset? lastObservedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    lastObservedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    lastObservedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttachedAksClusterHealthComponent(name, state, message, lastObservedAtUtc, additionalBinaryDataProperties);
+            return new AttachedAksClusterHealthComponent(name, state, message, lastObservedOn, additionalBinaryDataProperties);
         }
     }
 }
