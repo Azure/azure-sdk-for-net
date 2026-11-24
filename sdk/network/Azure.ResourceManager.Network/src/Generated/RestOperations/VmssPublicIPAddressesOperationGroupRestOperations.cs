@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class PublicIPAddressesOperationGroup
+    internal partial class VmssPublicIPAddressesOperationGroup
     {
         private readonly Uri _endpoint;
         private readonly TelemetryDetails _userAgent;
         private readonly Func<ResourceType, string> _getApiVersion;
 
-        /// <summary> Initializes a new instance of PublicIPAddressesOperationGroup for mocking. </summary>
-        protected PublicIPAddressesOperationGroup()
+        /// <summary> Initializes a new instance of VmssPublicIPAddressesOperationGroup for mocking. </summary>
+        protected VmssPublicIPAddressesOperationGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressesOperationGroup. </summary>
+        /// <summary> Initializes a new instance of VmssPublicIPAddressesOperationGroup. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal PublicIPAddressesOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
+        internal VmssPublicIPAddressesOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _getApiVersion = getApiVersion;
-            _userAgent = new TelemetryDetails(typeof(PublicIPAddressesOperationGroup).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(VmssPublicIPAddressesOperationGroup).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
