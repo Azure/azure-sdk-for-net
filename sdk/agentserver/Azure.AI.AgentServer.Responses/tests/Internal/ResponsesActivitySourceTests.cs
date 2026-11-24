@@ -123,6 +123,46 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo("conv_xyz"));
     }
 
+    [TestCase("conv_request")]
+    [TestCase(null)]
+    public void PropagateResponseBaggage_PreservesInboundConversationId(string? requestConversationId)
+    {
+        using var parent = _testSource.StartActivity("test-parent");
+        Assert.That(parent, Is.Not.Null);
+        parent!.SetBaggage(ResponsesTracingConstants.Baggage.ConversationId, "conv_workflow");
+
+        var source = new ResponsesActivitySource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            Conversation = requestConversationId is null ? null : BinaryData.FromString($"\"{requestConversationId}\"")
+        };
+
+        source.PropagateResponseBaggage(request, "caresp_inbound", EmptyHeaders());
+
+        Assert.That(parent.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo("conv_workflow"));
+        Assert.That(parent.Baggage.Count(b => b.Key == ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo(1));
+    }
+
+    [Test]
+    public void PropagateResponseBaggage_EmptyInboundConversationId_UsesRequestConversationId()
+    {
+        using var parent = _testSource.StartActivity("test-parent");
+        Assert.That(parent, Is.Not.Null);
+        parent!.SetBaggage(ResponsesTracingConstants.Baggage.ConversationId, string.Empty);
+
+        var source = new ResponsesActivitySource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            Conversation = BinaryData.FromString("\"conv_request\"")
+        };
+
+        source.PropagateResponseBaggage(request, "caresp_empty", EmptyHeaders());
+
+        Assert.That(parent.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo("conv_request"));
+    }
+
     [Test]
     public void PropagateResponseBaggage_NonStreaming_SetsFalse()
     {
