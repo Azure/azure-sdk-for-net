@@ -1,0 +1,71 @@
+# Keep the shared matrix generator unchanged. For Windows PR tests, filter its
+# finished matrix before creating the test jobs so only equivalent legs merge.
+parameters:
+  - name: SDKType
+    type: string
+  - name: ServiceDirectory
+    type: string
+  - name: TestSetupSteps
+    type: stepList
+  - name: TestTimeoutInMinutes
+    type: number
+  - name: UsePlatformContainer
+    type: boolean
+  - name: OSName
+    type: string
+  - name: Matrix
+    type: string
+  - name: DependsOn
+    type: string
+  - name: CloudConfig
+    type: object
+
+jobs:
+  - ${{ if eq(parameters.OSName, 'windows') }}:
+    # Include the container flag because the shared generator can use the same
+    # matrix output key for both VM and container jobs.
+    - job: ${{ replace(split(parameters.Matrix, '''')[1], '.', '_') }}_${{ parameters.UsePlatformContainer }}_dedup
+      displayName: Remove duplicate Windows test legs
+      dependsOn: ${{ parameters.DependsOn }}
+      condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true), ne(${{ parameters.Matrix }}, '{}'))
+      variables:
+        InputMatrix: $[ ${{ parameters.Matrix }} ]
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+      steps:
+        - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        - ${{ else }}:
+          - checkout: self
+        - pwsh: ./eng/scripts/Set-DeduplicatedTestMatrix.ps1 -MatrixJson $env:INPUT_MATRIX
+          name: filter
+          displayName: Filter equivalent Windows test legs
+          env:
+            INPUT_MATRIX: $(InputMatrix)
+
+    - template: /eng/pipelines/templates/jobs/ci.tests.yml
+      parameters:
+        SDKType: ${{ parameters.SDKType }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        UsePlatformContainer: ${{ parameters.UsePlatformContainer }}
+        OSName: ${{ parameters.OSName }}
+        Matrix: dependencies.${{ replace(split(parameters.Matrix, '''')[1], '.', '_') }}_${{ parameters.UsePlatformContainer }}_dedup.outputs['filter.matrix']
+        DependsOn: ${{ replace(split(parameters.Matrix, '''')[1], '.', '_') }}_${{ parameters.UsePlatformContainer }}_dedup
+        CloudConfig: ${{ parameters.CloudConfig }}
+
+  - ${{ else }}:
+    - template: /eng/pipelines/templates/jobs/ci.tests.yml
+      parameters:
+        SDKType: ${{ parameters.SDKType }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        UsePlatformContainer: ${{ parameters.UsePlatformContainer }}
+        OSName: ${{ parameters.OSName }}
+        Matrix: ${{ parameters.Matrix }}
+        DependsOn: ${{ parameters.DependsOn }}
+        CloudConfig: ${{ parameters.CloudConfig }}
