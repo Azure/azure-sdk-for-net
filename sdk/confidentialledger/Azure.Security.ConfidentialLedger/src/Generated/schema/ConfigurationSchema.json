@@ -53,6 +53,9 @@
             "EnableArchivedCollectionFallback": {
               "type": "boolean"
             },
+            "EnableHistoricalReadFallback": {
+              "type": "boolean"
+            },
             "Failover": {
               "type": "string"
             },

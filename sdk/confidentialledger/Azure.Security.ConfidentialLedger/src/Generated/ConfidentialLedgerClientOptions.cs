@@ -45,6 +45,10 @@ namespace Azure.Security.ConfidentialLedger
             {
                 EnableArchivedCollectionFallback = enableArchivedCollectionFallback;
             }
+            if (bool.TryParse(section["EnableHistoricalReadFallback"], out bool enableHistoricalReadFallback))
+            {
+                EnableHistoricalReadFallback = enableHistoricalReadFallback;
+            }
             if (Enum.TryParse(section["Failover"], out FailoverSelection failover))
             {
                 Failover = failover;
