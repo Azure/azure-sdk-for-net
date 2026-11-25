@@ -65,6 +65,27 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: management-parameters-replacement-follows-payload-role
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return findings
+      only. The owning package is Azure.ResourceManager.Compute. VirtualMachineUpdateParameters
+      is a dedicated PATCH partial-update body; VirtualMachineRestartParameters is a dedicated
+      POST request body. Neither is resource data or a reusable domain model. Both are newly
+      introduced, and no analyzer checks their names. All other requirements are satisfied.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '\bVirtualMachineUpdatePatch\b'
+      - type: output-matches
+        config:
+          pattern: '\bVirtualMachineRestartContent\b'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
   - name: management-patch-wrapper-needs-patch-name
     prompt: >-
       First invoke the code-review skill. Review this synthetic API addition
@@ -317,12 +338,12 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
-  - name: allow-id-vm-and-a-singular-flags-name
+  - name: allow-id-vm-and-a-plural-flags-name
     prompt: >-
       First invoke the code-review skill. Review this synthetic API addition
       and return findings only. A model has a string VmId containing opaque virtual-machine
-      identifiers, not UUIDs or ARM resource IDs. A closed flags enum named StorageFileAccess follows
-      the established domain convention and declares None = 0, Read = 1 and Write = 2 with FlagsAttribute.
+      identifiers, not UUIDs or ARM resource IDs. A closed flags enum named StorageFilePermissions
+      declares None = 0, Read = 1 and Write = 2 with FlagsAttribute.
       Its values are genuinely combinable. All other API requirements are satisfied. If there
       is no finding, return exactly `No findings.`
     graders:
@@ -332,6 +353,29 @@ stimuli:
       - type: output-matches
         config:
           pattern: '^\s*No findings\.\s*$'
+
+  - name: flags-enum-name-must-be-plural
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new enum and return findings only.
+      StorageFilePermission is a closed enum with FlagsAttribute and declares None = 0, Read = 1
+      and Write = 2. Its values are genuinely combinable. All other API and generation requirements
+      are satisfied. No enabled analyzer checks enum-name plurality.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '\bStorageFilePermissions\b'
+      - type: output-matches
+        config:
+          pattern: '(?i)singular|plural'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:StorageFilePermission)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:StorageFilePermission))'
 
   - name: power-of-two-values-do-not-establish-flags-semantics
     prompt: >-
