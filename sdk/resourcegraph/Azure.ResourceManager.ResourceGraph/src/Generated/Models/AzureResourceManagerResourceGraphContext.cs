@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceGraph
     [ModelReaderWriterBuildable(typeof(ResourceQueryContent))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryRequestOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryResult))]
-    [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequest))]
+    [ModelReaderWriterBuildable(typeof(ResourcesHistoryContent))]
     [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequestOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceSnapshotData))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

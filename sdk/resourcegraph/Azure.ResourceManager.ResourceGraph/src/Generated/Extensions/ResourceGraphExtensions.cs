@@ -262,5 +262,41 @@ namespace Azure.ResourceManager.ResourceGraph
 
             return GetMockableResourceGraphTenantResource(tenantResource).GetResources(content, cancellationToken);
         }
+
+        /// <summary>
+        /// List all snapshots of a resource for a given time interval.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.GetResourcesHistoryAsync(ResourcesHistoryContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<BinaryData>> GetResourcesHistoryAsync(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableResourceGraphTenantResource(tenantResource).GetResourcesHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all snapshots of a resource for a given time interval.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.GetResourcesHistory(ResourcesHistoryContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<BinaryData> GetResourcesHistory(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourceGraphTenantResource(tenantResource).GetResourcesHistory(content, cancellationToken);
+        }
     }
 }

@@ -305,17 +305,17 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         }
 
         /// <summary> Describes a history request to be executed. </summary>
-        /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
-        /// <param name="query"> The resources query. </param>
-        /// <param name="options"> The history request evaluation options. </param>
-        /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
-        /// <returns> A new <see cref="Models.ResourcesHistoryRequest"/> instance for mocking. </returns>
-        public static ResourcesHistoryRequest ResourcesHistoryRequest(IEnumerable<string> subscriptions = default, string query = default, ResourcesHistoryRequestOptions options = default, IEnumerable<string> managementGroups = default)
+        /// <param name="subscriptions"></param>
+        /// <param name="query"></param>
+        /// <param name="options"></param>
+        /// <param name="managementGroups"></param>
+        /// <returns> A new <see cref="Models.ResourcesHistoryContent"/> instance for mocking. </returns>
+        public static ResourcesHistoryContent ResourcesHistoryContent(IEnumerable<string> subscriptions = default, string query = default, ResourcesHistoryRequestOptions options = default, IEnumerable<string> managementGroups = default)
         {
             subscriptions ??= new ChangeTrackingList<string>();
             managementGroups ??= new ChangeTrackingList<string>();
 
-            return new ResourcesHistoryRequest((subscriptions ?? new ChangeTrackingList<string>()).ToList(), query, options, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ResourcesHistoryContent(subscriptions.ToList(), query, options, managementGroups.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> The options for history request evaluation. </summary>
