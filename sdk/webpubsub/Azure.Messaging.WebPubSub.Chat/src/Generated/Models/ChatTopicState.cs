@@ -56,7 +56,7 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> Converts a string to a <see cref="ChatTopicState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChatTopicState?(string value) => value == null ? null : new ChatTopicState(value);
+        public static implicit operator ChatTopicState?(string value) => value == null ? (ChatTopicState?)null : new ChatTopicState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
