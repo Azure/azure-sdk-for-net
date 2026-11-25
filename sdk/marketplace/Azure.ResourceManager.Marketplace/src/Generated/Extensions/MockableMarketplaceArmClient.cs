@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.Marketplace.Mocking
             return new PrivateStoreResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MarketplaceApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MarketplaceRequestApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource"/> object. </returns>
-        public virtual MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceRequestApprovalResource"/> object. </returns>
+        public virtual MarketplaceRequestApprovalResource GetMarketplaceRequestApprovalResource(ResourceIdentifier id)
         {
-            MarketplaceApprovalRequestResource.ValidateResourceId(id);
-            return new MarketplaceApprovalRequestResource(Client, id);
+            MarketplaceRequestApprovalResource.ValidateResourceId(id);
+            return new MarketplaceRequestApprovalResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MarketplaceAdminApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MarketplaceAdminRequestApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource"/> object. </returns>
-        public virtual MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceAdminRequestApprovalResource"/> object. </returns>
+        public virtual MarketplaceAdminRequestApprovalResource GetMarketplaceAdminRequestApprovalResource(ResourceIdentifier id)
         {
-            MarketplaceAdminApprovalRequestResource.ValidateResourceId(id);
-            return new MarketplaceAdminApprovalRequestResource(Client, id);
+            MarketplaceAdminRequestApprovalResource.ValidateResourceId(id);
+            return new MarketplaceAdminRequestApprovalResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PrivateStoreCollectionInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -582,19 +582,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdOn"> DateTime when role assignment schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        /// <param name="startsOn"> Start DateTime of the role assignment schedule. </param>
+        /// <param name="startOn"> Start DateTime of the role assignment schedule. </param>
         /// <param name="expirationType"> Type of the role assignment schedule expiration. </param>
-        /// <param name="endsOn"> End DateTime of the role assignment schedule. </param>
+        /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
         /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
-        /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleContentData"/> instance for mocking. </returns>
-        public static RoleAssignmentScheduleContentData RoleAssignmentScheduleContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleAssignmentScheduleId = default, ResourceIdentifier targetRoleAssignmentScheduleInstanceId = default, ResourceIdentifier linkedRoleEligibilityScheduleId = default, string justification = default, RoleAssignmentScheduleTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startsOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
+        /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleRequestData"/> instance for mocking. </returns>
+        public static RoleAssignmentScheduleRequestData RoleAssignmentScheduleRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleAssignmentScheduleId = default, ResourceIdentifier targetRoleAssignmentScheduleInstanceId = default, ResourceIdentifier linkedRoleEligibilityScheduleId = default, string justification = default, RoleAssignmentScheduleTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endOn = default, TimeSpan? duration = default)
         {
-            return new RoleAssignmentScheduleContentData(
+            return new RoleAssignmentScheduleRequestData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && targetRoleAssignmentScheduleId is null && targetRoleAssignmentScheduleInstanceId is null && startsOn is null && expirationType is null && endsOn is null && duration is null && linkedRoleEligibilityScheduleId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleAssignmentScheduleRequestProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && targetRoleAssignmentScheduleId is null && targetRoleAssignmentScheduleInstanceId is null && startOn is null && expirationType is null && endOn is null && duration is null && linkedRoleEligibilityScheduleId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleAssignmentScheduleRequestProperties(
                     scope,
                     roleDefinitionId,
                     principalId.GetValueOrDefault(),
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalId,
                     targetRoleAssignmentScheduleId,
                     targetRoleAssignmentScheduleInstanceId,
-                    startsOn is null && expirationType is null && endsOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startsOn, expirationType is null && endsOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endsOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     linkedRoleEligibilityScheduleId,
                     justification,
                     ticketInfo,
@@ -734,19 +734,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdOn"> DateTime when role eligibility schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        /// <param name="startsOn"> Start DateTime of the role eligibility schedule. </param>
+        /// <param name="startOn"> Start DateTime of the role eligibility schedule. </param>
         /// <param name="expirationType"> Type of the role eligibility schedule expiration. </param>
-        /// <param name="endsOn"> End DateTime of the role eligibility schedule. </param>
+        /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
         /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
-        /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleContentData"/> instance for mocking. </returns>
-        public static RoleEligibilityScheduleContentData RoleEligibilityScheduleContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleEligibilityScheduleId = default, ResourceIdentifier targetRoleEligibilityScheduleInstanceId = default, string justification = default, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startsOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
+        /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleRequestData"/> instance for mocking. </returns>
+        public static RoleEligibilityScheduleRequestData RoleEligibilityScheduleRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleEligibilityScheduleId = default, ResourceIdentifier targetRoleEligibilityScheduleInstanceId = default, string justification = default, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endOn = default, TimeSpan? duration = default)
         {
-            return new RoleEligibilityScheduleContentData(
+            return new RoleEligibilityScheduleRequestData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && startsOn is null && expirationType is null && endsOn is null && duration is null && targetRoleEligibilityScheduleId is null && targetRoleEligibilityScheduleInstanceId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleEligibilityScheduleRequestProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && startOn is null && expirationType is null && endOn is null && duration is null && targetRoleEligibilityScheduleId is null && targetRoleEligibilityScheduleInstanceId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleEligibilityScheduleRequestProperties(
                     scope,
                     roleDefinitionId,
                     principalId.GetValueOrDefault(),
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     requestType.GetValueOrDefault(),
                     status,
                     approvalId,
-                    startsOn is null && expirationType is null && endsOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startsOn, expirationType is null && endsOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endsOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     targetRoleEligibilityScheduleId,
                     targetRoleEligibilityScheduleInstanceId,
                     justification,
@@ -1165,6 +1165,329 @@ namespace Azure.ResourceManager.Authorization.Models
                 (notDataActions ?? new ChangeTrackingList<string>()).ToList(),
                 condition,
                 conditionVersion,
+                default);
+        }
+
+        /// <summary>
+        /// A privileged resource projection — a unified view of an Azure resource the
+        /// caller has privileged access to, with all role information flattened onto the
+        /// row. Connect-enablement dependencies are retrieved separately via
+        /// `GET .../privilegedResources/{privilegedResourceId}/relatedResources`.
+        /// The Azure resource-type namespace (`type`, e.g.
+        /// `microsoft.compute/virtualmachines`) is the discriminator — new resource
+        /// types are non-breaking additions and clients SHOULD tolerate unknown
+        /// values.
+        /// </summary>
+        /// <param name="projectionId">
+        /// Opaque server-generated identifier for this projection row. Stable per
+        /// (caller, resource) pair. Clients MUST treat this as opaque — do not parse.
+        /// Distinct from the conventional Azure resource `id`: the full Azure
+        /// resource path lives on `scope` below.
+        /// </param>
+        /// <param name="scope">
+        /// Fully-qualified Azure resource path (e.g.,
+        /// `/subscriptions/{subId}/resourceGroups/my-rg/providers/Microsoft.Compute/virtualMachines/my-vm`).
+        /// In the privileged-access model every resource is also a scope at which
+        /// role assignments can be granted, so this field uses the ARM-standard
+        /// `scope` name rather than `resourceId`.
+        /// </param>
+        /// <param name="displayName"> Human-readable resource name. </param>
+        /// <param name="type">
+        /// Azure resource provider type (lowercased), e.g.
+        /// `microsoft.compute/virtualmachines`. This is the ARM-standard `type`
+        /// field and also serves as the resource-kind discriminator — new resource
+        /// types are non-breaking additions.
+        /// </param>
+        /// <param name="location"> Azure region (e.g. `eastus`). </param>
+        /// <param name="tags">
+        /// Azure resource tags, mirrored verbatim from the upstream Azure resource.
+        /// Free-form user-defined key/value pairs, not validated — identical semantics
+        /// to standard Azure Resource Manager `TrackedResource.tags`.
+        /// </param>
+        /// <param name="parent">
+        /// Scope ancestor chain — innermost (resource group) first, outermost
+        /// (subscription, future management group) at the chain's tail. Navigation
+        /// only; carries no access information.
+        /// Inheritance of role assignments is recorded directly on each entry of
+        /// `roles` (each role's `scope` field), not by walking this chain. Clients
+        /// do not need to walk `parentResource` to discover inherited roles.
+        /// </param>
+        /// <param name="roles">
+        /// Every role granting access to this resource — direct or inherited from
+        /// any ancestor scope, and direct or via group membership (active or eligible).
+        /// Each entry's `scope` field records the actual assignment scope.
+        /// Inherited and group-sourced roles are already included and fully resolved
+        /// here: clients do NOT need to walk `parentResource` or resolve group
+        /// membership themselves.
+        /// </param>
+        /// <param name="isFavorite">
+        /// Whether you have favorited this resource (see
+        /// `privilegedResourceFavorites`). Always populated on every row.
+        /// </param>
+        /// <returns> A new <see cref="Models.PrivilegedResourceProjection"/> instance for mocking. </returns>
+        public static PrivilegedResourceProjection PrivilegedResourceProjection(string projectionId = default, ResourceIdentifier scope = default, string displayName = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ParentResourceScope parent = default, IEnumerable<RoleAssignmentSummary> roles = default, bool isFavorite = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            roles ??= new ChangeTrackingList<RoleAssignmentSummary>();
+
+            return new PrivilegedResourceProjection(
+                projectionId,
+                scope,
+                displayName,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                parent,
+                (roles ?? new ChangeTrackingList<RoleAssignmentSummary>()).ToList(),
+                isFavorite,
+                default);
+        }
+
+        /// <summary>
+        /// Scope ancestor entry. Navigation only — carries no access information.
+        /// Generic shape: `type` classifies the scope tier; scope-type-specific metadata
+        /// lives inside the open `properties` bag and is mirrored from the upstream
+        /// scope without validation. Recursive: each entry has its own
+        /// `parentResource` pointing at the next scope up. Present on every entry
+        /// except the outermost (root) scope.
+        /// </summary>
+        /// <param name="type">
+        /// Scope tier classification. Allowed values today: `resourceGroup`,
+        /// `subscription`. Future tiers (e.g., `managementGroup`, `tenant`, future
+        /// sub-resource hierarchies) are non-breaking additions — the `properties`
+        /// bag carries their per-type metadata.
+        /// </param>
+        /// <param name="scope">
+        /// Scope identifier for the parent scope. For Azure Resource Manager-addressable
+        /// scopes this is the full Azure Resource Manager resource path (e.g.,
+        /// `/subscriptions/{subId}/resourceGroups/my-rg`). Typed as `string` (not
+        /// `armResourceIdentifier`) because the extensible scope hierarchy may include
+        /// both Azure Resource Manager identifiers (including management-group paths
+        /// such as `/providers/Microsoft.Management/managementGroups/{id}`) and
+        /// tenant or future non-resource identifiers. Format is determined by the
+        /// sibling `type` value.
+        /// </param>
+        /// <param name="displayName">
+        /// Human-readable scope name. For subscriptions, may be the subscription id
+        /// when a display name is unavailable.
+        /// </param>
+        /// <param name="properties">
+        /// Scope-type-specific metadata bag, mirrored from the upstream Azure scope
+        /// for the given `type`, without validation. The set of fields inside is
+        /// determined by the sibling `type` value. Always emitted (possibly empty
+        /// `{}`) so clients can safely read it. Intentionally untyped at the API
+        /// contract layer so new scope tiers (`managementGroup`, `tenant`, future
+        /// sub-resource hierarchies) can be added without a contract break.
+        /// Examples today (informative, not enforced by schema):
+        /// <list type="bullet"><item><description>`type = "resourceGroup"`: `{}` (no scope-specific metadata in v1).</description></item><item><description>`type = "subscription"`:  `{ managementGroupPath: string[] }`</description></item></list>
+        /// (ordered root-to-direct-parent).
+        /// Clients SHOULD treat the bag as opaque unless they know the `type`.
+        /// </param>
+        /// <param name="parent">
+        /// The next ancestor in the chain. Present on every entry except the
+        /// outermost (root) scope, which omits the field.
+        /// </param>
+        /// <returns> A new <see cref="Models.ParentResourceScope"/> instance for mocking. </returns>
+        public static ParentResourceScope ParentResourceScope(ResourceScopeKind @type = default, string scope = default, string displayName = default, IDictionary<string, BinaryData> properties = default, ParentResourceScope parent = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ParentResourceScope(
+                @type,
+                scope,
+                displayName,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                parent,
+                default);
+        }
+
+        /// <summary>
+        /// A single role grant on the resource. Roles for a row are flattened: direct
+        /// and inherited assignments, direct-source and group-source assignments
+        /// (whether active or eligible), all appear as separate entries with their
+        /// actual assignment scope recorded in `scope`. The same role at the same
+        /// scope from the same source MUST NOT appear twice on the same row.
+        /// </summary>
+        /// <param name="roleId">
+        /// Opaque, stable identifier for this role grant. Stable per assignment, so it
+        /// is safe to use as a client-side collection key. Clients MUST treat this as
+        /// opaque — do not parse.
+        /// </param>
+        /// <param name="parentRoleId"> The identifier of the parent role, if this role has a parent. </param>
+        /// <param name="roleDefinitionId"> Azure role definition id (full path). </param>
+        /// <param name="roleDisplayName">
+        /// Human-readable display name of the role definition (e.g.
+        /// `Network Contributor`). Provided as a convenience so clients can render the
+        /// role without a separate lookup on `roleDefinitionId`.
+        /// </param>
+        /// <param name="scope">
+        /// Azure scope path where the assignment is granted (resource, resource
+        /// group, subscription, or future management-group id). Inheritance is
+        /// implicit: if `scope` differs from the row's `scope` (the resource's
+        /// own path), the role is inherited.
+        /// </param>
+        /// <param name="assignmentStatus">
+        /// The caller's current status against this role on this resource:
+        /// <list type="bullet"><item><description>`active`   — the user effectively has this role active right now.</description></item><item><description>`eligible` — the user can activate this role (one-step or two-step</description></item></list>
+        /// activation, depending on `source.membershipState`).
+        /// Modeled as an extensible string so future statuses (e.g. additional
+        /// lifecycle states) can be added without a breaking change; clients should
+        /// tolerate unknown values.
+        /// </param>
+        /// <param name="scheduleInfo">
+        /// Schedule (start time and expiration) backing this role grant. Populated for
+        /// both `active` and `eligible` entries. A permanent (no-expiry) assignment is
+        /// represented by `expiration.type` = `NoExpiration`; a time-bound assignment
+        /// by `AfterDuration` (with `duration`) or `AfterDateTime` (with `endDateTime`).
+        /// </param>
+        /// <param name="source"> Origin of the role grant — direct user assignment or via group membership. </param>
+        /// <param name="isLeastPrivilege">
+        /// Whether this role is a least-privilege role for the resource. A value of
+        /// `true` indicates the role grants the minimum permissions needed and is the
+        /// recommended choice; `false` indicates a broader-privilege role. Provided as
+        /// a recommendation so clients can guide users toward the least-privilege
+        /// option.
+        /// </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentSummary"/> instance for mocking. </returns>
+        public static RoleAssignmentSummary RoleAssignmentSummary(string roleId = default, string parentRoleId = default, ResourceIdentifier roleDefinitionId = default, string roleDisplayName = default, ResourceIdentifier scope = default, RoleAssignmentStatus assignmentStatus = default, RoleAssignmentScheduleDetails scheduleInfo = default, RoleAssignmentSource source = default, bool isLeastPrivilege = default)
+        {
+            return new RoleAssignmentSummary(
+                roleId,
+                parentRoleId,
+                roleDefinitionId,
+                roleDisplayName,
+                scope,
+                assignmentStatus,
+                scheduleInfo,
+                source,
+                isLeastPrivilege,
+                default);
+        }
+
+        /// <summary> Schedule info backing a role grant — start time and expiration. </summary>
+        /// <param name="startsOn"> Start DateTime of the schedule. </param>
+        /// <param name="expiration"> Expiration of the schedule. Absent implies no expiration is expressed. </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentScheduleDetails"/> instance for mocking. </returns>
+        public static RoleAssignmentScheduleDetails RoleAssignmentScheduleDetails(DateTimeOffset? startsOn = default, RoleAssignmentScheduleExpiration expiration = default)
+        {
+            return new RoleAssignmentScheduleDetails(startsOn, expiration, default);
+        }
+
+        /// <summary> Expiration of a role grant schedule. </summary>
+        /// <param name="type">
+        /// Type of expiration: `AfterDuration` (time-bound by `duration`),
+        /// `AfterDateTime` (time-bound by `endDateTime`), or `NoExpiration`
+        /// (permanent).
+        /// </param>
+        /// <param name="endsOn"> End DateTime of the schedule. Set when `type` is `AfterDateTime`. </param>
+        /// <param name="duration">
+        /// Duration of the schedule as an ISO-8601 TimeSpan. Set when `type` is
+        /// `AfterDuration`.
+        /// </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentScheduleExpiration"/> instance for mocking. </returns>
+        public static RoleAssignmentScheduleExpiration RoleAssignmentScheduleExpiration(RoleAssignmentScheduleExpirationType? @type = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
+        {
+            return new RoleAssignmentScheduleExpiration(@type, endsOn, duration, default);
+        }
+
+        /// <summary>
+        /// Origin of a role grant. Discriminated by `memberType`.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DirectRoleAssignmentSource"/> and <see cref="Models.GroupRoleAssignmentSource"/>.
+        /// </summary>
+        /// <param name="memberType">
+        /// Membership type: `direct` (direct user assignment) or `group` (granted via
+        /// a group the user is a member of).
+        /// </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentSource"/> instance for mocking. </returns>
+        public static RoleAssignmentSource RoleAssignmentSource(string memberType = default)
+        {
+            return new UnknownRoleAssignmentSource(memberType is null ? default : new PrivilegedResourceMemberType(memberType), default);
+        }
+
+        /// <summary> Direct user role assignment. </summary>
+        /// <returns> A new <see cref="Models.DirectRoleAssignmentSource"/> instance for mocking. </returns>
+        public static DirectRoleAssignmentSource DirectRoleAssignmentSource()
+        {
+            return new DirectRoleAssignmentSource(PrivilegedResourceMemberType.Direct, default);
+        }
+
+        /// <summary>
+        /// Group-sourced role assignment. The role is granted via `group`;
+        /// the user's membership state in that group is recorded in `membershipState`.
+        /// </summary>
+        /// <param name="group"> The group through which this role is granted. </param>
+        /// <param name="membershipState">
+        /// The user's membership state in the group. Drives client activation routing:
+        /// <list type="bullet"><item><description>`active`   → one-step (activate the role).</description></item><item><description>`eligible` → two-step (activate your group membership first, then</description></item></list>
+        /// activate the role).
+        /// </param>
+        /// <returns> A new <see cref="Models.GroupRoleAssignmentSource"/> instance for mocking. </returns>
+        public static GroupRoleAssignmentSource GroupRoleAssignmentSource(GroupReference @group = default, GroupMembershipState membershipState = default)
+        {
+            return new GroupRoleAssignmentSource(PrivilegedResourceMemberType.Group, default, @group, membershipState);
+        }
+
+        /// <summary> A reference to a Microsoft Entra ID group through which a role is granted. </summary>
+        /// <param name="id"> Microsoft Entra ID object id of the group. </param>
+        /// <param name="displayName"> Group display name. </param>
+        /// <returns> A new <see cref="Models.GroupReference"/> instance for mocking. </returns>
+        public static GroupReference GroupReference(string id = default, string displayName = default)
+        {
+            return new GroupReference(id, displayName, default);
+        }
+
+        /// <summary>
+        /// A connect-enablement resource for a privileged resource — an Azure resource
+        /// the caller must be able to access to connect to the primary resource (for a
+        /// virtual machine, typically the NIC, NSG, public IP, or Bastion host),
+        /// projected with its own scope and the roles the caller holds on it.
+        /// </summary>
+        /// <param name="projectionId">
+        /// Opaque server-generated identifier for this related-resource projection.
+        /// Stable per (caller, related resource) pair. Clients MUST treat this as
+        /// opaque — do not parse.
+        /// </param>
+        /// <param name="scope">
+        /// Fully-qualified Azure resource path of the related (connect-enablement)
+        /// resource — e.g. the virtual machine's NIC, NSG, public IP, or Bastion host.
+        /// As with `ResourceProjection.scope`, every resource is also a scope at which
+        /// role assignments can be granted, so this field uses the ARM-standard
+        /// `scope` name.
+        /// </param>
+        /// <param name="roles">
+        /// Every role granting the caller access to this related resource — direct or
+        /// inherited, direct-source or group-source, active or eligible. Each entry's
+        /// `scope` field records the actual assignment scope. The caller activates the
+        /// appropriate role here to enable connect to the primary resource.
+        /// </param>
+        /// <returns> A new <see cref="Models.RelatedPrivilegedResourceProjection"/> instance for mocking. </returns>
+        public static RelatedPrivilegedResourceProjection RelatedPrivilegedResourceProjection(string projectionId = default, ResourceIdentifier scope = default, IEnumerable<RoleAssignmentSummary> roles = default)
+        {
+            roles ??= new ChangeTrackingList<RoleAssignmentSummary>();
+
+            return new RelatedPrivilegedResourceProjection(projectionId, scope, (roles ?? new ChangeTrackingList<RoleAssignmentSummary>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privilegedResourceId">
+        /// The favorited Azure resource id. The `favoriteId` URL segment MUST equal
+        /// `base64url(lowercased(resourceId))`; the service rejects mismatches with
+        /// `400 InvalidRequest` on PUT.
+        /// Effectively immutable: set on create and never changed afterward — there is
+        /// no PATCH, and PUT validates the `favoriteId`-from-`resourceId` derivation.
+        /// </param>
+        /// <returns> A new <see cref="Authorization.PrivilegedResourceFavoriteData"/> instance for mocking. </returns>
+        public static PrivilegedResourceFavoriteData PrivilegedResourceFavoriteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privilegedResourceId = default)
+        {
+            return new PrivilegedResourceFavoriteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privilegedResourceId is null ? default : new PrivilegedResourceFavoriteProperties(privilegedResourceId, default),
                 default);
         }
 
