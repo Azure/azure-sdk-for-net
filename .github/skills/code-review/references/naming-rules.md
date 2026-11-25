@@ -21,8 +21,8 @@ as written; these checks are a starting point, not the full set.
 - <a name="fdg-naming-casing" href="#fdg-naming-casing">§</a> PascalCase for types, members, namespaces; camelCase for parameters and locals
 - <a name="fdg-naming-acronyms" href="#fdg-naming-acronyms">§</a> No abbreviations or acronym soup; acronyms of 2 letters stay upper (`IO`), 3+ are Pascal
   (`Http`, `Xml`, `Uri`). `Id` and `Vm` are explicit naming exceptions
-- <a name="fdg-naming-algorithm-acronyms" href="#fdg-naming-algorithm-acronyms">§</a> For Cryptographic (or other) algorithm names follow the same Pascal case acronym naming
-  conventions:
+- <a name="fdg-naming-algorithm-acronyms" href="#fdg-naming-algorithm-acronyms">§</a> In management-plane libraries, for Cryptographic (or other) algorithm names follow the same
+  Pascal case acronym naming conventions:
   - Advanced Encryption Standard (AES) is `Aes`.
   - Elliptic Curve Digital Signature Algorithm (ECDSA) is `ECDsa` (two-letter acronym followed
     by a three-letter acronym).
@@ -34,8 +34,9 @@ as written; these checks are a starting point, not the full set.
 - <a name="fdg-naming-vague-names" href="#fdg-naming-vague-names">§</a> No generic/vague names — `OperationResponse`, `DataCollection`, `Manager`, `Helper`,
   `Utility`, `Info` are smells
 - <a name="fdg-naming-unqualified-use" href="#fdg-naming-unqualified-use">§</a> Assess public type names in normal unqualified use. Add domain context when needed for meaning,
-  not a mechanical provider prefix such as `Microsoft` or `Azure`; retain a provider name when
-  it actually identifies the domain concept. Assess enum members with their enclosing enum
+  not a mechanical provider prefix; retain a provider name when it actually identifies the domain
+  concept. In management-plane libraries, avoid mechanical `Microsoft` or `Azure` prefixes.
+  Assess enum members with their enclosing enum
 - <a name="fdg-naming-async-and-try" href="#fdg-naming-async-and-try">§</a> Async methods end in `Async`; `Try*` methods return `bool` with an `out` result
 - <a name="fdg-naming-booleans" href="#fdg-naming-booleans">§</a> Boolean members read affirmatively (`IsEnabled`, not `IsNotDisabled`)
 - <a name="fdg-naming-duration-units" href="#fdg-naming-duration-units">§</a> Numeric durations or time intervals with fixed units name those units, consistently with the
@@ -57,8 +58,9 @@ as written; these checks are a starting point, not the full set.
 declarations, or on local variables. If an internal declaration is the *cause* of a bad public
 name, anchor the comment on the public member and reference the internal one as the cause.
 
-<a name="naming-boolean-properties-parameters" href="#naming-boolean-properties-parameters">§</a> **Boolean properties and parameters** read affirmatively and start with a verb such as `Is`,
-`Can`, or `Has` (`IsEnabled`/`isEnabled`, not `IsNotDisabled`/`isNotDisabled`).
+<a name="naming-boolean-properties-parameters" href="#naming-boolean-properties-parameters">§</a> **In management-plane libraries, Boolean properties and parameters** read affirmatively and
+start with a verb such as `Is`, `Can`, or `Has` (`IsEnabled`/`isEnabled`, not
+`IsNotDisabled`/`isNotDisabled`).
 
 <a name="naming-analyzer-coverage" href="#naming-analyzer-coverage">§</a> **Naming analyzers run only on shipping client libraries, and many projects opt out.**
 `EnableClientSdkAnalyzers` defaults on only when `IsShippingClientLibrary` is true
@@ -90,9 +92,10 @@ What they cover:
 
 - <a name="naming-definition-operation-suffixes" href="#naming-definition-operation-suffixes">§</a> **`Definition` and `Operation` are narrow, reserved suffixes, not general-purpose ones.**
   `*Definition` should be removed unless the plain noun would actually collide with another
-  resource's type in the same namespace. `*Operation` is reserved for types that inherit
-  `Operation<T>` or the non-generic `Operation`; a plain data model should not borrow it (use a
-  descriptive domain name or a suitable transport suffix instead).
+  resource's type in the same namespace. `*Operation` is reserved for operation types, such as
+  those inheriting `Operation<T>`; a plain data model should not borrow it (use a descriptive
+  domain name or a suitable transport suffix instead). In management-plane libraries, types
+  inheriting the non-generic `Operation` may also use `*Operation`.
   Both are only partially covered by `AZC0030`–`AZC0033`, which is type-scoped and frequently
   suppressed via `DisableEnhancedAnalysis` (see above) — treat this as the hand-review backstop
   for exactly the projects where the analyzer can't help.
@@ -228,11 +231,11 @@ What they cover:
   model with either suffix and without the matching base misrepresents its ARM role.
   In data-plane libraries, do not apply these ARM inheritance requirements; assess names by their
   domain meaning, such as `EventData` for event payloads.
-- <a name="naming-resource-collection-alternatives" href="#naming-resource-collection-alternatives">§</a> For an incorrectly named `*Resource` model, use a descriptive domain noun rather than a
-  generic `Info` fallback. In management-plane libraries, use `Data` only for a resource-data
-  subtype. For a non-resource `*Collection`, `Group` or `List` can be appropriate if it
-  describes the domain and does not collide; retain established domain terms such as
-  `MongoDBCollection`. Do not apply ARM-specific replacement requirements to data-plane models.
+- <a name="naming-resource-collection-alternatives" href="#naming-resource-collection-alternatives">§</a> In management-plane libraries, for an incorrectly named `*Resource` model, use a descriptive
+  domain noun rather than a generic `Info` fallback; use `Data` only for a resource-data subtype.
+  For a non-resource `*Collection`, `Group` or `List` can be appropriate if it describes the
+  domain and does not collide; retain established domain terms such as `MongoDBCollection`.
+  Do not apply these ARM-specific replacement requirements to data-plane models.
 - <a name="naming-expand-abbreviations" href="#naming-expand-abbreviations">§</a> **Expand single-word and abbreviated names.** `AZC0012` only covers types — apply the same
   standard to public properties and parameters. Also expand abbreviations the analyzer never
   sees, on types *and* members: `auth` → `authentication`, `agentRef` → `agent`, `params` →
@@ -246,9 +249,10 @@ What they cover:
 - <a name="naming-time-to-live" href="#naming-time-to-live">§</a> For a duration concept abbreviated `TTL`, prefer `TimeToLive`. Prefer a `TimeSpan` type over a
   unit suffix such as `TimeToLiveInSeconds`; if fixed units are kept, apply the shared
   numeric-unit guidance. A hop count is not a duration.
-- <a name="naming-interval-duration-suffixes" href="#naming-interval-duration-suffixes">§</a> `Interval` or `Duration` may describe a duration regardless of its wire format or CLR type;
-  do not strip the suffix solely because the value is not an ISO 8601 string. Prefer `TimeSpan`
-  for durations; fixed-unit numbers still name their units, for example `MonitoringIntervalInSeconds`.
+- <a name="naming-interval-duration-suffixes" href="#naming-interval-duration-suffixes">§</a> In management-plane libraries, `Interval` or `Duration` may describe a duration regardless of
+  its wire format or CLR type; do not strip the suffix solely because the value is not an ISO
+  8601 string. Prefer `TimeSpan` for durations; fixed-unit numbers still name their units, for
+  example `MonitoringIntervalInSeconds`.
 - <a name="naming-parameter-consistency" href="#naming-parameter-consistency">§</a> **Parameter names must be consistent and descriptive within a scope** (all methods on a
   client, all public constructors + the model-factory method for a type, all overloads of a
   method).
