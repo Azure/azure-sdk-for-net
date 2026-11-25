@@ -210,6 +210,14 @@ function Get-CiKey {
     return "ci-failure-analysis:$($Context.payload.repository.id):${PrNumber}:$($check.head_sha):$($check.id):$($check.completed_at)"
 }
 
+function Get-CiClaimOwner {
+    param($Context)
+
+    $runId = Get-CiPositiveInteger $Context.runId 'workflow run ID'
+    $attempt = Get-CiWorkflowAttempt $Context
+    return "ci-failure-analysis-owner:${runId}:$attempt"
+}
+
 function Get-CiCompletionMarker {
     param($Context, $PrNumber)
 
@@ -329,6 +337,7 @@ function Initialize-CiFailureAnalysis {
             output = @{
                 title = $script:CheckName
                 summary = "Analyzing failed net - pullrequest check $($check.id) completed at $($check.completed_at) for PR #$prNumber."
+                text = Get-CiClaimOwner $Context
             }
         }).data
         $prepared = [ordered]@{
@@ -374,7 +383,7 @@ function Get-CiOwnedClaim {
     if (!(Test-CiEqual $claim.name $script:CheckName) -or
         !(Test-CiEqual $claim.head_sha $Context.payload.check_run.head_sha) -or
         !(Test-CiEqual $claim.external_id (Get-CiKey $Context $Prepared.prNumber)) -or
-        !(Test-CiEqual $claim.details_url (Get-CiRunUrl $Context))) {
+        !(Test-CiEqual $claim.output.text (Get-CiClaimOwner $Context))) {
         throw 'Analysis claim does not belong to this workflow run and CI completion.'
     }
     return $claim
@@ -509,7 +518,7 @@ function Complete-CiFailureAnalysis {
     $null = Invoke-CiApi -Context $Context -Method 'PATCH' -Path "$(Get-CiRepoPath $Context)/check-runs/$($Prepared.claimId)" -Body @{
         status = 'completed'
         conclusion = $conclusion
-        output = @{ title = $script:CheckName; summary = "$summary See $(Get-CiRunUrl $Context)" }
+        output = @{ title = $script:CheckName; summary = "$summary See $(Get-CiRunUrl $Context)"; text = Get-CiClaimOwner $Context }
     }
     Write-Host $summary
     if ($conclusion -ceq 'failure') {
