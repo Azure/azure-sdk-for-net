@@ -357,7 +357,7 @@ Items do not have individual TTL settings. Each item inherits the store's
 | Parameter | Constraints |
 |---|---|
 | `limit` | 1–100. Defaults to 20. |
-| `order` | `ListRequestOrder.Asc` or `ListRequestOrder.Desc`. Defaults to `Desc`. |
+| `order` | `ListRequestOrder.Asc`, `ListRequestOrder.Desc`, or another service-supported value (for example, `new ListRequestOrder("...")`). `null` (the default) uses `Desc`. |
 | `after` / `before` | Opaque cursors that are mutually exclusive. |
 
 ## Best practices
