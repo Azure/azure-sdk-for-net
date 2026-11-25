@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain, IEnumerable<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IEnumerable<IPAddress> dnsServers, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
+        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, SecureLdapType? secureLdapType = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
             dnsServers ??= new ChangeTrackingList<IPAddress>();

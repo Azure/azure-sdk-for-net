@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                Response<EducationJoinContentData> response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                Response<EducationJoinContentData> response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new EducationJoinRequestDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EducationJoinContentData, EducationJoinRequestResource>(new EducationJoinContentDataAsyncCollectionResultOfT(
                 _joinRequestsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new EducationJoinRequestDataCollectionResultOfT(
+            return new PageableWrapper<EducationJoinContentData, EducationJoinRequestResource>(new EducationJoinContentDataCollectionResultOfT(
                 _joinRequestsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<EducationJoinRequestData> response = default;
+                Response<EducationJoinContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EducationJoinRequestData)null, result);
+                        response = Response.FromValue((EducationJoinContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<EducationJoinRequestData> response = default;
+                Response<EducationJoinContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EducationJoinRequestData)null, result);
+                        response = Response.FromValue((EducationJoinContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<EducationJoinRequestData> response = default;
+                Response<EducationJoinContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EducationJoinRequestData)null, result);
+                        response = Response.FromValue((EducationJoinContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -435,14 +435,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<EducationJoinRequestData> response = default;
+                Response<EducationJoinContentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EducationJoinRequestData)null, result);
+                        response = Response.FromValue((EducationJoinContentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

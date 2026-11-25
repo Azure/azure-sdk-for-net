@@ -65,8 +65,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
         /// <param name="postalCode"> Postal code. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="postalCode"/> is null. </exception>
         public DataBoxShippingAddress(string streetAddress1, string country, string postalCode) : this(streetAddress1, country)
         {
+            Argument.AssertNotNull(postalCode, nameof(postalCode));
+
             PostalCode = postalCode;
         }
 

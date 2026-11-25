@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return message;
         }
 
-        internal HttpMessage CreateGetDryrunRequest(string resourceUri, RequestContext context)
+        internal HttpMessage CreateListDryrunRequest(string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return message;
         }
 
-        internal HttpMessage CreateNextGetDryrunRequest(Uri nextPage, string resourceUri, RequestContext context)
+        internal HttpMessage CreateNextListDryrunRequest(Uri nextPage, string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

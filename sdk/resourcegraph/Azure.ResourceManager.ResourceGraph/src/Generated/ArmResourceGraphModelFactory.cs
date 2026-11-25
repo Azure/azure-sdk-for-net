@@ -19,16 +19,654 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     public static partial class ArmResourceGraphModelFactory
     {
 
-        /// <summary> Error details. </summary>
-        /// <param name="code"> Error code identifying the specific error. </param>
-        /// <param name="message"> A human readable error message. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.FacetErrorDetails"/> instance for mocking. </returns>
-        public static FacetErrorDetails FacetErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <summary>
+        /// An offering, the global product boundary a partner onboards under. It owns the demand side
+        /// (ontologies and query endpoints) and the supply side (data onboardings).
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.OfferingData"/> instance for mocking. </returns>
+        public static OfferingData OfferingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OfferingProperties properties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            return new OfferingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
 
-            return new FacetErrorDetails(code, message, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        /// <summary>
+        /// The properties of an offering, the global product boundary that owns both the demand
+        /// (ontologies, query endpoints) and the supply (data onboardings).
+        /// </summary>
+        /// <param name="displayName"> The partner-facing display name of the offering. </param>
+        /// <param name="tier"> The commercial tier of the offering. </param>
+        /// <param name="lifecycleState"> The public lifecycle state of the offering. </param>
+        /// <param name="organizationName"> The name of the organization that owns the offering. </param>
+        /// <param name="contactEmails"> Contact email addresses for the team that owns the offering. </param>
+        /// <param name="scenarioDescription"> A description of the scenario the offering serves. </param>
+        /// <param name="documentationLink"> A link to the offering's partner-facing documentation. </param>
+        /// <param name="serviceTreeId"> The Service Tree identifier of the owning service. </param>
+        /// <param name="provisioningState"> The provisioning state of the offering. </param>
+        /// <returns> A new <see cref="Models.OfferingProperties"/> instance for mocking. </returns>
+        public static OfferingProperties OfferingProperties(string displayName = default, OfferingTier? tier = default, LifecycleState? lifecycleState = default, string organizationName = default, IEnumerable<string> contactEmails = default, string scenarioDescription = default, Uri documentationLink = default, string serviceTreeId = default, OnboardingProvisioningState? provisioningState = default)
+        {
+            contactEmails ??= new ChangeTrackingList<string>();
+
+            return new OfferingProperties(
+                displayName,
+                tier,
+                lifecycleState,
+                organizationName,
+                (contactEmails ?? new ChangeTrackingList<string>()).ToList(),
+                scenarioDescription,
+                documentationLink,
+                serviceTreeId,
+                provisioningState,
+                default);
+        }
+
+        /// <summary>
+        /// An ontology, the data-model blueprint that declares the node and edge types a partner's scenario
+        /// needs. The definition is global; its per-region rollout lives on the activation children.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.OntologyData"/> instance for mocking. </returns>
+        public static OntologyData OntologyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OntologyProperties properties = default)
+        {
+            return new OntologyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// The properties of an ontology, the data-model blueprint that declares the node and edge types a
+        /// partner needs.
+        /// </summary>
+        /// <param name="displayName"> The partner-facing display name of the ontology. </param>
+        /// <param name="autoOnboard">
+        /// When `true`, creating or updating the ontology immediately materializes global data
+        /// onboardings for every unmet type. When `false`, gap analysis still runs and
+        /// `validationDetails` reports the gaps, but no new supply is created. Existing approved supply
+        /// can still satisfy the ontology; unmet demand keeps its derived `reviewStatus` at `Submitted`.
+        /// </param>
+        /// <param name="nodeTypeRefs"> The node types the ontology declares. </param>
+        /// <param name="edgeTypeRefs"> The edge types the ontology declares. </param>
+        /// <param name="provisioningState"> The provisioning state of the ontology. </param>
+        /// <param name="reviewStatus">
+        /// The review lifecycle of the ontology. It is derived from the data onboardings referenced by
+        /// `validationDetails` and reaches `Approved` only once every one of them is approved. Regional
+        /// activation is blocked until then.
+        /// </param>
+        /// <param name="rejectionReason">
+        /// The rejection reason propagated from backing supply. Rejected supply leaves the ontology's
+        /// derived review status at `Submitted`.
+        /// </param>
+        /// <param name="approvedBy"> The reviewer who last approved the ontology. </param>
+        /// <param name="approvedOn"> When the ontology was last approved. </param>
+        /// <param name="rejectedBy"> The reviewer who last rejected the ontology. </param>
+        /// <param name="rejectedOn"> When the ontology was last rejected. </param>
+        /// <param name="validationStatus">
+        /// The aggregate availability of every type the ontology declares. It is the worst per-type
+        /// availability across `validationDetails`.
+        /// </param>
+        /// <param name="validationDetails"> The per-type gap-analysis results for the ontology. </param>
+        /// <returns> A new <see cref="Models.OntologyProperties"/> instance for mocking. </returns>
+        public static OntologyProperties OntologyProperties(string displayName = default, bool? autoOnboard = default, IEnumerable<NodeTypeRef> nodeTypeRefs = default, IEnumerable<EdgeTypeRef> edgeTypeRefs = default, OnboardingProvisioningState? provisioningState = default, ReviewStatus? reviewStatus = default, string rejectionReason = default, string approvedBy = default, DateTimeOffset? approvedOn = default, string rejectedBy = default, DateTimeOffset? rejectedOn = default, ValidationAvailability? validationStatus = default, IEnumerable<ValidationDetail> validationDetails = default)
+        {
+            nodeTypeRefs ??= new ChangeTrackingList<NodeTypeRef>();
+            edgeTypeRefs ??= new ChangeTrackingList<EdgeTypeRef>();
+            validationDetails ??= new ChangeTrackingList<ValidationDetail>();
+
+            return new OntologyProperties(
+                displayName,
+                autoOnboard,
+                (nodeTypeRefs ?? new ChangeTrackingList<NodeTypeRef>()).ToList(),
+                (edgeTypeRefs ?? new ChangeTrackingList<EdgeTypeRef>()).ToList(),
+                provisioningState,
+                reviewStatus,
+                rejectionReason,
+                approvedBy,
+                approvedOn,
+                rejectedBy,
+                rejectedOn,
+                validationStatus,
+                (validationDetails ?? new ChangeTrackingList<ValidationDetail>()).ToList(),
+                default);
+        }
+
+        /// <summary> A node-type reference declared on an ontology. </summary>
+        /// <param name="resourceType"> The fully qualified Azure resource type, for example `microsoft.compute/virtualmachines`. </param>
+        /// <param name="alias"> An optional partner-facing alias for the node type. </param>
+        /// <returns> A new <see cref="Models.NodeTypeRef"/> instance for mocking. </returns>
+        public static NodeTypeRef NodeTypeRef(string resourceType = default, string @alias = default)
+        {
+            return new NodeTypeRef(resourceType, @alias, default);
+        }
+
+        /// <summary> An edge-type reference declared on an ontology. </summary>
+        /// <param name="relationshipType">
+        /// The fully qualified relationship type that connects the source and target node types.
+        /// Its own provider namespace identifies the publisher.
+        /// </param>
+        /// <param name="sourceNodeType"> The source node's Azure resource type or its ontology-local alias. </param>
+        /// <param name="targetNodeType"> The target node's Azure resource type or its ontology-local alias. </param>
+        /// <returns> A new <see cref="Models.EdgeTypeRef"/> instance for mocking. </returns>
+        public static EdgeTypeRef EdgeTypeRef(string relationshipType = default, string sourceNodeType = default, string targetNodeType = default)
+        {
+            return new EdgeTypeRef(relationshipType, sourceNodeType, targetNodeType, default);
+        }
+
+        /// <summary>
+        /// Per-type gap-analysis result. Carries the resolved data onboarding reference when the type is
+        /// (being) onboarded, which is how a partner discovers the supply record covering a type they
+        /// declared.
+        /// </summary>
+        /// <param name="kind"> Whether this detail describes a declared node type or edge type. </param>
+        /// <param name="resourceType"> The Azure resource type. Node entries only. </param>
+        /// <param name="relationshipType"> The relationship type. Edge entries only. </param>
+        /// <param name="sourceNodeType"> The Azure resource type at the source of the relationship. Edge entries only. </param>
+        /// <param name="targetNodeType"> The Azure resource type at the target of the relationship. Edge entries only. </param>
+        /// <param name="availability"> The availability of the type. </param>
+        /// <param name="dataOnboardingRef"> The ARM resource identifier of the data onboarding that covers this type. </param>
+        /// <param name="reviewStatus">
+        /// The review status of the data onboarding named by `dataOnboardingRef`. The ontology's own
+        /// `reviewStatus` is a roll-up of these: it reads `Approved` only when every entry does, and
+        /// regional activation is rejected while any entry is still `Submitted`.
+        /// </param>
+        /// <param name="message">
+        /// A human-readable explanation of the availability result. Emitted only when `availability` is
+        /// not `Available`, that is, only when there is something to explain.
+        /// </param>
+        /// <returns> A new <see cref="Models.ValidationDetail"/> instance for mocking. </returns>
+        public static ValidationDetail ValidationDetail(OntologyEntryKind kind = default, string resourceType = default, string relationshipType = default, string sourceNodeType = default, string targetNodeType = default, ValidationAvailability availability = default, ResourceIdentifier dataOnboardingRef = default, ReviewStatus reviewStatus = default, string message = default)
+        {
+            return new ValidationDetail(
+                kind,
+                resourceType,
+                relationshipType,
+                sourceNodeType,
+                targetNodeType,
+                availability,
+                dataOnboardingRef,
+                reviewStatus,
+                message,
+                default);
+        }
+
+        /// <summary>
+        /// A data onboarding, the publisher-side supply record for the types an ontology demands. Partners
+        /// read these to discover which publisher covers a type they declared. Global ontology writes
+        /// generate unmet supply when `autoOnboard` is enabled; operators approve the generated records.
+        /// There is no public data-onboarding write operation.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.DataOnboardingData"/> instance for mocking. </returns>
+        public static DataOnboardingData DataOnboardingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataOnboardingProperties properties = default)
+        {
+            return new DataOnboardingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// The properties of a data onboarding, the publisher-side supply record that covers one or more
+        /// node and edge types for a single provider namespace.
+        /// </summary>
+        /// <param name="publisherNamespace">
+        /// The provider namespace that owns every entry in `types`, for example `microsoft.compute`.
+        /// Relationships use their own relationship type's namespace, not the source node's namespace.
+        /// </param>
+        /// <param name="types"> Every node and edge type this publisher supplies. </param>
+        /// <param name="targetRegions">
+        /// The regions this supply is intended to reach. This is the denominator for `activationStatus`:
+        /// the roll-up reports `Active` only once every declared region has a succeeded regional
+        /// activation. An empty list means no target set was declared, in which case `activationStatus`
+        /// reports `Active` as soon as any region succeeds.
+        /// </param>
+        /// <param name="ontologyRef">
+        /// The ARM resource identifier of the ontology whose declared types caused this data onboarding
+        /// to be created. Reusing covered types within the same offering does not overwrite this
+        /// provenance. Newly unmet types are grouped by publisher within each generation batch, so a
+        /// publisher namespace can have multiple onboarding records.
+        /// </param>
+        /// <param name="activatedRegions">
+        /// The regions that have completed control-plane activation, derived from the regional
+        /// activation children. This is the numerator to `targetRegions`, not an execution-readiness signal.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the data onboarding. </param>
+        /// <param name="reviewStatus"> The review lifecycle of the data onboarding. </param>
+        /// <param name="activationStatus"> The aggregate regional rollout state of the data onboarding. </param>
+        /// <param name="rejectionReason"> The reason the data onboarding was rejected. </param>
+        /// <returns> A new <see cref="Models.DataOnboardingProperties"/> instance for mocking. </returns>
+        public static DataOnboardingProperties DataOnboardingProperties(string publisherNamespace = default, IEnumerable<OnboardingTypeSpec> types = default, IEnumerable<AzureLocation> targetRegions = default, ResourceIdentifier ontologyRef = default, IEnumerable<AzureLocation> activatedRegions = default, OnboardingProvisioningState? provisioningState = default, ReviewStatus? reviewStatus = default, ActivationStatus? activationStatus = default, string rejectionReason = default)
+        {
+            types ??= new ChangeTrackingList<OnboardingTypeSpec>();
+            targetRegions ??= new ChangeTrackingList<AzureLocation>();
+            activatedRegions ??= new ChangeTrackingList<AzureLocation>();
+
+            return new DataOnboardingProperties(
+                publisherNamespace,
+                (types ?? new ChangeTrackingList<OnboardingTypeSpec>()).ToList(),
+                (targetRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                ontologyRef,
+                (activatedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                provisioningState,
+                reviewStatus,
+                activationStatus,
+                rejectionReason,
+                default);
+        }
+
+        /// <summary>
+        /// One type a data onboarding supplies, either a node type or an edge (relationship) type,
+        /// discriminated by `kind`. Nodes and edges share a single collection because a publisher onboards
+        /// both through the same pipeline and they are approved, provisioned and activated together.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EdgeOnboardingTypeSpec"/> and <see cref="Models.NodeOnboardingTypeSpec"/>.
+        /// </summary>
+        /// <param name="kind"> Whether this entry describes a node type or an edge type. </param>
+        /// <param name="payloadSizeKb"> The average notification payload size, in kilobytes. </param>
+        /// <param name="peakNotificationRates"> Peak per-minute notification rates for this type. </param>
+        /// <param name="visibility"> The visibility of this type to consumers. </param>
+        /// <param name="status"> The review lifecycle state of this type. </param>
+        /// <param name="ingestionEndpoint"> The ingestion endpoint resolved for this type during regional activation. </param>
+        /// <returns> A new <see cref="Models.OnboardingTypeSpec"/> instance for mocking. </returns>
+        public static OnboardingTypeSpec OnboardingTypeSpec(string kind = default, float? payloadSizeKb = default, PeakNotificationRates peakNotificationRates = default, Visibility visibility = default, ReviewStatus status = default, IngestionEndpoint ingestionEndpoint = default)
+        {
+            return new UnknownOnboardingTypeSpec(
+                kind is null ? default : new OntologyEntryKind(kind),
+                payloadSizeKb,
+                peakNotificationRates,
+                visibility,
+                status,
+                ingestionEndpoint,
+                default);
+        }
+
+        /// <summary> Peak per-minute notification rates for a node or edge type. </summary>
+        /// <param name="write"> Peak write notifications per minute. </param>
+        /// <param name="delete"> Peak delete notifications per minute. </param>
+        /// <param name="snapshot"> Peak snapshot notifications per minute. </param>
+        /// <param name="event"> Peak event notifications per minute. </param>
+        /// <returns> A new <see cref="Models.PeakNotificationRates"/> instance for mocking. </returns>
+        public static PeakNotificationRates PeakNotificationRates(int write = default, int delete = default, int snapshot = default, int @event = default)
+        {
+            return new PeakNotificationRates(write, delete, snapshot, @event, default);
+        }
+
+        /// <summary>
+        /// The ingestion endpoint resolved from the approved storage assignments during regional
+        /// control-plane activation. Its presence does not indicate completed ingestion execution.
+        /// </summary>
+        /// <param name="uri"> The URI the publisher sends notifications to. </param>
+        /// <param name="supportedFormats"> The notification payload formats the endpoint accepts. </param>
+        /// <returns> A new <see cref="Models.IngestionEndpoint"/> instance for mocking. </returns>
+        public static IngestionEndpoint IngestionEndpoint(Uri uri = default, IEnumerable<string> supportedFormats = default)
+        {
+            supportedFormats ??= new ChangeTrackingList<string>();
+
+            return new IngestionEndpoint(uri, (supportedFormats ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> A node type a data onboarding supplies. </summary>
+        /// <param name="payloadSizeKb"> The average notification payload size, in kilobytes. </param>
+        /// <param name="peakNotificationRates"> Peak per-minute notification rates for this type. </param>
+        /// <param name="visibility"> The visibility of this type to consumers. </param>
+        /// <param name="status"> The review lifecycle state of this type. </param>
+        /// <param name="ingestionEndpoint"> The ingestion endpoint resolved for this type during regional activation. </param>
+        /// <param name="resourceType"> The fully qualified Azure resource type, for example `microsoft.compute/virtualmachines`. </param>
+        /// <param name="totalRowCount"> The total number of rows the publisher expects to supply. </param>
+        /// <returns> A new <see cref="Models.NodeOnboardingTypeSpec"/> instance for mocking. </returns>
+        public static NodeOnboardingTypeSpec NodeOnboardingTypeSpec(float? payloadSizeKb = default, PeakNotificationRates peakNotificationRates = default, Visibility visibility = default, ReviewStatus status = default, IngestionEndpoint ingestionEndpoint = default, string resourceType = default, long? totalRowCount = default)
+        {
+            return new NodeOnboardingTypeSpec(
+                OntologyEntryKind.Node,
+                payloadSizeKb,
+                peakNotificationRates,
+                visibility,
+                status,
+                ingestionEndpoint,
+                default,
+                resourceType,
+                totalRowCount);
+        }
+
+        /// <summary> An edge (relationship) type a data onboarding supplies. </summary>
+        /// <param name="payloadSizeKb"> The average notification payload size, in kilobytes. </param>
+        /// <param name="peakNotificationRates"> Peak per-minute notification rates for this type. </param>
+        /// <param name="visibility"> The visibility of this type to consumers. </param>
+        /// <param name="status"> The review lifecycle state of this type. </param>
+        /// <param name="ingestionEndpoint"> The ingestion endpoint resolved for this type during regional activation. </param>
+        /// <param name="relationshipType"> The relationship type that connects the source and target node types. </param>
+        /// <param name="sourceNodeType"> The Azure resource type at the source of the relationship. </param>
+        /// <param name="targetNodeType"> The Azure resource type at the target of the relationship. </param>
+        /// <param name="expectedEdgeCount"> The total number of edges the publisher expects to supply. </param>
+        /// <returns> A new <see cref="Models.EdgeOnboardingTypeSpec"/> instance for mocking. </returns>
+        public static EdgeOnboardingTypeSpec EdgeOnboardingTypeSpec(float? payloadSizeKb = default, PeakNotificationRates peakNotificationRates = default, Visibility visibility = default, ReviewStatus status = default, IngestionEndpoint ingestionEndpoint = default, string relationshipType = default, string sourceNodeType = default, string targetNodeType = default, long? expectedEdgeCount = default)
+        {
+            return new EdgeOnboardingTypeSpec(
+                OntologyEntryKind.Edge,
+                payloadSizeKb,
+                peakNotificationRates,
+                visibility,
+                status,
+                ingestionEndpoint,
+                default,
+                relationshipType,
+                sourceNodeType,
+                targetNodeType,
+                expectedEdgeCount);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="onboardingLocationProvisioningState"> The provisioning state of the location grouping. </param>
+        /// <returns> A new <see cref="ResourceGraph.DataOnboardingLocationData"/> instance for mocking. </returns>
+        public static DataOnboardingLocationData DataOnboardingLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OnboardingProvisioningState? onboardingLocationProvisioningState = default)
+        {
+            return new DataOnboardingLocationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                onboardingLocationProvisioningState is null ? default : new OnboardingLocationProperties(onboardingLocationProvisioningState, default),
+                default);
+        }
+
+        /// <summary>
+        /// The activation of a data onboarding in a single Azure region. Azure Resource Graph materializes
+        /// one of these when an ontology is activated in the region, and operators advance it through the
+        /// review workflow as the supply is rolled out. There is exactly one activation per region, so the
+        /// resource is a singleton addressed by the fixed name `default`.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.DataOnboardingActivationData"/> instance for mocking. </returns>
+        public static DataOnboardingActivationData DataOnboardingActivationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegionalActivationProperties properties = default)
+        {
+            return new DataOnboardingActivationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// The properties of a per-region activation. The same body is returned whether the activation
+        /// hangs off an ontology or off a data onboarding; the fields that do not apply to a given parent
+        /// are simply empty. `assignments` is populated only for a data-onboarding activation, and
+        /// `materializedDataOnboardingRefs` only for an ontology activation.
+        /// </summary>
+        /// <param name="ontologySnapshot">
+        /// The snapshot of the ontology body this activation was generated from. When supplied on create
+        /// or update, Azure Resource Graph compares it against the currently approved global ontology and
+        /// rejects the activation if they differ, enforcing the one-active-rollout invariant. When
+        /// omitted, the drift check is skipped. It is persisted and returned on read.
+        /// </param>
+        /// <param name="region">
+        /// The Azure region this activation covers. It matches the `locations` segment of the resource
+        /// identifier.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the activation. </param>
+        /// <param name="reviewStatus">
+        /// For data-onboarding activations, `UnderExecution` until the operator closes the region out
+        /// as `Executed`; approval happens globally on the supply record. The shared field is unused
+        /// for ontology activations and is returned with its default value, `Submitted`.
+        /// </param>
+        /// <param name="validationDetails"> The per-type gap-analysis results for this region. </param>
+        /// <param name="assignments">
+        /// The approved storage assignments this region has to execute, copied from the parent data
+        /// onboarding's approved configuration so that a regional record is self-describing. It is also
+        /// what a re-activation compares against to decide whether a region that already reported
+        /// `Executed` still is. Empty for an ontology activation.
+        /// </param>
+        /// <param name="ingestionEndpoint"> The ingestion endpoint resolved for this region. </param>
+        /// <param name="materializedDataOnboardingRefs">
+        /// ARM resource identifiers of the data onboardings materialized for this region as a side effect
+        /// of the activation. Empty when nothing was materialized.
+        /// </param>
+        /// <returns> A new <see cref="Models.RegionalActivationProperties"/> instance for mocking. </returns>
+        public static RegionalActivationProperties RegionalActivationProperties(OntologySnapshot ontologySnapshot = default, AzureLocation? region = default, OnboardingProvisioningState? provisioningState = default, ReviewStatus? reviewStatus = default, IEnumerable<ValidationDetail> validationDetails = default, IEnumerable<OntologyStorageAssignment> assignments = default, IngestionEndpoint ingestionEndpoint = default, IEnumerable<ResourceIdentifier> materializedDataOnboardingRefs = default)
+        {
+            validationDetails ??= new ChangeTrackingList<ValidationDetail>();
+            assignments ??= new ChangeTrackingList<OntologyStorageAssignment>();
+            materializedDataOnboardingRefs ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new RegionalActivationProperties(
+                ontologySnapshot,
+                region,
+                provisioningState,
+                reviewStatus,
+                (validationDetails ?? new ChangeTrackingList<ValidationDetail>()).ToList(),
+                (assignments ?? new ChangeTrackingList<OntologyStorageAssignment>()).ToList(),
+                ingestionEndpoint,
+                (materializedDataOnboardingRefs ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                default);
+        }
+
+        /// <summary>
+        /// A point-in-time snapshot of an ontology's semantic body that a regional activation was
+        /// generated from. Only semantic fields are captured; read-only and cosmetic fields are excluded.
+        /// </summary>
+        /// <param name="nodeTypeRefs"> The node types declared by the ontology at snapshot time. </param>
+        /// <param name="edgeTypeRefs"> The edge types declared by the ontology at snapshot time. </param>
+        /// <returns> A new <see cref="Models.OntologySnapshot"/> instance for mocking. </returns>
+        public static OntologySnapshot OntologySnapshot(IEnumerable<NodeTypeRef> nodeTypeRefs = default, IEnumerable<EdgeTypeRef> edgeTypeRefs = default)
+        {
+            nodeTypeRefs ??= new ChangeTrackingList<NodeTypeRef>();
+            edgeTypeRefs ??= new ChangeTrackingList<EdgeTypeRef>();
+
+            return new OntologySnapshot((nodeTypeRefs ?? new ChangeTrackingList<NodeTypeRef>()).ToList(), (edgeTypeRefs ?? new ChangeTrackingList<EdgeTypeRef>()).ToList(), default);
+        }
+
+        /// <summary>
+        /// An operator-assigned physical storage placement for one ontology node or edge. Read-only on the
+        /// API surface: it is set when an operator approves the parent data onboarding and is copied onto
+        /// each regional activation so that a regional record is self-describing.
+        /// </summary>
+        /// <param name="kind"> Whether this assignment covers a node type or an edge type. </param>
+        /// <param name="resourceType"> The Azure resource type. Node assignments only. </param>
+        /// <param name="relationshipType"> The relationship type. Edge assignments only. </param>
+        /// <param name="sourceNodeType"> The Azure resource type at the source of the relationship. Edge assignments only. </param>
+        /// <param name="targetNodeType"> The Azure resource type at the target of the relationship. Edge assignments only. </param>
+        /// <param name="scaleUnit"> The scale unit the type is placed on. </param>
+        /// <param name="dataset"> The dataset the type is placed in. </param>
+        /// <param name="logicalTableName"> The logical table name the type is written to. </param>
+        /// <param name="physicalTableName"> The physical table name backing the logical table. </param>
+        /// <param name="lookbackHours"> How far back, in hours, the type's data is retained for reconciliation. </param>
+        /// <returns> A new <see cref="Models.OntologyStorageAssignment"/> instance for mocking. </returns>
+        public static OntologyStorageAssignment OntologyStorageAssignment(OntologyEntryKind kind = default, string resourceType = default, string relationshipType = default, string sourceNodeType = default, string targetNodeType = default, string scaleUnit = default, string dataset = default, string logicalTableName = default, string physicalTableName = default, int lookbackHours = default)
+        {
+            return new OntologyStorageAssignment(
+                kind,
+                resourceType,
+                relationshipType,
+                sourceNodeType,
+                targetNodeType,
+                scaleUnit,
+                dataset,
+                logicalTableName,
+                physicalTableName,
+                lookbackHours,
+                default);
+        }
+
+        /// <summary>
+        /// A query endpoint, the consumer-side activation request that binds an approved ontology to a
+        /// queryable surface.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.QueryEndpointData"/> instance for mocking. </returns>
+        public static QueryEndpointData QueryEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QueryEndpointProperties properties = default)
+        {
+            return new QueryEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// The properties of a query endpoint, a consumer activation request that references an approved
+        /// ontology within the same offering.
+        /// </summary>
+        /// <param name="displayName"> The partner-facing display name of the query endpoint. </param>
+        /// <param name="ontologyRef">
+        /// The full Azure resource identifier of an approved ontology in the same subscription and
+        /// offering. The reference cannot be changed after creation. Legacy bare ontology names are
+        /// accepted on input and normalized; responses always contain the full resource identifier.
+        /// </param>
+        /// <param name="enginePreference"> The preferred query backend. Omission records no preference and does not provision a backend. </param>
+        /// <param name="estimatedQueriesPerDay"> The expected daily query volume, used for capacity planning. </param>
+        /// <param name="peakQueriesPerMinute"> The expected peak query rate, in queries per minute. </param>
+        /// <param name="provisioningState"> The provisioning state of the query endpoint. </param>
+        /// <returns> A new <see cref="Models.QueryEndpointProperties"/> instance for mocking. </returns>
+        public static QueryEndpointProperties QueryEndpointProperties(string displayName = default, ResourceIdentifier ontologyRef = default, QueryEnginePreference? enginePreference = default, int estimatedQueriesPerDay = default, int? peakQueriesPerMinute = default, OnboardingProvisioningState? provisioningState = default)
+        {
+            return new QueryEndpointProperties(
+                displayName,
+                ontologyRef,
+                enginePreference,
+                estimatedQueriesPerDay,
+                peakQueriesPerMinute,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="onboardingLocationProvisioningState"> The provisioning state of the location grouping. </param>
+        /// <returns> A new <see cref="ResourceGraph.OntologyLocationData"/> instance for mocking. </returns>
+        public static OntologyLocationData OntologyLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OnboardingProvisioningState? onboardingLocationProvisioningState = default)
+        {
+            return new OntologyLocationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                onboardingLocationProvisioningState is null ? default : new OnboardingLocationProperties(onboardingLocationProvisioningState, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="onboardingLocationProvisioningState"> The provisioning state of the location grouping. </param>
+        /// <returns> A new <see cref="ResourceGraph.QueryEndpointLocationData"/> instance for mocking. </returns>
+        public static QueryEndpointLocationData QueryEndpointLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OnboardingProvisioningState? onboardingLocationProvisioningState = default)
+        {
+            return new QueryEndpointLocationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                onboardingLocationProvisioningState is null ? default : new OnboardingLocationProperties(onboardingLocationProvisioningState, default),
+                default);
+        }
+
+        /// <summary>
+        /// The activation of an ontology in a single Azure region. There is exactly one activation per
+        /// region, so the resource is a singleton addressed by the fixed name `default`.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.OntologyActivationData"/> instance for mocking. </returns>
+        public static OntologyActivationData OntologyActivationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegionalActivationProperties properties = default)
+        {
+            return new OntologyActivationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// The activation of a query endpoint in a single Azure region. There is exactly one activation per
+        /// region, so the resource is a singleton addressed by the fixed name `default`.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResourceGraph.QueryEndpointActivationData"/> instance for mocking. </returns>
+        public static QueryEndpointActivationData QueryEndpointActivationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QueryEndpointActivationProperties properties = default)
+        {
+            return new QueryEndpointActivationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The properties of a per-region query endpoint activation. </summary>
+        /// <param name="ontologyRef">
+        /// The full Azure resource identifier of the ontology this regional endpoint serves, copied
+        /// from the parent query endpoint rather than supplied by the caller.
+        /// </param>
+        /// <param name="enginePreference"> The preferred query backend copied from the parent query endpoint. </param>
+        /// <param name="region">
+        /// The Azure region this activation covers. It matches the `locations` segment of the resource
+        /// identifier.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the activation. </param>
+        /// <param name="validationDetails"> The per-type gap-analysis results for this region. </param>
+        /// <returns> A new <see cref="Models.QueryEndpointActivationProperties"/> instance for mocking. </returns>
+        public static QueryEndpointActivationProperties QueryEndpointActivationProperties(ResourceIdentifier ontologyRef = default, QueryEnginePreference? enginePreference = default, AzureLocation? region = default, OnboardingProvisioningState? provisioningState = default, IEnumerable<ValidationDetail> validationDetails = default)
+        {
+            validationDetails ??= new ChangeTrackingList<ValidationDetail>();
+
+            return new QueryEndpointActivationProperties(
+                ontologyRef,
+                enginePreference,
+                region,
+                provisioningState,
+                (validationDetails ?? new ChangeTrackingList<ValidationDetail>()).ToList(),
+                default);
         }
 
         /// <summary> The parameters for a specific changes request. </summary>
@@ -166,6 +804,18 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 changeCategory,
                 propertyChangeType,
                 default);
+        }
+
+        /// <summary> Error details. </summary>
+        /// <param name="code"> Error code identifying the specific error. </param>
+        /// <param name="message"> A human readable error message. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.FacetErrorDetails"/> instance for mocking. </returns>
+        public static FacetErrorDetails FacetErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new FacetErrorDetails(code, message, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> The parameters for a specific change details request. </summary>
@@ -309,13 +959,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="query"> The resources query. </param>
         /// <param name="options"> The history request evaluation options. </param>
         /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
-        /// <returns> A new <see cref="Models.ResourcesHistoryRequest"/> instance for mocking. </returns>
-        public static ResourcesHistoryRequest ResourcesHistoryRequest(IEnumerable<string> subscriptions = default, string query = default, ResourcesHistoryRequestOptions options = default, IEnumerable<string> managementGroups = default)
+        /// <returns> A new <see cref="Models.ResourcesHistoryContent"/> instance for mocking. </returns>
+        public static ResourcesHistoryContent ResourcesHistoryContent(IEnumerable<string> subscriptions = default, string query = default, ResourcesHistoryRequestOptions options = default, IEnumerable<string> managementGroups = default)
         {
             subscriptions ??= new ChangeTrackingList<string>();
             managementGroups ??= new ChangeTrackingList<string>();
 
-            return new ResourcesHistoryRequest((subscriptions ?? new ChangeTrackingList<string>()).ToList(), query, options, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ResourcesHistoryContent((subscriptions ?? new ChangeTrackingList<string>()).ToList(), query, options, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> The options for history request evaluation. </summary>

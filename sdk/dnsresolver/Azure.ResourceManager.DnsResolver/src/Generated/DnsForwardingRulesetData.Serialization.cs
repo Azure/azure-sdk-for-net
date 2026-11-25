@@ -157,7 +157,6 @@ namespace Azure.ResourceManager.DnsResolver
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             DnsForwardingRulesetProperties properties = default;
-            string rulesetName = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -247,7 +246,6 @@ namespace Azure.ResourceManager.DnsResolver
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                rulesetName,
                 eTag,
                 additionalBinaryDataProperties);
         }

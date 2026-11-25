@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _running, _continuationToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _running, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListRequest(nextLink, _subscriptionId, _resourceGroupName, _running, _continuationToken, _context) : _client.CreateListRequest(_subscriptionId, _resourceGroupName, _running, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

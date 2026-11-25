@@ -929,5 +929,41 @@ namespace Azure.ResourceManager.Maintenance
 
             return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceConfigurations(cancellationToken);
         }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceApplyUpdateData> GetAllAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetAllAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetAll(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceApplyUpdateData> GetAll(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetAll(cancellationToken);
+        }
     }
 }

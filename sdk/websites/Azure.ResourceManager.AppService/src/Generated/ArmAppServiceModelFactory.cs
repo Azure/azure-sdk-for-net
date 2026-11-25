@@ -3542,7 +3542,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkData"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkData AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprintString = default, string certBlob = default, IEnumerable<AppServiceVirtualNetworkRoute> routes = default, bool? isResyncRequired = default, string dnsServers = default, bool? isSwift = default, string kind = default)
+        public static AppServiceVirtualNetworkData AppServiceVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier vnetResourceId = default, string certThumbprintString = default, string certBlob = default, IEnumerable<AppServiceVirtualNetworkRoute> routes = default, bool? isResyncRequired = default, string dnsServers = default, bool? isSwift = default, string kind = default)
         {
             return new AppServiceVirtualNetworkData(
                 id,
