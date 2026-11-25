@@ -8,11 +8,11 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs;
@@ -21,7 +21,9 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
+using DefaultSecurityTokenValidatorTests = Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.DefaultSecurityTokenValidatorTests;
 using SecurityTokenValidationException = Microsoft.IdentityModel.Tokens.SecurityTokenValidationException;
+using SymmetricSecurityKey = Microsoft.IdentityModel.Tokens.SymmetricSecurityKey;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -167,16 +169,18 @@ namespace SignalRServiceExtension.Tests
             var result = Assert.IsType<SignalRRefreshResult>(await provider.GetValueAsync());
             var response = Samples.AuthenticationRefresh.Refresh(request, result);
 
-            Assert.Equal(expectedStatus, Assert.IsAssignableFrom<IStatusCodeActionResult>(response).StatusCode);
             if (expectedStatus == StatusCodes.Status200OK)
             {
-                Assert.Same(result.ConnectionInfo, Assert.IsType<OkObjectResult>(response).Value);
+                var okResult = Assert.IsType<OkObjectResult>(response);
+                Assert.Equal(expectedStatus, okResult.StatusCode);
+                Assert.Same(result.ConnectionInfo, okResult.Value);
                 hubContext.Verify(
                     c => c.RefreshConnectionAuthenticationAsync(connectionToken, It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
                     Times.Once);
             }
             else
             {
+                Assert.Equal(expectedStatus, Assert.IsType<BadRequestResult>(response).StatusCode);
                 Assert.Equal(SignalRRefreshStatus.MissingConnectionToken, result.Status);
                 hubContext.Verify(
                     c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
@@ -246,6 +250,33 @@ namespace SignalRServiceExtension.Tests
             var value = await provider.GetValueAsync();
 
             Assert.Null(value);
+            hubContext.Verify(
+                c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
+        public async Task BindAsync_BearerWithInvalidIssuer_ReturnsUnauthorizedWithoutRefreshing()
+        {
+            const string key = "1234567812345678912345678123456789";
+            const string audience = "audience";
+            var token = DefaultSecurityTokenValidatorTests.GenerateJwtToken(key, "untrusted-issuer", audience, expireMinutes: 10);
+            var validator = new DefaultSecurityTokenValidator(parameters =>
+            {
+                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+                parameters.ValidIssuer = "trusted-issuer";
+                parameters.ValidAudience = audience;
+            });
+            var (binding, hubContext) = CreateBinding(out _, validator, useResultParameter: true);
+            var request = new DefaultHttpContext().Request;
+            request.Headers["Authorization"] = $"Bearer {token}";
+            request.Headers["X-SignalR-Connection-Token"] = "ct";
+
+            var provider = await binding.BindAsync(CreateBindingContext(request));
+
+            var result = Assert.IsType<SignalRRefreshResult>(await provider.GetValueAsync());
+            Assert.Equal(SignalRRefreshStatus.Unauthorized, result.Status);
+            Assert.Null(result.ConnectionInfo);
             hubContext.Verify(
                 c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
                 Times.Never);

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -62,7 +63,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 return CreateValueProvider(SignalRRefreshStatus.MissingConnectionToken);
             }
 
-            var tokenResult = _securityTokenValidator.ValidateToken(request);
+            SecurityTokenResult tokenResult;
+            try
+            {
+                tokenResult = _securityTokenValidator.ValidateToken(request);
+            }
+            catch (SecurityTokenInvalidIssuerException)
+            {
+                return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
+            }
+
             if (tokenResult.Status != SecurityTokenStatus.Valid || tokenResult.ExpiresOn <= DateTimeOffset.UtcNow)
             {
                 return CreateValueProvider(SignalRRefreshStatus.Unauthorized);

@@ -97,6 +97,8 @@ public static void ConfigureAuthentication(
 
 `[SignalRRefresh]` and negotiate with `EnableAuthenticationRefresh = true` reject a bearer token once its actual `exp` is reached, even if JWT validation accepted it within the configured clock skew. The configurer above rejects a validated token that lacks a user ID by throwing `SecurityTokenValidationException`.
 
+When the validator supplies an expiration, the binding uses it as the default `AuthenticationExpiresOn`. For security, we recommend keeping the default or having the server-side configurer set `AuthenticationExpiresOn` to a time earlier than the validated bearer's `exp`. During refresh, setting `AuthenticationExpiresOn` to `null` leaves the live connection's existing authentication deadline unchanged. Refresh cannot clear or shorten that deadline.
+
 Opt in during negotiate and expose a sibling refresh endpoint. When `ConnectionToken` is omitted, the refresh binding reads the client's `X-SignalR-Connection-Token` request header. This example uses `SignalRRefreshResult` in a .NET in-process function to return `400 Bad Request` when that header is missing or blank:
 
 ```C# Snippet:AuthenticationRefresh
