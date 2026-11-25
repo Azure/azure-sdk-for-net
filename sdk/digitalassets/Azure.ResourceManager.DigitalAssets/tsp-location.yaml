@@ -1,5 +1,5 @@
 directory: specification/digitalassets/resource-manager/Microsoft.DigitalAssets/DigitalAssets
-commit: 1112474efdc9ffe891994f177b1cc4fcf171e17b
+commit: 19923de9b558c1afd11f86f9fa01bd801df53f9f
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
