@@ -37,13 +37,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
+        // Keep ordinary calls bound to the GA virtual overload; cache settings require explicit arguments.
         public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
-#pragma warning restore AZC0002
             SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => CreateOrUpdateSkillset(
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) => CreateOrUpdateSkillset(
                 skillset,
                 onlyIfUnchanged,
                 ignoreCacheResetRequirements: null,
@@ -70,9 +68,9 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
             SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            bool? disableCacheReprocessingChangeDetection = null,
+            bool onlyIfUnchanged,
+            bool? ignoreCacheResetRequirements,
+            bool? disableCacheReprocessingChangeDetection,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(skillset, nameof(skillset));
@@ -102,13 +100,10 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
-#pragma warning restore AZC0002
             SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => await CreateOrUpdateSkillsetAsync(
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) => await CreateOrUpdateSkillsetAsync(
                 skillset,
                 onlyIfUnchanged,
                 ignoreCacheResetRequirements: null,
@@ -136,9 +131,9 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
             SearchIndexerSkillset skillset,
-            bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            bool? disableCacheReprocessingChangeDetection = null,
+            bool onlyIfUnchanged,
+            bool? ignoreCacheResetRequirements,
+            bool? disableCacheReprocessingChangeDetection,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(skillset, nameof(skillset));

@@ -11,59 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.KnowledgeBases.Models
+namespace Azure.Search.Documents.Models
 {
-    /// <summary> Configuration for an asset store used to store extracted assets such as images. </summary>
-    public partial class AssetStore : IJsonModel<AssetStore>
+    /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
+    public partial class SearchResultsDebugInfo : IJsonModel<SearchResultsDebugInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="AssetStore"/> for deserialization. </summary>
-        internal AssetStore()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchResultsDebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultsDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAssetStore(document.RootElement, options);
+                        return DeserializeSearchResultsDebugInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetStore)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResultsDebugInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultsDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetStore)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResultsDebugInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchResultsDebugInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetStore IPersistableModel<AssetStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchResultsDebugInfo IPersistableModel<SearchResultsDebugInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchResultsDebugInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchResultsDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +69,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultsDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetStore)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResultsDebugInfo)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("connectionString"u8);
-            writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("containerName"u8);
-            writer.WriteStringValue(ContainerName);
+            if (options.Format != "W" && Optional.IsDefined(QueryRewrites))
+            {
+                writer.WritePropertyName("queryRewrites"u8);
+                writer.WriteObjectValue(QueryRewrites, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Agentic))
+            {
+                writer.WritePropertyName("agentic"u8);
+                writer.WriteObjectValue(Agentic, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,42 +103,50 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetStore IJsonModel<AssetStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchResultsDebugInfo IJsonModel<SearchResultsDebugInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchResultsDebugInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultsDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetStore)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResultsDebugInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetStore(document.RootElement, options);
+            return DeserializeSearchResultsDebugInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AssetStore DeserializeAssetStore(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchResultsDebugInfo DeserializeSearchResultsDebugInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string connectionString = default;
-            string containerName = default;
+            QueryRewritesDebugInfo queryRewrites = default;
+            AgenticSearchDebugInfo agentic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("connectionString"u8))
+                if (prop.NameEquals("queryRewrites"u8))
                 {
-                    connectionString = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryRewrites = QueryRewritesDebugInfo.DeserializeQueryRewritesDebugInfo(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("containerName"u8))
+                if (prop.NameEquals("agentic"u8))
                 {
-                    containerName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentic = AgenticSearchDebugInfo.DeserializeAgenticSearchDebugInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +154,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetStore(connectionString, containerName, additionalBinaryDataProperties);
+            return new SearchResultsDebugInfo(queryRewrites, agentic, additionalBinaryDataProperties);
         }
     }
 }

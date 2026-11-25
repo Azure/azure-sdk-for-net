@@ -19,33 +19,33 @@ namespace Azure.Search.Documents.Indexes.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="McpServerKnowledgeSourceParameters"/>. </summary>
-        /// <param name="serverURL"> The URL of the MCP server endpoint. </param>
+        /// <param name="serverUri"> The URL of the MCP server endpoint. </param>
         /// <param name="tools"> The list of tools to invoke on the MCP server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverURL"/> or <paramref name="tools"/> is null. </exception>
-        public McpServerKnowledgeSourceParameters(string serverURL, IEnumerable<McpServerTool> tools)
+        /// <exception cref="ArgumentNullException"> <paramref name="serverUri"/> or <paramref name="tools"/> is null. </exception>
+        public McpServerKnowledgeSourceParameters(Uri serverUri, IEnumerable<McpServerTool> tools)
         {
-            Argument.AssertNotNull(serverURL, nameof(serverURL));
+            Argument.AssertNotNull(serverUri, nameof(serverUri));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            ServerURL = serverURL;
+            ServerUri = serverUri;
             Tools = tools.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="McpServerKnowledgeSourceParameters"/>. </summary>
-        /// <param name="serverURL"> The URL of the MCP server endpoint. </param>
+        /// <param name="serverUri"> The URL of the MCP server endpoint. </param>
         /// <param name="authentication"> The authentication configuration for the MCP server. </param>
         /// <param name="tools"> The list of tools to invoke on the MCP server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerKnowledgeSourceParameters(string serverURL, McpServerAuthentication authentication, IList<McpServerTool> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerKnowledgeSourceParameters(Uri serverUri, McpServerAuthentication authentication, IList<McpServerTool> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ServerURL = serverURL;
+            ServerUri = serverUri;
             Authentication = authentication;
             Tools = tools;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL of the MCP server endpoint. </summary>
-        public string ServerURL { get; set; }
+        public Uri ServerUri { get; set; }
 
         /// <summary> The authentication configuration for the MCP server. </summary>
         public McpServerAuthentication Authentication { get; set; }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,13 +16,15 @@ namespace Azure.Search.Documents.Tests.Utilities
     {
         [TestCase("ResourceId")]
         [TestCase("resourceid")]
+        [TestCase(null)]
         public async Task ResourceIdUsesDeveloperCredentialForBlobAccess(string resourceIdKey)
         {
             MockTransport transport = CreateTransport();
             Uri containerUri = new Uri("https://identityaccount.blob.core.windows.net/test-container");
             TokenCredential credential = new MockCredential();
             BlobContainerClient client = SearchResources.CreateBlobContainerClient(
-                $"{resourceIdKey}=/subscriptions/test/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/identityaccount;",
+                resourceIdKey == null ? null :
+                    $"{resourceIdKey}=/subscriptions/test/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/identityaccount;",
                 "test-container",
                 containerUri,
                 () => credential,
@@ -54,6 +57,38 @@ namespace Azure.Search.Documents.Tests.Utilities
             Assert.That(request.Headers.TryGetValue("Authorization", out string authorization), Is.True);
             Assert.That(authorization, Does.StartWith("SharedKey keyaccount:"));
         }
+
+        [TestCase("SEARCH_STORAGE_RESOURCE_ID", null, "Missing SEARCH_SEARCH_STORAGE_RESOURCE_ID")]
+        [TestCase("SEARCH_STORAGE_RESOURCE_ID", "not-an-arm-id", "full ARM resource ID")]
+        [TestCase("SEARCH_STORAGE_RESOURCE_ID", "/subscriptions/test/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/otheraccount", "must identify SEARCH_SEARCH_STORAGE_NAME")]
+        [TestCase("SEARCH_KEYVAULT_URL", "http://example.vault.azure.net", "absolute HTTPS vault URL")]
+        public void InvalidEncryptionConfigurationFailsBeforeResourceCreation(string name, string value, string error)
+        {
+            Dictionary<string, string> settings = EncryptionSettings();
+            settings[name] = value;
+
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => SearchTestEnvironment.ValidateDoubleEncryptedIndexConfiguration(key => settings[key]));
+
+            Assert.That(exception.Message, Does.Contain(error));
+            Assert.That(exception.Message, Does.Contain("No test resources have been created."));
+        }
+
+        [Test]
+        public void EncryptionConfigurationAcceptsKeylessExistingResources()
+        {
+            Dictionary<string, string> settings = EncryptionSettings();
+
+            Assert.DoesNotThrow(() => SearchTestEnvironment.ValidateDoubleEncryptedIndexConfiguration(key => settings[key]));
+        }
+
+        private static Dictionary<string, string> EncryptionSettings() => new Dictionary<string, string>
+        {
+            ["SEARCH_SERVICE_NAME"] = "test-search",
+            ["SEARCH_STORAGE_NAME"] = "identityaccount",
+            ["SEARCH_STORAGE_RESOURCE_ID"] = "/subscriptions/test/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/identityaccount",
+            ["SEARCH_KEYVAULT_URL"] = "https://example.vault.azure.net"
+        };
 
         private static MockTransport CreateTransport()
         {

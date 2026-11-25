@@ -17,7 +17,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetKnowledgeSourceFileIngestionOperationsAsyncCollectionResultOfT : AsyncPageable<KnowledgeSourceFileIngestionOperation>
+    internal partial class SearchIndexClientGetKnowledgeSourceFileIngestionOperationsAsyncCollectionResultOfT : AsyncPageable<KnowledgeSourceFileIngestionInfo>
     {
         private readonly SearchIndexClient _client;
         private readonly string _sourceName;
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SearchIndexClientGetKnowledgeSourceFileIngestionOperationsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<KnowledgeSourceFileIngestionOperation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<KnowledgeSourceFileIngestionInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<KnowledgeSourceFileIngestionOperation>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<KnowledgeSourceFileIngestionInfo>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Indexes
                 ListKnowledgeSourceFileIngestionOperationsResult result = (ListKnowledgeSourceFileIngestionOperationsResult)response;
                 string nextPageString = result.OdataNextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                yield return Page<KnowledgeSourceFileIngestionOperation>.FromValues((IReadOnlyList<KnowledgeSourceFileIngestionOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<KnowledgeSourceFileIngestionInfo>.FromValues((IReadOnlyList<KnowledgeSourceFileIngestionInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

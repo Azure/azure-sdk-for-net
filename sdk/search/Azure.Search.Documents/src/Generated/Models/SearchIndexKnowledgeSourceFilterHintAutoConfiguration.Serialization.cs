@@ -74,10 +74,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceFilterHintAutoConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CacheTtl))
+            if (Optional.IsDefined(CacheTimeToLiveInSeconds))
             {
                 writer.WritePropertyName("cacheTtl"u8);
-                writer.WriteNumberValue(CacheTtl.Value);
+                writer.WriteNumberValue(CacheTimeToLiveInSeconds.Value);
             }
             if (Optional.IsDefined(MaxFacetValueCount))
             {
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            int? cacheTtl = default;
+            int? cacheTimeToLiveInSeconds = default;
             int? maxFacetValueCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    cacheTtl = prop.Value.GetInt32();
+                    cacheTimeToLiveInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxFacetValueCount"u8))
@@ -154,7 +154,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchIndexKnowledgeSourceFilterHintAutoConfiguration(cacheTtl, maxFacetValueCount, additionalBinaryDataProperties);
+            return new SearchIndexKnowledgeSourceFilterHintAutoConfiguration(cacheTimeToLiveInSeconds, maxFacetValueCount, additionalBinaryDataProperties);
         }
     }
 }

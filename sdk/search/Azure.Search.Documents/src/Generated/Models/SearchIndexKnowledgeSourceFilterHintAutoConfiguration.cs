@@ -22,18 +22,18 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceFilterHintAutoConfiguration"/>. </summary>
-        /// <param name="cacheTtl"> The number of seconds resolved facet values are cached. The allowed range is 60 through 3600 on dedicated services and 60 through 900 on serverless services. When omitted, defaults to 3600 seconds on dedicated services and 900 seconds on serverless services. </param>
+        /// <param name="cacheTimeToLiveInSeconds"> The number of seconds resolved facet values are cached. The allowed range is 60 through 3600 on dedicated services and 60 through 900 on serverless services. When omitted, defaults to 3600 seconds on dedicated services and 900 seconds on serverless services. </param>
         /// <param name="maxFacetValueCount"> The maximum number of facet values to use as grounding. Defaults to 64; allowed range is 1 through 64. Values are selected in descending facet-count order, subject to the same 2048-character combined-length limit and 128-character per-value limit as manually specified filter values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceFilterHintAutoConfiguration(int? cacheTtl, int? maxFacetValueCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceFilterHintAutoConfiguration(int? cacheTimeToLiveInSeconds, int? maxFacetValueCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CacheTtl = cacheTtl;
+            CacheTimeToLiveInSeconds = cacheTimeToLiveInSeconds;
             MaxFacetValueCount = maxFacetValueCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of seconds resolved facet values are cached. The allowed range is 60 through 3600 on dedicated services and 60 through 900 on serverless services. When omitted, defaults to 3600 seconds on dedicated services and 900 seconds on serverless services. </summary>
-        public int? CacheTtl { get; set; }
+        public int? CacheTimeToLiveInSeconds { get; set; }
 
         /// <summary> The maximum number of facet values to use as grounding. Defaults to 64; allowed range is 1 through 64. Values are selected in descending facet-count order, subject to the same 2048-character combined-length limit and 128-character per-value limit as manually specified filter values. </summary>
         public int? MaxFacetValueCount { get; set; }

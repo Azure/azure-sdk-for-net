@@ -58,21 +58,33 @@ namespace Azure.Search.Documents.Indexes
         /// <value>String values from <see cref="LexicalNormalizerName.Values">LexicalAnalyzerName</see>.</value>
         public string NormalizerName { get; set; }
 
-        // search-preview:2026-05-01-preview {
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         /// <value>String values from <see cref="Models.PermissionFilter">PermissionFilter</see>.</value>
         public string PermissionFilter { get; set; }
+
+        // search-preview:2026-05-01-preview {
+        // Attribute arguments require bool; nullable backing fields preserve the unset state.
+        private bool? _isSensitivityLabelId;
+        private bool? _isSensitivityLabelName;
 
         /// <summary>
         /// A value indicating whether the field should be used for sensitivity label ID filtering.
         /// This enables document-level filtering based on Microsoft Purview sensitivity label IDs.
         /// </summary>
-        public bool? SensitivityLabelId { get; set; }
+        public bool IsSensitivityLabelId
+        {
+            get => _isSensitivityLabelId.GetValueOrDefault();
+            set => _isSensitivityLabelId = value;
+        }
 
         /// <summary>
         /// A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document.
         /// </summary>
-        public bool? SensitivityLabelName { get; set; }
+        public bool IsSensitivityLabelName
+        {
+            get => _isSensitivityLabelName.GetValueOrDefault();
+            set => _isSensitivityLabelName = value;
+        }
         // search-preview:2026-05-01-preview }
 
         /// <inheritdoc/>
@@ -99,20 +111,20 @@ namespace Azure.Search.Documents.Indexes
                 field.NormalizerName = NormalizerName;
             }
 
-            // search-preview:2026-05-01-preview {
             if (PermissionFilter != null)
             {
                 field.PermissionFilter = PermissionFilter;
             }
 
-            if (SensitivityLabelId.HasValue)
+            // search-preview:2026-05-01-preview {
+            if (_isSensitivityLabelId.HasValue)
             {
-                field.SensitivityLabelId = SensitivityLabelId;
+                field.IsSensitivityLabelId = _isSensitivityLabelId;
             }
 
-            if (SensitivityLabelName.HasValue)
+            if (_isSensitivityLabelName.HasValue)
             {
-                field.SensitivityLabelName = SensitivityLabelName;
+                field.IsSensitivityLabelName = _isSensitivityLabelName;
             }
             // search-preview:2026-05-01-preview }
         }

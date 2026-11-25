@@ -129,7 +129,7 @@ SearchIndexKnowledgeSource source = new SearchIndexKnowledgeSource(
                 {
                     AutoConfiguration = new SearchIndexKnowledgeSourceFilterHintAutoConfiguration
                     {
-                        CacheTtl = 60,
+                        CacheTimeToLiveInSeconds = 60,
                         MaxFacetValueCount = 16
                     },
                     FilterInstructions = "When a country is specified, filter country using the exact resolved facet value."

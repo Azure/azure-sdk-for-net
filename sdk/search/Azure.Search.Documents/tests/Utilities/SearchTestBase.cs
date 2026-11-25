@@ -70,6 +70,12 @@ namespace Azure.Search.Documents.Tests
             JsonPathSanitizers.Remove("$..token");
             SanitizedHeaders.Add("api-key");
             SanitizedHeaders.Add("x-ms-query-source-authorization");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Older snapshots used API keys; shared fixtures now authenticate with Entra ID.
+                LegacyExcludedHeaders.Add("api-key");
+                LegacyExcludedHeaders.Add("Authorization");
+            }
             CompareBodies = false;
         }
 

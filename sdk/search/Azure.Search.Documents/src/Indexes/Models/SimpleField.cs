@@ -66,20 +66,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public LexicalNormalizerName? NormalizerName { get; set; }
 
-        // search-preview:2026-05-01-preview {
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         public PermissionFilter? PermissionFilter { get; set; }
 
+        // search-preview:2026-05-01-preview {
         /// <summary>
         /// A value indicating whether the field should be used for sensitivity label ID filtering.
         /// This enables document-level filtering based on Microsoft Purview sensitivity label IDs.
         /// </summary>
-        public bool? SensitivityLabelId { get; set; }
+        public bool? IsSensitivityLabelId { get; set; }
 
         /// <summary>
         /// A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document.
         /// </summary>
-        public bool? SensitivityLabelName { get; set; }
+        public bool? IsSensitivityLabelName { get; set; }
         // search-preview:2026-05-01-preview }
 
         /// <inheritdoc/>
@@ -92,10 +92,10 @@ namespace Azure.Search.Documents.Indexes.Models
             field.IsSortable = IsSortable;
             field.NormalizerName = NormalizerName;
 
-            // search-preview:2026-05-01-preview {
             field.PermissionFilter = PermissionFilter;
-            field.SensitivityLabelId = SensitivityLabelId;
-            field.SensitivityLabelName = SensitivityLabelName;
+            // search-preview:2026-05-01-preview {
+            field.IsSensitivityLabelId = IsSensitivityLabelId;
+            field.IsSensitivityLabelName = IsSensitivityLabelName;
             // search-preview:2026-05-01-preview }
 
             // Use a SearchableField instead, which will override this property.

@@ -36,13 +36,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
+        // Keep ordinary calls bound to the GA virtual overload; cache settings require explicit arguments.
         public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
-#pragma warning restore AZC0002
             SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => CreateOrUpdateDataSourceConnection(
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) => CreateOrUpdateDataSourceConnection(
                 dataSourceConnection,
                 onlyIfUnchanged,
                 ignoreCacheResetRequirements: null,
@@ -65,11 +63,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Required token keeps GA calls with a trailing default literal unambiguous.
         public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            CancellationToken cancellationToken = default)
+            bool onlyIfUnchanged,
+            bool? ignoreCacheResetRequirements,
+            CancellationToken cancellationToken)
+#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
 
@@ -98,13 +98,10 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
         public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
-#pragma warning restore AZC0002
             SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => await CreateOrUpdateDataSourceConnectionAsync(
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) => await CreateOrUpdateDataSourceConnectionAsync(
                 dataSourceConnection,
                 onlyIfUnchanged,
                 ignoreCacheResetRequirements: null,
@@ -128,11 +125,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Required token keeps GA calls with a trailing default literal unambiguous.
         public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            CancellationToken cancellationToken = default)
+            bool onlyIfUnchanged,
+            bool? ignoreCacheResetRequirements,
+            CancellationToken cancellationToken)
+#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
 

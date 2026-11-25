@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Configuration for freshness-aware retrieval. When set, newer documents receive a ranking boost during retrieval. </summary>
-    public partial class FreshnessPolicy
+    public partial class KnowledgeSourceFreshnessPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FreshnessPolicy"/>. </summary>
-        public FreshnessPolicy()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFreshnessPolicy"/>. </summary>
+        public KnowledgeSourceFreshnessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreshnessPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFreshnessPolicy"/>. </summary>
         /// <param name="boostingDuration"> ISO 8601 duration for the freshness boosting window (e.g. 'P90D' for 90 days). Documents newer than this duration receive a ranking boost during retrieval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FreshnessPolicy(string boostingDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceFreshnessPolicy(string boostingDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BoostingDuration = boostingDuration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

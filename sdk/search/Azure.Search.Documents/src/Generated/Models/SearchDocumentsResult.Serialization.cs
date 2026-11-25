@@ -223,7 +223,7 @@ namespace Azure.Search.Documents.Models
             IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
             IReadOnlyList<QueryAnswerResult> answers = new ChangeTrackingList<QueryAnswerResult>();
             bool debugInfoIsDefined = false;
-            DebugInfo debugInfo = default;
+            SearchResultsDebugInfo debugInfo = default;
             SearchOptions nextPageParameters = default;
             IReadOnlyList<SearchResult> results = default;
             string nextLink = default;
@@ -300,7 +300,7 @@ namespace Azure.Search.Documents.Models
                         debugInfo = null;
                         continue;
                     }
-                    debugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, options);
+                    debugInfo = SearchResultsDebugInfo.DeserializeSearchResultsDebugInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@search.nextPageParameters"u8))

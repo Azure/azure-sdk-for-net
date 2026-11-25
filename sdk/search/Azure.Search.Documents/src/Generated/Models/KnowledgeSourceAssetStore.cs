@@ -12,16 +12,16 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Configuration for an asset store used to store extracted assets such as images. </summary>
-    public partial class AssetStore
+    public partial class KnowledgeSourceAssetStore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAssetStore"/>. </summary>
         /// <param name="connectionString"> The connection string for the asset store. </param>
         /// <param name="containerName"> The name of the blob container within the asset store where extracted assets (for example, images) are stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
-        public AssetStore(string connectionString, string containerName)
+        public KnowledgeSourceAssetStore(string connectionString, string containerName)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(containerName, nameof(containerName));
@@ -30,11 +30,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAssetStore"/>. </summary>
         /// <param name="connectionString"> The connection string for the asset store. </param>
         /// <param name="containerName"> The name of the blob container within the asset store where extracted assets (for example, images) are stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetStore(string connectionString, string containerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceAssetStore(string connectionString, string containerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;

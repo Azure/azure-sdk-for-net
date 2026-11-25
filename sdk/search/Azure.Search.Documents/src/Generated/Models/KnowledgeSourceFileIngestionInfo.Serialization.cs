@@ -16,63 +16,63 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tracks asynchronous upload or replacement of a file in a knowledge source. </summary>
-    public partial class KnowledgeSourceFileIngestionOperation : IJsonModel<KnowledgeSourceFileIngestionOperation>
+    public partial class KnowledgeSourceFileIngestionInfo : IJsonModel<KnowledgeSourceFileIngestionInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFileIngestionOperation"/> for deserialization. </summary>
-        internal KnowledgeSourceFileIngestionOperation()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFileIngestionInfo"/> for deserialization. </summary>
+        internal KnowledgeSourceFileIngestionInfo()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeSourceFileIngestionOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceFileIngestionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeSourceFileIngestionOperation(document.RootElement, options);
+                        return DeserializeKnowledgeSourceFileIngestionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeSourceFileIngestionOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KnowledgeSourceFileIngestionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceFileIngestionOperation IPersistableModel<KnowledgeSourceFileIngestionOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceFileIngestionInfo IPersistableModel<KnowledgeSourceFileIngestionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeSourceFileIngestionOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeSourceFileIngestionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSourceFileIngestionOperation"/> from. </param>
-        public static explicit operator KnowledgeSourceFileIngestionOperation(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSourceFileIngestionInfo"/> from. </param>
+        public static explicit operator KnowledgeSourceFileIngestionInfo(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeSourceFileIngestionOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKnowledgeSourceFileIngestionInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeSourceFileIngestionOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeSourceFileIngestionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -83,10 +83,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -123,24 +123,24 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceFileIngestionOperation IJsonModel<KnowledgeSourceFileIngestionOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceFileIngestionInfo IJsonModel<KnowledgeSourceFileIngestionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeSourceFileIngestionOperation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceFileIngestionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileIngestionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceFileIngestionInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeSourceFileIngestionOperation(document.RootElement, options);
+            return DeserializeKnowledgeSourceFileIngestionInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KnowledgeSourceFileIngestionOperation DeserializeKnowledgeSourceFileIngestionOperation(JsonElement element, ModelReaderWriterOptions options)
+        internal static KnowledgeSourceFileIngestionInfo DeserializeKnowledgeSourceFileIngestionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string id = default;
             string kind = default;
-            OperationState status = default;
+            KnowledgeSourceFileIngestionState status = default;
             KnowledgeSourceFile result = default;
             KnowledgeSourceFileIngestionError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new OperationState(prop.Value.GetString());
+                    status = new KnowledgeSourceFileIngestionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
@@ -192,7 +192,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KnowledgeSourceFileIngestionOperation(
+            return new KnowledgeSourceFileIngestionInfo(
                 id,
                 kind,
                 status,

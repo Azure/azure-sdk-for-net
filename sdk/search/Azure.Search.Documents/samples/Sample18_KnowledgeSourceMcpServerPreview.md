@@ -38,7 +38,7 @@ McpServerTool searchTool = new McpServerTool
 
 // Configure the MCP server parameters
 McpServerKnowledgeSourceParameters mcpParams = new McpServerKnowledgeSourceParameters(
-    serverURL: "https://learn.microsoft.com/api/mcp",
+    serverUri: new Uri("https://learn.microsoft.com/api/mcp"),
     tools: new[] { searchTool });
 
 McpServerKnowledgeSource mcpSource = new McpServerKnowledgeSource(
@@ -62,7 +62,7 @@ Console.WriteLine($"Retrieved: '{retrievedSource.Name}'");
 
 if (retrievedSource is McpServerKnowledgeSource retrievedMcp)
 {
-    Console.WriteLine($"  Server URL: {retrievedMcp.McpServerParameters.ServerURL}");
+    Console.WriteLine($"  Server URI: {retrievedMcp.McpServerParameters.ServerUri}");
     Console.WriteLine($"  Tools: {retrievedMcp.McpServerParameters.Tools.Count}");
     foreach (McpServerTool tool in retrievedMcp.McpServerParameters.Tools)
     {

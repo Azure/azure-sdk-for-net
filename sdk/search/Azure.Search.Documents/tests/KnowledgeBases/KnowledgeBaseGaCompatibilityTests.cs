@@ -55,9 +55,11 @@ namespace Azure.Search.Documents.Tests
                 "x-ms-query-work-iq-source-authorization", out _));
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task GeneratedRetrieveSendsBothAuthorizationHeaders(bool protocol)
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task GeneratedRetrieveSendsBothAuthorizationHeaders(bool protocol, bool omitQuerySourceAuthorization)
         {
             var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200,
                 "{\"response\":[],\"references\":[],\"activity\":[]}"));
@@ -68,18 +70,18 @@ namespace Azure.Search.Documents.Tests
             if (protocol)
             {
                 using RequestContent content = RequestContent.Create(new { });
-                await client.RetrieveAsync(content, querySourceAuthorization: "user-token",
-                    queryWorkIQSourceAuthorization: "work-iq-token");
+                await client.RetrieveAsync(content, querySourceAuthorization: omitQuerySourceAuthorization ? null : "user-token",
+                    queryWorkIQSourceAuthorization: "work-iq-token", context: null);
             }
             else
             {
                 await client.RetrieveAsync(new KnowledgeBaseRetrievalRequest(),
-                    querySourceAuthorization: "user-token", queryWorkIQSourceAuthorization: "work-iq-token");
+                    querySourceAuthorization: omitQuerySourceAuthorization ? null : "user-token", queryWorkIQSourceAuthorization: "work-iq-token", cancellationToken: default);
             }
 
             MockRequest request = transport.Requests.Single();
-            Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-source-authorization", out string userToken));
-            Assert.AreEqual("user-token", userToken);
+            Assert.AreEqual(!omitQuerySourceAuthorization, request.Headers.TryGetValue("x-ms-query-source-authorization", out string userToken));
+            Assert.AreEqual(omitQuerySourceAuthorization ? null : "user-token", userToken);
             Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqToken));
             Assert.AreEqual("work-iq-token", workIqToken);
         }

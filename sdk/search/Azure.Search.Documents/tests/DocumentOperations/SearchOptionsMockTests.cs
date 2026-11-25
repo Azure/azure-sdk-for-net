@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -35,9 +36,11 @@ namespace Azure.Search.Documents.Tests
         {
         }
 
-        private SearchClient CreateTestClient(MockTransport transport)
+        private SearchClient CreateTestClient(
+            MockTransport transport,
+            SearchClientOptions.ServiceVersion serviceVersion = SearchClientOptions.LatestVersion)
         {
-            var options = new SearchClientOptions()
+            var options = new SearchClientOptions(serviceVersion)
             {
                 Transport = transport,
             };
@@ -253,6 +256,76 @@ namespace Azure.Search.Documents.Tests
                 $"Request body did not contain expected JSON fragment.\n" +
                 $"Expected fragment: {expectedJsonFragment}\n" +
                 $"Actual body: {requestBody}");
+        }
+
+        [TestCase(SearchClientOptions.ServiceVersion.V2026_10_01, null)]
+        [TestCase(SearchClientOptions.ServiceVersion.V2026_10_01, "hotels")]
+        [TestCase(SearchClientOptions.ServiceVersion.V2026_11_01_Preview, null)]
+        [TestCase(SearchClientOptions.ServiceVersion.V2026_11_01_Preview, "hotels")]
+        public async Task UntouchedSemanticFieldsStayOmittedAfterContinuation(
+            SearchClientOptions.ServiceVersion serviceVersion,
+            string configurationName)
+        {
+            SearchOptions options = new SearchOptions
+            {
+                SemanticSearch = new SemanticSearchOptions { SemanticConfigurationName = configurationName }
+            };
+            string continuation = SearchContinuationToken.Serialize(new Uri(s_endpoint), options);
+            var transport = new MockTransport(_ =>
+            {
+                var response = new MockResponse(200);
+                response.SetContent("{\"value\":[]}");
+                return response;
+            });
+            SearchClient client = CreateTestClient(transport, serviceVersion);
+
+            foreach (SearchOptions requestOptions in new[] { options, new SearchOptions(continuation) })
+            {
+                await client.SearchAsync<SearchDocument>("hotel", requestOptions);
+            }
+
+            foreach (Request request in transport.Requests)
+            {
+                using JsonDocument json = JsonDocument.Parse(GetRequestContent(request.Content));
+                Assert.IsFalse(json.RootElement.TryGetProperty("semanticFields", out _));
+                if (configurationName != null)
+                {
+                    Assert.AreEqual(configurationName, json.RootElement.GetProperty("semanticConfiguration").GetString());
+                }
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ExplicitSemanticFieldsSurviveContinuation(bool empty)
+        {
+            SearchOptions options = new SearchOptions
+            {
+                SemanticSearch = new SemanticSearchOptions { SemanticFields = { "description", "title" } }
+            };
+            if (empty)
+            {
+                options.SemanticSearch.SemanticFields.Clear();
+            }
+            string continuation = SearchContinuationToken.Serialize(new Uri(s_endpoint), options);
+            var transport = new MockTransport(_ =>
+            {
+                var response = new MockResponse(200);
+                response.SetContent("{\"value\":[]}");
+                return response;
+            });
+            SearchClient client = CreateTestClient(transport);
+
+            foreach (SearchOptions requestOptions in new[] { options, new SearchOptions(continuation) })
+            {
+                await client.SearchAsync<SearchDocument>("hotel", requestOptions);
+            }
+
+            foreach (Request request in transport.Requests)
+            {
+                using JsonDocument json = JsonDocument.Parse(GetRequestContent(request.Content));
+                Assert.AreEqual(empty ? "" : "description,title", json.RootElement.GetProperty("semanticFields").GetString());
+            }
         }
 
         private static string GetRequestContent(RequestContent content)

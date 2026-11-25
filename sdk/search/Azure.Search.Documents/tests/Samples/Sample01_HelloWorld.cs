@@ -167,7 +167,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        [Ignore("Temporarily disabled: the configured Cognitive Services key is not valid for the PPE Search service's region.")]
         public async Task CreateIndexerAsync()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);
@@ -175,7 +174,8 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
             Environment.SetEnvironmentVariable("STORAGE_CONTAINER", resources.BlobContainerName);
-            Environment.SetEnvironmentVariable("COGNITIVE_SERVICES_KEY", resources.CognitiveServicesKey);
+            Environment.SetEnvironmentVariable("COGNITIVE_SERVICES_KEY",
+                string.IsNullOrEmpty(resources.CognitiveServicesEndpoint) ? resources.CognitiveServicesKey : null);
 
             // Define clean up tasks to be invoked in reverse order added.
             Stack<Func<Task>> cleanUpTasks = new Stack<Func<Task>>();
@@ -346,7 +346,14 @@ namespace Azure.Search.Documents.Tests.Samples
                     skillsetName,
                     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
                 {
-                    CognitiveServicesAccount = new CognitiveServicesAccountKey(
+                    CognitiveServicesAccount =
+#if !SNIPPET
+                        // Keyless recording resources use Search's identity; preserve the key-based documentation example.
+                        !string.IsNullOrEmpty(resources.CognitiveServicesEndpoint)
+                            ? new AIServicesAccountIdentity(new Uri(resources.CognitiveServicesEndpoint))
+                            :
+#endif
+                        new CognitiveServicesAccountKey(
                         Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
                     KnowledgeStore = new KnowledgeStore(
                         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),

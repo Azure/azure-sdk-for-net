@@ -56,13 +56,17 @@ namespace Azure.Search.Documents.Tests
                     SearchIndexerDataSourceType.AzureBlob,
                     "fake-connection-string",
                     new SearchIndexerDataContainer("test-container")),
-                ignoreCacheResetRequirements: true);
+                onlyIfUnchanged: false,
+                ignoreCacheResetRequirements: true,
+                cancellationToken: default);
             await client.CreateOrUpdateSkillsetAsync(
                 new SearchIndexerSkillset("test-skillset", Array.Empty<SearchIndexerSkill>()),
+                onlyIfUnchanged: false,
                 ignoreCacheResetRequirements: true,
                 disableCacheReprocessingChangeDetection: true);
             await client.CreateOrUpdateIndexerAsync(
                 new SearchIndexer("test-indexer", "test-data-source", "test-index"),
+                onlyIfUnchanged: false,
                 ignoreCacheResetRequirements: true,
                 disableCacheReprocessingChangeDetection: true);
 

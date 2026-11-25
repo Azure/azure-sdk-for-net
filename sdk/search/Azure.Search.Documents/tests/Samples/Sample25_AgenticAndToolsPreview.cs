@@ -196,7 +196,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             {
                                 AutoConfiguration = new SearchIndexKnowledgeSourceFilterHintAutoConfiguration
                                 {
-                                    CacheTtl = 60,
+                                    CacheTimeToLiveInSeconds = 60,
                                     MaxFacetValueCount = 16
                                 },
                                 FilterInstructions = "When a country is specified, filter country using the exact resolved facet value."
@@ -244,7 +244,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion
             var stored = (SearchIndexKnowledgeSource)(await indexClient.GetKnowledgeSourceAsync(sourceName)).Value;
             Assert.That(stored.SearchIndexParameters.QueryHints.Filters.Single().FieldValues, Is.Empty);
-            Assert.That(stored.SearchIndexParameters.QueryHints.Filters.Single().AutoConfiguration.CacheTtl, Is.EqualTo(60));
+            Assert.That(stored.SearchIndexParameters.QueryHints.Filters.Single().AutoConfiguration.CacheTimeToLiveInSeconds, Is.EqualTo(60));
             AssertPreviewReferences(response, "hotel-ca-1", "hotel-ca-2");
             Assert.That(response.Activity.OfType<KnowledgeBaseSearchIndexActivityRecord>().Any(activity =>
                 activity.QueryHintProcessing?.GeneratedFilter?.Contains("Canada") == true), Is.True);

@@ -319,7 +319,7 @@ namespace Azure.Search.Documents
             get { return VectorSearch?.Queries != null ? VectorSearch.Queries : new ChangeTrackingList<VectorQuery>(); }
             set
             {
-                if (value != null && value.Count > 0)
+                if (value != null && Optional.IsCollectionDefined(value))
                 {
                     VectorSearch ??= new VectorSearchOptions();
                 }
@@ -418,6 +418,7 @@ namespace Azure.Search.Documents
             }
         }
 
+        // Preserve collection definition state when restoring continuation tokens, including explicit empty lists.
         /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
         [CodeGenMember("SemanticFields")]
         private IList<string> SemanticFields
@@ -425,13 +426,13 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.SemanticFields ?? new ChangeTrackingList<string>(); }
             set
             {
-                if (value != null && value.Count > 0)
+                if (value != null && Optional.IsCollectionDefined(value))
                 {
                     SemanticSearch ??= new SemanticSearchOptions();
                 }
                 if (SemanticSearch != null)
                 {
-                    SemanticSearch.SemanticFields = value != null ? new List<string>(value) : new List<string>();
+                    SemanticSearch.SemanticFields = value ?? new ChangeTrackingList<string>();
                 }
             }
         }

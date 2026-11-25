@@ -66,10 +66,14 @@ namespace Azure.Search.Documents.Tests
         /// The storage account connection string.
         /// </summary>
         public string StorageAccountConnectionString => TestFixture.TestEnvironment.SearchStorageConnectionString ??
-            $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
+            (TestFixture.Mode == RecordedTestMode.Playback &&
+                !TestFixture.Recording.Variables.ContainsKey("SEARCH_STORAGE_RESOURCE_ID") &&
+                TestFixture.Recording.Variables.ContainsKey(SearchTestEnvironment.StorageAccountKeyVariableName)
+                ? $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}"
+                : $"ResourceId={TestFixture.TestEnvironment.StorageResourceId};");
 
         private BlobContainerClient GetBlobContainerClient() => CreateBlobContainerClient(
-            StorageAccountConnectionString,
+            TestFixture.TestEnvironment.SearchStorageConnectionString,
             BlobContainerName,
             new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}/{BlobContainerName}"),
             () => TestFixture.TestEnvironment.Credential);
@@ -82,7 +86,7 @@ namespace Azure.Search.Documents.Tests
             BlobClientOptions options = null)
         {
             // ResourceId authenticates Search's managed identity, not the local process creating test blobs.
-            return connectionString.StartsWith("ResourceId=", StringComparison.OrdinalIgnoreCase)
+            return connectionString == null || connectionString.StartsWith("ResourceId=", StringComparison.OrdinalIgnoreCase)
                 ? new BlobContainerClient(containerUri, getCredential(), options)
                 : new BlobContainerClient(connectionString, containerName, options);
         }
@@ -443,7 +447,7 @@ namespace Azure.Search.Documents.Tests
             TestFixture.InstrumentClient(
                 new SearchIndexClient(
                     Endpoint,
-                    new AzureKeyCredential(PrimaryApiKey),
+                    TestFixture.TestEnvironment.Credential,
                     TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
@@ -455,11 +459,11 @@ namespace Azure.Search.Documents.Tests
             TestFixture.InstrumentClient(
                 new SearchIndexerClient(
                     Endpoint,
-                    new AzureKeyCredential(PrimaryApiKey),
+                    TestFixture.TestEnvironment.Credential,
                     TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
-        /// Get a <see cref="SearchClient"/> to use for testing with an Admin API key.
+        /// Get a <see cref="SearchClient"/> to use for testing with a token credential.
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchClient"/> instance.</returns>
@@ -471,7 +475,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Get a <see cref="SearchClient"/> to use for testing with a query API key.
+        /// Get a <see cref="SearchClient"/> to use for queries with the test identity.
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchClient"/> instance.</returns>
@@ -482,7 +486,7 @@ namespace Azure.Search.Documents.Tests
                 new SearchClient(
                     Endpoint,
                     IndexName,
-                    new AzureKeyCredential(QueryApiKey),
+                    TestFixture.TestEnvironment.Credential,
                     TestFixture.GetSearchClientOptions(options)));
         }
         #endregion Get Clients
@@ -514,7 +518,7 @@ namespace Azure.Search.Documents.Tests
             {
                 // Shared resources are disposed after their creating test's recording has closed.
                 SearchIndexClient client = _isShared
-                    ? new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey))
+                    ? new SearchIndexClient(Endpoint, TestFixture.TestEnvironment.Credential)
                     : GetIndexClient();
                 try
                 {
@@ -610,7 +614,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random Index Name
                 IndexName = Random.GetName(8);
 
-                SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                SearchIndexClient client = new SearchIndexClient(Endpoint, TestFixture.TestEnvironment.Credential);
                 await client.CreateIndexAsync(getIndex(IndexName));
 
                 RequiresCleanup = true;
@@ -635,7 +639,7 @@ namespace Azure.Search.Documents.Tests
             // Upload the documents
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                SearchClient client = new SearchClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
+                SearchClient client = new SearchClient(Endpoint, IndexName, TestFixture.TestEnvironment.Credential);
 
                 if (isSample)
                 {

@@ -4,6 +4,13 @@ These APIs require a service and index configured for the corresponding preview
 capabilities. The preview package defaults to `2026-11-01-preview`; applications
 can still explicitly select an older supported service version.
 
+For an application, install this preview package explicitly; the stable package
+in the getting-started guide does not contain these preview APIs:
+
+```powershell
+dotnet add package Azure.Search.Documents --version 12.2.0-beta.1
+```
+
 ## End-to-end walkthroughs
 
 These samples create uniquely named Search resources, use a small synthetic hotel
@@ -256,7 +263,7 @@ var hint = new SearchIndexKnowledgeSourceFilterHint("category")
 {
     AutoConfiguration = new SearchIndexKnowledgeSourceFilterHintAutoConfiguration
     {
-        CacheTtl = 300,
+        CacheTimeToLiveInSeconds = 300,
         MaxFacetValueCount = 32
     }
 };

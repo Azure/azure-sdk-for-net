@@ -33,7 +33,6 @@ namespace Azure.Search.Documents.Tests.Samples
         // sample live-only; deterministic SSE playback coverage uses MockTransport in
         // KnowledgeBaseRetrievalClientStreamingTests.
         [LiveOnly]
-        [Ignore("Temporarily disabled pending PPE retrieval service recovery: the SSE stream terminates with BadGateway.")]
         public async Task StreamKnowledgeBaseRetrieval()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);

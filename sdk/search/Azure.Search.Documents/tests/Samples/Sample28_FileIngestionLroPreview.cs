@@ -81,9 +81,9 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"Replaced {replaced.FileName}; revision: {replaced.Metadata["revision"]}");
 
             int completed = 0;
-            await foreach (KnowledgeSourceFileIngestionOperation operation in indexClient.GetKnowledgeSourceFileIngestionOperationsAsync(sourceName))
+            await foreach (KnowledgeSourceFileIngestionInfo operation in indexClient.GetKnowledgeSourceFileIngestionOperationsAsync(sourceName))
             {
-                KnowledgeSourceFileIngestionOperation details = await indexClient.GetKnowledgeSourceFileIngestionOperationAsync(sourceName, operation.Id);
+                KnowledgeSourceFileIngestionInfo details = await indexClient.GetKnowledgeSourceFileIngestionOperationAsync(sourceName, operation.Id);
                 Console.WriteLine($"Ingestion status: {details.Status}");
                 if (details.Status.ToString() == "Succeeded" && details.Result?.FileId == uploaded.FileId)
                 {

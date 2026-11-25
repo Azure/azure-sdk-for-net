@@ -3,8 +3,15 @@
 Use the [common preview setup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md) and the existing,
 authorized provider. The executable methods are in
 [`Sample31_CompatibleEmbeddingsPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample31_CompatibleEmbeddingsPreview.cs).
-Add `Azure.AI.OpenAI`, `OpenAI.Embeddings`, `System.Globalization` and
+Add `Azure.AI.OpenAI`, `Azure.Identity`, `OpenAI.Embeddings`, `System.Globalization` and
 `System.Text.Json` namespaces used by the full source.
+
+The control-embedding request uses `DefaultAzureCredential`, not the OpenAI API
+key used by other samples. Install the `Azure.AI.OpenAI` and `Azure.Identity`
+packages, sign in with an identity authorized on the control Azure OpenAI
+resource, and grant that identity the **Cognitive Services OpenAI User** role.
+This runner identity is separate from the Search service's managed identity.
+Setting an OpenAI API key alone does not authorize this control request.
 
 ## Configure the complete embedding route and authentication
 

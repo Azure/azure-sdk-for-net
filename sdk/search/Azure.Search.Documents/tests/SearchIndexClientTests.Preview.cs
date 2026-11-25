@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Tests
                         {
                             AutoConfiguration = new SearchIndexKnowledgeSourceFilterHintAutoConfiguration
                             {
-                                CacheTtl = 300,
+                                CacheTimeToLiveInSeconds = 300,
                                 MaxFacetValueCount = 32
                             }
                         }
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Tests
                 SearchIndexKnowledgeSourceFilterHintAutoConfiguration configuration =
                     fetched.SearchIndexParameters.QueryHints.Filters.Single().AutoConfiguration;
                 Assert.IsNotNull(configuration);
-                Assert.AreEqual(300, configuration.CacheTtl);
+                Assert.AreEqual(300, configuration.CacheTimeToLiveInSeconds);
                 Assert.AreEqual(32, configuration.MaxFacetValueCount);
             }
             finally

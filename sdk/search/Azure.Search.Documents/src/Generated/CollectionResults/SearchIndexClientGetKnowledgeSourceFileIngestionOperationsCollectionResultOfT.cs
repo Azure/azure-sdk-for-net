@@ -14,7 +14,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetKnowledgeSourceFileIngestionOperationsCollectionResultOfT : Pageable<KnowledgeSourceFileIngestionOperation>
+    internal partial class SearchIndexClientGetKnowledgeSourceFileIngestionOperationsCollectionResultOfT : Pageable<KnowledgeSourceFileIngestionInfo>
     {
         private readonly SearchIndexClient _client;
         private readonly string _sourceName;
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SearchIndexClientGetKnowledgeSourceFileIngestionOperationsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KnowledgeSourceFileIngestionOperation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<KnowledgeSourceFileIngestionInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes
                 ListKnowledgeSourceFileIngestionOperationsResult result = (ListKnowledgeSourceFileIngestionOperationsResult)response;
                 string nextPageString = result.OdataNextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                yield return Page<KnowledgeSourceFileIngestionOperation>.FromValues((IReadOnlyList<KnowledgeSourceFileIngestionOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<KnowledgeSourceFileIngestionInfo>.FromValues((IReadOnlyList<KnowledgeSourceFileIngestionInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

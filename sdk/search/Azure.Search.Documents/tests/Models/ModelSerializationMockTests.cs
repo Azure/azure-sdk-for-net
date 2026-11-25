@@ -332,7 +332,7 @@ namespace Azure.Search.Documents.Tests.Models
 
             // FreshnessPolicy — new knowledge-base-level retrieval policy.
             yield return new TestCaseData(
-                typeof(FreshnessPolicy),
+                typeof(KnowledgeSourceFreshnessPolicy),
                 @"{""boostingDuration"":""P90D""}")
                 .SetName("Roundtrip_FreshnessPolicy");
 
@@ -594,14 +594,76 @@ namespace Azure.Search.Documents.Tests.Models
 
         [TestCase("J")]
         [TestCase("W")]
-        public void RandomScoringFunctionOmitsCommonFields(string format)
+        public void RandomScoringFunctionPersistsLegacyFieldsButOmitsThemOnWire(string format)
         {
             ScoringFunction function = new RandomScoringFunction { FieldName = "rating", Boost = 2.0 };
             using JsonDocument document = JsonDocument.Parse(
                 ModelReaderWriter.Write(function, new ModelReaderWriterOptions(format)));
             Assert.AreEqual("random", document.RootElement.GetProperty("type").GetString());
-            Assert.IsFalse(document.RootElement.TryGetProperty("fieldName", out _));
-            Assert.IsFalse(document.RootElement.TryGetProperty("boost", out _));
+            if (format == "W")
+            {
+                Assert.IsFalse(document.RootElement.TryGetProperty("fieldName", out _));
+                Assert.IsFalse(document.RootElement.TryGetProperty("boost", out _));
+            }
+            else
+            {
+                Assert.AreEqual("rating", document.RootElement.GetProperty("fieldName").GetString());
+                Assert.AreEqual(2.0, document.RootElement.GetProperty("boost").GetDouble());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void PersistedRandomScoringRetainsLegacyValuesWithoutStaleJson(string format)
+        {
+            BinaryData data = BinaryData.FromString(
+                """{"type":"random","fieldName":"rating","boost":2,"interpolation":"linear","random":{"seedParameter":"seed"},"future":{"enabled":true}}""");
+            var options = new ModelReaderWriterOptions(format);
+            foreach (ScoringFunction function in new ScoringFunction[]
+            {
+                ModelReaderWriter.Read<ScoringFunction>(data, options),
+                ModelReaderWriter.Read<RandomScoringFunction>(data, options)
+            })
+            {
+                Assert.IsInstanceOf<RandomScoringFunction>(function);
+                Assert.AreEqual("rating", function.FieldName);
+                Assert.AreEqual(2, function.Boost);
+                Assert.AreEqual(ScoringFunctionInterpolation.Linear, function.Interpolation);
+                Assert.AreEqual("seed", ((RandomScoringFunction)function).Parameters.SeedParameter);
+                function.FieldName = "updated";
+                function.Boost = 3;
+
+                BinaryData persisted = ModelReaderWriter.Write(function);
+                using JsonDocument json = JsonDocument.Parse(persisted);
+                Assert.AreEqual("updated", json.RootElement.GetProperty("fieldName").GetString());
+                Assert.AreEqual(3, json.RootElement.GetProperty("boost").GetDouble());
+                Assert.AreEqual(1, json.RootElement.EnumerateObject().Count(property => property.Name == "fieldName"));
+                Assert.AreEqual(1, json.RootElement.EnumerateObject().Count(property => property.Name == "boost"));
+                Assert.AreEqual(format == "J", json.RootElement.TryGetProperty("future", out _));
+                ScoringFunction roundtrip = ModelReaderWriter.Read<ScoringFunction>(persisted);
+                Assert.AreEqual("updated", roundtrip.FieldName);
+                Assert.AreEqual(3, roundtrip.Boost);
+
+                using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(function, SearchTestHelpers.WireOptions));
+                Assert.IsFalse(wire.RootElement.TryGetProperty("fieldName", out _));
+                Assert.IsFalse(wire.RootElement.TryGetProperty("boost", out _));
+                Assert.IsFalse(wire.RootElement.TryGetProperty("future", out _));
+                Assert.AreEqual("seed", wire.RootElement.GetProperty("random").GetProperty("seedParameter").GetString());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void McpServerUriPreservesWireProperty(string format)
+        {
+            Uri uri = new Uri("https://example.com/mcp?api-version=preview");
+            var parameters = new McpServerKnowledgeSourceParameters(uri, new[] { new McpServerTool { Name = "search" } });
+            var options = new ModelReaderWriterOptions(format);
+            BinaryData data = ModelReaderWriter.Write(parameters, options);
+            using JsonDocument json = JsonDocument.Parse(data);
+            Assert.AreEqual(uri.AbsoluteUri, json.RootElement.GetProperty("serverURL").GetString());
+            Assert.IsFalse(json.RootElement.TryGetProperty("serverUri", out _));
+            Assert.AreEqual(uri, ModelReaderWriter.Read<McpServerKnowledgeSourceParameters>(data, options).ServerUri);
         }
 
         private sealed class CustomerScoringFunction : ScoringFunction

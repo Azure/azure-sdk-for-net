@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private DebugInfo _debugInfo;
+        private SearchResultsDebugInfo _debugInfo;
         private bool _debugInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
         /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchResultsDebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Coverage = coverage;
@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Models
         public IReadOnlyList<QueryAnswerResult> Answers { get; }
 
         /// <summary> Debug information that applies to the search results as a whole. </summary>
-        public DebugInfo DebugInfo
+        public SearchResultsDebugInfo DebugInfo
         {
             get
             {

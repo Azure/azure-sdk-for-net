@@ -13,52 +13,57 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    /// <summary> Configuration for freshness-aware retrieval. When set, newer documents receive a ranking boost during retrieval. </summary>
-    public partial class FreshnessPolicy : IJsonModel<FreshnessPolicy>
+    /// <summary> Configuration for an asset store used to store extracted assets such as images. </summary>
+    public partial class KnowledgeSourceAssetStore : IJsonModel<KnowledgeSourceAssetStore>
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAssetStore"/> for deserialization. </summary>
+        internal KnowledgeSourceAssetStore()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FreshnessPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceAssetStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAssetStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFreshnessPolicy(document.RootElement, options);
+                        return DeserializeKnowledgeSourceAssetStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FreshnessPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceAssetStore)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAssetStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FreshnessPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceAssetStore)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FreshnessPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KnowledgeSourceAssetStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FreshnessPolicy IPersistableModel<FreshnessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceAssetStore IPersistableModel<KnowledgeSourceAssetStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FreshnessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeSourceAssetStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FreshnessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeSourceAssetStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +74,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAssetStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FreshnessPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceAssetStore)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BoostingDuration))
-            {
-                writer.WritePropertyName("boostingDuration"u8);
-                writer.WriteStringValue(BoostingDuration);
-            }
+            writer.WritePropertyName("connectionString"u8);
+            writer.WriteStringValue(ConnectionString);
+            writer.WritePropertyName("containerName"u8);
+            writer.WriteStringValue(ContainerName);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -98,36 +102,42 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FreshnessPolicy IJsonModel<FreshnessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceAssetStore IJsonModel<KnowledgeSourceAssetStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FreshnessPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceAssetStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAssetStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FreshnessPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceAssetStore)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFreshnessPolicy(document.RootElement, options);
+            return DeserializeKnowledgeSourceAssetStore(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FreshnessPolicy DeserializeFreshnessPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static KnowledgeSourceAssetStore DeserializeKnowledgeSourceAssetStore(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string boostingDuration = default;
+            string connectionString = default;
+            string containerName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("boostingDuration"u8))
+                if (prop.NameEquals("connectionString"u8))
                 {
-                    boostingDuration = prop.Value.GetString();
+                    connectionString = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("containerName"u8))
+                {
+                    containerName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +145,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FreshnessPolicy(boostingDuration, additionalBinaryDataProperties);
+            return new KnowledgeSourceAssetStore(connectionString, containerName, additionalBinaryDataProperties);
         }
     }
 }

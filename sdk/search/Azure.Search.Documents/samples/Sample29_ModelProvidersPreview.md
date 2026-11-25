@@ -6,6 +6,8 @@ The complete examples are `CompatibleChatRetrievesSeededEvidence` and
 [`Sample29_ModelProvidersPreview.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample29_ModelProvidersPreview.cs).
 They use existing deployments, never provision them.
 
+Include `using System.Text.Json;` for the compatible-provider header parsing.
+
 ## Select an OpenAI-compatible provider
 
 Configure `AZURE_SEARCH_COMPATIBLE_CHAT_URI` as the **complete HTTPS POST URL**,

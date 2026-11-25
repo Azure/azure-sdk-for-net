@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
@@ -103,51 +102,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRandomScoringFunction(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RandomScoringFunction DeserializeRandomScoringFunction(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ScoringFunctionInterpolation? interpolation = default;
-            string @type = "random";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RandomScoringParameters parameters = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("interpolation"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interpolation = prop.Value.GetString().ToScoringFunctionInterpolation();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("random"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parameters = RandomScoringParameters.DeserializeRandomScoringParameters(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new RandomScoringFunction(interpolation, @type, additionalBinaryDataProperties, parameters);
         }
     }
 }

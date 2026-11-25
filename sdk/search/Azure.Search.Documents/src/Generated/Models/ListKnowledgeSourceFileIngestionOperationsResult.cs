@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeSourceFileIngestionOperationsResult"/>. </summary>
         /// <param name="value"> The operations in this page. </param>
-        internal ListKnowledgeSourceFileIngestionOperationsResult(IEnumerable<KnowledgeSourceFileIngestionOperation> value)
+        internal ListKnowledgeSourceFileIngestionOperationsResult(IEnumerable<KnowledgeSourceFileIngestionInfo> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The operations in this page. </param>
         /// <param name="odataNextLink"> The absolute URL for the next page, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListKnowledgeSourceFileIngestionOperationsResult(IList<KnowledgeSourceFileIngestionOperation> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListKnowledgeSourceFileIngestionOperationsResult(IList<KnowledgeSourceFileIngestionInfo> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             OdataNextLink = odataNextLink;
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The operations in this page. </summary>
-        public IList<KnowledgeSourceFileIngestionOperation> Value { get; }
+        public IList<KnowledgeSourceFileIngestionInfo> Value { get; }
 
         /// <summary> The absolute URL for the next page, if any. </summary>
         public string OdataNextLink { get; }

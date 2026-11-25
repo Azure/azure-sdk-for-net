@@ -410,10 +410,10 @@ namespace Azure.Search.Documents.Models
         /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
         /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
         /// <param name="agentic"> Contains request-wide agentic diagnostics when debug selects agentic or all. Does not imply that classic query rewriting executed. </param>
-        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
-        public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = default, AgenticSearchDebugInfo agentic = default)
+        /// <returns> A new <see cref="Models.SearchResultsDebugInfo"/> instance for mocking. </returns>
+        public static SearchResultsDebugInfo SearchResultsDebugInfo(QueryRewritesDebugInfo queryRewrites = default, AgenticSearchDebugInfo agentic = default)
         {
-            return new DebugInfo(queryRewrites, agentic, additionalBinaryDataProperties: null);
+            return new SearchResultsDebugInfo(queryRewrites, agentic, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains debugging information specific to query rewrites. </summary>
@@ -861,9 +861,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="isFacetable"> A value indicating whether to enable the field to be referenced in facet queries. Typically used in a presentation of search results that includes hit count by category (for example, search for digital cameras and see hits by brand, by megapixels, by price, and so on). This property must be null for complex fields. Fields of type Edm.GeographyPoint or Collection(Edm.GeographyPoint) cannot be facetable. Default is true for all other simple fields. </param>
         /// <param name="permissionFilter"> A value indicating whether the field should be used as a permission filter. </param>
         /// <param name="organizationAccessExpiration"> A value indicating whether the field contains the expiration timestamp for organization-scoped SharePoint sharing links. At most one top-level field of type Edm.DateTimeOffset can have this property set to true. On permission-filtered queries, expiration applies only to orgLink:&lt;tenantId&gt; values in a userIds permission-filter field whose tenant ID matches the validated user's tenant ID. The grant is valid only before the timestamp; an absent expiration field or a null timestamp means no time limit. Expiration does not affect orgGroup:&lt;tenantId&gt; values in groupIds permission-filter fields or ordinary user and group grants. If omitted or false, this field is not used for organization-link expiration. </param>
-        /// <param name="sensitivityLabelId"> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </param>
-        /// <param name="sensitivityLabelName"> A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document. </param>
-        /// <param name="sourceDocumentId"> A value indicating whether the field contains the source document identifier used for Purview audit tracking. </param>
+        /// <param name="isSensitivityLabelId"> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </param>
+        /// <param name="isSensitivityLabelName"> A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document. </param>
+        /// <param name="isSourceDocumentId"> A value indicating whether the field contains the source document identifier used for Purview audit tracking. </param>
         /// <param name="sharepointSiteUrl"> A value indicating whether the field contains a SharePoint site URL used for SharePoint group-based filtering. </param>
         /// <param name="analyzerName"> The name of the analyzer to use for the field. This option can be used only with searchable fields and it can't be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
         /// <param name="searchAnalyzerName"> The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields. </param>
@@ -876,7 +876,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchField"/> instance for mocking. </returns>
-        public static SearchField SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? organizationAccessExpiration, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, string topicGraphProfile, VectorEncodingFormat? vectorEncodingFormat = default, IEnumerable<string> synonymMapNames = default, IEnumerable<SearchField> fields = default)
+        public static SearchField SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? organizationAccessExpiration, bool? isSensitivityLabelId, bool? isSensitivityLabelName, bool? isSourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, string topicGraphProfile, VectorEncodingFormat? vectorEncodingFormat = default, IEnumerable<string> synonymMapNames = default, IEnumerable<SearchField> fields = default)
         {
             synonymMapNames ??= new ChangeTrackingList<string>();
             fields ??= new ChangeTrackingList<SearchField>();
@@ -893,9 +893,9 @@ namespace Azure.Search.Documents.Models
                 isFacetable,
                 permissionFilter,
                 organizationAccessExpiration,
-                sensitivityLabelId,
-                sensitivityLabelName,
-                sourceDocumentId,
+                isSensitivityLabelId,
+                isSensitivityLabelName,
+                isSourceDocumentId,
                 sharepointSiteUrl,
                 analyzerName,
                 searchAnalyzerName,
@@ -2397,12 +2397,12 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Configures automatic resolution of a filter hint's grounding values from the target index facets. </summary>
-        /// <param name="cacheTtl"> The number of seconds resolved facet values are cached. The allowed range is 60 through 3600 on dedicated services and 60 through 900 on serverless services. When omitted, defaults to 3600 seconds on dedicated services and 900 seconds on serverless services. </param>
+        /// <param name="cacheTimeToLiveInSeconds"> The number of seconds resolved facet values are cached. The allowed range is 60 through 3600 on dedicated services and 60 through 900 on serverless services. When omitted, defaults to 3600 seconds on dedicated services and 900 seconds on serverless services. </param>
         /// <param name="maxFacetValueCount"> The maximum number of facet values to use as grounding. Defaults to 64; allowed range is 1 through 64. Values are selected in descending facet-count order, subject to the same 2048-character combined-length limit and 128-character per-value limit as manually specified filter values. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceFilterHintAutoConfiguration"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSourceFilterHintAutoConfiguration SearchIndexKnowledgeSourceFilterHintAutoConfiguration(int? cacheTtl = default, int? maxFacetValueCount = default)
+        public static SearchIndexKnowledgeSourceFilterHintAutoConfiguration SearchIndexKnowledgeSourceFilterHintAutoConfiguration(int? cacheTimeToLiveInSeconds = default, int? maxFacetValueCount = default)
         {
-            return new SearchIndexKnowledgeSourceFilterHintAutoConfiguration(cacheTtl, maxFacetValueCount, additionalBinaryDataProperties: null);
+            return new SearchIndexKnowledgeSourceFilterHintAutoConfiguration(cacheTimeToLiveInSeconds, maxFacetValueCount, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2507,7 +2507,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="networkAccessMode"> Optional network access mode for ingestion. Set to 'private' to run ingestion in a private execution environment that can reach data sources and dependencies over a private network. Default is 'public'. This is a create-time setting and cannot be changed after the knowledge source is created. </param>
         /// <param name="cache"> Enrichment cache configuration for Azure Blob graph extraction. Requires a GPv2 storage account with Blob and Table endpoints and reprocessing enabled. Once configured, the cache cannot be removed or its storage binding or identity changed. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
-        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default, AssetStore assetStore = default, FreshnessPolicy freshnessPolicy = default, KnowledgeSourceNetworkAccessMode? networkAccessMode = default, KnowledgeSourceCache cache = default)
+        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default, KnowledgeSourceAssetStore assetStore = default, KnowledgeSourceFreshnessPolicy freshnessPolicy = default, KnowledgeSourceNetworkAccessMode? networkAccessMode = default, KnowledgeSourceCache cache = default)
         {
             ingestionPermissionOptions ??= new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
 
@@ -2575,18 +2575,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for an asset store used to store extracted assets such as images. </summary>
         /// <param name="connectionString"> The connection string for the asset store. </param>
         /// <param name="containerName"> The name of the blob container within the asset store where extracted assets (for example, images) are stored. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.AssetStore"/> instance for mocking. </returns>
-        public static AssetStore AssetStore(string connectionString = default, string containerName = default)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceAssetStore"/> instance for mocking. </returns>
+        public static KnowledgeSourceAssetStore KnowledgeSourceAssetStore(string connectionString = default, string containerName = default)
         {
-            return new AssetStore(connectionString, containerName, additionalBinaryDataProperties: null);
+            return new KnowledgeSourceAssetStore(connectionString, containerName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for freshness-aware retrieval. When set, newer documents receive a ranking boost during retrieval. </summary>
         /// <param name="boostingDuration"> ISO 8601 duration for the freshness boosting window (e.g. 'P90D' for 90 days). Documents newer than this duration receive a ranking boost during retrieval. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.FreshnessPolicy"/> instance for mocking. </returns>
-        public static FreshnessPolicy FreshnessPolicy(string boostingDuration = default)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceFreshnessPolicy"/> instance for mocking. </returns>
+        public static KnowledgeSourceFreshnessPolicy KnowledgeSourceFreshnessPolicy(string boostingDuration = default)
         {
-            return new FreshnessPolicy(boostingDuration, additionalBinaryDataProperties: null);
+            return new KnowledgeSourceFreshnessPolicy(boostingDuration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configures storage for cached knowledge source enrichment results. Requires a GPv2 storage account with Blob and Table endpoints. The cache storage binding and identity cannot be changed after creation, and the cache cannot be removed while using the graph extraction workflow. </summary>
@@ -2977,15 +2977,15 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Parameters for an MCP server knowledge source. </summary>
-        /// <param name="serverURL"> The URL of the MCP server endpoint. </param>
+        /// <param name="serverUri"> The URL of the MCP server endpoint. </param>
         /// <param name="authentication"> The authentication configuration for the MCP server. </param>
         /// <param name="tools"> The list of tools to invoke on the MCP server. </param>
         /// <returns> A new <see cref="Indexes.Models.McpServerKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static McpServerKnowledgeSourceParameters McpServerKnowledgeSourceParameters(string serverURL = default, McpServerAuthentication authentication = default, IEnumerable<McpServerTool> tools = default)
+        public static McpServerKnowledgeSourceParameters McpServerKnowledgeSourceParameters(Uri serverUri = default, McpServerAuthentication authentication = default, IEnumerable<McpServerTool> tools = default)
         {
             tools ??= new ChangeTrackingList<McpServerTool>();
 
-            return new McpServerKnowledgeSourceParameters(serverURL, authentication, tools.ToList(), additionalBinaryDataProperties: null);
+            return new McpServerKnowledgeSourceParameters(serverUri, authentication, tools.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -3349,10 +3349,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="status"> The current state. Poll until the operation succeeds or fails. </param>
         /// <param name="result"> The file metadata, present only when ingestion succeeds. </param>
         /// <param name="error"> The failure details, present only when ingestion fails. </param>
-        /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceFileIngestionOperation"/> instance for mocking. </returns>
-        public static KnowledgeSourceFileIngestionOperation KnowledgeSourceFileIngestionOperation(string id = default, OperationState status = default, KnowledgeSourceFile result = default, KnowledgeSourceFileIngestionError error = default)
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceFileIngestionInfo"/> instance for mocking. </returns>
+        public static KnowledgeSourceFileIngestionInfo KnowledgeSourceFileIngestionInfo(string id = default, KnowledgeSourceFileIngestionState status = default, KnowledgeSourceFile result = default, KnowledgeSourceFileIngestionError error = default)
         {
-            return new KnowledgeSourceFileIngestionOperation(
+            return new KnowledgeSourceFileIngestionInfo(
                 id,
                 "knowledgeSourceFileIngestion",
                 status,
@@ -7145,7 +7145,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchField SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IEnumerable<string> synonymMapNames, IEnumerable<SearchField> fields)
         {
-            return SearchField(name: name, @type: @type, isKey: isKey, isRetrievable: isRetrievable, isStored: isStored, isSearchable: isSearchable, isFilterable: isFilterable, isSortable: isSortable, isFacetable: isFacetable, permissionFilter: default, organizationAccessExpiration: default, sensitivityLabelId: default, sensitivityLabelName: default, sourceDocumentId: default, sharepointSiteUrl: default, analyzerName: analyzerName, searchAnalyzerName: searchAnalyzerName, indexAnalyzerName: indexAnalyzerName, normalizerName: normalizerName, vectorSearchDimensions: vectorSearchDimensions, vectorSearchProfileName: vectorSearchProfileName, topicGraphProfile: default, vectorEncodingFormat: vectorEncodingFormat, synonymMapNames: synonymMapNames, fields: fields);
+            return SearchField(name: name, @type: @type, isKey: isKey, isRetrievable: isRetrievable, isStored: isStored, isSearchable: isSearchable, isFilterable: isFilterable, isSortable: isSortable, isFacetable: isFacetable, permissionFilter: default, organizationAccessExpiration: default, isSensitivityLabelId: default, isSensitivityLabelName: default, isSourceDocumentId: default, sharepointSiteUrl: default, analyzerName: analyzerName, searchAnalyzerName: searchAnalyzerName, indexAnalyzerName: indexAnalyzerName, normalizerName: normalizerName, vectorSearchDimensions: vectorSearchDimensions, vectorSearchProfileName: vectorSearchProfileName, topicGraphProfile: default, vectorEncodingFormat: vectorEncodingFormat, synonymMapNames: synonymMapNames, fields: fields);
         }
 
         /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>

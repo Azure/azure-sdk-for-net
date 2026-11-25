@@ -55,10 +55,11 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public QueryRewrites QueryRewrites { get; set; }
 
+        // Untouched preview options must not add semanticFields to GA requests.
         /// <summary>
         /// The list of field names used for semantic ranking.
         /// </summary>
-        public IList<string> SemanticFields { get; internal set; } = new List<string>();
+        public IList<string> SemanticFields { get; internal set; } = new ChangeTrackingList<string>();
         // search-preview:2026-05-01-preview }
     }
 }

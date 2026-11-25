@@ -11,54 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
-    public partial class DebugInfo : IJsonModel<DebugInfo>
+    /// <summary> Configuration for freshness-aware retrieval. When set, newer documents receive a ranking boost during retrieval. </summary>
+    public partial class KnowledgeSourceFreshnessPolicy : IJsonModel<KnowledgeSourceFreshnessPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceFreshnessPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDebugInfo(document.RootElement, options);
+                        return DeserializeKnowledgeSourceFreshnessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DebugInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceFreshnessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DebugInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceFreshnessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DebugInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KnowledgeSourceFreshnessPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DebugInfo IPersistableModel<DebugInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceFreshnessPolicy IPersistableModel<KnowledgeSourceFreshnessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DebugInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeSourceFreshnessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeSourceFreshnessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DebugInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceFreshnessPolicy)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryRewrites))
+            if (Optional.IsDefined(BoostingDuration))
             {
-                writer.WritePropertyName("queryRewrites"u8);
-                writer.WriteObjectValue(QueryRewrites, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Agentic))
-            {
-                writer.WritePropertyName("agentic"u8);
-                writer.WriteObjectValue(Agentic, options);
+                writer.WritePropertyName("boostingDuration"u8);
+                writer.WriteStringValue(BoostingDuration);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +98,36 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DebugInfo IJsonModel<DebugInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceFreshnessPolicy IJsonModel<KnowledgeSourceFreshnessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DebugInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceFreshnessPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFreshnessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DebugInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceFreshnessPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDebugInfo(document.RootElement, options);
+            return DeserializeKnowledgeSourceFreshnessPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DebugInfo DeserializeDebugInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static KnowledgeSourceFreshnessPolicy DeserializeKnowledgeSourceFreshnessPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            QueryRewritesDebugInfo queryRewrites = default;
-            AgenticSearchDebugInfo agentic = default;
+            string boostingDuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("queryRewrites"u8))
+                if (prop.NameEquals("boostingDuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryRewrites = QueryRewritesDebugInfo.DeserializeQueryRewritesDebugInfo(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("agentic"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentic = AgenticSearchDebugInfo.DeserializeAgenticSearchDebugInfo(prop.Value, options);
+                    boostingDuration = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +135,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DebugInfo(queryRewrites, agentic, additionalBinaryDataProperties);
+            return new KnowledgeSourceFreshnessPolicy(boostingDuration, additionalBinaryDataProperties);
         }
     }
 }

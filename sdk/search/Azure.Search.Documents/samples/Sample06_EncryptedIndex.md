@@ -43,16 +43,18 @@ az keyvault key create --vault-name "<vault-name>" -n "<key-name>" --kty rsa --s
 
 Once you have a Key Vault key you can use for wrapping and unwrapping service keys, you can create a `SearchResourceEncryptionKey` with the information about the key and credentials for your service principal if not using Managed Identity.
 
+The following example uses the Search service's system-assigned managed identity
+for Key Vault access and `DefaultAzureCredential` for the application calling
+Search. Grant the Search identity **Key Vault Crypto Service Encryption User**
+and grant the caller the required Search data-plane roles. Application credentials
+are not required for this managed-identity configuration.
+
 ```C# Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Index
 // Create a credential to connect to Key Vault and use a specific key version created previously.
 SearchResourceEncryptionKey encryptionKey = new SearchResourceEncryptionKey(
     new Uri(Environment.GetEnvironmentVariable("KEYVAULT_URL")),
     Environment.GetEnvironmentVariable("KEYVAULT_KEY_NAME"),
-    Environment.GetEnvironmentVariable("KEYVAULT_KEY_VERSION"))
-{
-    ApplicationId = Environment.GetEnvironmentVariable("APPLICATION_ID"),
-    ApplicationSecret = Environment.GetEnvironmentVariable("APPLICATION_SECRET"),
-};
+    Environment.GetEnvironmentVariable("KEYVAULT_KEY_VERSION"));
 
 // Create a connection to our storage blob container using the credential.
 string dataSourceConnectionName = "hotels-data-source";
@@ -102,8 +104,7 @@ SearchIndexer indexer = new SearchIndexer(
 // Now connect to our Search service and set up the data source and indexer.
 // Documents already in the storage blob will begin indexing immediately.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential);
 indexerClient.CreateDataSourceConnection(dataSourceConnection);
@@ -113,7 +114,7 @@ indexerClient.CreateIndexer(indexer);
 The data source connections, skillsets, indexers, and indexes are doubly encrypted, but querying the index works exactly the same as normally encrypted index encrypted by the service:
 
 ```C# Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Query
-// Create a SearchClient and search for luxury hotels. In production, be sure to use the query key.
+// Create a SearchClient and search for luxury hotels. In production, grant only the roles needed for querying.
 SearchClient searchClient = new SearchClient(endpoint, "hotels", credential);
 Response<SearchResults<Hotel>> results = searchClient.Search<Hotel>("luxury hotels");
 foreach (SearchResult<Hotel> result in results.Value.GetResults())

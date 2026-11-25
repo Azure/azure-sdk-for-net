@@ -245,8 +245,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             bool aiServicesIsDefined = false;
             AIServices aiServices = default;
-            AssetStore assetStore = default;
-            FreshnessPolicy freshnessPolicy = default;
+            KnowledgeSourceAssetStore assetStore = default;
+            KnowledgeSourceFreshnessPolicy freshnessPolicy = default;
             KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
             KnowledgeSourceCache cache = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -348,7 +348,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    assetStore = AssetStore.DeserializeAssetStore(prop.Value, options);
+                    assetStore = KnowledgeSourceAssetStore.DeserializeKnowledgeSourceAssetStore(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("freshnessPolicy"u8))
@@ -357,7 +357,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
+                    freshnessPolicy = KnowledgeSourceFreshnessPolicy.DeserializeKnowledgeSourceFreshnessPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkAccessMode"u8))

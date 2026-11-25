@@ -3397,13 +3397,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeSourceFileIngestionOperation> GetKnowledgeSourceFileIngestionOperation(string sourceName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeSourceFileIngestionInfo> GetKnowledgeSourceFileIngestionOperation(string sourceName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Response result = GetKnowledgeSourceFileIngestionOperation(sourceName, operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSourceFileIngestionOperation)result, result);
+            return Response.FromValue((KnowledgeSourceFileIngestionInfo)result, result);
         }
 
         /// <summary> Gets the status and, when successful, the result of a file ingestion operation. </summary>
@@ -3413,13 +3413,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeSourceFileIngestionOperation>> GetKnowledgeSourceFileIngestionOperationAsync(string sourceName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeSourceFileIngestionInfo>> GetKnowledgeSourceFileIngestionOperationAsync(string sourceName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Response result = await GetKnowledgeSourceFileIngestionOperationAsync(sourceName, operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSourceFileIngestionOperation)result, result);
+            return Response.FromValue((KnowledgeSourceFileIngestionInfo)result, result);
         }
 
         /// <summary>
@@ -3488,7 +3488,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KnowledgeSourceFileIngestionOperation> GetKnowledgeSourceFileIngestionOperations(string sourceName, int? pageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<KnowledgeSourceFileIngestionInfo> GetKnowledgeSourceFileIngestionOperations(string sourceName, int? pageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
@@ -3509,7 +3509,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KnowledgeSourceFileIngestionOperation> GetKnowledgeSourceFileIngestionOperationsAsync(string sourceName, int? pageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KnowledgeSourceFileIngestionInfo> GetKnowledgeSourceFileIngestionOperationsAsync(string sourceName, int? pageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 

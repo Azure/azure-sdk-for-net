@@ -414,15 +414,17 @@ namespace Azure.Search.Documents.Tests
             {
                 AutoConfiguration = new SearchIndexKnowledgeSourceFilterHintAutoConfiguration
                 {
-                    CacheTtl = 300,
+                    CacheTimeToLiveInSeconds = 300,
                     MaxFacetValueCount = 32
                 }
             };
             BinaryData data = ModelReaderWriter.Write(hint, new ModelReaderWriterOptions("W"));
             using JsonDocument json = JsonDocument.Parse(data);
             Assert.IsFalse(json.RootElement.TryGetProperty("fieldValues", out _));
+            Assert.AreEqual(300, json.RootElement.GetProperty("autoConfiguration").GetProperty("cacheTtl").GetInt32());
+            Assert.IsFalse(json.RootElement.GetProperty("autoConfiguration").TryGetProperty("cacheTimeToLiveInSeconds", out _));
             var read = ModelReaderWriter.Read<SearchIndexKnowledgeSourceFilterHint>(data);
-            Assert.AreEqual(300, read.AutoConfiguration.CacheTtl);
+            Assert.AreEqual(300, read.AutoConfiguration.CacheTimeToLiveInSeconds);
             Assert.AreEqual(32, read.AutoConfiguration.MaxFacetValueCount);
         }
 

@@ -12,28 +12,28 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tracks asynchronous upload or replacement of a file in a knowledge source. </summary>
-    public partial class KnowledgeSourceFileIngestionOperation
+    public partial class KnowledgeSourceFileIngestionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFileIngestionOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFileIngestionInfo"/>. </summary>
         /// <param name="id"> The server-generated operation identifier. </param>
         /// <param name="status"> The current state. Poll until the operation succeeds or fails. </param>
-        internal KnowledgeSourceFileIngestionOperation(string id, OperationState status)
+        internal KnowledgeSourceFileIngestionInfo(string id, KnowledgeSourceFileIngestionState status)
         {
             Id = id;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFileIngestionOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFileIngestionInfo"/>. </summary>
         /// <param name="id"> The server-generated operation identifier. </param>
         /// <param name="kind"> The kind of operation. </param>
         /// <param name="status"> The current state. Poll until the operation succeeds or fails. </param>
         /// <param name="result"> The file metadata, present only when ingestion succeeds. </param>
         /// <param name="error"> The failure details, present only when ingestion fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceFileIngestionOperation(string id, string kind, OperationState status, KnowledgeSourceFile result, KnowledgeSourceFileIngestionError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceFileIngestionInfo(string id, string kind, KnowledgeSourceFileIngestionState status, KnowledgeSourceFile result, KnowledgeSourceFileIngestionError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Kind { get; } = "knowledgeSourceFileIngestion";
 
         /// <summary> The current state. Poll until the operation succeeds or fails. </summary>
-        public OperationState Status { get; }
+        public KnowledgeSourceFileIngestionState Status { get; }
 
         /// <summary> The file metadata, present only when ingestion succeeds. </summary>
         public KnowledgeSourceFile Result { get; }

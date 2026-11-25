@@ -3,7 +3,7 @@
 This sample demonstrates how to use freshness-aware retrieval with ingestion-type Knowledge Sources. Freshness biases Retrieval-Augmented Generation (RAG) search results toward newer documents while preserving existing relevance signals (lexical, semantic, and vector similarity).
 
 Key concepts:
-- **FreshnessPolicy** on `KnowledgeSourceIngestionParameters` — configures how strongly recency influences ranking via `BoostingDuration` (ISO 8601 duration, e.g., `"P90D"` = 90 days).
+- **KnowledgeSourceFreshnessPolicy** on `KnowledgeSourceIngestionParameters.FreshnessPolicy` — configures how strongly recency influences ranking via `BoostingDuration` (ISO 8601 duration, e.g., `"P90D"` = 90 days).
 - **EnableFreshness** on `KnowledgeSourceReference` — opt-in per source when attaching to a Knowledge Base.
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
@@ -19,7 +19,7 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 ## Create a Knowledge Source with Freshness Policy
 
-Create an Azure Blob knowledge source with a `FreshnessPolicy` that configures a freshness scoring profile. Documents modified within the `BoostingDuration` window receive the highest boost, which decays linearly over time. This influences L1 ranking so newer documents are more likely to be selected for semantic reranking.
+Create an Azure Blob knowledge source with a `KnowledgeSourceFreshnessPolicy` that configures a freshness scoring profile. Documents modified within the `BoostingDuration` window receive the highest boost, which decays linearly over time. This influences L1 ranking so newer documents are more likely to be selected for semantic reranking.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateSourceWithPolicy
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -49,7 +49,7 @@ AzureBlobKnowledgeSource blobSource = new AzureBlobKnowledgeSource(
     {
         IngestionParameters = new KnowledgeSourceIngestionParameters
         {
-            FreshnessPolicy = new FreshnessPolicy
+            FreshnessPolicy = new KnowledgeSourceFreshnessPolicy
             {
                 // Documents modified within the last 90 days get the highest boost.
                 // The boost decays linearly over this window.

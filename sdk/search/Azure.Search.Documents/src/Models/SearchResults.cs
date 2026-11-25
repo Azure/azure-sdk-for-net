@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
         /// <see cref="SearchOptions.Debug"/> are set.
         /// Only populated when the request enabled debug diagnostics.
         /// </summary>
-        public DebugInfo DebugInfo { get; internal set; } // search-preview:2026-05-01-preview
+        public SearchResultsDebugInfo DebugInfo { get; internal set; } // search-preview:2026-05-01-preview
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -312,7 +312,7 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, ModelReaderWriterOptions.Json);
+                    results.DebugInfo = SearchResultsDebugInfo.DeserializeSearchResultsDebugInfo(prop.Value, ModelReaderWriterOptions.Json);
                 }
                 // search-preview:2026-05-01-preview }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
@@ -404,7 +404,7 @@ namespace Azure.Search.Documents.Models
         /// Debug information that applies to the search results as a whole, when the request
         /// enabled debug diagnostics. See <see cref="SearchResults{T}.DebugInfo"/>.
         /// </summary>
-        public DebugInfo DebugInfo => _results.DebugInfo; // search-preview:2026-05-01-preview
+        public SearchResultsDebugInfo DebugInfo => _results.DebugInfo; // search-preview:2026-05-01-preview
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>

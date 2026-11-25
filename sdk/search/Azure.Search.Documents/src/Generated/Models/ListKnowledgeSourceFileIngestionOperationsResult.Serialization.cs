@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KnowledgeSourceFileIngestionOperation item in Value)
+            foreach (KnowledgeSourceFileIngestionInfo item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            IList<KnowledgeSourceFileIngestionOperation> value = default;
+            IList<KnowledgeSourceFileIngestionInfo> value = default;
             string odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KnowledgeSourceFileIngestionOperation> array = new List<KnowledgeSourceFileIngestionOperation>();
+                    List<KnowledgeSourceFileIngestionInfo> array = new List<KnowledgeSourceFileIngestionInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeSourceFileIngestionOperation.DeserializeKnowledgeSourceFileIngestionOperation(item, options));
+                        array.Add(KnowledgeSourceFileIngestionInfo.DeserializeKnowledgeSourceFileIngestionInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListKnowledgeSourceFileIngestionOperationsResult(value ?? new ChangeTrackingList<KnowledgeSourceFileIngestionOperation>(), odataNextLink, additionalBinaryDataProperties);
+            return new ListKnowledgeSourceFileIngestionOperationsResult(value ?? new ChangeTrackingList<KnowledgeSourceFileIngestionInfo>(), odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(McpServerKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("serverURL"u8);
-            writer.WriteStringValue(ServerURL);
+            writer.WriteStringValue(ServerUri.AbsoluteUri);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
@@ -135,7 +135,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string serverURL = default;
+            Uri serverUri = default;
             McpServerAuthentication authentication = default;
             IList<McpServerTool> tools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (prop.NameEquals("serverURL"u8))
                 {
-                    serverURL = prop.Value.GetString();
+                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authentication"u8))
@@ -170,7 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new McpServerKnowledgeSourceParameters(serverURL, authentication, tools ?? new ChangeTrackingList<McpServerTool>(), additionalBinaryDataProperties);
+            return new McpServerKnowledgeSourceParameters(serverUri, authentication, tools ?? new ChangeTrackingList<McpServerTool>(), additionalBinaryDataProperties);
         }
     }
 }

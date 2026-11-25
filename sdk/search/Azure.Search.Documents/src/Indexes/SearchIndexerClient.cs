@@ -151,13 +151,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
+        // Keep ordinary calls bound to the GA virtual overload; cache settings require explicit arguments.
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
-#pragma warning restore AZC0002
             SearchIndexer indexer,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) => CreateOrUpdateIndexer(
                 indexer,
                 onlyIfUnchanged,
                 ignoreCacheResetRequirements: null,
@@ -184,9 +182,9 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
-            bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            bool? disableCacheReprocessingChangeDetection = null,
+            bool onlyIfUnchanged,
+            bool? ignoreCacheResetRequirements,
+            bool? disableCacheReprocessingChangeDetection,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));
@@ -216,13 +214,10 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
-#pragma warning restore AZC0002
             SearchIndexer indexer,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) => await CreateOrUpdateIndexerAsync(
                 indexer,
                 onlyIfUnchanged,
                 ignoreCacheResetRequirements: null,
@@ -250,9 +245,9 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
-            bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            bool? disableCacheReprocessingChangeDetection = null,
+            bool onlyIfUnchanged,
+            bool? ignoreCacheResetRequirements,
+            bool? disableCacheReprocessingChangeDetection,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));

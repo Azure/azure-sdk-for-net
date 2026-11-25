@@ -51,10 +51,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ScoringFunction)} does not support writing '{format}' format.");
             }
-            // Generated classic writers emit these fields; random has neither.
-            // Other subclasses retain the GA base-writer behavior.
+            // Classic writers emit these fields. Random retains legacy values only in persisted JSON.
             if (this is not (DistanceScoringFunction or FreshnessScoringFunction or
-                MagnitudeScoringFunction or TagScoringFunction or RandomScoringFunction))
+                MagnitudeScoringFunction or TagScoringFunction) &&
+                (this is not RandomScoringFunction || options.Format != "W"))
             {
                 writer.WriteString("fieldName", FieldName);
                 writer.WriteNumber("boost", Boost);

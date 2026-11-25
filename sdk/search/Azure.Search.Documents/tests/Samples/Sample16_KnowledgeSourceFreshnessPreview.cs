@@ -25,7 +25,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        [Ignore("Temporarily disabled pending PPE retrieval service recovery: all retrieval tasks fail with BadGateway.")]
         public async Task CreateKnowledgeSourceWithFreshnessPolicy()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
@@ -80,7 +79,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     {
                         IngestionParameters = new KnowledgeSourceIngestionParameters
                         {
-                            FreshnessPolicy = new FreshnessPolicy
+                            FreshnessPolicy = new KnowledgeSourceFreshnessPolicy
                             {
                                 // Documents modified within the last 90 days get the highest boost.
                                 // The boost decays linearly over this window.

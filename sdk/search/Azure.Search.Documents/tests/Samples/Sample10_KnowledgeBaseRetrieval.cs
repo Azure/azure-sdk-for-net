@@ -19,12 +19,16 @@ using NUnit.Framework;
 namespace Azure.Search.Documents.Tests.Samples
 {
     [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
-    [Ignore("Temporarily disabled pending PPE retrieval service recovery: all retrieval tasks fail with BadGateway.")]
     public partial class KnowledgeBaseRetrieval : SearchTestBase
     {
         public KnowledgeBaseRetrieval(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null/* RecordedTestMode.Record /* to re-record */)
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // These existing sample snapshots use the retired August preview.
+                IgnoredQueryParameters.Add("api-version");
+            }
         }
 
         [Test]

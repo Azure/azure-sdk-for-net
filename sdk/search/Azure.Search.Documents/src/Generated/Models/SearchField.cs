@@ -34,9 +34,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="isFacetable"> A value indicating whether to enable the field to be referenced in facet queries. Typically used in a presentation of search results that includes hit count by category (for example, search for digital cameras and see hits by brand, by megapixels, by price, and so on). This property must be null for complex fields. Fields of type Edm.GeographyPoint or Collection(Edm.GeographyPoint) cannot be facetable. Default is true for all other simple fields. </param>
         /// <param name="permissionFilter"> A value indicating whether the field should be used as a permission filter. </param>
         /// <param name="organizationAccessExpiration"> A value indicating whether the field contains the expiration timestamp for organization-scoped SharePoint sharing links. At most one top-level field of type Edm.DateTimeOffset can have this property set to true. On permission-filtered queries, expiration applies only to orgLink:&lt;tenantId&gt; values in a userIds permission-filter field whose tenant ID matches the validated user's tenant ID. The grant is valid only before the timestamp; an absent expiration field or a null timestamp means no time limit. Expiration does not affect orgGroup:&lt;tenantId&gt; values in groupIds permission-filter fields or ordinary user and group grants. If omitted or false, this field is not used for organization-link expiration. </param>
-        /// <param name="sensitivityLabelId"> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </param>
-        /// <param name="sensitivityLabelName"> A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document. </param>
-        /// <param name="sourceDocumentId"> A value indicating whether the field contains the source document identifier used for Purview audit tracking. </param>
+        /// <param name="isSensitivityLabelId"> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </param>
+        /// <param name="isSensitivityLabelName"> A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document. </param>
+        /// <param name="isSourceDocumentId"> A value indicating whether the field contains the source document identifier used for Purview audit tracking. </param>
         /// <param name="sharepointSiteUrl"> A value indicating whether the field contains a SharePoint site URL used for SharePoint group-based filtering. </param>
         /// <param name="analyzerName"> The name of the analyzer to use for the field. This option can be used only with searchable fields and it can't be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
         /// <param name="searchAnalyzerName"> The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields. </param>
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? organizationAccessExpiration, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, string topicGraphProfile, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? organizationAccessExpiration, bool? isSensitivityLabelId, bool? isSensitivityLabelName, bool? isSourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, string topicGraphProfile, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -62,9 +62,9 @@ namespace Azure.Search.Documents.Indexes.Models
             IsFacetable = isFacetable;
             _permissionFilter = permissionFilter;
             OrganizationAccessExpiration = organizationAccessExpiration;
-            SensitivityLabelId = sensitivityLabelId;
-            SensitivityLabelName = sensitivityLabelName;
-            SourceDocumentId = sourceDocumentId;
+            IsSensitivityLabelId = isSensitivityLabelId;
+            IsSensitivityLabelName = isSensitivityLabelName;
+            IsSourceDocumentId = isSourceDocumentId;
             SharepointSiteUrl = sharepointSiteUrl;
             AnalyzerName = analyzerName;
             SearchAnalyzerName = searchAnalyzerName;
@@ -97,13 +97,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? OrganizationAccessExpiration { get; set; }
 
         /// <summary> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </summary>
-        public bool? SensitivityLabelId { get; set; }
+        public bool? IsSensitivityLabelId { get; set; }
 
         /// <summary> A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document. </summary>
-        public bool? SensitivityLabelName { get; set; }
+        public bool? IsSensitivityLabelName { get; set; }
 
         /// <summary> A value indicating whether the field contains the source document identifier used for Purview audit tracking. </summary>
-        public bool? SourceDocumentId { get; set; }
+        public bool? IsSourceDocumentId { get; set; }
 
         /// <summary> A value indicating whether the field contains a SharePoint site URL used for SharePoint group-based filtering. </summary>
         public bool? SharepointSiteUrl { get; set; }
