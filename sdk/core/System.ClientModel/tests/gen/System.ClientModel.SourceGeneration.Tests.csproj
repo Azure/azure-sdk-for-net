@@ -31,6 +31,7 @@
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\JaggedArrayTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ListTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ListOfListTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ProxiedListOfListTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ModelInstances.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\MultiDimensionalArrayTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ReadOnlyMemoryTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />

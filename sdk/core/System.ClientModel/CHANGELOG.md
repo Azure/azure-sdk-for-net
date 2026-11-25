@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added model proxy support to `ModelReaderWriter`: derive from `ModelProxy<T>` to read and write `T` and the types derived from it in place of the models' own serialization, and add proxies to `ModelReaderWriterOptions.Proxies`. A proxy handles every such model by default; override its `CanHandle` methods to select models and payloads. `ResolveProxy` and `ProxiedModel` let serializers apply proxies to nested models. `ClientPipelineOptions.ModelProxies` holds proxies for clients constructed with the options and becomes read-only when the options are frozen.
+
 ### Breaking Changes
 
 ### Bugs Fixed

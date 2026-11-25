@@ -298,6 +298,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 OptionalProperty.ToList(virtualMachines),
                 proximityPlacementGroup,
                 OptionalProperty.ToList(statuses),
+                new Dictionary<string, BinaryData>(),
                 jsonPatch);
         }
 

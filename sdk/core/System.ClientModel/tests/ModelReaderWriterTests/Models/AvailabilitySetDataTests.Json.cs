@@ -447,7 +447,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             Assert.AreEqual("extraSku", model2.Patch.GetString("$.extraSku"u8));
             Assert.AreEqual("extraRoot", model2.Patch.GetString("$.extraRoot"u8));
-            CompareAvailabilitySetData(model, model2, "J", skips);
+            CompareAvailabilitySetData(model, model2, "J", propertySkips: skips);
         }
     }
 }
