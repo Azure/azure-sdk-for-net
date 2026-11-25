@@ -1,0 +1,14 @@
+{
+  "matrix": {
+    "$IMPORT": "eng/pipelines/templates/stages/platform-matrix.json"
+  },
+  "exclude": [
+    {
+      "OSVmImage": "env:WINDOWSVMIMAGE",
+      "Pool": "env:WINDOWSPOOL",
+      "TestTargetFramework": "net10.0",
+      "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false",
+      "BuildConfiguration": "Debug"
+    }
+  ]
+}

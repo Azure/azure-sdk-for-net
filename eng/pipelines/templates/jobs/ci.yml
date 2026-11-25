@@ -213,10 +213,7 @@ jobs:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
-        ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-          JobTemplatePath: /eng/pipelines/templates/jobs/deduplicated-ci-tests.yml
-        ${{ else }}:
-          JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
         MatrixConfigs: ${{ parameters.MatrixConfigs }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace: ${{ parameters.MatrixReplace }}
