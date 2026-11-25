@@ -52,6 +52,71 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             Assert.AreEqual("2001:db8::1", node.PublicIPv6Address);
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void PoolUpdatePreservesAllArguments(bool useLegacyOverload)
+        {
+            var startTask = new BatchStartTask("echo factory-test");
+            var applications = new[] { new BatchApplicationPackageReference("application") };
+            var metadata = new[] { new BatchMetadataItem("key", "value") };
+            var virtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference(), "batch.node.windows amd64");
+            var taskSchedulingPolicy = new BatchTaskSchedulingPolicy();
+            var networkConfiguration = new NetworkConfiguration();
+            var userAccounts = new[] { new UserAccount("factory-user", "sample-password") };
+            var mounts = new[] { new MountConfiguration() };
+            var upgradePolicy = new UpgradePolicy();
+            var profile = new VirtualMachineSkuProfile();
+
+            BatchPoolUpdateOptions update = useLegacyOverload
+                ? ComputeBatchModelFactory.BatchPoolUpdateOptions(
+                    "display", "Standard_D2", true, startTask, applications, metadata,
+                    virtualMachineConfiguration, 4, taskSchedulingPolicy, networkConfiguration,
+                    userAccounts, mounts, upgradePolicy)
+                : ComputeBatchModelFactory.BatchPoolUpdateOptions(
+                    "display", "Standard_D2", true, startTask, applications, metadata,
+                    virtualMachineConfiguration, 4, taskSchedulingPolicy, networkConfiguration,
+                    userAccounts, mounts, upgradePolicy, profile);
+
+            Assert.AreEqual("display", update.DisplayName);
+            Assert.AreEqual("Standard_D2", update.VmSize);
+            Assert.IsTrue(update.EnableInterNodeCommunication);
+            Assert.AreSame(startTask, update.StartTask);
+            CollectionAssert.AreEqual(applications, update.ApplicationPackageReferences);
+            CollectionAssert.AreEqual(metadata, update.Metadata);
+            Assert.AreSame(virtualMachineConfiguration, update.VirtualMachineConfiguration);
+            Assert.AreEqual(4, update.TaskSlotsPerNode);
+            Assert.AreSame(taskSchedulingPolicy, update.TaskSchedulingPolicy);
+            Assert.AreSame(networkConfiguration, update.NetworkConfiguration);
+            CollectionAssert.AreEqual(userAccounts, update.UserAccounts);
+            CollectionAssert.AreEqual(mounts, update.MountConfiguration);
+            Assert.AreSame(upgradePolicy, update.UpgradePolicy);
+            Assert.AreSame(useLegacyOverload ? null : profile, update.VmSkuProfile);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void PoolUpdateAcceptsNullArguments(bool useLegacyOverload)
+        {
+            BatchPoolUpdateOptions update = useLegacyOverload
+                ? ComputeBatchModelFactory.BatchPoolUpdateOptions(null, null, null, null, null, null, null, null, null, null, null, null, null)
+                : ComputeBatchModelFactory.BatchPoolUpdateOptions(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+            Assert.IsNull(update.DisplayName);
+            Assert.IsNull(update.VmSize);
+            Assert.IsNull(update.EnableInterNodeCommunication);
+            Assert.IsNull(update.StartTask);
+            Assert.IsEmpty(update.ApplicationPackageReferences);
+            Assert.IsEmpty(update.Metadata);
+            Assert.IsNull(update.VirtualMachineConfiguration);
+            Assert.IsNull(update.TaskSlotsPerNode);
+            Assert.IsNull(update.TaskSchedulingPolicy);
+            Assert.IsNull(update.NetworkConfiguration);
+            Assert.IsEmpty(update.UserAccounts);
+            Assert.IsEmpty(update.MountConfiguration);
+            Assert.IsNull(update.UpgradePolicy);
+            Assert.IsNull(update.VmSkuProfile);
+        }
+
         [TestCase("BatchNode", 23, "publicIPAddress", "publicIPv6Address")]
         [TestCase("BatchPoolCreateOptions", 20, "vmSkuProfile", null)]
         [TestCase("BatchPool", 34, "vmSkuProfile", null)]

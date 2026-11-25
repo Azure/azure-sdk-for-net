@@ -21,6 +21,7 @@
 ### Bugs Fixed
 
 - Preserved positional argument ordering in `ComputeBatchModelFactory.BatchNode`, `BatchPool`, `BatchPoolCreateOptions`, and `BatchPoolUpdateOptions` by appending new optional parameters and retaining the original binary-compatible overloads.
+- Fixed the legacy `ComputeBatchModelFactory.BatchPoolUpdateOptions` overload to preserve all supplied arguments, including the start task and pool configuration.
 - Added `BatchClientOptions.Audience` to support Microsoft Entra authentication in Azure Government, Azure China, and custom clouds while retaining Azure Public Cloud as the default.
 - Fixed deserialization of numeric `diskReadIOps` and `diskWriteIOps` values returned by the service.
 - Fixed shared-key authentication to include the content length when signing POST requests with an empty body.

@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -15,6 +16,7 @@ namespace Azure.Compute.Batch
     [CodeGenSuppress("BatchPoolCreateOptions", typeof(string), typeof(string), typeof(string), typeof(VirtualMachineConfiguration), typeof(VirtualMachineSkuProfile), typeof(TimeSpan?), typeof(int?), typeof(int?), typeof(bool?), typeof(string), typeof(TimeSpan?), typeof(bool?), typeof(NetworkConfiguration), typeof(BatchStartTask), typeof(IEnumerable<BatchApplicationPackageReference>), typeof(int?), typeof(BatchTaskSchedulingPolicy), typeof(IEnumerable<UserAccount>), typeof(IEnumerable<BatchMetadataItem>), typeof(IEnumerable<MountConfiguration>), typeof(UpgradePolicy))]
     [CodeGenSuppress("BatchPool", typeof(string), typeof(string), typeof(Uri), typeof(ETag), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(BatchPoolState), typeof(DateTimeOffset), typeof(AllocationState?), typeof(DateTimeOffset?), typeof(string), typeof(VirtualMachineConfiguration), typeof(VirtualMachineSkuProfile), typeof(TimeSpan?), typeof(IEnumerable<ResizeError>), typeof(int), typeof(int), typeof(int?), typeof(int?), typeof(bool?), typeof(string), typeof(TimeSpan?), typeof(AutoScaleRun), typeof(bool?), typeof(NetworkConfiguration), typeof(BatchStartTask), typeof(IEnumerable<BatchApplicationPackageReference>), typeof(int?), typeof(BatchTaskSchedulingPolicy), typeof(IEnumerable<UserAccount>), typeof(IEnumerable<BatchMetadataItem>), typeof(BatchPoolStatistics), typeof(IEnumerable<MountConfiguration>), typeof(BatchPoolIdentity), typeof(UpgradePolicy))]
     [CodeGenSuppress("BatchPoolUpdateOptions", typeof(string), typeof(string), typeof(bool?), typeof(BatchStartTask), typeof(IEnumerable<BatchApplicationPackageReference>), typeof(IEnumerable<BatchMetadataItem>), typeof(VirtualMachineConfiguration), typeof(VirtualMachineSkuProfile), typeof(int?), typeof(BatchTaskSchedulingPolicy), typeof(NetworkConfiguration), typeof(IEnumerable<UserAccount>), typeof(IEnumerable<MountConfiguration>), typeof(UpgradePolicy))]
+    [CodeGenSuppress("BatchPoolUpdateOptions", typeof(string), typeof(string), typeof(bool?), typeof(BatchStartTask), typeof(IEnumerable<BatchApplicationPackageReference>), typeof(IEnumerable<BatchMetadataItem>), typeof(VirtualMachineConfiguration), typeof(int?), typeof(BatchTaskSchedulingPolicy), typeof(NetworkConfiguration), typeof(IEnumerable<UserAccount>), typeof(IEnumerable<MountConfiguration>), typeof(UpgradePolicy))]
     public partial class ComputeBatchModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Azure.Compute.Batch.BatchFileProperties"/> for mocking. </summary>
@@ -204,6 +206,27 @@ namespace Azure.Compute.Batch
                 mountConfiguration.ToList(),
                 upgradePolicy,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Parameters for updating an Azure Batch Pool. </summary>
+        /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. This field can be updated only when the pool is empty. </param>
+        /// <param name="vmSize"> The size of virtual machines in the Pool. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes).&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="startTask"> A Task to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. If this element is present, it overwrites any existing StartTask. If omitted, any existing StartTask is left unchanged. </param>
+        /// <param name="applicationPackageReferences"> A list of Packages to be installed on each Compute Node in the Pool. Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. If this element is present, it replaces any existing Package references. If you specify an empty collection, then all Package references are removed from the Pool. If omitted, any existing Package references are left unchanged. </param>
+        /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. If this element is present, it replaces any existing metadata configured on the Pool. If you specify an empty collection, any metadata is removed from the Pool. If omitted, any existing metadata is left unchanged. </param>
+        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="taskSlotsPerNode"> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="networkConfiguration"> The network configuration for the Pool. This field can be updated only when the pool is empty. </param>
+        /// <param name="userAccounts"> The list of user Accounts to be created on each Compute Node in the Pool. This field can be updated only when the pool is empty. </param>
+        /// <param name="mountConfiguration"> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <returns> A new <see cref="Batch.BatchPoolUpdateOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchPoolUpdateOptions BatchPoolUpdateOptions(string displayName, string vmSize, bool? enableInterNodeCommunication, BatchStartTask startTask, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences, IEnumerable<BatchMetadataItem> metadata, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, NetworkConfiguration networkConfiguration, IEnumerable<UserAccount> userAccounts, IEnumerable<MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy)
+        {
+            return BatchPoolUpdateOptions(displayName: displayName, vmSize: vmSize, enableInterNodeCommunication: enableInterNodeCommunication, startTask: startTask, applicationPackageReferences: applicationPackageReferences, metadata: metadata, virtualMachineConfiguration: virtualMachineConfiguration, taskSlotsPerNode: taskSlotsPerNode, taskSchedulingPolicy: taskSchedulingPolicy, networkConfiguration: networkConfiguration, userAccounts: userAccounts, mountConfiguration: mountConfiguration, upgradePolicy: upgradePolicy, vmSkuProfile: default);
         }
 
         /// <summary> A Compute Node in the Batch service. </summary>

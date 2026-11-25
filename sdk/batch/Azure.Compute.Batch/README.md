@@ -51,7 +51,7 @@ new Uri("https://<your account>.eastus.batch.azure.com"), credential);
 Set both the Batch audience and the credential's authority host for the cloud containing your Batch account.
 The audience defaults to `BatchAudience.AzurePublicCloud` and is not inferred from the endpoint.
 
-```csharp
+```C# Snippet:Batch_Readme_SovereignCloudCredential
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
 {
     AuthorityHost = AzureAuthorityHosts.AzureGovernment
