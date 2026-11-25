@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         private readonly ClientDiagnostics _backupVaultResourcesClientDiagnostics;
         private readonly BackupVaultResources _backupVaultResourcesRestClient;
-        private readonly ClientDiagnostics _dppCrossTenantVaultMappingStatusClientDiagnostics;
-        private readonly DppCrossTenantVaultMappingStatus _dppCrossTenantVaultMappingStatusRestClient;
         private readonly DataProtectionBackupVaultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults";
@@ -54,11 +52,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataProtectionBackupVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataProtectionBackupVaultApiVersion);
             _backupVaultResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _backupVaultResourcesRestClient = new BackupVaultResources(_backupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/backupVaults", out string backupVaultResourcesApiVersionOverride) ? backupVaultResourcesApiVersionOverride : "2026-08-31-preview");
-            _dppCrossTenantVaultMappingStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _dppCrossTenantVaultMappingStatusRestClient = new DppCrossTenantVaultMappingStatus(_dppCrossTenantVaultMappingStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupVaultApiVersion ?? "2026-08-31-preview");
+            _backupVaultResourcesRestClient = new BackupVaultResources(_backupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/backupVaults", out string backupVaultResourcesApiVersionOverride) ? backupVaultResourcesApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -111,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +202,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -267,7 +262,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -327,7 +322,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -376,7 +371,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -425,7 +420,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -474,7 +469,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -523,7 +518,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -582,7 +577,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -620,102 +615,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status (Active/Inactive) of a cross-tenant vault mapping from the source vault side.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/crossTenantVaultMappingStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DppCrossTenantVaultMappingStatus_Check. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataProtectionBackupVaultResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CrossTenantVaultMappingStatusResult>> CheckAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _dppCrossTenantVaultMappingStatusClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.Check");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dppCrossTenantVaultMappingStatusRestClient.CreateCheckRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CrossTenantVaultMappingStatusResult> response = Response.FromValue(CrossTenantVaultMappingStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status (Active/Inactive) of a cross-tenant vault mapping from the source vault side.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/crossTenantVaultMappingStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DppCrossTenantVaultMappingStatus_Check. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataProtectionBackupVaultResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CrossTenantVaultMappingStatusResult> Check(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _dppCrossTenantVaultMappingStatusClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.Check");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dppCrossTenantVaultMappingStatusRestClient.CreateCheckRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CrossTenantVaultMappingStatusResult> response = Response.FromValue(CrossTenantVaultMappingStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {
@@ -1062,11 +961,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetDataProtectionBackupInstances().Get(backupInstanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AzureBackupJobResources in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
-        /// <returns> An object representing collection of AzureBackupJobResources and their operations over a AzureBackupJobResource. </returns>
-        public virtual AzureBackupJobResourceCollection GetAzureBackupJobResources()
+        /// <summary> Gets a collection of DataProtectionBackupJobs in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
+        /// <returns> An object representing collection of DataProtectionBackupJobs and their operations over a DataProtectionBackupJobResource. </returns>
+        public virtual DataProtectionBackupJobCollection GetDataProtectionBackupJobs()
         {
-            return GetCachedClient(client => new AzureBackupJobResourceCollection(client, Id));
+            return GetCachedClient(client => new DataProtectionBackupJobCollection(client, Id));
         }
 
         /// <summary> Gets a job with id in a backup vault. </summary>
@@ -1075,11 +974,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AzureBackupJobResource>> GetAzureBackupJobResourceAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionBackupJobResource>> GetDataProtectionBackupJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return await GetAzureBackupJobResources().GetAsync(jobId, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupJobs().GetAsync(jobId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a job with id in a backup vault. </summary>
@@ -1088,11 +987,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AzureBackupJobResource> GetAzureBackupJobResource(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionBackupJobResource> GetDataProtectionBackupJob(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return GetAzureBackupJobResources().Get(jobId, cancellationToken);
+            return GetDataProtectionBackupJobs().Get(jobId, cancellationToken);
         }
 
         /// <summary> Gets a collection of DeletedDataProtectionBackupInstances in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
@@ -1159,39 +1058,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
             return GetResourceGuardProxyBaseResources().Get(resourceGuardProxyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CrossTenantVaultMappings in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
-        /// <returns> An object representing collection of CrossTenantVaultMappings and their operations over a CrossTenantVaultMappingResource. </returns>
-        public virtual CrossTenantVaultMappingCollection GetCrossTenantVaultMappings()
-        {
-            return GetCachedClient(client => new CrossTenantVaultMappingCollection(client, Id));
-        }
-
-        /// <summary> Gets a cross-tenant vault mapping by name from the target vault. </summary>
-        /// <param name="mappingName"> The name of the cross-tenant vault mapping. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CrossTenantVaultMappingResource>> GetCrossTenantVaultMappingAsync(string mappingName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
-
-            return await GetCrossTenantVaultMappings().GetAsync(mappingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a cross-tenant vault mapping by name from the target vault. </summary>
-        /// <param name="mappingName"> The name of the cross-tenant vault mapping. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CrossTenantVaultMappingResource> GetCrossTenantVaultMapping(string mappingName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
-
-            return GetCrossTenantVaultMappings().Get(mappingName, cancellationToken);
         }
     }
 }

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureBackupJobResource"/> and their operations.
-    /// Each <see cref="AzureBackupJobResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupVaultResource"/>.
-    /// To get a <see cref="AzureBackupJobResourceCollection"/> instance call the GetAzureBackupJobResources method from an instance of <see cref="DataProtectionBackupVaultResource"/>.
+    /// A class representing a collection of <see cref="DataProtectionBackupJobResource"/> and their operations.
+    /// Each <see cref="DataProtectionBackupJobResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupVaultResource"/>.
+    /// To get a <see cref="DataProtectionBackupJobCollection"/> instance call the GetDataProtectionBackupJobs method from an instance of <see cref="DataProtectionBackupVaultResource"/>.
     /// </summary>
-    public partial class AzureBackupJobResourceCollection : ArmCollection, IEnumerable<AzureBackupJobResource>, IAsyncEnumerable<AzureBackupJobResource>
+    public partial class DataProtectionBackupJobCollection : ArmCollection, IEnumerable<DataProtectionBackupJobResource>, IAsyncEnumerable<DataProtectionBackupJobResource>
     {
         private readonly ClientDiagnostics _azureBackupJobResourcesClientDiagnostics;
         private readonly AzureBackupJobResources _azureBackupJobResourcesRestClient;
 
-        /// <summary> Initializes a new instance of AzureBackupJobResourceCollection for mocking. </summary>
-        protected AzureBackupJobResourceCollection()
+        /// <summary> Initializes a new instance of DataProtectionBackupJobCollection for mocking. </summary>
+        protected DataProtectionBackupJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBackupJobResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AzureBackupJobResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataProtectionBackupJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AzureBackupJobResource.ResourceType, out string azureBackupJobResourceApiVersion);
-            _azureBackupJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", AzureBackupJobResource.ResourceType.Namespace, Diagnostics);
-            _azureBackupJobResourcesRestClient = new AzureBackupJobResources(_azureBackupJobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureBackupJobResourceApiVersion ?? "2026-08-31-preview");
+            TryGetApiVersion(DataProtectionBackupJobResource.ResourceType, out string dataProtectionBackupJobApiVersion);
+            _azureBackupJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupJobResource.ResourceType.Namespace, Diagnostics);
+            _azureBackupJobResourcesRestClient = new AzureBackupJobResources(_azureBackupJobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupJobApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AzureBackupJobResource>> GetAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionBackupJobResource>> GetAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("AzureBackupJobResourceCollection.Get");
+            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobCollection.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AzureBackupJobResource> Get(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionBackupJobResource> Get(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("AzureBackupJobResourceCollection.Get");
+            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,25 +165,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureBackupJobResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupJobData, AzureBackupJobResource>(new DataProtectionBackupJobDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new DataProtectionBackupJobDataAsyncCollectionResultOfT(
                 _azureBackupJobResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AzureBackupJobResourceCollection.GetAll"), data => new AzureBackupJobResource(Client, data));
+                "DataProtectionBackupJobCollection.GetAll"), data => new DataProtectionBackupJobResource(Client, data));
         }
 
         /// <summary>
@@ -199,25 +199,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureBackupJobResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupJobResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupJobData, AzureBackupJobResource>(new DataProtectionBackupJobDataCollectionResultOfT(
+            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new DataProtectionBackupJobDataCollectionResultOfT(
                 _azureBackupJobResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AzureBackupJobResourceCollection.GetAll"), data => new AzureBackupJobResource(Client, data));
+                "DataProtectionBackupJobCollection.GetAll"), data => new DataProtectionBackupJobResource(Client, data));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("AzureBackupJobResourceCollection.Exists");
+            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("AzureBackupJobResourceCollection.Exists");
+            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobCollection.Exists");
             scope.Start();
             try
             {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AzureBackupJobResource>> GetIfExistsAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DataProtectionBackupJobResource>> GetIfExistsAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("AzureBackupJobResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AzureBackupJobResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataProtectionBackupJobResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AzureBackupJobResource> GetIfExists(string jobId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DataProtectionBackupJobResource> GetIfExists(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("AzureBackupJobResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -445,9 +445,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AzureBackupJobResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataProtectionBackupJobResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        IEnumerator<AzureBackupJobResource> IEnumerable<AzureBackupJobResource>.GetEnumerator()
+        IEnumerator<DataProtectionBackupJobResource> IEnumerable<DataProtectionBackupJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AzureBackupJobResource> IAsyncEnumerable<AzureBackupJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataProtectionBackupJobResource> IAsyncEnumerable<DataProtectionBackupJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

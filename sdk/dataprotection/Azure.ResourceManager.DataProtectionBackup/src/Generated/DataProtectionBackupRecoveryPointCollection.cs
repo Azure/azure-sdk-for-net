@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureBackupRecoveryPointResource"/> and their operations.
-    /// Each <see cref="AzureBackupRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupInstanceResource"/>.
-    /// To get a <see cref="AzureBackupRecoveryPointResourceCollection"/> instance call the GetAzureBackupRecoveryPointResources method from an instance of <see cref="DataProtectionBackupInstanceResource"/>.
+    /// A class representing a collection of <see cref="DataProtectionBackupRecoveryPointResource"/> and their operations.
+    /// Each <see cref="DataProtectionBackupRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupInstanceResource"/>.
+    /// To get a <see cref="DataProtectionBackupRecoveryPointCollection"/> instance call the GetDataProtectionBackupRecoveryPoints method from an instance of <see cref="DataProtectionBackupInstanceResource"/>.
     /// </summary>
-    public partial class AzureBackupRecoveryPointResourceCollection : ArmCollection, IEnumerable<AzureBackupRecoveryPointResource>, IAsyncEnumerable<AzureBackupRecoveryPointResource>
+    public partial class DataProtectionBackupRecoveryPointCollection : ArmCollection, IEnumerable<DataProtectionBackupRecoveryPointResource>, IAsyncEnumerable<DataProtectionBackupRecoveryPointResource>
     {
         private readonly ClientDiagnostics _azureBackupRecoveryPointResourcesClientDiagnostics;
         private readonly AzureBackupRecoveryPointResources _azureBackupRecoveryPointResourcesRestClient;
 
-        /// <summary> Initializes a new instance of AzureBackupRecoveryPointResourceCollection for mocking. </summary>
-        protected AzureBackupRecoveryPointResourceCollection()
+        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointCollection for mocking. </summary>
+        protected DataProtectionBackupRecoveryPointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBackupRecoveryPointResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AzureBackupRecoveryPointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataProtectionBackupRecoveryPointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AzureBackupRecoveryPointResource.ResourceType, out string azureBackupRecoveryPointResourceApiVersion);
-            _azureBackupRecoveryPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", AzureBackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureBackupRecoveryPointResourceApiVersion ?? "2026-08-31-preview");
+            TryGetApiVersion(DataProtectionBackupRecoveryPointResource.ResourceType, out string dataProtectionBackupRecoveryPointApiVersion);
+            _azureBackupRecoveryPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
+            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AzureBackupRecoveryPointResource>> GetAsync(string recoveryPointId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionBackupRecoveryPointResource>> GetAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResourceCollection.Get");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AzureBackupRecoveryPointResource> Get(string recoveryPointId, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionBackupRecoveryPointResource> Get(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResourceCollection.Get");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,21 +165,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureBackupRecoveryPointResource> GetAllAsync(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetAllAsync(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, AzureBackupRecoveryPointResource>(new DataProtectionBackupRecoveryPointDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new DataProtectionBackupRecoveryPointDataAsyncCollectionResultOfT(
                 _azureBackupRecoveryPointResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 filter,
                 skipToken,
                 context,
-                "AzureBackupRecoveryPointResourceCollection.GetAll"), data => new AzureBackupRecoveryPointResource(Client, data));
+                "DataProtectionBackupRecoveryPointCollection.GetAll"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -204,21 +204,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureBackupRecoveryPointResource> GetAll(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetAll(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupRecoveryPointData, AzureBackupRecoveryPointResource>(new DataProtectionBackupRecoveryPointDataCollectionResultOfT(
+            return new PageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new DataProtectionBackupRecoveryPointDataCollectionResultOfT(
                 _azureBackupRecoveryPointResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 filter,
                 skipToken,
                 context,
-                "AzureBackupRecoveryPointResourceCollection.GetAll"), data => new AzureBackupRecoveryPointResource(Client, data));
+                "DataProtectionBackupRecoveryPointCollection.GetAll"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResourceCollection.Exists");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.Exists");
             scope.Start();
             try
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResourceCollection.Exists");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AzureBackupRecoveryPointResource>> GetIfExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DataProtectionBackupRecoveryPointResource>> GetIfExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AzureBackupRecoveryPointResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataProtectionBackupRecoveryPointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,11 +426,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AzureBackupRecoveryPointResource> GetIfExists(string recoveryPointId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DataProtectionBackupRecoveryPointResource> GetIfExists(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -455,9 +455,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AzureBackupRecoveryPointResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataProtectionBackupRecoveryPointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        IEnumerator<AzureBackupRecoveryPointResource> IEnumerable<AzureBackupRecoveryPointResource>.GetEnumerator()
+        IEnumerator<DataProtectionBackupRecoveryPointResource> IEnumerable<DataProtectionBackupRecoveryPointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AzureBackupRecoveryPointResource> IAsyncEnumerable<AzureBackupRecoveryPointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataProtectionBackupRecoveryPointResource> IAsyncEnumerable<DataProtectionBackupRecoveryPointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
