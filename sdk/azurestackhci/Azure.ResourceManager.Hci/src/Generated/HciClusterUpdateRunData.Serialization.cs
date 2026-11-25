@@ -153,7 +153,6 @@ namespace Azure.ResourceManager.Hci
             ResourceType resourceType = default;
             SystemData systemData = default;
             UpdateRunProperties properties = default;
-            string updateRunName = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,7 +218,6 @@ namespace Azure.ResourceManager.Hci
                 resourceType,
                 systemData,
                 properties,
-                updateRunName,
                 location,
                 additionalBinaryDataProperties);
         }

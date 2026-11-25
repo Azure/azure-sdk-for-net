@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RoleAssignmentScheduleRequestData item in Value)
+            foreach (RoleAssignmentScheduleContentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            IList<RoleAssignmentScheduleRequestData> value = default;
+            IList<RoleAssignmentScheduleContentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RoleAssignmentScheduleRequestData> array = new List<RoleAssignmentScheduleRequestData>();
+                    List<RoleAssignmentScheduleContentData> array = new List<RoleAssignmentScheduleContentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(item, options));
+                        array.Add(RoleAssignmentScheduleContentData.DeserializeRoleAssignmentScheduleContentData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoleAssignmentScheduleRequestListResult(value ?? new ChangeTrackingList<RoleAssignmentScheduleRequestData>(), nextLink, additionalBinaryDataProperties);
+            return new RoleAssignmentScheduleRequestListResult(value ?? new ChangeTrackingList<RoleAssignmentScheduleContentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

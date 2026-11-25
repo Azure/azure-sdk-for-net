@@ -582,19 +582,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdOn"> DateTime when role assignment schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        /// <param name="startOn"> Start DateTime of the role assignment schedule. </param>
+        /// <param name="startsOn"> Start DateTime of the role assignment schedule. </param>
         /// <param name="expirationType"> Type of the role assignment schedule expiration. </param>
-        /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
+        /// <param name="endsOn"> End DateTime of the role assignment schedule. </param>
         /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
-        /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleRequestData"/> instance for mocking. </returns>
-        public static RoleAssignmentScheduleRequestData RoleAssignmentScheduleRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleAssignmentScheduleId = default, ResourceIdentifier targetRoleAssignmentScheduleInstanceId = default, ResourceIdentifier linkedRoleEligibilityScheduleId = default, string justification = default, RoleAssignmentScheduleTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endOn = default, TimeSpan? duration = default)
+        /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleContentData"/> instance for mocking. </returns>
+        public static RoleAssignmentScheduleContentData RoleAssignmentScheduleContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleAssignmentScheduleId = default, ResourceIdentifier targetRoleAssignmentScheduleInstanceId = default, ResourceIdentifier linkedRoleEligibilityScheduleId = default, string justification = default, RoleAssignmentScheduleTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startsOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
         {
-            return new RoleAssignmentScheduleRequestData(
+            return new RoleAssignmentScheduleContentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && targetRoleAssignmentScheduleId is null && targetRoleAssignmentScheduleInstanceId is null && startOn is null && expirationType is null && endOn is null && duration is null && linkedRoleEligibilityScheduleId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleAssignmentScheduleRequestProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && targetRoleAssignmentScheduleId is null && targetRoleAssignmentScheduleInstanceId is null && startsOn is null && expirationType is null && endsOn is null && duration is null && linkedRoleEligibilityScheduleId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleAssignmentScheduleRequestProperties(
                     scope,
                     roleDefinitionId,
                     principalId.GetValueOrDefault(),
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalId,
                     targetRoleAssignmentScheduleId,
                     targetRoleAssignmentScheduleInstanceId,
-                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startsOn is null && expirationType is null && endsOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startsOn, expirationType is null && endsOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endsOn, duration, default), default),
                     linkedRoleEligibilityScheduleId,
                     justification,
                     ticketInfo,
@@ -734,19 +734,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdOn"> DateTime when role eligibility schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        /// <param name="startOn"> Start DateTime of the role eligibility schedule. </param>
+        /// <param name="startsOn"> Start DateTime of the role eligibility schedule. </param>
         /// <param name="expirationType"> Type of the role eligibility schedule expiration. </param>
-        /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
+        /// <param name="endsOn"> End DateTime of the role eligibility schedule. </param>
         /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
-        /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleRequestData"/> instance for mocking. </returns>
-        public static RoleEligibilityScheduleRequestData RoleEligibilityScheduleRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleEligibilityScheduleId = default, ResourceIdentifier targetRoleEligibilityScheduleInstanceId = default, string justification = default, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endOn = default, TimeSpan? duration = default)
+        /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleContentData"/> instance for mocking. </returns>
+        public static RoleEligibilityScheduleContentData RoleEligibilityScheduleContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, Guid? principalId = default, RoleManagementPrincipalType? principalType = default, RoleManagementScheduleRequestType? requestType = default, RoleManagementScheduleStatus? status = default, string approvalId = default, ResourceIdentifier targetRoleEligibilityScheduleId = default, ResourceIdentifier targetRoleEligibilityScheduleInstanceId = default, string justification = default, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, Guid? requestorId = default, RoleManagementExpandedProperties expandedProperties = default, DateTimeOffset? startsOn = default, RoleManagementScheduleExpirationType? expirationType = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default)
         {
-            return new RoleEligibilityScheduleRequestData(
+            return new RoleEligibilityScheduleContentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && startOn is null && expirationType is null && endOn is null && duration is null && targetRoleEligibilityScheduleId is null && targetRoleEligibilityScheduleInstanceId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleEligibilityScheduleRequestProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && startsOn is null && expirationType is null && endsOn is null && duration is null && targetRoleEligibilityScheduleId is null && targetRoleEligibilityScheduleInstanceId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleEligibilityScheduleRequestProperties(
                     scope,
                     roleDefinitionId,
                     principalId.GetValueOrDefault(),
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     requestType.GetValueOrDefault(),
                     status,
                     approvalId,
-                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startsOn is null && expirationType is null && endsOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startsOn, expirationType is null && endsOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endsOn, duration, default), default),
                     targetRoleEligibilityScheduleId,
                     targetRoleEligibilityScheduleInstanceId,
                     justification,

@@ -14,21 +14,21 @@ using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    internal partial class RoleEligibilityScheduleRequestDataCollectionResultOfT : Pageable<RoleEligibilityScheduleRequestData>
+    internal partial class RoleAssignmentScheduleContentDataCollectionResultOfT : Pageable<RoleAssignmentScheduleContentData>
     {
-        private readonly RoleEligibilityScheduleRequests _client;
+        private readonly RoleAssignmentScheduleRequests _client;
         private readonly string _scope;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The RoleEligibilityScheduleRequests client used to send requests. </param>
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleContentDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The RoleAssignmentScheduleRequests client used to send requests. </param>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role eligibility schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role eligibility schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role eligibility schedule requests requested by the current user. Use $filter=asTarget() to return all role eligibility schedule requests created for the current user. Use $filter=asApprover() to return all role eligibility schedule requests where the current user is an approver. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role assignment schedule requests requested by the current user. Use $filter=asTarget() to return all role assignment schedule requests created for the current user. Use $filter=asApprover() to return all role assignment schedule requests where the current user is an approver. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RoleEligibilityScheduleRequestDataCollectionResultOfT(RoleEligibilityScheduleRequests client, string scope, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RoleAssignmentScheduleContentDataCollectionResultOfT(RoleAssignmentScheduleRequests client, string scope, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Authorization
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RoleEligibilityScheduleRequestDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RoleAssignmentScheduleContentDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RoleEligibilityScheduleRequestDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RoleEligibilityScheduleRequestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RoleAssignmentScheduleContentDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<RoleAssignmentScheduleContentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Authorization
                 {
                     yield break;
                 }
-                RoleEligibilityScheduleRequestListResult result = RoleEligibilityScheduleRequestListResult.FromResponse(response);
+                RoleAssignmentScheduleRequestListResult result = RoleAssignmentScheduleRequestListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<RoleEligibilityScheduleRequestData>.FromValues((IReadOnlyList<RoleEligibilityScheduleRequestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RoleAssignmentScheduleContentData>.FromValues((IReadOnlyList<RoleAssignmentScheduleContentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

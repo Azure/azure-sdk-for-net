@@ -13,35 +13,35 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> Role Eligibility schedule request. </summary>
-    public partial class RoleEligibilityScheduleRequestData : ResourceData
+    /// <summary> Role Assignment schedule request. </summary>
+    public partial class RoleAssignmentScheduleContentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestData"/>. </summary>
-        public RoleEligibilityScheduleRequestData()
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleContentData"/>. </summary>
+        public RoleAssignmentScheduleContentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleContentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Role eligibility schedule request properties. </param>
+        /// <param name="properties"> Role assignment schedule request properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleEligibilityScheduleRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleContentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleAssignmentScheduleRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Role eligibility schedule request properties. </summary>
+        /// <summary> Role assignment schedule request properties. </summary>
         [WirePath("properties")]
-        internal RoleEligibilityScheduleRequestProperties Properties { get; set; }
+        internal RoleAssignmentScheduleRequestProperties Properties { get; set; }
 
-        /// <summary> The role eligibility schedule request scope. </summary>
+        /// <summary> The role assignment schedule request scope. </summary>
         [WirePath("properties.scope")]
         public string Scope
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.RoleDefinitionId = value;
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (Properties is null)
                     {
-                        Properties = new RoleEligibilityScheduleRequestProperties();
+                        Properties = new RoleAssignmentScheduleRequestProperties();
                     }
                     Properties.PrincipalId = value.Value;
                 }
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (Properties is null)
                     {
-                        Properties = new RoleEligibilityScheduleRequestProperties();
+                        Properties = new RoleAssignmentScheduleRequestProperties();
                     }
                     Properties.RequestType = value.Value;
                 }
             }
         }
 
-        /// <summary> The status of the role eligibility schedule request. </summary>
+        /// <summary> The status of the role assignment schedule request. </summary>
         [WirePath("properties.status")]
         public RoleManagementScheduleStatus? Status
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        /// <summary> The approvalId of the role eligibility schedule request. </summary>
+        /// <summary> The approvalId of the role assignment schedule request. </summary>
         [WirePath("properties.approvalId")]
         public string ApprovalId
         {
@@ -141,43 +141,61 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        /// <summary> The resultant role eligibility schedule id or the role eligibility schedule id being updated. </summary>
-        [WirePath("properties.targetRoleEligibilityScheduleId")]
-        public ResourceIdentifier TargetRoleEligibilityScheduleId
+        /// <summary> The resultant role assignment schedule id or the role assignment schedule id being updated. </summary>
+        [WirePath("properties.targetRoleAssignmentScheduleId")]
+        public ResourceIdentifier TargetRoleAssignmentScheduleId
         {
             get
             {
-                return Properties is null ? default : Properties.TargetRoleEligibilityScheduleId;
+                return Properties is null ? default : Properties.TargetRoleAssignmentScheduleId;
             }
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
-                Properties.TargetRoleEligibilityScheduleId = value;
+                Properties.TargetRoleAssignmentScheduleId = value;
             }
         }
 
-        /// <summary> The role eligibility schedule instance id being updated. </summary>
-        [WirePath("properties.targetRoleEligibilityScheduleInstanceId")]
-        public ResourceIdentifier TargetRoleEligibilityScheduleInstanceId
+        /// <summary> The role assignment schedule instance id being updated. </summary>
+        [WirePath("properties.targetRoleAssignmentScheduleInstanceId")]
+        public ResourceIdentifier TargetRoleAssignmentScheduleInstanceId
         {
             get
             {
-                return Properties is null ? default : Properties.TargetRoleEligibilityScheduleInstanceId;
+                return Properties is null ? default : Properties.TargetRoleAssignmentScheduleInstanceId;
             }
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
-                Properties.TargetRoleEligibilityScheduleInstanceId = value;
+                Properties.TargetRoleAssignmentScheduleInstanceId = value;
             }
         }
 
-        /// <summary> Justification for the role eligibility. </summary>
+        /// <summary> The linked role eligibility schedule id - to activate an eligibility. </summary>
+        [WirePath("properties.linkedRoleEligibilityScheduleId")]
+        public ResourceIdentifier LinkedRoleEligibilityScheduleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedRoleEligibilityScheduleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleAssignmentScheduleRequestProperties();
+                }
+                Properties.LinkedRoleEligibilityScheduleId = value;
+            }
+        }
+
+        /// <summary> Justification for the role assignment. </summary>
         [WirePath("properties.justification")]
         public string Justification
         {
@@ -189,15 +207,15 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.Justification = value;
             }
         }
 
-        /// <summary> Ticket Info of the role eligibility. </summary>
+        /// <summary> Ticket Info of the role assignment. </summary>
         [WirePath("properties.ticketInfo")]
-        public RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo
+        public RoleAssignmentScheduleTicketInfo TicketInfo
         {
             get
             {
@@ -207,7 +225,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.TicketInfo = value;
             }
@@ -225,7 +243,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.Condition = value;
             }
@@ -243,13 +261,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.ConditionVersion = value;
             }
         }
 
-        /// <summary> DateTime when role eligibility schedule request was created. </summary>
+        /// <summary> DateTime when role assignment schedule request was created. </summary>
         [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn
         {
@@ -279,9 +297,9 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        /// <summary> Start DateTime of the role eligibility schedule. </summary>
+        /// <summary> Start DateTime of the role assignment schedule. </summary>
         [WirePath("properties.scheduleInfo.startDateTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
@@ -291,13 +309,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.StartsOn = value;
             }
         }
 
-        /// <summary> Type of the role eligibility schedule expiration. </summary>
+        /// <summary> Type of the role assignment schedule expiration. </summary>
         [WirePath("properties.scheduleInfo.expiration.type")]
         public RoleManagementScheduleExpirationType? ExpirationType
         {
@@ -309,15 +327,15 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.ExpirationType = value;
             }
         }
 
-        /// <summary> End DateTime of the role eligibility schedule. </summary>
+        /// <summary> End DateTime of the role assignment schedule. </summary>
         [WirePath("properties.scheduleInfo.expiration.endDateTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
@@ -327,13 +345,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.EndsOn = value;
             }
         }
 
-        /// <summary> Duration of the role eligibility schedule in TimeSpan. </summary>
+        /// <summary> Duration of the role assignment schedule in TimeSpan. </summary>
         [WirePath("properties.scheduleInfo.expiration.duration")]
         public TimeSpan? Duration
         {
@@ -345,7 +363,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleEligibilityScheduleRequestProperties();
+                    Properties = new RoleAssignmentScheduleRequestProperties();
                 }
                 Properties.Duration = value;
             }

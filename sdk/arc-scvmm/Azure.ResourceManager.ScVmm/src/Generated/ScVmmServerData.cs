@@ -52,8 +52,11 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
         public ScVmmServerData(AzureLocation location, ExtendedLocation extendedLocation, string fqdn) : this(location, extendedLocation)
         {
+            Argument.AssertNotNull(fqdn, nameof(fqdn));
+
             Fqdn = fqdn;
         }
 
