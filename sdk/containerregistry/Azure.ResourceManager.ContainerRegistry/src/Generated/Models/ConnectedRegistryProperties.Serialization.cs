@@ -164,11 +164,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("garbageCollection"u8);
                 writer.WriteObjectValue(GarbageCollection, options);
             }
-            if (Optional.IsDefined(RegistrySyncResult))
-            {
-                writer.WritePropertyName("registrySyncResult"u8);
-                writer.WriteObjectValue(RegistrySyncResult, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -224,7 +219,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails = default;
             IList<string> notificationsList = default;
             GarbageCollectionProperties garbageCollection = default;
-            ContainerRegistrySyncResult registrySyncResult = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -362,15 +356,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     garbageCollection = GarbageCollectionProperties.DeserializeGarbageCollectionProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("registrySyncResult"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    registrySyncResult = ContainerRegistrySyncResult.DeserializeContainerRegistrySyncResult(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -390,7 +375,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 statusDetails ?? new ChangeTrackingList<ConnectedRegistryStatusDetail>(),
                 notificationsList ?? new ChangeTrackingList<string>(),
                 garbageCollection,
-                registrySyncResult,
                 additionalBinaryDataProperties);
         }
     }

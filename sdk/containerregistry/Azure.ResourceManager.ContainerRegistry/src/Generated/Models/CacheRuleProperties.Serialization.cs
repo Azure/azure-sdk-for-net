@@ -80,11 +80,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("credentialSetResourceId"u8);
                 writer.WriteStringValue(CredentialSetResourceId);
             }
-            if (Optional.IsDefined(AdditionalAuthenticationProperties))
-            {
-                writer.WritePropertyName("additionalAuthenticationProperties"u8);
-                writer.WriteObjectValue(AdditionalAuthenticationProperties, options);
-            }
             if (Optional.IsDefined(SourceRepository))
             {
                 writer.WritePropertyName("sourceRepository"u8);
@@ -148,7 +143,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ResourceIdentifier credentialSetResourceId = default;
-            ContainerRegistryCacheAuthentication additionalAuthenticationProperties = default;
             string sourceRepository = default;
             string targetRepository = default;
             DateTimeOffset? createdOn = default;
@@ -163,15 +157,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         continue;
                     }
                     credentialSetResourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("additionalAuthenticationProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalAuthenticationProperties = ContainerRegistryCacheAuthentication.DeserializeContainerRegistryCacheAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sourceRepository"u8))
@@ -209,7 +194,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             return new CacheRuleProperties(
                 credentialSetResourceId,
-                additionalAuthenticationProperties,
                 sourceRepository,
                 targetRepository,
                 createdOn,

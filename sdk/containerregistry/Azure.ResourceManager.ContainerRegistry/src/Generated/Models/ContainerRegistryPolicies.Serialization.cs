@@ -99,11 +99,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("azureADAuthenticationAsArmPolicy"u8);
                 writer.WriteObjectValue(AzureADAuthenticationAsArmPolicy, options);
             }
-            if (Optional.IsDefined(SoftDeletePolicy))
-            {
-                writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,7 +146,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryRetentionPolicy retentionPolicy = default;
             ExportPolicy exportPolicy = default;
             AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy = default;
-            ContainerRegistrySoftDeletePolicy softDeletePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,15 +194,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     azureADAuthenticationAsArmPolicy = AzureADAuthenticationAsArmPolicy.DeserializeAzureADAuthenticationAsArmPolicy(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("softDeletePolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    softDeletePolicy = ContainerRegistrySoftDeletePolicy.DeserializeContainerRegistrySoftDeletePolicy(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -220,7 +205,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 retentionPolicy,
                 exportPolicy,
                 azureADAuthenticationAsArmPolicy,
-                softDeletePolicy,
                 additionalBinaryDataProperties);
         }
     }

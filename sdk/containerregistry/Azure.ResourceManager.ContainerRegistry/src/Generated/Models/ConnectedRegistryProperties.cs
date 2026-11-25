@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="statusDetails"> The list of current statuses of the connected registry. </param>
         /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
         /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
-        /// <param name="registrySyncResult"> The result of the connected registry's most recent sync with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryProperties(ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ActivationProperties activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, ContainerRegistrySyncResult registrySyncResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistryProperties(ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ActivationProperties activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Mode = mode;
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             StatusDetails = statusDetails;
             NotificationsList = notificationsList;
             GarbageCollection = garbageCollection;
-            RegistrySyncResult = registrySyncResult;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -119,10 +117,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The garbage collection properties of the connected registry. </summary>
         [WirePath("garbageCollection")]
         public GarbageCollectionProperties GarbageCollection { get; set; }
-
-        /// <summary> The result of the connected registry's most recent sync with its parent. </summary>
-        [WirePath("registrySyncResult")]
-        public ContainerRegistrySyncResult RegistrySyncResult { get; set; }
 
         /// <summary> The activation status of the connected registry. </summary>
         [WirePath("activation.status")]

@@ -82,11 +82,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryNameAvailableResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AvailableLoginServerName))
-            {
-                writer.WritePropertyName("availableLoginServerName"u8);
-                writer.WriteStringValue(AvailableLoginServerName);
-            }
             if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
@@ -144,18 +139,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string availableLoginServerName = default;
             bool? isNameAvailable = default;
             string reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("availableLoginServerName"u8))
-                {
-                    availableLoginServerName = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("nameAvailable"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -180,7 +169,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerRegistryNameAvailableResult(availableLoginServerName, isNameAvailable, reason, message, additionalBinaryDataProperties);
+            return new ContainerRegistryNameAvailableResult(isNameAvailable, reason, message, additionalBinaryDataProperties);
         }
     }
 }

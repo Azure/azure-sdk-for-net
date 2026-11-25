@@ -25,31 +25,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="CacheRuleUpdateProperties"/>. </summary>
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the Cache rule. </param>
-        /// <param name="additionalAuthenticationProperties">
-        /// Authentication configuration used by the cache rule to access the upstream source repository.
-        /// Omitted fields retain their current values. When authentication is first configured, all
-        /// required fields of the selected authentication type must be supplied. Changing an existing
-        /// authentication type is not supported.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRuleUpdateProperties(ResourceIdentifier credentialSetResourceId, AdditionalAuthenticationUpdateProperties additionalAuthenticationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheRuleUpdateProperties(ResourceIdentifier credentialSetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialSetResourceId = credentialSetResourceId;
-            AdditionalAuthenticationProperties = additionalAuthenticationProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource ID of the credential store which is associated with the Cache rule. </summary>
         [WirePath("credentialSetResourceId")]
         public ResourceIdentifier CredentialSetResourceId { get; set; }
-
-        /// <summary>
-        /// Authentication configuration used by the cache rule to access the upstream source repository.
-        /// Omitted fields retain their current values. When authentication is first configured, all
-        /// required fields of the selected authentication type must be supplied. Changing an existing
-        /// authentication type is not supported.
-        /// </summary>
-        [WirePath("additionalAuthenticationProperties")]
-        public AdditionalAuthenticationUpdateProperties AdditionalAuthenticationProperties { get; set; }
     }
 }
