@@ -33,6 +33,7 @@ steps:
       workingDirectory: $(Pipeline.Workspace)
     env:
       AZSDK_RELEASE_PLAN_ID: ${{ parameters.ReleasePlanId }}
+      AZSDKTOOLS_NOTIFICATION_SERVICE_URL: $(AzureSDKEmailerSasURL)
     displayName: Mark package as released
     continueOnError: true
     condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'))
