@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var name3 = Recording.GenerateAssetName("Pool-");
             var input = ResourceDataHelper.GetBatchAccountPoolData();
 
-            PoolEndpointConfiguration batchPoolEndpointConfiguration =  new PoolEndpointConfiguration(new List<BatchInboundNatPool>());
+            PoolEndpointConfiguration batchPoolEndpointConfiguration = new PoolEndpointConfiguration(new List<BatchInboundNatPool>());
             batchPoolEndpointConfiguration.InboundNatPools.Add(new BatchInboundNatPool("ruleName", BatchInboundEndpointProtocol.Tcp, 3389, 15000, 15100));
 
             input.NetworkConfiguration = new BatchNetworkConfiguration()
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.EndpointConfiguration);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.EndpointConfiguration.InboundNatPools);
-            Assert.AreEqual(3389,batchNodeRemoteLoginSettings.NetworkConfiguration.EndpointConfiguration.InboundNatPools[0].BackendPort);
+            Assert.AreEqual(3389, batchNodeRemoteLoginSettings.NetworkConfiguration.EndpointConfiguration.InboundNatPools[0].BackendPort);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration);
             Assert.NotNull(batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies);
             Assert.AreEqual(BatchIPFamily.IPv4, batchNodeRemoteLoginSettings.NetworkConfiguration.PublicIPAddressConfiguration.IPFamilies[0]);
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                 },
                 ProxyAgentSettings = new BatchProxyAgentSettings
                 {
-                   Imds = new BatchHostEndpointSettings
-                   {
-                       Mode = BatchHostEndpointSettingsModeType.Audit,
-                   },
-                   Enabled = true,
+                    Imds = new BatchHostEndpointSettings
+                    {
+                        Mode = BatchHostEndpointSettingsModeType.Audit,
+                    },
+                    Enabled = true,
                 },
             };
             input.DeploymentConfiguration.VmConfiguration.OSDisk = new BatchOSDisk()

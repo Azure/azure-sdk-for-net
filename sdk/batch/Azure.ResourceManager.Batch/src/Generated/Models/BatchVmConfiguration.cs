@@ -217,18 +217,5 @@ namespace Azure.ResourceManager.Batch.Models
                 Placement = value.HasValue ? new Placement(value.Value) : default;
             }
         }
-
-        /// <summary> The policy that controls allocation across availability zones. </summary>
-        public ZoneAllocationPolicy ResiliencyZoneAllocationPolicy
-        {
-            get
-            {
-                return ResiliencyPolicy is null ? default : ResiliencyPolicy.ZoneAllocationPolicy;
-            }
-            set
-            {
-                ResiliencyPolicy = new ResiliencyPolicy(value);
-            }
-        }
     }
 }

@@ -23,5 +23,12 @@ namespace Azure.ResourceManager.Batch.Models
         {
             get => DiskEncryptionConfiguration?.Targets;
         }
+
+        /// <summary> The policy that controls allocation across availability zones. </summary>
+        public ZoneAllocationPolicy ResiliencyZoneAllocationPolicy
+        {
+            get => ResiliencyPolicy is null ? default : ResiliencyPolicy.ZoneAllocationPolicy;
+            set => ResiliencyPolicy = value is null ? default : new ResiliencyPolicy(value);
+        }
     }
 }
