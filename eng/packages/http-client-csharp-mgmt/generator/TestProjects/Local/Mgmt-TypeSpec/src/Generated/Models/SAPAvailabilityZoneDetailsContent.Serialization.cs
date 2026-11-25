@@ -14,67 +14,67 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
-    public partial class SAPAvailabilityZoneDetailsRequest : IJsonModel<SAPAvailabilityZoneDetailsRequest>
+    /// <summary> The SAPAvailabilityZoneDetailsContent. </summary>
+    public partial class SAPAvailabilityZoneDetailsContent : IJsonModel<SAPAvailabilityZoneDetailsContent>
     {
-        /// <summary> Initializes a new instance of <see cref="SAPAvailabilityZoneDetailsRequest"/> for deserialization. </summary>
-        internal SAPAvailabilityZoneDetailsRequest()
+        /// <summary> Initializes a new instance of <see cref="SAPAvailabilityZoneDetailsContent"/> for deserialization. </summary>
+        internal SAPAvailabilityZoneDetailsContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SAPAvailabilityZoneDetailsRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SAPAvailabilityZoneDetailsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSAPAvailabilityZoneDetailsRequest(document.RootElement, options);
+                        return DeserializeSAPAvailabilityZoneDetailsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SAPAvailabilityZoneDetailsRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SAPAvailabilityZoneDetailsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SAPAvailabilityZoneDetailsRequest IPersistableModel<SAPAvailabilityZoneDetailsRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SAPAvailabilityZoneDetailsContent IPersistableModel<SAPAvailabilityZoneDetailsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SAPAvailabilityZoneDetailsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SAPAvailabilityZoneDetailsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sapAvailabilityZoneDetailsRequest"> The <see cref="SAPAvailabilityZoneDetailsRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SAPAvailabilityZoneDetailsRequest sapAvailabilityZoneDetailsRequest)
+        /// <param name="sapAvailabilityZoneDetailsContent"> The <see cref="SAPAvailabilityZoneDetailsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SAPAvailabilityZoneDetailsContent sapAvailabilityZoneDetailsContent)
         {
-            if (sapAvailabilityZoneDetailsRequest == null)
+            if (sapAvailabilityZoneDetailsContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(sapAvailabilityZoneDetailsRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sapAvailabilityZoneDetailsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SAPAvailabilityZoneDetailsRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SAPAvailabilityZoneDetailsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("preferredAvailabilityZone"u8);
             writer.WriteStringValue(PreferredAvailabilityZone);
@@ -111,24 +111,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SAPAvailabilityZoneDetailsRequest IJsonModel<SAPAvailabilityZoneDetailsRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SAPAvailabilityZoneDetailsContent IJsonModel<SAPAvailabilityZoneDetailsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SAPAvailabilityZoneDetailsRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SAPAvailabilityZoneDetailsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SAPAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SAPAvailabilityZoneDetailsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSAPAvailabilityZoneDetailsRequest(document.RootElement, options);
+            return DeserializeSAPAvailabilityZoneDetailsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SAPAvailabilityZoneDetailsRequest DeserializeSAPAvailabilityZoneDetailsRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SAPAvailabilityZoneDetailsContent DeserializeSAPAvailabilityZoneDetailsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SAPAvailabilityZoneDetailsRequest(preferredAvailabilityZone, additionalBinaryDataProperties);
+            return new SAPAvailabilityZoneDetailsContent(preferredAvailabilityZone, additionalBinaryDataProperties);
         }
     }
 }

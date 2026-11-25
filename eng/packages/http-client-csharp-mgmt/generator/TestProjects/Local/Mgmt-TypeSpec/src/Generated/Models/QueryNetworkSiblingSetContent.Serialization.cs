@@ -15,66 +15,66 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Request for querying network sibling set. </summary>
-    public partial class QueryNetworkSiblingSetRequest : IJsonModel<QueryNetworkSiblingSetRequest>
+    public partial class QueryNetworkSiblingSetContent : IJsonModel<QueryNetworkSiblingSetContent>
     {
-        /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetRequest"/> for deserialization. </summary>
-        internal QueryNetworkSiblingSetRequest()
+        /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetContent"/> for deserialization. </summary>
+        internal QueryNetworkSiblingSetContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryNetworkSiblingSetRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual QueryNetworkSiblingSetContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQueryNetworkSiblingSetRequest(document.RootElement, options);
+                        return DeserializeQueryNetworkSiblingSetContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryNetworkSiblingSetRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryNetworkSiblingSetContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QueryNetworkSiblingSetRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryNetworkSiblingSetContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QueryNetworkSiblingSetRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QueryNetworkSiblingSetContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QueryNetworkSiblingSetRequest IPersistableModel<QueryNetworkSiblingSetRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QueryNetworkSiblingSetContent IPersistableModel<QueryNetworkSiblingSetContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QueryNetworkSiblingSetRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QueryNetworkSiblingSetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="queryNetworkSiblingSetRequest"> The <see cref="QueryNetworkSiblingSetRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(QueryNetworkSiblingSetRequest queryNetworkSiblingSetRequest)
+        /// <param name="queryNetworkSiblingSetContent"> The <see cref="QueryNetworkSiblingSetContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(QueryNetworkSiblingSetContent queryNetworkSiblingSetContent)
         {
-            if (queryNetworkSiblingSetRequest == null)
+            if (queryNetworkSiblingSetContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(queryNetworkSiblingSetRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(queryNetworkSiblingSetContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QueryNetworkSiblingSetRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QueryNetworkSiblingSetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryNetworkSiblingSetRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryNetworkSiblingSetContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -116,24 +116,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QueryNetworkSiblingSetRequest IJsonModel<QueryNetworkSiblingSetRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QueryNetworkSiblingSetContent IJsonModel<QueryNetworkSiblingSetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryNetworkSiblingSetRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual QueryNetworkSiblingSetContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QueryNetworkSiblingSetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryNetworkSiblingSetRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryNetworkSiblingSetContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQueryNetworkSiblingSetRequest(document.RootElement, options);
+            return DeserializeQueryNetworkSiblingSetContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QueryNetworkSiblingSetRequest DeserializeQueryNetworkSiblingSetRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static QueryNetworkSiblingSetContent DeserializeQueryNetworkSiblingSetContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QueryNetworkSiblingSetRequest(location, subscriptionId, additionalBinaryDataProperties);
+            return new QueryNetworkSiblingSetContent(location, subscriptionId, additionalBinaryDataProperties);
         }
     }
 }

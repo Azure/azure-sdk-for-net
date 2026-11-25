@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The LogStatusRequest. </summary>
-    public partial class LogStatusRequest
+    /// <summary> The LogStatusContent. </summary>
+    public partial class LogStatusContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogStatusRequest"/>. </summary>
-        public LogStatusRequest()
+        /// <summary> Initializes a new instance of <see cref="LogStatusContent"/>. </summary>
+        public LogStatusContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogStatusRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogStatusContent"/>. </summary>
         /// <param name="filter"> Filter for the monitored resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogStatusRequest(string filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogStatusContent(string filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filter = filter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
