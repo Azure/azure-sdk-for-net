@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Upgraded `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR`, and `Microsoft.Azure.SignalR.Protocols` from 1.32.0 to 1.34.0, and `Microsoft.Azure.SignalR.Serverless.Protocols` from 1.11.1 to 1.11.2.
+
 ## 2.4.0 (2026-11-20)
 
 ### Bugs Fixed
