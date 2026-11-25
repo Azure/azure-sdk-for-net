@@ -61,7 +61,7 @@ namespace Azure.Identity
         {
             _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            TenantId = tenantId;
+            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull: true);
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
@@ -106,6 +106,7 @@ namespace Azure.Identity
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
+                ScopeUtilities.ValidateScope(resource);
                 var processStartInfos = GetProcessStartInfos(tokenProviders, resource, requestContext, cancellationToken);
 
                 if (processStartInfos.Count == 0)
@@ -234,6 +235,7 @@ namespace Azure.Identity
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
+                Validations.ValidateTenantId(tenantId, nameof(requestContext.TenantId), allowNull: true);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
