@@ -1,0 +1,6 @@
+directory: specification/saas/resource-manager/Microsoft.SaaS/Saas
+commit: 202f55950aeb4a5655f507f9a840fd46666ef55c
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
