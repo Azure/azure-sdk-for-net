@@ -143,8 +143,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
-      issues: write
-      pull-requests: read
+      pull-requests: write
     steps:
       - name: Download terminal agent output
         if: needs.size_gate.outputs.within_cap != 'false' && needs.agent.outputs.output_types == ''
@@ -217,8 +216,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
-      issues: write
-      pull-requests: read
+      pull-requests: write
     steps:
       - name: Update an earlier manual-review notification
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0

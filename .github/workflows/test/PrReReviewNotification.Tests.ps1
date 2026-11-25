@@ -188,13 +188,15 @@ Describe 'PR re-review manual-review notifications' {
             $job | Should -Match '!cancelled\(\)'
             $job | Should -Match "needs\.size_gate\.outputs\.within_cap == 'false'"
             $job | Should -Match "needs\.validate_agent_output\.result == 'failure'"
-            $job | Should -Match 'issues: write'
+            $job | Should -Not -Match 'issues: write'
             $job | Should -Match 'actions: read'
-            $job | Should -Match 'pull-requests: read'
+            $job | Should -Match 'pull-requests: write'
             $job | Should -Match 'Fail oversized re-review[\s\S]*always\(\)[\s\S]*exit 1'
             $job | Should -Match "Download terminal agent output[\s\S]*needs\.size_gate\.outputs\.within_cap != 'false'"
 
             $update = Get-NotificationJob 'update_manual_review' $text
+            $update | Should -Not -Match 'issues: write'
+            $update | Should -Match 'pull-requests: write'
             $update | Should -Match "github\.event_name != 'workflow_dispatch'"
             $update | Should -Match "needs\.validate_agent_output\.result == 'success'"
             $update | Should -Match "!contains\(needs\.agent\.outputs\.output_types, 'unresolve_review_thread'\)"
