@@ -4545,25 +4545,25 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> ExpressRoute LAG. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> ExpressRouteLag properties. </param>
-        /// <param name="type"> The type of the resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
         /// <returns> A new <see cref="Network.ExpressRouteLagData"/> instance for mocking. </returns>
-        public static ExpressRouteLagData ExpressRouteLagData(ResourceIdentifier id = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExpressRouteLagPropertiesFormat properties = default, string @type = default, string eTag = default, ManagedServiceIdentity identity = default)
+        public static ExpressRouteLagData ExpressRouteLagData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExpressRouteLagPropertiesFormat properties = default, string eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ExpressRouteLagData(
                 id,
                 name,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 properties,
-                @type,
                 eTag,
                 identity);
         }
