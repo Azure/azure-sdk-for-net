@@ -16,29 +16,26 @@ namespace Azure.ResourceManager.ProviderHub
 {
     internal partial class ResourceTypeSkuDataCollectionResultOfT : Pageable<ResourceTypeSkuData>
     {
-        private readonly NestedResourceTypeFirstSku _client;
+        private readonly ResourceTypeSku _client;
         private readonly Guid _subscriptionId;
         private readonly string _providerNamespace;
         private readonly string _resourceType;
-        private readonly string _nestedResourceTypeFirst;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ResourceTypeSkuDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The NestedResourceTypeFirstSku client used to send requests. </param>
+        /// <param name="client"> The ResourceTypeSku client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ResourceTypeSkuDataCollectionResultOfT(NestedResourceTypeFirstSku client, Guid subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceTypeSkuDataCollectionResultOfT(ResourceTypeSku client, Guid subscriptionId, string providerNamespace, string resourceType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _providerNamespace = providerNamespace;
             _resourceType = resourceType;
-            _nestedResourceTypeFirst = nestedResourceTypeFirst;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -72,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsNestedResourceTypeFirstRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _context) : _client.CreateGetByResourceTypeRegistrationsNestedResourceTypeFirstRequest(_subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _context) : _client.CreateGetByResourceTypeRegistrationsRequest(_subscriptionId, _providerNamespace, _resourceType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

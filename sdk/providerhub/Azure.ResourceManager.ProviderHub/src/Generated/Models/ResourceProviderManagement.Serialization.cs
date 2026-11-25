@@ -214,6 +214,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(FeatureApprovalClaims))
+            {
+                writer.WritePropertyName("featureApprovalClaims"u8);
+                writer.WriteStartArray();
+                foreach (string item in FeatureApprovalClaims)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(ServiceTreeInfos))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
@@ -281,6 +296,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string profitCenterCode = default;
             string profitCenterProgramId = default;
             IList<string> featureManagementOwners = default;
+            IList<string> featureApprovalClaims = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -477,6 +493,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     featureManagementOwners = array;
                     continue;
                 }
+                if (prop.NameEquals("featureApprovalClaims"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    featureApprovalClaims = array;
+                    continue;
+                }
                 if (prop.NameEquals("serviceTreeInfos"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -512,6 +549,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 profitCenterCode,
                 profitCenterProgramId,
                 featureManagementOwners ?? new ChangeTrackingList<string>(),
+                featureApprovalClaims ?? new ChangeTrackingList<string>(),
                 serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 additionalBinaryDataProperties);
         }

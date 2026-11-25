@@ -334,6 +334,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("superScaleEnabled"u8);
                 writer.WriteBooleanValue(IsSuperScaleEnabled.Value);
             }
+            if (Optional.IsDefined(LifecycleInfo))
+            {
+                writer.WritePropertyName("lifecycleInfo"u8);
+                writer.WriteObjectValue(LifecycleInfo, options);
+            }
             if (Optional.IsCollectionDefined(ResourceConcurrencyControlOptions))
             {
                 writer.WritePropertyName("resourceConcurrencyControlOptions"u8);
@@ -731,6 +736,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             PrivateEndpointConfiguration privateEndpointConfiguration = default;
             WriteLockConfiguration writeLock = default;
             bool? isSuperScaleEnabled = default;
+            ResourceTypeLifecycleInfo lifecycleInfo = default;
             IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
             ResourceGraphConfiguration resourceGraphConfiguration = default;
             ResourceProviderManagement management = default;
@@ -1182,6 +1188,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     isSuperScaleEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("lifecycleInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleInfo = ResourceTypeLifecycleInfo.DeserializeResourceTypeLifecycleInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceConcurrencyControlOptions"u8))
@@ -1702,6 +1717,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 privateEndpointConfiguration,
                 writeLock,
                 isSuperScaleEnabled,
+                lifecycleInfo,
                 resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
                 resourceGraphConfiguration,
                 management,
