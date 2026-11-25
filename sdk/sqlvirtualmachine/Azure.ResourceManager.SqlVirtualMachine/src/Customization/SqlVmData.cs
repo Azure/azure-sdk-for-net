@@ -16,17 +16,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
     public partial class SqlVmData
     {
+        private readonly string _sqlVmName;
+
         internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, string sqlVmName, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _sqlVmName = sqlVmName;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        // Retain the legacy property as an alias for the resource name.
+        // Preserve a legacy factory name independently of the resource name.
         /// <summary> Gets the name of the SQL virtual machine. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string SqlVmName => Name;
+        public string SqlVmName => _sqlVmName ?? Name;
 
         /// <summary> Operating System of the current SQL Virtual Machine. </summary>
         [CodeGenMember("OSType")]

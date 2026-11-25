@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Preserve explicit SQL virtual machine and group names passed to the model factory without changing the inherited resource name.
+
 ### Other Changes
 
 ## 1.1.2 (2026-04-29)

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Preserve explicit organization names passed to the model factory without changing the inherited resource name.
+
 ### Other Changes
 
 ## 1.0.0 (2026-09-23)

@@ -5,18 +5,20 @@
 
 using System;
 using System.Threading;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    // Backward-compat bridge: The TypeSpec migration uses OverrideResourceName on ExtensionOperations
-    // in ApplyUpdate.tsp to create separate MaintenanceApplyUpdate*Resource/Collection classes per scope
-    // variant. The old Swagger-based SDK (1.1.3) exposed subscription-level "GetMaintenanceApplyUpdates"
-    // methods returning Pageable<MaintenanceApplyUpdateResource>. The new generated code produces
-    // "GetMaintenanceApplyUpdateOperationGroups" returning Pageable<MaintenanceApplyUpdateOperationGroupResource>.
-    // These bridge methods preserve the old method names and return types using the same REST client
-    // (MaintenanceApplyUpdateRestClient) but wrapping results as MaintenanceApplyUpdateResource.
+    // The subscription list is emitted as an extension without an applyUpdates resource
+    // version lookup. Keep that lookup for both the generated and compatibility methods.
+    [CodeGenSuppress(nameof(MaintenanceApplyUpdateRestClient))]
     public partial class MockableMaintenanceSubscriptionResource
     {
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(
+            MaintenanceApplyUpdateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint,
+            TryGetApiVersion(MaintenanceApplyUpdateResource.ResourceType, out string apiVersion) ? apiVersion : "2025-10-01-preview");
+
+        // The compatibility methods wrap the same list response in the GA resource type.
         /// <summary> Get Configuration records within a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)

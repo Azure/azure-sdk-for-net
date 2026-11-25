@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Preserve deeply nested unknown JSON properties when round-tripping `ResourcesHistoryContent` on .NET Standard 2.0.
+
 ### Other Changes
 
 ## 1.1.1 (2026-06-28)

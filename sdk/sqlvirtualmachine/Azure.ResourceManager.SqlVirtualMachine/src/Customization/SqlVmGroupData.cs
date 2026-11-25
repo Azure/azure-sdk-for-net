@@ -12,15 +12,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class SqlVmGroupData
     {
+        private readonly string _sqlVmGroupName;
+
         internal SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineGroupProperties properties, string sqlVmGroupName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _sqlVmGroupName = sqlVmGroupName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        // Retain the legacy property as an alias for the resource name.
+        // Preserve a legacy factory name independently of the resource name.
         /// <summary> Gets the name of the SQL virtual machine group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string SqlVmGroupName => Name;
+        public string SqlVmGroupName => _sqlVmGroupName ?? Name;
     }
 }
