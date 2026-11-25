@@ -4965,6 +4965,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesModel(model, kind, skuName, description, default);
         }
 
+        /// <summary> Properties of Cognitive Services Project'. </summary>
+        /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
+        /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
+        /// <param name="description"> The description of the Cognitive Services Project. </param>
+        /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
+        /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault)
+        {
+            return new CognitiveServicesProjectProperties(
+                provisioningState,
+                displayName,
+                description,
+                endpoints ?? new ChangeTrackingDictionary<string, string>(),
+                isDefault,
+                default,
+                default,
+                default);
+        }
+
         /// <summary> Properties of Cognitive Services account. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
@@ -5141,27 +5162,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
                 (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
                 (safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>()).ToList(),
-                default,
-                default,
-                default);
-        }
-
-        /// <summary> Properties of Cognitive Services Project'. </summary>
-        /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
-        /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
-        /// <param name="description"> The description of the Cognitive Services Project. </param>
-        /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
-        /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault)
-        {
-            return new CognitiveServicesProjectProperties(
-                provisioningState,
-                displayName,
-                description,
-                endpoints ?? new ChangeTrackingDictionary<string, string>(),
-                isDefault,
                 default,
                 default,
                 default);

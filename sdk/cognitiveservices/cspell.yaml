@@ -5,6 +5,7 @@ overrides:
     words:
       - aacs
       - hitl
+      - kuberay
       - onnx
       - rego
       - regos
