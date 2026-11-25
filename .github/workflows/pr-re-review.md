@@ -14,8 +14,153 @@ on:
   # default [admin, maintainer, write] role check even though they're trusted automation —
   # e.g. azure-sdk-automation[bot] pushing a synchronize commit to a PR branch.
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
+  # The gate only skips with a verified receipt and complete README-only history; all
+  # missing evidence, unsupported retries, and base-branch changes fall back to review.
+  permissions:
+    actions: read
+    contents: read
+    pull-requests: read
+  steps:
+    - name: Checkout trusted README gate
+      if: steps.check_membership.outputs.is_team_member == 'true' && github.event.pull_request.base.ref == github.event.repository.default_branch
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      continue-on-error: true
+      with:
+        ref: ${{ github.event.repository.default_branch }}
+        path: .pr-re-review-gate-helpers
+        persist-credentials: false
+        sparse-checkout: .github/workflows/pr-re-review
+    - name: Fetch PR history without executing it
+      if: steps.check_membership.outputs.is_team_member == 'true' && github.event.pull_request.base.ref == github.event.repository.default_branch
+      continue-on-error: true
+      shell: pwsh
+      env:
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      run: |
+        if ($env:PR_NUMBER -cnotmatch '^[1-9][0-9]*$' -or $env:PR_HEAD_SHA -cnotmatch '^[0-9a-f]{40}$') { throw 'Invalid PR identity.' }
+        $repo = '.pr-re-review-gate-head'
+        git init --bare $repo
+        if ($LASTEXITCODE -ne 0) { throw 'Cannot initialize PR object store.' }
+        git -C $repo fetch --no-tags --depth=100 --filter=blob:none "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY.git" "refs/pull/$env:PR_NUMBER/head"
+        if ($LASTEXITCODE -ne 0) { throw 'Cannot fetch PR history.' }
+        $fetched = git -C $repo rev-parse FETCH_HEAD
+        if ($LASTEXITCODE -ne 0 -or $fetched -cne $env:PR_HEAD_SHA) { throw 'Fetched PR head is stale.' }
+        git -C $repo update-ref HEAD $env:PR_HEAD_SHA
+        if ($LASTEXITCODE -ne 0) { throw 'Cannot set PR object-store head.' }
+    - name: Check for README-only changes
+      if: steps.check_membership.outputs.is_team_member == 'true' && github.event.pull_request.base.ref == github.event.repository.default_branch
+      id: readme-gate
+      shell: pwsh
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+        REVIEW_HEAD_REPOSITORY: .pr-re-review-gate-head
+        REVIEW_HELPERS_REPOSITORY: .pr-re-review-gate-helpers
+      run: |
+        try {
+          $gate = './.pr-re-review-gate-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewReadmeGate.ps1'
+          if (!(Test-Path -PathType Leaf $gate)) { throw 'Trusted README gate is unavailable.' }
+          & $gate
+        } catch {
+          Write-Warning "README gate failed; running the review: $_"
+          [IO.File]::AppendAllText($env:GITHUB_OUTPUT, "eligible=true`n")
+        }
+        $global:LASTEXITCODE = 0
 if: github.event.pull_request.draft == false && (github.event_name == 'pull_request' || github.event.pull_request.head.repo.id != github.repository_id)
 description: "Verify prior review threads and catch missed issues after each new commit, using the shared code-review rules"
+jobs:
+  pre-activation:
+    outputs:
+      eligible: ${{ steps.readme-gate.outputs.eligible }}
+  activation:
+    if: needs.pre_activation.outputs.eligible != 'false'
+  agent:
+    needs: [activation, pre_activation]
+    if: needs.pre_activation.outputs.eligible != 'false'
+  # Reopen actions can succeed as a job while skipping individual requests, so those
+  # runs conservatively produce no receipt. Only first attempts are unambiguous.
+  baseline-receipt:
+    needs: [agent, detection, safe_outputs, validate_agent_output]
+    if: >
+      !cancelled() && github.run_attempt == 1 && github.event.pull_request.base.ref == github.event.repository.default_branch && needs.agent.result == 'success' &&
+      needs.detection.result == 'success' && needs.detection.outputs.detection_conclusion == 'success' &&
+      needs.safe_outputs.result == 'success' && needs.safe_outputs.outputs.process_safe_outputs_status == 'success' &&
+      needs.safe_outputs.outputs.process_safe_outputs_items_applied != '' && needs.safe_outputs.outputs.process_safe_outputs_items_applied != '0' &&
+      needs.validate_agent_output.result == 'success' &&
+      !contains(needs.agent.outputs.output_types, 'unresolve_review_thread')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Download processed review evidence
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        continue-on-error: true
+        with:
+          name: safe-outputs-items
+          path: ${{ runner.temp }}/pr-re-review-receipt/items
+      - name: Download exported helper identity
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        continue-on-error: true
+        with:
+          name: pr-re-review-input
+          path: ${{ runner.temp }}/pr-re-review-receipt/input
+      - name: Checkout trusted receipt helper
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        continue-on-error: true
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+          sparse-checkout: .github/workflows/pr-re-review
+      - name: Verify published review and prepare baseline
+        id: receipt
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+          REVIEW_ITEMS: ${{ runner.temp }}/pr-re-review-receipt/items/safe-output-items.jsonl
+          RECEIPT_PATH: ${{ runner.temp }}/pr-re-review-receipt/receipt.json
+        run: |
+          try {
+            $exported = [IO.File]::ReadAllText("$env:RUNNER_TEMP/pr-re-review-receipt/input/helpers-tree").Trim()
+            $current = git rev-parse HEAD:.github/workflows/pr-re-review
+            if ($LASTEXITCODE -ne 0 -or $exported -cnotmatch '^[0-9a-f]{40}$' -or $current -cne $exported) {
+              throw 'The trusted helpers changed after review.'
+            }
+            $exportedCommit = [IO.File]::ReadAllText("$env:RUNNER_TEMP/pr-re-review-receipt/input/helpers-commit").Trim()
+            $currentCommit = git rev-parse HEAD
+            if ($LASTEXITCODE -ne 0 -or $exportedCommit -cnotmatch '^[0-9a-f]{40}$' -or $currentCommit -cne $exportedCommit) {
+              throw 'The base branch moved after review.'
+            }
+            ./.github/workflows/pr-re-review/Invoke-PrReReviewReceipt.ps1
+            [IO.File]::AppendAllText($env:GITHUB_OUTPUT, "created=true`n")
+          } catch {
+            Write-Warning "No baseline can be issued: $_"
+            [IO.File]::AppendAllText($env:GITHUB_OUTPUT, "created=false`n")
+          }
+          $global:LASTEXITCODE = 0
+      - name: Upload verified baseline
+        id: baseline-upload
+        if: steps.receipt.outputs.created == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        continue-on-error: true
+        with:
+          name: pr-re-review-baseline-v1-attempt-1
+          path: ${{ runner.temp }}/pr-re-review-receipt/receipt.json
+          if-no-files-found: error
+      # REST job steps expose conclusion, not outcome. This success-only step lets a
+      # future gate distinguish a genuine upload from continue-on-error's success conclusion.
+      - name: Confirm baseline upload
+        if: steps.baseline-upload.outcome == 'success'
+        run: echo 'Verified baseline uploaded.'
 imports:
   - shared/copilot-cli-version-probe-guard.md
   - shared/agent-output-validation.md
@@ -56,6 +201,9 @@ pre-agent-steps:
         throw 'Could not resolve the re-review helpers tree.'
       }
       [IO.File]::WriteAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-tree", $tree)
+      $commit = git -C .pr-re-review-helpers rev-parse HEAD
+      if ($LASTEXITCODE -ne 0 -or $commit -cnotmatch '^[0-9a-f]{40}$') { throw 'Could not resolve the trusted base tip.' }
+      [IO.File]::WriteAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-commit", $commit)
   - name: Upload exported-patch markers
     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
     with:
