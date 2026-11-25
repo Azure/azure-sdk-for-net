@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class BillingRequestData1CollectionResultOfT : Pageable<BillingRequestData>
+    internal partial class BillingContentData1CollectionResultOfT : Pageable<BillingContentData>
     {
         private readonly BillingRequests _client;
         private readonly string _billingAccountName;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of BillingRequestData1CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingContentData1CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BillingRequests client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BillingRequestData1CollectionResultOfT(BillingRequests client, string billingAccountName, string billingProfileName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BillingContentData1CollectionResultOfT(BillingRequests client, string billingAccountName, string billingProfileName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of BillingRequestData1CollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingContentData1CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BillingRequestData1CollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BillingRequestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BillingContentData1CollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<BillingContentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 BillingRequestListResult result = BillingRequestListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<BillingRequestData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BillingContentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

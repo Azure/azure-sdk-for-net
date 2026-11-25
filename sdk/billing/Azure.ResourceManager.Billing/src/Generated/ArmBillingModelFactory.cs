@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> A request submitted by a user to manage billing. Users with an owner role on the scope can approve or decline these requests. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Billing.BillingRequestData"/> instance for mocking. </returns>
-        public static BillingRequestData BillingRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingRequestProperties properties = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Billing.BillingContentData"/> instance for mocking. </returns>
+        public static BillingContentData BillingContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingRequestProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BillingRequestData(
+            return new BillingContentData(
                 id,
                 name,
                 resourceType,

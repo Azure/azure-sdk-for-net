@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary> A request submitted by a user to manage billing. Users with an owner role on the scope can approve or decline these requests. </summary>
-    public partial class BillingRequestData : ResourceData
+    public partial class BillingContentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BillingRequestData"/>. </summary>
-        public BillingRequestData()
+        /// <summary> Initializes a new instance of <see cref="BillingContentData"/>. </summary>
+        public BillingContentData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingRequestData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingContentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="properties"> A request submitted by a user to manage billing. Users with an owner role on the scope can approve or decline these requests. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingRequestProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal BillingContentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingRequestProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Tags = tags;

@@ -14,9 +14,10 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class BillingRequestDataCollectionResultOfT : Pageable<BillingRequestData>
+    internal partial class BillingContentData0CollectionResultOfT : Pageable<BillingContentData>
     {
         private readonly BillingRequests _client;
+        private readonly string _billingAccountName;
         private readonly string _filter;
         private readonly string _orderBy;
         private readonly long? _maxCount;
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of BillingRequestDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingContentData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BillingRequests client used to send requests. </param>
+        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -36,9 +38,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BillingRequestDataCollectionResultOfT(BillingRequests client, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BillingContentData0CollectionResultOfT(BillingRequests client, string billingAccountName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _billingAccountName = billingAccountName;
             _filter = filter;
             _orderBy = orderBy;
             _maxCount = maxCount;
@@ -49,11 +52,11 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of BillingRequestDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingContentData0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BillingRequestDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BillingRequestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BillingContentData0CollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<BillingContentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 BillingRequestListResult result = BillingRequestListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<BillingRequestData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BillingContentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByUserRequest(nextLink, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByUserRequest(_filter, _orderBy, _maxCount, _skip, _count, _search, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByBillingAccountRequest(nextLink, _billingAccountName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByBillingAccountRequest(_billingAccountName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

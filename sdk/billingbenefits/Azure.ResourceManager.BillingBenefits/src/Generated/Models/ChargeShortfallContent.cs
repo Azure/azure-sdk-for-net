@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Charge shortfall request. </summary>
-    public partial class ChargeShortfallRequest
+    public partial class ChargeShortfallContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChargeShortfallRequest"/>. </summary>
-        public ChargeShortfallRequest()
+        /// <summary> Initializes a new instance of <see cref="ChargeShortfallContent"/>. </summary>
+        public ChargeShortfallContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChargeShortfallRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChargeShortfallContent"/>. </summary>
         /// <param name="properties"> Charge shortfall request properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChargeShortfallRequest(Shortfall properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChargeShortfallContent(Shortfall properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,62 +14,62 @@ using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> List MACCs under a billing account. </summary>
-    public partial class SellerResourceListRequest : IJsonModel<SellerResourceListRequest>
+    /// <summary> Charge shortfall request. </summary>
+    public partial class ChargeShortfallContent : IJsonModel<ChargeShortfallContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SellerResourceListRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ChargeShortfallContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SellerResourceListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChargeShortfallContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSellerResourceListRequest(document.RootElement, options);
+                        return DeserializeChargeShortfallContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SellerResourceListRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChargeShortfallContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SellerResourceListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChargeShortfallContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SellerResourceListRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChargeShortfallContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SellerResourceListRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ChargeShortfallContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SellerResourceListRequest IPersistableModel<SellerResourceListRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ChargeShortfallContent IPersistableModel<ChargeShortfallContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SellerResourceListRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChargeShortfallContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sellerResourceListRequest"> The <see cref="SellerResourceListRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SellerResourceListRequest sellerResourceListRequest)
+        /// <param name="chargeShortfallContent"> The <see cref="ChargeShortfallContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ChargeShortfallContent chargeShortfallContent)
         {
-            if (sellerResourceListRequest == null)
+            if (chargeShortfallContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(sellerResourceListRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(chargeShortfallContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SellerResourceListRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChargeShortfallContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SellerResourceListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChargeShortfallContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SellerResourceListRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChargeShortfallContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,30 +109,30 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SellerResourceListRequest IJsonModel<SellerResourceListRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ChargeShortfallContent IJsonModel<ChargeShortfallContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SellerResourceListRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ChargeShortfallContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SellerResourceListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChargeShortfallContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SellerResourceListRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChargeShortfallContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSellerResourceListRequest(document.RootElement, options);
+            return DeserializeChargeShortfallContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SellerResourceListRequest DeserializeSellerResourceListRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ChargeShortfallContent DeserializeChargeShortfallContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SellerResourceListRequestProperties properties = default;
+            Shortfall properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    properties = SellerResourceListRequestProperties.DeserializeSellerResourceListRequestProperties(prop.Value, options);
+                    properties = Shortfall.DeserializeShortfall(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SellerResourceListRequest(properties, additionalBinaryDataProperties);
+            return new ChargeShortfallContent(properties, additionalBinaryDataProperties);
         }
     }
 }

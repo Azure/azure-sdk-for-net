@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> List MACCs under a billing account. </summary>
-    public partial class SellerResourceListRequest
+    public partial class SellerResourceListContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SellerResourceListRequest"/>. </summary>
-        public SellerResourceListRequest()
+        /// <summary> Initializes a new instance of <see cref="SellerResourceListContent"/>. </summary>
+        public SellerResourceListContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SellerResourceListRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SellerResourceListContent"/>. </summary>
         /// <param name="properties"> Request properties to list maccs under a billing account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SellerResourceListRequest(SellerResourceListRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SellerResourceListContent(SellerResourceListRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
