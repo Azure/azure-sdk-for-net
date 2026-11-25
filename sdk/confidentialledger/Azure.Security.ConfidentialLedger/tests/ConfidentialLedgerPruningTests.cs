@@ -347,6 +347,314 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual(4, statusCalls, "Three individual 404 HTTP requests are tolerated; the fourth fails.");
         }
 
+        [TestCase("InvalidTransactionId", false, true)]
+        [TestCase("UnknownLedgerEntry", false, true)]
+        [TestCase("UnknownLedgerEntry", true, false)]
+        [TestCase("UnknownLedgerEntry", true, true)]
+        public async Task Failover_MissingEntryTraversesCollectionsAndPreservesPayload(string errorCode, bool current, bool enableHistoricalFallback)
+        {
+            const string collection = "collection /+&?";
+            var requests = new List<Uri>();
+            int discoveryCalls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    discoveryCalls++;
+                    var metadata = new MockResponse(200);
+                    metadata.SetContent(@"{ ""failoverLedgers"": [ ""first"", ""second"" ] }");
+                    return metadata;
+                }
+                requests.Add(req.Uri.ToUri());
+                if (!req.Uri.Host.StartsWith("second"))
+                {
+                    var missing = new MockResponse(404);
+                    missing.SetContent($@"{{ ""error"": {{ ""code"": ""{errorCode}"", ""message"": ""missing"" }} }}");
+                    return missing;
+                }
+                var response = new MockResponse(200);
+                response.AddHeader("x-ms-request-id", "backup-request");
+                response.SetContent(@"{ ""contents"": ""latest"", ""collectionId"": ""collection /+&?"", ""transactionId"": ""7.42"", ""tags"": [""retained""], ""futureField"": { ""value"": true } }");
+                return response;
+            });
+            var client = CreateClient(transport, false, maxRetries: 2,
+                configure: options => options.EnableHistoricalReadFallback = enableHistoricalFallback);
+
+            using Response response = current
+                ? await client.GetCurrentLedgerEntryAsync(collection, new RequestContext())
+                : await client.GetLedgerEntryAsync("2.1", collection, new RequestContext());
+
+            Assert.AreEqual(1, discoveryCalls);
+            Assert.AreEqual(7, requests.Count, "Each missing endpoint gets its existing bounded retry budget; success must not add loading polls.");
+            Assert.AreEqual(current ? "/app/transactions/current" : "/app/transactions/2.1", requests[0].AbsolutePath);
+            for (int i = 3; i < requests.Count; i++)
+            {
+                Assert.AreEqual("/app/transactions/current", requests[i].AbsolutePath);
+                Assert.AreEqual(requests[0].Query, requests[i].Query, "Keep collection encoding and API version.");
+            }
+            Assert.AreEqual(3, requests.FindAll(uri => uri.Host.StartsWith("testledger")).Count);
+            Assert.AreEqual(3, requests.FindAll(uri => uri.Host.StartsWith("first")).Count);
+            Assert.AreEqual("second.confidential-ledger.azure.com", requests[6].Host);
+            Assert.IsTrue(response.Headers.TryGetValue("x-ms-request-id", out string requestId));
+            Assert.AreEqual("backup-request", requestId);
+            // The client's using HttpMessage has already disposed the response. Buffered content
+            // must remain readable through ContentStream, not only through Content's buffer access.
+            Assert.IsTrue(response.ContentStream.CanRead);
+            using (JsonDocument streamed = JsonDocument.Parse(response.ContentStream))
+            {
+                JsonElement streamedEntry = current ? streamed.RootElement : streamed.RootElement.GetProperty("entry");
+                Assert.AreEqual("latest", streamedEntry.GetProperty("contents").GetString());
+                Assert.AreEqual("7.42", streamedEntry.GetProperty("transactionId").GetString());
+            }
+            response.ContentStream.Position = 0;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            JsonElement entry = current ? document.RootElement : document.RootElement.GetProperty("entry");
+            Assert.AreEqual("latest", entry.GetProperty("contents").GetString());
+            Assert.AreEqual(collection, entry.GetProperty("collectionId").GetString());
+            Assert.AreEqual("7.42", entry.GetProperty("transactionId").GetString(), "Never relabel a different entry with the requested transaction id.");
+            Assert.AreEqual("retained", entry.GetProperty("tags")[0].GetString());
+            Assert.IsTrue(entry.GetProperty("futureField").GetProperty("value").GetBoolean());
+            if (!current)
+            {
+                Assert.AreEqual("Ready", document.RootElement.GetProperty("state").GetString());
+                Assert.IsTrue(response.Headers.TryGetValue("Content-Length", out string contentLength));
+                Assert.AreEqual(response.Content.ToMemory().Length.ToString(), contentLength);
+                response.Dispose();
+                Assert.IsTrue(response.ContentStream.CanRead, "Repeated disposal must preserve buffered content.");
+
+                // A non-buffered replacement must still be disposed and cleared to avoid
+                // leaking resources such as a network connection.
+                using var replacementBuffer = new MemoryStream();
+                response.ContentStream = Stream.Synchronized(replacementBuffer);
+                response.Dispose();
+                Assert.IsFalse(replacementBuffer.CanRead);
+                Assert.IsNull(response.ContentStream);
+                Assert.DoesNotThrow(() => response.Dispose());
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task Failover_HistoricalFallbackPreservesResponseClassification(bool classifySuccessAsError)
+        {
+            int backupCalls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    var metadata = new MockResponse(200);
+                    metadata.SetContent(@"{ ""failoverLedgers"": [ ""backup"" ] }");
+                    return metadata;
+                }
+                if (req.Uri.Host.StartsWith("testledger"))
+                {
+                    return new MockResponse(404);
+                }
+
+                Assert.AreEqual("backup.confidential-ledger.azure.com", req.Uri.Host);
+                Assert.AreEqual("/app/transactions/current", req.Uri.Path);
+                backupCalls++;
+                var response = new MockResponse(200);
+                response.SetContent(@"{ ""contents"": ""latest"", ""collectionId"": ""collection"", ""transactionId"": ""7.42"" }");
+                return response;
+            });
+            var client = CreateClient(transport, false,
+                configure: options => options.EnableHistoricalReadFallback = true);
+            var context = new RequestContext();
+            context.AddClassifier(200, classifySuccessAsError);
+
+            if (classifySuccessAsError)
+            {
+                RequestFailedException error = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await client.GetLedgerEntryAsync("2.1", "collection", context));
+                Assert.AreEqual(200, error.Status);
+            }
+            else
+            {
+                using Response response = await client.GetLedgerEntryAsync("2.1", "collection", context);
+                Assert.AreEqual(200, response.Status);
+                Assert.IsFalse(response.IsError);
+                using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+                Assert.AreEqual("Ready", document.RootElement.GetProperty("state").GetString());
+                Assert.AreEqual("7.42", document.RootElement.GetProperty("entry").GetProperty("transactionId").GetString());
+            }
+            Assert.AreEqual(1, backupCalls);
+        }
+
+        [Test]
+        public void HistoricalReadFallback_IsDisabledByDefault()
+        {
+            Assert.IsFalse(new ConfidentialLedgerClientOptions().EnableHistoricalReadFallback);
+        }
+
+        [TestCase(null, false)]
+        [TestCase(false, false)]
+        [TestCase(null, true)]
+        [TestCase(false, true)]
+        public void Failover_Historical404WithoutOptInPreservesPrimary(bool? enableHistoricalFallback, bool enableArchivedFallback)
+        {
+            int calls = 0;
+            var transport = new MockTransport(req =>
+            {
+                calls++;
+                Assert.AreEqual("testledger.confidential-ledger.azure.com", req.Uri.Host);
+                Assert.AreEqual("/app/transactions/2.1", req.Uri.Path);
+                var missing = new MockResponse(404);
+                missing.SetContent(@"{ ""error"": { ""code"": ""InvalidTransactionId"", ""message"": ""primary missing"" } }");
+                return missing;
+            });
+            var client = CreateClient(transport, enableArchivedFallback, maxRetries: 2, configure: options =>
+            {
+                if (enableHistoricalFallback.HasValue)
+                {
+                    options.EnableHistoricalReadFallback = enableHistoricalFallback.Value;
+                }
+            });
+
+            RequestFailedException error = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.GetLedgerEntryAsync("2.1", "collection", new RequestContext()));
+
+            Assert.AreEqual(404, error.Status);
+            Assert.AreEqual("InvalidTransactionId", error.ErrorCode);
+            StringAssert.Contains("primary missing", error.Message);
+            Assert.AreEqual(3, calls, "Only the primary's normal retry budget should be consumed; no discovery or substitution.");
+        }
+
+        [TestCase(null, false)]
+        [TestCase("", false)]
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        public void Failover_MissingEntryRequiresNonemptyCollection(string collection, bool current)
+        {
+            int calls = 0;
+            var transport = new MockTransport(req =>
+            {
+                calls++;
+                Assert.AreEqual("testledger.confidential-ledger.azure.com", req.Uri.Host);
+                return new MockResponse(404);
+            });
+            var client = CreateClient(transport, false,
+                configure: options => options.EnableHistoricalReadFallback = true);
+
+            RequestFailedException error = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                if (current)
+                    await client.GetCurrentLedgerEntryAsync(collection, new RequestContext());
+                else
+                    await client.GetLedgerEntryAsync("2.1", collection, new RequestContext());
+            });
+            Assert.AreEqual(404, error.Status);
+            Assert.AreEqual(1, calls);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Failover_MissingEntryAllCandidatesFailRestoresPrimary(bool transportFailure)
+        {
+            int attempts = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    var metadata = new MockResponse(200);
+                    metadata.SetContent(@"{ ""failoverLedgers"": [ ""first"", ""second"" ] }");
+                    return metadata;
+                }
+                attempts++;
+                if (transportFailure && req.Uri.Host.StartsWith("second"))
+                    throw new HttpRequestException("backup unavailable");
+                var missing = new MockResponse(404);
+                missing.SetContent($@"{{ ""error"": {{ ""code"": ""InvalidTransactionId"", ""message"": ""{req.Uri.Host}"" }} }}");
+                return missing;
+            });
+            var client = CreateClient(transport, false,
+                configure: options => options.EnableHistoricalReadFallback = true);
+
+            RequestFailedException error = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.GetLedgerEntryAsync("2.1", "collection", new RequestContext()));
+            Assert.AreEqual(404, error.Status);
+            Assert.AreEqual("InvalidTransactionId", error.ErrorCode);
+            StringAssert.Contains("testledger.confidential-ledger.azure.com", error.Message);
+            Assert.AreEqual(3, attempts);
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public void Failover_MissingEntryCancellationStopsTraversal(int cancelAt)
+        {
+            using var cancellation = new CancellationTokenSource();
+            int calls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (calls++ == cancelAt)
+                    cancellation.Cancel();
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    var metadata = new MockResponse(200);
+                    metadata.SetContent(@"{ ""failoverLedgers"": [ ""first"", ""second"" ] }");
+                    return metadata;
+                }
+                return new MockResponse(404);
+            });
+            var client = CreateClient(transport, false,
+                configure: options => options.EnableHistoricalReadFallback = true);
+
+            Assert.That(async () => await client.GetLedgerEntryAsync("2.1", "collection",
+                new RequestContext { CancellationToken = cancellation.Token }), Throws.InstanceOf<OperationCanceledException>());
+            Assert.AreEqual(cancelAt + 1, calls);
+        }
+
+        [TestCase(401)]
+        [TestCase(403)]
+        [TestCase(400)]
+        public void Failover_PermanentPrimaryErrorsDoNotUseCollectionFallback(int status)
+        {
+            int calls = 0;
+            var transport = new MockTransport(_ => { calls++; return new MockResponse(status); });
+            var client = CreateClient(transport, false,
+                configure: options => options.EnableHistoricalReadFallback = true);
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.GetLedgerEntryAsync("2.1", "collection", new RequestContext()));
+            Assert.AreEqual(1, calls);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task Failover_TransientHistoricalReadKeepsTransactionPathAndRetryBudgets(bool enableHistoricalFallback)
+        {
+            int primaryCalls = 0;
+            int backupCalls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    var metadata = new MockResponse(200);
+                    metadata.SetContent(@"{ ""failoverLedgers"": [ ""backup"" ] }");
+                    return metadata;
+                }
+                Assert.AreEqual("/app/transactions/2.1", req.Uri.Path);
+                if (req.Uri.Host.StartsWith("testledger"))
+                {
+                    primaryCalls++;
+                    return new MockResponse(503);
+                }
+                if (++backupCalls == 1)
+                    return new MockResponse(503);
+                var ready = new MockResponse(200);
+                ready.SetContent(@"{ ""state"": ""Ready"", ""entry"": { ""transactionId"": ""2.1"" } }");
+                return ready;
+            });
+            var client = CreateClient(transport, false, maxRetries: 1,
+                configure: options => options.EnableHistoricalReadFallback = enableHistoricalFallback);
+            using Response response = await client.GetLedgerEntryAsync("2.1", "collection", new RequestContext());
+            Assert.AreEqual(2, primaryCalls);
+            Assert.AreEqual(2, backupCalls);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            Assert.AreEqual("2.1", document.RootElement.GetProperty("entry").GetProperty("transactionId").GetString());
+        }
+
         [TestCase(408)]
         [TestCase(429)]
         [TestCase(500)]
@@ -802,7 +1110,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        public void Failover_DoesNotRouteWritesToFailoverLedger()
+        public void Failover_DoesNotRouteWritesToFailoverLedger([Values(404, 503)] int status)
         {
             int failoverMetadataCalls = 0;
 
@@ -815,8 +1123,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     meta.SetContent(@"{ ""failoverLedgers"": [ ""backupledger"" ] }");
                     return meta;
                 }
-                // The write (POST) consistently fails with a transient error.
-                return new MockResponse(503);
+                return new MockResponse(status);
             });
 
             var client = CreateClient(transport, enableArchivedFallback: false);
@@ -827,11 +1134,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        [TestCase("receipt")]
-        [TestCase("status")]
-        [TestCase("governance")]
-        [TestCase("range")]
-        public void Failover_DoesNotRouteUnsupportedGetToFailoverLedger(string operation)
+        public void Failover_DoesNotRouteUnsupportedGetToFailoverLedger(
+            [Values("receipt", "status", "governance", "range")] string operation,
+            [Values(404, 503)] int status)
         {
             int failoverMetadataCalls = 0;
             var transport = new MockTransport(req =>
@@ -844,7 +1149,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     return meta;
                 }
 
-                return new MockResponse(503);
+                return new MockResponse(status);
             });
 
             var client = CreateClient(transport, enableArchivedFallback: false);
@@ -927,7 +1232,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 Assert.AreEqual(1, attempts, "No retry is allowed when MaxRetries is zero.");
             }
 
-            Assert.AreEqual(0, metadataCalls, "Ineligible transport failures must not initiate failover discovery.");
+            Assert.AreEqual(operation == "archive" ? 1 : 0, metadataCalls,
+                "Only the initial collection-qualified current-entry 404 may discover failovers; the ineligible history query must not.");
         }
 
         private static async Task InvokeIneligibleOperationAsync(ConfidentialLedgerClient client, string operation)

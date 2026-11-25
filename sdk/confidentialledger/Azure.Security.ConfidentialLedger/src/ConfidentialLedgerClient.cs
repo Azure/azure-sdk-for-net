@@ -33,6 +33,7 @@ namespace Azure.Security.ConfidentialLedger
         private readonly bool _useLedgerGateway;
         private readonly ConfidentialLedgerFailoverService _failoverService;
         private readonly bool _enableArchivedCollectionFallback;
+        private readonly bool _enableHistoricalReadFallback;
         private readonly int _maxLoadingRetries;
         private readonly TimeSpan _loadingPollDelay;
 
@@ -157,6 +158,7 @@ namespace Azure.Security.ConfidentialLedger
             _endpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
             _enableArchivedCollectionFallback = actualOptions.EnableArchivedCollectionFallback;
+            _enableHistoricalReadFallback = actualOptions.EnableHistoricalReadFallback;
             _maxLoadingRetries = actualOptions.Retry.MaxRetries;
             _loadingPollDelay = actualOptions.Retry.Delay;
         }
@@ -446,6 +448,13 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the ledger entry at the specified transaction id. </summary>
+        /// <remarks>
+        /// When <see cref="ConfidentialLedgerClientOptions.EnableHistoricalReadFallback"/> is enabled
+        /// and a nonempty collection id is supplied, a primary 404 triggers a legacy collection-based fallback:
+        /// the current entry is read from a configured failover ledger. This is not an exact historical
+        /// lookup; the returned entry retains its actual transaction id, which may differ from the request.
+        /// This fallback is disabled by default; a primary 404 is then surfaced without substitution.
+        /// </remarks>
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -473,6 +482,13 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the ledger entry at the specified transaction id. </summary>
+        /// <remarks>
+        /// When <see cref="ConfidentialLedgerClientOptions.EnableHistoricalReadFallback"/> is enabled
+        /// and a nonempty collection id is supplied, a primary 404 triggers a legacy collection-based fallback:
+        /// the current entry is read from a configured failover ledger. This is not an exact historical
+        /// lookup; the returned entry retains its actual transaction id, which may differ from the request.
+        /// This fallback is disabled by default; a primary 404 is then surfaced without substitution.
+        /// </remarks>
         public virtual Response GetLedgerEntry(string transactionId, string collectionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -579,7 +595,7 @@ namespace Azure.Security.ConfidentialLedger
         private HttpMessage CreateFailoverGetLedgerEntryRequest(string transactionId, string collectionId, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
-            FailoverPolicy.MarkEligible(message);
+            FailoverPolicy.MarkEligible(message, collectionId, _enableHistoricalReadFallback);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -599,7 +615,7 @@ namespace Azure.Security.ConfidentialLedger
         private HttpMessage CreateFailoverGetCurrentLedgerEntryRequest(string collectionId, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
-            FailoverPolicy.MarkEligible(message);
+            FailoverPolicy.MarkEligible(message, collectionId, enableCollectionFallback: true);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

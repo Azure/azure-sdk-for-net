@@ -59,6 +59,21 @@ namespace Azure.Security.ConfidentialLedger
         public bool EnableArchivedCollectionFallback { get; set; }
 
         /// <summary>
+        /// Controls whether a historical read returning 404 on the primary ledger may fall back to
+        /// the collection's current entry on a configured failover ledger. Defaults to <c>false</c>.
+        /// </summary>
+        /// <remarks>
+        /// Applies to <c>GetLedgerEntry</c> and <c>GetLedgerEntryAsync</c> only when a nonempty
+        /// collection id is supplied. When enabled, this restores the legacy collection-based lookup,
+        /// not an exact historical lookup: the returned entry may have different contents and a different
+        /// transaction id from the one requested. The response preserves the entry's actual transaction
+        /// id and reports state <c>Ready</c>. When disabled, a primary 404 is surfaced without this fallback.
+        /// This option does not affect current-entry reads, transient failover, or
+        /// <see cref="EnableArchivedCollectionFallback"/>. It has no effect in Ledger Gateway mode.
+        /// </remarks>
+        public bool EnableHistoricalReadFallback { get; set; }
+
+        /// <summary>
         /// Controls the order in which a read request is retried against the ledger's failover endpoints
         /// when the primary ledger returns a transient failure. Defaults to <see cref="FailoverSelection.Ordered"/>,
         /// which preserves the order reported by the identity service. Use <see cref="FailoverSelection.Random"/>

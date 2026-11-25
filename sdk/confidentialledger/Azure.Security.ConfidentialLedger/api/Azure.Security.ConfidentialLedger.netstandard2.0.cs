@@ -165,6 +165,7 @@ namespace Azure.Security.ConfidentialLedger
         public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2026_02_23) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
         public bool EnableArchivedCollectionFallback { get { throw null; } set { } }
+        public bool EnableHistoricalReadFallback { get { throw null; } set { } }
         public Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.FailoverSelection Failover { get { throw null; } set { } }
         public System.TimeSpan? FailoverNetworkTimeout { get { throw null; } set { } }
         public bool UseLedgerGateway { get { throw null; } set { } }

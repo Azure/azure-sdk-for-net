@@ -1,14 +1,14 @@
 # Release History
 
-## 2.0.0-beta.7 (Unreleased)
+## 2.0.0-beta.7 (2026-11-19)
 
 ### Features Added
 
-### Breaking Changes
+- Added `ConfidentialLedgerClientOptions.EnableHistoricalReadFallback`, disabled by default. Enable it to allow `GetLedgerEntry` and `GetLedgerEntryAsync` with a nonempty collection id to query the collection's current entry on a failover ledger after a primary 404. This is not an exact historical lookup and can return different contents and a different transaction id. The response preserves the actual returned transaction id and tags and wraps the entry with state `Ready`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Restored cross-ledger fallback for collection-qualified current-entry reads returning 404, including `InvalidTransactionId` and `UnknownLedgerEntry`, and traversal past missing entries on failover ledgers. Historical-to-current fallback requires opting in with `EnableHistoricalReadFallback`; otherwise a primary historical-read 404 is preserved. Reads without a nonempty collection id do not fail over on 404; transient failover and non-entry operations are unchanged.
 
 ## 2.0.0-beta.6 (2026-10-15)
 
