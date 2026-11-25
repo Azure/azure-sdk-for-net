@@ -88,6 +88,24 @@ BeforeAll {
     }
 }
 
+Describe 'ConvertTo-PrReReviewReplayCutoff' {
+    It 'accepts UTC and offset timestamps' -ForEach @(
+        @{ Value = '2026-11-10T19:43:40Z'; Expected = '2026-11-10T19:43:40+00:00' }
+        @{ Value = '2026-11-10T19:43:40.1234567+02:00'; Expected = '2026-11-10T19:43:40.1234567+02:00' }
+    ) {
+        (ConvertTo-PrReReviewReplayCutoff $Value).ToString('o') | Should -Be ([DateTimeOffset]::Parse($Expected, [Globalization.CultureInfo]::InvariantCulture).ToString('o'))
+    }
+
+    It 'rejects invalid cutoff <Value> with an ISO 8601 error' -ForEach @(
+        @{ Value = '2026-02-31T12:00:00Z' }
+        @{ Value = '2026-11-10T19:43:40' }
+        @{ Value = '2026-11-10 19:43:40Z' }
+        @{ Value = '2026-11-10T19:43:40.12345678Z' }
+    ) {
+        { ConvertTo-PrReReviewReplayCutoff $Value } | Should -Throw -ExpectedMessage '*ISO 8601*'
+    }
+}
+
 Describe 'Invoke-PrReReviewInputExport.ps1 replay' {
     BeforeEach {
         $script:SavedEnvironment = @{}
@@ -178,6 +196,14 @@ Describe 'Invoke-PrReReviewInputExport.ps1 replay' {
         $env:REPLAY_HISTORY_CUTOFF = '2026-11-10 19:43'
         { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } |
             Should -Throw -ExpectedMessage '*not a pull request number*REPLAY_HEAD_SHA*40-character*REPLAY_BASE_SHA*40-character*ISO 8601*'
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly
+    }
+
+    It 'aggregates an invalid calendar date with other invalid replay inputs' {
+        $env:REPLAY_HEAD_SHA = 'main'
+        $env:REPLAY_HISTORY_CUTOFF = '2026-02-31T12:00:00Z'
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } |
+            Should -Throw -ExpectedMessage '*REPLAY_HEAD_SHA*40-character*ISO 8601*'
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly
     }
 

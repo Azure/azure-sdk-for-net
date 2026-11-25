@@ -261,6 +261,8 @@ function Test-PrReReviewReplayCommit {
     return $Value -cmatch '^[0-9a-f]{7,64}$' -and @($AllowedCommits | Where-Object { $_ -and $_.StartsWith($Value, [StringComparison]::Ordinal) }).Count -gt 0
 }
 
+# Recognizes << and <<- (but not <<<), then a wholly single- or double-quoted delimiter, or a
+# backslash-prefixed or bare ASCII alphanumeric/underscore delimiter. A quoted delimiter suppresses expansions in the body.
 $script:HeredocPattern = [regex]'\G(?<!<)<<(?!<)(?<dash>-?)[ \t]*(?:(?<quote>'')(?<word>[^''\n]*)''|(?<quote>")(?<word>[^"\n]*)"|(?<quote>\\)?(?<word>[A-Za-z0-9_]+))'
 
 function Set-PrReReviewShellMask {

@@ -141,7 +141,6 @@ permissions:
   issues: read
 engine:
   id: copilot
-  # 1.0.80 did not know claude-sonnet-5.5 and fell back to a 128K-token prompt limit.
   version: "1.0.103"
   # Without this, 1.0.103 sends medium effort, and agents that stopped early blamed their effort budget.
   args: ["--reasoning-effort", "high"]

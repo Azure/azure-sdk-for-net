@@ -307,10 +307,12 @@ query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
 function ConvertTo-PrReReviewReplayCutoff {
     param([Parameter(Mandatory)][AllowEmptyString()][string]$Value)
 
-    if ($Value -cnotmatch '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?(?:Z|[+-]\d{2}:\d{2})$') {
+    $cutoff = [DateTimeOffset]::MinValue
+    if ($Value -cnotmatch '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?(?:Z|[+-]\d{2}:\d{2})$' -or
+        ![DateTimeOffset]::TryParse($Value, [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::None, [ref]$cutoff)) {
         throw "The history cutoff '$Value' must be an ISO 8601 time with a UTC offset, such as 2026-11-10T19:43:40Z."
     }
-    return [DateTimeOffset]::Parse($Value, [Globalization.CultureInfo]::InvariantCulture)
+    return $cutoff
 }
 
 function Get-PrReReviewReplayInput {
