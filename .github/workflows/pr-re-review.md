@@ -102,6 +102,8 @@ jobs:
       pull-requests: read
     outputs:
       within_cap: ${{ steps.measure.outputs.within_cap }}
+      characters: ${{ steps.measure.outputs.characters }}
+      max_characters: ${{ steps.measure.outputs.max_characters }}
     steps:
       - name: Checkout trusted re-review helpers
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -122,10 +124,12 @@ jobs:
           REPLAY_HEAD_SHA: ${{ inputs.head_sha }}
           REPLAY_BASE_SHA: ${{ inputs.base_sha }}
           REPLAY_HISTORY_CUTOFF: ${{ inputs.history_cutoff }}
+          MAX_CHARACTERS: '700000'
         run: |
           $gate = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewSizeGate.ps1'
           if (Test-Path -PathType Leaf $gate) {
-            & $gate
+            & $gate -MaxCharacters ([long]$env:MAX_CHARACTERS)
+            Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value "max_characters=$env:MAX_CHARACTERS"
           } else {
             Write-Host '::notice::The base branch predates the re-review size gate, so the re-review runs without a size limit.'
             Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value 'within_cap=true'
@@ -133,6 +137,112 @@ jobs:
   agent:
     needs: [size_gate]
     if: needs.size_gate.outputs.within_cap == 'true'
+  notify_manual_review:
+    needs: [size_gate, agent, validate_agent_output]
+    if: ${{ always() && !cancelled() && github.event_name != 'workflow_dispatch' && (needs.size_gate.outputs.within_cap == 'false' || (needs.agent.result != 'skipped' && needs.validate_agent_output.result == 'failure')) }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Download terminal agent output
+        if: needs.size_gate.outputs.within_cap != 'false' && needs.agent.outputs.output_types == ''
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: "{agent,agent-output-fallback}"
+          merge-multiple: true
+          path: ${{ runner.temp }}/agent-result
+      - name: Notify that manual review is needed
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          REVIEW_OVERSIZED: ${{ needs.size_gate.outputs.within_cap == 'false' }}
+          REVIEW_OUTPUT_TYPES: ${{ needs.agent.outputs.output_types }}
+          REVIEW_CHARACTERS: ${{ needs.size_gate.outputs.characters }}
+          REVIEW_LIMIT: ${{ needs.size_gate.outputs.max_characters }}
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const oversized = process.env.REVIEW_OVERSIZED === 'true';
+            let reason;
+            if (oversized) {
+              const characters = process.env.REVIEW_CHARACTERS;
+              const limit = process.env.REVIEW_LIMIT;
+              if (!/^\d+$/.test(characters) || !/^\d+$/.test(limit)) {
+                throw new Error('Missing read-set size or limit for the size-gate notification');
+              }
+              reason = `The automated re-review was skipped because its read set is ${Number(characters).toLocaleString('en-US')} characters (limit: ${Number(limit).toLocaleString('en-US')}).`;
+            } else {
+              let types = process.env.REVIEW_OUTPUT_TYPES.split(',').filter(Boolean);
+              if (types.length === 0) {
+                const output = JSON.parse(fs.readFileSync(path.join(process.env.RUNNER_TEMP, 'agent-result', 'agent_output.json'), 'utf8'));
+                types = Array.isArray(output?.items) ? output.items.map(item => item?.type) : [];
+              }
+              if (!types.some(type => ['report_incomplete', 'missing_tool', 'missing_data'].includes(type))) {
+                core.info('No explicit incomplete agent output; no manual-review notification to post.');
+                return;
+              }
+              reason = 'The automated re-review did not complete.';
+            }
+            const eventPr = context.payload.pull_request;
+            if (!eventPr?.number || !eventPr.head?.sha || !eventPr.base?.sha) throw new Error('Missing pull request number or analyzed head/base SHA');
+            const { owner, repo } = context.repo;
+            const pull_number = eventPr.number;
+            const pr = await github.rest.pulls.get({ owner, repo, pull_number });
+            if (pr.data.state !== 'open' || pr.data.draft || pr.data.head.sha !== eventPr.head.sha) {
+              core.info('The pull request is closed, draft, or has a different head; no notification to post.');
+              return;
+            }
+            const marker = `<!-- pr-re-review-manual-review:${process.env.GITHUB_RUN_ID} -->`;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number: pull_number, per_page: 100 });
+            const previous = comments.find(comment => comment.user?.login === 'github-actions[bot]' && comment.body?.includes(marker));
+            const url = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            const baseNote = pr.data.base.sha !== eventPr.base.sha ? ' The base has changed since this run.' : '';
+            const body = `${marker}\n${reason} The run analyzed base \`${eventPr.base.sha}\`.${baseNote} Please request a manual review of commit \`${eventPr.head.sha}\` against the current base unless a later automated re-review completes. [View workflow run](${url}).\n\n&#45; by copilot`;
+            if (previous) {
+              if (previous.body !== body) await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number: pull_number, body });
+            }
+      - name: Fail oversized re-review
+        if: ${{ always() && needs.size_gate.outputs.within_cap == 'false' }}
+        run: |
+          echo '::error::The automated re-review was skipped because the read set exceeds the size limit; manual review is needed.'
+          exit 1
+  update_manual_review:
+    needs: [agent, detection, validate_agent_output, safe_outputs, unresolve_review_thread]
+    if: ${{ always() && !cancelled() && github.event_name != 'workflow_dispatch' && needs.agent.result == 'success' && needs.detection.outputs.detection_conclusion == 'success' && needs.validate_agent_output.result == 'success' && needs.safe_outputs.result == 'success' && needs.safe_outputs.outputs.process_safe_outputs_status == 'success' && needs.unresolve_review_thread.result == 'skipped' && !contains(needs.agent.outputs.output_types, 'unresolve_review_thread') }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Update an earlier manual-review notification
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const eventPr = context.payload.pull_request;
+            if (!eventPr?.number || !eventPr.head?.sha || !eventPr.base?.sha) throw new Error('Missing pull request number or analyzed head/base SHA');
+            const { owner, repo } = context.repo;
+            const pull_number = eventPr.number;
+            const pr = await github.rest.pulls.get({ owner, repo, pull_number });
+            if (pr.data.state !== 'open' || pr.data.draft || pr.data.head.sha !== eventPr.head.sha || pr.data.base.sha !== eventPr.base.sha) {
+              core.info('The pull request is closed, draft, or has a different head or base; no notification to update.');
+              return;
+            }
+            const attempt = await github.rest.actions.getWorkflowRunAttempt({ owner, repo, run_id: Number(process.env.GITHUB_RUN_ID), attempt_number: Number(process.env.GITHUB_RUN_ATTEMPT) });
+            const startedAt = Date.parse(attempt.data.run_started_at);
+            if (!Number.isFinite(startedAt)) throw new Error('Missing workflow attempt start time');
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number: pull_number, per_page: 100 });
+            const url = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            for (const comment of comments) {
+              const marker = /^<!-- pr-re-review-manual-review:\d+ -->/.exec(comment.body || '')?.[0];
+              const updatedAt = Date.parse(comment.updated_at);
+              if (comment.user?.login !== 'github-actions[bot]' || !marker || !comment.body.includes('Please request a manual review') || !Number.isFinite(updatedAt) || updatedAt >= startedAt) continue;
+              const body = `${marker}\nThe automated re-review of commit \`${eventPr.head.sha}\` completed in a later run or attempt. [View workflow run](${url}).\n\n&#45; by copilot`;
+              await github.rest.issues.updateComment({ owner, repo, comment_id: comment.id, body });
+            }
 inlined-imports: true
 permissions:
   copilot-requests: write
