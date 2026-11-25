@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         provisioningState,
                         resourceGuid,
                         null),
-                name,
                 etag,
                 additionalBinaryDataProperties: null);
         }

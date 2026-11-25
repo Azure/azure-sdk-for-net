@@ -4597,6 +4597,7 @@ namespace Azure.ResourceManager.Hci.Models
                         (steps ?? new ChangeTrackingList<HciUpdateStep>()).ToList(),
                         default),
                     default),
+                default,
                 location,
                 default);
         }
