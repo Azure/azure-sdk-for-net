@@ -18,6 +18,12 @@ namespace Extensions.Plugin.Visitors
         // Rename before the generator builds constructor parameters and serialization from the property.
         protected override PropertyProvider PreVisitProperty(InputProperty property, PropertyProvider propertyProvider)
         {
+            // This visitor was not in place before the Azure.AI.Projects.Agents release and
+            // we cannot apply it to this package, because it will result in breaking changes.
+            if (property.EnclosingType?.Namespace?.StartsWith("Azure.AI.Projects.Agents") == true)
+            {
+                return propertyProvider;
+            }
             if (propertyProvider is null || property.IsExactName || !IsDateTimeType(property.Type))
             {
                 return propertyProvider;
