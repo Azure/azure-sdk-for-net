@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Education.Models
         /// <summary> Initializes a new instance of <see cref="JoinRequestList"/>. </summary>
         internal JoinRequestList()
         {
-            Value = new ChangeTrackingList<EducationJoinRequestData>();
+            Value = new ChangeTrackingList<EducationJoinContentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JoinRequestList"/>. </summary>
         /// <param name="value"> The JoinRequestDetails items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JoinRequestList(IReadOnlyList<EducationJoinRequestData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JoinRequestList(IReadOnlyList<EducationJoinContentData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Education.Models
         }
 
         /// <summary> The JoinRequestDetails items on this page. </summary>
-        public IReadOnlyList<EducationJoinRequestData> Value { get; }
+        public IReadOnlyList<EducationJoinContentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }

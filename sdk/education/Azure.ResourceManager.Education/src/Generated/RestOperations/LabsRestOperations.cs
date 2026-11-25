@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeBudget, RequestContext context)
+        internal HttpMessage CreateListRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeBudget, RequestContext context)
+        internal HttpMessage CreateNextListRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string billingAccountName, string billingProfileName, bool? includeBudget, bool? includeDeleted, RequestContext context)
+        internal HttpMessage CreateListAllRequest(string billingAccountName, string billingProfileName, bool? includeBudget, bool? includeDeleted, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string billingAccountName, string billingProfileName, bool? includeBudget, bool? includeDeleted, RequestContext context)
+        internal HttpMessage CreateNextListAllRequest(Uri nextPage, string billingAccountName, string billingProfileName, bool? includeBudget, bool? includeDeleted, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
