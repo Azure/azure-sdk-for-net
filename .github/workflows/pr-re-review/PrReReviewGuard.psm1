@@ -456,6 +456,9 @@ function Get-PrReReviewShellReadText {
             foreach ($substitution in $command.Substitutions) {
                 foreach ($nested in (Split-PrReReviewShellCommand $substitution)) {
                     if ($nested.Name -ceq 'cat') {
+                        foreach ($inner in $nested.Substitutions) {
+                            Get-PrReReviewShellReadText $inner $PublishedFiles
+                        }
                         Get-PrReReviewHeredocReadText $nested $PublishedFiles
                     } else {
                         Get-PrReReviewShellReadText $nested.Source $PublishedFiles
