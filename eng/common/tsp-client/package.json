@@ -4,5 +4,11 @@
   },
   "engines": {
     "node": ">=22.13.0"
+  },
+  "overrides": {
+    "@azure-tools/typespec-client-generator-cli": {
+      "simple-git": "^4.0.2",
+      "shell-quote": "^1.12.0"
+    }
   }
 }
