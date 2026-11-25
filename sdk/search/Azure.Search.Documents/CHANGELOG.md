@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added support for `2026-11-01-preview`, now the default service version. Older supported GA service versions remain available.
-- Added graph queries with typed results, diagnostics, statistics, explain plans, and provenance, along with graph knowledge source extraction, grounding, and retrieval models.
+- Added graph queries with typed results, diagnostics, statistics, explain plans, and provenance, along with graph knowledge source extraction, grounding, and retrieval models. Graph retrieval options use `KnowledgeSourceGraphParams`, `KnowledgeSourceGraphProvenanceParams`, and `KnowledgeSourceGraphHydrateDocumentsParams`.
 - Added topic-graph vector search profiles and discriminated `NoneVectorQueryTopicGraph`, `DiverseVectorQueryTopicGraph`, and `BalancedVectorQueryTopicGraph` query options.
 - Added facet-based filter-hint `AutoConfiguration`, knowledge source enrichment caching, and the `Gpt6Astra`, `Gpt6Sol`, `Gpt6Luna`, and `Gpt61Sol` model names.
 - Added random scoring profiles with optional query-time seeds and agentic search options.

@@ -162,7 +162,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         {
                             IncludeReferences = true,
                             IncludeReferenceSourceData = true,
-                            GraphParameters = new AgentRuntimeGraphParams { IncludeQuery = true }
+                            GraphParameters = new KnowledgeSourceGraphParams { IncludeQuery = true }
                         }
                     }
                 });

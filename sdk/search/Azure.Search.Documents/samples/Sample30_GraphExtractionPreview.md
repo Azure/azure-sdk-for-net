@@ -214,7 +214,7 @@ KnowledgeBaseRetrievalResponse response = await retrievalClient.RetrieveAsync(
             {
                 IncludeReferences = true,
                 IncludeReferenceSourceData = true,
-                GraphParameters = new AgentRuntimeGraphParams { IncludeQuery = true }
+                GraphParameters = new KnowledgeSourceGraphParams { IncludeQuery = true }
             }
         }
     });

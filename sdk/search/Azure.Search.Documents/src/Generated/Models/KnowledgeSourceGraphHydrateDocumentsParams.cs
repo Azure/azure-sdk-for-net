@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Selection and count limits for hydrated source documents returned by knowledge retrieval. </summary>
-    public partial class AgentRuntimeGraphHydrateDocumentsParams
+    public partial class KnowledgeSourceGraphHydrateDocumentsParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentRuntimeGraphHydrateDocumentsParams"/>. </summary>
-        public AgentRuntimeGraphHydrateDocumentsParams()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceGraphHydrateDocumentsParams"/>. </summary>
+        public KnowledgeSourceGraphHydrateDocumentsParams()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentRuntimeGraphHydrateDocumentsParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceGraphHydrateDocumentsParams"/>. </summary>
         /// <param name="select"> Comma-separated retrievable source fields to include. </param>
         /// <param name="top"> Maximum hydrated documents to return. Defaults to 50; this is independent of graph-row count. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentRuntimeGraphHydrateDocumentsParams(string @select, int? top, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceGraphHydrateDocumentsParams(string @select, int? top, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Select = @select;
             Top = top;

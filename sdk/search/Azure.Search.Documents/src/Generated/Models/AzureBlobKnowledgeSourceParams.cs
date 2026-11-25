@@ -40,14 +40,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="graphParameters"> Graph-query visibility and source-document hydration options for a graph-enabled source. </param>
         /// <param name="topicGraph"> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </param>
-        internal AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, AgentRuntimeGraphParams graphParameters, VectorQueryTopicGraph topicGraph) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
+        internal AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, KnowledgeSourceGraphParams graphParameters, VectorQueryTopicGraph topicGraph) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
         {
             GraphParameters = graphParameters;
             TopicGraph = topicGraph;
         }
 
         /// <summary> Graph-query visibility and source-document hydration options for a graph-enabled source. </summary>
-        public AgentRuntimeGraphParams GraphParameters { get; set; }
+        public KnowledgeSourceGraphParams GraphParameters { get; set; }
 
         /// <summary> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </summary>
         public VectorQueryTopicGraph TopicGraph { get; set; }

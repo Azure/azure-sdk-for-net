@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeSourceKind kind = default;
             bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AgentRuntimeGraphParams graphParameters = default;
+            KnowledgeSourceGraphParams graphParameters = default;
             VectorQueryTopicGraph topicGraph = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,7 +232,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    graphParameters = AgentRuntimeGraphParams.DeserializeAgentRuntimeGraphParams(prop.Value, options);
+                    graphParameters = KnowledgeSourceGraphParams.DeserializeKnowledgeSourceGraphParams(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("topicGraph"u8))

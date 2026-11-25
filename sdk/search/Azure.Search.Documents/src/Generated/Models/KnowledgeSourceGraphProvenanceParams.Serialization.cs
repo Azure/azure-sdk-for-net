@@ -14,51 +14,51 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Source-document hydration policy for knowledge retrieval graph results. </summary>
-    public partial class AgentRuntimeGraphProvenanceParams : IJsonModel<AgentRuntimeGraphProvenanceParams>
+    public partial class KnowledgeSourceGraphProvenanceParams : IJsonModel<KnowledgeSourceGraphProvenanceParams>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentRuntimeGraphProvenanceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceGraphProvenanceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentRuntimeGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentRuntimeGraphProvenanceParams(document.RootElement, options);
+                        return DeserializeKnowledgeSourceGraphProvenanceParams(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentRuntimeGraphProvenanceParams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceGraphProvenanceParams)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentRuntimeGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentRuntimeGraphProvenanceParams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceGraphProvenanceParams)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentRuntimeGraphProvenanceParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KnowledgeSourceGraphProvenanceParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentRuntimeGraphProvenanceParams IPersistableModel<AgentRuntimeGraphProvenanceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceGraphProvenanceParams IPersistableModel<KnowledgeSourceGraphProvenanceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentRuntimeGraphProvenanceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeSourceGraphProvenanceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentRuntimeGraphProvenanceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeSourceGraphProvenanceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentRuntimeGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentRuntimeGraphProvenanceParams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceGraphProvenanceParams)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Kind))
             {
@@ -103,31 +103,31 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentRuntimeGraphProvenanceParams IJsonModel<AgentRuntimeGraphProvenanceParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceGraphProvenanceParams IJsonModel<KnowledgeSourceGraphProvenanceParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentRuntimeGraphProvenanceParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceGraphProvenanceParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentRuntimeGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceGraphProvenanceParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentRuntimeGraphProvenanceParams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceGraphProvenanceParams)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentRuntimeGraphProvenanceParams(document.RootElement, options);
+            return DeserializeKnowledgeSourceGraphProvenanceParams(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentRuntimeGraphProvenanceParams DeserializeAgentRuntimeGraphProvenanceParams(JsonElement element, ModelReaderWriterOptions options)
+        internal static KnowledgeSourceGraphProvenanceParams DeserializeKnowledgeSourceGraphProvenanceParams(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             KnowledgeSourceGraphProvenanceKind? kind = default;
-            AgentRuntimeGraphHydrateDocumentsParams hydrateDocuments = default;
+            KnowledgeSourceGraphHydrateDocumentsParams hydrateDocuments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    hydrateDocuments = AgentRuntimeGraphHydrateDocumentsParams.DeserializeAgentRuntimeGraphHydrateDocumentsParams(prop.Value, options);
+                    hydrateDocuments = KnowledgeSourceGraphHydrateDocumentsParams.DeserializeKnowledgeSourceGraphHydrateDocumentsParams(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentRuntimeGraphProvenanceParams(kind, hydrateDocuments, additionalBinaryDataProperties);
+            return new KnowledgeSourceGraphProvenanceParams(kind, hydrateDocuments, additionalBinaryDataProperties);
         }
     }
 }

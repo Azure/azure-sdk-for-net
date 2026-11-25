@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Graph-specific overrides for a graph-enabled Azure Blob knowledge source during retrieval. </summary>
-    public partial class AgentRuntimeGraphParams
+    public partial class KnowledgeSourceGraphParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentRuntimeGraphParams"/>. </summary>
-        public AgentRuntimeGraphParams()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceGraphParams"/>. </summary>
+        public KnowledgeSourceGraphParams()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentRuntimeGraphParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceGraphParams"/>. </summary>
         /// <param name="provenance"> Controls whether source documents supporting graph results are also returned. </param>
         /// <param name="includeQuery"> Include generated GQL in graphSearchArguments.gql. Omitted or false does not expose generated query text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentRuntimeGraphParams(AgentRuntimeGraphProvenanceParams provenance, bool? includeQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceGraphParams(KnowledgeSourceGraphProvenanceParams provenance, bool? includeQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provenance = provenance;
             IncludeQuery = includeQuery;
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> Controls whether source documents supporting graph results are also returned. </summary>
-        public AgentRuntimeGraphProvenanceParams Provenance { get; set; }
+        public KnowledgeSourceGraphProvenanceParams Provenance { get; set; }
 
         /// <summary> Include generated GQL in graphSearchArguments.gql. Omitted or false does not expose generated query text. </summary>
         public bool? IncludeQuery { get; set; }

@@ -5037,7 +5037,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="graphParameters"> Graph-query visibility and source-document hydration options for a graph-enabled source. </param>
         /// <param name="topicGraph"> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments = default, bool? enableImageServing = default, AgentRuntimeGraphParams graphParameters = default, VectorQueryTopicGraph topicGraph = default)
+        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments = default, bool? enableImageServing = default, KnowledgeSourceGraphParams graphParameters = default, VectorQueryTopicGraph topicGraph = default)
         {
             return new AzureBlobKnowledgeSourceParams(
                 knowledgeSourceName,
@@ -5059,28 +5059,28 @@ namespace Azure.Search.Documents.Models
         /// <summary> Graph-specific overrides for a graph-enabled Azure Blob knowledge source during retrieval. </summary>
         /// <param name="provenance"> Controls whether source documents supporting graph results are also returned. </param>
         /// <param name="includeQuery"> Include generated GQL in graphSearchArguments.gql. Omitted or false does not expose generated query text. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.AgentRuntimeGraphParams"/> instance for mocking. </returns>
-        public static AgentRuntimeGraphParams AgentRuntimeGraphParams(AgentRuntimeGraphProvenanceParams provenance = default, bool? includeQuery = default)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceGraphParams"/> instance for mocking. </returns>
+        public static KnowledgeSourceGraphParams KnowledgeSourceGraphParams(KnowledgeSourceGraphProvenanceParams provenance = default, bool? includeQuery = default)
         {
-            return new AgentRuntimeGraphParams(provenance, includeQuery, additionalBinaryDataProperties: null);
+            return new KnowledgeSourceGraphParams(provenance, includeQuery, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Source-document hydration policy for knowledge retrieval graph results. </summary>
         /// <param name="kind"> Whether graph retrieval returns graph rows only or also hydrates source documents. </param>
         /// <param name="hydrateDocuments"> Source-document options; only valid when kind is hydrate. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.AgentRuntimeGraphProvenanceParams"/> instance for mocking. </returns>
-        public static AgentRuntimeGraphProvenanceParams AgentRuntimeGraphProvenanceParams(KnowledgeSourceGraphProvenanceKind? kind = default, AgentRuntimeGraphHydrateDocumentsParams hydrateDocuments = default)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceGraphProvenanceParams"/> instance for mocking. </returns>
+        public static KnowledgeSourceGraphProvenanceParams KnowledgeSourceGraphProvenanceParams(KnowledgeSourceGraphProvenanceKind? kind = default, KnowledgeSourceGraphHydrateDocumentsParams hydrateDocuments = default)
         {
-            return new AgentRuntimeGraphProvenanceParams(kind, hydrateDocuments, additionalBinaryDataProperties: null);
+            return new KnowledgeSourceGraphProvenanceParams(kind, hydrateDocuments, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Selection and count limits for hydrated source documents returned by knowledge retrieval. </summary>
         /// <param name="select"> Comma-separated retrievable source fields to include. </param>
         /// <param name="top"> Maximum hydrated documents to return. Defaults to 50; this is independent of graph-row count. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.AgentRuntimeGraphHydrateDocumentsParams"/> instance for mocking. </returns>
-        public static AgentRuntimeGraphHydrateDocumentsParams AgentRuntimeGraphHydrateDocumentsParams(string @select = default, int? top = default)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceGraphHydrateDocumentsParams"/> instance for mocking. </returns>
+        public static KnowledgeSourceGraphHydrateDocumentsParams KnowledgeSourceGraphHydrateDocumentsParams(string @select = default, int? top = default)
         {
-            return new AgentRuntimeGraphHydrateDocumentsParams(@select, top, additionalBinaryDataProperties: null);
+            return new KnowledgeSourceGraphHydrateDocumentsParams(@select, top, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies runtime parameters for a indexed SharePoint knowledge source. </summary>

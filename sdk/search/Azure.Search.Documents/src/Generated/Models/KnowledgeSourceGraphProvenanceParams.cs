@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Source-document hydration policy for knowledge retrieval graph results. </summary>
-    public partial class AgentRuntimeGraphProvenanceParams
+    public partial class KnowledgeSourceGraphProvenanceParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentRuntimeGraphProvenanceParams"/>. </summary>
-        public AgentRuntimeGraphProvenanceParams()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceGraphProvenanceParams"/>. </summary>
+        public KnowledgeSourceGraphProvenanceParams()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentRuntimeGraphProvenanceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceGraphProvenanceParams"/>. </summary>
         /// <param name="kind"> Whether graph retrieval returns graph rows only or also hydrates source documents. </param>
         /// <param name="hydrateDocuments"> Source-document options; only valid when kind is hydrate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentRuntimeGraphProvenanceParams(KnowledgeSourceGraphProvenanceKind? kind, AgentRuntimeGraphHydrateDocumentsParams hydrateDocuments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceGraphProvenanceParams(KnowledgeSourceGraphProvenanceKind? kind, KnowledgeSourceGraphHydrateDocumentsParams hydrateDocuments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             HydrateDocuments = hydrateDocuments;
@@ -36,6 +36,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public KnowledgeSourceGraphProvenanceKind? Kind { get; set; }
 
         /// <summary> Source-document options; only valid when kind is hydrate. </summary>
-        public AgentRuntimeGraphHydrateDocumentsParams HydrateDocuments { get; set; }
+        public KnowledgeSourceGraphHydrateDocumentsParams HydrateDocuments { get; set; }
     }
 }
