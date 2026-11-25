@@ -8,41 +8,64 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps._Geolocation
 {
-    /// <summary> The JsonFormat. </summary>
-    internal readonly partial struct JsonFormat : IEquatable<JsonFormat>
+    /// <summary> Desired format of the response. Only `json` format is supported. </summary>
+    public readonly partial struct JsonFormat : IEquatable<JsonFormat>
     {
         private readonly string _value;
+        /// <summary>
+        /// [The JavaScript Object Notation Data Interchange
+        /// Format](https://tools.ietf.org/html/rfc8259)
+        /// </summary>
+        private const string JsonValue = "json";
 
         /// <summary> Initializes a new instance of <see cref="JsonFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JsonFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string JsonValue = "json";
-
-        /// <summary> [The JavaScript Object Notation Data Interchange Format](https://tools.ietf.org/html/rfc8259). </summary>
+        /// <summary>
+        /// [The JavaScript Object Notation Data Interchange
+        /// Format](https://tools.ietf.org/html/rfc8259)
+        /// </summary>
         public static JsonFormat Json { get; } = new JsonFormat(JsonValue);
+
         /// <summary> Determines if two <see cref="JsonFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JsonFormat left, JsonFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JsonFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JsonFormat left, JsonFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JsonFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JsonFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JsonFormat(string value) => new JsonFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JsonFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JsonFormat?(string value) => value == null ? (JsonFormat?)null : new JsonFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JsonFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JsonFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

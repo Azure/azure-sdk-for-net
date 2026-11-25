@@ -5,10 +5,42 @@
 
 #nullable disable
 
-namespace Azure.Maps.Geolocation
+using System;
+using System.Collections.Generic;
+
+namespace Azure.Maps._Geolocation
 {
     /// <summary> The object containing the country/region information. </summary>
-    internal partial class CountryRegion
+    public partial class CountryRegion
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="CountryRegion"/>. </summary>
+        internal CountryRegion()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CountryRegion"/>. </summary>
+        /// <param name="isoCode">
+        /// The IP address's 2-character country or region code ([ISO
+        /// 3166-1](https://www.iso.org/iso-3166-country-codes.html)). Note that IP
+        /// addresses in ranges reserved for special purposes will return Null for
+        /// country/region.
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CountryRegion(string isoCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            IsoCode = isoCode;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary>
+        /// The IP address's 2-character country or region code ([ISO
+        /// 3166-1](https://www.iso.org/iso-3166-country-codes.html)). Note that IP
+        /// addresses in ranges reserved for special purposes will return Null for
+        /// country/region.
+        /// </summary>
+        public string IsoCode { get; }
     }
 }
