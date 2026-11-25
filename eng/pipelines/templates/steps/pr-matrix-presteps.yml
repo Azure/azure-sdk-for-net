@@ -15,6 +15,15 @@ parameters:
   - name: EnableTestRuntimeWeighting
     type: boolean
     default: false
+  - name: TestMatrixConfigs
+    type: object
+    default: []
+  - name: TestMatrixFilters
+    type: object
+    default: []
+  - name: TestMatrixReplace
+    type: object
+    default: []
   - name: LocTarget
     type: number
     default: 474000
@@ -114,6 +123,24 @@ steps:
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
       env:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+    - pwsh: |
+        # Select before consolidation to retain each package's matrix configuration.
+        [long]$selectionSeed = 0
+        [void][long]::TryParse('$(System.PullRequest.PullRequestNumber)', [ref]$selectionSeed)
+        $defaultMatrixFile = "$(Build.ArtifactStagingDirectory)/test-matrix-configs.json"
+        '${{ convertToJson(parameters.TestMatrixConfigs) }}' | Set-Content $defaultMatrixFile
+        eng/scripts/Select-MacTestPackages.ps1 `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -OutputFolder "$(Build.ArtifactStagingDirectory)/MacTestPackageInfo" `
+          -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
+          -DefaultMatrixFile $defaultMatrixFile `
+          -MatrixFilters '${{ join(''',''', parameters.TestMatrixFilters) }}' `
+          -MatrixReplace '${{ join(''',''', parameters.TestMatrixReplace) }}' `
+          -DisplayNameFilter '$(displayNameFilter)' `
+          -SelectionSeed $selectionSeed
+      displayName: Select direct packages for macOS tests
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
     - pwsh: |
         $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
