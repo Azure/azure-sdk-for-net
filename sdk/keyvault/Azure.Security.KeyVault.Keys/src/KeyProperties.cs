@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -152,7 +152,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Gets the external key reference, if available. Only populated on Managed HSM with service
-        /// version <c>2026-01-01-preview</c> or later when the key is registered as an external key.
+        /// version <c>2026-04-01</c> or later when the key is registered as an external key.
         /// </summary>
         public ExternalKey ExternalKey { get => _attributes.ExternalKey; internal set => _attributes.ExternalKey = value; }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,9 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault External Key Manager (EKM) service.
     /// </summary>
     [CodeGenType("KeyVaultEkmRestClient")]
+#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+    [CodeGenSuppress("KeyVaultEkmClient", typeof(KeyVaultEkmClientSettings))]
+#pragma warning restore SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public partial class KeyVaultEkmClient
     {
         /// <summary>
@@ -22,6 +26,14 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <value>The vault URI.</value>
         public virtual Uri VaultUri => _endpoint;
+
+        /// <summary> Initializes a new instance of KeyVaultEkmClient from a <see cref="KeyVaultEkmClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for KeyVaultEkmClient. </param>
+        // Written by hand because the generator emits the spec's "vaultBaseUrl" name, but the settings property is customized to VaultUri.
+        [Experimental("SCME0002")]
+        public KeyVaultEkmClient(KeyVaultEkmClientSettings settings) : this(settings?.VaultUri, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultEkmClient"/>. </summary>
         /// <param name="vaultUri"> The <see cref="Uri"/> to use. </param>

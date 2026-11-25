@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:EkmCreateConnectionAsync
 #if SNIPPET
             // Read the EKM proxy's CA certificate bytes.
-            byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
+            BinaryData serverCaCertificate = BinaryData.FromBytes(File.ReadAllBytes("ekm-proxy-ca.cer"));
 
             // Build the EKM connection with the EKM proxy's HostName
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", new[] { serverCaCertificate })
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 ServerSubjectCommonName = "ekm.contoso.com",
             };
 #else
-            byte[] serverCaCertificate = ReadCaCertificate();
+            BinaryData serverCaCertificate = BinaryData.FromBytes(ReadCaCertificate());
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(ekmHost, new[] { serverCaCertificate })
             {
                 PathPrefix = TestEnvironment.EkmPathPrefix
@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:EkmCreateConnectionSync
 #if SNIPPET
             // Read the EKM proxy's CA certificate bytes (DER- or PEM-encoded).
-            byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
+            BinaryData serverCaCertificate = BinaryData.FromBytes(File.ReadAllBytes("ekm-proxy-ca.cer"));
 
             // Build the EKM connection with the EKM proxy's HostName
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", new[] { serverCaCertificate })
@@ -123,7 +123,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 ServerSubjectCommonName = "ekm.contoso.com",
             };
 #else
-            byte[] serverCaCertificate = ReadCaCertificate();
+            BinaryData serverCaCertificate = BinaryData.FromBytes(ReadCaCertificate());
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(ekmHost, new[] { serverCaCertificate })
             {
                 PathPrefix = TestEnvironment.EkmPathPrefix,

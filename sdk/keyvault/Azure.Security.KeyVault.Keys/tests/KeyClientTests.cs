@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -62,6 +63,47 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ex = Assert.Throws<ArgumentNullException>(
                 () => new CreateExternalKeyOptions("name", null));
             Assert.AreEqual("externalKey", ex.ParamName);
+        }
+
+        [Test]
+        public void CreateExternalKeyRequestBodyContainsOnlySupportedFields()
+        {
+            var options = new CreateExternalKeyOptions("name", new ExternalKey("ext-1"))
+            {
+                Enabled = true,
+                NotBefore = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
+                ExpiresOn = new DateTimeOffset(2027, 1, 1, 0, 0, 0, TimeSpan.Zero),
+                ReleasePolicy = new KeyReleasePolicy(BinaryData.FromString("{}")),
+                Tags = { ["tag"] = "value" },
+            };
+
+            ReadOnlyMemory<byte> body = new KeyRequestParameters(options).Serialize();
+
+            using JsonDocument json = JsonDocument.Parse(body);
+            JsonElement root = json.RootElement;
+
+            Assert.IsFalse(root.TryGetProperty("kty", out _));
+            Assert.IsFalse(root.TryGetProperty("key_ops", out _));
+            Assert.AreEqual("value", root.GetProperty("tags").GetProperty("tag").GetString());
+            Assert.IsTrue(root.TryGetProperty("release_policy", out _));
+
+            JsonElement attributes = root.GetProperty("attributes");
+            Assert.IsFalse(attributes.TryGetProperty("exportable", out _));
+            Assert.IsTrue(attributes.GetProperty("enabled").GetBoolean());
+            Assert.IsTrue(attributes.TryGetProperty("nbf", out _));
+            Assert.IsTrue(attributes.TryGetProperty("exp", out _));
+            Assert.AreEqual("ext-1", attributes.GetProperty("external_key").GetProperty("id").GetString());
+        }
+
+        [Test]
+        public void KeyModelFactorySetsExternalKey()
+        {
+            var externalKey = new ExternalKey("ext-1");
+
+            KeyProperties properties = KeyModelFactory.KeyProperties(name: "name", externalKey: externalKey);
+
+            Assert.AreSame(externalKey, properties.ExternalKey);
+            Assert.IsNull(KeyModelFactory.KeyProperties(name: "name").ExternalKey);
         }
 
         [Test]

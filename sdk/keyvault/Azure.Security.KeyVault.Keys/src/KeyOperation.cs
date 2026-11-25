@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Gets a value that indicates the key can be used to securely wrap a key generated inside a trusted execution environment (TEE) with the <see cref="CryptographyClient.SecureWrapKeyAsync"/> or <see cref="CryptographyClient.SecureWrapKey"/> methods.
         /// </summary>
         /// <remarks>
-        /// This value is only available with API version 2026-01-01-preview and newer.
+        /// This value is only available with API version 2026-04-01 and newer.
         /// </remarks>
         public static KeyOperation SecureWrapKey { get; } = new KeyOperation("secureWrapKey");
 
@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Gets a value that indicates the key can be used to securely unwrap a key into a trusted execution environment (TEE) with the <see cref="CryptographyClient.SecureUnwrapKeyAsync"/> or <see cref="CryptographyClient.SecureUnwrapKey"/> methods.
         /// </summary>
         /// <remarks>
-        /// This value is only available with API version 2026-01-01-preview and newer.
+        /// This value is only available with API version 2026-04-01 and newer.
         /// </remarks>
         public static KeyOperation SecureUnwrapKey { get; } = new KeyOperation("secureUnwrapKey");
 

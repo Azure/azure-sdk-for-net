@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void NewHostNullThrows()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new KeyVaultEkmConnection(null, new[] { s_cert1 }));
+                () => new KeyVaultEkmConnection(null, new[] { BinaryData.FromBytes(s_cert1) }));
             Assert.That(ex.ParamName, Is.EqualTo("hostName"));
         }
 
@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void NewHostEmptyThrows()
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(
-                () => new KeyVaultEkmConnection(string.Empty, new[] { s_cert1 }));
+                () => new KeyVaultEkmConnection(string.Empty, new[] { BinaryData.FromBytes(s_cert1) }));
             Assert.That(ex.ParamName, Is.EqualTo("hostName"));
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [Test]
         public void Ctor_PopulatesProperties()
         {
-            KeyVaultEkmConnection connection = new("ekm.contoso.com", new[] { s_cert1, s_cert2 });
+            KeyVaultEkmConnection connection = new("ekm.contoso.com", new[] { BinaryData.FromBytes(s_cert1), BinaryData.FromBytes(s_cert2) });
 
             Assert.That(connection.HostName, Is.EqualTo("ekm.contoso.com"));
             Assert.That(connection.ServerCaCertificates, Has.Count.EqualTo(2));
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [Test]
         public void OptionalProperties_AreSettable()
         {
-            KeyVaultEkmConnection connection = new("ekm.contoso.com", new[] { s_cert1 })
+            KeyVaultEkmConnection connection = new("ekm.contoso.com", new[] { BinaryData.FromBytes(s_cert1) })
             {
                 PathPrefix = "/keys",
                 ServerSubjectCommonName = "CN=ekm.contoso.com",

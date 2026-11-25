@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             byte[] ca = ReadCaCertificate();
 
-            return new KeyVaultEkmConnection(host, new[] { ca })
+            return new KeyVaultEkmConnection(host, new[] { BinaryData.FromBytes(ca) })
             {
                 PathPrefix = TestEnvironment.EkmPathPrefix
             };
