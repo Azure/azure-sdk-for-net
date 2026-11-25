@@ -29,7 +29,7 @@ jobs:
       dependsOn: ${{ parameters.DependsOn }}
       condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true), ne(${{ parameters.Matrix }}, '{}'))
       variables:
-        InputMatrix: $[ ${{ parameters.Matrix }} ]
+        TestMatrixJson: $[ ${{ parameters.Matrix }} ]
       pool:
         name: $(LINUXPOOL)
         image: $(LINUXVMIMAGE)
@@ -39,11 +39,11 @@ jobs:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         - ${{ else }}:
           - checkout: self
-        - pwsh: ./eng/scripts/Set-DeduplicatedTestMatrix.ps1 -MatrixJson $env:INPUT_MATRIX
+        - pwsh: ./eng/scripts/Set-DeduplicatedTestMatrix.ps1 -MatrixJson $env:TEST_MATRIX_JSON
           name: filter
           displayName: Filter equivalent Windows test legs
           env:
-            INPUT_MATRIX: $(InputMatrix)
+            TEST_MATRIX_JSON: $(TestMatrixJson)
 
     - template: /eng/pipelines/templates/jobs/ci.tests.yml
       parameters:

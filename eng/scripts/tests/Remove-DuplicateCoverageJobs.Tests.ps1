@@ -32,6 +32,21 @@ AfterAll {
 }
 
 Describe 'Remove duplicate Windows coverage jobs' -Tag 'UnitTest' {
+  It 'passes the matrix through pipeline and environment variables without reserved prefixes' {
+    $template = Get-Content -Raw (Join-Path $script:root 'eng/pipelines/templates/jobs/deduplicated-ci-tests.yml')
+    $variable = [regex]::Match($template, '(?m)^\s*(?<name>\w+): \$\[ \$\{\{ parameters\.Matrix \}\} \]')
+    $mapping = [regex]::Match($template, '(?m)^\s*(?<name>[A-Z_]+): \$\((?<variable>\w+)\)')
+    $scriptArgument = [regex]::Match($template, '-MatrixJson \$env:(?<name>[A-Z_]+)')
+    $variable.Success | Should -BeTrue
+    $mapping.Success | Should -BeTrue
+    $scriptArgument.Success | Should -BeTrue
+    $mapping.Groups['variable'].Value | Should -Be $variable.Groups['name'].Value
+    $scriptArgument.Groups['name'].Value | Should -Be $mapping.Groups['name'].Value
+    foreach ($name in @($variable.Groups['name'].Value, $mapping.Groups['name'].Value)) {
+      $name | Should -Not -Match '^(endpoint|input|secret|path|securefile)'
+    }
+  }
+
   It 'replaces the duplicate in the real sparse matrix, without changing other legs' {
     $base = (& $script:generator -ConfigPath $script:matrixConfig -Selection sparse -CI:$false | ConvertFrom-Json -AsHashtable)
     $actual = ApplyFilter (& $script:generator -ConfigPath $script:matrixConfig -Selection sparse -CI:$false)
