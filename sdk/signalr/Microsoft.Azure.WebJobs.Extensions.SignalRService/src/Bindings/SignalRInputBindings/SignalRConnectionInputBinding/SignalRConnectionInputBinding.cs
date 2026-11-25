@@ -44,8 +44,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             if (bindingData.ContainsKey(HttpRequestName) && _securityTokenValidator != null)
             {
                 var tokenResult = _securityTokenValidator.ValidateToken(request);
+                var authenticationExpiresOn = attrResolved.EnableAuthenticationRefresh ? tokenResult.ExpiresOn : null;
 
-                if (tokenResult.Status != SecurityTokenStatus.Valid)
+                if (tokenResult.Status != SecurityTokenStatus.Valid || authenticationExpiresOn <= DateTimeOffset.UtcNow)
                 {
                     return new SignalRConnectionInfoValueProvider(null, _userType, "");
                 }
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 {
                     UserId = attrResolved.UserId,
                     Claims = azureSignalRClient.GetCustomClaims(attrResolved.IdToken, attrResolved.ClaimTypeList),
-                    AuthenticationExpiresOn = attrResolved.EnableAuthenticationRefresh ? tokenResult.ExpiresOn : null,
+                    AuthenticationExpiresOn = authenticationExpiresOn,
                 };
                 signalRConnectionDetail = _signalRConnectionInfoConfigurer.ConfigureAuthenticatedConnection(tokenResult, request, signalRConnectionDetail);
                 if (signalRConnectionDetail is null)

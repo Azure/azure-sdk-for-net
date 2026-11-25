@@ -95,9 +95,9 @@ public static void ConfigureAuthentication(
 }
 ```
 
-`[SignalRRefresh]` rejects a token once its actual `exp` is reached. The configurer above rejects a validated token that lacks a user ID by throwing `SecurityTokenValidationException`.
+`[SignalRRefresh]` and negotiate with `EnableAuthenticationRefresh = true` reject a bearer token once its actual `exp` is reached, even if JWT validation accepted it within the configured clock skew. The configurer above rejects a validated token that lacks a user ID by throwing `SecurityTokenValidationException`.
 
-Opt in during negotiate and expose a sibling refresh endpoint. The function specifies the connection token source through `ConnectionToken`. This example binds it to the client's `X-SignalR-Connection-Token` request header. If the header is missing, the binding expression can fail before the refresh handler runs. Both handlers return `401 Unauthorized` when the binding returns no connection info:
+Opt in during negotiate and expose a sibling refresh endpoint. When `ConnectionToken` is omitted, the refresh binding reads the client's `X-SignalR-Connection-Token` request header. This example uses `SignalRRefreshResult` in a .NET in-process function to return `400 Bad Request` when that header is missing or blank:
 
 ```C# Snippet:AuthenticationRefresh
 [FunctionName("Negotiate")]
@@ -117,16 +117,35 @@ public static IActionResult Refresh(
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/refresh")] HttpRequest req,
     [SignalRRefresh(
         HubName = "chat",
-        ConnectionToken = "{headers.X-SignalR-Connection-Token}",
-        TokenLifetimeSeconds = 3600)] SignalRConnectionInfo connectionInfo)
+        TokenLifetimeSeconds = 3600)] SignalRRefreshResult result)
 {
-    return connectionInfo is null ? new UnauthorizedResult() : new OkObjectResult(connectionInfo);
+    return result.Status switch
+    {
+        SignalRRefreshStatus.Succeeded => new OkObjectResult(result.ConnectionInfo),
+        SignalRRefreshStatus.MissingConnectionToken => new BadRequestResult(),
+        SignalRRefreshStatus.Unauthorized => new UnauthorizedResult(),
+        SignalRRefreshStatus.Forbidden => new StatusCodeResult(StatusCodes.Status403Forbidden),
+        SignalRRefreshStatus.ConnectionNotFound => new NotFoundResult(),
+        _ => new StatusCodeResult(StatusCodes.Status500InternalServerError),
+    };
 }
 ```
 
 SignalR rejects the refresh if the projected `UserId` does not match the live connection's user ID. The projected claims replace the previous application claims, so roles no longer present in the new bearer token are removed. If you supply claims through `IdToken` and `ClaimTypeList` instead, validate the separate `IdToken` before the binding uses it.
 
 If `UserId` is supplied but the application claims are omitted or empty, refresh clears the existing application claims after the service verifies the user ID. To refresh only the authentication expiration and preserve the existing claims, omit both `UserId` and application claims from the refresh binding and its configurer.
+
+The refresh handler maps binding outcomes to HTTP responses:
+
+| Refresh status | HTTP response |
+| --- | --- |
+| `Succeeded` | `200` with `result.ConnectionInfo` as the response body |
+| `MissingConnectionToken` | `400` when the default header is missing or blank, or an explicit binding resolves to a blank value |
+| `Unauthorized` | `401` when authentication or application policy rejects the request |
+| `Forbidden` | `403` when the refreshed token resolves to a different user |
+| `ConnectionNotFound` | `404` when the connection is missing, disconnected, or uses an unsupported negotiate version |
+
+Set `ConnectionToken` explicitly to use a different token source. An explicit binding expression that fails to resolve can still fail before the handler runs. A Management SDK `AzureSignalRException` whose message contains `different user` maps to `Forbidden`; one whose message contains `not found` maps to `ConnectionNotFound`. These matches are case-sensitive. Exceptions without either phrase, including SDK timeouts, still propagate to the Functions host.
 
 ### SignalR output binding
 

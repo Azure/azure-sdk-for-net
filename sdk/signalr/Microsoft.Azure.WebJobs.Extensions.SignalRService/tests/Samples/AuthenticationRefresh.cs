@@ -54,10 +54,17 @@ namespace SignalRServiceExtension.Tests.Samples
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/refresh")] HttpRequest req,
             [SignalRRefresh(
                 HubName = "chat",
-                ConnectionToken = "{headers.X-SignalR-Connection-Token}",
-                TokenLifetimeSeconds = 3600)] SignalRConnectionInfo connectionInfo)
+                TokenLifetimeSeconds = 3600)] SignalRRefreshResult result)
         {
-            return connectionInfo is null ? new UnauthorizedResult() : new OkObjectResult(connectionInfo);
+            return result.Status switch
+            {
+                SignalRRefreshStatus.Succeeded => new OkObjectResult(result.ConnectionInfo),
+                SignalRRefreshStatus.MissingConnectionToken => new BadRequestResult(),
+                SignalRRefreshStatus.Unauthorized => new UnauthorizedResult(),
+                SignalRRefreshStatus.Forbidden => new StatusCodeResult(StatusCodes.Status403Forbidden),
+                SignalRRefreshStatus.ConnectionNotFound => new NotFoundResult(),
+                _ => new StatusCodeResult(StatusCodes.Status500InternalServerError),
+            };
         }
         #endregion
     }

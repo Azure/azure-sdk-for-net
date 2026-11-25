@@ -273,6 +273,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public string ConnectionToken { get { throw null; } set { } }
         public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
+    public sealed partial class SignalRRefreshResult
+    {
+        internal SignalRRefreshResult() { }
+        public Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionInfo ConnectionInfo { get { throw null; } }
+        public Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRRefreshStatus Status { get { throw null; } }
+    }
+    public enum SignalRRefreshStatus
+    {
+        Succeeded = 0,
+        MissingConnectionToken = 1,
+        Unauthorized = 2,
+        Forbidden = 3,
+        ConnectionNotFound = 4,
+    }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
     public partial class SignalRTriggerAttribute : System.Attribute

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,9 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
+using DefaultSecurityTokenValidatorTests = Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.DefaultSecurityTokenValidatorTests;
 using SecurityTokenValidationException = Microsoft.IdentityModel.Tokens.SecurityTokenValidationException;
+using SymmetricSecurityKey = Microsoft.IdentityModel.Tokens.SymmetricSecurityKey;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -40,6 +43,51 @@ namespace SignalRServiceExtension.Tests
         {
             public static void Method([SignalRConnectionInfo(HubName = HubName)] SignalRConnectionInfo info)
             {
+            }
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task BuildAsync_BearerExpiredWithinClockSkew_RejectsOnlyWhenRefreshIsEnabled(bool enableAuthenticationRefresh)
+        {
+            const string issuer = "issuer";
+            const string audience = "audience";
+            const string key = "1234567812345678912345678123456789";
+            var token = DefaultSecurityTokenValidatorTests.GenerateJwtToken(key, issuer, audience, expireMinutes: -1);
+            var request = new DefaultHttpContext().Request;
+            request.Headers["Authorization"] = $"Bearer {token}";
+            var validator = new DefaultSecurityTokenValidator(parameters =>
+            {
+                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+                parameters.ValidIssuer = issuer;
+                parameters.ValidAudience = audience;
+                parameters.ClockSkew = TimeSpan.FromMinutes(5);
+            });
+            Assert.Equal(SecurityTokenStatus.Valid, validator.ValidateToken(request).Status);
+            var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
+            var (binding, capturedOptions) = CreateBinding(configurer.Object, default, validator);
+            var attr = new SignalRConnectionInfoAttribute
+            {
+                HubName = HubName,
+                ConnectionStringSetting = ConnectionStringSetting,
+                EnableAuthenticationRefresh = enableAuthenticationRefresh,
+            };
+
+            var provider = await binding.InvokeBuildAsync(attr, new Dictionary<string, object> { [HttpRequestName] = request });
+            var value = await provider.GetValueAsync();
+
+            if (enableAuthenticationRefresh)
+            {
+                Assert.Null(value);
+                configurer.VerifyNoOtherCalls();
+                Assert.Null(capturedOptions.Value);
+            }
+            else
+            {
+                Assert.IsType<SignalRConnectionInfo>(value);
+                Assert.NotNull(capturedOptions.Value);
+                Assert.Null(capturedOptions.Value.AuthenticationExpiresOn);
             }
         }
 
@@ -133,10 +181,11 @@ namespace SignalRServiceExtension.Tests
 
         private static (TestableConnectionBinding Binding, StrongBox<NegotiationOptions> CapturedOptions) CreateBinding(
             ISignalRConnectionInfoConfigurer configurer,
-            DateTimeOffset expiresOn)
+            DateTimeOffset expiresOn,
+            ISecurityTokenValidator securityTokenValidator = null)
         {
             var capturedOptions = new StrongBox<NegotiationOptions>();
-            var hubContext = new Mock<ServiceHubContext>();
+            var hubContext = new Mock<ServiceHubContext>(MockBehavior.Strict);
             hubContext
                 .Setup(c => c.NegotiateAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<NegotiationOptions, CancellationToken>((options, _) => capturedOptions.Value = options)
@@ -157,7 +206,7 @@ namespace SignalRServiceExtension.Tests
             validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
                 .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity()), expiresOn));
 
-            return (new TestableConnectionBinding(context, configuration, Mock.Of<INameResolver>(), validator.Object, configurer), capturedOptions);
+            return (new TestableConnectionBinding(context, configuration, Mock.Of<INameResolver>(), securityTokenValidator ?? validator.Object, configurer), capturedOptions);
         }
 
         private static IReadOnlyDictionary<string, object> CreateBindingData() =>

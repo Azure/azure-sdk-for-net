@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
 
@@ -16,6 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     internal class SignalRRefreshInputBinding : BindingBase<SignalRRefreshAttribute>
     {
         private const string HttpRequestName = "$request";
+        private const string ConnectionTokenHeaderName = "X-SignalR-Connection-Token";
         private const string SignalRUserIdClaimType = "asrs.s.uid";
         private readonly ISecurityTokenValidator _securityTokenValidator;
         private readonly ISignalRConnectionInfoConfigurer _signalRConnectionInfoConfigurer;
@@ -50,15 +52,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
 
             var connectionToken = attrResolved.ConnectionToken;
+            if (connectionToken is null && request.Headers.TryGetValue(ConnectionTokenHeaderName, out var headerToken))
+            {
+                connectionToken = headerToken.ToString();
+            }
+
             if (string.IsNullOrWhiteSpace(connectionToken))
             {
-                return new SignalRConnectionInfoValueProvider(null, _userType, "");
+                return CreateValueProvider(SignalRRefreshStatus.MissingConnectionToken);
             }
 
             var tokenResult = _securityTokenValidator.ValidateToken(request);
             if (tokenResult.Status != SecurityTokenStatus.Valid || tokenResult.ExpiresOn <= DateTimeOffset.UtcNow)
             {
-                return new SignalRConnectionInfoValueProvider(null, _userType, "");
+                return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
             }
 
             var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, _managerStore).ConfigureAwait(false);
@@ -72,21 +79,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             signalRConnectionDetail = _signalRConnectionInfoConfigurer.ConfigureAuthenticatedConnection(tokenResult, request, signalRConnectionDetail);
             if (signalRConnectionDetail is null)
             {
-                return new SignalRConnectionInfoValueProvider(null, _userType, "");
+                return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
             }
 
-            var claims = signalRConnectionDetail.Claims is { Count: > 0 } ? signalRConnectionDetail.Claims : null;
+            var claims = signalRConnectionDetail.Claims?.ToList();
             if (!string.IsNullOrEmpty(signalRConnectionDetail.UserId))
             {
-                claims = claims?.Where(c => !string.Equals(c.Type, SignalRUserIdClaimType, StringComparison.OrdinalIgnoreCase)).ToList()
-                    ?? new List<Claim>();
-                claims.Add(new Claim(SignalRUserIdClaimType, signalRConnectionDetail.UserId));
+                claims ??= new List<Claim>();
+                claims.Insert(0, new Claim(SignalRUserIdClaimType, signalRConnectionDetail.UserId));
             }
 
-            var info = await azureSignalRClient.RefreshConnectionInfoAsync(
-                connectionToken, signalRConnectionDetail.AuthenticationExpiresOn,
-                claims, attrResolved.TokenLifetimeSeconds, cancellationToken).ConfigureAwait(false);
-            return new SignalRConnectionInfoValueProvider(info, _userType, "");
+            try
+            {
+                var info = await azureSignalRClient.RefreshConnectionInfoAsync(
+                    connectionToken, signalRConnectionDetail.AuthenticationExpiresOn,
+                    claims is { Count: > 0 } ? claims : null, attrResolved.TokenLifetimeSeconds, cancellationToken).ConfigureAwait(false);
+                return CreateValueProvider(SignalRRefreshStatus.Succeeded, info);
+            }
+            catch (AzureSignalRException ex) when (_userType == typeof(SignalRRefreshResult) && ex.Message.Contains("different user"))
+            {
+                return CreateValueProvider(SignalRRefreshStatus.Forbidden);
+            }
+            catch (AzureSignalRException ex) when (_userType == typeof(SignalRRefreshResult) && ex.Message.Contains("not found"))
+            {
+                return CreateValueProvider(SignalRRefreshStatus.ConnectionNotFound);
+            }
         }
+
+        private IValueProvider CreateValueProvider(SignalRRefreshStatus status, SignalRConnectionInfo info = null) =>
+            _userType == typeof(SignalRRefreshResult)
+                ? new SignalRConnectionInfoValueProvider(new SignalRRefreshResult(status, info), "")
+                : new SignalRConnectionInfoValueProvider(info, _userType, "");
     }
 }

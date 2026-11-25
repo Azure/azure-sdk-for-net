@@ -15,6 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         /// <summary>
         /// Gets or sets the connection token of the live client connection to refresh.
+        /// When omitted, the binding reads the X-SignalR-Connection-Token request header.
         /// </summary>
         [AutoResolve]
         public string ConnectionToken { get; set; }
