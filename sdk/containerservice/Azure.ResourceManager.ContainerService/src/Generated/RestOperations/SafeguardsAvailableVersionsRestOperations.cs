@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateGetSafeguardsVersionsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateListSafeguardsVersionsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateNextGetSafeguardsVersionsRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateNextListSafeguardsVersionsRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

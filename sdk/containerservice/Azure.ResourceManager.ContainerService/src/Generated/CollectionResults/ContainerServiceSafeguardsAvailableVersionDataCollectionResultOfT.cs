@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSafeguardsVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetSafeguardsVersionsRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListSafeguardsVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateListSafeguardsVersionsRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

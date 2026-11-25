@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.CostManagement
         /// Checks availability and correctness of a name for a cost allocation rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckNameAvailabilityAsync(ResourceIdentifier, CostAllocationRuleCheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckNameAvailabilityAsync(ResourceIdentifier, CostAllocationRuleCheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<CostAllocationRuleCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostAllocationRuleCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.CostManagement
         /// Checks availability and correctness of a name for a cost allocation rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckNameAvailability(ResourceIdentifier, CostAllocationRuleCheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckNameAvailability(ResourceIdentifier, CostAllocationRuleCheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<CostAllocationRuleCheckNameAvailabilityResult> CheckNameAvailability(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CostAllocationRuleCheckNameAvailabilityResult> CheckNameAvailability(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
