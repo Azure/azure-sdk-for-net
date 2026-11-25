@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
     <ProjectReference Include="..\..\TestProjects\Local\Mgmt-TypeSpec\src\Azure.Generator.MgmtTypeSpec.Tests.csproj" />
   </ItemGroup>

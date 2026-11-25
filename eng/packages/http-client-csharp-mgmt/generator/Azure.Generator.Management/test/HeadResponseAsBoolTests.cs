@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using NUnit.Framework;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Tests;
+namespace Azure.Generator.Management.Tests;
 
 internal class HeadResponseAsBoolTests
 {
