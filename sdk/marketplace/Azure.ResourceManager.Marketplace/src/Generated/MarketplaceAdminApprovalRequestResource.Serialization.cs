@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary></summary>
-    public partial class MarketplaceAdminApprovalRequestResource : IJsonModel<MarketplaceAdminApprovalRequestData>
+    public partial class MarketplaceAdminApprovalRequestResource : IJsonModel<MarketplaceAdminApprovalContentData>
     {
-        private static IJsonModel<MarketplaceAdminApprovalRequestData> s_dataDeserializationInstance;
+        private static IJsonModel<MarketplaceAdminApprovalContentData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MarketplaceAdminApprovalRequestData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MarketplaceAdminApprovalRequestData();
+        private static IJsonModel<MarketplaceAdminApprovalContentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MarketplaceAdminApprovalContentData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MarketplaceAdminApprovalRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)Data).Write(writer, options);
+        void IJsonModel<MarketplaceAdminApprovalContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAdminApprovalContentData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceAdminApprovalRequestData IJsonModel<MarketplaceAdminApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MarketplaceAdminApprovalContentData IJsonModel<MarketplaceAdminApprovalContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MarketplaceAdminApprovalRequestData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
+        BinaryData IPersistableModel<MarketplaceAdminApprovalContentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MarketplaceAdminApprovalContentData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceAdminApprovalRequestData IPersistableModel<MarketplaceAdminApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAdminApprovalRequestData>(data, options, AzureResourceManagerMarketplaceContext.Default);
+        MarketplaceAdminApprovalContentData IPersistableModel<MarketplaceAdminApprovalContentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAdminApprovalContentData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MarketplaceAdminApprovalContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

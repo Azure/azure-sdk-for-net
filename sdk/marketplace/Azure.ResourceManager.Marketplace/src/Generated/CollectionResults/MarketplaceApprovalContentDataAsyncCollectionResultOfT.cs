@@ -17,19 +17,19 @@ using Azure.ResourceManager.Marketplace.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    internal partial class MarketplaceApprovalRequestDataAsyncCollectionResultOfT : AsyncPageable<MarketplaceApprovalRequestData>
+    internal partial class MarketplaceApprovalContentDataAsyncCollectionResultOfT : AsyncPageable<MarketplaceApprovalContentData>
     {
         private readonly PrivateStore _client;
         private readonly Guid _privateStoreId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MarketplaceApprovalRequestDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MarketplaceApprovalContentDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateStore client used to send requests. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MarketplaceApprovalRequestDataAsyncCollectionResultOfT(PrivateStore client, Guid privateStoreId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MarketplaceApprovalContentDataAsyncCollectionResultOfT(PrivateStore client, Guid privateStoreId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _privateStoreId = privateStoreId;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Marketplace
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MarketplaceApprovalRequestDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MarketplaceApprovalContentDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MarketplaceApprovalRequestDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<MarketplaceApprovalRequestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MarketplaceApprovalContentDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<MarketplaceApprovalContentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<MarketplaceApprovalRequestData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<MarketplaceApprovalContentData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null, cancellationToken).ConfigureAwait(false);
             RequestApprovalsList result = RequestApprovalsList.FromResponse(response);
-            yield return Page<MarketplaceApprovalRequestData>.FromValues((IReadOnlyList<MarketplaceApprovalRequestData>)result.Value, null, response);
+            yield return Page<MarketplaceApprovalContentData>.FromValues((IReadOnlyList<MarketplaceApprovalContentData>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>

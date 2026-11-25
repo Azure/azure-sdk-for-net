@@ -17,69 +17,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> Request approval resource. </summary>
-    public partial class MarketplaceApprovalRequestData : ResourceData, IJsonModel<MarketplaceApprovalRequestData>
+    /// <summary> Admin request approval resource. </summary>
+    public partial class MarketplaceAdminApprovalContentData : ResourceData, IJsonModel<MarketplaceAdminApprovalContentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalContentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMarketplaceApprovalRequestData(document.RootElement, options);
+                        return DeserializeMarketplaceAdminApprovalContentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalContentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalContentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalContentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MarketplaceApprovalRequestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MarketplaceAdminApprovalContentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceApprovalRequestData IPersistableModel<MarketplaceApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MarketplaceApprovalRequestData)PersistableModelCreateCore(data, options);
+        MarketplaceAdminApprovalContentData IPersistableModel<MarketplaceAdminApprovalContentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MarketplaceAdminApprovalContentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MarketplaceApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MarketplaceAdminApprovalContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="marketplaceApprovalRequestData"> The <see cref="MarketplaceApprovalRequestData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MarketplaceApprovalRequestData marketplaceApprovalRequestData)
+        /// <param name="marketplaceAdminApprovalContentData"> The <see cref="MarketplaceAdminApprovalContentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MarketplaceAdminApprovalContentData marketplaceAdminApprovalContentData)
         {
-            if (marketplaceApprovalRequestData == null)
+            if (marketplaceAdminApprovalContentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(marketplaceApprovalRequestData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(marketplaceAdminApprovalContentData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MarketplaceApprovalRequestData"/> from. </param>
-        internal static MarketplaceApprovalRequestData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MarketplaceAdminApprovalContentData"/> from. </param>
+        internal static MarketplaceAdminApprovalContentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMarketplaceApprovalRequestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMarketplaceAdminApprovalContentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MarketplaceApprovalRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MarketplaceAdminApprovalContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalContentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceApprovalRequestData IJsonModel<MarketplaceApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MarketplaceApprovalRequestData)JsonModelCreateCore(ref reader, options);
+        MarketplaceAdminApprovalContentData IJsonModel<MarketplaceAdminApprovalContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MarketplaceAdminApprovalContentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalContentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMarketplaceApprovalRequestData(document.RootElement, options);
+            return DeserializeMarketplaceAdminApprovalContentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MarketplaceApprovalRequestData DeserializeMarketplaceApprovalRequestData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MarketplaceAdminApprovalContentData DeserializeMarketplaceAdminApprovalContentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Marketplace
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            RequestApprovalProperties properties = default;
+            AdminRequestApprovalProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Marketplace
                     {
                         continue;
                     }
-                    properties = RequestApprovalProperties.DeserializeRequestApprovalProperties(prop.Value, options);
+                    properties = AdminRequestApprovalProperties.DeserializeAdminRequestApprovalProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Marketplace
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MarketplaceApprovalRequestData(
+            return new MarketplaceAdminApprovalContentData(
                 id,
                 name,
                 resourceType,

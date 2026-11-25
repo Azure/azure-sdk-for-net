@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Marketplace
     {
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
         private readonly PrivateStore _privateStoreRestClient;
-        private readonly MarketplaceAdminApprovalRequestData _data;
+        private readonly MarketplaceAdminApprovalContentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/adminRequestApprovals";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MarketplaceAdminApprovalRequestResource(ArmClient client, MarketplaceAdminApprovalRequestData data) : this(client, data.Id)
+        internal MarketplaceAdminApprovalRequestResource(ArmClient client, MarketplaceAdminApprovalContentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MarketplaceAdminApprovalRequestData Data
+        public virtual MarketplaceAdminApprovalContentData Data
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, publisherId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalContentData> response = Response.FromValue(MarketplaceAdminApprovalContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, publisherId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalContentData> response = Response.FromValue(MarketplaceAdminApprovalContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceAdminApprovalContentData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Update");
             scope.Start();
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalContentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalContentData> response = Response.FromValue(MarketplaceAdminApprovalContentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceAdminApprovalContentData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Update");
             scope.Start();
@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalContentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalContentData> response = Response.FromValue(MarketplaceAdminApprovalContentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
