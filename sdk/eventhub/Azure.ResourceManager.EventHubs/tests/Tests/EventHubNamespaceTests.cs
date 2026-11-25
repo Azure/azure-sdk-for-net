@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //validate if created successfully
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //delete namespace
-            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await eventHubNamespace.DeleteAsync(WaitUntil.Started));
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
@@ -61,19 +65,24 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //update namespace
-            var updateNamespaceParameter = eventHubNamespace.Data;
+            var updateNamespaceParameter = new EventHubsNamespaceData(DefaultLocation);
             updateNamespaceParameter.Tags.Add("key1", "value1");
             updateNamespaceParameter.Tags.Add("key2", "value2");
-            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(updateNamespaceParameter);
+            ArmOperation<EventHubsNamespaceResource> update = await eventHubNamespace.UpdateAsync(WaitUntil.Started, updateNamespaceParameter);
+            AssertStatus(update.GetRawResponse(), 200, 202);
+            EventHubsNamespaceResource eventHubNamespace2 = await CompleteAsync(update);
 
             //validate
-            Assert.AreEqual(eventHubNamespace2.Value.Data.Tags.Count, 2);
-            Assert.AreEqual("value1", eventHubNamespace2.Value.Data.Tags["key1"]);
-            Assert.AreEqual("value2", eventHubNamespace2.Value.Data.Tags["key2"]);
+            Response<EventHubsNamespaceResource> readBack = await eventHubNamespace2.GetAsync();
+            AssertStatus(readBack.GetRawResponse(), 200);
+            Assert.AreEqual(2, readBack.Value.Data.Tags.Count);
+            Assert.AreEqual("value1", readBack.Value.Data.Tags["key1"]);
+            Assert.AreEqual("value2", readBack.Value.Data.Tags["key2"]);
+            Assert.IsTrue(readBack.Value.Data.DisableLocalAuth, "A tag-only PATCH must retain disableLocalAuth.");
 
             //wait until provision state is succeeded
             await GetSucceededNamespace(eventHubNamespace);
@@ -88,14 +97,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubsNamespaceData(DefaultLocation))).Value;
-            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubsNamespaceData(DefaultLocation))).Value;
+            await CreateNamespaceAsync(_resourceGroup, namespaceName1);
+            await CreateNamespaceAsync(_resourceGroup, namespaceName2);
             int count = 0;
             EventHubsNamespaceResource namespace1 = null;
             EventHubsNamespaceResource namespace2 = null;
 
             //validate
-            await foreach (EventHubsNamespaceResource eventHubNamespace in namespaceCollection.GetAllAsync())
+            foreach (EventHubsNamespaceResource eventHubNamespace in await ReadAllAsync(namespaceCollection.GetAllAsync()))
             {
                 count++;
                 if (eventHubNamespace.Id.Name == namespaceName1)
@@ -110,7 +119,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Testing")]
         public async Task GetNamespacesInSubscription()
         {
             //create two namespaces in two resourcegroups
@@ -120,14 +128,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection1 = _resourceGroup.GetEventHubsNamespaces();
             EventHubsNamespaceCollection namespaceCollection2 = resourceGroup.GetEventHubsNamespaces();
-            _ = (await namespaceCollection1.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubsNamespaceData(DefaultLocation))).Value;
-            _ = (await namespaceCollection2.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubsNamespaceData(DefaultLocation))).Value;
+            await CreateNamespaceAsync(_resourceGroup, namespaceName1);
+            await CreateNamespaceAsync(resourceGroup, namespaceName2);
             int count = 0;
             EventHubsNamespaceResource namespace1 = null;
             EventHubsNamespaceResource namespace2 = null;
 
             //validate
-            await foreach (EventHubsNamespaceResource eventHubNamespace in DefaultSubscription.GetEventHubsNamespacesAsync())
+            foreach (EventHubsNamespaceResource eventHubNamespace in await ReadAllAsync(DefaultSubscription.GetEventHubsNamespacesAsync()))
             {
                 count++;
                 if (eventHubNamespace.Id.Name == namespaceName1)
@@ -140,7 +148,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(namespace1.Id.ResourceGroupName, _resourceGroup.Id.Name);
             Assert.AreEqual(namespace2.Id.ResourceGroupName, resourceGroup.Id.Name);
 
-            await namespace2.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await namespace2.DeleteAsync(WaitUntil.Started));
         }
 
         [Test]
@@ -151,7 +159,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
             EventHubsNamespaceAuthorizationRuleCollection ruleCollection = eventHubNamespace.GetEventHubsNamespaceAuthorizationRules();
 
             //create authorization rule
@@ -160,7 +168,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            EventHubsNamespaceAuthorizationRuleResource authorizationRule = await CompleteAsync(await ruleCollection.CreateOrUpdateAsync(WaitUntil.Started, ruleName, parameter));
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -171,7 +179,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<EventHubsNamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<EventHubsNamespaceAuthorizationRuleResource> rules = await ReadAllAsync(ruleCollection.GetAllAsync());
 
             //there should be two authorization rules
             Assert.True(rules.Count > 1);
@@ -193,16 +201,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //update authorization rule
             parameter.Rights.Add(EventHubsAccessRight.Manage);
-            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            authorizationRule = await CompleteAsync(await authorizationRule.UpdateAsync(WaitUntil.Started, parameter));
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //delete authorization rule
-            await authorizationRule.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await authorizationRule.DeleteAsync(WaitUntil.Started));
 
             //validate if deleted
             Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
-            rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            rules = await ReadAllAsync(ruleCollection.GetAllAsync());
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
         }
@@ -217,9 +225,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
             {
-                KafkaEnabled = true
+                KafkaEnabled = true,
+                DisableLocalAuth = true
             };
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
             Assert.IsTrue(eventHubNamespace.Data.KafkaEnabled);
         }
@@ -237,7 +246,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             // create with dual-stack (IPv4 + IPv6)
             EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
             {
-                IPAddressType = EventHubsIPAddressType.DualStack
+                IPAddressType = EventHubsIPAddressType.DualStack,
+                DisableLocalAuth = true
             };
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
@@ -247,9 +257,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
             Assert.AreEqual(EventHubsIPAddressType.DualStack, eventHubNamespace.Data.IPAddressType);
 
-            // update to IPv4 via the synchronous namespace PATCH and assert the round-trip
+            // update to IPv4 via the long-running namespace PATCH and assert the round-trip
             eventHubNamespace.Data.IPAddressType = EventHubsIPAddressType.IPv4;
-            eventHubNamespace = (await eventHubNamespace.UpdateAsync(eventHubNamespace.Data)).Value;
+            eventHubNamespace = (await eventHubNamespace.UpdateAsync(WaitUntil.Completed, eventHubNamespace.Data)).Value;
             Assert.AreEqual(EventHubsIPAddressType.IPv4, eventHubNamespace.Data.IPAddressType);
 
             await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
@@ -263,7 +273,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
             EventHubsNamespaceAuthorizationRuleCollection ruleCollection = eventHubNamespace.GetEventHubsNamespaceAuthorizationRules();
 
             //create authorization rule
@@ -272,7 +282,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            EventHubsNamespaceAuthorizationRuleResource authorizationRule = await CompleteAsync(await ruleCollection.CreateOrUpdateAsync(WaitUntil.Started, ruleName, parameter));
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -329,12 +339,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation) { DisableLocalAuth = true })).Value;
             Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
             AssertDefaultNamespaceProperties(eventHubNamespace.Data, EventHubsSkuName.Standard);
 
-            //Set Disable Local Auth on the standard namespace
-            eventHubNamespace.Data.DisableLocalAuth = true;
+            //Re-apply the full namespace definition and verify Disable Local Auth is retained
             EventHubsNamespaceResource updatedNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, eventHubNamespace.Data)).Value;
             AssertNamespacePropertiesOnUpdate(eventHubNamespace.Data, updatedNamespace.Data);
 
@@ -363,7 +372,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
             {
-                ZoneRedundant = true
+                ZoneRedundant = true,
+                DisableLocalAuth = true
             })).Value;
 
             Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
@@ -380,6 +390,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task PremiumNamespaceCreateOrUpdate()
         {
             //create namespace
@@ -392,7 +403,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 {
                     Tier = EventHubsSkuTier.Premium,
                     Capacity = 1
-                }
+                },
+                DisableLocalAuth = true
             })).Value;
             AssertDefaultNamespaceProperties(eventHubNamespace.Data, EventHubsSkuName.Premium);
 
@@ -551,7 +563,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(EventHubsSkuName.Standard, namespaceData.Sku.Name);
                 Assert.AreEqual(1, namespaceData.Sku.Capacity);
                 Assert.True(namespaceData.ZoneRedundant);
-                Assert.False(namespaceData.DisableLocalAuth);
+                Assert.True(namespaceData.DisableLocalAuth);
                 Assert.False(namespaceData.IsAutoInflateEnabled);
                 Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
                 Assert.True(namespaceData.KafkaEnabled);
@@ -561,7 +573,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(EventHubsSkuName.Premium, namespaceData.Sku.Name);
                 Assert.AreEqual(1, namespaceData.Sku.Capacity);
                 Assert.True(namespaceData.ZoneRedundant);
-                Assert.False(namespaceData.DisableLocalAuth);
+                Assert.True(namespaceData.DisableLocalAuth);
                 Assert.False(namespaceData.IsAutoInflateEnabled);
                 Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
                 Assert.True(namespaceData.KafkaEnabled);
@@ -737,27 +749,521 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 eventHubNamespace = await eventHubNamespace.GetAsync();
                 i++;
             }
+            Assert.AreEqual("Succeeded", eventHubNamespace.Data.ProvisioningState);
             return eventHubNamespace;
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("returned id is invalid")]
         public async Task GetEventHubPrivateLinkResources()
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
 
             //get private link resource
-            await foreach (var _ in eventHubNamespace.GetPrivateLinkResourcesAsync())
-            {
-                return;
-            }
+            var resources = await ReadAllAsync(eventHubNamespace.GetPrivateLinkResourcesAsync());
+            Assert.IsNotEmpty(resources);
+            Assert.That(resources.Any(resource => resource.GroupId == "namespace"));
+        }
 
-            Assert.Fail($"{nameof(EventHubsNamespaceResource)}.{nameof(EventHubsNamespaceResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(EventHubsPrivateLinkResourceData)}.");
+        [RecordedTest]
+        public async Task UpdateNamespaceAuthenticationPreservesTags()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            var resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Tags = { { "retained", "value" } }
+            }));
+            EventHubsNamespaceResource updated = await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
+            {
+                DisableLocalAuth = true
+            }));
+            Assert.IsTrue(updated.Data.DisableLocalAuth);
+            Response<EventHubsNamespaceResource> readBack = await resource.GetAsync();
+            AssertStatus(readBack.GetRawResponse(), 200);
+            Assert.IsTrue(readBack.Value.Data.DisableLocalAuth);
+            Assert.AreEqual("value", readBack.Value.Data.Tags["retained"]);
+            Assert.AreEqual("Succeeded", readBack.Value.Data.ProvisioningState);
+        }
+
+        [RecordedTest]
+        public async Task CreateGetAndListNetworkRuleSets()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            var resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            await CompleteAsync(await resource.GetEventHubsNetworkRuleSet().CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
+                IPRules = { new EventHubsNetworkRuleSetIPRules { IPMask = "1.1.1.1", Action = "Allow" } }
+            }));
+            Response<EventHubsNetworkRuleSetResource> readBack = await resource.GetEventHubsNetworkRuleSet().GetAsync();
+            AssertStatus(readBack.GetRawResponse(), 200);
+            Assert.AreEqual(EventHubsNetworkRuleSetDefaultAction.Deny, readBack.Value.Data.DefaultAction);
+            Assert.AreEqual(1, readBack.Value.Data.IPRules.Count);
+            var listed = await resource.GetNetworkRuleSetsAsync();
+            AssertStatus(listed.GetRawResponse(), 200);
+            Assert.IsNotNull(listed.Value);
+        }
+
+        [RecordedTest]
+        public async Task CreateNamespaceWithSystemAssignedIdentity()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubsNamespaceResource created = await CompleteAsync(await _resourceGroup.GetEventHubsNamespaces().CreateOrUpdateAsync(WaitUntil.Started, namespaceName, new EventHubsNamespaceData(DefaultLocation)
+            {
+                DisableLocalAuth = true,
+                Sku = new EventHubsSku(EventHubsSkuName.Standard) { Capacity = 1 },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            }));
+            Assert.AreEqual("Succeeded", created.Data.ProvisioningState);
+
+            Response<EventHubsNamespaceResource> readBack = await created.GetAsync();
+            AssertStatus(readBack.GetRawResponse(), 200);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, readBack.Value.Data.Identity.ManagedServiceIdentityType);
+            Assert.IsNotNull(readBack.Value.Data.Identity.PrincipalId);
+            Assert.IsNotNull(readBack.Value.Data.Identity.TenantId);
+            Assert.IsTrue(readBack.Value.Data.DisableLocalAuth);
+        }
+
+        [RecordedTest]
+        public async Task UpdateNamespaceIdentityPreservesTagsAndLocalAuth()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceResource resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Tags = { { "retained", "value" } }
+            }));
+            ResourceIdentifier identityId = await CreateArmResourceAsync(
+                new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{Recording.GenerateAssetName("ehidentity")}"),
+                new { });
+
+            // Add system- and user-assigned identities with a PATCH that does not mention tags or local auth.
+            var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
+            identity.UserAssignedIdentities.Add(identityId, new UserAssignedIdentity());
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation) { Identity = identity }));
+
+            EventHubsNamespaceData readBack = (await resource.GetAsync()).Value.Data;
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, readBack.Identity.ManagedServiceIdentityType);
+            Assert.IsNotNull(readBack.Identity.PrincipalId);
+            Assert.AreEqual(1, readBack.Identity.UserAssignedIdentities.Count);
+            Assert.That(readBack.Identity.UserAssignedIdentities.Keys.Select(id => id.ToString()), Has.Some.EqualTo(identityId.ToString()).IgnoreCase);
+            Assert.AreEqual("value", readBack.Tags["retained"]);
+            Assert.IsTrue(readBack.DisableLocalAuth);
+
+            // Removing every identity must also leave tags and local auth untouched.
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+            }));
+
+            readBack = (await resource.GetAsync()).Value.Data;
+            Assert.That(readBack.Identity == null || readBack.Identity.ManagedServiceIdentityType == ManagedServiceIdentityType.None);
+            Assert.AreEqual("value", readBack.Tags["retained"]);
+            Assert.IsTrue(readBack.DisableLocalAuth);
+        }
+
+        [RecordedTest]
+        public async Task StandardNamespaceRejectsCustomerManagedKeyEncryption()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubsNamespaceResource resource = await CompleteAsync(await _resourceGroup.GetEventHubsNamespaces().CreateOrUpdateAsync(WaitUntil.Started, namespaceName, new EventHubsNamespaceData(DefaultLocation)
+            {
+                DisableLocalAuth = true,
+                Sku = new EventHubsSku(EventHubsSkuName.Standard) { Capacity = 1 },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            }));
+
+            var encryption = new EventHubsEncryption { KeySource = EventHubsKeySource.MicrosoftKeyVault };
+            encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties
+            {
+                KeyName = Key1,
+                KeyVaultUri = new Uri("https://ehsdktestvault.vault.azure.net")
+            });
+
+            // Customer-managed keys are Premium-only; a Standard namespace must reject the request rather than silently ignore it.
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await (await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation) { Encryption = encryption })).WaitForCompletionAsync());
+            Assert.That(exception.Status, Is.InRange(400, 499));
+
+            EventHubsNamespaceData readBack = (await resource.GetAsync()).Value.Data;
+            Assert.That(readBack.Encryption?.KeySource, Is.Not.EqualTo(EventHubsKeySource.MicrosoftKeyVault));
+            Assert.AreEqual("Succeeded", readBack.ProvisioningState);
+        }
+
+        [RecordedTest]
+        public async Task NetworkRuleSetIPRulesCanBeReplacedAndCleared()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceResource resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            EventHubsNetworkRuleSetResource ruleSet = resource.GetEventHubsNetworkRuleSet();
+
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
+                TrustedServiceAccessEnabled = true,
+                IPRules =
+                {
+                    new EventHubsNetworkRuleSetIPRules { IPMask = "1.1.1.1", Action = EventHubsNetworkRuleIPAction.Allow },
+                    new EventHubsNetworkRuleSetIPRules { IPMask = "1.1.1.2", Action = EventHubsNetworkRuleIPAction.Allow },
+                    new EventHubsNetworkRuleSetIPRules { IPMask = "10.0.0.0/24", Action = EventHubsNetworkRuleIPAction.Allow }
+                }
+            }));
+            EventHubsNetworkRuleSetData readBack = (await ruleSet.GetAsync()).Value.Data;
+            Assert.AreEqual(EventHubsNetworkRuleSetDefaultAction.Deny, readBack.DefaultAction);
+            Assert.IsTrue(readBack.TrustedServiceAccessEnabled);
+            CollectionAssert.AreEquivalent(new[] { "1.1.1.1", "1.1.1.2", "10.0.0.0/24" }, readBack.IPRules.Select(rule => rule.IPMask));
+
+            // Replacing the rule set must replace the IP list, not append to it.
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
+                TrustedServiceAccessEnabled = false,
+                IPRules = { new EventHubsNetworkRuleSetIPRules { IPMask = "2.2.2.2", Action = EventHubsNetworkRuleIPAction.Allow } }
+            }));
+            readBack = (await ruleSet.GetAsync()).Value.Data;
+            Assert.IsFalse(readBack.TrustedServiceAccessEnabled);
+            CollectionAssert.AreEquivalent(new[] { "2.2.2.2" }, readBack.IPRules.Select(rule => rule.IPMask));
+
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Allow
+            }));
+            readBack = (await ruleSet.GetAsync()).Value.Data;
+            Assert.AreEqual(EventHubsNetworkRuleSetDefaultAction.Allow, readBack.DefaultAction);
+            Assert.IsEmpty(readBack.IPRules);
+            Assert.IsTrue((await resource.GetAsync()).Value.Data.DisableLocalAuth);
+        }
+
+        [RecordedTest]
+        public async Task NetworkRuleSetVirtualNetworkRulesRoundTrip()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceResource resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            ResourceIdentifier vnetId = await CreateArmResourceAsync(
+                new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{Recording.GenerateAssetName("sdktestvnet")}"),
+                new
+                {
+                    addressSpace = new { addressPrefixes = new[] { "10.0.0.0/16" } },
+                    subnets = new[]
+                    {
+                        new { name = "default", properties = new { addressPrefix = "10.0.0.0/24", serviceEndpoints = new[] { new { service = "Microsoft.EventHub" } } } }
+                    }
+                });
+            ResourceIdentifier subnetId = new ResourceIdentifier($"{vnetId}/subnets/default");
+            EventHubsNetworkRuleSetResource ruleSet = resource.GetEventHubsNetworkRuleSet();
+
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
+                VirtualNetworkRules = { new EventHubsNetworkRuleSetVirtualNetworkRules { SubnetId = subnetId, IgnoreMissingVnetServiceEndpoint = false } }
+            }));
+            EventHubsNetworkRuleSetData readBack = (await ruleSet.GetAsync()).Value.Data;
+            Assert.AreEqual(1, readBack.VirtualNetworkRules.Count);
+            Assert.That(readBack.VirtualNetworkRules[0].SubnetId.ToString(), Is.EqualTo(subnetId.ToString()).IgnoreCase);
+            Assert.IsFalse(readBack.VirtualNetworkRules[0].IgnoreMissingVnetServiceEndpoint);
+
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Allow
+            }));
+            readBack = (await ruleSet.GetAsync()).Value.Data;
+            Assert.IsEmpty(readBack.VirtualNetworkRules);
+        }
+
+        [RecordedTest]
+        public async Task NetworkRuleSetPublicNetworkAccessIsReflectedOnNamespace()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceResource resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            EventHubsNetworkRuleSetResource ruleSet = resource.GetEventHubsNetworkRuleSet();
+
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
+                PublicNetworkAccess = EventHubsPublicNetworkAccessFlag.Disabled
+            }));
+            Assert.AreEqual(EventHubsPublicNetworkAccessFlag.Disabled, (await ruleSet.GetAsync()).Value.Data.PublicNetworkAccess);
+            Assert.AreEqual(EventHubsPublicNetworkAccess.Disabled, (await resource.GetAsync()).Value.Data.PublicNetworkAccess);
+
+            await CompleteAsync(await ruleSet.CreateOrUpdateAsync(WaitUntil.Started, new EventHubsNetworkRuleSetData
+            {
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Allow,
+                PublicNetworkAccess = EventHubsPublicNetworkAccessFlag.Enabled
+            }));
+            Assert.AreEqual(EventHubsPublicNetworkAccessFlag.Enabled, (await ruleSet.GetAsync()).Value.Data.PublicNetworkAccess);
+            Assert.AreEqual(EventHubsPublicNetworkAccess.Enabled, (await resource.GetAsync()).Value.Data.PublicNetworkAccess);
+        }
+
+        // Mirrors controllers such as Fabric Eventstream that GET the namespace, change tags, and PUT the whole resource back.
+        [RecordedTest]
+        public async Task ReadModifyWritePutPreservesIdentityAndSettings()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceIdentifier identityId = await CreateArmResourceAsync(
+                new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{Recording.GenerateAssetName("ehidentity")}"),
+                new { });
+            var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
+            identity.UserAssignedIdentities.Add(identityId, new UserAssignedIdentity());
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubsNamespaceCollection namespaces = _resourceGroup.GetEventHubsNamespaces();
+            await CompleteAsync(await namespaces.CreateOrUpdateAsync(WaitUntil.Started, namespaceName, new EventHubsNamespaceData(DefaultLocation)
+            {
+                DisableLocalAuth = true,
+                Sku = new EventHubsSku(EventHubsSkuName.Standard) { Capacity = 1 },
+                Identity = identity,
+                MinimumTlsVersion = EventHubsTlsVersion.Tls1_2,
+                KafkaEnabled = true,
+                Tags = { { "fabric.tenantId", "00000000-0000-0000-0000-000000000000" } }
+            }));
+
+            EventHubsNamespaceData current = (await namespaces.GetAsync(namespaceName)).Value.Data;
+            current.Tags["cth-scenario"] = "ReadModifyWrite";
+            EventHubsNamespaceResource written = await CompleteAsync(await namespaces.CreateOrUpdateAsync(WaitUntil.Started, namespaceName, current));
+            Assert.AreEqual("Succeeded", written.Data.ProvisioningState);
+
+            EventHubsNamespaceData readBack = (await namespaces.GetAsync(namespaceName)).Value.Data;
+            Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, readBack.Identity.ManagedServiceIdentityType);
+            Assert.That(readBack.Identity.UserAssignedIdentities.Keys.Select(id => id.ToString()), Has.Some.EqualTo(identityId.ToString()).IgnoreCase);
+            Assert.IsTrue(readBack.DisableLocalAuth);
+            Assert.AreEqual(EventHubsTlsVersion.Tls1_2, readBack.MinimumTlsVersion);
+            Assert.IsTrue(readBack.KafkaEnabled);
+            Assert.AreEqual(EventHubsSkuName.Standard, readBack.Sku.Name);
+            Assert.AreEqual("ReadModifyWrite", readBack.Tags["cth-scenario"]);
+            Assert.AreEqual("00000000-0000-0000-0000-000000000000", readBack.Tags["fabric.tenantId"]);
+        }
+
+        // Mirrors controllers that keep JSON checkpoints in tags and rewrite them with tags-only PATCH requests.
+        [RecordedTest]
+        public async Task TagsOnlyPatchReplacesTagSetWithJsonValues()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceResource resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            const string firstCheckpoint = "{\"version\":1,\"enabled\":true,\"nextSequence\":19218,\"offset\":\"30066215272\"}";
+            const string secondCheckpoint = "{\"version\":1,\"enabled\":false,\"nextSequence\":19219,\"offset\":\"30066215999\"}";
+
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Tags = { { "cth-cmk-checkpoint", firstCheckpoint }, { "cth-scenario", "first" } }
+            }));
+            EventHubsNamespaceData readBack = (await resource.GetAsync()).Value.Data;
+            Assert.AreEqual(firstCheckpoint, readBack.Tags["cth-cmk-checkpoint"]);
+            Assert.AreEqual("first", readBack.Tags["cth-scenario"]);
+
+            // A tags PATCH replaces the whole tag set: keys left out are removed, and other properties are untouched.
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Tags = { { "cth-cmk-checkpoint", secondCheckpoint } }
+            }));
+            readBack = (await resource.GetAsync()).Value.Data;
+            Assert.AreEqual(secondCheckpoint, readBack.Tags["cth-cmk-checkpoint"]);
+            Assert.IsFalse(readBack.Tags.ContainsKey("cth-scenario"));
+            Assert.IsTrue(readBack.DisableLocalAuth);
+            Assert.AreEqual("Succeeded", readBack.ProvisioningState);
+        }
+
+        [RecordedTest]
+        public async Task RootAuthorizationRuleKeysAreListedWhenLocalAuthDisabled()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceResource resource = await CreateNamespaceAsync(_resourceGroup, await CreateValidNamespaceName("testnamespacemgmt"));
+            EventHubsNamespaceAuthorizationRuleResource rootRule = await resource.GetEventHubsNamespaceAuthorizationRuleAsync(DefaultNamespaceAuthorizationRule);
+            CollectionAssert.AreEquivalent(new[] { EventHubsAccessRight.Listen, EventHubsAccessRight.Manage, EventHubsAccessRight.Send }, rootRule.Data.Rights);
+
+            Response<EventHubsAccessKeys> keys = await rootRule.GetKeysAsync();
+            AssertStatus(keys.GetRawResponse(), 200);
+            Assert.IsNotNull(keys.Value.PrimaryKey);
+            Assert.IsNotNull(keys.Value.SecondaryKey);
+            Assert.IsTrue((await resource.GetAsync()).Value.Data.DisableLocalAuth);
+        }
+
+        // Dependencies are created as generic ARM resources so request bodies don't depend on the Network or ManagedIdentity SDK version.
+        private async Task<ResourceIdentifier> CreateArmResourceAsync(ResourceIdentifier id, object properties)
+        {
+            var data = new GenericResourceData(DefaultLocation) { Properties = BinaryData.FromObjectAsJson(properties) };
+            GenericResource created = await CompleteAsync(await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Started, id, data));
+            return created.Id;
+        }
+        private const string NamespaceId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/tests/providers/Microsoft.EventHub/namespaces/test";
+        private const string PollPath = "/providers/Microsoft.EventHub/operations/test";
+        private const string NamespaceJson = "{\"id\":\"" + NamespaceId + "\",\"name\":\"test\",\"type\":\"Microsoft.EventHub/namespaces\",\"location\":\"eastus2\",\"tags\":{\"retained\":\"value\"},\"properties\":{\"provisioningState\":\"Succeeded\",\"disableLocalAuth\":true}}";
+
+        [Test]
+        [Category("Unit")]
+        public async Task DefaultArmRetryRecoversOnLastAttempt()
+        {
+            var options = new ArmClientOptions();
+            Assert.AreEqual(RetryMode.Exponential, options.Retry.Mode);
+            Assert.AreEqual(3, options.Retry.MaxRetries);
+            Assert.AreEqual(TimeSpan.FromSeconds(0.8), options.Retry.Delay);
+            Assert.AreEqual(TimeSpan.FromMinutes(1), options.Retry.MaxDelay);
+            int attempts = 0;
+            options.Transport = new MockTransport(_ => ++attempts < 4
+                ? new MockResponse(503).AddHeader("Retry-After", "0")
+                : new MockResponse(200).SetContent(NamespaceJson));
+            Response<EventHubsNamespaceResource> response = await CreateResource(options).GetAsync();
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(4, attempts);
+        }
+
+        [Test]
+        [Category("Unit")]
+        public void DefaultArmRetryStopsAfterThreeRetries()
+        {
+            int attempts = 0;
+            var options = new ArmClientOptions
+            {
+                Transport = new MockTransport(_ =>
+                {
+                    attempts++;
+                    return new MockResponse(503).AddHeader("Retry-After", "0");
+                })
+            };
+            RequestFailedException failure = Assert.ThrowsAsync<RequestFailedException>(async () => await CreateResource(options).GetAsync());
+            Assert.AreEqual(503, failure.Status);
+            Assert.AreEqual(4, attempts);
+        }
+
+        [Test]
+        [Category("Unit")]
+        public void DefaultArmRetryDoesNotRetryBadRequest()
+        {
+            int attempts = 0;
+            var options = new ArmClientOptions
+            {
+                Transport = new MockTransport(_ =>
+                {
+                    attempts++;
+                    return new MockResponse(400);
+                })
+            };
+            RequestFailedException failure = Assert.ThrowsAsync<RequestFailedException>(async () => await CreateResource(options).GetAsync());
+            Assert.AreEqual(400, failure.Status);
+            Assert.AreEqual(1, attempts);
+        }
+
+        [Test]
+        [Category("Unit")]
+        public async Task Patch200CompletesWithoutPollingAndOmitsUnchangedAuthentication()
+        {
+            int requests = 0;
+            var options = new ArmClientOptions
+            {
+                Transport = new MockTransport(request =>
+                {
+                    requests++;
+                    Assert.AreEqual(RequestMethod.Patch, request.Method);
+                    using var body = ReadBody(request);
+                    Assert.AreEqual("value", body.RootElement.GetProperty("tags").GetProperty("retained").GetString());
+                    Assert.IsFalse(body.RootElement.TryGetProperty("properties", out var properties) &&
+                        properties.TryGetProperty("disableLocalAuth", out _));
+                    return new MockResponse(200).SetContent(NamespaceJson);
+                })
+            };
+            ArmOperation<EventHubsNamespaceResource> operation = await CreateResource(options).UpdateAsync(
+                WaitUntil.Completed, new EventHubsNamespaceData(AzureLocation.EastUS2) { Tags = { { "retained", "value" } } });
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual("value", operation.Value.Data.Tags["retained"]);
+            Assert.IsTrue(operation.Value.Data.DisableLocalAuth);
+            Assert.AreEqual(1, requests);
+        }
+
+        [Test]
+        [Category("Unit")]
+        public async Task Patch202TagUpdatePollsUntilSucceededAndPreservesAuthentication()
+        {
+            var transport = new MockTransport(
+                new MockResponse(202).AddHeader("Azure-AsyncOperation", "https://management.azure.com" + PollPath).AddHeader("Retry-After", "0"),
+                new MockResponse(200).AddHeader("Retry-After", "0").SetContent("{\"status\":\"InProgress\"}"),
+                new MockResponse(200).SetContent("{\"status\":\"Succeeded\"}"),
+                new MockResponse(200).SetContent(NamespaceJson.Replace("\"retained\":\"value\"", "\"retained\":\"updated\"")));
+            var resource = CreateResource(new ArmClientOptions { Transport = transport });
+            ArmOperation<EventHubsNamespaceResource> operation = await resource.UpdateAsync(
+                WaitUntil.Started, new EventHubsNamespaceData(AzureLocation.EastUS2) { Tags = { { "retained", "updated" } } });
+            Assert.AreEqual(202, operation.GetRawResponse().Status);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.AreEqual(1, transport.Requests.Count);
+            using var body = ReadBody(transport.Requests[0]);
+            Assert.AreEqual("updated", body.RootElement.GetProperty("tags").GetProperty("retained").GetString());
+            Assert.IsFalse(body.RootElement.TryGetProperty("properties", out var properties) &&
+                properties.TryGetProperty("disableLocalAuth", out _));
+            await operation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual("Succeeded", operation.Value.Data.ProvisioningState);
+            Assert.AreEqual("updated", operation.Value.Data.Tags["retained"]);
+            Assert.IsTrue(operation.Value.Data.DisableLocalAuth);
+            Assert.AreEqual(4, transport.Requests.Count);
+            Assert.AreEqual(PollPath, transport.Requests[1].Uri.Path);
+            Assert.AreEqual(PollPath, transport.Requests[2].Uri.Path);
+            Assert.AreEqual(NamespaceId, transport.Requests[3].Uri.Path);
+        }
+
+        [Test]
+        [Category("Unit")]
+        public async Task Patch202PollsUntilSucceededAndRetainsTags()
+        {
+            int requests = 0;
+            var options = new ArmClientOptions
+            {
+                Transport = new MockTransport(request =>
+                {
+                    requests++;
+                    if (requests == 1)
+                    {
+                        Assert.AreEqual(RequestMethod.Patch, request.Method);
+                        using var body = ReadBody(request);
+                        Assert.IsFalse(body.RootElement.GetProperty("properties").GetProperty("disableLocalAuth").GetBoolean());
+                        Assert.IsFalse(body.RootElement.TryGetProperty("tags", out _));
+                        return new MockResponse(202).AddHeader("Azure-AsyncOperation", "https://management.azure.com" + PollPath)
+                            .AddHeader("Retry-After", "0");
+                    }
+                    Assert.AreEqual(RequestMethod.Get, request.Method);
+                    if (requests < 4)
+                    {
+                        Assert.AreEqual(PollPath, request.Uri.Path);
+                        return new MockResponse(200).AddHeader("Retry-After", "0")
+                            .SetContent(requests == 2 ? "{\"status\":\"InProgress\"}" : "{\"status\":\"Succeeded\"}");
+                    }
+                    Assert.AreEqual(NamespaceId, request.Uri.Path);
+                    return new MockResponse(200).SetContent(NamespaceJson.Replace("\"disableLocalAuth\":true", "\"disableLocalAuth\":false"));
+                })
+            };
+            ArmOperation<EventHubsNamespaceResource> operation = await CreateResource(options).UpdateAsync(
+                WaitUntil.Started, new EventHubsNamespaceData(AzureLocation.EastUS2) { DisableLocalAuth = false });
+            Assert.AreEqual(202, operation.GetRawResponse().Status);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.AreEqual(1, requests);
+            await operation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual("Succeeded", operation.Value.Data.ProvisioningState);
+            Assert.AreEqual("value", operation.Value.Data.Tags["retained"]);
+            Assert.IsFalse(operation.Value.Data.DisableLocalAuth);
+            Assert.AreEqual(4, requests);
+        }
+
+        private EventHubsNamespaceResource CreateResource(ArmClientOptions options)
+        {
+            var client = InstrumentClient(new ArmClient(new MockCredential(), "00000000-0000-0000-0000-000000000001", options));
+            return client.GetEventHubsNamespaceResource(new ResourceIdentifier(NamespaceId));
+        }
+
+        private static JsonDocument ReadBody(MockRequest request)
+        {
+            using var stream = new MemoryStream();
+            request.Content.WriteTo(stream, CancellationToken.None);
+            return JsonDocument.Parse(Encoding.UTF8.GetString(stream.ToArray()));
         }
     }
 }

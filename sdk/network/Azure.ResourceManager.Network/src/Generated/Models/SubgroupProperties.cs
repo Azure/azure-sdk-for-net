@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of subgroup. </summary>
-    public partial class SubgroupProperties
+    internal partial class SubgroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of virtual machine references. </summary>
         [WirePath("virtualMachines")]
-        public IReadOnlyList<NetworkSubResource> VirtualMachines { get; }
+        public IReadOnlyList<NetworkSubResource> VirtualMachines { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> The provisioning state of the subgroup. </summary>
         [WirePath("provisioningState")]
