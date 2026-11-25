@@ -7,7 +7,7 @@ Invoke-Pester -Output Detailed $PSScriptRoot/Apply-WeightedBatching.Tests.ps1
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" "PSModule-Helpers.ps1")
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
-Describe "Apply-WeightedBatching" {
+Describe "Apply-WeightedBatching" -Tag "UnitTest" {
   BeforeEach {
     $packageInfoFolder = Join-Path $TestDrive "PackageInfo"
     $weightsFile = Join-Path $TestDrive "weights.json"
@@ -63,6 +63,39 @@ Describe "Apply-WeightedBatching" {
       @($names | Where-Object { $_ -like "Direct.*" }).Count |
         Should -BeIn @(0, $names.Count)
     }
+  }
+
+  It "keeps packages with different matrix configurations in separate buckets" {
+    foreach ($package in @(
+      @{ Name = 'Default'; Weight = 120; Configs = @() },
+      @{ Name = 'Custom'; Weight = 100; Configs = @(@{ Name = 'custom'; Path = 'custom.json'; Selection = 'sparse' }) }
+    )) {
+      @{
+        ArtifactName = $package.Name
+        IncludedForValidation = $false
+        CIParameters = @{ CIMatrixConfigs = $package.Configs }
+      } | ConvertTo-Json -Depth 10 | Set-Content (Join-Path $packageInfoFolder "$($package.Name).json")
+    }
+    @{ Default = 120; Custom = 100 } | ConvertTo-Json | Set-Content $weightsFile
+
+    & (Join-Path $PSScriptRoot '..' 'Apply-WeightedBatching.ps1') `
+      -PackageInfoFolder $packageInfoFolder -WeightsFile $weightsFile -Target 240 -GroupByMatrixConfigs
+
+    $files = @(Get-ChildItem $packageInfoFolder -Filter '*.json')
+    $files.Count | Should -Be 2
+    $custom = Get-Content (Join-Path $packageInfoFolder 'Custom.json') -Raw | ConvertFrom-Json
+    $custom.CIParameters.CIMatrixConfigs[0].Name | Should -Be 'custom'
+  }
+
+  It "groups packages without matrix metadata as defaults" {
+    foreach ($name in @('A', 'B')) {
+      @{ ArtifactName = $name; IncludedForValidation = $false } |
+        ConvertTo-Json | Set-Content (Join-Path $packageInfoFolder "$name.json")
+    }
+    @{ A = 1; B = 1 } | ConvertTo-Json | Set-Content $weightsFile
+    & (Join-Path $PSScriptRoot '..' 'Apply-WeightedBatching.ps1') `
+      -PackageInfoFolder $packageInfoFolder -WeightsFile $weightsFile -Target 240 -GroupByMatrixConfigs
+    @(Get-ChildItem $packageInfoFolder -Filter '*.json').Count | Should -Be 1
   }
 
   It "uses a positive fallback for missing and zero weights" {

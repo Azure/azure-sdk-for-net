@@ -41,10 +41,14 @@ param (
   [Parameter(Mandatory = $true)][string]$WeightsFile,
   [Parameter()][int]$Target = 1800,
   [Parameter()][int]$IndirectTarget = 0,
-  [Parameter()][int]$DefaultWeight = 1
+  [Parameter()][int]$DefaultWeight = 1,
+  [Parameter()][switch]$GroupByMatrixConfigs
 )
 
 Set-StrictMode -Version 4
+if ($GroupByMatrixConfigs) {
+  . (Join-Path $PSScriptRoot '../common/scripts/Helpers/Package-Helpers.ps1')
+}
 
 if ($IndirectTarget -le 0) { $IndirectTarget = $Target }
 if ($Target -le 0) { throw "Target must be greater than zero." }
@@ -189,14 +193,27 @@ function Apply-LPTBatching {
 }
 
 # Apply LPT batching to direct and indirect packages separately
-if ($directPackages.Count -gt 0) {
-  Apply-LPTBatching -Packages $directPackages -Weights $weights `
-    -Target $Target -DefaultWeight $DefaultWeight -Label "Direct"
-}
-
-if ($indirectPackages.Count -gt 0) {
-  Apply-LPTBatching -Packages $indirectPackages -Weights $weights `
-    -Target $IndirectTarget -DefaultWeight $DefaultWeight -Label "Indirect"
+foreach ($set in @(
+  @{ Packages = $directPackages; Target = $Target; Label = 'Direct' },
+  @{ Packages = $indirectPackages; Target = $IndirectTarget; Label = 'Indirect' }
+)) {
+  if ($set.Packages.Count -eq 0) { continue }
+  if ($GroupByMatrixConfigs) {
+    $groups = $set.Packages | Group-Object {
+      $ciProperty = $_.Json.PSObject.Properties['CIParameters']
+      $configProperty = if ($ciProperty -and $ciProperty.Value) { $ciProperty.Value.PSObject.Properties['CIMatrixConfigs'] }
+      $configs = if ($configProperty) { $configProperty.Value }
+      if ($configs) { Get-ObjectKey $configs } else { 'unset' }
+    }
+    foreach ($group in $groups) {
+      Apply-LPTBatching -Packages @($group.Group) -Weights $weights `
+        -Target $set.Target -DefaultWeight $DefaultWeight -Label $set.Label
+    }
+  }
+  else {
+    Apply-LPTBatching -Packages $set.Packages -Weights $weights `
+      -Target $set.Target -DefaultWeight $DefaultWeight -Label $set.Label
+  }
 }
 
 # Verify

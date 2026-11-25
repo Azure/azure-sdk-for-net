@@ -6,6 +6,12 @@ parameters:
   - name: ForceDirect
     type: boolean
     default: false
+  - name: PackageScope
+    type: string
+    default: all
+  - name: DefaultMatrixConfigs
+    type: object
+    default: []
   - name: ExcludePaths
     type: object
     default: []
@@ -81,6 +87,14 @@ steps:
     displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
 
+  - ${{ if ne(parameters.PackageScope, 'all') }}:
+    - pwsh: |
+        eng/scripts/Select-PrTestPackages.ps1 `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -Scope '${{ parameters.PackageScope }}' `
+          -DefaultMatrixConfigs '${{ convertToJson(parameters.DefaultMatrixConfigs) }}'
+      displayName: Select ${{ parameters.PackageScope }} packages for PR tests
+
   - ${{ if eq(parameters.EnableTestRuntimeWeighting, true) }}:
     - pwsh: |
         $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
@@ -121,7 +135,8 @@ steps:
           eng/scripts/Apply-WeightedBatching.ps1 `
             -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
             -WeightsFile $weightsFile `
-            -Target 240
+            -Target 240 `
+            -GroupByMatrixConfigs:$${{ ne(parameters.PackageScope, 'all') }}
 
           # PackageInfo entries now represent weighted buckets. Slower macOS runs one
           # bucket per job, while Linux and Windows amortize setup over three buckets.

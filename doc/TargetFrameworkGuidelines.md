@@ -48,10 +48,12 @@ called end of life (EOL).
 ## Test targets
 
 Every framework a package targets is tested. Test, sample, perf, and stress
-projects under `sdk/` run on every .NET version that is still in support or
+projects under `sdk/` target every .NET version that is still in support or
 still in a package's targets, plus `NetFxTargetFramework` on Windows: the
 earliest .NET Framework version that is still in support or still in a
-package's targets. Every CI test matrix covers the same set.
+package's targets. The default scheduled and live-test matrices cover this set.
+Service SDK PR test matrices omit `net9.0`; core package PR tests retain it for
+System.ClientModel. This reduces service integration coverage on .NET 9.
 
 - ✅ **DO** add each new .NET version, LTS or STS, to the test targets when it
   ships.
@@ -152,7 +154,9 @@ When a new .NET version ships:
    `Coverage_Record` entry to it. Update the service-specific matrices
    (`git grep -l TestTargetFramework -- sdk`) the same way, unless a matrix
    deliberately runs fewer frameworks, such as the LTS-only
-   `sdk/tools/platform-generator-matrix.json`.
+   `sdk/tools/platform-generator-matrix.json`. Keep the service PR framework
+   filter in `eng/pipelines/templates/jobs/pr-test-matrix.yml` consistent with
+   the intended PR coverage.
 5. `eng/pipelines/templates/steps/install-dotnet.yml`: install an SDK for each
    test framework older than the `global.json` SDK.
 6. `eng/centralpackagemanagement/`: add and remove versions conditioned on a

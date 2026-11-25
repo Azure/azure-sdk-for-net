@@ -1,0 +1,71 @@
+parameters:
+  - name: Scope
+    type: string
+    default: all
+  - name: SDKType
+    type: string
+  - name: ServiceDirectory
+    type: string
+  - name: MatrixConfigs
+    type: object
+  - name: MatrixFilters
+    type: object
+  - name: MatrixReplace
+    type: object
+  - name: TestSetupSteps
+    type: stepList
+  - name: TestTimeoutInMinutes
+    type: number
+  - name: ExcludePaths
+    type: object
+
+jobs:
+  - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    parameters:
+      GenerateJobName: generate_target_service_test_matrix_${{ parameters.Scope }}
+      JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+      MatrixConfigs:
+        - ${{ each config in parameters.MatrixConfigs }}:
+          - ${{ config }}
+          - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), ne(parameters.ServiceDirectory, 'auto'), ne(parameters.ServiceDirectory, 'core'), eq(config.Path, 'eng/pipelines/templates/stages/platform-matrix.json')) }}:
+            - Name: NET_ci_service_projectref
+              Path: eng/pipelines/templates/stages/pr-service-projectref-matrix.json
+              Selection: sparse
+              GenerateVMJobs: true
+      MatrixFilters:
+        - ${{ each filter in parameters.MatrixFilters }}:
+          - ${{ filter }}
+        - ${{ if or(eq(parameters.Scope, 'service'), and(eq(variables['Build.Reason'], 'PullRequest'), ne(parameters.ServiceDirectory, 'auto'), ne(parameters.ServiceDirectory, 'core'))) }}:
+          - 'TestTargetFramework=^(?!net9\.0$)'
+      MatrixReplace: ${{ parameters.MatrixReplace }}
+      CloudConfig:
+        Cloud: public
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 10
+        PRJobBatchSizeByPool:
+          Linux: $(TestMatrixEntriesPerJobLinux)
+          Windows: $(TestMatrixEntriesPerJobWindows)
+          Mac: $(TestMatrixEntriesPerJobMac)
+        PRMatrixIndirectFilters:
+          - 'AdditionalTestArguments=.*true'
+          - 'Pool=.*LinuxPool$'
+        PreGenerationSteps:
+          - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+            parameters:
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PublishingArtifactName: TestPackagesArtifact_${{ parameters.Scope }}
+              PackageScope: ${{ parameters.Scope }}
+              DefaultMatrixConfigs: ${{ parameters.MatrixConfigs }}
+              ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableTestRuntimeWeighting: true
+      AdditionalParameters:
+        SDKType: ${{ parameters.SDKType }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        PackageInfoArtifactName: TestPackagesArtifact_${{ parameters.Scope }}

@@ -1,0 +1,20 @@
+{
+  "displayNames": {
+    "/p:UseProjectReferenceToAzureClients=true": "ProjectRef"
+  },
+  "matrix": {
+    "Agent": {
+      "Ubuntu-24.04_NET8.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net8.0"
+      }
+    },
+    "AdditionalTestArguments": [
+      "/p:UseProjectReferenceToAzureClients=true"
+    ],
+    "BuildConfiguration": [
+      "Debug"
+    ]
+  }
+}

@@ -26,6 +26,9 @@ parameters:
     default: ''
   - name: OSName
     type: string
+  - name: PackageInfoArtifactName
+    type: string
+    default: TestPackagesArtifact
 
 jobs:
   - job:
@@ -108,7 +111,7 @@ jobs:
       - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - task: DownloadPipelineArtifact@2
           inputs:
-            artifact: TestPackagesArtifact
+            artifact: ${{ parameters.PackageInfoArtifactName }}
             path: $(Build.SourcesDirectory)/PackageInfo
 
       - pwsh: |
