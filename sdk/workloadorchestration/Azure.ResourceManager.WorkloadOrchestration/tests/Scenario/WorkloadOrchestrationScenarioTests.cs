@@ -33,15 +33,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
             string schemaName = Recording.GenerateAssetName("schema88");
             string schemaVersionName = Recording.GenerateAssetName("1.0.0");
 
-            var options = new ArmClientOptions();
-            if (Mode == RecordedTestMode.Playback)
-            {
-                // Existing recordings use the stable API version, not the current preview default.
-                options.SetApiVersion(EdgeSchemaResource.ResourceType, "2025-06-01");
-                options.SetApiVersion(EdgeSchemaVersionResource.ResourceType, "2025-06-01");
-            }
-            ArmClient client = GetArmClient(options);
-            ResourceGroupResource resourceGroupResource = GetResourceGroup(client);
+            // Get client and resource group from test base
+            ArmClient client = GetArmClient();
+            ResourceGroupResource resourceGroupResource = GetResourceGroup();
 
             // Get schema collection and create new schema
             EdgeSchemaCollection collection = resourceGroupResource.GetEdgeSchemas();
