@@ -357,7 +357,7 @@ namespace Azure.Generator.Management.Visitors
                 return null;
             }
             var constructorParameters = publicConstructor
-                ? propertyModelType.EffectiveConstructors.First(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Signature.Parameters
+                ? PropertyHelpers.GetPublicConstructors(propertyModelType).First().Signature.Parameters
                 : propertyModelType.FullConstructor.Signature.Parameters;
 
             var parameters = new List<ValueExpression>();
@@ -1124,7 +1124,7 @@ namespace Azure.Generator.Management.Visitors
                                 bool nestedHasPublicCtor = false;
                                 if (TryGetModelProvider(variable.Type, out var nestedModelType))
                                 {
-                                    nestedHasPublicCtor = nestedModelType.EffectiveConstructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                                    nestedHasPublicCtor = PropertyHelpers.GetPublicConstructors(nestedModelType).Any();
                                 }
                                 var conditionExpression = BuildConditionExpression(properties, publicConstructor: nestedHasPublicCtor);
                                 var ctorParams = BuildConstructorParameters(variable.Type, properties, publicConstructor: nestedHasPublicCtor);
@@ -1158,8 +1158,7 @@ namespace Azure.Generator.Management.Visitors
                                     if (internalProperty.WireInfo?.IsRequired == true
                                         && internalProperty.Body is AutoPropertyBody { HasSetter: false, InitializationExpression: null } autoBody
                                         && TryGetModelProvider(internalProperty.Type, out var nestedModel)
-                                        && nestedModel.EffectiveConstructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                                            && c.Signature.Parameters.Count == 0))
+                                        && PropertyHelpers.GetPublicConstructors(nestedModel).Any(c => c.Signature.Parameters.Count == 0))
                                     {
                                         internalProperty.Update(body: autoBody with { InitializationExpression = New.Instance(internalProperty.Type) });
                                     }

@@ -66,19 +66,33 @@ namespace Azure.Generator.Management.Utilities
             return (true, null, false);
         }
 
-        private static bool HasDefaultPublicCtor(ModelProvider? innerModel)
+        internal static IEnumerable<ConstructorProvider> GetPublicConstructors(ModelProvider model)
         {
-            if (innerModel is null)
-                return false;
-
-            foreach (var ctor in innerModel.EffectiveConstructors)
+            var declared = model.CanonicalView.Constructors;
+            var publicConstructors = declared.Where(IsPublicInstanceConstructor);
+            if (declared.Any(constructor => constructor.Signature.Parameters.Count == 0 &&
+                !constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static)))
             {
-                if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !ctor.Signature.Parameters.Any())
-                    return true;
+                return publicConstructors;
             }
 
-            return false;
+            var serializationConstructor = model.SerializationProviders
+                .Where(partial => partial.Type.Namespace == model.Type.Namespace &&
+                    partial.Type.ClrMetadataName == model.Type.ClrMetadataName)
+                .SelectMany(partial => partial.Constructors)
+                .FirstOrDefault(constructor => constructor.Signature.Parameters.Count == 0 &&
+                    !constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static));
+            return serializationConstructor is not null && IsPublicInstanceConstructor(serializationConstructor)
+                ? publicConstructors.Append(serializationConstructor)
+                : publicConstructors;
+
+            static bool IsPublicInstanceConstructor(ConstructorProvider constructor)
+                => (constructor.Signature.Modifiers & (MethodSignatureModifiers.Public | MethodSignatureModifiers.Static)) == MethodSignatureModifiers.Public;
         }
+
+        private static bool HasDefaultPublicCtor(ModelProvider? innerModel)
+            => innerModel is not null && GetPublicConstructors(innerModel)
+                .Any(constructor => constructor.Signature.Parameters.Count == 0);
 
         public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty, CSharpType publicPropertyType)
         {
