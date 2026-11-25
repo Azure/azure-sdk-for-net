@@ -25,10 +25,10 @@
           "type": "object",
           "description": "Configuration for KeyVaultEkmClient.",
           "properties": {
-            "VaultBaseUrl": {
+            "VaultUri": {
               "type": "string",
               "format": "uri",
-              "description": "Gets or sets the VaultBaseUrl."
+              "description": "Gets or sets the Uri of the vault on which the client operates."
             },
             "Credential": {
               "$ref": "#/definitions/credential"

@@ -18,9 +18,11 @@
 - Removed External Key Manager (EKM) proxy private endpoint support added in 4.9.0-beta.4, including the `CreateEkmPrivateEndpoint`, `GetEkmPrivateEndpoint`, `GetEkmPrivateEndpoints`, `DeleteEkmPrivateEndpoint`, and `GetEkmPrivateEndpointOperationStatus` methods (and their async counterparts) in `KeyVaultEkmClient`, the `KeyVaultEkmPrivateEndpoint*` models, the `KeyVaultEkmConnectivityMode` type, and the `KeyVaultEkmConnection.ConnectivityMode` property.
 - Removed `IDisposable` and the `Dispose()` methods from `KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient`, added in 4.9.0-beta.3.
 - Removed support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy, added in 4.9.0-beta.2.
+- Renamed `KeyVaultEkmClientSettings.VaultBaseUrl` to `VaultUri`. The `KeyVaultEkmClient` configuration key is now `VaultUri` instead of `VaultBaseUrl`.
 
 ### Bugs Fixed
 
+- Fixed `KeyVaultEkmClient(KeyVaultEkmClientSettings)`, added in 4.9.0-beta.1, never authenticating requests. The client ignored `KeyVaultEkmClientSettings.CredentialProvider` and was built without the Key Vault authentication policy. The constructor now uses the configured credential and throws an `ArgumentNullException` if no credential is configured.
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
 - Improved authentication challenge resource validation.
 - (From 4.9.0-beta.3) Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.

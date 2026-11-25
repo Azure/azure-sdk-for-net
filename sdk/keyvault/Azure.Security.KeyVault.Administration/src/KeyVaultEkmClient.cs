@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="settings"> The settings for KeyVaultEkmClient. </param>
         // Written by hand because the generator emits the spec's "vaultBaseUrl" name, but the settings property is customized to VaultUri.
         [Experimental("SCME0002")]
-        public KeyVaultEkmClient(KeyVaultEkmClientSettings settings) : this((HttpPipelinePolicy)null, settings?.VaultUri, settings?.Options)
+        public KeyVaultEkmClient(KeyVaultEkmClientSettings settings) : this(settings?.VaultUri, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
