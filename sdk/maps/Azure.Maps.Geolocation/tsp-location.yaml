@@ -1,0 +1,6 @@
+directory: specification/maps/data-plane/Geolocation
+commit: be3f50a059a73fe5f5073bc997b09318b21018b4
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
