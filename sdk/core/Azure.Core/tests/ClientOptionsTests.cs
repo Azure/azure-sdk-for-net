@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.Samples;
 using Azure.Core.TestFramework;
@@ -14,6 +17,113 @@ namespace Azure.Core.Tests
     [NonParallelizable]
     public class ClientOptionsTests
     {
+        [Test]
+        public void ModelProxies_IsEmptyMutableAndStable()
+        {
+            var options = new TestClientOptions();
+
+            Assert.That(options.ModelProxies, Is.Empty);
+            Assert.IsFalse(options.ModelProxies.IsReadOnly);
+            Assert.AreSame(options.ModelProxies, options.ModelProxies);
+            Assert.IsNull(typeof(ClientOptions).GetProperty(nameof(ClientOptions.ModelProxies))!.GetSetMethod());
+        }
+
+        [Test]
+        public void ModelProxies_KeepOrderAndSupportListOperations()
+        {
+            var options = new TestClientOptions();
+            var first = new LabelProxy("first");
+            var second = new LabelProxy("second");
+            var third = new LabelProxy("third");
+            var replacement = new LabelProxy("replacement");
+
+            options.ModelProxies.Add(first);
+            options.ModelProxies.Add(second);
+            options.ModelProxies.Insert(0, third);
+            Assert.That(options.ModelProxies, Is.EqualTo(new ModelProxy[] { third, first, second }));
+            Assert.AreEqual(1, options.ModelProxies.IndexOf(first));
+            Assert.IsTrue(options.ModelProxies.Contains(second));
+
+            options.ModelProxies[1] = replacement;
+            Assert.IsTrue(options.ModelProxies.Remove(third));
+            Assert.IsFalse(options.ModelProxies.Remove(first));
+            var copy = new ModelProxy[2];
+            options.ModelProxies.CopyTo(copy, 0);
+            Assert.That(copy, Is.EqualTo(new ModelProxy[] { replacement, second }));
+
+            options.ModelProxies.RemoveAt(0);
+            Assert.That(options.ModelProxies, Is.EqualTo(new ModelProxy[] { second }));
+
+            options.ModelProxies.Clear();
+            Assert.That(options.ModelProxies, Is.Empty);
+        }
+
+        [Test]
+        public void ModelProxies_RejectNull()
+        {
+            var options = new TestClientOptions();
+            options.ModelProxies.Add(new LabelProxy("existing"));
+
+            Assert.Throws<ArgumentNullException>(() => options.ModelProxies.Add(null!));
+            Assert.Throws<ArgumentNullException>(() => options.ModelProxies.Insert(0, null!));
+            Assert.Throws<ArgumentNullException>(() => options.ModelProxies[0] = null!);
+            Assert.AreEqual(1, options.ModelProxies.Count);
+        }
+
+        [Test]
+        public void ModelProxies_AreCopiedIntoAnIndependentCollection()
+        {
+            // Options created with the protected constructors are copied from ClientOptions.Default.
+            var first = new LabelProxy("first");
+            var second = new LabelProxy("second");
+            ClientOptions.Default.ModelProxies.Add(first);
+            ClientOptions.Default.ModelProxies.Add(second);
+
+            var options = new TestClientOptions();
+
+            Assert.AreNotSame(ClientOptions.Default.ModelProxies, options.ModelProxies);
+            Assert.IsFalse(options.ModelProxies.IsReadOnly);
+            Assert.That(options.ModelProxies, Is.EqualTo(new ModelProxy[] { first, second }));
+
+            options.ModelProxies.RemoveAt(0);
+            options.ModelProxies.Add(new LabelProxy("third"));
+            ClientOptions.Default.ModelProxies.Add(new LabelProxy("fourth"));
+
+            Assert.AreEqual(3, ClientOptions.Default.ModelProxies.Count);
+            Assert.AreSame(first, ClientOptions.Default.ModelProxies[0]);
+            Assert.AreEqual(2, options.ModelProxies.Count);
+            Assert.AreSame(second, options.ModelProxies[0]);
+        }
+
+        [Test]
+        public void ModelProxies_ApplyThroughClientModelReaderWriterOptions()
+        {
+            var options = new TestClientOptions();
+            options.ModelProxies.Add(new LabelProxy("proxy"));
+
+            ModelReaderWriterOptions clientOptions = CreateModelReaderWriterOptions(options);
+            BinaryData written = ModelReaderWriter.Write(new TestJsonModel { Name = "original", Value = 5 }, clientOptions);
+            TestJsonModel read = ModelReaderWriter.Read<TestJsonModel>(BinaryData.FromString("{\"name\":\"payload\",\"value\":7}"), clientOptions);
+
+            StringAssert.Contains("\"name\":\"proxy:original\"", written.ToString());
+            Assert.AreEqual("proxy", read.Name);
+            Assert.AreEqual(7, read.Value);
+
+            BinaryData unproxied = ModelReaderWriter.Write(new TestJsonModel { Name = "original" }, CreateModelReaderWriterOptions(new TestClientOptions()));
+            StringAssert.Contains("\"name\":\"original\"", unproxied.ToString());
+        }
+
+        // Builds the options a client uses to read and write models from the proxies on its client options.
+        private static ModelReaderWriterOptions CreateModelReaderWriterOptions(ClientOptions clientOptions)
+        {
+            var options = new ModelReaderWriterOptions("W");
+            foreach (ModelProxy proxy in clientOptions.ModelProxies)
+            {
+                options.Proxies.Add(proxy);
+            }
+            return options;
+        }
+
         [TearDown]
         public void TearDown()
         {
@@ -272,6 +382,52 @@ namespace Azure.Core.Tests
 
         private class TestClientOptions : ClientOptions
         {
+        }
+
+        private sealed class LabelProxy : ModelProxy<TestJsonModel>, IJsonModel<TestJsonModel>
+        {
+            private readonly string _label;
+
+            public LabelProxy(string label)
+            {
+                _label = label;
+            }
+
+            public override BinaryData Write(ModelReaderWriterOptions options)
+            {
+                using var stream = new MemoryStream();
+                using (var writer = new Utf8JsonWriter(stream))
+                {
+                    ((IJsonModel<TestJsonModel>)this).Write(writer, options);
+                }
+                return BinaryData.FromBytes(stream.ToArray());
+            }
+
+            void IJsonModel<TestJsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                var original = (TestJsonModel)options.ProxiedModel!;
+                writer.WriteStartObject();
+                writer.WriteString("name", $"{_label}:{original.Name}");
+                writer.WriteNumber("value", original.Value);
+                writer.WriteEndObject();
+            }
+
+            public override TestJsonModel Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                using JsonDocument document = JsonDocument.Parse(data);
+                return Create(document.RootElement);
+            }
+
+            TestJsonModel IJsonModel<TestJsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return Create(document.RootElement);
+            }
+
+            private TestJsonModel Create(JsonElement element)
+                => new TestJsonModel { Name = _label, Value = element.GetProperty("value").GetInt32() };
+
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         private class TestClientOptionsWithCustomMaxApplicationIdLength : ClientOptions

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -16,6 +17,7 @@ namespace Azure.Core
     public abstract class ClientOptions
     {
         private HttpPipelineTransport _transport;
+        private ModelProxyCollection? _modelProxies;
         internal bool IsCustomTransportSet { get; private set; }
 
         /// <summary>
@@ -54,6 +56,10 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
+                if (clientOptions._modelProxies is { Count: > 0 } modelProxies)
+                {
+                    _modelProxies = new ModelProxyCollection(modelProxies);
+                }
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -135,6 +141,18 @@ namespace Azure.Core
         /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
         /// </summary>
         public HttpPipelinePolicy? RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets the model proxies used to read and write models for clients constructed with these options.
+        /// </summary>
+        /// <remarks>
+        /// A client adds these proxies to the <see cref="ModelReaderWriterOptions.Proxies"/> of the
+        /// <see cref="ModelReaderWriterOptions"/> it uses to read and write models. See
+        /// <see cref="ModelReaderWriterOptions.Proxies"/> for how proxies are matched to models.
+        /// Add proxies before constructing a client with these options; changes made afterwards might not be
+        /// observed by that client.
+        /// </remarks>
+        public IList<ModelProxy> ModelProxies => _modelProxies ??= new ModelProxyCollection();
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.

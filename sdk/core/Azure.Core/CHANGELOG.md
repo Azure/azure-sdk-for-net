@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ClientOptions.ModelProxies` so model proxies can be registered for clients, mirroring `ClientPipelineOptions.ModelProxies` in System.ClientModel.
+
 ### Breaking Changes
 
 ### Bugs Fixed
