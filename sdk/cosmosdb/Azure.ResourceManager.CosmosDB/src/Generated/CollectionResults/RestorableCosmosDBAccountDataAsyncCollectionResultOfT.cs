@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateListByLocationRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
