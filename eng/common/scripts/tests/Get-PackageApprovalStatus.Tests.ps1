@@ -152,9 +152,9 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $global:CapturedAzSdkInvocations.Count | Should Be 2
     }
 
-    It "includes raw output when azsdk returns malformed output" {
+    It "reports the CLI failure and raw output when azsdk returns no response" {
         $global:AzSdkExitCode = 1
-        $global:AzSdkOutput = "distinct raw command output"
+        $global:AzSdkOutput = "diagnostic contains { a stray brace"
         $caughtError = $null
 
         try {
@@ -165,14 +165,65 @@ Describe "Get-PackageApprovalStatus.ps1" {
         }
 
         $caughtError | Should Not BeNullOrEmpty
-        $caughtError.Exception.Message | Should Match "distinct raw command output"
+        $caughtError.Exception.Message | Should Match "Package approval check failed for azure-test 1\.0\.0 \(azsdk exit code 1\)"
+        $caughtError.Exception.Message | Should Not Match "malformed JSON"
+        $caughtError.Exception.Message | Should Match "diagnostic contains \{ a stray brace"
+        $caughtError.Exception.Message | Should Match "No valid JSON object was found"
+    }
+
+    It "parses an indented approval response after CLI diagnostics" {
+        $global:AzSdkExitCode = 1
+        $global:AzSdkOutput = @'
+API call failed: GET /AutoReview/GetReviewStatus?language=Python&packageName=azure-test&packageVersion=1.0.0 returned NotFound: "Review is not found for package azure-test"
+  {
+    "operation_status": "Failed",
+    "response_error": "APIView: Review is not found for package azure-test",
+    "result": {
+      "isApproved": false,
+      "finalSource": "none",
+      "reason": "unknownPackage",
+      "reviewHub": {
+        "isApproved": false,
+        "reason": "unknownPackage",
+        "statusCode": 200
+      },
+      "apiView": {
+        "isApproved": false,
+        "reason": "notFound",
+        "statusCode": 404,
+        "details": ["Review is not found for package azure-test"]
+      }
+    }
+  }
+'@
+        $packageInfo = Get-Content $packageInfoPath -Raw | ConvertFrom-Json
+        $packageInfo | Add-Member -NotePropertyName ReleaseStatus -NotePropertyValue Unreleased
+        $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
+            ForEach-Object { "$_" }
+
+        ($messages -join [Environment]::NewLine) | Should Match "Reason: unknownPackage"
+        $failureSummary = $messages | Where-Object { $_ -match "Ignoring approval check failure" }
+        $failureSummary | Should Match "is not approved for release \(reason: unknownPackage\)"
+        $failureSummary | Should Not Match "Review is not found"
+        ($messages -join [Environment]::NewLine) | Should Match "HTTP status: 404"
+        ($messages -join [Environment]::NewLine) | Should Not Match "malformed JSON"
     }
 
     It "fails when the response is malformed" {
         $global:AzSdkOutput = "not json"
+        $caughtError = $null
 
-        { & $scriptPath -PackageInfoFiles $packageInfoPath } |
-            Should Throw
+        try {
+            & $scriptPath -PackageInfoFiles $packageInfoPath
+        }
+        catch {
+            $caughtError = $_
+        }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "returned malformed JSON"
+        $caughtError.Exception.Message | Should Match "not json"
     }
 
     It "fails when a successful CLI invocation reports an unapproved result" {
