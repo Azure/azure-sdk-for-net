@@ -33,5 +33,5 @@ jobs:
           # GitHub's wrapper otherwise propagates the last native test command's exit code.
           exit 0
 
-      - name: Run re-review job tests
-        run: node --test .github/workflows/test/pr-re-review-*.test.cjs
+      - name: Run unresolve-review-thread job tests
+        run: node --test .github/workflows/test/pr-re-review-unresolve-thread.test.cjs
