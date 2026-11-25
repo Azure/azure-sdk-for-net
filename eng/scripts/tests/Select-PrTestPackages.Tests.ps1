@@ -29,7 +29,7 @@ BeforeAll {
   function Get-TestMatrix($folder, $configPath, $filters, $indirectFilters = @()) {
     $result = & (Join-Path $script:repoRoot 'eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1') `
       -PackagePropertiesFolder $folder -PRMatrixFile $configPath -PRMatrixSetting ProjectNames `
-      -Filters $filters -IndirectFilters $indirectFilters -PackagesPerPRJob 10
+      -Filters $filters -IndirectFilters $indirectFilters -PackagesPerPRJob 10 -CI:$false
     return ($result | ConvertFrom-Json -AsHashtable)
   }
 }
@@ -82,6 +82,30 @@ Describe 'PR test package selection' -Tag 'UnitTest' {
     @(@{ Name = 'test'; Path = 'eng/pipelines/templates/stages/platform-matrix.json'; Selection = 'all' }) |
       ConvertTo-Json -AsArray | Set-Content $config
     (Get-TestMatrix $folder $config @()).Count | Should -Be 0
+  }
+
+  It 'parses matrix output when the CI environment is present' {
+    $existed = Test-Path Env:SYSTEM_TEAMPROJECTID
+    $previous = [Environment]::GetEnvironmentVariable('SYSTEM_TEAMPROJECTID')
+    try {
+      $env:SYSTEM_TEAMPROJECTID = 'test-project'
+      $env:LINUXPOOL = 'LinuxPool'; $env:LINUXVMIMAGE = 'linux'
+      $env:WINDOWSPOOL = 'WindowsPool'; $env:WINDOWSVMIMAGE = 'windows'
+      $env:MACPOOL = 'MacPool'; $env:MACVMIMAGE = 'mac'
+      $empty = Join-Path $TestDrive 'empty-ci'
+      New-Item -ItemType Directory -Force $empty | Out-Null
+      $config = Join-Path $TestDrive 'ci-config.json'
+      Set-Content $config $script:defaultConfigs
+      (Get-TestMatrix $empty $config @()).Count | Should -Be 0
+      $matrix = & (Join-Path $script:repoRoot 'eng/common/scripts/job-matrix/Create-JobMatrix.ps1') `
+        -ConfigPath (Join-Path $script:repoRoot 'eng/pipelines/templates/stages/platform-matrix.json') `
+        -Selection sparse -Filters @('Pool=LinuxPool') -CI:$false | ConvertFrom-Json -AsHashtable
+      $matrix.Count | Should -BeGreaterThan 0
+    }
+    finally {
+      if ($existed) { [Environment]::SetEnvironmentVariable('SYSTEM_TEAMPROJECTID', $previous) }
+      else { Remove-Item Env:SYSTEM_TEAMPROJECTID -ErrorAction SilentlyContinue }
+    }
   }
 
   It 'retains sparse indirect service project-reference coverage' {
@@ -182,7 +206,7 @@ Describe 'PR test package selection' -Tag 'UnitTest' {
     Write-Project-Files-To-Matrix $projects $matrixPath $output 'ProjectListOverrideFile'
     & (Join-Path $script:repoRoot 'eng/scripts/Remove-Net9FromTestMatrix.ps1') -MatrixPath $matrixPath
     $matrix = & (Join-Path $script:repoRoot 'eng/common/scripts/job-matrix/Create-JobMatrix.ps1') `
-      -ConfigPath $matrixPath -Selection sparse -Filters @($script:serviceFilter) | ConvertFrom-Json -AsHashtable
+      -ConfigPath $matrixPath -Selection sparse -Filters @($script:serviceFilter) -CI:$false | ConvertFrom-Json -AsHashtable
     $selected = @($matrix.Values | ForEach-Object ProjectListOverrideFile | Sort-Object -Unique)
     $selected.Count | Should -Be 10
     @($matrix.Values | Where-Object TestTargetFramework -EQ 'net9.0').Count | Should -Be 0
