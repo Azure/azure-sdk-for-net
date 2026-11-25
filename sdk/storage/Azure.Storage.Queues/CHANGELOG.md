@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a regression where client-side decryption of queue messages reused a cached content encryption key across messages in the same receive or peek call, causing decryption failures for messages encrypted with different keys.
 
 ### Other Changes
 

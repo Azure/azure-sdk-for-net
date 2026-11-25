@@ -16,12 +16,10 @@ namespace Azure.Storage.Queues
 {
     internal class QueueClientSideDecryptor
     {
-        private readonly ClientSideDecryptor _decryptor;
         public QueueClientSideEncryptionOptions Options { get; }
 
         public QueueClientSideDecryptor(QueueClientSideEncryptionOptions options)
         {
-            _decryptor = new ClientSideDecryptor(options);
             Options = options;
         }
 
@@ -68,7 +66,8 @@ namespace Azure.Storage.Queues
             }
 
             var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageText));
-            var decryptedMessageStream = await _decryptor.DecryptReadInternal(
+            // Each message has its own content encryption key, so a decryptor (and its key cache) must not be shared.
+            var decryptedMessageStream = await new ClientSideDecryptor(Options).DecryptReadInternal(
                 encryptedMessageStream,
                 encryptedMessage.EncryptionData,
                 ivInStream: false,

@@ -14,6 +14,14 @@ using static Azure.Storage.Cryptography.Models.ClientSideEncryptionVersionExtens
 
 namespace Azure.Storage.Cryptography
 {
+    /// <summary>
+    /// Decrypts client-side encrypted content.
+    /// </summary>
+    /// <remarks>
+    /// Instances cache the content encryption key after the first unwrap. An instance must only be used
+    /// for a single encrypted resource (e.g. one blob download or one queue message). Reusing an instance
+    /// across resources with different content encryption keys will fail or decrypt with the wrong key.
+    /// </remarks>
     internal class ClientSideDecryptor
     {
         /// <summary>
