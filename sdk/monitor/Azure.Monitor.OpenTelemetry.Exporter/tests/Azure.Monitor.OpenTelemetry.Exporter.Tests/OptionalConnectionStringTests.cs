@@ -99,11 +99,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Network statistics still need a configured customer key. Attach can describe the host
-        /// application without one.
+        /// Routed stats do not require a configured customer key.
         /// </summary>
         [Fact]
-        public void NoNetworkSdkStatisticsAreCollectedWithoutAConnectionString()
+        public void NetworkSdkStatisticsAreEnabledWithoutAConnectionString()
         {
             using var stats = new MockStatsbeatScope();
             using var listener = new TestEventListener();
@@ -115,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 multiEndpointEnabled: true);
 
             Assert.NotNull(transmitter._statsbeat);
-            Assert.Null(transmitter._statsbeat.NetworkSdkStatsManager);
+            Assert.NotNull(transmitter._statsbeat.NetworkSdkStatsManager);
 
             Assert.Empty(listener.Messages.Where(e => e.EventName == "ErrorInitializingStatsbeat"));
             transmitter._statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(

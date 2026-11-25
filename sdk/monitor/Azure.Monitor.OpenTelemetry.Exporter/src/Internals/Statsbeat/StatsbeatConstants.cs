@@ -136,9 +136,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         internal const string FeatureStatsbeatMetricName = "Feature";
 
         /// <summary>
-        /// Meter name for Network SDKStats (short interval - 15 min). Tracks request success,
-        /// failure, retry, throttle, exception counts and request duration for outbound
-        /// transmissions to the configured ingestion endpoint.
+        /// Meter name for Network SDKStats (short interval - 15 min). Tracks outbound request
+        /// duration and outcomes, and the number of items accepted, dropped, or queued for retry.
         /// </summary>
         internal const string NetworkSdkStatsMeterName = "NetworkSdkStatsMeter";
 

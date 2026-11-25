@@ -979,7 +979,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             public bool Disposed { get; private set; }
 
-            public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+            public ValueTask<ExportResult> TrackAsync(IReadOnlyCollection<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
                 => new(ExportResult.Success);
 
             public IDisposable BeginPersistOnlyScope() => new NoopScope();

@@ -416,6 +416,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (cancellationToken.IsCancellationRequested)
             {
+                if (_statsbeat?.NetworkSdkStatsManager is { } stats)
+                {
+                    for (int i = 0; i < routeBatch.Count; i++)
+                    {
+                        var group = routeBatch[i];
+                        stats.TrackBatchDisposition(GetGroupHost(group), group, willRetry: false);
+                    }
+                }
                 return ExportResult.Failure;
             }
 
@@ -460,10 +468,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             var itemCount = group.TelemetryItems.Count;
             var restClient = group.IsAad ? _routedAadRestClient : _routedRestClient;
+            var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
 
             if (restClient == null)
             {
                 AzureMonitorExporterEventSource.Log.RoutedAadTelemetryDroppedWithoutCredential(exportSequence, itemCount, group.Description);
+                networkSdkStats?.TrackBatchDisposition(GetGroupHost(group), group, willRetry: false);
                 ReportDelivery(exportSequence, group, itemCount, "dropped");
 
                 return ExportResult.Failure;
@@ -474,20 +484,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
                 var deferred = SaveGroupForLaterTransmission(group, storage);
+                networkSdkStats?.TrackBatchDisposition(GetGroupHost(group), group, deferred == ExportResult.Success);
                 ReportDelivery(exportSequence, group, itemCount, deferred == ExportResult.Success ? "persisted" : "dropped");
 
                 return deferred;
             }
 
-            var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
-            Uri? trackUri = null;
+            string? requestHost = null;
+            Stopwatch? stopwatch = null;
             var statusCode = 0;
 
             try
             {
-                trackUri = ApplicationInsightsRestClient.CreateTrackUri(group.IngestionEndpoint);
+                var trackUri = ApplicationInsightsRestClient.CreateTrackUri(group.IngestionEndpoint);
+                requestHost = trackUri.Host;
 
-                var stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
+                stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
                 using var httpMessage = async
                     ? await restClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).ConfigureAwait(false)
@@ -503,25 +515,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // Uri.Host reflects any redirect that was followed, so it names the stamp that
                     // actually answered rather than the endpoint the telemetry was routed to.
-                    var requestHost = httpMessage.Request.Uri.Host;
+                    requestHost = httpMessage.Request.Uri.Host;
 
-                    if (httpMessage.HasResponse)
-                    {
-                        networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
-                    }
-
-                    if (result == ExportResult.Success)
-                    {
-                        networkSdkStats.TrackSuccess(requestHost);
-                    }
-                    else if (httpMessage.HasResponse)
-                    {
-                        networkSdkStats.TrackResponseFailure(requestHost, httpMessage.Response.Status);
-                    }
-                    else
-                    {
-                        networkSdkStats.TrackException(requestHost, exceptionType: null);
-                    }
+                    networkSdkStats.TrackRequest(requestHost, httpMessage.HasResponse ? statusCode : null,
+                        stopwatch!.Elapsed.TotalMilliseconds, group);
                 }
 
                 if (result == ExportResult.Success)
@@ -540,7 +537,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     AzureMonitorExporterEventSource.Log.RoutedAuthenticationFailed(group.Description, statusCode, group.IsAad);
                 }
 
-                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, group.IsAad, telemetrySchemaTypeCounter: null, networkSdkStats);
+                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, group.IsAad, telemetrySchemaTypeCounter: null, networkSdkStats, group);
                 var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
                 ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);
 
@@ -550,11 +547,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Null when the destination could not even be constructed. Building a Uri here would
                 // throw a second time, out of the catch, abandoning the remaining endpoint groups.
-                networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
+                double? duration = null;
+                if (stopwatch?.IsRunning == true)
+                {
+                    stopwatch.Stop();
+                    duration = stopwatch.Elapsed.TotalMilliseconds;
+                }
+                networkSdkStats?.TrackRequest(requestHost, statusCode: null, duration, group, ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, group.IsAad, _connectionVars.InstrumentationKey, ex);
 
                 // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
                 var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+                networkSdkStats?.TrackBatchDisposition(requestHost, group, thrown == ExportResult.Success);
 
                 // Reading the response can throw after ingestion answered, so acceptance is unknown.
                 ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped", accepted: -1, statusCode);
@@ -565,6 +569,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void ReportDelivery(long exportSequence, EndpointRouteBatch.Group group, int itemCount, string outcome, int accepted = -1, int statusCode = 0)
             => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.Description, outcome, accepted, statusCode);
+
+        private static string? GetGroupHost(EndpointRouteBatch.Group group)
+            => Uri.TryCreate(group.IngestionEndpoint, UriKind.Absolute, out var uri) ? uri.Host : null;
 
         /// <summary>
         /// Only the accepted count is asserted. A 206 settles each item separately, and which of the
@@ -605,14 +612,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IReadOnlyCollection<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return result;
-            }
-
             // This is the unrouted path: it sends to the configured endpoint under the configured
             // key. With no connection string, both are placeholders that seed the REST client, so a
             // send here would deliver a customer's telemetry to a host that names nobody, stamped
@@ -624,10 +626,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return result;
             }
 
+            var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
+            var statsBatch = networkSdkStats == null ? null : new ConfiguredNetworkStatsBatch(_connectionVars.InstrumentationKey, telemetryItems.Count);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                networkSdkStats?.TrackBatchDisposition(null, statsBatch!, willRetry: false);
+                return result;
+            }
+
             var blobProvider = _fileBlobProvider;
             if (IsPersistOnly && blobProvider != null)
             {
-                return SaveForLaterTransmission(telemetryItems, telemetrySchemaTypeCounter, blobProvider);
+                result = SaveForLaterTransmission(telemetryItems, telemetrySchemaTypeCounter, blobProvider);
+                networkSdkStats?.TrackBatchDisposition(null, statsBatch!, result == ExportResult.Success);
+                return result;
             }
 
             // Without persistent storage the request itself is the durability, so it gets its own
@@ -644,13 +657,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 cancellationToken = linkedSource.Token;
             }
 
-            var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
+            Stopwatch? stopwatch = null;
+            string? requestHost = null;
 
             try
             {
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
-                    var stopwatch = networkSdkStats != null ? System.Diagnostics.Stopwatch.StartNew() : null;
+                    stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
                     using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
@@ -660,42 +674,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
 
-                    if (networkSdkStats != null)
+                    requestHost = httpMessage.Request.Uri.Host;
+                    networkSdkStats?.TrackRequest(requestHost, httpMessage.HasResponse ? httpMessage.Response.Status : null,
+                        stopwatch!.Elapsed.TotalMilliseconds, statsBatch!);
+
+                    if (result == ExportResult.Failure && (_fileBlobProvider != null || networkSdkStats != null))
                     {
-                        var requestHost = httpMessage.Request.Uri.Host;
-
-                        if (httpMessage.HasResponse)
+                        if (_fileBlobProvider != null)
                         {
-                            // Request_Duration is recorded for every request that received a
-                            // response, regardless of outcome.
-                            networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
+                            _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
                         }
-
-                        if (result == ExportResult.Success)
-                        {
-                            // Record Network SDKStats Request_Success_Count for HTTP 200.
-                            // request.Uri reflects any redirect followed by IngestionRedirectPolicy,
-                            // so the host recorded matches the stamp that returned the response.
-                            networkSdkStats.TrackSuccess(requestHost);
-                        }
-                        else if (httpMessage.HasResponse)
-                        {
-                            // Classify the top-level non-success response as retry / throttle /
-                            // failure. 206 partial-success per-envelope handling happens in
-                            // HttpPipelineHelper.HandlePartialSuccess.
-                            networkSdkStats.TrackResponseFailure(requestHost, httpMessage.Response.Status);
-                        }
-                        else
-                        {
-                            // No response code received: count as an exception.
-                            networkSdkStats.TrackException(requestHost, exceptionType: null);
-                        }
-                    }
-
-                    if (result == ExportResult.Failure && _fileBlobProvider != null)
-                    {
-                        _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter, networkSdkStats);
+                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled,
+                            _fileBlobProvider == null ? null : telemetrySchemaTypeCounter, networkSdkStats, statsBatch);
                         result = transmissionResult.ExportResult;
                     }
                     else
@@ -712,6 +702,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         result = _fileBlobProvider.SaveTelemetryWithEviction(requestContent, _storageDirectory, StorageMaxSizeBytes);
                     }
+                    networkSdkStats?.TrackBatchDisposition(null, statsBatch!, result == ExportResult.Success);
 
                     if (result == ExportResult.Success)
                     {
@@ -725,7 +716,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                networkSdkStats?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
+                if (stopwatch?.IsRunning == true)
+                {
+                    stopwatch.Stop();
+                    networkSdkStats!.TrackDuration(requestHost: null, stopwatch.Elapsed.TotalMilliseconds, _connectionVars.InstrumentationKey);
+                }
+                networkSdkStats?.TrackException(requestHost, ex.GetType().FullName, _connectionVars.InstrumentationKey);
+                networkSdkStats?.TrackBatchDisposition(requestHost, statsBatch!, willRetry: false);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
                 CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
             }
