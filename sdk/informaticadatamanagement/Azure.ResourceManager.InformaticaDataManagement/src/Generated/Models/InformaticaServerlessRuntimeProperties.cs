@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
             set
             {
-                ServerlessRuntimeNetworkProfile = new ServerlessRuntimeNetworkProfile(value);
+                ServerlessRuntimeNetworkProfile = value is null ? default : new ServerlessRuntimeNetworkProfile(value);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
             set
             {
-                ServerlessRuntimeUserContextProperties = new ServerlessRuntimeUserContextProperties(value);
+                ServerlessRuntimeUserContextProperties = value is null ? default : new ServerlessRuntimeUserContextProperties(value);
             }
         }
     }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                Manual = new BrokerX509ManualCertificate(value);
+                Manual = value is null ? default : new BrokerX509ManualCertificate(value);
             }
         }
     }

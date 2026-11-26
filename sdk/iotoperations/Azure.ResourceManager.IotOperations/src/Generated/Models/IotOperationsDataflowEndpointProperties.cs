@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                LocalStorageSettings = new DataflowEndpointLocalStorage(value);
+                LocalStorageSettings = value is null ? default : new DataflowEndpointLocalStorage(value);
             }
         }
     }
