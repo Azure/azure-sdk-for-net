@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             }
             set
             {
-                CmkProfile = new CmkProfile(value);
+                CmkProfile = value is null ? default : new CmkProfile(value);
             }
         }
     }

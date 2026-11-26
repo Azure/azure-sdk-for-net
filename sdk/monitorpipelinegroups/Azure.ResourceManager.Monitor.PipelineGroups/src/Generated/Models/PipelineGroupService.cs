@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             }
             set
             {
-                Persistence = new PersistenceConfigurations(value);
+                Persistence = value is null ? default : new PersistenceConfigurations(value);
             }
         }
     }
