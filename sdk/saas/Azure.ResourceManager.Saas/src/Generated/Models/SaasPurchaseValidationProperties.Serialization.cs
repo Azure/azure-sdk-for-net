@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.Saas.Models
                 writer.WritePropertyName("futureStartDate"u8);
                 writer.WriteStringValue(FutureStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFreeTrial))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Saas.Models
             string assetId = default;
             string description = default;
             SaasResourceStatus? status = default;
-            SubscriptionStatusReason? statusReason = default;
+            SaasSubscriptionStatusReason? statusReason = default;
             long? quantity = default;
             string publisherName = default;
             string planName = default;
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.Saas.Models
             DateTimeOffset? termStartsOn = default;
             DateTimeOffset? termEndsOn = default;
             DateTimeOffset? futureStartsOn = default;
-            bool? autoRenew = default;
+            bool? isAutoRenew = default;
             bool? isFreeTrial = default;
             string storefront = default;
             string purchaserEmail = default;
             string quoteId = default;
             string privateOfferId = default;
             string productCode = default;
-            PatchIntent? intent = default;
+            SaasPatchIntent? intent = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Saas.Models
                     {
                         continue;
                     }
-                    statusReason = new SubscriptionStatusReason(prop.Value.GetString());
+                    statusReason = new SaasSubscriptionStatusReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("quantity"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Saas.Models
                     {
                         continue;
                     }
-                    autoRenew = prop.Value.GetBoolean();
+                    isAutoRenew = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isFreeTrial"u8))
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Saas.Models
                     {
                         continue;
                     }
-                    intent = new PatchIntent(prop.Value.GetString());
+                    intent = new SaasPatchIntent(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Saas.Models
                 termStartsOn,
                 termEndsOn,
                 futureStartsOn,
-                autoRenew,
+                isAutoRenew,
                 isFreeTrial,
                 storefront,
                 purchaserEmail,

@@ -1,5 +1,5 @@
 directory: specification/saas/resource-manager/Microsoft.SaaS/Saas
-commit: 202f55950aeb4a5655f507f9a840fd46666ef55c
+commit: ad8e54d2538c5943ccadd9d48fad9dc3ce6bef56
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

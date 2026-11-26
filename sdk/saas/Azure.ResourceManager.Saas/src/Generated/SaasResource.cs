@@ -21,15 +21,15 @@ using Azure.ResourceManager.Saas.Models;
 namespace Azure.ResourceManager.Saas
 {
     /// <summary>
-    /// A class representing a SaasResource along with the instance operations that can be performed on it.
+    /// A class representing a Saas along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SaasResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSaasResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAllSaas method.
     /// </summary>
     public partial class SaasResource : ArmResource
     {
         private readonly ClientDiagnostics _saasSubscriptionLevelClientDiagnostics;
         private readonly SaasSubscriptionLevel _saasSubscriptionLevelRestClient;
-        private readonly SaasResourceData _data;
+        private readonly SaasData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SaaS/resources";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Saas
         /// <summary> Initializes a new instance of <see cref="SaasResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SaasResource(ArmClient client, SaasResourceData data) : this(client, data.Id)
+        internal SaasResource(ArmClient client, SaasData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Saas
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SaasResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string saasResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string saasApiVersion);
             _saasSubscriptionLevelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Saas", ResourceType.Namespace, Diagnostics);
-            _saasSubscriptionLevelRestClient = new SaasSubscriptionLevel(_saasSubscriptionLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, saasResourceApiVersion ?? "2026-04-01");
+            _saasSubscriptionLevelRestClient = new SaasSubscriptionLevel(_saasSubscriptionLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, saasApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Saas
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SaasResourceData Data
+        public virtual SaasData Data
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expandCustomerData, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expandCustomerData, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaasResource>> UpdateAsync(WaitUntil waitUntil, SaasResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaasResource>> UpdateAsync(WaitUntil waitUntil, SaasPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SaasArmOperation<SaasResource> operation = new SaasArmOperation<SaasResource>(
                     new SaasResourceOperationSource(Client),
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<SaasResource> Update(WaitUntil waitUntil, SaasResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaasResource> Update(WaitUntil waitUntil, SaasPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SaasArmOperation<SaasResource> operation = new SaasArmOperation<SaasResource>(
                     new SaasResourceOperationSource(Client),
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Saas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessTokenResult>> GetAccessTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SaasAccessTokenResult>> GetAccessTokenAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _saasSubscriptionLevelClientDiagnostics.CreateScope("SaasResource.GetAccessToken");
             scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetAccessTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AccessTokenResult> response = Response.FromValue(AccessTokenResult.FromResponse(result), result);
+                Response<SaasAccessTokenResult> response = Response.FromValue(SaasAccessTokenResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Saas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessTokenResult> GetAccessToken(CancellationToken cancellationToken = default)
+        public virtual Response<SaasAccessTokenResult> GetAccessToken(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _saasSubscriptionLevelClientDiagnostics.CreateScope("SaasResource.GetAccessToken");
             scope.Start();
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetAccessTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AccessTokenResult> response = Response.FromValue(AccessTokenResult.FromResponse(result), result);
+                Response<SaasAccessTokenResult> response = Response.FromValue(SaasAccessTokenResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaasResource>> UnsubscribeAsync(WaitUntil waitUntil, UnsubscribeConfig body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaasResource>> UnsubscribeAsync(WaitUntil waitUntil, SaasUnsubscribeConfig body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UnsubscribeConfig.ToRequestContent(body), context);
+                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasUnsubscribeConfig.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SaasArmOperation<SaasResource> operation = new SaasArmOperation<SaasResource>(
                     new SaasResourceOperationSource(Client),
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<SaasResource> Unsubscribe(WaitUntil waitUntil, UnsubscribeConfig body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaasResource> Unsubscribe(WaitUntil waitUntil, SaasUnsubscribeConfig body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UnsubscribeConfig.ToRequestContent(body), context);
+                HttpMessage message = _saasSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasUnsubscribeConfig.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SaasArmOperation<SaasResource> operation = new SaasArmOperation<SaasResource>(
                     new SaasResourceOperationSource(Client),
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="patch"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ResourceValidationResult>> ValidateUpdateAsync(SaasResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SaasResourceValidationResult>> ValidateUpdateAsync(SaasPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -658,9 +658,9 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _saasSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<SaasResourceValidationResult> response = Response.FromValue(SaasResourceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="patch"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ResourceValidationResult> ValidateUpdate(SaasResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<SaasResourceValidationResult> ValidateUpdate(SaasPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -710,9 +710,9 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _saasSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaasPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<SaasResourceValidationResult> response = Response.FromValue(SaasResourceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -751,13 +751,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                    Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                     return Response.FromValue(new SaasResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SaasResourcePatch patch = new SaasResourcePatch();
+                    SaasData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SaasPatch patch = new SaasPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -799,13 +799,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                    Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                     return Response.FromValue(new SaasResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SaasResourcePatch patch = new SaasResourcePatch();
+                    SaasData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SaasPatch patch = new SaasPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -845,13 +845,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                    Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                     return Response.FromValue(new SaasResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SaasResourcePatch patch = new SaasResourcePatch();
+                    SaasData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SaasPatch patch = new SaasPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SaasResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -887,13 +887,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                    Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                     return Response.FromValue(new SaasResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SaasResourcePatch patch = new SaasResourcePatch();
+                    SaasData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SaasPatch patch = new SaasPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SaasResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -929,13 +929,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                    Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                     return Response.FromValue(new SaasResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SaasResourcePatch patch = new SaasResourcePatch();
+                    SaasData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SaasPatch patch = new SaasPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -975,13 +975,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SaasResourceData> response = Response.FromValue(SaasResourceData.FromResponse(result), result);
+                    Response<SaasData> response = Response.FromValue(SaasData.FromResponse(result), result);
                     return Response.FromValue(new SaasResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SaasResourcePatch patch = new SaasResourcePatch();
+                    SaasData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SaasPatch patch = new SaasPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

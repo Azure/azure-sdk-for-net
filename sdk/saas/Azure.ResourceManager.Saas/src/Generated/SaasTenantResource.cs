@@ -21,15 +21,15 @@ using Azure.ResourceManager.Saas.Models;
 namespace Azure.ResourceManager.Saas
 {
     /// <summary>
-    /// A class representing a SaasTenantResource along with the instance operations that can be performed on it.
+    /// A class representing a SaasTenant along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SaasTenantResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSaasTenantResources method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSaasTenants method.
     /// </summary>
     public partial class SaasTenantResource : ArmResource
     {
         private readonly ClientDiagnostics _saasTenantLevelClientDiagnostics;
         private readonly SaasTenantLevel _saasTenantLevelRestClient;
-        private readonly SaasTenantResourceData _data;
+        private readonly SaasTenantData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SaaS/saasresources";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Saas
         /// <summary> Initializes a new instance of <see cref="SaasTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SaasTenantResource(ArmClient client, SaasTenantResourceData data) : this(client, data.Id)
+        internal SaasTenantResource(ArmClient client, SaasTenantData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Saas
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SaasTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string saasTenantResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string saasTenantApiVersion);
             _saasTenantLevelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Saas", ResourceType.Namespace, Diagnostics);
-            _saasTenantLevelRestClient = new SaasTenantLevel(_saasTenantLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, saasTenantResourceApiVersion ?? "2026-04-01");
+            _saasTenantLevelRestClient = new SaasTenantLevel(_saasTenantLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, saasTenantApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Saas
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SaasTenantResourceData Data
+        public virtual SaasTenantData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, expandCustomerData, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, expandCustomerData, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaasTenantResource>> UpdateAsync(WaitUntil waitUntil, SaasTenantResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaasTenantResource>> UpdateAsync(WaitUntil waitUntil, SaasTenantPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasTenantLevelRestClient.CreateUpdateResourceRequest(Id.Name, SaasTenantResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _saasTenantLevelRestClient.CreateUpdateResourceRequest(Id.Name, SaasTenantPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SaasArmOperation<SaasTenantResource> operation = new SaasArmOperation<SaasTenantResource>(
                     new SaasTenantResourceOperationSource(Client),
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<SaasTenantResource> Update(WaitUntil waitUntil, SaasTenantResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaasTenantResource> Update(WaitUntil waitUntil, SaasTenantPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Saas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _saasTenantLevelRestClient.CreateUpdateResourceRequest(Id.Name, SaasTenantResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _saasTenantLevelRestClient.CreateUpdateResourceRequest(Id.Name, SaasTenantPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SaasArmOperation<SaasTenantResource> operation = new SaasArmOperation<SaasTenantResource>(
                     new SaasTenantResourceOperationSource(Client),
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Saas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessTokenResult>> GetAccessTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SaasAccessTokenResult>> GetAccessTokenAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _saasTenantLevelClientDiagnostics.CreateScope("SaasTenantResource.GetAccessToken");
             scope.Start();
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasTenantLevelRestClient.CreateGetAccessTokenRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AccessTokenResult> response = Response.FromValue(AccessTokenResult.FromResponse(result), result);
+                Response<SaasAccessTokenResult> response = Response.FromValue(SaasAccessTokenResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Saas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessTokenResult> GetAccessToken(CancellationToken cancellationToken = default)
+        public virtual Response<SaasAccessTokenResult> GetAccessToken(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _saasTenantLevelClientDiagnostics.CreateScope("SaasTenantResource.GetAccessToken");
             scope.Start();
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Saas
                 };
                 HttpMessage message = _saasTenantLevelRestClient.CreateGetAccessTokenRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AccessTokenResult> response = Response.FromValue(AccessTokenResult.FromResponse(result), result);
+                Response<SaasAccessTokenResult> response = Response.FromValue(SaasAccessTokenResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -527,13 +527,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                    Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                     return Response.FromValue(new SaasTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasTenantResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SaasTenantResourcePatch patch = new SaasTenantResourcePatch();
+                    SaasTenantData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SaasTenantPatch patch = new SaasTenantPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -575,13 +575,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                    Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                     return Response.FromValue(new SaasTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasTenantResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SaasTenantResourcePatch patch = new SaasTenantResourcePatch();
+                    SaasTenantData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SaasTenantPatch patch = new SaasTenantPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -621,13 +621,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                    Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                     return Response.FromValue(new SaasTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasTenantResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SaasTenantResourcePatch patch = new SaasTenantResourcePatch();
+                    SaasTenantData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SaasTenantPatch patch = new SaasTenantPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SaasTenantResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -663,13 +663,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                    Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                     return Response.FromValue(new SaasTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasTenantResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SaasTenantResourcePatch patch = new SaasTenantResourcePatch();
+                    SaasTenantData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SaasTenantPatch patch = new SaasTenantPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SaasTenantResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -705,13 +705,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                    Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                     return Response.FromValue(new SaasTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasTenantResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SaasTenantResourcePatch patch = new SaasTenantResourcePatch();
+                    SaasTenantData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SaasTenantPatch patch = new SaasTenantPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -751,13 +751,13 @@ namespace Azure.ResourceManager.Saas
                     };
                     HttpMessage message = _saasTenantLevelRestClient.CreateGetResourceRequest(Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SaasTenantResourceData> response = Response.FromValue(SaasTenantResourceData.FromResponse(result), result);
+                    Response<SaasTenantData> response = Response.FromValue(SaasTenantData.FromResponse(result), result);
                     return Response.FromValue(new SaasTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SaasTenantResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SaasTenantResourcePatch patch = new SaasTenantResourcePatch();
+                    SaasTenantData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SaasTenantPatch patch = new SaasTenantPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

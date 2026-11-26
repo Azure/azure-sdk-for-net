@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Saas.Mocking
 
         private SaasOperationStatuses SaasOperationStatusesRestClient => _saasOperationStatusesRestClient ??= new SaasOperationStatuses(SaasOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
-        /// <summary> Gets a collection of SaasTenantResources in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of SaasTenantResources and their operations over a SaasTenantResource. </returns>
-        public virtual SaasTenantResourceCollection GetSaasTenantResources()
+        /// <summary> Gets a collection of SaasTenants in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of SaasTenants and their operations over a SaasTenantResource. </returns>
+        public virtual SaasTenantCollection GetSaasTenants()
         {
-            return GetCachedClient(client => new SaasTenantResourceCollection(client, Id));
+            return GetCachedClient(client => new SaasTenantCollection(client, Id));
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SaasTenantResource>> GetSaasTenantResourceAsync(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SaasTenantResource>> GetSaasTenantAsync(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return await GetSaasTenantResources().GetAsync(resourceId, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetSaasTenants().GetAsync(resourceId, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SaasTenantResource> GetSaasTenantResource(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual Response<SaasTenantResource> GetSaasTenant(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetSaasTenantResources().Get(resourceId, expandCustomerData, cancellationToken);
+            return GetSaasTenants().Get(resourceId, expandCustomerData, cancellationToken);
         }
 
         /// <summary>

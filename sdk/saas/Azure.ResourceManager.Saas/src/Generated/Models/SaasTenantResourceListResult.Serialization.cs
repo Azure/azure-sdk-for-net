@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Saas.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SaasTenantResourceData item in Value)
+            foreach (SaasTenantData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Saas.Models
             {
                 return null;
             }
-            IList<SaasTenantResourceData> value = default;
+            IList<SaasTenantData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SaasTenantResourceData> array = new List<SaasTenantResourceData>();
+                    List<SaasTenantData> array = new List<SaasTenantData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SaasTenantResourceData.DeserializeSaasTenantResourceData(item, options));
+                        array.Add(SaasTenantData.DeserializeSaasTenantData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Saas.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SaasTenantResourceListResult(value ?? new ChangeTrackingList<SaasTenantResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new SaasTenantResourceListResult(value ?? new ChangeTrackingList<SaasTenantData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
