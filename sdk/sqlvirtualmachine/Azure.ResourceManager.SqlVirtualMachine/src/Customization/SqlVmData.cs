@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
     public partial class SqlVmData
     {
+        // The factory and deserializer still pass sqlVmName, but the generated constructor
+        // would assign it to the getter-only alias. Keep the signature and ignore the legacy
+        // value. See https://github.com/Azure/azure-sdk-for-net/issues/65199.
         internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, string sqlVmName, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -26,6 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         // Retain the legacy property as an alias for the resource name.
         /// <summary> Gets the name of the SQL virtual machine. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Please use Name instead.")]
         public string SqlVmName => Name;
 
         /// <summary> Operating System of the current SQL Virtual Machine. </summary>

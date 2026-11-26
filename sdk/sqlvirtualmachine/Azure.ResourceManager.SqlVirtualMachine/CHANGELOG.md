@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+- `SqlVmData.SqlVmName` and `SqlVmGroupData.SqlVmGroupName` are obsolete; use `Name` instead.
+- Pass `name` to the model factory instead of `sqlVmName` or `sqlVmGroupName`. The legacy arguments are retained for compatibility but ignored.
+
 ## 1.1.2 (2026-04-29)
 
 ### Other Changes
