@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -105,9 +104,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         StripOrphanedVirtualModifiers(model.BaseModelProvider!, removedPropertyNames);
         // Reset cached constructors, serialization, and model factories so they do not keep
         // references to inherited ARM properties removed from the model surface.
+        // Defer rebuilding serialization to GetWriter: during PreVisitModel the factory has not
+        // registered this model yet, so unknown discriminator variants can cache a null base type.
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
-
-        SerializationVisitor.UpdateBaseJsonModelWriteCore(model);
 
         _regularUpdated.Add(model);
     }

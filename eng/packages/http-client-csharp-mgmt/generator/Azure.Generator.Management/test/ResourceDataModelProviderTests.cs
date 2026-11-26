@@ -19,6 +19,43 @@ namespace Azure.Generator.Mgmt.Tests
     public class ResourceDataModelProviderTests
     {
         [Test]
+        public void DiscriminatedArmModelRetainsUnknownVariantBaseDuringFactoryRegistration()
+        {
+            var armBase = InputFactory.Model(
+                "Resource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true)
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                .GetSetMethod(true)!
+                .Invoke(armBase, ["Azure.ResourceManager.CommonTypes.Resource"]);
+            var derived = InputFactory.Model(
+                "ConcreteDevice",
+                discriminatedKind: "concrete",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var model = InputFactory.Model(
+                "Device",
+                properties: [InputFactory.Property("kind", InputPrimitiveType.String, isRequired: true, isDiscriminator: true)],
+                baseModel: armBase,
+                discriminatedModels: new Dictionary<string, InputModelType> { ["concrete"] = derived },
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [armBase, model, derived]);
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var unknown = provider.DerivedModels.Single(m => m.IsUnknownDiscriminatorModel);
+
+            Assert.That(unknown.Type.BaseType, Is.EqualTo(provider.Type));
+            foreach (var serialization in unknown.SerializationProviders)
+            {
+                Assert.DoesNotThrow(() => plugin.Object.GetWriter(serialization).Write());
+            }
+        }
+
+        [Test]
         public void ResourceDataModelProviderAvoidsStaleResourceClientCustomCodeView()
         {
             var (client, models) = InputResourceData.ClientWithResource();
@@ -192,6 +229,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames, Does.Contain("Properties"));
 
             var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            SerializationVisitor.UpdateBaseJsonModelWriteCore(result);
             var jsonModelWriteCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelWriteCore");
             Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
 
