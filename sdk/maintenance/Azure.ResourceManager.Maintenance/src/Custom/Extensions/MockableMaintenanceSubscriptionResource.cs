@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 {
     // The subscription list is emitted as an extension without an applyUpdates resource
     // version lookup. Keep that lookup for both the generated and compatibility methods.
+    // Remove this workaround once https://github.com/Azure/azure-sdk-for-net/issues/65190 is fixed.
     [CodeGenSuppress(nameof(MaintenanceApplyUpdateRestClient))]
     public partial class MockableMaintenanceSubscriptionResource
     {
