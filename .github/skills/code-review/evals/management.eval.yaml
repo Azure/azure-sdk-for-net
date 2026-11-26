@@ -86,6 +86,28 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: management-parameters-replacement-preserves-domain-role
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic API addition and return findings
+      only. Azure.ResourceManager.Compute introduces ConnectionParameters, a reusable domain model
+      representing connection configuration, nested in resource responses and multiple POST and
+      PATCH bodies. It is not a dedicated request wrapper or a partial-update model. Connection is
+      too vague; ConnectionConfiguration accurately describes the concept and does not collide.
+      No analyzer checks its name. All other API and generation requirements are satisfied.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '\bConnectionConfiguration\b'
+      - type: output-not-matches
+        config:
+          pattern: '\bConnection(?:Content|Patch)\b'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
   - name: management-patch-wrapper-needs-patch-name
     prompt: >-
       First invoke the code-review skill. Review this synthetic API addition

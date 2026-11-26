@@ -149,12 +149,12 @@ What they cover:
   consistency with the base type wins.
 - <a name="naming-request-suffix" href="#naming-request-suffix">§</a> **No `Request` suffix — use `Content`.** Same scope. `RequestContent`/`RequestContext`/
   `RequestOptions` from `Azure.Core` and `System.ClientModel` are framework types and are
-  exempt. `*Parameter`/`*Parameters` is the same smell. In management-plane libraries, replace
-  that suffix with `Content` or `Patch` according to the model's actual usage: use `Patch` for
-  partial-update semantics, and `Content` for a request payload that is not itself a patch.
+  exempt. `*Parameter`/`*Parameters` is the same smell. For a reusable domain model, drop the
+  suffix if the remaining name is descriptive, or use a more descriptive domain noun (for example,
+  `ConnectionConfiguration`). In management-plane libraries, for a dedicated request transport
+  model, use `Patch` for partial-update semantics or `Content` for a non-patch request payload.
   A model nested in a PATCH body is not automatically a patch; see the management request-body
-  rule below. For data-plane models, drop the suffix or use a domain noun. Do **not** reach for
-  `*Options` as the replacement (see the `Options` rule below).
+  rule below. Do **not** reach for `*Options` as the replacement (see the `Options` rule below).
 - <a name="naming-options-suffix" href="#naming-options-suffix">§</a> **`Options` suffix is reserved for client options and method options bags.** Two legitimate
   uses, and neither is "a serialized body model":
   1. **Client options** — `<Client>Options : ClientOptions`, client-level configuration.
@@ -181,8 +181,7 @@ What they cover:
   - <a name="naming-domain-nouns" href="#naming-domain-nouns">§</a> **If the type is a noun in its own right, it takes no suffix at all** — even when it is
     round-tripped. `VirtualMachine` is created and fetched, and it is simply `VirtualMachine`,
     never `VirtualMachineContent`. Same for a nested domain object like a tool connection or a
-    search configuration: name it the noun. For a management model with a `Parameter` or
-    `Parameters` suffix, apply the replacement rule above.
+    search configuration: name it the noun, including when replacing `Parameter` or `Parameters`.
   - So "round-trip" alone never justifies `Content`. Ask first whether the type names a domain
     concept. Only reach for `Content`/`Result` when the answer is no and the type is a pure
     payload wrapper.
