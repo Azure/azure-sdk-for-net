@@ -12,6 +12,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
 {
     public partial class NapsterOrganizationData
     {
+        // The generated factory and deserializer still pass organizationName, but the generated
+        // constructor tries to assign it to the getter-only OrganizationName alias.
+        // Keep the signature without assigning or storing the legacy value.
+        // See https://github.com/Azure/azure-sdk-for-net/issues/65199.
         internal NapsterOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NapsterOrganizationProperties properties, string organizationName, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;

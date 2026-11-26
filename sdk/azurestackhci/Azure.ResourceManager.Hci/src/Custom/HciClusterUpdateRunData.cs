@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Hci
     [CodeGenSuppress("LastUpdatedTimeUtc")]
     public partial class HciClusterUpdateRunData
     {
+        // Keep accepting the legacy argument from the model factory and deserializer without
+        // assigning it to the getter-only UpdateRunName alias. See https://github.com/Azure/azure-sdk-for-net/issues/65199.
         internal HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpdateRunProperties properties, string updateRunName, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
