@@ -6,6 +6,7 @@ import "@azure-tools/typespec-client-generator-core";
 using TypeSpec.Rest;
 using TypeSpec.Http;
 using Azure.ResourceManager;
+using Azure.ClientGenerator.Core;
 
 namespace MgmtTypeSpec;
 
@@ -23,6 +24,15 @@ op previewActions is ArmProviderActionSync<
     location: Azure.Core.azureLocation;
   }
 >;
+
+/** Checks whether a configuration name exists at tenant scope. */
+@route("/providers/MgmtTypeSpec/configurationNames/{name}")
+@head
+@responseAsBool("csharp")
+op checkConfigurationName(
+  ...ApiVersionParameter,
+  @path name: string,
+): NoContentResponse | NotFoundResponse | CommonTypes.ErrorResponse;
 
 model FooPreviewAction {
   /** The action to be performed. */
