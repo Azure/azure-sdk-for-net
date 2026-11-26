@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             }
             set
             {
-                TermsOfService = new TermsOfService(value);
+                TermsOfService = value is null ? default : new TermsOfService(value);
             }
         }
     }

@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             set
             {
-                Sku = new AppConfigurationSku(value);
+                Sku = value is null ? default : new AppConfigurationSku(value);
             }
         }
     }
