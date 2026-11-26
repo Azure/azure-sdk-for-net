@@ -12,19 +12,17 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
 {
     public partial class NapsterOrganizationData
     {
-        private readonly string _organizationName;
-
         internal NapsterOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NapsterOrganizationProperties properties, string organizationName, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            _organizationName = organizationName;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        // Preserve a legacy factory name independently of the resource name.
+        // Retain the legacy property as an alias for the resource name.
         /// <summary> Gets the name of the organization resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string OrganizationName => _organizationName ?? Name;
+        [Obsolete("This property is obsolete and will be removed in a future version. Please use Name instead.")]
+        public string OrganizationName => Name;
     }
 }
