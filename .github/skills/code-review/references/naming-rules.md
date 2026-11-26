@@ -140,9 +140,9 @@ What they cover:
   (`Created`/`Updated`/`Started` for completed events, `Expires` for a future event), not the
   noun (`CreationOn`). Applies to public properties and parameters. Never use `DateTime` on the
   public surface.
-- <a name="naming-etag-property" href="#naming-etag-property">§</a> **Spell an entity-tag property `ETag`** when it represents an actual entity tag; use
-  `Azure.ETag` for its semantic type. Do not infer this from a name alone or retype a generic
-  raw-header dictionary. See [semantic value types](repository-rules.md#semantic-value-types).
+- <a name="naming-etag-property" href="#naming-etag-property">§</a> **In management-plane libraries, spell an entity-tag property `ETag`** when it represents an
+  actual entity tag; use `Azure.ETag` for its semantic type. Do not infer this from a name alone
+  or retype a generic raw-header dictionary. See [semantic value types](repository-rules.md#semantic-value-types).
 - <a name="naming-response-suffix" href="#naming-response-suffix">§</a> **No `Response` suffix — use `Result`.** Applies to public **types**, properties, methods, and
   parameters. Exception: a type deriving from a third-party base whose own convention is
   `...ResponseItem` (e.g. `OpenAI.Responses.ResponseItem`) keeps the base's suffix —
