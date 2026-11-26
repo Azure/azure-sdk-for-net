@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateListByLocationRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateNextListByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateListRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateNextListRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateListAllRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextListAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

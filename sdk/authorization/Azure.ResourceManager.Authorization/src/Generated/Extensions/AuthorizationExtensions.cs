@@ -1083,6 +1083,24 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PrivilegedResourceFavoriteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetPrivilegedResourceFavoriteResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PrivilegedResourceFavoriteResource"/> object. </returns>
+        public static PrivilegedResourceFavoriteResource GetPrivilegedResourceFavoriteResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetPrivilegedResourceFavoriteResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2237,6 +2255,73 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
+        /// Gets a collection of PrivilegedResourceFavorites in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResourceFavorites()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of PrivilegedResourceFavorites and their operations over a PrivilegedResourceFavoriteResource. </returns>
+        public static PrivilegedResourceFavoriteCollection GetPrivilegedResourceFavorites(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResourceFavorites();
+        }
+
+        /// <summary>
+        /// Get one of the calling user's favorites by id.
+        /// Returns `404` if the calling user has not favorited this resource, even
+        /// if another user has.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResourceFavoriteAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="favoriteId">
+        /// Favorite identifier — `base64url(lowercased Azure resource ID)`. Because
+        /// the derivation is deterministic, the client may compute it locally
+        /// from the resource id.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PrivilegedResourceFavoriteResource>> GetPrivilegedResourceFavoriteAsync(this TenantResource tenantResource, string favoriteId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResourceFavoriteAsync(favoriteId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get one of the calling user's favorites by id.
+        /// Returns `404` if the calling user has not favorited this resource, even
+        /// if another user has.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResourceFavorite(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="favoriteId">
+        /// Favorite identifier — `base64url(lowercased Azure resource ID)`. Because
+        /// the derivation is deterministic, the client may compute it locally
+        /// from the resource id.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PrivilegedResourceFavoriteResource> GetPrivilegedResourceFavorite(this TenantResource tenantResource, string favoriteId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResourceFavorite(favoriteId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of AuthorizationProviderOperationsMetadata in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -2321,6 +2406,262 @@ namespace Azure.ResourceManager.Authorization
         internal static Response<DenyAssignmentResource> GetById(this TenantResource tenantResource, string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             return GetMockableAuthorizationTenantResource(tenantResource).GetById(denyAssignmentId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the calling user's privileged Azure resources.
+        /// Returns the resources you have privileged access to, evaluated with your
+        /// own permissions — only resources you are authorized to see are included.
+        /// Pagination: server-driven via `maxpagesize` (advisory) + `nextLink`.
+        /// Clients follow `nextLink` verbatim — do not parse, mutate, or append
+        /// query parameters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResourcesAsync(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="accessScope">
+        /// Controls whether the response is scoped to subscriptions the caller has
+        /// PIM assignments on, or expanded to all readable subscriptions. Allowed
+        /// values today: `pimOnly` (default — only subscriptions with PIM
+        /// assignments) and `allAccessible` (any subscription the caller can read).
+        /// Modeled as an extensible string so future scope expansions can be
+        /// added without a breaking change; clients should tolerate unknown values.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// Advisory maximum page-size hint. The server may return fewer items than
+        /// `maxpagesize` and still include a `nextLink`. Accepted range: 1 through
+        /// <list type="number"><item><description>Name follows the standard Azure pagination convention</description></item></list>
+        /// (`maxpagesize`) rather than the strict-maximum `$top` to signal the
+        /// advisory semantics.
+        /// </param>
+        /// <param name="filter">
+        /// OData `$filter` expression that selects resource rows. Flat, lowercase
+        /// `and` expression only — `or`, `not`, and grouping are rejected.
+        /// Supported predicates:
+        /// <list type="bullet"><item><description>`type` — `eq` or `in`, e.g.</description></item></list>
+        /// `type eq 'microsoft.compute/virtualmachines'` or
+        /// `type in ('microsoft.compute/virtualmachines','microsoft.desktopvirtualization/hostpools')`.
+        /// Every value must be a supported primary resource type.
+        /// <list type="bullet"><item><description>`scope` — `eq` or `in`, using exact, case-insensitive ARM-ID</description></item></list>
+        /// membership.
+        /// <list type="bullet"><item><description>`subscriptionId` — `eq`, `ne`, or `in`. It is an exact resource GUID,</description></item></list>
+        /// so `contains` / `startswith` are rejected.
+        /// <list type="bullet"><item><description>`subscriptionName` — `eq`, `ne`, `contains`, or `startswith`. The</description></item></list>
+        /// human-readable subscription display name (distinct from the
+        /// `subscriptionId` GUID).
+        /// <list type="bullet"><item><description>`resourceGroup` — `eq`, `ne`, `contains`, `startswith`, or `in`.</description></item></list>
+        /// Matches by name across every subscription the caller can see; because
+        /// resource-group names are not globally unique, combine it with
+        /// `subscriptionId` to disambiguate.
+        /// <list type="bullet"><item><description>`tags.&lt;key&gt;` (dynamic) — `eq`, `ne`, `contains`, or `startswith`.</description></item></list>
+        /// A tag predicate addresses a single key with dotted syntax
+        /// (e.g. `tags.environment eq 'prod'`); the whole remainder after
+        /// `tags.` is the key, matched case-insensitively. An empty key
+        /// (`tags.`) is rejected.
+        /// <list type="bullet"><item><description>`displayName` and `location` — `eq`, `ne`, and function-form</description></item></list>
+        /// `startswith(field,'value')` / `contains(field,'value')`.
+        /// <list type="bullet"><item><description>Role assignment status:</description></item></list>
+        /// `roles/any(r: r/assignmentStatus eq 'active'|'eligible')`.
+        /// Favorite-state predicates that reference `isFavorite` are not supported
+        /// in this API version and return `400 InvalidFilterField` until favorite
+        /// filtering is implemented.
+        /// The `in` membership operator is limited to `type`, `scope`,
+        /// `subscriptionId`, and `resourceGroup`; all other fields accept only the
+        /// infix (`eq` / `ne`) and function (`contains` / `startswith`) forms.
+        /// `endswith` is not supported. Values inside one `in` clause are
+        /// OR-composed and matched case-insensitively; separate clauses remain
+        /// AND-composed.
+        /// The decoded expression cannot exceed 4096 characters, and each decoded
+        /// string literal cannot exceed 1024 characters. The combined resource-type,
+        /// scope, and predicate input count cannot exceed 50.
+        /// A role assignment status predicate selects resource rows that have at
+        /// least one matching role; it does not filter the contents of `roles`.
+        /// Every matching resource returns its complete roles collection.
+        /// </param>
+        /// <param name="orderby">
+        /// Sort expression. Supported values: `displayName`, `displayName asc`, or
+        /// `displayName desc`. Ordering is applied to the complete filtered set
+        /// before pagination, with `scope` as the deterministic tie-breaker.
+        /// Invalid expressions return `400 InvalidOrderBy`.
+        /// </param>
+        /// <param name="count">
+        /// When `true`, the response includes the full post-filter row count in the
+        /// optional `count` field — the cardinality of the complete filtered set
+        /// before the page slice. Absent or `false` omits `count`. Any other value
+        /// returns `400 InvalidCount`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PrivilegedResourceProjection> GetPrivilegedResourcesAsync(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResourcesAsync(accessScope, maxpagesize, filter, @orderby, count, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the calling user's privileged Azure resources.
+        /// Returns the resources you have privileged access to, evaluated with your
+        /// own permissions — only resources you are authorized to see are included.
+        /// Pagination: server-driven via `maxpagesize` (advisory) + `nextLink`.
+        /// Clients follow `nextLink` verbatim — do not parse, mutate, or append
+        /// query parameters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetPrivilegedResources(PrivilegedResourceAccessScopeFilter?, int?, string, string, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="accessScope">
+        /// Controls whether the response is scoped to subscriptions the caller has
+        /// PIM assignments on, or expanded to all readable subscriptions. Allowed
+        /// values today: `pimOnly` (default — only subscriptions with PIM
+        /// assignments) and `allAccessible` (any subscription the caller can read).
+        /// Modeled as an extensible string so future scope expansions can be
+        /// added without a breaking change; clients should tolerate unknown values.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// Advisory maximum page-size hint. The server may return fewer items than
+        /// `maxpagesize` and still include a `nextLink`. Accepted range: 1 through
+        /// <list type="number"><item><description>Name follows the standard Azure pagination convention</description></item></list>
+        /// (`maxpagesize`) rather than the strict-maximum `$top` to signal the
+        /// advisory semantics.
+        /// </param>
+        /// <param name="filter">
+        /// OData `$filter` expression that selects resource rows. Flat, lowercase
+        /// `and` expression only — `or`, `not`, and grouping are rejected.
+        /// Supported predicates:
+        /// <list type="bullet"><item><description>`type` — `eq` or `in`, e.g.</description></item></list>
+        /// `type eq 'microsoft.compute/virtualmachines'` or
+        /// `type in ('microsoft.compute/virtualmachines','microsoft.desktopvirtualization/hostpools')`.
+        /// Every value must be a supported primary resource type.
+        /// <list type="bullet"><item><description>`scope` — `eq` or `in`, using exact, case-insensitive ARM-ID</description></item></list>
+        /// membership.
+        /// <list type="bullet"><item><description>`subscriptionId` — `eq`, `ne`, or `in`. It is an exact resource GUID,</description></item></list>
+        /// so `contains` / `startswith` are rejected.
+        /// <list type="bullet"><item><description>`subscriptionName` — `eq`, `ne`, `contains`, or `startswith`. The</description></item></list>
+        /// human-readable subscription display name (distinct from the
+        /// `subscriptionId` GUID).
+        /// <list type="bullet"><item><description>`resourceGroup` — `eq`, `ne`, `contains`, `startswith`, or `in`.</description></item></list>
+        /// Matches by name across every subscription the caller can see; because
+        /// resource-group names are not globally unique, combine it with
+        /// `subscriptionId` to disambiguate.
+        /// <list type="bullet"><item><description>`tags.&lt;key&gt;` (dynamic) — `eq`, `ne`, `contains`, or `startswith`.</description></item></list>
+        /// A tag predicate addresses a single key with dotted syntax
+        /// (e.g. `tags.environment eq 'prod'`); the whole remainder after
+        /// `tags.` is the key, matched case-insensitively. An empty key
+        /// (`tags.`) is rejected.
+        /// <list type="bullet"><item><description>`displayName` and `location` — `eq`, `ne`, and function-form</description></item></list>
+        /// `startswith(field,'value')` / `contains(field,'value')`.
+        /// <list type="bullet"><item><description>Role assignment status:</description></item></list>
+        /// `roles/any(r: r/assignmentStatus eq 'active'|'eligible')`.
+        /// Favorite-state predicates that reference `isFavorite` are not supported
+        /// in this API version and return `400 InvalidFilterField` until favorite
+        /// filtering is implemented.
+        /// The `in` membership operator is limited to `type`, `scope`,
+        /// `subscriptionId`, and `resourceGroup`; all other fields accept only the
+        /// infix (`eq` / `ne`) and function (`contains` / `startswith`) forms.
+        /// `endswith` is not supported. Values inside one `in` clause are
+        /// OR-composed and matched case-insensitively; separate clauses remain
+        /// AND-composed.
+        /// The decoded expression cannot exceed 4096 characters, and each decoded
+        /// string literal cannot exceed 1024 characters. The combined resource-type,
+        /// scope, and predicate input count cannot exceed 50.
+        /// A role assignment status predicate selects resource rows that have at
+        /// least one matching role; it does not filter the contents of `roles`.
+        /// Every matching resource returns its complete roles collection.
+        /// </param>
+        /// <param name="orderby">
+        /// Sort expression. Supported values: `displayName`, `displayName asc`, or
+        /// `displayName desc`. Ordering is applied to the complete filtered set
+        /// before pagination, with `scope` as the deterministic tie-breaker.
+        /// Invalid expressions return `400 InvalidOrderBy`.
+        /// </param>
+        /// <param name="count">
+        /// When `true`, the response includes the full post-filter row count in the
+        /// optional `count` field — the cardinality of the complete filtered set
+        /// before the page slice. Absent or `false` omits `count`. Any other value
+        /// returns `400 InvalidCount`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PrivilegedResourceProjection> GetPrivilegedResources(this TenantResource tenantResource, PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetPrivilegedResources(accessScope, maxpagesize, filter, @orderby, count, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the connect-enablement related resources for a privileged resource.
+        /// Returns the resources you must additionally access to connect to the
+        /// privileged resource identified by `{privilegedResourceId}` — for example,
+        /// for a virtual machine: the NIC, NSG, public IP, and Bastion host.
+        /// Each entry is itself a projection (`RelatedResourceProjection`): the related
+        /// resource's own `projectionId` and `scope`, plus the `roles` you hold
+        /// (active or eligible) on that related resource. Clients drive activation
+        /// against those roles to enable connect. Resource properties themselves are
+        /// NOT returned — read them directly from the Azure Resource Manager REST APIs
+        /// at Connect time.
+        /// Returns an empty page when the privileged resource has no connect-enablement
+        /// dependencies.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetRelatedResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="privilegedResourceId">
+        /// Opaque projection identifier of the parent privileged resource — the
+        /// `projectionId` returned by the `privilegedResources` list operation.
+        /// Clients MUST treat this as opaque — do not parse.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RelatedPrivilegedResourceProjection> GetRelatedResourcesAsync(this TenantResource tenantResource, string privilegedResourceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetRelatedResourcesAsync(privilegedResourceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the connect-enablement related resources for a privileged resource.
+        /// Returns the resources you must additionally access to connect to the
+        /// privileged resource identified by `{privilegedResourceId}` — for example,
+        /// for a virtual machine: the NIC, NSG, public IP, and Bastion host.
+        /// Each entry is itself a projection (`RelatedResourceProjection`): the related
+        /// resource's own `projectionId` and `scope`, plus the `roles` you hold
+        /// (active or eligible) on that related resource. Clients drive activation
+        /// against those roles to enable connect. Resource properties themselves are
+        /// NOT returned — read them directly from the Azure Resource Manager REST APIs
+        /// at Connect time.
+        /// Returns an empty page when the privileged resource has no connect-enablement
+        /// dependencies.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetRelatedResources(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="privilegedResourceId">
+        /// Opaque projection identifier of the parent privileged resource — the
+        /// `projectionId` returned by the `privilegedResources` list operation.
+        /// Clients MUST treat this as opaque — do not parse.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RelatedPrivilegedResourceProjection> GetRelatedResources(this TenantResource tenantResource, string privilegedResourceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetRelatedResources(privilegedResourceId, cancellationToken);
         }
 
         /// <summary>
@@ -2453,7 +2794,7 @@ namespace Azure.ResourceManager.Authorization
         /// Get access review instances assigned for my approval.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2461,18 +2802,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccessReviewScheduleDefinitionData> GetAllAsync(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAllAsync(filter, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// Get access review instances assigned for my approval.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApproval(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2480,11 +2821,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccessReviewScheduleDefinitionData> GetAll(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApproval(this TenantResource tenantResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAll(filter, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetAccessReviewScheduleDefinitionsAssignedForMyApproval(filter, cancellationToken);
         }
 
         /// <summary>

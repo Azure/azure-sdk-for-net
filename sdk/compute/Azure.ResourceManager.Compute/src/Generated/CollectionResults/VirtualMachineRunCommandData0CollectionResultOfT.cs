@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByVirtualMachineRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _expand, _context) : _client.CreateGetByVirtualMachineRequest(_subscriptionId, _resourceGroupName, _vmName, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByVirtualMachineRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _expand, _context) : _client.CreateListByVirtualMachineRequest(_subscriptionId, _resourceGroupName, _vmName, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

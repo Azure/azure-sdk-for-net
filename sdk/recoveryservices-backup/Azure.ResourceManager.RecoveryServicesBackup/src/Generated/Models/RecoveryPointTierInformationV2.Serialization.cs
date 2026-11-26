@@ -107,22 +107,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            RecoveryPointTierType? tierType = default;
             RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RecoveryPointTierType? @type = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tierType = prop.Value.GetString().ToRecoveryPointTierType();
-                    continue;
-                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -167,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecoveryPointTierInformationV2(tierType, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, @type);
+            return new RecoveryPointTierInformationV2(status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, @type);
         }
     }
 }

@@ -3968,9 +3968,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
         /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
         /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/> instance for mocking. </returns>
-        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string metadataEndpoint = default, string clientId = default, string clientSecret = default, bool? useInTestConsole = default, bool? useInApiDocumentation = default, string openId = default)
+        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string metadataEndpoint = default, string clientId = default, string clientSecret = default, bool? useInTestConsole = default, bool? useInApiDocumentation = default)
         {
             return new ApiManagementOpenIdConnectProviderData(
                 id,
@@ -3986,7 +3985,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     useInTestConsole,
                     useInApiDocumentation,
                     default),
-                openId,
                 default);
         }
 
@@ -5761,40 +5759,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 default);
         }
 
-        /// <summary> OpenId Connect Provider details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> User-friendly OpenID Connect Provider name. </param>
-        /// <param name="description"> User-friendly description of OpenID Connect Provider. </param>
-        /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
-        /// <param name="clientId"> Client ID of developer console which is the client application. </param>
-        /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
-        /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
-        /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, bool? useInTestConsole, bool? useInApiDocumentation)
-        {
-            return new ApiManagementOpenIdConnectProviderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && description is null && metadataEndpoint is null && clientId is null && clientSecret is null && useInTestConsole is null && useInApiDocumentation is null ? default : new OpenidConnectProviderContractProperties(
-                    displayName,
-                    description,
-                    metadataEndpoint,
-                    clientId,
-                    clientSecret,
-                    useInTestConsole,
-                    useInApiDocumentation,
-                    default),
-                default,
-                default);
-        }
-
         /// <summary> The developer portal configuration contract. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -6858,7 +6822,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     default,
                     default,
                     default),
-                default,
                 default);
         }
     }

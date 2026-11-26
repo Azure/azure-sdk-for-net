@@ -450,7 +450,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="limit">Optional maximum number of results.</param>
         /// <param name="after">Optional cursor: return results after this id. Mutually exclusive with <paramref name="before"/>.</param>
         /// <param name="before">Optional cursor: return results before this id. Mutually exclusive with <paramref name="after"/>.</param>
-        /// <param name="order">Sort order over creation time.</param>
+        /// <param name="order">Sort order over creation time, or <see langword="null"/> for <see cref="ListRequestOrder.Desc"/>.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A <see cref="StateStoreItemKeyPage"/> of keys.</returns>
         public virtual Task<StateStoreItemKeyPage> ListKeysAsync(
@@ -458,7 +458,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             int? limit = null,
             string? after = null,
             string? before = null,
-            ListRequestOrder order = ListRequestOrder.Desc,
+            ListRequestOrder? order = null,
             CancellationToken cancellationToken = default)
             => ListKeysAsync(tags, limit, after, before, order, callId: null, cancellationToken);
 
@@ -467,7 +467,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="limit">Optional maximum number of results.</param>
         /// <param name="after">Optional cursor: return results after this id. Mutually exclusive with <paramref name="before"/>.</param>
         /// <param name="before">Optional cursor: return results before this id. Mutually exclusive with <paramref name="after"/>.</param>
-        /// <param name="order">Sort order over creation time.</param>
+        /// <param name="order">Sort order over creation time, or <see langword="null"/> for <see cref="ListRequestOrder.Desc"/>.</param>
         /// <param name="callId">The Foundry call ID to forward, or <see langword="null"/> to use the current request context.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A <see cref="StateStoreItemKeyPage"/> of keys.</returns>
@@ -476,7 +476,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             int? limit,
             string? after,
             string? before,
-            ListRequestOrder order,
+            ListRequestOrder? order,
             string? callId,
             CancellationToken cancellationToken = default)
         {
@@ -485,6 +485,8 @@ namespace Azure.AI.AgentServer.Core.Storage
                 throw new ArgumentException($"{nameof(after)} and {nameof(before)} are mutually exclusive.");
             }
 
+            ListRequestOrder effectiveOrder = order ?? ListRequestOrder.Desc;
+
             if (_localBackend is not null)
             {
                 return await _localBackend.ListKeysAsync(
@@ -492,7 +494,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                     limit,
                     after,
                     before,
-                    order,
+                    effectiveOrder,
                     cancellationToken).ConfigureAwait(false);
             }
 
@@ -520,7 +522,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                 query.Add(new KeyValuePair<string, string>("before", before));
             }
 
-            query.Add(new KeyValuePair<string, string>("order", order.ToSerialString()));
+            query.Add(new KeyValuePair<string, string>("order", effectiveOrder.ToString()));
 
             Request request = BuildRequest(
                 RequestMethod.Get,

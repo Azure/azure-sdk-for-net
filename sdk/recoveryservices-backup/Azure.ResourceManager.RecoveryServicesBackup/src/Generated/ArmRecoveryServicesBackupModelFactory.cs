@@ -2173,16 +2173,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> RecoveryPoint Tier Information V2. </summary>
-        /// <param name="tierType"> Recovery point tier type. </param>
         /// <param name="status"> Recovery point tier status. </param>
         /// <param name="extendedInfo"> Recovery point tier status. </param>
         /// <param name="type"> Recovery point tier type. </param>
         /// <returns> A new <see cref="Models.RecoveryPointTierInformationV2"/> instance for mocking. </returns>
-        public static RecoveryPointTierInformationV2 RecoveryPointTierInformationV2(RecoveryPointTierType? tierType = default, RecoveryPointTierStatus? status = default, IDictionary<string, string> extendedInfo = default, RecoveryPointTierType? @type = default)
+        public static RecoveryPointTierInformationV2 RecoveryPointTierInformationV2(RecoveryPointTierStatus? status = default, IDictionary<string, string> extendedInfo = default, RecoveryPointTierType? @type = default)
         {
             extendedInfo ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RecoveryPointTierInformationV2(tierType, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), default, @type);
+            return new RecoveryPointTierInformationV2(status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), default, @type);
         }
 
         /// <summary> The RecoveryPointMoveReadinessInfo. </summary>
@@ -6689,6 +6688,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 targetTierSizeIncreaseInBytes,
                 retailSourceTierCostPerGBPerMonth,
                 retailTargetTierCostPerGBPerMonth);
+        }
+
+        /// <summary> RecoveryPoint Tier Information V2. </summary>
+        /// <param name="tierType"></param>
+        /// <param name="status"> Recovery point tier status. </param>
+        /// <param name="extendedInfo"> Recovery point tier status. </param>
+        /// <param name="type"> Recovery point tier type. </param>
+        /// <returns> A new <see cref="Models.RecoveryPointTierInformationV2"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryPointTierInformationV2 RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, RecoveryPointTierType? @type)
+        {
+            return new RecoveryPointTierInformationV2(status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), default, @type);
         }
 
         /// <summary> IaaS VM workload-specific backup item representing the Classic Compute VM. </summary>

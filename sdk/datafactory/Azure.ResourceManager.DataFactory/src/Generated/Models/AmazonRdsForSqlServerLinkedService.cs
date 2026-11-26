@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -38,8 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerLinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public AmazonRdsForSqlServerLinkedService(DataFactoryElement<string> connectionString) : this()
         {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
             ConnectionString = connectionString;
         }
 

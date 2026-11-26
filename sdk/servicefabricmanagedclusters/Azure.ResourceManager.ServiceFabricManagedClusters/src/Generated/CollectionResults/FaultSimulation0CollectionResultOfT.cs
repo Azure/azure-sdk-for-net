@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetFaultSimulationRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context) : _client.CreateGetFaultSimulationRequest(_subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListFaultSimulationRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context) : _client.CreateListFaultSimulationRequest(_subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -57,8 +57,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> is null. </exception>
         public EdgeOrderShippingAddress(string streetAddress1, string country) : this(country)
         {
+            Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
+
             StreetAddress1 = streetAddress1;
         }
 
