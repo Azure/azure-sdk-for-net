@@ -37,6 +37,21 @@ union FlattenChannel {
 }
 
 /**
+ * Middle wrapper of a multi-level forwarding chain. It has a required sibling, so it is never
+ * valid when created empty, and a safe-flattened single-property child.
+ */
+model DeepFlattenMiddle {
+  /** Required plain reference leaf; explicit flatten keeps lazy-create-and-assign semantics (control). */
+  mode: string;
+
+  /** Safe-flattened child (single required reference property). */
+  deepInner?: SafeFlattenInner;
+
+  /** Optional sibling that must survive clearing the deep leaf. */
+  deepNote?: string;
+}
+
+/**
  * Properties model with a safe-flattened sub-model and a customized property.
  * Also marked with @useSystemTextJsonConverter so the generated JsonConverter.Read
  * is verified to call the dynamic-model deserialization overload that takes the raw payload.
@@ -55,6 +70,10 @@ model MultiFlattenProperties {
 
   /** Must not safe-flatten because its model also has an independent internal property. */
   independentInternal?: IndependentInternalPropertyModel;
+
+  /** Explicitly flattened wrapper: its safe-flattened child is forwarded through two levels, its plain `mode` leaf is the explicit-flatten control. */
+  deepMiddle?: DeepFlattenMiddle;
+
 }
 
 @resource("multiFlatten")

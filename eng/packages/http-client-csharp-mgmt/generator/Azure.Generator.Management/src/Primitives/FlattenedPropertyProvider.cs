@@ -33,12 +33,23 @@ namespace Azure.Generator.Management.Primitives
         /// </summary>
         public bool IsLiftedToNullable { get; }
 
-        public FlattenedPropertyProvider(FormattableString? description, MethodSignatureModifiers modifiers, CSharpType type, string name, PropertyBody body, TypeProvider enclosingType, PropertyProvider flattenedFrom, PropertyProvider originalProperty, CSharpType? explicitInterface = null, PropertyWireInformation? wireInfo = null, bool isRef = false, IEnumerable<AttributeStatement>? attributes = null, bool isLiftedToNullable = false)
+        /// <summary>
+        /// True when the setter generated for this property leaves an absent backing wrapper absent
+        /// when assigned <c>null</c> (instead of materializing it). This records the actual generated
+        /// setter behavior, not the flattening kind: it is set by the direct null-clearing safe-flatten
+        /// setter (<c>Wrapper = value is null ? default : new Wrapper(value)</c>) and propagated by
+        /// forwarding setters whose inner property has it. Explicit <c>@flattenProperty</c> setters
+        /// (lazy-create-and-assign) never have it unless they forward such a property.
+        /// </summary>
+        public bool SkipsWrapperCreationOnNull { get; }
+
+        public FlattenedPropertyProvider(FormattableString? description, MethodSignatureModifiers modifiers, CSharpType type, string name, PropertyBody body, TypeProvider enclosingType, PropertyProvider flattenedFrom, PropertyProvider originalProperty, CSharpType? explicitInterface = null, PropertyWireInformation? wireInfo = null, bool isRef = false, IEnumerable<AttributeStatement>? attributes = null, bool isLiftedToNullable = false, bool skipsWrapperCreationOnNull = false)
             : base(description, modifiers, type, name, body, enclosingType, explicitInterface, wireInfo, isRef, attributes)
         {
             FlattenedProperty = flattenedFrom;
             OriginalProperty = originalProperty;
             IsLiftedToNullable = isLiftedToNullable;
+            SkipsWrapperCreationOnNull = skipsWrapperCreationOnNull;
         }
     }
 }

@@ -83,6 +83,7 @@ namespace MgmtTypeSpec {
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenProperties.deepMiddle);
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(CycleTestConnectionReference.properties);
 
