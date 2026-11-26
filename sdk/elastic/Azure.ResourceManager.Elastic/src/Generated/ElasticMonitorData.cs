@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Elastic
             }
             set
             {
-                Sku = new ElasticSku(value);
+                Sku = value is null ? default : new ElasticSku(value);
             }
         }
     }
