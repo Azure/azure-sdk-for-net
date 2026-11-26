@@ -14,11 +14,11 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Tests
 {
-    public abstract class ClientDisposalTestsBase<TClient, TOptions>
-        where TClient : class, IDisposable
+    public abstract class ClientLifetimeTestsBase<TClient, TOptions>
+        where TClient : class
         where TOptions : ClientOptions
     {
-        protected static readonly Uri VaultUri = new("https://disposal.vault.azure.net");
+        protected static readonly Uri VaultUri = new("https://lifetime.vault.azure.net");
 
         protected abstract TClient CreateClient(TokenCredential credential, TOptions options = null);
 
@@ -27,84 +27,125 @@ namespace Azure.Security.KeyVault.Tests
         protected abstract HttpPipeline GetPipeline(TClient client);
 
         [Test]
-        public void DisposeReleasesOwnedTransportOnce([Values] bool explicitOptions, [Values] bool concurrent)
+        public void ClientDoesNotExposeDisposal()
+        {
+            Assert.That(typeof(IDisposable).IsAssignableFrom(typeof(TClient)), Is.False);
+            Assert.That(Array.Exists(typeof(TClient).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static),
+                method => method.Name == "Dispose"), Is.False);
+        }
+
+        [Test]
+        public void DefaultClientsShareTransportWithoutRequiringDisposal([Values] bool explicitOptions, [Values] bool concurrent)
         {
             using DisposableCredential credential = new();
-            using TClient client = CreateClient(credential, explicitOptions ? CreateOptions() : null);
+            TClient client = CreateClient(credential, explicitOptions ? CreateOptions() : null);
             DefaultTransportLifetime lifetime = new(GetPipeline(client));
             lifetime.AssertAlive();
 
-            DisposeRepeatedly(client, concurrent);
+            var clients = new TClient[16];
+            void Create(int i) => clients[i] = CreateClient(credential, explicitOptions ? CreateOptions() : null);
+            if (concurrent)
+            {
+                Parallel.For(0, clients.Length, Create);
+            }
+            else
+            {
+                for (int i = 0; i < clients.Length; i++)
+                {
+                    Create(i);
+                }
+            }
 
-            lifetime.AssertDisposedOnce();
+            foreach (TClient other in clients)
+            {
+                Assert.That(GetUnderlyingTransport(GetPipeline(other)), Is.SameAs(GetUnderlyingTransport(GetPipeline(client))));
+            }
+            lifetime.AssertAlive();
             Assert.That(credential.DisposeCount, Is.Zero);
         }
 
         [Test]
-        public void DisposeDoesNotDisposeCallerTransportOrCredential()
+        public void ClientsDoNotOwnCallerTransportOrCredential()
         {
             using DisposableMockTransport transport = new();
             using DisposableCredential credential = new();
             TOptions options = CreateOptions();
             options.Transport = transport;
-            using TClient first = CreateClient(credential, options);
-            using TClient second = CreateClient(credential, options);
-            Assert.That(GetTransport(GetPipeline(first)), Is.SameAs(transport));
-            Assert.That(GetTransport(GetPipeline(second)), Is.SameAs(transport));
-            Assert.That(ReadField<bool>(GetPipeline(first), "isTransportOwnedInternally"), Is.False);
+            TClient first = CreateClient(credential, options);
+            TClient second = CreateClient(credential, options);
+            Assert.That(GetUnderlyingTransport(GetPipeline(first)), Is.SameAs(transport));
+            Assert.That(GetUnderlyingTransport(GetPipeline(second)), Is.SameAs(transport));
+            Assert.That(GetPipeline(first), Is.Not.InstanceOf<DisposableHttpPipeline>());
+            Assert.That(options.Transport, Is.SameAs(transport));
 
-            DisposeRepeatedly(first, concurrent: true);
+            AssertCanSend(GetPipeline(first));
+            first = null;
             Assert.That(transport.DisposeCount, Is.Zero);
             Assert.That(credential.DisposeCount, Is.Zero);
 
-            using Request request = GetPipeline(second).CreateRequest();
-            request.Uri.Reset(VaultUri);
-            using Response response = GetPipeline(second).SendRequest(request, CancellationToken.None);
-            Assert.That(response.Status, Is.EqualTo(200));
-
-            DisposeRepeatedly(second, concurrent: true);
+            AssertCanSend(GetPipeline(second));
             Assert.That(transport.DisposeCount, Is.Zero);
             Assert.That(credential.DisposeCount, Is.Zero);
 
             transport.Dispose();
             Assert.That(transport.DisposeCount, Is.EqualTo(1));
             Assert.That(Assert.Throws<ObjectDisposedException>(() => transport.CreateRequest()), Is.SameAs(transport.DisposedException));
+            Assert.That(Assert.Throws<ObjectDisposedException>(() => GetPipeline(second).CreateRequest()), Is.SameAs(transport.DisposedException));
         }
 
         [Test]
-        public void DisposeDoesNotDisposeCallerHttpClient()
+        public void ClientDoesNotOwnCallerHttpClient()
         {
             using HttpClient httpClient = new();
             using HttpClientTransport transport = new(httpClient);
             TOptions options = CreateOptions();
             options.Transport = transport;
-            using TClient client = CreateClient(new MockCredential(), options);
-            Assert.That(GetTransport(GetPipeline(client)), Is.SameAs(transport));
+            TClient client = CreateClient(new MockCredential(), options);
+            Assert.That(GetUnderlyingTransport(GetPipeline(client)), Is.SameAs(transport));
 
-            DisposeRepeatedly(client, concurrent: true);
-
+            using Request request = GetPipeline(client).CreateRequest();
+            client = null;
             Assert.DoesNotThrow(httpClient.CancelPendingRequests);
         }
 
         [Test]
-        public void DisposeIsSafeForMockingConstructor()
+        public void SharedOptionsAreNotMutatedAndAllCustomerPoliciesRunOnce()
         {
-            TClient client = new Mock<TClient> { CallBase = true }.Object;
-            Assert.DoesNotThrow(() => DisposeRepeatedly(client, concurrent: true));
+            using var transport = new DisposableMockTransport();
+            TOptions options = CreateOptions();
+            options.Transport = transport;
+            var perCall = new CountingPolicy();
+            var perRetry = new CountingPolicy();
+            var beforeTransport = new CountingPolicy();
+            options.AddPolicy(perCall, HttpPipelinePosition.PerCall);
+            options.AddPolicy(perRetry, HttpPipelinePosition.PerRetry);
+            options.AddPolicy(beforeTransport, HttpPipelinePosition.BeforeTransport);
+            var clients = new TClient[16];
+            Parallel.For(0, clients.Length, i => clients[i] = CreateClient(new MockCredential(), options));
+            foreach (TClient client in clients)
+            {
+                AssertCanSend(GetPipeline(client));
+            }
+            Assert.That(options.Transport, Is.SameAs(transport));
+            Assert.That(perCall.Count, Is.EqualTo(clients.Length));
+            Assert.That(perRetry.Count, Is.EqualTo(clients.Length));
+            Assert.That(beforeTransport.Count, Is.EqualTo(clients.Length));
+            Assert.That(transport.DisposeCount, Is.Zero);
         }
 
-        protected static void DisposeRepeatedly(IDisposable client, bool concurrent = false)
+        [Test]
+        public void MockingConstructorDoesNotRequireDisposal()
         {
-            if (concurrent)
-            {
-                Parallel.For(0, 16, _ => client.Dispose());
-            }
-            else
-            {
-                client.Dispose();
-            }
+            TClient client = new Mock<TClient> { CallBase = true }.Object;
+            Assert.That(client, Is.Not.Null.And.Not.InstanceOf<IDisposable>());
+        }
 
-            client.Dispose();
+        protected static void AssertCanSend(HttpPipeline pipeline)
+        {
+            using Request request = pipeline.CreateRequest();
+            request.Uri.Reset(VaultUri);
+            using Response response = pipeline.SendRequest(request, CancellationToken.None);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         protected static T ReadField<T>(object instance, string name, Type declaringType = null)
@@ -120,6 +161,9 @@ namespace Azure.Security.KeyVault.Tests
         protected static HttpPipelineTransport GetTransport(HttpPipeline pipeline) =>
             ReadField<HttpPipelineTransport>(pipeline, "_transport", typeof(HttpPipeline));
 
+        protected static HttpPipelineTransport GetUnderlyingTransport(HttpPipeline pipeline) =>
+            ReadField<HttpPipelineTransport>(GetTransport(pipeline), "_transport");
+
         protected sealed class DefaultTransportLifetime
         {
             private readonly HttpPipelineTransport _transport;
@@ -128,12 +172,11 @@ namespace Azure.Security.KeyVault.Tests
 
             public DefaultTransportLifetime(HttpPipeline pipeline)
             {
-                Assert.That(pipeline, Is.InstanceOf<DisposableHttpPipeline>());
-                Assert.That(ReadField<bool>(pipeline, "isTransportOwnedInternally"), Is.True);
-                _transport = GetTransport(pipeline);
+                Assert.That(pipeline, Is.Not.InstanceOf<DisposableHttpPipeline>());
+                _transport = GetUnderlyingTransport(pipeline);
                 if (_transport is HttpClientTransport)
                 {
-                    Assert.That(_transport, Is.Not.SameAs(HttpClientTransport.Shared));
+                    Assert.That(_transport, Is.SameAs(HttpClientTransport.Shared));
                     _clientWrapper = ReadField<object>(_transport, "_clientWrapper");
                     _httpClient = ReadField<HttpClient>(_clientWrapper, "_client");
                 }
@@ -162,20 +205,6 @@ namespace Azure.Security.KeyVault.Tests
                     Assert.That(request, Is.Not.Null);
                 }
             }
-
-            public void AssertDisposedOnce()
-            {
-                if (_httpClient != null)
-                {
-                    Assert.Throws<ObjectDisposedException>(_httpClient.CancelPendingRequests);
-                    // HttpClient.Dispose is idempotent, but an extra pipeline disposal incorrectly releases the wrapper again.
-                    Assert.That(ReadField<int>(_clientWrapper, "_refCount"), Is.Zero);
-                }
-                else
-                {
-                    Assert.That(_transport, Is.Not.InstanceOf<IDisposable>());
-                }
-            }
         }
 
         protected sealed class ResponsePolicy : HttpPipelinePolicy
@@ -197,6 +226,12 @@ namespace Azure.Security.KeyVault.Tests
                 Process(message, pipeline);
                 return default;
             }
+        }
+
+        private sealed class CountingPolicy : HttpPipelineSynchronousPolicy
+        {
+            internal int Count;
+            public override void OnSendingRequest(HttpMessage message) => Interlocked.Increment(ref Count);
         }
 
         protected sealed class DisposableMockTransport : MockTransport, IDisposable

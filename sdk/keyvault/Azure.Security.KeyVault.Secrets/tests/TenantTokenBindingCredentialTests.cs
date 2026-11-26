@@ -453,12 +453,14 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public async Task CertificateMismatchRetryDoesNotActivateBearerFallback()
         {
-            var inner = new CallbackCredential((context, _) => new ValueTask<AccessToken>(Token(true)));
+            using var certificate = AutomaticTransportTests.Certificate();
+            var inner = new CallbackCredential((context, _) => new ValueTask<AccessToken>(Token(true, certificate)));
             var transport = new MockTransport(
                 new MockResponse(401).WithHeader("WWW-Authenticate", Challenge),
                 new MockResponse(401).WithJson("""{"error":{"message":"[MtlsCnfClaimRequestDataValidationFailed]"}}"""),
                 Success());
-            var options = new SecretClientOptions { Transport = transport };
+            using var binding = new CertificateBoundTestTransport(transport);
+            var options = new SecretClientOptions { Transport = binding.Transport };
             options.Retry.MaxRetries = 1;
             options.Retry.Delay = TimeSpan.Zero;
             var client = new SecretClient(VaultUri, inner, options);
@@ -473,13 +475,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void TransportExceptionCannotTriggerCredentialFallback()
         {
-            var inner = new CallbackCredential((_, _) => new ValueTask<AccessToken>(Token(true)));
+            using var certificate = AutomaticTransportTests.Certificate();
+            var inner = new CallbackCredential((_, _) => new ValueTask<AccessToken>(Token(true, certificate)));
             int requests = 0;
             var error = WrapDenial("managed");
             var transport = new MockTransport(_ => requests++ == 0
                 ? new MockResponse(401).WithHeader("WWW-Authenticate", Challenge)
                 : throw error);
-            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = transport });
+            using var binding = new CertificateBoundTestTransport(transport);
+            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = binding.Transport });
 
             Exception actual = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
             {
@@ -494,6 +498,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public async Task TokenRenewalFallbackRemovesPreviouslyBoundHeader()
         {
+            using var certificate = AutomaticTransportTests.Certificate();
             int popCalls = 0;
             var inner = new CallbackCredential((context, _) =>
             {
@@ -501,7 +506,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 {
                     throw WrapDenial("managed");
                 }
-                return new ValueTask<AccessToken>(Token(context.IsProofOfPossessionEnabled));
+                return new ValueTask<AccessToken>(Token(context.IsProofOfPossessionEnabled, certificate));
             });
             var boundHeaders = new ConcurrentQueue<bool>();
             int requests = 0;
@@ -512,7 +517,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     ? new MockResponse(401).WithHeader("WWW-Authenticate", Challenge)
                     : Success();
             });
-            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = transport });
+            using var binding = new CertificateBoundTestTransport(transport);
+            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = binding.Transport });
             for (int i = 0; i < 3; i++)
             {
                 _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
@@ -558,6 +564,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public async Task BackgroundRenewalDenialSwitchesNewRequestsToBearer()
         {
+            using var certificate = AutomaticTransportTests.Certificate();
             var bearerStarted = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var releaseBearer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var bearerFinished = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -571,7 +578,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     {
                         throw WrapDenial("managed");
                     }
-                    return new AccessToken("bound-result", DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddMinutes(-1), "mtls_pop");
+                    return new AccessToken("bound-result", DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddMinutes(-1), "mtls_pop", certificate);
                 }
 
                 if (Interlocked.Increment(ref bearerCalls) == 1)
@@ -594,7 +601,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     ? new MockResponse(401).WithHeader("WWW-Authenticate", Challenge)
                     : Success();
             });
-            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = transport });
+            using var binding = new CertificateBoundTestTransport(transport);
+            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = binding.Transport });
 
             try
             {
@@ -666,8 +674,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private static CallbackCredential DenyingCredential(Exception denial) => new((context, _) =>
             context.IsProofOfPossessionEnabled ? throw denial : new ValueTask<AccessToken>(Token(false)));
 
-        private static AccessToken Token(bool bound) =>
-            new(bound ? "bound-result" : "bearer-result", DateTimeOffset.MinValue, null, bound ? "mtls_pop" : BearerType);
+        private static AccessToken Token(bool bound, System.Security.Cryptography.X509Certificates.X509Certificate2 certificate = null) =>
+            new(bound ? "bound-result" : "bearer-result", DateTimeOffset.MinValue, null, bound ? "mtls_pop" : BearerType, certificate);
 
         private static MockResponse Success() => new(200)
         {

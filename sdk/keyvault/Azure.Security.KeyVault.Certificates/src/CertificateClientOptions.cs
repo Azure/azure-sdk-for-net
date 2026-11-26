@@ -11,6 +11,13 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificateClientOptions : ClientOptions
     {
+        internal CertificateClientOptions CloneForPipeline()
+        {
+            var clone = (CertificateClientOptions)MemberwiseClone();
+            clone.Transport = KeyVaultTransport.Create(Transport);
+            return clone;
+        }
+
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see

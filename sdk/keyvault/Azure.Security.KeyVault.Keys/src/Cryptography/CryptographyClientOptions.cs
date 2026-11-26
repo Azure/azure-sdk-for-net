@@ -11,6 +11,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class CryptographyClientOptions : ClientOptions
     {
+        internal CryptographyClientOptions CloneForPipeline()
+        {
+            var clone = (CryptographyClientOptions)MemberwiseClone();
+            clone.Transport = KeyVaultTransport.Create(Transport);
+            return clone;
+        }
+
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see

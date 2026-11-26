@@ -11,7 +11,11 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeCacheVerificationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeResourceVerificationTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ClientDisposalTestsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClientLifetimeTestsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutomaticTransportTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CertificateBoundTestTransport.cs" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\tests\Identity\Data\cert.pfx" Link="transport-test.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\tests\Identity\Data\cert-password-protected.pfx" Link="transport-test-other.pfx" CopyToOutputDirectory="PreserveNewest" />
     <Compile Include="$(MSBuildThisFileDirectory)ContinuousAccessEvaluationTestsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTestEventListener.cs" />
