@@ -5,6 +5,7 @@ parameters:
   DevFeed: 'public/azure-sdk-for-net'
   PublicFeed: Nuget.org
   PublicPublishEnvironment: package-publish
+  ReleasePlanId: '0'
 
 stages:
   - stage: Signing
@@ -280,6 +281,7 @@ stages:
                         ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
                         PackageArtifactName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
+                        ReleasePlanId: ${{ parameters.ReleasePlanId }}
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS
