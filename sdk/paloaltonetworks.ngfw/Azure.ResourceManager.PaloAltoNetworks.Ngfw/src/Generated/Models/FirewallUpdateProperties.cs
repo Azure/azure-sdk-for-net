@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             set
             {
-                StrataCloudManagerConfig = new StrataCloudManagerConfig(value);
+                StrataCloudManagerConfig = value is null ? default : new StrataCloudManagerConfig(value);
             }
         }
     }

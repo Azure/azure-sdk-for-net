@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             set
             {
-                VirtualNetworkGateway2 = new VirtualNetworkConnectionGatewayReference(value);
+                VirtualNetworkGateway2 = value is null ? default : new VirtualNetworkConnectionGatewayReference(value);
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             set
             {
-                LocalNetworkGateway2 = new VirtualNetworkConnectionGatewayReference(value);
+                LocalNetworkGateway2 = value is null ? default : new VirtualNetworkConnectionGatewayReference(value);
             }
         }
 

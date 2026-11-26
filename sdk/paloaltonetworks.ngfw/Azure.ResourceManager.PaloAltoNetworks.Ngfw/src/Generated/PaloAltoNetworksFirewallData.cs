@@ -263,6 +263,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new FirewallDeploymentProperties();
                 }
                 Properties.CloudManagerName = value;
