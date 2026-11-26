@@ -131,6 +131,10 @@ namespace Azure.ResourceManager.Confluent
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new OrganizationResourceProperties();
                 }
                 Properties.LinkOrganizationToken = value;

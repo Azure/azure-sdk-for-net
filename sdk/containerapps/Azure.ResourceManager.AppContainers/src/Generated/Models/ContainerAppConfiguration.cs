@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             set
             {
-                Service = new Service(value);
+                Service = value is null ? default : new Service(value);
             }
         }
     }

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                FlexProfile = new FlexProfile(value);
+                FlexProfile = value is null ? default : new FlexProfile(value);
             }
         }
 
