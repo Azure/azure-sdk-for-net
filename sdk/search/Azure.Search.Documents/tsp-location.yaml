@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
-commit: 8636ccd5cfb10bf54bf499e912451a3918da7d71
+commit: 9897ed178f0b3fbe91a49296af88215bebc83b00
 directory: specification/search/data-plane/Search
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

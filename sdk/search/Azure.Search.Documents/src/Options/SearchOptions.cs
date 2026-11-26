@@ -319,7 +319,7 @@ namespace Azure.Search.Documents
             get { return VectorSearch?.Queries != null ? VectorSearch.Queries : new ChangeTrackingList<VectorQuery>(); }
             set
             {
-                if (value != null && Optional.IsCollectionDefined(value))
+                if (value != null && value.Count > 0)
                 {
                     VectorSearch ??= new VectorSearchOptions();
                 }
