@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FaultSimulation> GetFaultSimulationAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FaultSimulation> ListFaultSimulationAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "ServiceFabricManagedNodeTypeResource.GetFaultSimulation");
+                "ServiceFabricManagedNodeTypeResource.ListFaultSimulation");
         }
 
         /// <summary>
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FaultSimulation> GetFaultSimulation(CancellationToken cancellationToken = default)
+        public virtual Pageable<FaultSimulation> ListFaultSimulation(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "ServiceFabricManagedNodeTypeResource.GetFaultSimulation");
+                "ServiceFabricManagedNodeTypeResource.ListFaultSimulation");
         }
 
         /// <summary>

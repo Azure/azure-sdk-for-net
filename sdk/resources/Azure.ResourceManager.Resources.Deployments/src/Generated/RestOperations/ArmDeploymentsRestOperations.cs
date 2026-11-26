@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             return message;
         }
 
-        internal HttpMessage CreateGetAtScopeRequest(string scope, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateListAtScopeRequest(string scope, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             return message;
         }
 
-        internal HttpMessage CreateNextGetAtScopeRequest(Uri nextPage, string scope, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateNextListAtScopeRequest(Uri nextPage, string scope, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string scope, string assessmentName, RequestContext context)
+        internal HttpMessage CreateListRequest(string scope, string assessmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string scope, string assessmentName, RequestContext context)
+        internal HttpMessage CreateNextListRequest(Uri nextPage, string scope, string assessmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string scope, RequestContext context)
+        internal HttpMessage CreateListAllRequest(string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string scope, RequestContext context)
+        internal HttpMessage CreateNextListAllRequest(Uri nextPage, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -26,6 +26,96 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="OfferingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OfferingResource"/> object. </returns>
+        public virtual OfferingResource GetOfferingResource(ResourceIdentifier id)
+        {
+            OfferingResource.ValidateResourceId(id);
+            return new OfferingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OntologyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OntologyResource"/> object. </returns>
+        public virtual OntologyResource GetOntologyResource(ResourceIdentifier id)
+        {
+            OntologyResource.ValidateResourceId(id);
+            return new OntologyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataOnboardingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataOnboardingResource"/> object. </returns>
+        public virtual DataOnboardingResource GetDataOnboardingResource(ResourceIdentifier id)
+        {
+            DataOnboardingResource.ValidateResourceId(id);
+            return new DataOnboardingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataOnboardingLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataOnboardingLocationResource"/> object. </returns>
+        public virtual DataOnboardingLocationResource GetDataOnboardingLocationResource(ResourceIdentifier id)
+        {
+            DataOnboardingLocationResource.ValidateResourceId(id);
+            return new DataOnboardingLocationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataOnboardingActivationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataOnboardingActivationResource"/> object. </returns>
+        public virtual DataOnboardingActivationResource GetDataOnboardingActivationResource(ResourceIdentifier id)
+        {
+            DataOnboardingActivationResource.ValidateResourceId(id);
+            return new DataOnboardingActivationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="QueryEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QueryEndpointResource"/> object. </returns>
+        public virtual QueryEndpointResource GetQueryEndpointResource(ResourceIdentifier id)
+        {
+            QueryEndpointResource.ValidateResourceId(id);
+            return new QueryEndpointResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OntologyLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OntologyLocationResource"/> object. </returns>
+        public virtual OntologyLocationResource GetOntologyLocationResource(ResourceIdentifier id)
+        {
+            OntologyLocationResource.ValidateResourceId(id);
+            return new OntologyLocationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="QueryEndpointLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QueryEndpointLocationResource"/> object. </returns>
+        public virtual QueryEndpointLocationResource GetQueryEndpointLocationResource(ResourceIdentifier id)
+        {
+            QueryEndpointLocationResource.ValidateResourceId(id);
+            return new QueryEndpointLocationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OntologyActivationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OntologyActivationResource"/> object. </returns>
+        public virtual OntologyActivationResource GetOntologyActivationResource(ResourceIdentifier id)
+        {
+            OntologyActivationResource.ValidateResourceId(id);
+            return new OntologyActivationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="QueryEndpointActivationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QueryEndpointActivationResource"/> object. </returns>
+        public virtual QueryEndpointActivationResource GetQueryEndpointActivationResource(ResourceIdentifier id)
+        {
+            QueryEndpointActivationResource.ValidateResourceId(id);
+            return new QueryEndpointActivationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ResourceGraphQueryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceGraphQueryResource"/> object. </returns>

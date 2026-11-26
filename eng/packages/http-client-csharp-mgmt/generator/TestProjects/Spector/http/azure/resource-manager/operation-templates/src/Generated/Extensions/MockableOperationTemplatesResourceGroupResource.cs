@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExportResult>> ExportAsync(WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExportResult>> ExportAsync(WaitUntil waitUntil, string orderName, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
             Argument.AssertNotNull(content, nameof(content));
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<ExportResult> operation = new OperationTemplatesArmOperation<ExportResult>(
                     new ExportResultOperationSource(),
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExportResult> Export(WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExportResult> Export(WaitUntil waitUntil, string orderName, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
             Argument.AssertNotNull(content, nameof(content));
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<ExportResult> operation = new OperationTemplatesArmOperation<ExportResult>(
                     new ExportResultOperationSource(),

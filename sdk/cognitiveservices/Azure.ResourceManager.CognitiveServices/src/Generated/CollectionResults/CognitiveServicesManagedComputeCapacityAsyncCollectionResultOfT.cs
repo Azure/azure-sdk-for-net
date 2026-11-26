@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _subscriptionId;
         private readonly string _offer;
         private readonly string _acceleratorType;
-        private readonly string _deploymentId;
-        private readonly string _location;
+        private readonly ResourceIdentifier _deploymentId;
+        private readonly AzureLocation? _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CognitiveServicesManagedComputeCapacityAsyncCollectionResultOfT(ManagedComputeCapacities client, string subscriptionId, string offer, string acceleratorType, string deploymentId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CognitiveServicesManagedComputeCapacityAsyncCollectionResultOfT(ManagedComputeCapacities client, string subscriptionId, string offer, string acceleratorType, ResourceIdentifier deploymentId, AzureLocation? location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

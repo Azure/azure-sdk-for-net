@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeCapacityProperties(string acceleratorType, string offerScope, string scopeId, int? availableAccelerators, int? totalAvailableAccelerators, IReadOnlyList<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeCapacityProperties(string acceleratorType, CognitiveServicesManagedComputeCapacityOfferScope? offerScope, string scopeId, int? availableAccelerators, int? totalAvailableAccelerators, IReadOnlyList<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AcceleratorType = acceleratorType;
             OfferScope = offerScope;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The capacity offer scope: Global or DataZone. Omitted for deployment-scoped results. </summary>
         [WirePath("offerScope")]
-        public string OfferScope { get; }
+        public CognitiveServicesManagedComputeCapacityOfferScope? OfferScope { get; }
 
         /// <summary>
         /// The identifier within the offer scope: an empty string for Global, or US or EU

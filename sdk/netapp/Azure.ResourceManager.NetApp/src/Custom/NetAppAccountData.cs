@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -12,9 +14,11 @@ namespace Azure.ResourceManager.NetApp
     public partial class NetAppAccountData
     {
         /// <summary> Entra ID configuration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version.")]
         public EntraIdConfig EntraIdConfig
         {
-            get => Properties is null ? default : Properties.EntraIdConfig;
+            get => (EntraIdConfig)Properties?.EntraIdConfig;
             set
             {
                 if (Properties is null)

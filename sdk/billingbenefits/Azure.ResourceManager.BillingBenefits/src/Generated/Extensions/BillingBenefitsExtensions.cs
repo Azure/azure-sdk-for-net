@@ -1162,14 +1162,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Validate savings plan purchase.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.ValidateAsync(BenefitValidateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.ValidateAsync(BenefitValidateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<BenefitValidateResult>> ValidateAsync(this TenantResource tenantResource, BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BenefitValidateResult>> ValidateAsync(this TenantResource tenantResource, BenefitValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1180,14 +1180,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Validate savings plan purchase.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.Validate(BenefitValidateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.Validate(BenefitValidateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<BenefitValidateResult> Validate(this TenantResource tenantResource, BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public static Response<BenefitValidateResult> Validate(this TenantResource tenantResource, BenefitValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1198,7 +1198,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// List maccs by billing account
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAllAsync(SellerResourceListRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAllAsync(SellerResourceListContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1206,7 +1206,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaccResource> GetAllAsync(this TenantResource tenantResource, SellerResourceListRequest content, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MaccResource> GetAllAsync(this TenantResource tenantResource, SellerResourceListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// List maccs by billing account
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAll(SellerResourceListRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAll(SellerResourceListContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaccResource> GetAll(this TenantResource tenantResource, SellerResourceListRequest content, CancellationToken cancellationToken = default)
+        public static Pageable<MaccResource> GetAll(this TenantResource tenantResource, SellerResourceListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

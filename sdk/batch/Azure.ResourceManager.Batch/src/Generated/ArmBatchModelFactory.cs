@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="action"> Action when client IP address is matched. </param>
         /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
         /// <returns> A new <see cref="Models.BatchIPRule"/> instance for mocking. </returns>
-        public static BatchIPRule BatchIPRule(BatchIPRuleAction action, string value)
+        public static BatchIPRule BatchIPRule(BatchIPRuleAction action = default, string value = default)
         {
             return new BatchIPRule(action, value, default);
         }
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
-        public static BatchAccessRule BatchAccessRule(string name, BatchAccessRuleProperties properties)
+        public static BatchAccessRule BatchAccessRule(string name = default, BatchAccessRuleProperties properties = default)
         {
             return new BatchAccessRule(name, properties, default);
         }
@@ -1327,7 +1327,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location)
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
         {
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.BatchResourceAssociation"/> instance for mocking. </returns>
-        public static BatchResourceAssociation BatchResourceAssociation(string name, ResourceAssociationAccessMode? accessMode)
+        public static BatchResourceAssociation BatchResourceAssociation(string name = default, ResourceAssociationAccessMode? accessMode = default)
         {
             return new BatchResourceAssociation(name, accessMode, default);
         }

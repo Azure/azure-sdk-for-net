@@ -1075,10 +1075,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="resourceId"> Fully-qualified resource identifier of the credits associated with the shortfall. </param>
         /// <param name="balanceVersion"> Points to BalanceVersion document that indicates the remaining commitment balance when the credit was created. </param>
         /// <param name="systemId"> This is an identifier of the shortfall which will not change for its lifetime. </param>
-        /// <returns> A new <see cref="Models.ChargeShortfallRequest"/> instance for mocking. </returns>
-        public static ChargeShortfallRequest ChargeShortfallRequest(string productCode = default, BillingBenefitsCommitment charge = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier resourceId = default, float? balanceVersion = default, string systemId = default)
+        /// <returns> A new <see cref="Models.ChargeShortfallContent"/> instance for mocking. </returns>
+        public static ChargeShortfallContent ChargeShortfallContent(string productCode = default, BillingBenefitsCommitment charge = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier resourceId = default, float? balanceVersion = default, string systemId = default)
         {
-            return new ChargeShortfallRequest(productCode is null && charge is null && startsOn is null && endsOn is null && resourceId is null && balanceVersion is null && systemId is null ? default : new Shortfall(
+            return new ChargeShortfallContent(productCode is null && charge is null && startsOn is null && endsOn is null && resourceId is null && balanceVersion is null && systemId is null ? default : new Shortfall(
                 productCode,
                 charge,
                 startsOn,
@@ -1338,12 +1338,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Request to validate any benefit. </summary>
         /// <param name="benefits"> Defines benefits for validation. </param>
-        /// <returns> A new <see cref="Models.BenefitValidateRequest"/> instance for mocking. </returns>
-        public static BenefitValidateRequest BenefitValidateRequest(IEnumerable<BenefitValidateModel> benefits = default)
+        /// <returns> A new <see cref="Models.BenefitValidateContent"/> instance for mocking. </returns>
+        public static BenefitValidateContent BenefitValidateContent(IEnumerable<BenefitValidateModel> benefits = default)
         {
             benefits ??= new ChangeTrackingList<BenefitValidateModel>();
 
-            return new BenefitValidateRequest((benefits ?? new ChangeTrackingList<BenefitValidateModel>()).ToList(), default);
+            return new BenefitValidateContent((benefits ?? new ChangeTrackingList<BenefitValidateModel>()).ToList(), default);
         }
 
         /// <summary>
@@ -1496,10 +1496,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="includeContributors"> Setting it to true will return the list of contributors associated with the MACC. </param>
         /// <param name="includeMilestones"> Setting it to true will return the list of milestones associated with the MACC. </param>
         /// <param name="primaryResourceId"> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </param>
-        /// <returns> A new <see cref="Models.SellerResourceListRequest"/> instance for mocking. </returns>
-        public static SellerResourceListRequest SellerResourceListRequest(ResourceIdentifier billingAccountResourceId = default, string filter = default, bool? includeContributors = default, bool? includeMilestones = default, ResourceIdentifier primaryResourceId = default)
+        /// <returns> A new <see cref="Models.SellerResourceListContent"/> instance for mocking. </returns>
+        public static SellerResourceListContent SellerResourceListContent(ResourceIdentifier billingAccountResourceId = default, string filter = default, bool? includeContributors = default, bool? includeMilestones = default, ResourceIdentifier primaryResourceId = default)
         {
-            return new SellerResourceListRequest(billingAccountResourceId is null && filter is null && includeContributors is null && includeMilestones is null && primaryResourceId is null ? default : new SellerResourceListRequestProperties(
+            return new SellerResourceListContent(billingAccountResourceId is null && filter is null && includeContributors is null && includeMilestones is null && primaryResourceId is null ? default : new SellerResourceListRequestProperties(
                 billingAccountResourceId,
                 filter,
                 includeContributors,

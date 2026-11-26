@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.32 (Unreleased)
+## 1.0.0 (2026-11-24)
 
 ### Features Added
 
@@ -13,8 +13,21 @@
 
 ### Breaking Changes
 
+- `FoundryStateStore` and the `FoundryStorage*Exception` types are now experimental
+  (`AAAS004`), and `AgentRestoreContext` joins the experimental snapshot lifecycle
+  contract (`AAAS002`). Existing code that uses these types fails to compile until the
+  corresponding diagnostic is suppressed (for example, `#pragma warning disable AAAS004`
+  or `<NoWarn>$(NoWarn);AAAS004</NoWarn>`).
+- `ListRequestOrder` is now an extensible string-backed struct instead of an `enum`, so
+  callers can pass sort orders added by the service later. `FoundryStateStore.ListKeysAsync`
+  now takes `ListRequestOrder? order`, and `null` (the default) still sorts descending.
+  Code that uses `ListRequestOrder` values in `switch` case labels, as constants, or with
+  `Enum` APIs must be updated.
+
 ### Bugs Fixed
 
+- Fixed hosted startup failing with `MissingMethodException` when Agent365 trace export
+  was enabled and a stable `Microsoft.OpenTelemetry` distro was resolved.
 - Ensured snapshot rollback and host disposal join owned workers before releasing
   stores, bound cleanup waits to the host shutdown timeout, and retained failed
   cleanup for safe retry without blocking disposal of unrelated services.
@@ -26,6 +39,8 @@
   local endpoint changes do not reject a restore.
 
 ### Other Changes
+
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`.
 
 ## 1.0.0-beta.31 (2026-11-04)
 

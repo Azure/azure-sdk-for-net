@@ -111,6 +111,45 @@ Describe "Mark-PackageReleased.ps1" {
         ($messages -join [Environment]::NewLine) | Should Match '"revisionId":"revision456"'
     }
 
+    It "parses an indented response after CLI diagnostics" {
+        $global:AzSdkOutput = @'
+APIView release check reported a missing review.
+  {
+    "operation_status": "Succeeded",
+    "api_review_hub": {
+      "packageVersionId": "version123",
+      "isReleased": true
+    },
+    "api_view": {
+      "revisionId": "revision456",
+      "isReleased": true
+    }
+  }
+'@
+
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
+            ForEach-Object { "$_" }
+
+        [Array]::IndexOf($messages, "API Review Hub") | Should BeLessThan ([Array]::IndexOf($messages, "APIView"))
+        ($messages -join [Environment]::NewLine) | Should Match '"packageVersionId":"version123"'
+        ($messages -join [Environment]::NewLine) | Should Match '"revisionId":"revision456"'
+        ($messages -join [Environment]::NewLine) | Should Not Match "malformed JSON"
+    }
+
+    It "ignores JSON diagnostics when finding the CLI response" {
+        $global:AzSdkOutput = @'
+{"error":{"code":"ReviewNotFound","message":"APIView review is not available."}}
+{"operation_status":"Succeeded","api_review_hub":{"packageVersionId":"version123","isReleased":true},"api_view":null}
+'@
+
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
+            ForEach-Object { "$_" }
+
+        [Array]::IndexOf($messages, "API Review Hub") | Should BeGreaterThan -1
+        ($messages -join [Environment]::NewLine) | Should Not Match "Multiple JSON objects"
+        ($messages -join [Environment]::NewLine) | Should Not Match "malformed JSON"
+    }
+
     It "surfaces partial backend failure details from azsdk" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","api_review_hub":{"packageVersionId":"version123"},"api_view":null,"response_errors":["APIView: APIView failed"]}'
@@ -127,7 +166,7 @@ Describe "Mark-PackageReleased.ps1" {
         $caughtError.Exception.Message | Should Match "APIView: APIView failed"
     }
 
-    It "includes raw output when azsdk returns malformed output" {
+    It "reports the CLI failure and raw output when azsdk returns no response" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = "distinct raw command output"
         $caughtError = $null
@@ -140,7 +179,26 @@ Describe "Mark-PackageReleased.ps1" {
         }
 
         $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "Mark released failed for azure-test 1\.0\.0 \(azsdk exit code 1\)"
+        $caughtError.Exception.Message | Should Not Match "malformed JSON"
         $caughtError.Exception.Message | Should Match "distinct raw command output"
+        $caughtError.Exception.Message | Should Match "No valid JSON object was found"
+    }
+
+    It "reports malformed output after a successful CLI invocation" {
+        $global:AzSdkOutput = "not json"
+        $caughtError = $null
+
+        try {
+            & $scriptPath -PackageInfoFiles $packageInfoPath
+        }
+        catch {
+            $caughtError = $_
+        }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "returned malformed JSON"
+        $caughtError.Exception.Message | Should Match "not json"
     }
 
     It "accepts a successful response with a missing backend result" {

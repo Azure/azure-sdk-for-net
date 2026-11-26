@@ -415,10 +415,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Redis.RedisPatchScheduleData"/> instance for mocking. </returns>
-        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<RedisPatchScheduleSetting> scheduleEntries = default, RedisPatchScheduleDefaultName defaultName = default, AzureLocation? location = default)
+        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<RedisPatchScheduleSetting> scheduleEntries = default, AzureLocation? location = default)
         {
             return new RedisPatchScheduleData(
                 id,
@@ -426,7 +425,6 @@ namespace Azure.ResourceManager.Redis.Models
                 resourceType,
                 systemData,
                 scheduleEntries is null ? default : new RedisPatchScheduleSettings((scheduleEntries ?? new ChangeTrackingList<RedisPatchScheduleSetting>()).ToList(), default),
-                defaultName,
                 location,
                 default);
         }
@@ -689,7 +687,6 @@ namespace Azure.ResourceManager.Redis.Models
                 resourceType,
                 systemData,
                 scheduleEntries is null ? default : new RedisPatchScheduleSettings((scheduleEntries ?? new ChangeTrackingList<RedisPatchScheduleSetting>()).ToList(), default),
-                default,
                 location,
                 default);
         }

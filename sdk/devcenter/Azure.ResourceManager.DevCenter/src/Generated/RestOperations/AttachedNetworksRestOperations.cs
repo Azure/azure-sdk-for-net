@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByDevCenterRequest(Guid subscriptionId, string resourceGroupName, string devCenterName, int? top, RequestContext context)
+        internal HttpMessage CreateListByDevCenterRequest(Guid subscriptionId, string resourceGroupName, string devCenterName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDevCenterRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string devCenterName, int? top, RequestContext context)
+        internal HttpMessage CreateNextListByDevCenterRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string devCenterName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

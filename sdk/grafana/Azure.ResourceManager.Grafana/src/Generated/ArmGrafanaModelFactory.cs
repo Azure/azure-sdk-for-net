@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GrafanaPrivateLinkServiceConnectionState connectionState = default, IEnumerable<string> groupIds = default, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GrafanaPrivateLinkServiceConnectionState connectionState, IEnumerable<string> groupIds, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new GrafanaPrivateEndpointConnectionData(
                 id,

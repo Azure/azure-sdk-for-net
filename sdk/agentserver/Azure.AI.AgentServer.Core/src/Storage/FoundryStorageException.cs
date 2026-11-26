@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Core.Storage
 {
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     /// Base exception for all Foundry storage service errors. Derives from
     /// <see cref="RequestFailedException"/> so callers get the HTTP status and error code.
     /// </summary>
+    [Experimental("AAAS004")]
     public class FoundryStorageException : RequestFailedException
     {
         /// <summary>Initializes a new instance of the <see cref="FoundryStorageException"/> class.</summary>

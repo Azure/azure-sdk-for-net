@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByAzureApiManagementServiceRequest(Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context)
+        internal HttpMessage CreateListByAzureApiManagementServiceRequest(Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByAzureApiManagementServiceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context)
+        internal HttpMessage CreateNextListByAzureApiManagementServiceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

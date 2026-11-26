@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eHNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName);
             _schemaGroupCollection = eHNamespace.GetEventHubsSchemaGroups();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 SchemaType = EventHubsSchemaType.Avro
             };
-            EventHubsSchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
+            EventHubsSchemaGroupResource schemaGroup = await CompleteAsync(await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, schemaGroupName, parameters));
             Assert.NotNull(schemaGroup);
             Assert.AreEqual(schemaGroupName, schemaGroup.Id.Name);
 
@@ -47,7 +47,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             schemaGroup = await _schemaGroupCollection.GetAsync(schemaGroupName);
 
             //delete eventhub
-            await schemaGroup.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await schemaGroup.DeleteAsync(WaitUntil.Started));
+            Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
+            RequestFailedException failure = Assert.ThrowsAsync<RequestFailedException>(async () => await _schemaGroupCollection.GetAsync(schemaGroupName));
+            Assert.AreEqual(404, failure.Status);
         }
 
         [Test]
@@ -60,16 +63,53 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 SchemaType = EventHubsSchemaType.Avro
             };
-            _ = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName1, parameters)).Value;
+            await CompleteAsync(await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, schemaGroupName1, parameters));
 
             //validate
             int count = 0;
-            await foreach (EventHubsSchemaGroupResource schemaGroup in _schemaGroupCollection.GetAllAsync())
+            foreach (EventHubsSchemaGroupResource schemaGroup in await ReadAllAsync(_schemaGroupCollection.GetAllAsync()))
             {
                 if (schemaGroup.Id.Name == schemaGroupName1)
                     count++;
             }
             Assert.AreEqual(1, count);
+        }
+
+        [RecordedTest]
+        public async Task UpdateSchemaGroup()
+        {
+            string name = Recording.GenerateAssetName("schemagroup");
+            EventHubsSchemaGroupResource resource = await CompleteAsync(await _schemaGroupCollection.CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubsSchemaGroupData
+                {
+                    SchemaType = EventHubsSchemaType.Avro,
+                    SchemaCompatibility = EventHubsSchemaCompatibility.Backward,
+                    GroupProperties = { { "purpose", "initial" } }
+                }));
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsSchemaGroupData
+            {
+                SchemaType = EventHubsSchemaType.Avro,
+                SchemaCompatibility = EventHubsSchemaCompatibility.Backward,
+                GroupProperties = { { "purpose", "updated" } }
+            }));
+            EventHubsSchemaGroupData data = null;
+            for (int attempt = 0; attempt < 12; attempt++)
+            {
+                Response<EventHubsSchemaGroupResource> readBack = await resource.GetAsync();
+                AssertStatus(readBack.GetRawResponse(), 200);
+                data = readBack.Value.Data;
+                if (data.GroupProperties.TryGetValue("purpose", out string purpose) && purpose == "updated")
+                {
+                    break;
+                }
+                if (attempt < 11 && Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            }
+            Assert.AreEqual("updated", data.GroupProperties["purpose"]);
+            Assert.AreEqual(EventHubsSchemaCompatibility.Backward, data.SchemaCompatibility);
+            Assert.AreEqual(EventHubsSchemaType.Avro, data.SchemaType);
         }
     }
 }
