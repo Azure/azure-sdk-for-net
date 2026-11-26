@@ -10,15 +10,23 @@ namespace Azure.Provisioning.AppService;
 // Preserve the historical float-typed compatibility property while binding it within the generated nested HTTP model to avoid overwriting sibling trigger settings.
 internal partial class FunctionsScaleAndConcurrencyTriggersHttp
 {
-    internal BicepValue<float> HttpPerInstanceConcurrency
+    // Use methods so the compatibility member does not count as another property during safe flattening.
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/65191.
+    internal BicepValue<float> GetHttpPerInstanceConcurrency()
     {
-        get { Initialize(); return _httpPerInstanceConcurrency; }
-        set { Initialize(); _httpPerInstanceConcurrency.Assign(value); }
+        Initialize();
+        return _httpPerInstanceConcurrency;
+    }
+
+    internal void SetHttpPerInstanceConcurrency(BicepValue<float> value)
+    {
+        Initialize();
+        _httpPerInstanceConcurrency.Assign(value);
     }
     private BicepValue<float> _httpPerInstanceConcurrency;
 
     partial void DefineAdditionalProperties()
     {
-        _httpPerInstanceConcurrency = DefineProperty<float>(nameof(HttpPerInstanceConcurrency), ["perInstanceConcurrency"]);
+        _httpPerInstanceConcurrency = DefineProperty<float>(nameof(FunctionAppScaleAndConcurrency.HttpPerInstanceConcurrency), ["perInstanceConcurrency"]);
     }
 }

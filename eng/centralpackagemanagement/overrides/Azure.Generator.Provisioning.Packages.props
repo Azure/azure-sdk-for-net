@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <!-- Preserve provisioning's dependency while management adopts a newer Azure.Generator. -->
-    <PackageVersion Update="Azure.Generator" Version="1.0.0-alpha.20261023.4" />
-  </ItemGroup>
-</Project>
