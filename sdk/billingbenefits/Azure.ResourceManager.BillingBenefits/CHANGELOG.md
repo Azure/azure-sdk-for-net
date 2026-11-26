@@ -6,7 +6,11 @@
 
 ### Breaking Changes
 
+- Renamed the `TenantResource` extension methods `GetAll` and `Validate` to `GetMaccs` and `ValidateBillingBenefitsSavingsPlanPurchase`, respectively, including their asynchronous counterparts.
+
 ### Bugs Fixed
+
+- Added resource-specific `ArmClient` extension names `GetApplicableMaccs` and `GetApplicableCredits`, including their asynchronous counterparts. The previous `GetAll` and `GetApplicable` methods remain available for compatibility.
 
 ### Other Changes
 

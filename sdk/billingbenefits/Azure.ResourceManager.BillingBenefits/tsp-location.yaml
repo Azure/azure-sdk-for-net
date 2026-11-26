@@ -1,4 +1,4 @@
 directory: specification/billingbenefits/BillingBenefits.Management
-commit: e0eced653a847e2a058576ec9d1f75bb421bef2b
-repo: Azure/azure-rest-api-specs
+commit: c9ef113f3a06c88deaf85da63b077451bc7ed0db
+repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
