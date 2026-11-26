@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             set
             {
-                FailoverAction = new ResourceCustomProtectionAction(value);
+                FailoverAction = value is null ? default : new ResourceCustomProtectionAction(value);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             set
             {
-                FailoverCommitAction = new ResourceCustomProtectionAction(value);
+                FailoverCommitAction = value is null ? default : new ResourceCustomProtectionAction(value);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             set
             {
-                TestFailoverAction = new ResourceCustomProtectionAction(value);
+                TestFailoverAction = value is null ? default : new ResourceCustomProtectionAction(value);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             set
             {
-                TestFailoverCleanupAction = new ResourceCustomProtectionAction(value);
+                TestFailoverCleanupAction = value is null ? default : new ResourceCustomProtectionAction(value);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             set
             {
-                ReprotectAction = new ResourceCustomProtectionAction(value);
+                ReprotectAction = value is null ? default : new ResourceCustomProtectionAction(value);
             }
         }
     }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             set
             {
-                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+                DiskEncryptionSet = value is null ? default : new DiskEncryptionSetParameters(value);
             }
         }
     }

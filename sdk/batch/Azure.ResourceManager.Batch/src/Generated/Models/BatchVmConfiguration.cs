@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             set
             {
-                ServiceArtifactReference = new ServiceArtifactReference(value);
+                ServiceArtifactReference = value is null ? default : new ServiceArtifactReference(value);
             }
         }
     }

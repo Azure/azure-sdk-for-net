@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             set
             {
-                NetAppVolume = new NetAppVolume(value);
+                NetAppVolume = value is null ? default : new NetAppVolume(value);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             set
             {
-                ElasticSanVolume = new ElasticSanVolume(value);
+                ElasticSanVolume = value is null ? default : new ElasticSanVolume(value);
             }
         }
     }
