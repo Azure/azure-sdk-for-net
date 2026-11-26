@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>The Azure.ResourceManager.ProfessionalService client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
-    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.ProfessionalService</AssemblyTitle>
+    <Description>Microsoft Azure Resource Manager client SDK for managing Azure Professional Service resources (Microsoft.ProfessionalService).</Description>
+    <AssemblyTitle>Microsoft Azure Resource Manager Professional Service Client Library</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.ResourceManager.ProfessionalService</PackageTags>
+    <PackageTags>azure;management;arm;resource manager;professionalservice</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

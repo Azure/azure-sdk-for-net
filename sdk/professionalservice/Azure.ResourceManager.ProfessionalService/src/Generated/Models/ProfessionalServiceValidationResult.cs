@@ -12,25 +12,25 @@ using System.Linq;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> The result of validating a proposed purchase or resource update without modifying state. </summary>
-    public partial class ResourceValidationResult
+    public partial class ProfessionalServiceValidationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceValidationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceValidationResult"/>. </summary>
         /// <param name="isValid"> Indicates whether the proposed purchase or update passed validation. </param>
         /// <param name="details"> The list of validation failures. Empty when `isValid` is `true`. </param>
-        internal ResourceValidationResult(bool isValid, IEnumerable<ResourceValidationError> details)
+        internal ProfessionalServiceValidationResult(bool isValid, IEnumerable<ProfessionalServiceValidationError> details)
         {
             IsValid = isValid;
             Details = details.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceValidationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceValidationResult"/>. </summary>
         /// <param name="isValid"> Indicates whether the proposed purchase or update passed validation. </param>
         /// <param name="details"> The list of validation failures. Empty when `isValid` is `true`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceValidationResult(bool isValid, IList<ResourceValidationError> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServiceValidationResult(bool isValid, IList<ProfessionalServiceValidationError> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsValid = isValid;
             Details = details;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public bool IsValid { get; }
 
         /// <summary> The list of validation failures. Empty when `isValid` is `true`. </summary>
-        public IList<ResourceValidationError> Details { get; }
+        public IList<ProfessionalServiceValidationError> Details { get; }
     }
 }

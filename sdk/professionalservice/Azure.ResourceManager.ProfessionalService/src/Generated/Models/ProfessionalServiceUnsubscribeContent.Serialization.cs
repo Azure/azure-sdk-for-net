@@ -15,61 +15,61 @@ using Azure.ResourceManager.ProfessionalService;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> Unsubscribe options for a Professional Service resource. </summary>
-    public partial class UnsubscribeConfig : IJsonModel<UnsubscribeConfig>
+    public partial class ProfessionalServiceUnsubscribeContent : IJsonModel<ProfessionalServiceUnsubscribeContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UnsubscribeConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProfessionalServiceUnsubscribeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnsubscribeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceUnsubscribeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUnsubscribeConfig(document.RootElement, options);
+                        return DeserializeProfessionalServiceUnsubscribeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnsubscribeConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfessionalServiceUnsubscribeContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnsubscribeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceUnsubscribeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProfessionalServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UnsubscribeConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfessionalServiceUnsubscribeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UnsubscribeConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProfessionalServiceUnsubscribeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UnsubscribeConfig IPersistableModel<UnsubscribeConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProfessionalServiceUnsubscribeContent IPersistableModel<ProfessionalServiceUnsubscribeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UnsubscribeConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProfessionalServiceUnsubscribeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="unsubscribeConfig"> The <see cref="UnsubscribeConfig"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UnsubscribeConfig unsubscribeConfig)
+        /// <param name="professionalServiceUnsubscribeContent"> The <see cref="ProfessionalServiceUnsubscribeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ProfessionalServiceUnsubscribeContent professionalServiceUnsubscribeContent)
         {
-            if (unsubscribeConfig == null)
+            if (professionalServiceUnsubscribeContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(unsubscribeConfig, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(professionalServiceUnsubscribeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UnsubscribeConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProfessionalServiceUnsubscribeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnsubscribeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceUnsubscribeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnsubscribeConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfessionalServiceUnsubscribeContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(UnsubscribeOnly))
+            if (Optional.IsDefined(IsUnsubscribeOnly))
             {
                 writer.WritePropertyName("unsubscribeOnly"u8);
-                writer.WriteBooleanValue(UnsubscribeOnly.Value);
+                writer.WriteBooleanValue(IsUnsubscribeOnly.Value);
             }
             if (Optional.IsDefined(ReasonCode))
             {
@@ -124,33 +124,33 @@ namespace Azure.ResourceManager.ProfessionalService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UnsubscribeConfig IJsonModel<UnsubscribeConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProfessionalServiceUnsubscribeContent IJsonModel<ProfessionalServiceUnsubscribeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UnsubscribeConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProfessionalServiceUnsubscribeContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnsubscribeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceUnsubscribeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnsubscribeConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfessionalServiceUnsubscribeContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnsubscribeConfig(document.RootElement, options);
+            return DeserializeProfessionalServiceUnsubscribeContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnsubscribeConfig DeserializeUnsubscribeConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProfessionalServiceUnsubscribeContent DeserializeProfessionalServiceUnsubscribeContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? unsubscribeOnly = default;
+            bool? isUnsubscribeOnly = default;
             int? reasonCode = default;
             string feedback = default;
-            DeletionSource? deletionSource = default;
+            ProfessionalServiceDeletionSource? deletionSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     {
                         continue;
                     }
-                    unsubscribeOnly = prop.Value.GetBoolean();
+                    isUnsubscribeOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reasonCode"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     {
                         continue;
                     }
-                    deletionSource = new DeletionSource(prop.Value.GetString());
+                    deletionSource = new ProfessionalServiceDeletionSource(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnsubscribeConfig(unsubscribeOnly, reasonCode, feedback, deletionSource, additionalBinaryDataProperties);
+            return new ProfessionalServiceUnsubscribeContent(isUnsubscribeOnly, reasonCode, feedback, deletionSource, additionalBinaryDataProperties);
         }
     }
 }

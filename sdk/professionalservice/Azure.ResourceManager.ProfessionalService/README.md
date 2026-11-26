@@ -1,6 +1,6 @@
-# Azure.ResourceManager.ProfessionalService management client library for .NET
+# Azure Professional Service management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library supports managing Microsoft Azure Professional Service resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

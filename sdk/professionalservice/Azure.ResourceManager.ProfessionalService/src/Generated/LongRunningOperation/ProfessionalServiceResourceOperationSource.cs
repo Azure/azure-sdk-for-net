@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProfessionalService
         ProfessionalServiceResource IOperationSource<ProfessionalServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProfessionalServiceResourceData data = ProfessionalServiceResourceData.DeserializeProfessionalServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ProfessionalServiceData data = ProfessionalServiceData.DeserializeProfessionalServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ProfessionalServiceResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProfessionalService
         async ValueTask<ProfessionalServiceResource> IOperationSource<ProfessionalServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProfessionalServiceResourceData data = ProfessionalServiceResourceData.DeserializeProfessionalServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ProfessionalServiceData data = ProfessionalServiceData.DeserializeProfessionalServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ProfessionalServiceResource(_client, data);
         }
     }

@@ -7,28 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityRequest
+    public partial class ProfessionalServiceNameAvailabilityContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityRequest"/>. </summary>
-        public CheckNameAvailabilityRequest()
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceNameAvailabilityContent"/>. </summary>
+        public ProfessionalServiceNameAvailabilityContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityRequest(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServiceNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public string Name { get; set; }
 
         /// <summary> The resource type. </summary>
-        public string Type { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

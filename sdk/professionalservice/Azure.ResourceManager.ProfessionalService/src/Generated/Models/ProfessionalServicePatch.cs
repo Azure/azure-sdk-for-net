@@ -12,22 +12,22 @@ using Azure.ResourceManager.ProfessionalService;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> The type used for update operations of the ProfessionalServiceResource. </summary>
-    public partial class ProfessionalServiceResourcePatch
+    public partial class ProfessionalServicePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceResourcePatch"/>. </summary>
-        public ProfessionalServiceResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServicePatch"/>. </summary>
+        public ProfessionalServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServicePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfessionalServiceResourcePatch(IDictionary<string, string> tags, ProfessionalServiceResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServicePatch(IDictionary<string, string> tags, ProfessionalServiceResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

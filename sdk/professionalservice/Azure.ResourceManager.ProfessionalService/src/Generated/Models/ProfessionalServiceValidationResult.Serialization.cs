@@ -15,63 +15,63 @@ using Azure.ResourceManager.ProfessionalService;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> The result of validating a proposed purchase or resource update without modifying state. </summary>
-    public partial class ResourceValidationResult : IJsonModel<ResourceValidationResult>
+    public partial class ProfessionalServiceValidationResult : IJsonModel<ProfessionalServiceValidationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceValidationResult"/> for deserialization. </summary>
-        internal ResourceValidationResult()
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceValidationResult"/> for deserialization. </summary>
+        internal ProfessionalServiceValidationResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceValidationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProfessionalServiceValidationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceValidationResult(document.RootElement, options);
+                        return DeserializeProfessionalServiceValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceValidationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfessionalServiceValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProfessionalServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceValidationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfessionalServiceValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceValidationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProfessionalServiceValidationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceValidationResult IPersistableModel<ResourceValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProfessionalServiceValidationResult IPersistableModel<ProfessionalServiceValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProfessionalServiceValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceValidationResult"/> from. </param>
-        internal static ResourceValidationResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProfessionalServiceValidationResult"/> from. </param>
+        internal static ProfessionalServiceValidationResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResourceValidationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeProfessionalServiceValidationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProfessionalServiceValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceValidationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfessionalServiceValidationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("isValid"u8);
             writer.WriteBooleanValue(IsValid);
             writer.WritePropertyName("details"u8);
             writer.WriteStartArray();
-            foreach (ResourceValidationError item in Details)
+            foreach (ProfessionalServiceValidationError item in Details)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -115,31 +115,31 @@ namespace Azure.ResourceManager.ProfessionalService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceValidationResult IJsonModel<ResourceValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProfessionalServiceValidationResult IJsonModel<ProfessionalServiceValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceValidationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProfessionalServiceValidationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceValidationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfessionalServiceValidationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceValidationResult(document.RootElement, options);
+            return DeserializeProfessionalServiceValidationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceValidationResult DeserializeResourceValidationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProfessionalServiceValidationResult DeserializeProfessionalServiceValidationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool isValid = default;
-            IList<ResourceValidationError> details = default;
+            IList<ProfessionalServiceValidationError> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 }
                 if (prop.NameEquals("details"u8))
                 {
-                    List<ResourceValidationError> array = new List<ResourceValidationError>();
+                    List<ProfessionalServiceValidationError> array = new List<ProfessionalServiceValidationError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceValidationError.DeserializeResourceValidationError(item, options));
+                        array.Add(ProfessionalServiceValidationError.DeserializeProfessionalServiceValidationError(item, options));
                     }
                     details = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceValidationResult(isValid, details ?? new ChangeTrackingList<ResourceValidationError>(), additionalBinaryDataProperties);
+            return new ProfessionalServiceValidationResult(isValid, details ?? new ChangeTrackingList<ProfessionalServiceValidationError>(), additionalBinaryDataProperties);
         }
     }
 }

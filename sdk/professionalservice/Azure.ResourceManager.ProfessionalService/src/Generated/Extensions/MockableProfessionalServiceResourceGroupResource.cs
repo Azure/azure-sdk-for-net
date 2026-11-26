@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
             "2026-05-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
-        /// <summary> Gets a collection of ProfessionalServiceResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ProfessionalServiceResources and their operations over a ProfessionalServiceResource. </returns>
-        public virtual ProfessionalServiceResourceCollection GetProfessionalServiceResources()
+        /// <summary> Gets a collection of ProfessionalServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ProfessionalServices and their operations over a ProfessionalServiceResource. </returns>
+        public virtual ProfessionalServiceCollection GetProfessionalServices()
         {
-            return GetCachedClient(client => new ProfessionalServiceResourceCollection(client, Id));
+            return GetCachedClient(client => new ProfessionalServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProfessionalServiceResource>> GetProfessionalServiceResourceAsync(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfessionalServiceResource>> GetProfessionalServiceAsync(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetProfessionalServiceResources().GetAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetProfessionalServices().GetAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProfessionalServiceResource> GetProfessionalServiceResource(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual Response<ProfessionalServiceResource> GetProfessionalService(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetProfessionalServiceResources().Get(resourceName, expandCustomerData, cancellationToken);
+            return GetProfessionalServices().Get(resourceName, expandCustomerData, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ResourceValidationResult>> ValidatePurchaseAsync(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfessionalServiceValidationResult>> ValidatePurchaseAsync(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 };
                 HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateValidatePurchaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ProfessionalServicePurchaseValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ResourceValidationResult> ValidatePurchase(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ProfessionalServiceValidationResult> ValidatePurchase(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 };
                 HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateValidatePurchaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ProfessionalServicePurchaseValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

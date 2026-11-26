@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="description"> Optional description. Used as subscription display name by Teams, Admin Center, and other consumers. </param>
         /// <param name="quantity"> The seat count. </param>
         /// <param name="riskPropertyBagHeader"> The risk property bag header (JSON format). Write-only — not returned in GET responses. </param>
-        /// <param name="autoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="quoteId"> The quote identifier associated with the purchase. </param>
         /// <param name="privateOfferId"> The private offer identifier. </param>
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfessionalServiceResourceUpdateProperties(string description, long? quantity, string riskPropertyBagHeader, bool? autoRenew, string storefront, string quoteId, string privateOfferId, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServiceResourceUpdateProperties(string description, long? quantity, string riskPropertyBagHeader, bool? isAutoRenew, string storefront, string quoteId, string privateOfferId, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Quantity = quantity;
             RiskPropertyBagHeader = riskPropertyBagHeader;
-            AutoRenew = autoRenew;
+            IsAutoRenew = isAutoRenew;
             Storefront = storefront;
             QuoteId = quoteId;
             PrivateOfferId = privateOfferId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public string RiskPropertyBagHeader { get; set; }
 
         /// <summary> Whether the Professional Service subscription will auto-renew upon term end. </summary>
-        public bool? AutoRenew { get; set; }
+        public bool? IsAutoRenew { get; set; }
 
         /// <summary> The storefront. </summary>
         public string Storefront { get; set; }

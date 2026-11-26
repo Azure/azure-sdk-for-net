@@ -21,15 +21,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ProfessionalService
 {
     /// <summary>
-    /// A class representing a ProfessionalServiceResource along with the instance operations that can be performed on it.
+    /// A class representing a ProfessionalService along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProfessionalServiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetProfessionalServiceResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetProfessionalServices method.
     /// </summary>
     public partial class ProfessionalServiceResource : ArmResource
     {
         private readonly ClientDiagnostics _professionalServiceSubscriptionLevelClientDiagnostics;
         private readonly ProfessionalServiceSubscriptionLevel _professionalServiceSubscriptionLevelRestClient;
-        private readonly ProfessionalServiceResourceData _data;
+        private readonly ProfessionalServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ProfessionalService/resources";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <summary> Initializes a new instance of <see cref="ProfessionalServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProfessionalServiceResource(ArmClient client, ProfessionalServiceResourceData data) : this(client, data.Id)
+        internal ProfessionalServiceResource(ArmClient client, ProfessionalServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProfessionalServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string professionalServiceResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string professionalServiceApiVersion);
             _professionalServiceSubscriptionLevelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProfessionalService", ResourceType.Namespace, Diagnostics);
-            _professionalServiceSubscriptionLevelRestClient = new ProfessionalServiceSubscriptionLevel(_professionalServiceSubscriptionLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, professionalServiceResourceApiVersion ?? "2026-05-01");
+            _professionalServiceSubscriptionLevelRestClient = new ProfessionalServiceSubscriptionLevel(_professionalServiceSubscriptionLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, professionalServiceApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProfessionalService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProfessionalServiceResourceData Data
+        public virtual ProfessionalServiceData Data
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 };
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expandCustomerData, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 };
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expandCustomerData, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProfessionalServiceResource>> UpdateAsync(WaitUntil waitUntil, ProfessionalServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfessionalServiceResource>> UpdateAsync(WaitUntil waitUntil, ProfessionalServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServiceResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProfessionalServiceArmOperation<ProfessionalServiceResource> operation = new ProfessionalServiceArmOperation<ProfessionalServiceResource>(
                     new ProfessionalServiceResourceOperationSource(Client),
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ProfessionalServiceResource> Update(WaitUntil waitUntil, ProfessionalServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfessionalServiceResource> Update(WaitUntil waitUntil, ProfessionalServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServiceResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProfessionalServiceArmOperation<ProfessionalServiceResource> operation = new ProfessionalServiceArmOperation<ProfessionalServiceResource>(
                     new ProfessionalServiceResourceOperationSource(Client),
@@ -430,12 +430,12 @@ namespace Azure.ResourceManager.ProfessionalService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProfessionalServiceResource>> UnsubscribeAsync(WaitUntil waitUntil, UnsubscribeConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ProfessionalServiceResource>> UnsubscribeAsync(WaitUntil waitUntil, ProfessionalServiceUnsubscribeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResource.Unsubscribe");
             scope.Start();
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UnsubscribeConfig.ToRequestContent(body), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServiceUnsubscribeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProfessionalServiceArmOperation<ProfessionalServiceResource> operation = new ProfessionalServiceArmOperation<ProfessionalServiceResource>(
                     new ProfessionalServiceResourceOperationSource(Client),
@@ -489,12 +489,12 @@ namespace Azure.ResourceManager.ProfessionalService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<ProfessionalServiceResource> Unsubscribe(WaitUntil waitUntil, UnsubscribeConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ProfessionalServiceResource> Unsubscribe(WaitUntil waitUntil, ProfessionalServiceUnsubscribeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResource.Unsubscribe");
             scope.Start();
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UnsubscribeConfig.ToRequestContent(body), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateUnsubscribeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServiceUnsubscribeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProfessionalServiceArmOperation<ProfessionalServiceResource> operation = new ProfessionalServiceArmOperation<ProfessionalServiceResource>(
                     new ProfessionalServiceResourceOperationSource(Client),
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="patch"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ResourceValidationResult>> ValidateUpdateAsync(ProfessionalServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfessionalServiceValidationResult>> ValidateUpdateAsync(ProfessionalServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -562,9 +562,9 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServiceResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServicePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="patch"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ResourceValidationResult> ValidateUpdate(ProfessionalServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ProfessionalServiceValidationResult> ValidateUpdate(ProfessionalServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -614,9 +614,9 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServiceResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateValidateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfessionalServicePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -655,13 +655,13 @@ namespace Azure.ResourceManager.ProfessionalService
                     };
                     HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                    Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                     return Response.FromValue(new ProfessionalServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProfessionalServiceResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ProfessionalServiceResourcePatch patch = new ProfessionalServiceResourcePatch();
+                    ProfessionalServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ProfessionalServicePatch patch = new ProfessionalServicePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -703,13 +703,13 @@ namespace Azure.ResourceManager.ProfessionalService
                     };
                     HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                    Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                     return Response.FromValue(new ProfessionalServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProfessionalServiceResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ProfessionalServiceResourcePatch patch = new ProfessionalServiceResourcePatch();
+                    ProfessionalServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ProfessionalServicePatch patch = new ProfessionalServicePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -749,13 +749,13 @@ namespace Azure.ResourceManager.ProfessionalService
                     };
                     HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                    Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                     return Response.FromValue(new ProfessionalServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProfessionalServiceResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ProfessionalServiceResourcePatch patch = new ProfessionalServiceResourcePatch();
+                    ProfessionalServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ProfessionalServicePatch patch = new ProfessionalServicePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ProfessionalServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -791,13 +791,13 @@ namespace Azure.ResourceManager.ProfessionalService
                     };
                     HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                    Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                     return Response.FromValue(new ProfessionalServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProfessionalServiceResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ProfessionalServiceResourcePatch patch = new ProfessionalServiceResourcePatch();
+                    ProfessionalServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ProfessionalServicePatch patch = new ProfessionalServicePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ProfessionalServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -833,13 +833,13 @@ namespace Azure.ResourceManager.ProfessionalService
                     };
                     HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                    Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                     return Response.FromValue(new ProfessionalServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProfessionalServiceResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ProfessionalServiceResourcePatch patch = new ProfessionalServiceResourcePatch();
+                    ProfessionalServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ProfessionalServicePatch patch = new ProfessionalServicePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -879,13 +879,13 @@ namespace Azure.ResourceManager.ProfessionalService
                     };
                     HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                    Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                     return Response.FromValue(new ProfessionalServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProfessionalServiceResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ProfessionalServiceResourcePatch patch = new ProfessionalServiceResourcePatch();
+                    ProfessionalServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ProfessionalServicePatch patch = new ProfessionalServicePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

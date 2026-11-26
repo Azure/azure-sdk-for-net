@@ -18,10 +18,10 @@ using Azure.ResourceManager.ProfessionalService.Models;
 namespace Azure.ResourceManager.ProfessionalService
 {
     /// <summary> Professional Service tracked resource for GA API version 2026-05-01. Inherits standard Azure Resource Manager envelope (id, name, type, location, tags, systemData). </summary>
-    public partial class ProfessionalServiceResourceData : TrackedResourceData, IJsonModel<ProfessionalServiceResourceData>
+    public partial class ProfessionalServiceData : TrackedResourceData, IJsonModel<ProfessionalServiceData>
     {
-        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceResourceData"/> for deserialization. </summary>
-        internal ProfessionalServiceResourceData()
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceData"/> for deserialization. </summary>
+        internal ProfessionalServiceData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProfessionalServiceResourceData(document.RootElement, options);
+                        return DeserializeProfessionalServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfessionalServiceResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfessionalServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProfessionalServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProfessionalServiceResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfessionalServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProfessionalServiceResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProfessionalServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProfessionalServiceResourceData IPersistableModel<ProfessionalServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProfessionalServiceResourceData)PersistableModelCreateCore(data, options);
+        ProfessionalServiceData IPersistableModel<ProfessionalServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProfessionalServiceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProfessionalServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProfessionalServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="professionalServiceResourceData"> The <see cref="ProfessionalServiceResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ProfessionalServiceResourceData professionalServiceResourceData)
+        /// <param name="professionalServiceData"> The <see cref="ProfessionalServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ProfessionalServiceData professionalServiceData)
         {
-            if (professionalServiceResourceData == null)
+            if (professionalServiceData == null)
             {
                 return null;
             }
-            return RequestContent.Create(professionalServiceResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(professionalServiceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProfessionalServiceResourceData"/> from. </param>
-        internal static ProfessionalServiceResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProfessionalServiceData"/> from. </param>
+        internal static ProfessionalServiceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProfessionalServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeProfessionalServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProfessionalServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProfessionalServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfessionalServiceResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfessionalServiceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.ProfessionalService
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProfessionalServiceResourceData IJsonModel<ProfessionalServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProfessionalServiceResourceData)JsonModelCreateCore(ref reader, options);
+        ProfessionalServiceData IJsonModel<ProfessionalServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProfessionalServiceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProfessionalServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfessionalServiceResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfessionalServiceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProfessionalServiceResourceData(document.RootElement, options);
+            return DeserializeProfessionalServiceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProfessionalServiceResourceData DeserializeProfessionalServiceResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProfessionalServiceData DeserializeProfessionalServiceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ProfessionalService
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProfessionalServiceResourceData(
+            return new ProfessionalServiceData(
                 id,
                 name,
                 resourceType,

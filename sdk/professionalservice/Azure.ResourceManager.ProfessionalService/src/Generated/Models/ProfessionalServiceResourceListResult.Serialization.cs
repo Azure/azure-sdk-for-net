@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ProfessionalServiceResourceData item in Value)
+            foreach (ProfessionalServiceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             {
                 return null;
             }
-            IList<ProfessionalServiceResourceData> value = default;
+            IList<ProfessionalServiceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ProfessionalServiceResourceData> array = new List<ProfessionalServiceResourceData>();
+                    List<ProfessionalServiceData> array = new List<ProfessionalServiceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProfessionalServiceResourceData.DeserializeProfessionalServiceResourceData(item, options));
+                        array.Add(ProfessionalServiceData.DeserializeProfessionalServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProfessionalServiceResourceListResult(value ?? new ChangeTrackingList<ProfessionalServiceResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new ProfessionalServiceResourceListResult(value ?? new ChangeTrackingList<ProfessionalServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 writer.WritePropertyName("riskPropertyBagHeader"u8);
                 writer.WriteStringValue(RiskPropertyBagHeader);
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Storefront))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             string description = default;
             long? quantity = default;
             string riskPropertyBagHeader = default;
-            bool? autoRenew = default;
+            bool? isAutoRenew = default;
             string storefront = default;
             string quoteId = default;
             string privateOfferId = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     {
                         continue;
                     }
-                    autoRenew = prop.Value.GetBoolean();
+                    isAutoRenew = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storefront"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 description,
                 quantity,
                 riskPropertyBagHeader,
-                autoRenew,
+                isAutoRenew,
                 storefront,
                 quoteId,
                 privateOfferId,

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.ProfessionalService
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityRequest))]
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServiceData))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServiceNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServiceNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServicePatch))]
     [ModelReaderWriterBuildable(typeof(ProfessionalServicePurchaseValidationContent))]
     [ModelReaderWriterBuildable(typeof(ProfessionalServicePurchaseValidationProperties))]
     [ModelReaderWriterBuildable(typeof(ProfessionalServiceResource))]
-    [ModelReaderWriterBuildable(typeof(ProfessionalServiceResourceData))]
-    [ModelReaderWriterBuildable(typeof(ProfessionalServiceResourcePatch))]
     [ModelReaderWriterBuildable(typeof(ProfessionalServiceResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ProfessionalServiceResourceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResourceValidationError))]
-    [ModelReaderWriterBuildable(typeof(ResourceValidationResult))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServiceUnsubscribeContent))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServiceValidationError))]
+    [ModelReaderWriterBuildable(typeof(ProfessionalServiceValidationResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnsubscribeConfig))]
     public partial class AzureResourceManagerProfessionalServiceContext : ModelReaderWriterContext
     {
     }

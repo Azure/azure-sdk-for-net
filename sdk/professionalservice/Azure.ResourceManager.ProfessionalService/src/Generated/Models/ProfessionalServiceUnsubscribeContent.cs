@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> Unsubscribe options for a Professional Service resource. </summary>
-    public partial class UnsubscribeConfig
+    public partial class ProfessionalServiceUnsubscribeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UnsubscribeConfig"/>. </summary>
-        public UnsubscribeConfig()
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceUnsubscribeContent"/>. </summary>
+        public ProfessionalServiceUnsubscribeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnsubscribeConfig"/>. </summary>
-        /// <param name="unsubscribeOnly"> Whether it is unsubscribe only. </param>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceUnsubscribeContent"/>. </summary>
+        /// <param name="isUnsubscribeOnly"> Whether it is unsubscribe only. </param>
         /// <param name="reasonCode"> The reason code. </param>
         /// <param name="feedback"> The feedback. </param>
         /// <param name="deletionSource"> The deletion source. Defaults to CustomerCancellation if not specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnsubscribeConfig(bool? unsubscribeOnly, int? reasonCode, string feedback, DeletionSource? deletionSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServiceUnsubscribeContent(bool? isUnsubscribeOnly, int? reasonCode, string feedback, ProfessionalServiceDeletionSource? deletionSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UnsubscribeOnly = unsubscribeOnly;
+            IsUnsubscribeOnly = isUnsubscribeOnly;
             ReasonCode = reasonCode;
             Feedback = feedback;
             DeletionSource = deletionSource;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         }
 
         /// <summary> Whether it is unsubscribe only. </summary>
-        public bool? UnsubscribeOnly { get; set; }
+        public bool? IsUnsubscribeOnly { get; set; }
 
         /// <summary> The reason code. </summary>
         public int? ReasonCode { get; set; }
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public string Feedback { get; set; }
 
         /// <summary> The deletion source. Defaults to CustomerCancellation if not specified. </summary>
-        public DeletionSource? DeletionSource { get; set; }
+        public ProfessionalServiceDeletionSource? DeletionSource { get; set; }
     }
 }

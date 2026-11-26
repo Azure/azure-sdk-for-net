@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ProfessionalService.ProfessionalServiceResourceData"/> instance for mocking. </returns>
-        public static ProfessionalServiceResourceData ProfessionalServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProfessionalServiceResourceProperties properties = default)
+        /// <returns> A new <see cref="ProfessionalService.ProfessionalServiceData"/> instance for mocking. </returns>
+        public static ProfessionalServiceData ProfessionalServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProfessionalServiceResourceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProfessionalServiceResourceData(
+            return new ProfessionalServiceData(
                 id,
                 name,
                 resourceType,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="termStartsOn"> The start date of the current term. Server-calculated. </param>
         /// <param name="termEndsOn"> The end date of the current term. Server-calculated. </param>
         /// <param name="futureStartsOn"> The future start date of the subscription commitment, when available. Server-calculated. </param>
-        /// <param name="autoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
         /// <param name="isFreeTrial"> Whether the current term is a free trial term. Server-determined. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="purchaserEmail">
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="privateOfferId"> The private offer identifier. </param>
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <returns> A new <see cref="Models.ProfessionalServiceResourceProperties"/> instance for mocking. </returns>
-        public static ProfessionalServiceResourceProperties ProfessionalServiceResourceProperties(ProfessionalServiceProvisioningState? provisioningState = default, string assetId = default, string description = default, ProfessionalServiceResourceStatus? status = default, SubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? autoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default)
+        public static ProfessionalServiceResourceProperties ProfessionalServiceResourceProperties(ProfessionalServiceProvisioningState? provisioningState = default, string assetId = default, string description = default, ProfessionalServiceResourceStatus? status = default, ProfessionalServiceSubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? isAutoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default)
         {
             return new ProfessionalServiceResourceProperties(
                 provisioningState,
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 termStartsOn,
                 termEndsOn,
                 futureStartsOn,
-                autoRenew,
+                isAutoRenew,
                 isFreeTrial,
                 storefront,
                 purchaserEmail,
@@ -109,31 +109,31 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <summary> The type used for update operations of the ProfessionalServiceResource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ProfessionalServiceResourcePatch"/> instance for mocking. </returns>
-        public static ProfessionalServiceResourcePatch ProfessionalServiceResourcePatch(IDictionary<string, string> tags = default, ProfessionalServiceResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.ProfessionalServicePatch"/> instance for mocking. </returns>
+        public static ProfessionalServicePatch ProfessionalServicePatch(IDictionary<string, string> tags = default, ProfessionalServiceResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProfessionalServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new ProfessionalServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> The updatable properties of the ProfessionalServiceResource. </summary>
         /// <param name="description"> Optional description. Used as subscription display name by Teams, Admin Center, and other consumers. </param>
         /// <param name="quantity"> The seat count. </param>
         /// <param name="riskPropertyBagHeader"> The risk property bag header (JSON format). Write-only — not returned in GET responses. </param>
-        /// <param name="autoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="quoteId"> The quote identifier associated with the purchase. </param>
         /// <param name="privateOfferId"> The private offer identifier. </param>
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <returns> A new <see cref="Models.ProfessionalServiceResourceUpdateProperties"/> instance for mocking. </returns>
-        public static ProfessionalServiceResourceUpdateProperties ProfessionalServiceResourceUpdateProperties(string description = default, long? quantity = default, string riskPropertyBagHeader = default, bool? autoRenew = default, string storefront = default, string quoteId = default, string privateOfferId = default, string productCode = default)
+        public static ProfessionalServiceResourceUpdateProperties ProfessionalServiceResourceUpdateProperties(string description = default, long? quantity = default, string riskPropertyBagHeader = default, bool? isAutoRenew = default, string storefront = default, string quoteId = default, string privateOfferId = default, string productCode = default)
         {
             return new ProfessionalServiceResourceUpdateProperties(
                 description,
                 quantity,
                 riskPropertyBagHeader,
-                autoRenew,
+                isAutoRenew,
                 storefront,
                 quoteId,
                 privateOfferId,
@@ -142,53 +142,53 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         }
 
         /// <summary> Unsubscribe options for a Professional Service resource. </summary>
-        /// <param name="unsubscribeOnly"> Whether it is unsubscribe only. </param>
+        /// <param name="isUnsubscribeOnly"> Whether it is unsubscribe only. </param>
         /// <param name="reasonCode"> The reason code. </param>
         /// <param name="feedback"> The feedback. </param>
         /// <param name="deletionSource"> The deletion source. Defaults to CustomerCancellation if not specified. </param>
-        /// <returns> A new <see cref="Models.UnsubscribeConfig"/> instance for mocking. </returns>
-        public static UnsubscribeConfig UnsubscribeConfig(bool? unsubscribeOnly = default, int? reasonCode = default, string feedback = default, DeletionSource? deletionSource = default)
+        /// <returns> A new <see cref="Models.ProfessionalServiceUnsubscribeContent"/> instance for mocking. </returns>
+        public static ProfessionalServiceUnsubscribeContent ProfessionalServiceUnsubscribeContent(bool? isUnsubscribeOnly = default, int? reasonCode = default, string feedback = default, ProfessionalServiceDeletionSource? deletionSource = default)
         {
-            return new UnsubscribeConfig(unsubscribeOnly, reasonCode, feedback, deletionSource, default);
+            return new ProfessionalServiceUnsubscribeContent(isUnsubscribeOnly, reasonCode, feedback, deletionSource, default);
         }
 
         /// <summary> The result of validating a proposed purchase or resource update without modifying state. </summary>
         /// <param name="isValid"> Indicates whether the proposed purchase or update passed validation. </param>
         /// <param name="details"> The list of validation failures. Empty when `isValid` is `true`. </param>
-        /// <returns> A new <see cref="Models.ResourceValidationResult"/> instance for mocking. </returns>
-        public static ResourceValidationResult ResourceValidationResult(bool isValid = default, IEnumerable<ResourceValidationError> details = default)
+        /// <returns> A new <see cref="Models.ProfessionalServiceValidationResult"/> instance for mocking. </returns>
+        public static ProfessionalServiceValidationResult ProfessionalServiceValidationResult(bool isValid = default, IEnumerable<ProfessionalServiceValidationError> details = default)
         {
-            details ??= new ChangeTrackingList<ResourceValidationError>();
+            details ??= new ChangeTrackingList<ProfessionalServiceValidationError>();
 
-            return new ResourceValidationResult(isValid, (details ?? new ChangeTrackingList<ResourceValidationError>()).ToList(), default);
+            return new ProfessionalServiceValidationResult(isValid, (details ?? new ChangeTrackingList<ProfessionalServiceValidationError>()).ToList(), default);
         }
 
         /// <summary> A machine-readable error code and human-readable message describing a validation failure. </summary>
         /// <param name="code"> Machine-readable validation error code. </param>
         /// <param name="message"> Human-readable description of the validation failure. </param>
-        /// <returns> A new <see cref="Models.ResourceValidationError"/> instance for mocking. </returns>
-        public static ResourceValidationError ResourceValidationError(string code = default, string message = default)
+        /// <returns> A new <see cref="Models.ProfessionalServiceValidationError"/> instance for mocking. </returns>
+        public static ProfessionalServiceValidationError ProfessionalServiceValidationError(string code = default, string message = default)
         {
-            return new ResourceValidationError(code, message, default);
+            return new ProfessionalServiceValidationError(code, message, default);
         }
 
         /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.ProfessionalServiceNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ProfessionalServiceNameAvailabilityContent ProfessionalServiceNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
         {
-            return new CheckNameAvailabilityRequest(name, @type, default);
+            return new ProfessionalServiceNameAvailabilityContent(name, resourceType, default);
         }
 
         /// <summary> The check availability result. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.ProfessionalServiceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static ProfessionalServiceNameAvailabilityResult ProfessionalServiceNameAvailabilityResult(bool? isNameAvailable = default, ProfessionalServiceNameUnavailableReason? reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
+            return new ProfessionalServiceNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> Request payload for validating a proposed Professional Service purchase without creating the resource. </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="termStartsOn"> The start date of the current term. Server-calculated. </param>
         /// <param name="termEndsOn"> The end date of the current term. Server-calculated. </param>
         /// <param name="futureStartsOn"> The future start date of the subscription commitment, when available. Server-calculated. </param>
-        /// <param name="autoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
         /// <param name="isFreeTrial"> Whether the current term is a free trial term. Server-determined. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="purchaserEmail">
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="name"> The proposed Professional Service resource name to validate. </param>
         /// <returns> A new <see cref="Models.ProfessionalServicePurchaseValidationProperties"/> instance for mocking. </returns>
-        public static ProfessionalServicePurchaseValidationProperties ProfessionalServicePurchaseValidationProperties(ProfessionalServiceProvisioningState? provisioningState = default, string assetId = default, string description = default, ProfessionalServiceResourceStatus? status = default, SubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? autoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default, string name = default)
+        public static ProfessionalServicePurchaseValidationProperties ProfessionalServicePurchaseValidationProperties(ProfessionalServiceProvisioningState? provisioningState = default, string assetId = default, string description = default, ProfessionalServiceResourceStatus? status = default, ProfessionalServiceSubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? isAutoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default, string name = default)
         {
             return new ProfessionalServicePurchaseValidationProperties(
                 provisioningState,
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 termStartsOn,
                 termEndsOn,
                 futureStartsOn,
-                autoRenew,
+                isAutoRenew,
                 isFreeTrial,
                 storefront,
                 purchaserEmail,

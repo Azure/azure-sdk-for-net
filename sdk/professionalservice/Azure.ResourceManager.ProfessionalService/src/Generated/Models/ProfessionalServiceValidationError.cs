@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> A machine-readable error code and human-readable message describing a validation failure. </summary>
-    public partial class ResourceValidationError
+    public partial class ProfessionalServiceValidationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceValidationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceValidationError"/>. </summary>
         /// <param name="code"> Machine-readable validation error code. </param>
         /// <param name="message"> Human-readable description of the validation failure. </param>
-        internal ResourceValidationError(string code, string message)
+        internal ProfessionalServiceValidationError(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceValidationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceValidationError"/>. </summary>
         /// <param name="code"> Machine-readable validation error code. </param>
         /// <param name="message"> Human-readable description of the validation failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceValidationError(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServiceValidationError(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

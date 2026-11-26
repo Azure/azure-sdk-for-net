@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProfessionalServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProfessionalServiceResource> GetProfessionalServiceResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProfessionalServiceResource> GetProfessionalServicesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProfessionalServiceResourceData, ProfessionalServiceResource>(new ProfessionalServiceResourceDataAsync0CollectionResultOfT(ProfessionalServiceSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProfessionalServiceSubscriptionResource.GetProfessionalServiceResources"), data => new ProfessionalServiceResource(Client, data));
+            return new AsyncPageableWrapper<ProfessionalServiceData, ProfessionalServiceResource>(new ProfessionalServiceDataAsync0CollectionResultOfT(ProfessionalServiceSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProfessionalServiceSubscriptionResource.GetProfessionalServices"), data => new ProfessionalServiceResource(Client, data));
         }
 
         /// <summary>
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProfessionalServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProfessionalServiceResource> GetProfessionalServiceResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<ProfessionalServiceResource> GetProfessionalServices(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProfessionalServiceResourceData, ProfessionalServiceResource>(new ProfessionalServiceResourceData0CollectionResultOfT(ProfessionalServiceSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProfessionalServiceSubscriptionResource.GetProfessionalServiceResources"), data => new ProfessionalServiceResource(Client, data));
+            return new PageableWrapper<ProfessionalServiceData, ProfessionalServiceResource>(new ProfessionalServiceData0CollectionResultOfT(ProfessionalServiceSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProfessionalServiceSubscriptionResource.GetProfessionalServices"), data => new ProfessionalServiceResource(Client, data));
         }
 
         /// <summary>
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfessionalServiceNameAvailabilityResult>> CheckProfessionalServiceNameAvailabilityAsync(ProfessionalServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProfessionalServiceSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableProfessionalServiceSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = ProfessionalServiceSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableProfessionalServiceSubscriptionResource.CheckProfessionalServiceNameAvailability");
             scope.Start();
             try
             {
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateCheckProfessionalServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ProfessionalServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<ProfessionalServiceNameAvailabilityResult> response = Response.FromValue(ProfessionalServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<ProfessionalServiceNameAvailabilityResult> CheckProfessionalServiceNameAvailability(ProfessionalServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProfessionalServiceSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableProfessionalServiceSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = ProfessionalServiceSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableProfessionalServiceSubscriptionResource.CheckProfessionalServiceNameAvailability");
             scope.Start();
             try
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateCheckProfessionalServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ProfessionalServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<ProfessionalServiceNameAvailabilityResult> response = Response.FromValue(ProfessionalServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ResourceValidationResult>> ValidatePurchaseBySubscriptionAsync(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfessionalServiceValidationResult>> ValidatePurchaseBySubscriptionAsync(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 };
                 HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateValidatePurchaseBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), ProfessionalServicePurchaseValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ResourceValidationResult> ValidatePurchaseBySubscription(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ProfessionalServiceValidationResult> ValidatePurchaseBySubscription(ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 };
                 HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateValidatePurchaseBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), ProfessionalServicePurchaseValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
+                Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

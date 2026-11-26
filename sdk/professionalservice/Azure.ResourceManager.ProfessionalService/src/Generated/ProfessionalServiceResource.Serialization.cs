@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ProfessionalService
 {
     /// <summary></summary>
-    public partial class ProfessionalServiceResource : IJsonModel<ProfessionalServiceResourceData>
+    public partial class ProfessionalServiceResource : IJsonModel<ProfessionalServiceData>
     {
-        private static IJsonModel<ProfessionalServiceResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ProfessionalServiceData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ProfessionalServiceResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProfessionalServiceResourceData();
+        private static IJsonModel<ProfessionalServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProfessionalServiceData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProfessionalServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProfessionalServiceResourceData>)Data).Write(writer, options);
+        void IJsonModel<ProfessionalServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProfessionalServiceData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProfessionalServiceResourceData IJsonModel<ProfessionalServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ProfessionalServiceData IJsonModel<ProfessionalServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProfessionalServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProfessionalServiceResourceData>(Data, options, AzureResourceManagerProfessionalServiceContext.Default);
+        BinaryData IPersistableModel<ProfessionalServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProfessionalServiceData>(Data, options, AzureResourceManagerProfessionalServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProfessionalServiceResourceData IPersistableModel<ProfessionalServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfessionalServiceResourceData>(data, options, AzureResourceManagerProfessionalServiceContext.Default);
+        ProfessionalServiceData IPersistableModel<ProfessionalServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfessionalServiceData>(data, options, AzureResourceManagerProfessionalServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProfessionalServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ProfessionalServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -58,27 +58,27 @@ namespace Azure.ResourceManager.ProfessionalService
         }
 
         /// <summary>
-        /// Gets a collection of ProfessionalServiceResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ProfessionalServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceResourceGroupResource.GetProfessionalServiceResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceResourceGroupResource.GetProfessionalServices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ProfessionalServiceResources and their operations over a ProfessionalServiceResource. </returns>
-        public static ProfessionalServiceResourceCollection GetProfessionalServiceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ProfessionalServices and their operations over a ProfessionalServiceResource. </returns>
+        public static ProfessionalServiceCollection GetProfessionalServices(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableProfessionalServiceResourceGroupResource(resourceGroupResource).GetProfessionalServiceResources();
+            return GetMockableProfessionalServiceResourceGroupResource(resourceGroupResource).GetProfessionalServices();
         }
 
         /// <summary>
         /// Gets a Professional Service resource by its name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceResourceGroupResource.GetProfessionalServiceResourceAsync(string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceResourceGroupResource.GetProfessionalServiceAsync(string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -87,18 +87,18 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProfessionalServiceResource>> GetProfessionalServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProfessionalServiceResource>> GetProfessionalServiceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableProfessionalServiceResourceGroupResource(resourceGroupResource).GetProfessionalServiceResourceAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetMockableProfessionalServiceResourceGroupResource(resourceGroupResource).GetProfessionalServiceAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a Professional Service resource by its name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceResourceGroupResource.GetProfessionalServiceResource(string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceResourceGroupResource.GetProfessionalService(string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProfessionalServiceResource> GetProfessionalServiceResource(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public static Response<ProfessionalServiceResource> GetProfessionalService(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableProfessionalServiceResourceGroupResource(resourceGroupResource).GetProfessionalServiceResource(resourceName, expandCustomerData, cancellationToken);
+            return GetMockableProfessionalServiceResourceGroupResource(resourceGroupResource).GetProfessionalService(resourceName, expandCustomerData, cancellationToken);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceValidationResult>> ValidatePurchaseAsync(this ResourceGroupResource resourceGroupResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProfessionalServiceValidationResult>> ValidatePurchaseAsync(this ResourceGroupResource resourceGroupResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceValidationResult> ValidatePurchase(this ResourceGroupResource resourceGroupResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<ProfessionalServiceValidationResult> ValidatePurchase(this ResourceGroupResource resourceGroupResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -154,72 +154,72 @@ namespace Azure.ResourceManager.ProfessionalService
         /// Lists all Professional Service resources within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.GetProfessionalServiceResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.GetProfessionalServicesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ProfessionalServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProfessionalServiceResource> GetProfessionalServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProfessionalServiceResource> GetProfessionalServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).GetProfessionalServiceResourcesAsync(cancellationToken);
+            return GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).GetProfessionalServicesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Professional Service resources within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.GetProfessionalServiceResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.GetProfessionalServices(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ProfessionalServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProfessionalServiceResource> GetProfessionalServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ProfessionalServiceResource> GetProfessionalServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).GetProfessionalServiceResources(cancellationToken);
+            return GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).GetProfessionalServices(cancellationToken);
         }
 
         /// <summary>
         /// Checks whether a proposed Professional Service resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.CheckNameAvailabilityAsync(CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.CheckProfessionalServiceNameAvailabilityAsync(ProfessionalServiceNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProfessionalServiceNameAvailabilityResult>> CheckProfessionalServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ProfessionalServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).CheckProfessionalServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether a proposed Professional Service resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.CheckNameAvailability(CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProfessionalServiceSubscriptionResource.CheckProfessionalServiceNameAvailability(ProfessionalServiceNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<ProfessionalServiceNameAvailabilityResult> CheckProfessionalServiceNameAvailability(this SubscriptionResource subscriptionResource, ProfessionalServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).CheckNameAvailability(content, cancellationToken);
+            return GetMockableProfessionalServiceSubscriptionResource(subscriptionResource).CheckProfessionalServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ResourceValidationResult>> ValidatePurchaseBySubscriptionAsync(this SubscriptionResource subscriptionResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProfessionalServiceValidationResult>> ValidatePurchaseBySubscriptionAsync(this SubscriptionResource subscriptionResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ResourceValidationResult> ValidatePurchaseBySubscription(this SubscriptionResource subscriptionResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<ProfessionalServiceValidationResult> ValidatePurchaseBySubscription(this SubscriptionResource subscriptionResource, ProfessionalServicePurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

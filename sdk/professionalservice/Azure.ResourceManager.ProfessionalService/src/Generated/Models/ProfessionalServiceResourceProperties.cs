@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="termStartsOn"> The start date of the current term. Server-calculated. </param>
         /// <param name="termEndsOn"> The end date of the current term. Server-calculated. </param>
         /// <param name="futureStartsOn"> The future start date of the subscription commitment, when available. Server-calculated. </param>
-        /// <param name="autoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the Professional Service subscription will auto-renew upon term end. </param>
         /// <param name="isFreeTrial"> Whether the current term is a free trial term. Server-determined. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="purchaserEmail">
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="privateOfferId"> The private offer identifier. </param>
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfessionalServiceResourceProperties(ProfessionalServiceProvisioningState? provisioningState, string assetId, string description, ProfessionalServiceResourceStatus? status, SubscriptionStatusReason? statusReason, long? quantity, string publisherName, string planName, string offerName, string termUnit, string billingPeriod, string riskPropertyBagHeader, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, DateTimeOffset? futureStartsOn, bool? autoRenew, bool? isFreeTrial, string storefront, string purchaserEmail, string quoteId, string privateOfferId, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServiceResourceProperties(ProfessionalServiceProvisioningState? provisioningState, string assetId, string description, ProfessionalServiceResourceStatus? status, ProfessionalServiceSubscriptionStatusReason? statusReason, long? quantity, string publisherName, string planName, string offerName, string termUnit, string billingPeriod, string riskPropertyBagHeader, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, DateTimeOffset? futureStartsOn, bool? isAutoRenew, bool? isFreeTrial, string storefront, string purchaserEmail, string quoteId, string privateOfferId, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AssetId = assetId;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             TermStartsOn = termStartsOn;
             TermEndsOn = termEndsOn;
             FutureStartsOn = futureStartsOn;
-            AutoRenew = autoRenew;
+            IsAutoRenew = isAutoRenew;
             IsFreeTrial = isFreeTrial;
             Storefront = storefront;
             PurchaserEmail = purchaserEmail;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public ProfessionalServiceResourceStatus? Status { get; }
 
         /// <summary> The reason for the current status. Server-assigned. </summary>
-        public SubscriptionStatusReason? StatusReason { get; }
+        public ProfessionalServiceSubscriptionStatusReason? StatusReason { get; }
 
         /// <summary> The seat count. </summary>
         public long? Quantity { get; set; }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public DateTimeOffset? FutureStartsOn { get; }
 
         /// <summary> Whether the Professional Service subscription will auto-renew upon term end. </summary>
-        public bool? AutoRenew { get; set; }
+        public bool? IsAutoRenew { get; set; }
 
         /// <summary> Whether the current term is a free trial term. Server-determined. </summary>
         public bool? IsFreeTrial { get; }

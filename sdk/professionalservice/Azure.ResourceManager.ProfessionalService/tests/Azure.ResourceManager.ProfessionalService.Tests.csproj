@@ -1,9 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" Condition="'$(IsMgmtLibrary)' != 'true'" />
     <ProjectReference Include="..\src\Azure.ResourceManager.ProfessionalService.csproj" />

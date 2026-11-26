@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 writer.WritePropertyName("futureStartDate"u8);
                 writer.WriteStringValue(FutureStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFreeTrial))
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             string assetId = default;
             string description = default;
             ProfessionalServiceResourceStatus? status = default;
-            SubscriptionStatusReason? statusReason = default;
+            ProfessionalServiceSubscriptionStatusReason? statusReason = default;
             long? quantity = default;
             string publisherName = default;
             string planName = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             DateTimeOffset? termStartsOn = default;
             DateTimeOffset? termEndsOn = default;
             DateTimeOffset? futureStartsOn = default;
-            bool? autoRenew = default;
+            bool? isAutoRenew = default;
             bool? isFreeTrial = default;
             string storefront = default;
             string purchaserEmail = default;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     {
                         continue;
                     }
-                    statusReason = new SubscriptionStatusReason(prop.Value.GetString());
+                    statusReason = new ProfessionalServiceSubscriptionStatusReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("quantity"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     {
                         continue;
                     }
-                    autoRenew = prop.Value.GetBoolean();
+                    isAutoRenew = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isFreeTrial"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                 termStartsOn,
                 termEndsOn,
                 futureStartsOn,
-                autoRenew,
+                isAutoRenew,
                 isFreeTrial,
                 storefront,
                 purchaserEmail,

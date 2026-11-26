@@ -17,19 +17,19 @@ using Azure.ResourceManager.ProfessionalService.Models;
 
 namespace Azure.ResourceManager.ProfessionalService
 {
-    internal partial class ProfessionalServiceResourceDataAsync0CollectionResultOfT : AsyncPageable<ProfessionalServiceResourceData>
+    internal partial class ProfessionalServiceDataAsync0CollectionResultOfT : AsyncPageable<ProfessionalServiceData>
     {
         private readonly ProfessionalServiceSubscriptionLevelGlobal _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ProfessionalServiceResourceDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ProfessionalServiceDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProfessionalServiceSubscriptionLevelGlobal client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProfessionalServiceResourceDataAsync0CollectionResultOfT(ProfessionalServiceSubscriptionLevelGlobal client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ProfessionalServiceDataAsync0CollectionResultOfT(ProfessionalServiceSubscriptionLevelGlobal client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ProfessionalService
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ProfessionalServiceResourceDataAsync0CollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ProfessionalServiceDataAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ProfessionalServiceResourceDataAsync0CollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<ProfessionalServiceResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ProfessionalServiceDataAsync0CollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<ProfessionalServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<ProfessionalServiceResourceData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<ProfessionalServiceData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 }
                 ProfessionalServiceResourceListResult result = ProfessionalServiceResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ProfessionalServiceResourceData>.FromValues((IReadOnlyList<ProfessionalServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ProfessionalServiceData>.FromValues((IReadOnlyList<ProfessionalServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

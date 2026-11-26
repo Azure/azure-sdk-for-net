@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ProfessionalService
     /// <summary>
     /// A class representing a collection of <see cref="ProfessionalServiceResource"/> and their operations.
     /// Each <see cref="ProfessionalServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ProfessionalServiceResourceCollection"/> instance call the GetProfessionalServiceResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ProfessionalServiceCollection"/> instance call the GetProfessionalServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ProfessionalServiceResourceCollection : ArmCollection, IEnumerable<ProfessionalServiceResource>, IAsyncEnumerable<ProfessionalServiceResource>
+    public partial class ProfessionalServiceCollection : ArmCollection, IEnumerable<ProfessionalServiceResource>, IAsyncEnumerable<ProfessionalServiceResource>
     {
         private readonly ClientDiagnostics _professionalServiceSubscriptionLevelClientDiagnostics;
         private readonly ProfessionalServiceSubscriptionLevel _professionalServiceSubscriptionLevelRestClient;
 
-        /// <summary> Initializes a new instance of ProfessionalServiceResourceCollection for mocking. </summary>
-        protected ProfessionalServiceResourceCollection()
+        /// <summary> Initializes a new instance of ProfessionalServiceCollection for mocking. </summary>
+        protected ProfessionalServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProfessionalServiceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProfessionalServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ProfessionalServiceResource.ResourceType, out string professionalServiceResourceApiVersion);
+            TryGetApiVersion(ProfessionalServiceResource.ResourceType, out string professionalServiceApiVersion);
             _professionalServiceSubscriptionLevelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProfessionalService", ProfessionalServiceResource.ResourceType.Namespace, Diagnostics);
-            _professionalServiceSubscriptionLevelRestClient = new ProfessionalServiceSubscriptionLevel(_professionalServiceSubscriptionLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, professionalServiceResourceApiVersion ?? "2026-05-01");
+            _professionalServiceSubscriptionLevelRestClient = new ProfessionalServiceSubscriptionLevel(_professionalServiceSubscriptionLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, professionalServiceApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ProfessionalServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ProfessionalServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfessionalServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ProfessionalServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ProfessionalServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ProfessionalServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProfessionalServiceArmOperation<ProfessionalServiceResource> operation = new ProfessionalServiceArmOperation<ProfessionalServiceResource>(
                     new ProfessionalServiceResourceOperationSource(Client),
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.ProfessionalService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ProfessionalServiceResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ProfessionalServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfessionalServiceResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ProfessionalServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ProfessionalServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ProfessionalServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProfessionalServiceArmOperation<ProfessionalServiceResource> operation = new ProfessionalServiceArmOperation<ProfessionalServiceResource>(
                     new ProfessionalServiceResourceOperationSource(Client),
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ProfessionalService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.Get");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.Get");
             scope.Start();
             try
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 };
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, expandCustomerData, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ProfessionalService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.Get");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.Get");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ProfessionalService
                 };
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, expandCustomerData, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProfessionalServiceResourceData> response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                Response<ProfessionalServiceData> response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ProfessionalService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProfessionalServiceResourceData, ProfessionalServiceResource>(new ProfessionalServiceResourceDataAsyncCollectionResultOfT(_professionalServiceSubscriptionLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfessionalServiceResourceCollection.GetAll"), data => new ProfessionalServiceResource(Client, data));
+            return new AsyncPageableWrapper<ProfessionalServiceData, ProfessionalServiceResource>(new ProfessionalServiceDataAsyncCollectionResultOfT(_professionalServiceSubscriptionLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfessionalServiceCollection.GetAll"), data => new ProfessionalServiceResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ProfessionalService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProfessionalServiceResourceData, ProfessionalServiceResource>(new ProfessionalServiceResourceDataCollectionResultOfT(_professionalServiceSubscriptionLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfessionalServiceResourceCollection.GetAll"), data => new ProfessionalServiceResource(Client, data));
+            return new PageableWrapper<ProfessionalServiceData, ProfessionalServiceResource>(new ProfessionalServiceDataCollectionResultOfT(_professionalServiceSubscriptionLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfessionalServiceCollection.GetAll"), data => new ProfessionalServiceResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ProfessionalService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.Exists");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.ProfessionalService
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, expandCustomerData, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProfessionalServiceResourceData> response = default;
+                Response<ProfessionalServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProfessionalServiceResourceData)null, result);
+                        response = Response.FromValue((ProfessionalServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ProfessionalService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.Exists");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -422,14 +422,14 @@ namespace Azure.ResourceManager.ProfessionalService
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, expandCustomerData, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProfessionalServiceResourceData> response = default;
+                Response<ProfessionalServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProfessionalServiceResourceData)null, result);
+                        response = Response.FromValue((ProfessionalServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ProfessionalService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -480,14 +480,14 @@ namespace Azure.ResourceManager.ProfessionalService
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, expandCustomerData, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProfessionalServiceResourceData> response = default;
+                Response<ProfessionalServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProfessionalServiceResourceData)null, result);
+                        response = Response.FromValue((ProfessionalServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ProfessionalService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _professionalServiceSubscriptionLevelClientDiagnostics.CreateScope("ProfessionalServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -542,14 +542,14 @@ namespace Azure.ResourceManager.ProfessionalService
                 HttpMessage message = _professionalServiceSubscriptionLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, expandCustomerData, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProfessionalServiceResourceData> response = default;
+                Response<ProfessionalServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProfessionalServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ProfessionalServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProfessionalServiceResourceData)null, result);
+                        response = Response.FromValue((ProfessionalServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
