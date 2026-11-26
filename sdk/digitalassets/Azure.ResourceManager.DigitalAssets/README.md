@@ -1,6 +1,6 @@
-# Azure.ResourceManager.DigitalAssets management client library for .NET
+# Microsoft Azure Digital Assets management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library supports managing Microsoft Azure Digital Assets resources: zero-knowledge proof (ZKP) rollups and their partitions.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
