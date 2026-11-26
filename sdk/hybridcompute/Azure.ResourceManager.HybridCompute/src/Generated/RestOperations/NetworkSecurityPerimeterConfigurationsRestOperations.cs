@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        internal HttpMessage CreateGetByPrivateLinkScopeRequest(Guid subscriptionId, string resourceGroupName, string scopeName, RequestContext context)
+        internal HttpMessage CreateListByPrivateLinkScopeRequest(Guid subscriptionId, string resourceGroupName, string scopeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        internal HttpMessage CreateNextGetByPrivateLinkScopeRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scopeName, RequestContext context)
+        internal HttpMessage CreateNextListByPrivateLinkScopeRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scopeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

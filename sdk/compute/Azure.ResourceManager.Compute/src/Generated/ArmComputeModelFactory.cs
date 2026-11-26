@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
         /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ResourceIdentifier interconnectBlockId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, VirtualMachineScaleSetHardwareProfile hardwareProfile, ResourceIdentifier serviceArtifactReferenceId, ComputeSecurityPostureReference securityPostureReference, DateTimeOffset? timeCreated)
+        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = default, VirtualMachineScaleSetStorageProfile storageProfile = default, VirtualMachineScaleSetNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, CapacityReservationProfile capacityReservation = default, ResourceIdentifier interconnectBlockId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineScaleSetHardwareProfile hardwareProfile = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeSecurityPostureReference securityPostureReference = default, DateTimeOffset? timeCreated = default)
         {
             return new VirtualMachineScaleSetVmProfile(
                 osProfile,
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskControllerKind"> Specifies the disk controller type configured for the virtual machines in the scale set. Minimum api-version: 2022-08-01. </param>
         /// <param name="diskApiVersion"> Specifies the Disk API version used when applying additionalDiskProperties to managed disks. The value must be in the format YYYY-MM-DD (e.g., "2026-03-02"). </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetStorageProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetStorageProfile VirtualMachineScaleSetStorageProfile(ImageReference imageReference, VirtualMachineScaleSetOSDisk osDisk, IEnumerable<VirtualMachineScaleSetDataDisk> dataDisks, DiskControllerType? diskControllerKind, DiskApiVersion? diskApiVersion)
+        public static VirtualMachineScaleSetStorageProfile VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default, VirtualMachineScaleSetOSDisk osDisk = default, IEnumerable<VirtualMachineScaleSetDataDisk> dataDisks = default, DiskControllerType? diskControllerKind = default, DiskApiVersion? diskApiVersion = default)
         {
             dataDisks ??= new ChangeTrackingList<VirtualMachineScaleSetDataDisk>();
 
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <param name="firstPartyServiceTagId"> The first party service tag resource identifier associated with the public IP address. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetIPTag"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetIPTag VirtualMachineScaleSetIPTag(string ipTagType, string tag, ResourceIdentifier firstPartyServiceTagId)
+        public static VirtualMachineScaleSetIPTag VirtualMachineScaleSetIPTag(string ipTagType = default, string tag = default, ResourceIdentifier firstPartyServiceTagId = default)
         {
             return new VirtualMachineScaleSetIPTag(ipTagType, tag, firstPartyServiceTagId, default);
         }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="useLocalFileRules"> When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM. </param>
         /// <returns> A new <see cref="Models.HostEndpointSettings"/> instance for mocking. </returns>
-        public static HostEndpointSettings HostEndpointSettings(HostEndpointSettingsMode? mode, string inVmAccessControlProfileReferenceId, bool? useLocalFileRules)
+        public static HostEndpointSettings HostEndpointSettings(HostEndpointSettingsMode? mode = default, string inVmAccessControlProfileReferenceId = default, bool? useLocalFileRules = default)
         {
             return new HostEndpointSettings(mode, inVmAccessControlProfileReferenceId, useLocalFileRules, default);
         }
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
         /// <param name="interconnectBlockId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateVmProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateVmProfile VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, double? billingMaxPrice, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, ResourceIdentifier interconnectBlockId)
+        public static VirtualMachineScaleSetUpdateVmProfile VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default, VirtualMachineScaleSetUpdateStorageProfile storageProfile = default, VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default, SecurityPostureReferenceUpdate securityPostureReference = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, VirtualMachineScaleSetHardwareProfile hardwareProfile = default, ResourceIdentifier interconnectBlockId = default)
         {
             return new VirtualMachineScaleSetUpdateVmProfile(
                 osProfile,
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskControllerKind"> Specifies the disk controller type configured for the virtual machines in the scale set. <b>Note:</b> You need to deallocate the virtual machines in the scale set before updating its disk controller type based on the upgrade mode configured for the scale set. Minimum api-version: 2022-08-01. </param>
         /// <param name="diskApiVersion"> Specifies the Disk API version used when applying additionalDiskProperties to managed disks. The value must be in the format YYYY-MM-DD (e.g., "2026-03-02"). </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateStorageProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateStorageProfile VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference, VirtualMachineScaleSetUpdateOSDisk osDisk, IEnumerable<VirtualMachineScaleSetDataDisk> dataDisks, DiskControllerType? diskControllerKind, DiskApiVersion? diskApiVersion)
+        public static VirtualMachineScaleSetUpdateStorageProfile VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference = default, VirtualMachineScaleSetUpdateOSDisk osDisk = default, IEnumerable<VirtualMachineScaleSetDataDisk> dataDisks = default, DiskControllerType? diskControllerKind = default, DiskApiVersion? diskApiVersion = default)
         {
             dataDisks ??= new ChangeTrackingList<VirtualMachineScaleSetDataDisk>();
 
@@ -1885,7 +1885,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate the virtual machine scale set VM instance. The capacity reservation group is inherited from the parent virtual machine scale set and cannot be changed on the individual scale set VM instance. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, ResourceIdentifier virtualMachineResourceId, ResourceIdentifier interconnectBlockId, CapacityReservationProfile capacityReservation, IDictionary<string, BinaryData> additionalProperties)
+        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default, string vmId = default, VirtualMachineScaleSetVmInstanceView instanceView = default, VirtualMachineHardwareProfile hardwareProfile = default, ResilientVmDeletionStatus? resilientVmDeletionStatus = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, SecurityProfile securityProfile = default, VirtualMachineNetworkProfile networkProfile = default, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, string provisioningState = default, string licenseType = default, string modelDefinitionApplied = default, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default, string userData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier virtualMachineResourceId = default, ResourceIdentifier interconnectBlockId = default, CapacityReservationProfile capacityReservation = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -1934,7 +1934,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="interconnectSubgroupId"> The ID (GUID) of the Interconnect subgroup in which the Virtual Machine was placed. </param>
         /// <param name="capacityReservationType"> Specifies which type of capacity reservation the virtual machine scale set VM instance will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IEnumerable<DiskInstanceView> disks, IEnumerable<VirtualMachineExtensionInstanceView> extensions, InstanceViewStatus vmHealthStatus, BootDiagnosticsInstanceView bootDiagnostics, IEnumerable<InstanceViewStatus> statuses, ResourceIdentifier assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string interconnectSubgroupId, ComputeCapacityReservationType? capacityReservationType)
+        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, ResourceIdentifier assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string interconnectSubgroupId = default, ComputeCapacityReservationType? capacityReservationType = default)
         {
             disks ??= new ChangeTrackingList<DiskInstanceView>();
             extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. This feature is still in preview mode and is not supported for VirtualMachineScaleSet. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
         /// <param name="processorMode"> Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot. Minimum api-version: 2026-04-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineHardwareProfile"/> instance for mocking. </returns>
-        public static VirtualMachineHardwareProfile VirtualMachineHardwareProfile(VirtualMachineSizeType? vmSize, VirtualMachineSizeProperties vmSizeProperties, ProcessorMode? processorMode)
+        public static VirtualMachineHardwareProfile VirtualMachineHardwareProfile(VirtualMachineSizeType? vmSize = default, VirtualMachineSizeProperties vmSizeProperties = default, ProcessorMode? processorMode = default)
         {
             return new VirtualMachineHardwareProfile(vmSize, vmSizeProperties, processorMode, default);
         }
@@ -2088,7 +2088,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="alignRegionalDisksToVmZone"> Specifies whether the regional disks should be aligned/moved to the VM zone. This is applicable <b>only</b> for VMs with placement.zonePlacementPolicy set to <b>Any</b>. Please note that this change is irreversible. Minimum api-version: 2024-11-01. </param>
         /// <param name="diskApiVersion"> Specifies the Disk API version used when applying additionalDiskProperties to managed disks. The value must be in the format YYYY-MM-DD (e.g., "2026-03-02"). </param>
         /// <returns> A new <see cref="Models.VirtualMachineStorageProfile"/> instance for mocking. </returns>
-        public static VirtualMachineStorageProfile VirtualMachineStorageProfile(ImageReference imageReference, VirtualMachineOSDisk osDisk, IEnumerable<VirtualMachineDataDisk> dataDisks, DiskControllerType? diskControllerType, bool? alignRegionalDisksToVmZone, DiskApiVersion? diskApiVersion)
+        public static VirtualMachineStorageProfile VirtualMachineStorageProfile(ImageReference imageReference = default, VirtualMachineOSDisk osDisk = default, IEnumerable<VirtualMachineDataDisk> dataDisks = default, DiskControllerType? diskControllerType = default, bool? alignRegionalDisksToVmZone = default, DiskApiVersion? diskApiVersion = default)
         {
             dataDisks ??= new ChangeTrackingList<VirtualMachineDataDisk>();
 
@@ -2324,7 +2324,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <param name="firstPartyServiceTagId"> The first party service tag resource identifier associated with the public IP address. </param>
         /// <returns> A new <see cref="Models.VirtualMachineIPTag"/> instance for mocking. </returns>
-        public static VirtualMachineIPTag VirtualMachineIPTag(string ipTagType, string tag, ResourceIdentifier firstPartyServiceTagId)
+        public static VirtualMachineIPTag VirtualMachineIPTag(string ipTagType = default, string tag = default, ResourceIdentifier firstPartyServiceTagId = default)
         {
             return new VirtualMachineIPTag(ipTagType, tag, firstPartyServiceTagId, default);
         }
@@ -2663,7 +2663,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="interconnectSubgroupId"> The ID (GUID) of the Interconnect subgroup in which the Virtual Machine was placed. </param>
         /// <param name="capacityReservationType"> Specifies which type of capacity reservation the virtual machine will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IEnumerable<DiskInstanceView> disks, IEnumerable<VirtualMachineExtensionInstanceView> extensions, InstanceViewStatus vmHealthStatus, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IEnumerable<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool, string interconnectSubgroupId, ComputeCapacityReservationType? capacityReservationType)
+        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default, string interconnectSubgroupId = default, ComputeCapacityReservationType? capacityReservationType = default)
         {
             disks ??= new ChangeTrackingList<DiskInstanceView>();
             extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
@@ -3111,7 +3111,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="runProfile"> Specifies when and how the extension should be executed. </param>
         /// <param name="extensionFeatureTags"> List of additional metadata properties (e.g., compliance flags, supported features). </param>
         /// <returns> A new <see cref="Compute.VirtualMachineExtensionImageData"/> instance for mocking. </returns>
-        public static VirtualMachineExtensionImageData VirtualMachineExtensionImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string operatingSystem, string computeRole, string handlerSchema, bool? virtualMachineScaleSetEnabled, bool? supportsMultipleExtensions, string releaseNotes, ReleaseCategory? releaseCategory = default, UrgencyLevel? urgencyLevel = default, RunProfile? runProfile = default, IEnumerable<ExtensionFeatureTag> extensionFeatureTags = default)
+        public static VirtualMachineExtensionImageData VirtualMachineExtensionImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string operatingSystem = default, string computeRole = default, string handlerSchema = default, bool? virtualMachineScaleSetEnabled = default, bool? supportsMultipleExtensions = default, string releaseNotes = default, ReleaseCategory? releaseCategory = default, UrgencyLevel? urgencyLevel = default, RunProfile? runProfile = default, IEnumerable<ExtensionFeatureTag> extensionFeatureTags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3836,7 +3836,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="reservationState"> The current state of the capacity reservation. </param>
         /// <param name="name"> The name of the capacity reservation. </param>
         /// <returns> A new <see cref="Models.CapacityReservationInstanceViewWithName"/> instance for mocking. </returns>
-        public static CapacityReservationInstanceViewWithName CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo, IEnumerable<InstanceViewStatus> statuses, ReservationState? reservationState, string name)
+        public static CapacityReservationInstanceViewWithName CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo = default, IEnumerable<InstanceViewStatus> statuses = default, ReservationState? reservationState = default, string name = default)
         {
             statuses ??= new ChangeTrackingList<InstanceViewStatus>();
 
@@ -3847,7 +3847,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="reservationState"> The current state of the capacity reservation. </param>
         /// <returns> A new <see cref="Models.CapacityReservationInstanceView"/> instance for mocking. </returns>
-        public static CapacityReservationInstanceView CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IEnumerable<InstanceViewStatus> statuses, ReservationState? reservationState)
+        public static CapacityReservationInstanceView CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo = default, IEnumerable<InstanceViewStatus> statuses = default, ReservationState? reservationState = default)
         {
             statuses ??= new ChangeTrackingList<InstanceViewStatus>();
 
@@ -3859,7 +3859,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="virtualMachinesAllocated"> A list of all virtual machines resource ids allocated against the capacity reservation. </param>
         /// <param name="usedReservedCountBySubscription"> For open capacity reservations, this provides a map of the used reserved capacity count keyed by the subscription id (a GUID) that is consuming the capacity, i.e. each entry maps a consuming subscription id to the count of reserved capacity it is currently using. This is populated only for open capacity reservations and is not reported for targeted and block capacity reservations, which instead report allocation through virtualMachinesAllocated. Minimum api-version: 2026-04-01. </param>
         /// <returns> A new <see cref="Models.CapacityReservationUtilization"/> instance for mocking. </returns>
-        public static CapacityReservationUtilization CapacityReservationUtilization(int? currentCapacity, IEnumerable<SubResource> virtualMachinesAllocated, IReadOnlyDictionary<string, int> usedReservedCountBySubscription)
+        public static CapacityReservationUtilization CapacityReservationUtilization(int? currentCapacity = default, IEnumerable<SubResource> virtualMachinesAllocated = default, IReadOnlyDictionary<string, int> usedReservedCountBySubscription = default)
         {
             virtualMachinesAllocated ??= new ChangeTrackingList<SubResource>();
             usedReservedCountBySubscription ??= new ChangeTrackingDictionary<string, int>();
@@ -3937,7 +3937,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="minimumCommitmentDays"> The minimum number of days that must pass after the start date before a Future capacity reservation can be updated or deleted once it has been committed. Will be populated with a default value if not provided. </param>
         /// <param name="modifiableUntil"> The date/time until which a Future capacity reservation can be updated or deleted. Read-only. </param>
         /// <returns> A new <see cref="Models.ScheduleProfile"/> instance for mocking. </returns>
-        public static ScheduleProfile ScheduleProfile(string start, string end, int? minimumCommitmentDays, DateTimeOffset? modifiableUntil = default)
+        public static ScheduleProfile ScheduleProfile(string start = default, string end = default, int? minimumCommitmentDays = default, DateTimeOffset? modifiableUntil = default)
         {
             return new ScheduleProfile(start, end, minimumCommitmentDays, modifiableUntil, default);
         }
@@ -5214,7 +5214,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
         /// <returns> A new <see cref="Compute.GalleryData"/> instance for mocking. </returns>
-        public static GalleryData GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, string identifierUniqueName, ManagedServiceIdentity identity)
+        public static GalleryData GalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SoftDeletePolicy softDeletePolicy = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5326,7 +5326,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identity"> The identity of the gallery, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryPatch"/> instance for mocking. </returns>
-        public static GalleryPatch GalleryPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, string identifierUniqueName, ManagedServiceIdentity identity, IDictionary<string, string> tags)
+        public static GalleryPatch GalleryPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SoftDeletePolicy softDeletePolicy = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5427,7 +5427,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period. In dateTime offset format. </param>
         /// <param name="hardDeletionTargetOn"> The timestamp at which a soft-deleted gallery image version is permanently (hard) deleted and can no longer be recovered. In dateTime offset format. </param>
         /// <returns> A new <see cref="Models.GallerySoftDeletedResourceDetails"/> instance for mocking. </returns>
-        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, GallerySoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, DateTimeOffset? consumptionEndsOn, DateTimeOffset? hardDeletionTargetOn = default)
+        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier resourceArmId = default, GallerySoftDeletedArtifactType? softDeletedArtifactType = default, DateTimeOffset? softDeletedOn = default, DateTimeOffset? consumptionEndsOn = default, DateTimeOffset? hardDeletionTargetOn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5631,7 +5631,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="imageMetadataProfiles"> The image metadata profiles associated with the gallery image version. </param>
         /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
-        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IEnumerable<ImageMetadataProfile> imageMetadataProfiles)
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, ImageVersionSecurityProfile securityProfile = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, IEnumerable<ImageMetadataProfile> imageMetadataProfiles = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5778,7 +5778,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> This property specifies the security profile of a data disk image. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         /// <returns> A new <see cref="Models.DataDiskImageEncryption"/> instance for mocking. </returns>
-        public static DataDiskImageEncryption DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, DataDiskImageSecurityProfile securityProfile, int lun = default)
+        public static DataDiskImageEncryption DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId = default, DataDiskImageSecurityProfile securityProfile = default, int lun = default)
         {
             return new DataDiskImageEncryption(diskEncryptionSetId, default, securityProfile, lun);
         }
@@ -6021,7 +6021,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="imageMetadataProfiles"> The image metadata profiles associated with the gallery image version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
-        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IEnumerable<ImageMetadataProfile> imageMetadataProfiles, IDictionary<string, string> tags)
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, ImageVersionSecurityProfile securityProfile = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, IEnumerable<ImageMetadataProfile> imageMetadataProfiles = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6796,7 +6796,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </param>
         /// <param name="imageState"> The state of the gallery image version, derived from its soft-delete status. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IDictionary<string, string> artifactTags, DateTimeOffset? consumptionEndsOn, GalleryImageVersionState? imageState = default)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default, DateTimeOffset? consumptionEndsOn = default, GalleryImageVersionState? imageState = default)
         {
             return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null && consumptionEndsOn is null && imageState is null ? default : new SharedGalleryImageVersionProperties(
                 publishedOn,
@@ -6973,7 +6973,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </param>
         /// <param name="imageState"> The state of the gallery image version, derived from its soft-delete status. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IDictionary<string, string> artifactTags, DateTimeOffset? consumptionEndsOn, GalleryImageVersionState? imageState = default)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, DateTimeOffset? consumptionEndsOn = default, GalleryImageVersionState? imageState = default)
         {
             return new CommunityGalleryImageVersionData(
                 name,

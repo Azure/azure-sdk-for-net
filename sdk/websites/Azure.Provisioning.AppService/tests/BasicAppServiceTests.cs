@@ -213,24 +213,34 @@ public class BasicAppServiceTests
             """);
     }
 
-    [Test]
-    public async Task CustomDeploymentPropertiesSharePropertiesObject()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task CustomDeploymentPropertiesSharePropertiesObject(bool useLegacyConcurrency)
     {
         await using Trycep test = new Trycep().Define(
             ctx =>
             {
                 Infrastructure infra = new();
+                FunctionAppScaleAndConcurrency scaleAndConcurrency = new()
+                {
+                    FunctionAppMaximumInstanceCount = 10
+                };
+                if (useLegacyConcurrency)
+                {
+                    scaleAndConcurrency.HttpPerInstanceConcurrency = 2.5F;
+                }
+                else
+                {
+                    scaleAndConcurrency.ConcurrentHttpPerInstanceConcurrency = 3;
+                }
+
                 WebSite site = new(nameof(site))
                 {
                     Name = "site",
                     Location = new AzureLocation("westus"),
                     FunctionAppConfig = new FunctionAppConfig
                     {
-                        ScaleAndConcurrency = new FunctionAppScaleAndConcurrency
-                        {
-                            FunctionAppMaximumInstanceCount = 10,
-                            HttpPerInstanceConcurrency = 2.5F
-                        }
+                        ScaleAndConcurrency = scaleAndConcurrency
                     }
                 };
                 infra.Add(site);
@@ -249,7 +259,7 @@ public class BasicAppServiceTests
             });
 
         test.Compare(
-            """
+            $$"""
             resource site 'Microsoft.Web/sites@2025-03-01' = {
               name: 'site'
               location: 'westus'
@@ -259,7 +269,7 @@ public class BasicAppServiceTests
                     maximumInstanceCount: 10
                     triggers: {
                       http: {
-                        perInstanceConcurrency: json('2.5')
+                        perInstanceConcurrency: {{(useLegacyConcurrency ? "json('2.5')" : "3")}}
                       }
                     }
                   }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="blobAccessPointConfiguration"> Configuration that attaches this container to a Blob Access Point. If set, the container is a read-only virtual container whose read/list requests are forwarded to the connected backing data store. Cannot be changed, removed, or added after container creation. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="Storage.BlobContainerData"/> instance for mocking. </returns>
-        public static BlobContainerData BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, BlobAccessPointConfigurationConnection blobAccessPointConfiguration, ETag? eTag)
+        public static BlobContainerData BlobContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, bool? isDeleted = default, DateTimeOffset? deletedOn = default, int? remainingRetentionDays = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, StoragePublicAccessType? publicAccess = default, DateTimeOffset? lastModifiedOn = default, StorageLeaseStatus? leaseStatus = default, StorageLeaseState? leaseState = default, StorageLeaseDurationType? leaseDuration = default, IDictionary<string, string> metadata = default, BlobContainerImmutabilityPolicy immutabilityPolicy = default, LegalHoldProperties legalHold = default, bool? hasLegalHold = default, bool? hasImmutabilityPolicy = default, ImmutableStorageWithVersioning immutableStorageWithVersioning = default, bool? enableNfsV3RootSquash = default, bool? enableNfsV3AllSquash = default, BlobAccessPointConfigurationConnection blobAccessPointConfiguration = default, ETag? eTag = default)
         {
             return new BlobContainerData(
                 id,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> The storage account name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <returns> A new <see cref="Models.StorageAccountNameAvailabilityContent"/> instance for mocking. </returns>
-        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name, ResourceType resourceType)
+        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name = default, ResourceType resourceType = default)
         {
             return new StorageAccountNameAvailabilityContent(name, resourceType, default);
         }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="key1"></param>
         /// <param name="key2"></param>
         /// <returns> A new <see cref="Models.StorageAccountKeyCreationTime"/> instance for mocking. </returns>
-        public static StorageAccountKeyCreationTime StorageAccountKeyCreationTime(DateTimeOffset? key1, DateTimeOffset? key2)
+        public static StorageAccountKeyCreationTime StorageAccountKeyCreationTime(DateTimeOffset? key1 = default, DateTimeOffset? key2 = default)
         {
             return new StorageAccountKeyCreationTime(key1, key2, default);
         }
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Storage task execution report for a run instance. </param>
         /// <returns> A new <see cref="Models.StorageTaskReportInstance"/> instance for mocking. </returns>
-        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTaskReportProperties properties)
+        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageTaskReportProperties properties = default)
         {
             return new StorageTaskReportInstance(
                 id,
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </param>
         /// <returns> A new <see cref="Storage.FileServiceUsageData"/> instance for mocking. </returns>
-        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FileServiceUsageProperties properties)
+        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileServiceUsageProperties properties = default)
         {
             return new FileServiceUsageData(
                 id,

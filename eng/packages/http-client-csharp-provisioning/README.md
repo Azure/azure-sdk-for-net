@@ -52,7 +52,11 @@ emit:
 
 ## Development
 
-Keep all three generator dependencies in `package.json` aligned with
-`eng/centralpackagemanagement/Directory.Generation.Packages.props` and compatible
-with each other. After updating the pins, run `npm install` in this directory,
-then run `eng/scripts/Generate.ps1` to regenerate and build both local fixtures.
+Keep the management generator dependency in `package.json` aligned with
+`AzureManagementGeneratorVersion` in
+`eng/centralpackagemanagement/Directory.Generation.Packages.props`. Match the
+remaining npm generator dependencies and TypeSpec versions to the selected
+management generator release, and keep `Azure.Generator` aligned with
+`AzureGeneratorVersion` without a provisioning-specific CPM override. After
+updating the pins, run `npm install` in this directory, then run
+`eng/scripts/Generate.ps1` to regenerate and build both local fixtures.

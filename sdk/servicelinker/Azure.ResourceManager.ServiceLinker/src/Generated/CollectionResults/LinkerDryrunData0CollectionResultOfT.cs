@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDryrunRequest(nextLink, _resourceUri, _context) : _client.CreateGetDryrunRequest(_resourceUri, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListDryrunRequest(nextLink, _resourceUri, _context) : _client.CreateListDryrunRequest(_resourceUri, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

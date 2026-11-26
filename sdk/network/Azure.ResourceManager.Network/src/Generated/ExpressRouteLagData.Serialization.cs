@@ -101,11 +101,6 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -150,7 +145,6 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ExpressRouteLagPropertiesFormat properties = default;
-            string @type = default;
             string eTag = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
@@ -217,11 +211,6 @@ namespace Azure.ResourceManager.Network
                     properties = ExpressRouteLagPropertiesFormat.DeserializeExpressRouteLagPropertiesFormat(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("etag"u8))
                 {
                     eTag = prop.Value.GetString();
@@ -249,7 +238,6 @@ namespace Azure.ResourceManager.Network
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,
                 properties,
-                @type,
                 eTag,
                 identity);
         }
