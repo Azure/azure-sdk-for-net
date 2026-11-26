@@ -8,8 +8,6 @@
 
 ### Bugs Fixed
 
-- Honor the configured `Microsoft.Maintenance/applyUpdates` API version when listing apply updates at subscription scope.
-
 ### Other Changes
 
 ## 1.2.0-beta.12 (2026-10-20)
