@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             set
             {
-                Groups = new JWTAuthenticatorClaimMappingExpression(value);
+                Groups = value is null ? default : new JWTAuthenticatorClaimMappingExpression(value);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             set
             {
-                Uid = new JWTAuthenticatorClaimMappingExpression(value);
+                Uid = value is null ? default : new JWTAuthenticatorClaimMappingExpression(value);
             }
         }
     }
