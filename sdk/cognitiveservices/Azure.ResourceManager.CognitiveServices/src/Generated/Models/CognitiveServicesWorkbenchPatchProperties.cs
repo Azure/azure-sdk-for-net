@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Mutable properties for a Workbench resource. </summary>
-    public partial class WorkbenchUpdateProperties
+    public partial class CognitiveServicesWorkbenchPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private int? _gpuCount;
         private bool _gpuCountIsDefined;
 
-        /// <summary> Initializes a new instance of <see cref="WorkbenchUpdateProperties"/>. </summary>
-        public WorkbenchUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesWorkbenchPatchProperties"/>. </summary>
+        public CognitiveServicesWorkbenchPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkbenchUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesWorkbenchPatchProperties"/>. </summary>
         /// <param name="targetClusterId"> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </param>
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle workbench is automatically shut down (e.g., 'PT30M'). </param>
         /// <param name="instanceType"> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. Omit to preserve the current value; null resets to the Singularity.D4_v3 fallback. Foundry Compute ignores this override and uses the pool configuration. An actual instance type change requires the workbench to be stopped. </param>
         /// <param name="gpuCount"> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. Omit to preserve the current value; null clears the override to use the full node or the instance type's default count. Full-node Azure VM sizes permit partition selection. A supplied count must match an exact Singularity instance type; the Singularity.D4_v3 fallback accepts 4. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkbenchUpdateProperties(string targetClusterId, string idleTimeBeforeShutdown, string instanceType, int? gpuCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchPatchProperties(string targetClusterId, string idleTimeBeforeShutdown, string instanceType, int? gpuCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             IdleTimeBeforeShutdown = idleTimeBeforeShutdown;

@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterDisposition"> Retains the physical AKS and AI Manager resources. Only Keep is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, DeleteRequestClusterDisposition? clusterDisposition = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, AttachedAksClusterDeleteDisposition? clusterDisposition = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _attachedAksClustersClientDiagnostics.CreateScope("AttachedAksClusterResource.Delete");
             scope.Start();
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterDisposition"> Retains the physical AKS and AI Manager resources. Only Keep is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, DeleteRequestClusterDisposition? clusterDisposition = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, AttachedAksClusterDeleteDisposition? clusterDisposition = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _attachedAksClustersClientDiagnostics.CreateScope("AttachedAksClusterResource.Delete");
             scope.Start();

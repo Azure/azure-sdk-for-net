@@ -12,24 +12,24 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Identifies a tool by its canonical type and optional MCP server URL or connector. </summary>
-    public partial class ToolControlEntry
+    public partial class CognitiveServicesProjectToolControlEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolControlEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectToolControlEntry"/>. </summary>
         /// <param name="type"> The canonical tool type. For type mcp, exactly one of serverUrl or connectorId must be specified. Other tool types must omit both properties. </param>
-        public ToolControlEntry(ToolControlType @type)
+        public CognitiveServicesProjectToolControlEntry(CognitiveServicesProjectToolControlType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolControlEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectToolControlEntry"/>. </summary>
         /// <param name="type"> The canonical tool type. For type mcp, exactly one of serverUrl or connectorId must be specified. Other tool types must omit both properties. </param>
         /// <param name="serverUri"> The absolute HTTPS URL or URL pattern of an MCP server, stored as a string to support wildcards. The entire URL may contain at most one literal '<i>' across its hostname, path, query, and fragment. Supported patterns include https://</i>.contoso.com/mcp, https://contoso.com/mcp/<i>, https://contoso.com/mcp?tenant=</i>, and https://contoso.com/mcp#*. A hostname wildcard must be the leftmost label. The URL must not contain user information. Applies only to type mcp and cannot be specified together with connectorId. </param>
         /// <param name="connectorId"> The opaque MCP connector catalog identifier, not an Azure resource ID. Applies only to type mcp and cannot be specified together with serverUrl. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolControlEntry(ToolControlType @type, string serverUri, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesProjectToolControlEntry(CognitiveServicesProjectToolControlType @type, string serverUri, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ServerUri = serverUri;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The canonical tool type. For type mcp, exactly one of serverUrl or connectorId must be specified. Other tool types must omit both properties. </summary>
         [WirePath("type")]
-        public ToolControlType Type { get; set; }
+        public CognitiveServicesProjectToolControlType Type { get; set; }
 
         /// <summary> The absolute HTTPS URL or URL pattern of an MCP server, stored as a string to support wildcards. The entire URL may contain at most one literal '<i>' across its hostname, path, query, and fragment. Supported patterns include https://</i>.contoso.com/mcp, https://contoso.com/mcp/<i>, https://contoso.com/mcp?tenant=</i>, and https://contoso.com/mcp#*. A hostname wildcard must be the leftmost label. The URL must not contain user information. Applies only to type mcp and cannot be specified together with connectorId. </summary>
         [WirePath("serverUrl")]

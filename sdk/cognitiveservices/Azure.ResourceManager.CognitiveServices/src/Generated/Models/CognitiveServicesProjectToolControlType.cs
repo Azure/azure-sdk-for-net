@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The canonical tool type supported by Foundry agents. Additional tool types may be specified as strings. </summary>
-    public readonly partial struct ToolControlType : IEquatable<ToolControlType>
+    public readonly partial struct CognitiveServicesProjectToolControlType : IEquatable<CognitiveServicesProjectToolControlType>
     {
         private readonly string _value;
         /// <summary> Agent-to-agent tool. </summary>
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Web IQ preview tool. </summary>
         private const string WebIqPreviewValue = "web_iq_preview";
 
-        /// <summary> Initializes a new instance of <see cref="ToolControlType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectToolControlType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ToolControlType(string value)
+        public CognitiveServicesProjectToolControlType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -85,116 +85,116 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Agent-to-agent tool. </summary>
-        public static ToolControlType A2a { get; } = new ToolControlType(A2aValue);
+        public static CognitiveServicesProjectToolControlType A2a { get; } = new CognitiveServicesProjectToolControlType(A2aValue);
 
         /// <summary> Azure AI Search tool. </summary>
-        public static ToolControlType AzureAiSearch { get; } = new ToolControlType(AzureAiSearchValue);
+        public static CognitiveServicesProjectToolControlType AzureAiSearch { get; } = new CognitiveServicesProjectToolControlType(AzureAiSearchValue);
 
         /// <summary> Azure Function tool. </summary>
-        public static ToolControlType AzureFunction { get; } = new ToolControlType(AzureFunctionValue);
+        public static CognitiveServicesProjectToolControlType AzureFunction { get; } = new CognitiveServicesProjectToolControlType(AzureFunctionValue);
 
         /// <summary> Grounding with Bing Search tool. </summary>
-        public static ToolControlType BingGrounding { get; } = new ToolControlType(BingGroundingValue);
+        public static CognitiveServicesProjectToolControlType BingGrounding { get; } = new CognitiveServicesProjectToolControlType(BingGroundingValue);
 
         /// <summary> Browser automation tool. </summary>
-        public static ToolControlType BrowserAutomation { get; } = new ToolControlType(BrowserAutomationValue);
+        public static CognitiveServicesProjectToolControlType BrowserAutomation { get; } = new CognitiveServicesProjectToolControlType(BrowserAutomationValue);
 
         /// <summary> Capture structured outputs tool. </summary>
-        public static ToolControlType CaptureStructuredOutputs { get; } = new ToolControlType(CaptureStructuredOutputsValue);
+        public static CognitiveServicesProjectToolControlType CaptureStructuredOutputs { get; } = new CognitiveServicesProjectToolControlType(CaptureStructuredOutputsValue);
 
         /// <summary> OpenAPI tool. </summary>
-        public static ToolControlType Openapi { get; } = new ToolControlType(OpenapiValue);
+        public static CognitiveServicesProjectToolControlType Openapi { get; } = new CognitiveServicesProjectToolControlType(OpenapiValue);
 
         /// <summary> Function tool. </summary>
-        public static ToolControlType Function { get; } = new ToolControlType(FunctionValue);
+        public static CognitiveServicesProjectToolControlType Function { get; } = new CognitiveServicesProjectToolControlType(FunctionValue);
 
         /// <summary> File search tool. </summary>
-        public static ToolControlType FileSearch { get; } = new ToolControlType(FileSearchValue);
+        public static CognitiveServicesProjectToolControlType FileSearch { get; } = new CognitiveServicesProjectToolControlType(FileSearchValue);
 
         /// <summary> Computer use tool. </summary>
-        public static ToolControlType ComputerUsePreview { get; } = new ToolControlType(ComputerUsePreviewValue);
+        public static CognitiveServicesProjectToolControlType ComputerUsePreview { get; } = new CognitiveServicesProjectToolControlType(ComputerUsePreviewValue);
 
         /// <summary> Web search tool. </summary>
-        public static ToolControlType WebSearch { get; } = new ToolControlType(WebSearchValue);
+        public static CognitiveServicesProjectToolControlType WebSearch { get; } = new CognitiveServicesProjectToolControlType(WebSearchValue);
 
         /// <summary> Model Context Protocol (MCP) tool. </summary>
-        public static ToolControlType Mcp { get; } = new ToolControlType(McpValue);
+        public static CognitiveServicesProjectToolControlType Mcp { get; } = new CognitiveServicesProjectToolControlType(McpValue);
 
         /// <summary> Code interpreter tool. </summary>
-        public static ToolControlType CodeInterpreter { get; } = new ToolControlType(CodeInterpreterValue);
+        public static CognitiveServicesProjectToolControlType CodeInterpreter { get; } = new CognitiveServicesProjectToolControlType(CodeInterpreterValue);
 
         /// <summary> Image generation tool. </summary>
-        public static ToolControlType ImageGeneration { get; } = new ToolControlType(ImageGenerationValue);
+        public static CognitiveServicesProjectToolControlType ImageGeneration { get; } = new CognitiveServicesProjectToolControlType(ImageGenerationValue);
 
         /// <summary> Local shell tool. </summary>
-        public static ToolControlType LocalShell { get; } = new ToolControlType(LocalShellValue);
+        public static CognitiveServicesProjectToolControlType LocalShell { get; } = new CognitiveServicesProjectToolControlType(LocalShellValue);
 
         /// <summary> Shell tool. </summary>
-        public static ToolControlType Shell { get; } = new ToolControlType(ShellValue);
+        public static CognitiveServicesProjectToolControlType Shell { get; } = new CognitiveServicesProjectToolControlType(ShellValue);
 
         /// <summary> Custom tool. </summary>
-        public static ToolControlType Custom { get; } = new ToolControlType(CustomValue);
+        public static CognitiveServicesProjectToolControlType Custom { get; } = new CognitiveServicesProjectToolControlType(CustomValue);
 
         /// <summary> Web search preview tool. </summary>
-        public static ToolControlType WebSearchPreview { get; } = new ToolControlType(WebSearchPreviewValue);
+        public static CognitiveServicesProjectToolControlType WebSearchPreview { get; } = new CognitiveServicesProjectToolControlType(WebSearchPreviewValue);
 
         /// <summary> Apply patch tool. </summary>
-        public static ToolControlType ApplyPatch { get; } = new ToolControlType(ApplyPatchValue);
+        public static CognitiveServicesProjectToolControlType ApplyPatch { get; } = new CognitiveServicesProjectToolControlType(ApplyPatchValue);
 
         /// <summary> Agent-to-agent preview tool. </summary>
-        public static ToolControlType A2aPreview { get; } = new ToolControlType(A2aPreviewValue);
+        public static CognitiveServicesProjectToolControlType A2aPreview { get; } = new CognitiveServicesProjectToolControlType(A2aPreviewValue);
 
         /// <summary> Grounding with Bing Custom Search preview tool. </summary>
-        public static ToolControlType BingCustomSearchPreview { get; } = new ToolControlType(BingCustomSearchPreviewValue);
+        public static CognitiveServicesProjectToolControlType BingCustomSearchPreview { get; } = new CognitiveServicesProjectToolControlType(BingCustomSearchPreviewValue);
 
         /// <summary> Browser automation preview tool. </summary>
-        public static ToolControlType BrowserAutomationPreview { get; } = new ToolControlType(BrowserAutomationPreviewValue);
+        public static CognitiveServicesProjectToolControlType BrowserAutomationPreview { get; } = new CognitiveServicesProjectToolControlType(BrowserAutomationPreviewValue);
 
         /// <summary> Fabric data agent preview tool. </summary>
-        public static ToolControlType FabricDataagentPreview { get; } = new ToolControlType(FabricDataagentPreviewValue);
+        public static CognitiveServicesProjectToolControlType FabricDataagentPreview { get; } = new CognitiveServicesProjectToolControlType(FabricDataagentPreviewValue);
 
         /// <summary> SharePoint grounding preview tool. </summary>
-        public static ToolControlType SharepointGroundingPreview { get; } = new ToolControlType(SharepointGroundingPreviewValue);
+        public static CognitiveServicesProjectToolControlType SharepointGroundingPreview { get; } = new CognitiveServicesProjectToolControlType(SharepointGroundingPreviewValue);
 
         /// <summary> Memory search preview tool. </summary>
-        public static ToolControlType MemorySearchPreview { get; } = new ToolControlType(MemorySearchPreviewValue);
+        public static CognitiveServicesProjectToolControlType MemorySearchPreview { get; } = new CognitiveServicesProjectToolControlType(MemorySearchPreviewValue);
 
         /// <summary> Work IQ preview tool. </summary>
-        public static ToolControlType WorkIqPreview { get; } = new ToolControlType(WorkIqPreviewValue);
+        public static CognitiveServicesProjectToolControlType WorkIqPreview { get; } = new CognitiveServicesProjectToolControlType(WorkIqPreviewValue);
 
         /// <summary> Fabric IQ preview tool. </summary>
-        public static ToolControlType FabricIqPreview { get; } = new ToolControlType(FabricIqPreviewValue);
+        public static CognitiveServicesProjectToolControlType FabricIqPreview { get; } = new CognitiveServicesProjectToolControlType(FabricIqPreviewValue);
 
         /// <summary> Toolbox search preview tool. </summary>
-        public static ToolControlType ToolboxSearchPreview { get; } = new ToolControlType(ToolboxSearchPreviewValue);
+        public static CognitiveServicesProjectToolControlType ToolboxSearchPreview { get; } = new CognitiveServicesProjectToolControlType(ToolboxSearchPreviewValue);
 
         /// <summary> Web IQ preview tool. </summary>
-        public static ToolControlType WebIqPreview { get; } = new ToolControlType(WebIqPreviewValue);
+        public static CognitiveServicesProjectToolControlType WebIqPreview { get; } = new CognitiveServicesProjectToolControlType(WebIqPreviewValue);
 
-        /// <summary> Determines if two <see cref="ToolControlType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesProjectToolControlType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ToolControlType left, ToolControlType right) => left.Equals(right);
+        public static bool operator ==(CognitiveServicesProjectToolControlType left, CognitiveServicesProjectToolControlType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ToolControlType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesProjectToolControlType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ToolControlType left, ToolControlType right) => !left.Equals(right);
+        public static bool operator !=(CognitiveServicesProjectToolControlType left, CognitiveServicesProjectToolControlType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ToolControlType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesProjectToolControlType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ToolControlType(string value) => new ToolControlType(value);
+        public static implicit operator CognitiveServicesProjectToolControlType(string value) => new CognitiveServicesProjectToolControlType(value);
 
-        /// <summary> Converts a string to a <see cref="ToolControlType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesProjectToolControlType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ToolControlType?(string value) => value == null ? null : new ToolControlType(value);
+        public static implicit operator CognitiveServicesProjectToolControlType?(string value) => value == null ? null : new CognitiveServicesProjectToolControlType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ToolControlType other && Equals(other);
+        public override bool Equals(object obj) => obj is CognitiveServicesProjectToolControlType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ToolControlType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CognitiveServicesProjectToolControlType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

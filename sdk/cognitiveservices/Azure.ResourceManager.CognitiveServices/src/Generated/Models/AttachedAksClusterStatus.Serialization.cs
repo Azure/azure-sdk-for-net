@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("observedGeneration"u8);
                 writer.WriteNumberValue(ObservedGeneration.Value);
             }
-            if (Optional.IsDefined(ConnectorObservedAtUtc))
+            if (Optional.IsDefined(ConnectorObservedOn))
             {
                 writer.WritePropertyName("connectorObservedAtUtc"u8);
-                writer.WriteStringValue(ConnectorObservedAtUtc.Value, "O");
+                writer.WriteStringValue(ConnectorObservedOn.Value, "O");
             }
             if (Optional.IsDefined(Readiness))
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("health"u8);
                 writer.WriteObjectValue(Health, options);
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AttachedAksClusterIdentityStatus identity = default;
             AttachedAksClusterConnectorRegistration connectorRegistration = default;
             long? observedGeneration = default;
-            DateTimeOffset? connectorObservedAtUtc = default;
+            DateTimeOffset? connectorObservedOn = default;
             AttachedAksClusterReadinessStatus readiness = default;
             AttachedAksClusterAiManagerStatus aiManager = default;
             AttachedAksClusterIntegrationResourceStatus extension = default;
             AttachedAksClusterHealthStatus health = default;
-            DateTimeOffset? lastUpdatedTimeUtc = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    connectorObservedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    connectorObservedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("readiness"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    lastUpdatedTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -320,12 +320,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 identity,
                 connectorRegistration,
                 observedGeneration,
-                connectorObservedAtUtc,
+                connectorObservedOn,
                 readiness,
                 aiManager,
                 extension,
                 health,
-                lastUpdatedTimeUtc,
+                lastUpdatedOn,
                 additionalBinaryDataProperties);
         }
     }

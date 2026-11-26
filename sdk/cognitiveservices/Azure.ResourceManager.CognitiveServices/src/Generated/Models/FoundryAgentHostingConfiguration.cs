@@ -13,27 +13,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Base configuration for hosting Foundry agents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedClusterAgentHostingConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedClusterFoundryAgentHostingConfiguration"/>.
     /// </summary>
-    public abstract partial class AgentHostingConfiguration
+    public abstract partial class FoundryAgentHostingConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentHostingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FoundryAgentHostingConfiguration"/>. </summary>
         /// <param name="name"> Unique name of the hosting configuration within the Foundry account. </param>
         /// <param name="hostingType"> Type of infrastructure used to host Foundry agents. </param>
-        private protected AgentHostingConfiguration(string name, AgentHostingType hostingType)
+        private protected FoundryAgentHostingConfiguration(string name, AgentHostingType hostingType)
         {
             Name = name;
             HostingType = hostingType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentHostingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FoundryAgentHostingConfiguration"/>. </summary>
         /// <param name="name"> Unique name of the hosting configuration within the Foundry account. </param>
         /// <param name="hostingType"> Type of infrastructure used to host Foundry agents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentHostingConfiguration(string name, AgentHostingType hostingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FoundryAgentHostingConfiguration(string name, AgentHostingType hostingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             HostingType = hostingType;

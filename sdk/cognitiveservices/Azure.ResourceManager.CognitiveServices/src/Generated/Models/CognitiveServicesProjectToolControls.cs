@@ -12,22 +12,22 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Defines the default and per-tool access policy for a Foundry project. </summary>
-    public partial class ToolControls
+    public partial class CognitiveServicesProjectToolControls
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolControls"/>. </summary>
-        public ToolControls()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectToolControls"/>. </summary>
+        public CognitiveServicesProjectToolControls()
         {
-            AllowedTools = new ChangeTrackingList<ToolControlEntry>();
+            AllowedTools = new ChangeTrackingList<CognitiveServicesProjectToolControlEntry>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolControls"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectToolControls"/>. </summary>
         /// <param name="defaultAction"> The action applied when a tool is not listed explicitly. Only Deny is currently supported. </param>
         /// <param name="allowedTools"> The tools explicitly allowed by the policy. Omission or an empty array specifies no explicitly allowed tools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolControls(ToolControlsDefaultAction? defaultAction, IList<ToolControlEntry> allowedTools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesProjectToolControls(CognitiveServicesProjectToolControlsDefaultAction? defaultAction, IList<CognitiveServicesProjectToolControlEntry> allowedTools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
             AllowedTools = allowedTools;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The action applied when a tool is not listed explicitly. Only Deny is currently supported. </summary>
         [WirePath("defaultAction")]
-        public ToolControlsDefaultAction? DefaultAction { get; set; }
+        public CognitiveServicesProjectToolControlsDefaultAction? DefaultAction { get; set; }
 
         /// <summary> The tools explicitly allowed by the policy. Omission or an empty array specifies no explicitly allowed tools. </summary>
         [WirePath("allowedTools")]
-        public IList<ToolControlEntry> AllowedTools { get; }
+        public IList<CognitiveServicesProjectToolControlEntry> AllowedTools { get; }
     }
 }

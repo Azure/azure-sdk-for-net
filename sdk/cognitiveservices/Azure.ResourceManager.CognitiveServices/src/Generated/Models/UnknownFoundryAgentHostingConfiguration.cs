@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    internal partial class UnknownAgentHostingConfiguration : AgentHostingConfiguration
+    internal partial class UnknownFoundryAgentHostingConfiguration : FoundryAgentHostingConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAgentHostingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFoundryAgentHostingConfiguration"/>. </summary>
         /// <param name="name"> Unique name of the hosting configuration within the Foundry account. </param>
         /// <param name="hostingType"> Type of infrastructure used to host Foundry agents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentHostingConfiguration(string name, AgentHostingType hostingType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, hostingType != default ? hostingType : "unknown", additionalBinaryDataProperties)
+        internal UnknownFoundryAgentHostingConfiguration(string name, AgentHostingType hostingType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, hostingType != default ? hostingType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

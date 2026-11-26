@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="state"> Overall attachment health. </param>
         /// <param name="summary"> Summary of the evaluated health. </param>
         /// <param name="lastObservedOn"> Time at which health was last observed. </param>
-        /// <param name="newWorkAdmissionAllowed"> Whether the attachment can admit new workloads. </param>
+        /// <param name="isNewWorkAdmissionAllowed"> Whether the attachment can admit new workloads. </param>
         /// <param name="components"> Health of individual attachment components. </param>
         /// <param name="reasons"> Reasons contributing to the evaluated health. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state, string summary, DateTimeOffset? lastObservedOn, bool? newWorkAdmissionAllowed, IList<AttachedAksClusterHealthComponent> components, IList<AttachedAksClusterHealthReason> reasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state, string summary, DateTimeOffset? lastObservedOn, bool? isNewWorkAdmissionAllowed, IList<AttachedAksClusterHealthComponent> components, IList<AttachedAksClusterHealthReason> reasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Summary = summary;
             LastObservedOn = lastObservedOn;
-            NewWorkAdmissionAllowed = newWorkAdmissionAllowed;
+            IsNewWorkAdmissionAllowed = isNewWorkAdmissionAllowed;
             Components = components;
             Reasons = reasons;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Whether the attachment can admit new workloads. </summary>
         [WirePath("newWorkAdmissionAllowed")]
-        public bool? NewWorkAdmissionAllowed { get; }
+        public bool? IsNewWorkAdmissionAllowed { get; }
 
         /// <summary> Health of individual attachment components. </summary>
         [WirePath("components")]

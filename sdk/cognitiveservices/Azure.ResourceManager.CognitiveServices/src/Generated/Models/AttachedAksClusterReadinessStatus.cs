@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AttachedAksClusterReadinessStatus"/>. </summary>
-        /// <param name="connectorReady"> Whether the connector is ready. </param>
+        /// <param name="isConnectorReady"> Whether the connector is ready. </param>
         /// <param name="capabilities"> Readiness of individual capabilities. </param>
         /// <param name="blockers"> Conditions preventing readiness. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterReadinessStatus(bool? connectorReady, IList<AttachedAksClusterCapabilityStatus> capabilities, IList<string> blockers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterReadinessStatus(bool? isConnectorReady, IList<AttachedAksClusterCapabilityStatus> capabilities, IList<string> blockers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ConnectorReady = connectorReady;
+            IsConnectorReady = isConnectorReady;
             Capabilities = capabilities;
             Blockers = blockers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Whether the connector is ready. </summary>
         [WirePath("connectorReady")]
-        public bool? ConnectorReady { get; }
+        public bool? IsConnectorReady { get; }
 
         /// <summary> Readiness of individual capabilities. </summary>
         [WirePath("capabilities")]

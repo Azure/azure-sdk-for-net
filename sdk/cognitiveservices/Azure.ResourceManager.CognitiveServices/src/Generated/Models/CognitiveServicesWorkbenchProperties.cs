@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string instanceType, int? gpuCount, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, WorkbenchProvisioningState? provisioningState, WorkbenchStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string instanceType, int? gpuCount, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, CognitiveServicesWorkbenchProvisioningState? provisioningState, CognitiveServicesWorkbenchStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Provisioning state of the workbench resource, independent of runtime lifecycle status. </summary>
         [WirePath("provisioningState")]
-        public WorkbenchProvisioningState? ProvisioningState { get; }
+        public CognitiveServicesWorkbenchProvisioningState? ProvisioningState { get; }
 
         /// <summary> Runtime lifecycle status of the workbench. Independent of resource provisioning; start, stop, restart, and runtime health changes do not change provisioningState. </summary>
         [WirePath("status")]
-        public WorkbenchStatus? Status { get; }
+        public CognitiveServicesWorkbenchStatus? Status { get; }
 
         /// <summary> Error details for the workbench resource. </summary>
         [WirePath("errors")]

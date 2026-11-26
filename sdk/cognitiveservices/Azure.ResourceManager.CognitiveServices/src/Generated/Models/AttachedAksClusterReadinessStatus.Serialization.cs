@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(AttachedAksClusterReadinessStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ConnectorReady))
+            if (Optional.IsDefined(IsConnectorReady))
             {
                 writer.WritePropertyName("connectorReady"u8);
-                writer.WriteBooleanValue(ConnectorReady.Value);
+                writer.WriteBooleanValue(IsConnectorReady.Value);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            bool? connectorReady = default;
+            bool? isConnectorReady = default;
             IList<AttachedAksClusterCapabilityStatus> capabilities = default;
             IList<string> blockers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    connectorReady = prop.Value.GetBoolean();
+                    isConnectorReady = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("capabilities"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttachedAksClusterReadinessStatus(connectorReady, capabilities ?? new ChangeTrackingList<AttachedAksClusterCapabilityStatus>(), blockers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AttachedAksClusterReadinessStatus(isConnectorReady, capabilities ?? new ChangeTrackingList<AttachedAksClusterCapabilityStatus>(), blockers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

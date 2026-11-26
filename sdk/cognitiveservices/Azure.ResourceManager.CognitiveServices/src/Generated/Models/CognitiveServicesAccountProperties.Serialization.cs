@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("agentHostingConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (AgentHostingConfiguration item in AgentHostingConfigurations)
+                foreach (FoundryAgentHostingConfiguration item in AgentHostingConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string defaultProject = default;
             IList<string> associatedProjects = default;
             CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
-            IList<AgentHostingConfiguration> agentHostingConfigurations = default;
+            IList<FoundryAgentHostingConfiguration> agentHostingConfigurations = default;
             IList<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>();
             bool costControlConnectionsIsDefined = false;
             CostControlConnections costControlConnections = default;
@@ -820,10 +820,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<AgentHostingConfiguration> array = new List<AgentHostingConfiguration>();
+                    List<FoundryAgentHostingConfiguration> array = new List<FoundryAgentHostingConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentHostingConfiguration.DeserializeAgentHostingConfiguration(item, options));
+                        array.Add(FoundryAgentHostingConfiguration.DeserializeFoundryAgentHostingConfiguration(item, options));
                     }
                     agentHostingConfigurations = array;
                     continue;
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
                 capabilitySettings,
-                agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
+                agentHostingConfigurations ?? new ChangeTrackingList<FoundryAgentHostingConfiguration>(),
                 trustedCertificateSources,
                 costControlConnections,
                 additionalBinaryDataProperties)

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? isDefault = default;
             CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
             bool toolControlsIsDefined = false;
-            ToolControls toolControls = default;
+            CognitiveServicesProjectToolControls toolControls = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         toolControls = null;
                         continue;
                     }
-                    toolControls = ToolControls.DeserializeToolControls(prop.Value, options);
+                    toolControls = CognitiveServicesProjectToolControls.DeserializeCognitiveServicesProjectToolControls(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

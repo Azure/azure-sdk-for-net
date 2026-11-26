@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("lastObservedAtUtc"u8);
                 writer.WriteStringValue(LastObservedOn.Value, "O");
             }
-            if (Optional.IsDefined(NewWorkAdmissionAllowed))
+            if (Optional.IsDefined(IsNewWorkAdmissionAllowed))
             {
                 writer.WritePropertyName("newWorkAdmissionAllowed"u8);
-                writer.WriteBooleanValue(NewWorkAdmissionAllowed.Value);
+                writer.WriteBooleanValue(IsNewWorkAdmissionAllowed.Value);
             }
             if (Optional.IsCollectionDefined(Components))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AttachedAksClusterHealthState? state = default;
             string summary = default;
             DateTimeOffset? lastObservedOn = default;
-            bool? newWorkAdmissionAllowed = default;
+            bool? isNewWorkAdmissionAllowed = default;
             IList<AttachedAksClusterHealthComponent> components = default;
             IList<AttachedAksClusterHealthReason> reasons = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    newWorkAdmissionAllowed = prop.Value.GetBoolean();
+                    isNewWorkAdmissionAllowed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("components"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 state,
                 summary,
                 lastObservedOn,
-                newWorkAdmissionAllowed,
+                isNewWorkAdmissionAllowed,
                 components ?? new ChangeTrackingList<AttachedAksClusterHealthComponent>(),
                 reasons ?? new ChangeTrackingList<AttachedAksClusterHealthReason>(),
                 additionalBinaryDataProperties);

@@ -13,16 +13,16 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Configuration for hosting Foundry agents on an Azure Kubernetes Service managed cluster. </summary>
-    public partial class ManagedClusterAgentHostingConfiguration : AgentHostingConfiguration
+    public partial class ManagedClusterFoundryAgentHostingConfiguration : FoundryAgentHostingConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentHostingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterFoundryAgentHostingConfiguration"/>. </summary>
         /// <param name="name"> Unique name of the hosting configuration within the Foundry account. </param>
         /// <param name="hostingManagementIdentityResourceId"> Azure resource ID of the user-assigned managed identity used by the Foundry resource provider to manage the hosting configuration. The identity must be assigned to the Foundry account in identity.userAssignedIdentities. </param>
         /// <param name="workloadIdentityResourceId"> Azure resource ID of the separate user-assigned managed identity federated to service accounts on the AKS cluster. Hosted agents use this identity to access the Azure Storage blob data plane. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the customer-owned AKS managed cluster that runs the hosted agent workloads. </param>
         /// <param name="storageAccountResourceId"> Azure resource ID of the customer-owned storage account used by the hosted agents. The storage account must be in the same subscription and region as the AKS cluster, and its data-plane endpoint must be reachable from the workload network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="hostingManagementIdentityResourceId"/>, <paramref name="workloadIdentityResourceId"/>, <paramref name="clusterResourceId"/> or <paramref name="storageAccountResourceId"/> is null. </exception>
-        public ManagedClusterAgentHostingConfiguration(string name, ResourceIdentifier hostingManagementIdentityResourceId, ResourceIdentifier workloadIdentityResourceId, ResourceIdentifier clusterResourceId, ResourceIdentifier storageAccountResourceId) : base(name, AgentHostingType.ManagedCluster)
+        public ManagedClusterFoundryAgentHostingConfiguration(string name, ResourceIdentifier hostingManagementIdentityResourceId, ResourceIdentifier workloadIdentityResourceId, ResourceIdentifier clusterResourceId, ResourceIdentifier storageAccountResourceId) : base(name, AgentHostingType.ManagedCluster)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(hostingManagementIdentityResourceId, nameof(hostingManagementIdentityResourceId));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             StorageAccountResourceId = storageAccountResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentHostingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterFoundryAgentHostingConfiguration"/>. </summary>
         /// <param name="name"> Unique name of the hosting configuration within the Foundry account. </param>
         /// <param name="hostingType"> Type of infrastructure used to host Foundry agents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="workloadIdentityResourceId"> Azure resource ID of the separate user-assigned managed identity federated to service accounts on the AKS cluster. Hosted agents use this identity to access the Azure Storage blob data plane. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the customer-owned AKS managed cluster that runs the hosted agent workloads. </param>
         /// <param name="storageAccountResourceId"> Azure resource ID of the customer-owned storage account used by the hosted agents. The storage account must be in the same subscription and region as the AKS cluster, and its data-plane endpoint must be reachable from the workload network. </param>
-        internal ManagedClusterAgentHostingConfiguration(string name, AgentHostingType hostingType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier hostingManagementIdentityResourceId, ResourceIdentifier workloadIdentityResourceId, ResourceIdentifier clusterResourceId, ResourceIdentifier storageAccountResourceId) : base(name, hostingType, additionalBinaryDataProperties)
+        internal ManagedClusterFoundryAgentHostingConfiguration(string name, AgentHostingType hostingType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier hostingManagementIdentityResourceId, ResourceIdentifier workloadIdentityResourceId, ResourceIdentifier clusterResourceId, ResourceIdentifier storageAccountResourceId) : base(name, hostingType, additionalBinaryDataProperties)
         {
             HostingManagementIdentityResourceId = hostingManagementIdentityResourceId;
             WorkloadIdentityResourceId = workloadIdentityResourceId;

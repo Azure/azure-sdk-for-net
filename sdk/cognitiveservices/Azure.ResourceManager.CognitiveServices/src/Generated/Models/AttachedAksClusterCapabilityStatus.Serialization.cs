@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Ready))
+            if (Optional.IsDefined(IsReady))
             {
                 writer.WritePropertyName("ready"u8);
-                writer.WriteBooleanValue(Ready.Value);
+                writer.WriteBooleanValue(IsReady.Value);
             }
             if (Optional.IsDefined(Message))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string name = default;
-            bool? ready = default;
+            bool? isReady = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    ready = prop.Value.GetBoolean();
+                    isReady = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttachedAksClusterCapabilityStatus(name, ready, message, additionalBinaryDataProperties);
+            return new AttachedAksClusterCapabilityStatus(name, isReady, message, additionalBinaryDataProperties);
         }
     }
 }

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="identity"> Identity provisioned for training on the attached cluster. </param>
         /// <param name="connectorRegistration"> Connector registration associated with the attachment. </param>
         /// <param name="observedGeneration"> Attachment generation observed by the connector. </param>
-        /// <param name="connectorObservedAtUtc"> Time at which the connector was last observed. </param>
+        /// <param name="connectorObservedOn"> Time at which the connector was last observed. </param>
         /// <param name="readiness"> Connector and capability readiness. </param>
         /// <param name="aiManager"> Status of the AI Manager integration. </param>
         /// <param name="extension"> Status of the training extension resource. </param>
         /// <param name="health"> Evaluated attachment health and workload admission status. </param>
-        /// <param name="lastUpdatedTimeUtc"> Last update time of the attachment status. </param>
+        /// <param name="lastUpdatedOn"> Last update time of the attachment status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterStatus(AttachedAksClusterProvisioningStage? stage, ResourceIdentifier clusterResourceId, string providerOperationId, string message, AttachedAksClusterIdentityStatus identity, AttachedAksClusterConnectorRegistration connectorRegistration, long? observedGeneration, DateTimeOffset? connectorObservedAtUtc, AttachedAksClusterReadinessStatus readiness, AttachedAksClusterAiManagerStatus aiManager, AttachedAksClusterIntegrationResourceStatus extension, AttachedAksClusterHealthStatus health, DateTimeOffset? lastUpdatedTimeUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterStatus(AttachedAksClusterProvisioningStage? stage, ResourceIdentifier clusterResourceId, string providerOperationId, string message, AttachedAksClusterIdentityStatus identity, AttachedAksClusterConnectorRegistration connectorRegistration, long? observedGeneration, DateTimeOffset? connectorObservedOn, AttachedAksClusterReadinessStatus readiness, AttachedAksClusterAiManagerStatus aiManager, AttachedAksClusterIntegrationResourceStatus extension, AttachedAksClusterHealthStatus health, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Stage = stage;
             ClusterResourceId = clusterResourceId;
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Identity = identity;
             ConnectorRegistration = connectorRegistration;
             ObservedGeneration = observedGeneration;
-            ConnectorObservedAtUtc = connectorObservedAtUtc;
+            ConnectorObservedOn = connectorObservedOn;
             Readiness = readiness;
             AiManager = aiManager;
             Extension = extension;
             Health = health;
-            LastUpdatedTimeUtc = lastUpdatedTimeUtc;
+            LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Time at which the connector was last observed. </summary>
         [WirePath("connectorObservedAtUtc")]
-        public DateTimeOffset? ConnectorObservedAtUtc { get; }
+        public DateTimeOffset? ConnectorObservedOn { get; }
 
         /// <summary> Connector and capability readiness. </summary>
         [WirePath("readiness")]
@@ -106,6 +106,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Last update time of the attachment status. </summary>
         [WirePath("lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedTimeUtc { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

@@ -14,59 +14,59 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Base configuration for hosting Foundry agents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedClusterAgentHostingConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedClusterFoundryAgentHostingConfiguration"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownAgentHostingConfiguration))]
-    public abstract partial class AgentHostingConfiguration : IJsonModel<AgentHostingConfiguration>
+    [PersistableModelProxy(typeof(UnknownFoundryAgentHostingConfiguration))]
+    public abstract partial class FoundryAgentHostingConfiguration : IJsonModel<FoundryAgentHostingConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentHostingConfiguration"/> for deserialization. </summary>
-        internal AgentHostingConfiguration()
+        /// <summary> Initializes a new instance of <see cref="FoundryAgentHostingConfiguration"/> for deserialization. </summary>
+        internal FoundryAgentHostingConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentHostingConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FoundryAgentHostingConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FoundryAgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentHostingConfiguration(document.RootElement, options);
+                        return DeserializeFoundryAgentHostingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentHostingConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FoundryAgentHostingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FoundryAgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentHostingConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FoundryAgentHostingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentHostingConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FoundryAgentHostingConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentHostingConfiguration IPersistableModel<AgentHostingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FoundryAgentHostingConfiguration IPersistableModel<FoundryAgentHostingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentHostingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FoundryAgentHostingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentHostingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FoundryAgentHostingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FoundryAgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentHostingConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FoundryAgentHostingConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentHostingConfiguration IJsonModel<AgentHostingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FoundryAgentHostingConfiguration IJsonModel<FoundryAgentHostingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentHostingConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FoundryAgentHostingConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FoundryAgentHostingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentHostingConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FoundryAgentHostingConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentHostingConfiguration(document.RootElement, options);
+            return DeserializeFoundryAgentHostingConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentHostingConfiguration DeserializeAgentHostingConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static FoundryAgentHostingConfiguration DeserializeFoundryAgentHostingConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 switch (discriminator.GetString())
                 {
                     case "ManagedCluster":
-                        return ManagedClusterAgentHostingConfiguration.DeserializeManagedClusterAgentHostingConfiguration(element, options);
+                        return ManagedClusterFoundryAgentHostingConfiguration.DeserializeManagedClusterFoundryAgentHostingConfiguration(element, options);
                 }
             }
-            return UnknownAgentHostingConfiguration.DeserializeUnknownAgentHostingConfiguration(element, options);
+            return UnknownFoundryAgentHostingConfiguration.DeserializeUnknownFoundryAgentHostingConfiguration(element, options);
         }
     }
 }

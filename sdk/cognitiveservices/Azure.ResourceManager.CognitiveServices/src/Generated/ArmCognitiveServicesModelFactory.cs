@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="trustedCertificateSources"> Private CA trust sources for supported features in an AIServices account with allowProjectManagement enabled. Supports one Azure Key Vault source containing version-pinned references to secrets with PEM-encoded CA certificates or certificate bundles. On PUT or PATCH, a non-null array replaces the complete configuration, so include all references to retain. Omit this property or send null to preserve the existing configuration; send an empty array to clear it. </param>
         /// <param name="costControlConnectionsAppInsightsConnectionId"> The full resource ID of the optional Application Insights connection. Set to null in an account update to remove it. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? isStoredCompletionsDisabled = default, bool? isA365LoggingEnabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default, IEnumerable<AgentHostingConfiguration> agentHostingConfigurations = default, IEnumerable<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = default, ResourceIdentifier costControlConnectionsAppInsightsConnectionId = default)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? isStoredCompletionsDisabled = default, bool? isA365LoggingEnabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default, IEnumerable<FoundryAgentHostingConfiguration> agentHostingConfigurations = default, IEnumerable<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = default, ResourceIdentifier costControlConnectionsAppInsightsConnectionId = default)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             commitmentPlanAssociations ??= new ChangeTrackingList<CommitmentPlanAssociation>();
             aiFoundryNetworkInjections ??= new ChangeTrackingList<AIFoundryNetworkInjection>();
             associatedProjects ??= new ChangeTrackingList<string>();
-            agentHostingConfigurations ??= new ChangeTrackingList<AgentHostingConfiguration>();
+            agentHostingConfigurations ??= new ChangeTrackingList<FoundryAgentHostingConfiguration>();
             trustedCertificateSources ??= new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>();
 
             return new CognitiveServicesAccountProperties(
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 defaultProject,
                 (associatedProjects ?? new ChangeTrackingList<string>()).ToList(),
                 capabilitySettings,
-                (agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>()).ToList(),
+                (agentHostingConfigurations ?? new ChangeTrackingList<FoundryAgentHostingConfiguration>()).ToList(),
                 (trustedCertificateSources ?? new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>()).ToList(),
                 costControlConnectionsAppInsightsConnectionId is null ? default : new CostControlConnections(costControlConnectionsAppInsightsConnectionId, default),
                 default);
@@ -575,14 +575,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary>
         /// Base configuration for hosting Foundry agents.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedClusterAgentHostingConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedClusterFoundryAgentHostingConfiguration"/>.
         /// </summary>
         /// <param name="name"> Unique name of the hosting configuration within the Foundry account. </param>
         /// <param name="hostingType"> Type of infrastructure used to host Foundry agents. </param>
-        /// <returns> A new <see cref="Models.AgentHostingConfiguration"/> instance for mocking. </returns>
-        public static AgentHostingConfiguration AgentHostingConfiguration(string name = default, string hostingType = default)
+        /// <returns> A new <see cref="Models.FoundryAgentHostingConfiguration"/> instance for mocking. </returns>
+        public static FoundryAgentHostingConfiguration FoundryAgentHostingConfiguration(string name = default, string hostingType = default)
         {
-            return new UnknownAgentHostingConfiguration(name, hostingType is null ? default : new AgentHostingType(hostingType), default);
+            return new UnknownFoundryAgentHostingConfiguration(name, hostingType is null ? default : new AgentHostingType(hostingType), default);
         }
 
         /// <summary> Configuration for hosting Foundry agents on an Azure Kubernetes Service managed cluster. </summary>
@@ -591,10 +591,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="workloadIdentityResourceId"> Azure resource ID of the separate user-assigned managed identity federated to service accounts on the AKS cluster. Hosted agents use this identity to access the Azure Storage blob data plane. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the customer-owned AKS managed cluster that runs the hosted agent workloads. </param>
         /// <param name="storageAccountResourceId"> Azure resource ID of the customer-owned storage account used by the hosted agents. The storage account must be in the same subscription and region as the AKS cluster, and its data-plane endpoint must be reachable from the workload network. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterAgentHostingConfiguration"/> instance for mocking. </returns>
-        public static ManagedClusterAgentHostingConfiguration ManagedClusterAgentHostingConfiguration(string name = default, ResourceIdentifier hostingManagementIdentityResourceId = default, ResourceIdentifier workloadIdentityResourceId = default, ResourceIdentifier clusterResourceId = default, ResourceIdentifier storageAccountResourceId = default)
+        /// <returns> A new <see cref="Models.ManagedClusterFoundryAgentHostingConfiguration"/> instance for mocking. </returns>
+        public static ManagedClusterFoundryAgentHostingConfiguration ManagedClusterFoundryAgentHostingConfiguration(string name = default, ResourceIdentifier hostingManagementIdentityResourceId = default, ResourceIdentifier workloadIdentityResourceId = default, ResourceIdentifier clusterResourceId = default, ResourceIdentifier storageAccountResourceId = default)
         {
-            return new ManagedClusterAgentHostingConfiguration(
+            return new ManagedClusterFoundryAgentHostingConfiguration(
                 name,
                 AgentHostingType.ManagedCluster,
                 default,
@@ -1079,10 +1079,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="allowedCapabilities"> Capabilities available to the project binding. </param>
         /// <param name="stage"> Current project binding stage. </param>
         /// <param name="message"> Details of the current binding state. </param>
-        /// <param name="kubeRayReady"> Whether the binding is ready for KubeRay workloads. </param>
-        /// <param name="foundryNativeReady"> Whether the binding is ready for Foundry-native workloads. </param>
+        /// <param name="isKubeRayReady"> Whether the binding is ready for KubeRay workloads. </param>
+        /// <param name="isFoundryNativeReady"> Whether the binding is ready for Foundry-native workloads. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterProjectBinding"/> instance for mocking. </returns>
-        public static AttachedAksClusterProjectBinding AttachedAksClusterProjectBinding(string projectId = default, string projectName = default, string @namespace = default, string serviceAccountName = default, string workloadIdentityClientId = default, IEnumerable<AttachedAksClusterCapability> allowedCapabilities = default, AttachedAksClusterProjectBindingStage? stage = default, string message = default, bool? kubeRayReady = default, bool? foundryNativeReady = default)
+        public static AttachedAksClusterProjectBinding AttachedAksClusterProjectBinding(string projectId = default, string projectName = default, string @namespace = default, string serviceAccountName = default, string workloadIdentityClientId = default, IEnumerable<AttachedAksClusterCapability> allowedCapabilities = default, AttachedAksClusterProjectBindingStage? stage = default, string message = default, bool? isKubeRayReady = default, bool? isFoundryNativeReady = default)
         {
             allowedCapabilities ??= new ChangeTrackingList<AttachedAksClusterCapability>();
 
@@ -1095,8 +1095,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 (allowedCapabilities ?? new ChangeTrackingList<AttachedAksClusterCapability>()).ToList(),
                 stage,
                 message,
-                kubeRayReady,
-                foundryNativeReady,
+                isKubeRayReady,
+                isFoundryNativeReady,
                 default);
         }
 
@@ -1108,14 +1108,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="identity"> Identity provisioned for training on the attached cluster. </param>
         /// <param name="connectorRegistration"> Connector registration associated with the attachment. </param>
         /// <param name="observedGeneration"> Attachment generation observed by the connector. </param>
-        /// <param name="connectorObservedAtUtc"> Time at which the connector was last observed. </param>
+        /// <param name="connectorObservedOn"> Time at which the connector was last observed. </param>
         /// <param name="readiness"> Connector and capability readiness. </param>
         /// <param name="aiManager"> Status of the AI Manager integration. </param>
         /// <param name="extension"> Status of the training extension resource. </param>
         /// <param name="health"> Evaluated attachment health and workload admission status. </param>
-        /// <param name="lastUpdatedTimeUtc"> Last update time of the attachment status. </param>
+        /// <param name="lastUpdatedOn"> Last update time of the attachment status. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterStatus"/> instance for mocking. </returns>
-        public static AttachedAksClusterStatus AttachedAksClusterStatus(AttachedAksClusterProvisioningStage? stage = default, ResourceIdentifier clusterResourceId = default, string providerOperationId = default, string message = default, AttachedAksClusterIdentityStatus identity = default, AttachedAksClusterConnectorRegistration connectorRegistration = default, long? observedGeneration = default, DateTimeOffset? connectorObservedAtUtc = default, AttachedAksClusterReadinessStatus readiness = default, AttachedAksClusterAiManagerStatus aiManager = default, AttachedAksClusterIntegrationResourceStatus extension = default, AttachedAksClusterHealthStatus health = default, DateTimeOffset? lastUpdatedTimeUtc = default)
+        public static AttachedAksClusterStatus AttachedAksClusterStatus(AttachedAksClusterProvisioningStage? stage = default, ResourceIdentifier clusterResourceId = default, string providerOperationId = default, string message = default, AttachedAksClusterIdentityStatus identity = default, AttachedAksClusterConnectorRegistration connectorRegistration = default, long? observedGeneration = default, DateTimeOffset? connectorObservedOn = default, AttachedAksClusterReadinessStatus readiness = default, AttachedAksClusterAiManagerStatus aiManager = default, AttachedAksClusterIntegrationResourceStatus extension = default, AttachedAksClusterHealthStatus health = default, DateTimeOffset? lastUpdatedOn = default)
         {
             return new AttachedAksClusterStatus(
                 stage,
@@ -1125,12 +1125,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 identity,
                 connectorRegistration,
                 observedGeneration,
-                connectorObservedAtUtc,
+                connectorObservedOn,
                 readiness,
                 aiManager,
                 extension,
                 health,
-                lastUpdatedTimeUtc,
+                lastUpdatedOn,
                 default);
         }
 
@@ -1181,26 +1181,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Readiness of the attachment connector and capabilities. </summary>
-        /// <param name="connectorReady"> Whether the connector is ready. </param>
+        /// <param name="isConnectorReady"> Whether the connector is ready. </param>
         /// <param name="capabilities"> Readiness of individual capabilities. </param>
         /// <param name="blockers"> Conditions preventing readiness. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterReadinessStatus"/> instance for mocking. </returns>
-        public static AttachedAksClusterReadinessStatus AttachedAksClusterReadinessStatus(bool? connectorReady = default, IEnumerable<AttachedAksClusterCapabilityStatus> capabilities = default, IEnumerable<string> blockers = default)
+        public static AttachedAksClusterReadinessStatus AttachedAksClusterReadinessStatus(bool? isConnectorReady = default, IEnumerable<AttachedAksClusterCapabilityStatus> capabilities = default, IEnumerable<string> blockers = default)
         {
             capabilities ??= new ChangeTrackingList<AttachedAksClusterCapabilityStatus>();
             blockers ??= new ChangeTrackingList<string>();
 
-            return new AttachedAksClusterReadinessStatus(connectorReady, (capabilities ?? new ChangeTrackingList<AttachedAksClusterCapabilityStatus>()).ToList(), (blockers ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new AttachedAksClusterReadinessStatus(isConnectorReady, (capabilities ?? new ChangeTrackingList<AttachedAksClusterCapabilityStatus>()).ToList(), (blockers ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Readiness of an individual attachment capability. </summary>
         /// <param name="name"> Capability name. </param>
-        /// <param name="ready"> Whether the capability is ready. </param>
+        /// <param name="isReady"> Whether the capability is ready. </param>
         /// <param name="message"> Details of the capability's readiness. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterCapabilityStatus"/> instance for mocking. </returns>
-        public static AttachedAksClusterCapabilityStatus AttachedAksClusterCapabilityStatus(string name = default, bool? ready = default, string message = default)
+        public static AttachedAksClusterCapabilityStatus AttachedAksClusterCapabilityStatus(string name = default, bool? isReady = default, string message = default)
         {
-            return new AttachedAksClusterCapabilityStatus(name, ready, message, default);
+            return new AttachedAksClusterCapabilityStatus(name, isReady, message, default);
         }
 
         /// <summary> Status of the AI Manager integration on the attached cluster. </summary>
@@ -1272,11 +1272,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="state"> Overall attachment health. </param>
         /// <param name="summary"> Summary of the evaluated health. </param>
         /// <param name="lastObservedOn"> Time at which health was last observed. </param>
-        /// <param name="newWorkAdmissionAllowed"> Whether the attachment can admit new workloads. </param>
+        /// <param name="isNewWorkAdmissionAllowed"> Whether the attachment can admit new workloads. </param>
         /// <param name="components"> Health of individual attachment components. </param>
         /// <param name="reasons"> Reasons contributing to the evaluated health. </param>
         /// <returns> A new <see cref="Models.AttachedAksClusterHealthStatus"/> instance for mocking. </returns>
-        public static AttachedAksClusterHealthStatus AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state = default, string summary = default, DateTimeOffset? lastObservedOn = default, bool? newWorkAdmissionAllowed = default, IEnumerable<AttachedAksClusterHealthComponent> components = default, IEnumerable<AttachedAksClusterHealthReason> reasons = default)
+        public static AttachedAksClusterHealthStatus AttachedAksClusterHealthStatus(AttachedAksClusterHealthState? state = default, string summary = default, DateTimeOffset? lastObservedOn = default, bool? isNewWorkAdmissionAllowed = default, IEnumerable<AttachedAksClusterHealthComponent> components = default, IEnumerable<AttachedAksClusterHealthReason> reasons = default)
         {
             components ??= new ChangeTrackingList<AttachedAksClusterHealthComponent>();
             reasons ??= new ChangeTrackingList<AttachedAksClusterHealthReason>();
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 state,
                 summary,
                 lastObservedOn,
-                newWorkAdmissionAllowed,
+                isNewWorkAdmissionAllowed,
                 (components ?? new ChangeTrackingList<AttachedAksClusterHealthComponent>()).ToList(),
                 (reasons ?? new ChangeTrackingList<AttachedAksClusterHealthReason>()).ToList(),
                 default);
@@ -2607,7 +2607,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="capabilitySettings"> Effective agent capability settings for the project. Optional partial override of the account defaults; omitted fields inherit from the parent account when present. Settable only at create time. </param>
         /// <param name="toolControls"> The project-level tool access policy. Omitting this property in a PUT request clears the policy. In PATCH requests, omission preserves the policy and an explicit null clears it. Responses omit this property when no policy is configured. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = default, string displayName = default, string description = default, IReadOnlyDictionary<string, string> endpoints = default, bool? isDefault = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default, ToolControls toolControls = default)
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = default, string displayName = default, string description = default, IReadOnlyDictionary<string, string> endpoints = default, bool? isDefault = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default, CognitiveServicesProjectToolControls toolControls = default)
         {
             endpoints ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2625,22 +2625,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Defines the default and per-tool access policy for a Foundry project. </summary>
         /// <param name="defaultAction"> The action applied when a tool is not listed explicitly. Only Deny is currently supported. </param>
         /// <param name="allowedTools"> The tools explicitly allowed by the policy. Omission or an empty array specifies no explicitly allowed tools. </param>
-        /// <returns> A new <see cref="Models.ToolControls"/> instance for mocking. </returns>
-        public static ToolControls ToolControls(ToolControlsDefaultAction? defaultAction = default, IEnumerable<ToolControlEntry> allowedTools = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectToolControls"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectToolControls CognitiveServicesProjectToolControls(CognitiveServicesProjectToolControlsDefaultAction? defaultAction = default, IEnumerable<CognitiveServicesProjectToolControlEntry> allowedTools = default)
         {
-            allowedTools ??= new ChangeTrackingList<ToolControlEntry>();
+            allowedTools ??= new ChangeTrackingList<CognitiveServicesProjectToolControlEntry>();
 
-            return new ToolControls(defaultAction, (allowedTools ?? new ChangeTrackingList<ToolControlEntry>()).ToList(), default);
+            return new CognitiveServicesProjectToolControls(defaultAction, (allowedTools ?? new ChangeTrackingList<CognitiveServicesProjectToolControlEntry>()).ToList(), default);
         }
 
         /// <summary> Identifies a tool by its canonical type and optional MCP server URL or connector. </summary>
         /// <param name="type"> The canonical tool type. For type mcp, exactly one of serverUrl or connectorId must be specified. Other tool types must omit both properties. </param>
         /// <param name="serverUri"> The absolute HTTPS URL or URL pattern of an MCP server, stored as a string to support wildcards. The entire URL may contain at most one literal '<i>' across its hostname, path, query, and fragment. Supported patterns include https://</i>.contoso.com/mcp, https://contoso.com/mcp/<i>, https://contoso.com/mcp?tenant=</i>, and https://contoso.com/mcp#*. A hostname wildcard must be the leftmost label. The URL must not contain user information. Applies only to type mcp and cannot be specified together with connectorId. </param>
         /// <param name="connectorId"> The opaque MCP connector catalog identifier, not an Azure resource ID. Applies only to type mcp and cannot be specified together with serverUrl. </param>
-        /// <returns> A new <see cref="Models.ToolControlEntry"/> instance for mocking. </returns>
-        public static ToolControlEntry ToolControlEntry(ToolControlType @type = default, string serverUri = default, string connectorId = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectToolControlEntry"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectToolControlEntry CognitiveServicesProjectToolControlEntry(CognitiveServicesProjectToolControlType @type = default, string serverUri = default, string connectorId = default)
         {
-            return new ToolControlEntry(@type, serverUri, connectorId, default);
+            return new CognitiveServicesProjectToolControlEntry(@type, serverUri, connectorId, default);
         }
 
         /// <summary> Connection base resource schema. </summary>
@@ -4452,7 +4452,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string instanceType = default, int? gpuCount = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, WorkbenchProvisioningState? provisioningState = default, WorkbenchStatus? status = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string instanceType = default, int? gpuCount = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesWorkbenchProvisioningState? provisioningState = default, CognitiveServicesWorkbenchStatus? status = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -4477,7 +4477,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="properties"> Properties of the workbench to update. </param>
         /// <param name="identity"> Identity for the resource. May be changed while the workbench is running only when properties is omitted or null; the change takes effect after restart. If a properties object is supplied, including an empty object or timeout-only update, changing identity requires the workbench to be stopped. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchPatch"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchPatch CognitiveServicesWorkbenchPatch(WorkbenchUpdateProperties properties = default, CognitiveServicesComputeIdentity identity = default)
+        public static CognitiveServicesWorkbenchPatch CognitiveServicesWorkbenchPatch(CognitiveServicesWorkbenchPatchProperties properties = default, CognitiveServicesComputeIdentity identity = default)
         {
             return new CognitiveServicesWorkbenchPatch(properties, identity, default);
         }
@@ -4487,10 +4487,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle workbench is automatically shut down (e.g., 'PT30M'). </param>
         /// <param name="instanceType"> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. Omit to preserve the current value; null resets to the Singularity.D4_v3 fallback. Foundry Compute ignores this override and uses the pool configuration. An actual instance type change requires the workbench to be stopped. </param>
         /// <param name="gpuCount"> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. Omit to preserve the current value; null clears the override to use the full node or the instance type's default count. Full-node Azure VM sizes permit partition selection. A supplied count must match an exact Singularity instance type; the Singularity.D4_v3 fallback accepts 4. </param>
-        /// <returns> A new <see cref="Models.WorkbenchUpdateProperties"/> instance for mocking. </returns>
-        public static WorkbenchUpdateProperties WorkbenchUpdateProperties(string targetClusterId = default, string idleTimeBeforeShutdown = default, string instanceType = default, int? gpuCount = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchPatchProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesWorkbenchPatchProperties CognitiveServicesWorkbenchPatchProperties(string targetClusterId = default, string idleTimeBeforeShutdown = default, string instanceType = default, int? gpuCount = default)
         {
-            return new WorkbenchUpdateProperties(targetClusterId, idleTimeBeforeShutdown, instanceType, gpuCount, default);
+            return new CognitiveServicesWorkbenchPatchProperties(targetClusterId, idleTimeBeforeShutdown, instanceType, gpuCount, default);
         }
 
         /// <summary> Identity for the resource. </summary>

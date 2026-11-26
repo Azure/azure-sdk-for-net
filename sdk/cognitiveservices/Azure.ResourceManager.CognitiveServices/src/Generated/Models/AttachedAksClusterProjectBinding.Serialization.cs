@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(KubeRayReady))
+            if (Optional.IsDefined(IsKubeRayReady))
             {
                 writer.WritePropertyName("kubeRayReady"u8);
-                writer.WriteBooleanValue(KubeRayReady.Value);
+                writer.WriteBooleanValue(IsKubeRayReady.Value);
             }
-            if (Optional.IsDefined(FoundryNativeReady))
+            if (Optional.IsDefined(IsFoundryNativeReady))
             {
                 writer.WritePropertyName("foundryNativeReady"u8);
-                writer.WriteBooleanValue(FoundryNativeReady.Value);
+                writer.WriteBooleanValue(IsFoundryNativeReady.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IList<AttachedAksClusterCapability> allowedCapabilities = default;
             AttachedAksClusterProjectBindingStage? stage = default;
             string message = default;
-            bool? kubeRayReady = default;
-            bool? foundryNativeReady = default;
+            bool? isKubeRayReady = default;
+            bool? isFoundryNativeReady = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    kubeRayReady = prop.Value.GetBoolean();
+                    isKubeRayReady = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("foundryNativeReady"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    foundryNativeReady = prop.Value.GetBoolean();
+                    isFoundryNativeReady = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 allowedCapabilities ?? new ChangeTrackingList<AttachedAksClusterCapability>(),
                 stage,
                 message,
-                kubeRayReady,
-                foundryNativeReady,
+                isKubeRayReady,
+                isFoundryNativeReady,
                 additionalBinaryDataProperties);
         }
     }

@@ -14,51 +14,51 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Defines the default and per-tool access policy for a Foundry project. </summary>
-    public partial class ToolControls : IJsonModel<ToolControls>
+    public partial class CognitiveServicesProjectToolControls : IJsonModel<CognitiveServicesProjectToolControls>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ToolControls PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesProjectToolControls PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolControls>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesProjectToolControls>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeToolControls(document.RootElement, options);
+                        return DeserializeCognitiveServicesProjectToolControls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolControls)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesProjectToolControls)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolControls>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesProjectToolControls>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ToolControls)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesProjectToolControls)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolControls>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesProjectToolControls>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolControls IPersistableModel<ToolControls>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesProjectToolControls IPersistableModel<CognitiveServicesProjectToolControls>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolControls>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesProjectToolControls>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolControls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesProjectToolControls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolControls>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesProjectToolControls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolControls)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesProjectToolControls)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DefaultAction))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("allowedTools"u8);
                 writer.WriteStartArray();
-                foreach (ToolControlEntry item in AllowedTools)
+                foreach (CognitiveServicesProjectToolControlEntry item in AllowedTools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,31 +108,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolControls IJsonModel<ToolControls>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesProjectToolControls IJsonModel<CognitiveServicesProjectToolControls>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ToolControls JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesProjectToolControls JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolControls>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesProjectToolControls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolControls)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesProjectToolControls)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolControls(document.RootElement, options);
+            return DeserializeCognitiveServicesProjectToolControls(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ToolControls DeserializeToolControls(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesProjectToolControls DeserializeCognitiveServicesProjectToolControls(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ToolControlsDefaultAction? defaultAction = default;
-            IList<ToolControlEntry> allowedTools = default;
+            CognitiveServicesProjectToolControlsDefaultAction? defaultAction = default;
+            IList<CognitiveServicesProjectToolControlEntry> allowedTools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    defaultAction = new ToolControlsDefaultAction(prop.Value.GetString());
+                    defaultAction = new CognitiveServicesProjectToolControlsDefaultAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allowedTools"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ToolControlEntry> array = new List<ToolControlEntry>();
+                    List<CognitiveServicesProjectToolControlEntry> array = new List<CognitiveServicesProjectToolControlEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolControlEntry.DeserializeToolControlEntry(item, options));
+                        array.Add(CognitiveServicesProjectToolControlEntry.DeserializeCognitiveServicesProjectToolControlEntry(item, options));
                     }
                     allowedTools = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ToolControls(defaultAction, allowedTools ?? new ChangeTrackingList<ToolControlEntry>(), additionalBinaryDataProperties);
+            return new CognitiveServicesProjectToolControls(defaultAction, allowedTools ?? new ChangeTrackingList<CognitiveServicesProjectToolControlEntry>(), additionalBinaryDataProperties);
         }
     }
 }

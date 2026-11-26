@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="allowedCapabilities"> Capabilities available to the project binding. </param>
         /// <param name="stage"> Current project binding stage. </param>
         /// <param name="message"> Details of the current binding state. </param>
-        /// <param name="kubeRayReady"> Whether the binding is ready for KubeRay workloads. </param>
-        /// <param name="foundryNativeReady"> Whether the binding is ready for Foundry-native workloads. </param>
+        /// <param name="isKubeRayReady"> Whether the binding is ready for KubeRay workloads. </param>
+        /// <param name="isFoundryNativeReady"> Whether the binding is ready for Foundry-native workloads. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterProjectBinding(string projectId, string projectName, string @namespace, string serviceAccountName, string workloadIdentityClientId, IList<AttachedAksClusterCapability> allowedCapabilities, AttachedAksClusterProjectBindingStage? stage, string message, bool? kubeRayReady, bool? foundryNativeReady, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterProjectBinding(string projectId, string projectName, string @namespace, string serviceAccountName, string workloadIdentityClientId, IList<AttachedAksClusterCapability> allowedCapabilities, AttachedAksClusterProjectBindingStage? stage, string message, bool? isKubeRayReady, bool? isFoundryNativeReady, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectId = projectId;
             ProjectName = projectName;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AllowedCapabilities = allowedCapabilities;
             Stage = stage;
             Message = message;
-            KubeRayReady = kubeRayReady;
-            FoundryNativeReady = foundryNativeReady;
+            IsKubeRayReady = isKubeRayReady;
+            IsFoundryNativeReady = isFoundryNativeReady;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Whether the binding is ready for KubeRay workloads. </summary>
         [WirePath("kubeRayReady")]
-        public bool? KubeRayReady { get; }
+        public bool? IsKubeRayReady { get; }
 
         /// <summary> Whether the binding is ready for Foundry-native workloads. </summary>
         [WirePath("foundryNativeReady")]
-        public bool? FoundryNativeReady { get; }
+        public bool? IsFoundryNativeReady { get; }
     }
 }

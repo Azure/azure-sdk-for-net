@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="AttachedAksClusterCapabilityStatus"/>. </summary>
         /// <param name="name"> Capability name. </param>
-        /// <param name="ready"> Whether the capability is ready. </param>
+        /// <param name="isReady"> Whether the capability is ready. </param>
         /// <param name="message"> Details of the capability's readiness. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttachedAksClusterCapabilityStatus(string name, bool? ready, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttachedAksClusterCapabilityStatus(string name, bool? isReady, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Ready = ready;
+            IsReady = isReady;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Whether the capability is ready. </summary>
         [WirePath("ready")]
-        public bool? Ready { get; }
+        public bool? IsReady { get; }
 
         /// <summary> Details of the capability's readiness. </summary>
         [WirePath("message")]

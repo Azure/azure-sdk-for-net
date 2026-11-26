@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Runtime lifecycle status of a workbench. </summary>
-    public readonly partial struct WorkbenchStatus : IEquatable<WorkbenchStatus>
+    public readonly partial struct CognitiveServicesWorkbenchStatus : IEquatable<CognitiveServicesWorkbenchStatus>
     {
         private readonly string _value;
         /// <summary> The runtime status is unknown. </summary>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The runtime has failed. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="WorkbenchStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesWorkbenchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkbenchStatus(string value)
+        public CognitiveServicesWorkbenchStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -47,59 +47,59 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The runtime status is unknown. </summary>
-        public static WorkbenchStatus Unknown { get; } = new WorkbenchStatus(UnknownValue);
+        public static CognitiveServicesWorkbenchStatus Unknown { get; } = new CognitiveServicesWorkbenchStatus(UnknownValue);
 
         /// <summary> The runtime is being created. </summary>
-        public static WorkbenchStatus Creating { get; } = new WorkbenchStatus(CreatingValue);
+        public static CognitiveServicesWorkbenchStatus Creating { get; } = new CognitiveServicesWorkbenchStatus(CreatingValue);
 
         /// <summary> The runtime is starting. </summary>
-        public static WorkbenchStatus Starting { get; } = new WorkbenchStatus(StartingValue);
+        public static CognitiveServicesWorkbenchStatus Starting { get; } = new CognitiveServicesWorkbenchStatus(StartingValue);
 
         /// <summary> The runtime is running. </summary>
-        public static WorkbenchStatus Running { get; } = new WorkbenchStatus(RunningValue);
+        public static CognitiveServicesWorkbenchStatus Running { get; } = new CognitiveServicesWorkbenchStatus(RunningValue);
 
         /// <summary> The runtime is stopping. </summary>
-        public static WorkbenchStatus Stopping { get; } = new WorkbenchStatus(StoppingValue);
+        public static CognitiveServicesWorkbenchStatus Stopping { get; } = new CognitiveServicesWorkbenchStatus(StoppingValue);
 
         /// <summary> The runtime is stopped. </summary>
-        public static WorkbenchStatus Stopped { get; } = new WorkbenchStatus(StoppedValue);
+        public static CognitiveServicesWorkbenchStatus Stopped { get; } = new CognitiveServicesWorkbenchStatus(StoppedValue);
 
         /// <summary> The runtime is restarting. </summary>
-        public static WorkbenchStatus Restarting { get; } = new WorkbenchStatus(RestartingValue);
+        public static CognitiveServicesWorkbenchStatus Restarting { get; } = new CognitiveServicesWorkbenchStatus(RestartingValue);
 
         /// <summary> The runtime is being updated. </summary>
-        public static WorkbenchStatus Updating { get; } = new WorkbenchStatus(UpdatingValue);
+        public static CognitiveServicesWorkbenchStatus Updating { get; } = new CognitiveServicesWorkbenchStatus(UpdatingValue);
 
         /// <summary> The runtime is being deleted. </summary>
-        public static WorkbenchStatus Deleting { get; } = new WorkbenchStatus(DeletingValue);
+        public static CognitiveServicesWorkbenchStatus Deleting { get; } = new CognitiveServicesWorkbenchStatus(DeletingValue);
 
         /// <summary> The runtime has failed. </summary>
-        public static WorkbenchStatus Failed { get; } = new WorkbenchStatus(FailedValue);
+        public static CognitiveServicesWorkbenchStatus Failed { get; } = new CognitiveServicesWorkbenchStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="WorkbenchStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesWorkbenchStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(WorkbenchStatus left, WorkbenchStatus right) => left.Equals(right);
+        public static bool operator ==(CognitiveServicesWorkbenchStatus left, CognitiveServicesWorkbenchStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="WorkbenchStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesWorkbenchStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(WorkbenchStatus left, WorkbenchStatus right) => !left.Equals(right);
+        public static bool operator !=(CognitiveServicesWorkbenchStatus left, CognitiveServicesWorkbenchStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="WorkbenchStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesWorkbenchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkbenchStatus(string value) => new WorkbenchStatus(value);
+        public static implicit operator CognitiveServicesWorkbenchStatus(string value) => new CognitiveServicesWorkbenchStatus(value);
 
-        /// <summary> Converts a string to a <see cref="WorkbenchStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesWorkbenchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkbenchStatus?(string value) => value == null ? null : new WorkbenchStatus(value);
+        public static implicit operator CognitiveServicesWorkbenchStatus?(string value) => value == null ? null : new CognitiveServicesWorkbenchStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WorkbenchStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is CognitiveServicesWorkbenchStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(WorkbenchStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CognitiveServicesWorkbenchStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

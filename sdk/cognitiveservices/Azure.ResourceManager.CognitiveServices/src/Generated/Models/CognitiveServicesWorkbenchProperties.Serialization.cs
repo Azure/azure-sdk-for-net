@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesComputeSshSettings sshSettings = default;
             CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default;
             string webEndpoint = default;
-            WorkbenchProvisioningState? provisioningState = default;
-            WorkbenchStatus? status = default;
+            CognitiveServicesWorkbenchProvisioningState? provisioningState = default;
+            CognitiveServicesWorkbenchStatus? status = default;
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new WorkbenchProvisioningState(prop.Value.GetString());
+                    provisioningState = new CognitiveServicesWorkbenchProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    status = new WorkbenchStatus(prop.Value.GetString());
+                    status = new CognitiveServicesWorkbenchStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
