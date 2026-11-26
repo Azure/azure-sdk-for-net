@@ -30,11 +30,67 @@ internal class SerializationVisitor : ScmLibraryVisitor
     {
         if (type is MrwSerializationTypeDefinition serializationType)
         {
+            UpdateBaseJsonModelWriteCore(serializationType);
             foreach (var method in serializationType.Methods)
             {
                 UpdateSerializationMethod(method);
             }
         }
+    }
+
+    internal static void UpdateBaseJsonModelWriteCore(MrwSerializationTypeDefinition serializationType)
+    {
+        if (!ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(serializationType.Type, out var typeProvider)
+            || typeProvider is not ModelProvider model)
+        {
+            return;
+        }
+
+        UpdateBaseJsonModelWriteCore(serializationType, model);
+    }
+
+    internal static void UpdateBaseJsonModelWriteCore(ModelProvider model)
+    {
+        foreach (var serializationType in model.SerializationProviders.OfType<MrwSerializationTypeDefinition>())
+        {
+            UpdateBaseJsonModelWriteCore(serializationType, model);
+        }
+    }
+
+    private static void UpdateBaseJsonModelWriteCore(MrwSerializationTypeDefinition serializationType, ModelProvider model)
+    {
+        if (!HasSystemObjectBase(model))
+        {
+            return;
+        }
+
+        var method = serializationType.Methods.SingleOrDefault(method => method.Signature.Name == "JsonModelWriteCore");
+        if (method is null || method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override))
+        {
+            return;
+        }
+
+        var baseCall = Base.Invoke(method.Signature.Name, method.Signature.Parameters.Select(parameter => parameter.AsArgument()).ToArray()).Terminate();
+        method.Signature.Update(modifiers: method.Signature.Modifiers & ~MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Override);
+        MethodBodyStatement[] bodyStatements = method.BodyStatements is MethodBodyStatements statements
+            ? [baseCall, .. statements.Statements]
+            : method.BodyStatements is { } body ? [baseCall, body] : [baseCall];
+        method.Update(
+            signature: method.Signature,
+            bodyStatements: bodyStatements);
+    }
+
+    private static bool HasSystemObjectBase(ModelProvider model)
+    {
+        for (var baseModel = model.BaseModelProvider; baseModel is not null; baseModel = baseModel.BaseModelProvider)
+        {
+            if (baseModel is SystemObjectModelProvider)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <inheritdoc/>

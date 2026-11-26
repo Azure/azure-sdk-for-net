@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -105,6 +106,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // Reset cached constructors, serialization, and model factories so they do not keep
         // references to inherited ARM properties removed from the model surface.
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
+
+        SerializationVisitor.UpdateBaseJsonModelWriteCore(model);
 
         _regularUpdated.Add(model);
     }
