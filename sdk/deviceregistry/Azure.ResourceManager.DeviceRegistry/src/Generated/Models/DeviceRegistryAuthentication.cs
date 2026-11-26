@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             set
             {
-                X509Credentials = new DeviceRegistryX509Credentials(value);
+                X509Credentials = value is null ? default : new DeviceRegistryX509Credentials(value);
             }
         }
     }

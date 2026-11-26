@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             set
             {
-                Sku = new DatadogSku(value);
+                Sku = value is null ? default : new DatadogSku(value);
             }
         }
     }
