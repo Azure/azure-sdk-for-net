@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/>. </summary>
         /// <param name="properties"> Properties of the storage task assignment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public StorageTaskAssignmentData(StorageTaskAssignmentProperties properties) : this()
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
             Properties = properties;
         }
 

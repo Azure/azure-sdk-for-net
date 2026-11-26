@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByScopeRequest(nextLink, _scope, _context) : _client.CreateGetByScopeRequest(_scope, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByScopeRequest(nextLink, _scope, _context) : _client.CreateListByScopeRequest(_scope, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

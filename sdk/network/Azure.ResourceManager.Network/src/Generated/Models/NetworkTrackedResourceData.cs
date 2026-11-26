@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
-        public ResourceType? ResourceType { get; }
+        public virtual ResourceType? ResourceType { get; }
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]

@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
     {
         public NapsterOrganizationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use Name instead.")]
         public string OrganizationName { get { throw null; } }
         public Azure.ResourceManager.NapsterOmniagentApi.Models.NapsterOrganizationProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

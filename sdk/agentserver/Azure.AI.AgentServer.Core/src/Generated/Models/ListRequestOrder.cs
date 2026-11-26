@@ -5,14 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary> Sort order for state-store list requests. </summary>
-    public enum ListRequestOrder
+    public readonly partial struct ListRequestOrder : IEquatable<ListRequestOrder>
     {
+        private readonly string _value;
         /// <summary> Ascending order. </summary>
-        Asc,
+        private const string AscValue = "asc";
         /// <summary> Descending order. </summary>
-        Desc
+        private const string DescValue = "desc";
+
+        /// <summary> Initializes a new instance of <see cref="ListRequestOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ListRequestOrder(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Ascending order. </summary>
+        public static ListRequestOrder Asc { get; } = new ListRequestOrder(AscValue);
+
+        /// <summary> Descending order. </summary>
+        public static ListRequestOrder Desc { get; } = new ListRequestOrder(DescValue);
+
+        /// <summary> Determines if two <see cref="ListRequestOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ListRequestOrder left, ListRequestOrder right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ListRequestOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ListRequestOrder left, ListRequestOrder right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ListRequestOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ListRequestOrder(string value) => new ListRequestOrder(value);
+
+        /// <summary> Converts a string to a <see cref="ListRequestOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ListRequestOrder?(string value) => value == null ? (ListRequestOrder?)null : new ListRequestOrder(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ListRequestOrder other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ListRequestOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

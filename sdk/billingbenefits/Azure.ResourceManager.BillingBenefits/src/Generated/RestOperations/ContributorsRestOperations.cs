@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BillingBenefits
             return message;
         }
 
-        internal HttpMessage CreateGetFromPrimaryRequest(Guid subscriptionId, string resourceGroupName, string maccName, RequestContext context)
+        internal HttpMessage CreateListFromPrimaryRequest(Guid subscriptionId, string resourceGroupName, string maccName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BillingBenefits
             return message;
         }
 
-        internal HttpMessage CreateNextGetFromPrimaryRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string maccName, RequestContext context)
+        internal HttpMessage CreateNextListFromPrimaryRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string maccName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
