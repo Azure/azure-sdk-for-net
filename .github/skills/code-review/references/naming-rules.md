@@ -149,7 +149,10 @@ What they cover:
   consistency with the base type wins.
 - <a name="naming-request-suffix" href="#naming-request-suffix">§</a> **No `Request` suffix — use `Content`.** Same scope. `RequestContent`/`RequestContext`/
   `RequestOptions` from `Azure.Core` and `System.ClientModel` are framework types and are
-  exempt. `*Parameter`/`*Parameters` is the same smell. For a reusable domain model, drop the
+  exempt. A generic `*Parameter`/`*Parameters` suffix on a wrapper or configuration model is the
+  same smell. Keep `Parameter` when it names the actual domain object or member, such as a
+  `RunCommandInputParameter` representing one command parameter with a name and value; do not
+  flag it solely for the suffix. For a reusable domain model with a generic suffix, drop the
   suffix if the remaining name is descriptive, or use a more descriptive domain noun (for example,
   `ConnectionConfiguration`). In management-plane libraries, for a dedicated request transport
   model, use `Patch` for partial-update semantics or `Content` for a non-patch request payload.
@@ -167,7 +170,10 @@ What they cover:
   It is **not** a generic replacement suffix for a body/wire payload model. A type that
   implements `IJsonModel<T>`/`IPersistableModel<T>` — i.e. it serializes as one request or
   response body — must not be named `*Options`. For an otherwise invalid `*Options` model,
-  replace `Options` with `Config` in both management and data-plane libraries; this is a
+  replace `Options` with `Config` in both management and data-plane libraries. Exception: for a
+  dedicated management PATCH partial-update model, use `Patch` instead of `Config`; the PATCH
+  role takes precedence. For other invalid `*Options` models, including dedicated management
+  PUT/POST wrappers, `Config` takes precedence over the transport suffix defaults. This is a
   specific suffix convention, not permission to abbreviate `configuration` elsewhere. Do not
   rename actual client options or method options bags. When cleaning up a bad suffix (`*Parameters`,
   `*Resource`, `*Request`) on a payload model, do **not** land on `*Options` — use the default
@@ -181,18 +187,22 @@ What they cover:
   - <a name="naming-domain-nouns" href="#naming-domain-nouns">§</a> **If the type is a noun in its own right, it takes no suffix at all** — even when it is
     round-tripped. `VirtualMachine` is created and fetched, and it is simply `VirtualMachine`,
     never `VirtualMachineContent`. Same for a nested domain object like a tool connection or a
-    search configuration: name it the noun, including when replacing `Parameter` or `Parameters`.
+    search configuration: name it the noun, including when replacing a generic `Parameter` or
+    `Parameters` suffix. Retain `Parameter` when it is the domain noun itself, as described above.
   - So "round-trip" alone never justifies `Content`. Ask first whether the type names a domain
     concept. Only reach for `Content`/`Result` when the answer is no and the type is a pure
     payload wrapper.
   - These are soft defaults — use them *unless there is a significantly better option* or the
-    `Options`-to-`Config` convention above applies. What is **not** acceptable as a substitute:
-    `Options`, `Parameters`, `Request`, `Response`, `Resource`.
+    `Options`-to-`Config` convention above applies. What is **not** acceptable as a generic
+    transport suffix: `Options`, `Parameters`, `Request`, `Response`, `Resource`. This does not
+    prohibit `Parameter` or `Parameters` when the term names the actual domain concept above.
   - To classify usage from the `api/*.cs` listing: a **public constructor** means the type is
     used as input, a method on the package's `*ModelFactory` means it is used as output, and
     both together mean round-trip.
 - <a name="naming-management-request-body" href="#naming-management-request-body">§</a> **Management request-body models follow their actual role and HTTP contract.** Use `Patch`
   for a dedicated PATCH partial-update model and `Content` for a dedicated PUT/POST wrapper.
+  For an invalid `*Options` model, the replacement rule above takes precedence for PUT/POST
+  wrappers, while `Patch` takes precedence for dedicated PATCH partial-update models.
   Resource-data models retain `Data`. Do not infer the verb from a method name or rename a
   reusable domain model merely because it is used as a request body. A model used as a property
   inside a PATCH body is not itself a patch merely because of its parent. If the property is

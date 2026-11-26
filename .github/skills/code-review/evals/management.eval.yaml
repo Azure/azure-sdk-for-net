@@ -72,16 +72,21 @@ stimuli:
       is a dedicated PATCH partial-update body; VirtualMachineRestartParameters is a dedicated
       POST request body. Neither is resource data or a reusable domain model. Both are newly
       introduced, and no analyzer checks their names. All other requirements are satisfied.
+      For each finding, include a separate line in the exact format
+      `RECOMMEND: original-name -> replacement-name`, without backticks; explanations may follow.
     graders:
       - type: skill-invocation
         config:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '\bVirtualMachineUpdatePatch\b'
+          pattern: '(?m)^RECOMMEND: VirtualMachineUpdateParameters -> VirtualMachine(?:Update)?Patch\s*$'
       - type: output-matches
         config:
-          pattern: '\bVirtualMachineRestartContent\b'
+          pattern: '(?m)^RECOMMEND: VirtualMachineRestartParameters -> VirtualMachineRestartContent\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^RECOMMEND: (?:VirtualMachine(?:Update)?Patch|VirtualMachineRestartContent) ->'
       - type: output-not-matches
         config:
           pattern: '^\s*No findings\.\s*$'
@@ -94,16 +99,63 @@ stimuli:
       PATCH bodies. It is not a dedicated request wrapper or a partial-update model. Connection is
       too vague; ConnectionConfiguration accurately describes the concept and does not collide.
       No analyzer checks its name. All other API and generation requirements are satisfied.
+      Include a separate line in the exact format `RECOMMEND: original-name -> replacement-name`,
+      without backticks; explanations may follow and may discuss rejected alternatives.
     graders:
       - type: skill-invocation
         config:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '\bConnectionConfiguration\b'
+          pattern: '(?m)^RECOMMEND: ConnectionParameters -> ConnectionConfiguration\s*$'
       - type: output-not-matches
         config:
-          pattern: '\bConnection(?:Content|Patch)\b'
+          pattern: '(?m)^RECOMMEND: (?:ConnectionParameters -> Connection(?:Content|Patch)|ConnectionConfiguration -> ConnectionParameters)\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: preserve-parameter-domain-concept
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic API addition and return findings
+      only. Azure.ResourceManager.Compute introduces RunCommandInputParameter, a domain model
+      representing one command input parameter with a name and a value, not a request wrapper or
+      a general configuration object. A RunCommandInput has an InputParameters property containing
+      a list of these command parameters. Both names describe the actual domain concepts. All other
+      API and generation requirements are satisfied; no enabled analyzer flags these names. If
+      there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: management-patch-options-use-patch-before-config
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return findings
+      only. Azure.ResourceManager.Compute introduces VirtualMachineUpdateOptions, a serialized
+      model used solely as a PATCH partial-update body, and VirtualMachineRestartOptions, a
+      serialized model used solely as a POST request body. Neither is a client options type,
+      method options bag, resource-data type, or reusable domain model. Both are newly introduced,
+      and no enabled analyzer checks their names. All other requirements are satisfied.
+      For each finding, include a separate line in the exact format
+      `RECOMMEND: original-name -> replacement-name`, without backticks; explanations may follow
+      and may discuss rejected alternatives.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: VirtualMachineUpdateOptions -> VirtualMachine(?:Update)?Patch\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: VirtualMachineRestartOptions -> VirtualMachineRestartConfig\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^RECOMMEND: (?:VirtualMachineUpdateOptions -> VirtualMachineUpdateConfig|VirtualMachineRestartOptions -> VirtualMachineRestartContent|VirtualMachine(?:Update)?Patch -> VirtualMachineUpdateOptions|VirtualMachineRestartConfig -> VirtualMachineRestartOptions)\s*$'
       - type: output-not-matches
         config:
           pattern: '^\s*No findings\.\s*$'
@@ -381,23 +433,25 @@ stimuli:
       First invoke the code-review skill. Review this synthetic new enum and return findings only.
       StorageFilePermission is a closed enum with FlagsAttribute and declares None = 0, Read = 1
       and Write = 2. Its values are genuinely combinable. All other API and generation requirements
-      are satisfied. No enabled analyzer checks enum-name plurality.
+      are satisfied. No enabled analyzer checks enum-name plurality. Include a separate line in
+      the exact format `SEVERITY RECOMMEND: original-name -> replacement-name`, using the actual
+      severity marker and no backticks; explanations may follow.
     graders:
       - type: skill-invocation
         config:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '\bStorageFilePermissions\b'
+          pattern: '(?m)^🔴 RECOMMEND: StorageFilePermission -> StorageFilePermissions\s*$'
       - type: output-matches
         config:
           pattern: '(?i)singular|plural'
       - type: output-not-matches
         config:
           pattern: '^\s*No findings\.\s*$'
-      - type: output-matches
+      - type: output-not-matches
         config:
-          pattern: '(?i)((?:StorageFilePermission)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:StorageFilePermission))'
+          pattern: '(?m)^\s*(?:🟡|ℹ️) RECOMMEND:|^(?:🔴|🟡|ℹ️) RECOMMEND: StorageFilePermissions -> StorageFilePermission\s*$'
 
   - name: power-of-two-values-do-not-establish-flags-semantics
     prompt: >-
