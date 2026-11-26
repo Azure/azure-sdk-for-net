@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             set
             {
-                MemberSelector = new MemberSelector(value);
+                MemberSelector = value is null ? default : new MemberSelector(value);
             }
         }
     }

@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new ClusterMeshProfileProperties();
                 }
                 Properties.MemberSelectorByLabel = value;
