@@ -1254,6 +1254,7 @@ namespace Azure.ResourceManager.Hci
         public string Status { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciUpdateStep> Steps { get { throw null; } }
         public System.DateTimeOffset? TimeStarted { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use Name instead.")]
         public string UpdateRunName { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
