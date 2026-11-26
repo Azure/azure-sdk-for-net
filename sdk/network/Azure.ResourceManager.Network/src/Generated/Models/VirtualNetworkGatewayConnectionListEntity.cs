@@ -384,6 +384,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
                 }
                 Properties.VirtualNetworkGateway2Id = value;
@@ -402,6 +406,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
                 }
                 Properties.LocalNetworkGateway2Id = value;

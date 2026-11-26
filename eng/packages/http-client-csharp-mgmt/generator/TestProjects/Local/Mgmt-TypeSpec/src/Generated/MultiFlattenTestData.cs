@@ -109,9 +109,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new MultiFlattenProperties();
                 }
                 Properties.InnerSelectionType = value;
+            }
+        }
+
+        /// <summary> Required plain reference leaf; explicit flatten keeps lazy-create-and-assign semantics (control). </summary>
+        [WirePath("properties.deepMiddle.mode")]
+        public string Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiFlattenProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
+        /// <summary> Optional sibling that must survive clearing the deep leaf. </summary>
+        [WirePath("properties.deepMiddle.deepNote")]
+        public string DeepNote
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeepNote;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiFlattenProperties();
+                }
+                Properties.DeepNote = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SelectionType. </summary>
+        [WirePath("properties.deepMiddle.deepInner.selectionType")]
+        public string DeepInnerSelectionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeepInnerSelectionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    if (value is null)
+                    {
+                        return;
+                    }
+                    Properties = new MultiFlattenProperties();
+                }
+                Properties.DeepInnerSelectionType = value;
             }
         }
     }

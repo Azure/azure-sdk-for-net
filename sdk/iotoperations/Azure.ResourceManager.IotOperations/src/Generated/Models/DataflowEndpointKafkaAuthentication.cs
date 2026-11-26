@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                X509CertificateSettings = new DataflowEndpointAuthenticationX509(value);
+                X509CertificateSettings = value is null ? default : new DataflowEndpointAuthenticationX509(value);
             }
         }
     }

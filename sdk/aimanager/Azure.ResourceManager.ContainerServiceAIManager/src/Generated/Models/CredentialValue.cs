@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             }
             set
             {
-                Inline = new InlineCredential(value);
+                Inline = value is null ? default : new InlineCredential(value);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             }
             set
             {
-                ManagedIdentity = new ManagedIdentityCredential(value);
+                ManagedIdentity = value is null ? default : new ManagedIdentityCredential(value);
             }
         }
     }

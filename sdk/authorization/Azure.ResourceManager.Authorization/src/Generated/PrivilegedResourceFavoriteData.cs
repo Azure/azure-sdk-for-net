@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Authorization
             }
             set
             {
-                Properties = new PrivilegedResourceFavoriteProperties(value);
+                Properties = value is null ? default : new PrivilegedResourceFavoriteProperties(value);
             }
         }
     }

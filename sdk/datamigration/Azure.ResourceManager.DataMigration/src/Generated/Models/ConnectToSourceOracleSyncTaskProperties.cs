@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             set
             {
-                Input = new ConnectToSourceOracleSyncTaskInput(value);
+                Input = value is null ? default : new ConnectToSourceOracleSyncTaskInput(value);
             }
         }
     }

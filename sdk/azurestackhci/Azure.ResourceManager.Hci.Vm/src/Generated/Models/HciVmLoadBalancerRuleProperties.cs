@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             set
             {
-                Probe = new LoadBalancerProbeReference(value);
+                Probe = value is null ? default : new LoadBalancerProbeReference(value);
             }
         }
     }

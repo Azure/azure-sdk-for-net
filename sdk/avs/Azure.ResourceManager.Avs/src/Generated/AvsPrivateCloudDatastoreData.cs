@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.Avs
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new DatastoreProperties();
                 }
                 Properties.NetAppVolumeId = value;
@@ -120,6 +124,10 @@ namespace Azure.ResourceManager.Avs
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new DatastoreProperties();
                 }
                 Properties.ElasticSanVolumeTargetId = value;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(value);
+                ServiceAccountTokenSettings = value is null ? default : new DataflowEndpointAuthenticationServiceAccountToken(value);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                X509CertificateSettings = new DataflowEndpointAuthenticationX509(value);
+                X509CertificateSettings = value is null ? default : new DataflowEndpointAuthenticationX509(value);
             }
         }
     }

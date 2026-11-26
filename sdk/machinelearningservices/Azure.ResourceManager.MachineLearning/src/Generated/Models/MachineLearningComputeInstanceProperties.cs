@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             set
             {
-                Subnet = new ResourceId(value);
+                Subnet = value is null ? default : new ResourceId(value);
             }
         }
 

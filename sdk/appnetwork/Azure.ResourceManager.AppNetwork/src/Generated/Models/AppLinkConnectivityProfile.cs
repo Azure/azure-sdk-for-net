@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             set
             {
-                PrivateConnect = new PrivateConnectProfile(value);
+                PrivateConnect = value is null ? default : new PrivateConnectProfile(value);
             }
         }
     }

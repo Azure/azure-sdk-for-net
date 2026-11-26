@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             set
             {
-                Input = new MigrateMISyncCompleteCommandInput(value);
+                Input = value is null ? default : new MigrateMISyncCompleteCommandInput(value);
             }
         }
     }

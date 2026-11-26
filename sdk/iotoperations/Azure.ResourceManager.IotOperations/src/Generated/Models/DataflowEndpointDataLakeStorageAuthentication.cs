@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                AccessTokenSettings = new DataflowEndpointAuthenticationAccessToken(value);
+                AccessTokenSettings = value is null ? default : new DataflowEndpointAuthenticationAccessToken(value);
             }
         }
 

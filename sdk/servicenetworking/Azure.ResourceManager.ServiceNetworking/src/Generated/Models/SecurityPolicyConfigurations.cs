@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             set
             {
-                WafSecurityPolicy = new WafSecurityPolicy(value);
+                WafSecurityPolicy = value is null ? default : new WafSecurityPolicy(value);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             set
             {
-                IPAccessRulesSecurityPolicy = new ServiceNetworkingIPAccessRulesSecurityPolicy(value);
+                IPAccessRulesSecurityPolicy = value is null ? default : new ServiceNetworkingIPAccessRulesSecurityPolicy(value);
             }
         }
     }

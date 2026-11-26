@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
             set
             {
-                UserDetails = new QumuloUserDetails(value);
+                UserDetails = value is null ? default : new QumuloUserDetails(value);
             }
         }
     }

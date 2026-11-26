@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             set
             {
-                AutoUpgradeProfile = new AutoUpgradeProfile(value);
+                AutoUpgradeProfile = value is null ? default : new AutoUpgradeProfile(value);
             }
         }
 

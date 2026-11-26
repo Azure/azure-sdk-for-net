@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             set
             {
-                Sku = new NginxResourceSku(value);
+                Sku = value is null ? default : new NginxResourceSku(value);
             }
         }
     }

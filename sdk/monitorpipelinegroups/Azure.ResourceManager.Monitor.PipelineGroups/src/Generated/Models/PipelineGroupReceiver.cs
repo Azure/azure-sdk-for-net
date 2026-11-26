@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             }
             set
             {
-                Otlp = new PipelineGroupOtlpReceiver(value);
+                Otlp = value is null ? default : new PipelineGroupOtlpReceiver(value);
             }
         }
     }

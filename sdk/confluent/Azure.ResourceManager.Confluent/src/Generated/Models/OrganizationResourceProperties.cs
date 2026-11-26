@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             set
             {
-                LinkOrganization = new LinkOrganization(value);
+                LinkOrganization = value is null ? default : new LinkOrganization(value);
             }
         }
     }

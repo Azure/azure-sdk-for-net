@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             }
             set
             {
-                MicrosoftFoundry = new MicrosoftFoundrySource(value);
+                MicrosoftFoundry = value is null ? default : new MicrosoftFoundrySource(value);
             }
         }
     }

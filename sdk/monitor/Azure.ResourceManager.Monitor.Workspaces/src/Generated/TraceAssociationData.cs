@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             }
             set
             {
-                Properties = new TraceAssociationProperties(value);
+                Properties = value is null ? default : new TraceAssociationProperties(value);
             }
         }
     }

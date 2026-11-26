@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             set
             {
-                Properties = new UpdateMigrationItemProperties(value);
+                Properties = value is null ? default : new UpdateMigrationItemProperties(value);
             }
         }
     }

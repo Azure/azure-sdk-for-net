@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                DefaultSecretProviderClassRef = new SecretProviderClassRef(value);
+                DefaultSecretProviderClassRef = value is null ? default : new SecretProviderClassRef(value);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                AdrNamespaceRef = new AzureDeviceRegistryNamespaceRef(value);
+                AdrNamespaceRef = value is null ? default : new AzureDeviceRegistryNamespaceRef(value);
             }
         }
     }

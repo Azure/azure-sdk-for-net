@@ -662,9 +662,10 @@ namespace Azure.Generator.Management.Visitors
                 var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
                 var propertyType = GetFlattenedPropertyType(model, flattenPropertyName, innerProperty, shouldLiftToNullable);
                 var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
+                var skipsWrapperCreationOnNull = false;
                 var flattenPropertyBody = new MethodPropertyBody(
                     PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty, propertyType),
-                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, propertyType.IsNullable, shouldPreserveSetter)
+                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, propertyType.IsNullable, out skipsWrapperCreationOnNull, shouldPreserveSetter)
                 );
 
                 var flattenedProperty =
@@ -681,7 +682,8 @@ namespace Azure.Generator.Management.Visitors
                         ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                         innerProperty.IsRef,
                         FilterAttributesForFlatten(innerProperty.Attributes),
-                        isLiftedToNullable: shouldLiftToNullable);
+                        isLiftedToNullable: shouldLiftToNullable,
+                        skipsWrapperCreationOnNull: skipsWrapperCreationOnNull);
                 ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterDerivedProperty(flattenedProperty, innerProperty);
 
                 PreserveConstructorParameterType(model, flattenedProperty, innerProperty, shouldLiftToNullable);
@@ -741,10 +743,11 @@ namespace Azure.Generator.Management.Visitors
             var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
             var shouldEmitCollectionSetter = shouldPreserveSetter
                 || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
+            var skipsWrapperCreationOnNull = false;
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty, propertyType),
                 // Emit collection setters only when compatibility or parent delegation requires them.
-                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, propertyType.IsNullable)
+                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, propertyType.IsNullable, out skipsWrapperCreationOnNull)
             );
 
             var flattenedProperty =
@@ -761,7 +764,8 @@ namespace Azure.Generator.Management.Visitors
                     ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                     innerProperty.IsRef,
                     FilterAttributesForFlatten(innerProperty.Attributes),
-                    isLiftedToNullable: shouldLiftToNullable);
+                    isLiftedToNullable: shouldLiftToNullable,
+                    skipsWrapperCreationOnNull: skipsWrapperCreationOnNull);
             ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterDerivedProperty(flattenedProperty, innerProperty);
             PreserveConstructorParameterType(model, flattenedProperty, innerProperty, shouldLiftToNullable);
 

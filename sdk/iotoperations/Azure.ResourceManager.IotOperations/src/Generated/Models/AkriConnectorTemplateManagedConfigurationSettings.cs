@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                TrustSettings = new AkriConnectorTemplateTrustList(value);
+                TrustSettings = value is null ? default : new AkriConnectorTemplateTrustList(value);
             }
         }
     }

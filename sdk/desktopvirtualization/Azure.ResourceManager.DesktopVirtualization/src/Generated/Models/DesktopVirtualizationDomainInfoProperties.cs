@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             set
             {
-                AzureActiveDirectoryInfo = new AzureActiveDirectoryInfoProperties(value);
+                AzureActiveDirectoryInfo = value is null ? default : new AzureActiveDirectoryInfoProperties(value);
             }
         }
     }

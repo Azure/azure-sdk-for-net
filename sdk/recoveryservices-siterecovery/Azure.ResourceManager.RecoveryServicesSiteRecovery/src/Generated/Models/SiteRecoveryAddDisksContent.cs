@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             set
             {
-                Properties = new SiteRecoveryAddDisksProperties(value);
+                Properties = value is null ? default : new SiteRecoveryAddDisksProperties(value);
             }
         }
     }

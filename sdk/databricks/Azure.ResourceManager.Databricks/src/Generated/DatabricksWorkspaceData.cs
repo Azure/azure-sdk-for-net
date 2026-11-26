@@ -380,6 +380,10 @@ namespace Azure.ResourceManager.Databricks
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new WorkspaceProperties();
                 }
                 Properties.EncryptionEntities = value;

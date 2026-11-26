@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             set
             {
-                SelfManagedUpgradeProfile = new SelfManagedUpgradeProfile(value);
+                SelfManagedUpgradeProfile = value is null ? default : new SelfManagedUpgradeProfile(value);
             }
         }
     }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             }
             set
             {
-                TransformLanguage = new PipelineGroupTransformLanguageProcessor(value);
+                TransformLanguage = value is null ? default : new PipelineGroupTransformLanguageProcessor(value);
             }
         }
     }

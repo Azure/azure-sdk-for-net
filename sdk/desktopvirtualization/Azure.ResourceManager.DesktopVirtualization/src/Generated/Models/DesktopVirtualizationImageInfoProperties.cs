@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             set
             {
-                CustomInfo = new CustomInfoProperties(value);
+                CustomInfo = value is null ? default : new CustomInfoProperties(value);
             }
         }
     }

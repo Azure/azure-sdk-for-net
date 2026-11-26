@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Databricks.Models
             }
             set
             {
-                Encryption = new WorkspacePropertiesEncryption(value);
+                Encryption = value is null ? default : new WorkspacePropertiesEncryption(value);
             }
         }
     }

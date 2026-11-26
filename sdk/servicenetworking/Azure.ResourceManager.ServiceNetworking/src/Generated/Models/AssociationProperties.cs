@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             set
             {
-                Subnet = new AssociationSubnet(value);
+                Subnet = value is null ? default : new AssociationSubnet(value);
             }
         }
     }

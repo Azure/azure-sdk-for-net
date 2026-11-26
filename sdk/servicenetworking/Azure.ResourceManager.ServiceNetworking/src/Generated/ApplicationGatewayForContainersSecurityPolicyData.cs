@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new SecurityPolicyProperties();
                 }
                 Properties.WafPolicyId = value;
