@@ -420,15 +420,15 @@ namespace SignalRServiceExtension.Tests
         }
 
         [Fact]
-        public async Task BuildAsync_WithoutValidator_ThrowsConfigurationErrorEvenWithMissingConnectionToken()
+        public async Task BuildAsync_WithoutConnectionToken_ReportsMissingConnectionToken()
         {
-            var (binding, hubContext) = CreateBinding(out _);
+            var (binding, hubContext) = CreateBinding(out _, useResultParameter: true);
             var attr = new SignalRRefreshAttribute { HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
             var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
 
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => binding.InvokeBuildAsync(attr, bindingData));
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
 
-            Assert.Contains("AddDefaultAuth", exception.Message);
+            Assert.Equal(SignalRRefreshStatus.MissingConnectionToken, Assert.IsType<SignalRRefreshResult>(await provider.GetValueAsync()).Status);
             hubContext.Verify(
                 c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
                 Times.Never);

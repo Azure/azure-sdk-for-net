@@ -47,11 +47,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 throw new InvalidOperationException("[SignalRRefresh] requires an HTTP-triggered function.");
             }
 
-            if (_securityTokenValidator == null)
-            {
-                throw new InvalidOperationException("[SignalRRefresh] requires an ISecurityTokenValidator. Register one with AddDefaultAuth or provide a custom implementation.");
-            }
-
             var connectionToken = attrResolved.ConnectionToken;
             if (connectionToken is null && request.Headers.TryGetValue(ConnectionTokenHeaderName, out var headerToken))
             {
@@ -63,19 +58,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 return CreateValueProvider(SignalRRefreshStatus.MissingConnectionToken);
             }
 
-            SecurityTokenResult tokenResult;
-            try
+            SecurityTokenResult tokenResult = null;
+            if (_securityTokenValidator != null)
             {
-                tokenResult = _securityTokenValidator.ValidateToken(request);
-            }
-            catch (SecurityTokenInvalidIssuerException)
-            {
-                return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
-            }
+                try
+                {
+                    tokenResult = _securityTokenValidator.ValidateToken(request);
+                }
+                catch (SecurityTokenInvalidIssuerException)
+                {
+                    return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
+                }
 
-            if (tokenResult.Status != SecurityTokenStatus.Valid || tokenResult.ExpiresOn <= DateTimeOffset.UtcNow)
-            {
-                return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
+                if (tokenResult.Status != SecurityTokenStatus.Valid || tokenResult.ExpiresOn <= DateTimeOffset.UtcNow)
+                {
+                    return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
+                }
             }
 
             var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, _managerStore).ConfigureAwait(false);
@@ -84,12 +82,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 UserId = attrResolved.UserId,
                 Claims = customClaims.Count > 0 ? customClaims : null,
-                AuthenticationExpiresOn = tokenResult.ExpiresOn,
+                AuthenticationExpiresOn = tokenResult?.ExpiresOn,
             };
-            signalRConnectionDetail = _signalRConnectionInfoConfigurer.ConfigureAuthenticatedConnection(tokenResult, request, signalRConnectionDetail);
-            if (signalRConnectionDetail is null)
+            if (tokenResult != null)
             {
-                return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
+                signalRConnectionDetail = _signalRConnectionInfoConfigurer.ConfigureAuthenticatedConnection(tokenResult, request, signalRConnectionDetail);
+                if (signalRConnectionDetail is null)
+                {
+                    return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
+                }
             }
 
             var claims = signalRConnectionDetail.Claims?.ToList();
