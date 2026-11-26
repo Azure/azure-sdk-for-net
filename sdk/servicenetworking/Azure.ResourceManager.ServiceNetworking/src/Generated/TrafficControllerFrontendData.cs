@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new FrontendProperties();
                 }
                 Properties.AssociationId = value;

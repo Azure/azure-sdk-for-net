@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
             set
             {
-                Subnet = new Subnet(value);
+                Subnet = value is null ? default : new Subnet(value);
             }
         }
     }
