@@ -88,6 +88,7 @@ internal static class BicepSyntax
 
     public static class Declare
     {
+        public static ExtensionStatement Extension(BicepExpression reference, ObjectExpression? configuration = null, string? alias = null) => new(reference, configuration, alias);
         public static ParameterStatement Param<T>(string name, BicepExpression? defaultValue = null) => Param(name, Types.Create<T>(), defaultValue);
         public static ParameterStatement Param(string name, BicepExpression type, BicepExpression? defaultValue = null) => new(name, type, defaultValue);
         public static VariableStatement Var(string name, BicepExpression value) => new(name, value);
