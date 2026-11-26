@@ -12,10 +12,13 @@ using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
+    [CodeGenSuppress("CognitiveServicesAccountDeploymentProperties", typeof(CognitiveServicesAccountDeploymentProvisioningState?), typeof(CognitiveServicesAccountDeploymentModel), typeof(ResourceIdentifier), typeof(DeploymentSpeculativeDecoding), typeof(CognitiveServicesAccountDeploymentScaleSettings), typeof(IReadOnlyDictionary<string, string>), typeof(string), typeof(ServiceAccountCallRateLimit), typeof(IEnumerable<ServiceAccountThrottlingRule>), typeof(DeploymentModelVersionUpgradeOption?), typeof(bool?), typeof(int?), typeof(DeploymentCapacitySettings), typeof(string), typeof(string), typeof(CognitiveServicesDeploymentServiceTier?), typeof(CognitiveServicesDeploymentState?), typeof(CognitiveServicesDeploymentRouting))]
+    [CodeGenSuppress("RaiPolicyProperties", typeof(RaiPolicyFormat?), typeof(RaiAcsManifest), typeof(IEnumerable<RaiRegoReference>), typeof(RaiPolicyType?), typeof(RaiPolicyMode?), typeof(string), typeof(IEnumerable<RaiPolicyContentFilter>), typeof(IEnumerable<CustomBlocklistConfig>), typeof(IEnumerable<RaiSafetyProviderSourceConfig>), typeof(IEnumerable<RaiPolicyCustomExternalSafetyProviderReference>), typeof(RaiEgressPolicyConfig))]
     public static partial class ArmCognitiveServicesModelFactory
     {
         // The regenerated factory adds parameters; retain the 1.7.0 signature for binary compatibility.
@@ -86,7 +89,52 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, ResourceIdentifier contextCacheContainerId, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing)
         {
-            return CognitiveServicesAccountDeploymentProperties(provisioningState, model, contextCacheContainerId, default, scaleSettings, capabilities, raiPolicyName, callRateLimit, rateLimits, versionUpgradeOption, isDynamicThrottlingEnabled, currentCapacity, capacitySettings, parentDeploymentName, spilloverDeploymentName, serviceTier, deploymentState, routing);
+            return CognitiveServicesAccountDeploymentProperties(provisioningState, model, contextCacheContainerId, scaleSettings, capabilities, raiPolicyName, callRateLimit, rateLimits, versionUpgradeOption, isDynamicThrottlingEnabled, currentCapacity, capacitySettings, parentDeploymentName, spilloverDeploymentName, serviceTier, deploymentState, routing, speculativeDecoding: default);
+        }
+
+        // Append new parameters after the GA parameters to preserve partial positional calls.
+        /// <summary> Creates Cognitive Services account deployment properties for mocking. </summary>
+        /// <param name="provisioningState"> The deployment provisioning state. </param>
+        /// <param name="model"> The deployment model. </param>
+        /// <param name="contextCacheContainerId"> The context cache container resource ID. </param>
+        /// <param name="scaleSettings"> The deployment scale settings. </param>
+        /// <param name="capabilities"> The deployment capabilities. </param>
+        /// <param name="raiPolicyName"> The RAI policy name. </param>
+        /// <param name="callRateLimit"> The call rate limit. </param>
+        /// <param name="rateLimits"> The throttling rules. </param>
+        /// <param name="versionUpgradeOption"> The model version upgrade option. </param>
+        /// <param name="isDynamicThrottlingEnabled"> Whether dynamic throttling is enabled. </param>
+        /// <param name="currentCapacity"> The current capacity. </param>
+        /// <param name="capacitySettings"> The capacity settings. </param>
+        /// <param name="parentDeploymentName"> The parent deployment name. </param>
+        /// <param name="spilloverDeploymentName"> The spillover deployment name. </param>
+        /// <param name="serviceTier"> The deployment service tier. </param>
+        /// <param name="deploymentState"> The deployment state. </param>
+        /// <param name="routing"> The deployment routing configuration. </param>
+        /// <param name="speculativeDecoding"> The speculative decoding settings. </param>
+        /// <returns> A new deployment properties instance. </returns>
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, ResourceIdentifier contextCacheContainerId = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? isDynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, CognitiveServicesDeploymentServiceTier? serviceTier = default, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default, DeploymentSpeculativeDecoding speculativeDecoding = default)
+        {
+            return new CognitiveServicesAccountDeploymentProperties(
+                provisioningState,
+                model,
+                contextCacheContainerId,
+                speculativeDecoding,
+                scaleSettings,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                raiPolicyName,
+                callRateLimit,
+                (rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>()).ToList(),
+                versionUpgradeOption,
+                isDynamicThrottlingEnabled,
+                currentCapacity,
+                capacitySettings,
+                parentDeploymentName,
+                spilloverDeploymentName,
+                serviceTier,
+                deploymentState,
+                routing,
+                default);
         }
 
         // The regenerated factory adds parameters; retain the 1.7.0 signature for binary compatibility.
@@ -102,7 +150,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders, RaiEgressPolicyConfig egressPolicy)
         {
-            return RaiPolicyProperties(default, default, default, policyType, mode, basePolicyName, contentFilters, customBlocklists, safetyProviders, default, egressPolicy);
+            return RaiPolicyProperties(policyType, mode, basePolicyName, contentFilters, customBlocklists, safetyProviders, egressPolicy, format: default);
+        }
+
+        // Append new parameters after the GA parameters to preserve partial positional calls.
+        /// <summary> Creates RAI policy properties for mocking. </summary>
+        /// <param name="policyType"> The policy type. </param>
+        /// <param name="mode"> The policy mode. </param>
+        /// <param name="basePolicyName"> The base policy name. </param>
+        /// <param name="contentFilters"> The content filters. </param>
+        /// <param name="customBlocklists"> The custom blocklists. </param>
+        /// <param name="safetyProviders"> The safety providers. </param>
+        /// <param name="egressPolicy"> The egress policy. </param>
+        /// <param name="format"> The policy representation. </param>
+        /// <param name="acs"> The ACS manifest. </param>
+        /// <param name="acsRegos"> Reusable Rego resources loaded with the ACS manifest. </param>
+        /// <param name="customExternalSafetyProviders"> The external safety-provider references. </param>
+        /// <returns> A new RAI policy properties instance. </returns>
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders = default, RaiEgressPolicyConfig egressPolicy = default, RaiPolicyFormat? format = default, RaiAcsManifest acs = default, IEnumerable<RaiRegoReference> acsRegos = default, IEnumerable<RaiPolicyCustomExternalSafetyProviderReference> customExternalSafetyProviders = default)
+        {
+            return new RaiPolicyProperties(
+                format,
+                acs,
+                (acsRegos ?? new ChangeTrackingList<RaiRegoReference>()).ToList(),
+                policyType,
+                mode,
+                basePolicyName,
+                (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
+                (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
+                (safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>()).ToList(),
+                (customExternalSafetyProviders ?? new ChangeTrackingList<RaiPolicyCustomExternalSafetyProviderReference>()).ToList(),
+                egressPolicy,
+                default);
         }
 
         /// <summary> Cognitive Services account is an Azure resource representing the provisioned account, its type, location and SKU. </summary>

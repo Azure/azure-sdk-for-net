@@ -1374,53 +1374,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> Properties of Cognitive Services account deployment. </summary>
-        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
-        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
-        /// <param name="contextCacheContainerId"> The resource ID of the context cache container associated with this deployment. </param>
-        /// <param name="speculativeDecoding"> Speculative decoding settings for the deployment. This configuration applies to Fireworks model formats. </param>
-        /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
-        /// <param name="capabilities"> The capabilities. </param>
-        /// <param name="raiPolicyName"> The name of RAI policy. </param>
-        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
-        /// <param name="rateLimits"></param>
-        /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
-        /// <param name="isDynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
-        /// <param name="currentCapacity"> The current capacity. </param>
-        /// <param name="capacitySettings"> Internal use only. </param>
-        /// <param name="parentDeploymentName"> The name of parent deployment. </param>
-        /// <param name="spilloverDeploymentName"> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </param>
-        /// <param name="serviceTier"> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </param>
-        /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
-        /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, ResourceIdentifier contextCacheContainerId = default, DeploymentSpeculativeDecoding speculativeDecoding = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? isDynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, CognitiveServicesDeploymentServiceTier? serviceTier = default, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
-        {
-            capabilities ??= new ChangeTrackingDictionary<string, string>();
-            rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
-
-            return new CognitiveServicesAccountDeploymentProperties(
-                provisioningState,
-                model,
-                contextCacheContainerId,
-                speculativeDecoding,
-                scaleSettings,
-                capabilities ?? new ChangeTrackingDictionary<string, string>(),
-                raiPolicyName,
-                callRateLimit,
-                (rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>()).ToList(),
-                versionUpgradeOption,
-                isDynamicThrottlingEnabled,
-                currentCapacity,
-                capacitySettings,
-                parentDeploymentName,
-                spilloverDeploymentName,
-                serviceTier,
-                deploymentState,
-                routing,
-                default);
-        }
-
         /// <summary> Speculative decoding settings for a deployment. </summary>
         /// <param name="draftModel"> Draft model used to generate speculative decoding tokens. </param>
         /// <param name="draftTokenCount"> The number of draft tokens attempted per speculation step. </param>
@@ -1655,48 +1608,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 properties,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary> Azure OpenAI Content Filters properties. </summary>
-        /// <param name="format">
-        /// The policy representation. Omission selects ContentFilters when creating a policy. ACS policy
-        /// creation and replacement require ACS.
-        /// </param>
-        /// <param name="acs"> The ACS manifest. Required by service validation when format is ACS. </param>
-        /// <param name="acsRegos"> Reusable same-account Rego resources loaded with the ACS manifest. </param>
-        /// <param name="policyType"> Content Filters policy type. </param>
-        /// <param name="mode"> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </param>
-        /// <param name="basePolicyName"> Name of Rai policy. </param>
-        /// <param name="contentFilters"> The list of Content Filters. </param>
-        /// <param name="customBlocklists"> The list of custom Blocklist. </param>
-        /// <param name="safetyProviders"> The list of Safety Providers. </param>
-        /// <param name="customExternalSafetyProviders"> Optional external safety-provider references used by this policy. </param>
-        /// <param name="egressPolicy">
-        /// Egress (outbound network) policy controlling which external endpoints sandboxed
-        /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
-        /// </param>
-        /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
-        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyFormat? format = default, RaiAcsManifest acs = default, IEnumerable<RaiRegoReference> acsRegos = default, RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders = default, IEnumerable<RaiPolicyCustomExternalSafetyProviderReference> customExternalSafetyProviders = default, RaiEgressPolicyConfig egressPolicy = default)
-        {
-            acsRegos ??= new ChangeTrackingList<RaiRegoReference>();
-            contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
-            customBlocklists ??= new ChangeTrackingList<CustomBlocklistConfig>();
-            safetyProviders ??= new ChangeTrackingList<RaiSafetyProviderSourceConfig>();
-            customExternalSafetyProviders ??= new ChangeTrackingList<RaiPolicyCustomExternalSafetyProviderReference>();
-
-            return new RaiPolicyProperties(
-                format,
-                acs,
-                (acsRegos ?? new ChangeTrackingList<RaiRegoReference>()).ToList(),
-                policyType,
-                mode,
-                basePolicyName,
-                (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
-                (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
-                (safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>()).ToList(),
-                (customExternalSafetyProviders ?? new ChangeTrackingList<RaiPolicyCustomExternalSafetyProviderReference>()).ToList(),
-                egressPolicy,
                 default);
         }
 

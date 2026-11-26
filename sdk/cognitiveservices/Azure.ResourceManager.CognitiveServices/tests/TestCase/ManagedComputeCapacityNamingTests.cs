@@ -115,6 +115,35 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
 
         [Test]
+        public void DeploymentPropertiesFactoryPreservesPartialPositionalCalls()
+        {
+            var cacheId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000");
+            var scaleSettings = new CognitiveServicesAccountDeploymentScaleSettings { Capacity = 2 };
+            var capabilities = new Dictionary<string, string> { ["key"] = "value" };
+            var properties = ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties(
+                default, default, cacheId, scaleSettings, capabilities, "policy");
+
+            Assert.AreEqual(cacheId, properties.ContextCacheContainerId);
+            Assert.AreSame(scaleSettings, properties.ScaleSettings);
+            Assert.AreEqual("value", properties.Capabilities["key"]);
+            Assert.AreEqual("policy", properties.RaiPolicyName);
+        }
+
+        [Test]
+        public void DeploymentPropertiesFactoryPreservesOptionalAndNewArguments()
+        {
+            Assert.IsNotNull(ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties());
+
+            var scaleSettings = new CognitiveServicesAccountDeploymentScaleSettings { Capacity = 2 };
+            var speculativeDecoding = ArmCognitiveServicesModelFactory.DeploymentSpeculativeDecoding(draftTokenCount: 3);
+            var properties = ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties(
+                scaleSettings: scaleSettings, speculativeDecoding: speculativeDecoding);
+
+            Assert.AreSame(scaleSettings, properties.ScaleSettings);
+            Assert.AreSame(speculativeDecoding, properties.SpeculativeDecoding);
+        }
+
+        [Test]
         public void ReleasedRaiPolicyPropertiesFactoryPreservesValues()
         {
             var egressPolicy = new RaiEgressPolicyConfig();
@@ -125,6 +154,35 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
             Assert.AreEqual("base", properties.BasePolicyName);
             Assert.AreSame(egressPolicy, properties.EgressPolicy);
+        }
+
+        [Test]
+        public void RaiPolicyPropertiesFactoryPreservesPartialPositionalCalls()
+        {
+            var policy = ArmCognitiveServicesModelFactory.RaiPolicyProperties(RaiPolicyType.UserManaged);
+            Assert.AreEqual(RaiPolicyType.UserManaged, policy.PolicyType);
+
+            var properties = ArmCognitiveServicesModelFactory.RaiPolicyProperties(
+                RaiPolicyType.UserManaged, RaiPolicyMode.Blocking, "base");
+            Assert.AreEqual(RaiPolicyType.UserManaged, properties.PolicyType);
+            Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
+            Assert.AreEqual("base", properties.BasePolicyName);
+        }
+
+        [Test]
+        public void RaiPolicyPropertiesFactoryPreservesOptionalAndNewArguments()
+        {
+            Assert.IsNotNull(ArmCognitiveServicesModelFactory.RaiPolicyProperties());
+
+            var policy = ArmCognitiveServicesModelFactory.RaiPolicyProperties(policyType: RaiPolicyType.UserManaged);
+            Assert.AreEqual(RaiPolicyType.UserManaged, policy.PolicyType);
+
+            var properties = ArmCognitiveServicesModelFactory.RaiPolicyProperties(
+                RaiPolicyType.UserManaged, RaiPolicyMode.Blocking, "base", format: RaiPolicyFormat.ACS);
+            Assert.AreEqual(RaiPolicyType.UserManaged, properties.PolicyType);
+            Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
+            Assert.AreEqual("base", properties.BasePolicyName);
+            Assert.AreEqual(RaiPolicyFormat.ACS, properties.Format);
         }
     }
 }

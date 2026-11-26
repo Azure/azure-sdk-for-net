@@ -15,6 +15,7 @@
 ### Bugs Fixed
 
 - Aligned new AKS attachment status properties, Foundry agent hosting models, project tool-control models, workbench models, and the AKS attachment deletion disposition with .NET naming conventions.
+- Preserved partial positional model-factory calls supported in `1.7.0` for deployment properties and RAI policy properties.
 
 ## 1.7.0 (2026-11-13)
 
