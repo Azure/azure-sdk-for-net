@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             set
             {
-                VirtualMachineImage = new VirtualMachineImage(value);
+                VirtualMachineImage = value is null ? default : new VirtualMachineImage(value);
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             set
             {
-                Subnet = new ResourceId(value);
+                Subnet = value is null ? default : new ResourceId(value);
             }
         }
     }
