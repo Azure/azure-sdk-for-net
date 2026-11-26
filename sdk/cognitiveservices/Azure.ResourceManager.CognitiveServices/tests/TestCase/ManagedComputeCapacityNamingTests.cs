@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using NUnit.Framework;
@@ -183,6 +185,56 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
             Assert.AreEqual("base", properties.BasePolicyName);
             Assert.AreEqual(RaiPolicyFormat.ACS, properties.Format);
+        }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.CognitiveServices/accounts/account/computes/cluster")]
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/virtualClusters/cluster")]
+        public void ComputeAndWorkbenchResourceIdsPreserveWireValues(string clusterId)
+        {
+            var resourceId = new ResourceIdentifier(clusterId);
+            const string imageLink = "mcr.microsoft.com/azureml/workbench:latest";
+            var options = new ModelReaderWriterOptions("W");
+            object[] models =
+            {
+                new ContainerInstanceComputeProperties("eastus", resourceId, imageLink),
+                new CognitiveServicesWorkbenchProperties(resourceId, imageLink),
+                new CognitiveServicesWorkbenchPatchProperties { TargetClusterId = resourceId },
+                ArmCognitiveServicesModelFactory.ContainerInstanceComputeProperties(
+                    location: "eastus", targetClusterId: resourceId, imageLink: imageLink),
+                ArmCognitiveServicesModelFactory.CognitiveServicesWorkbenchProperties(
+                    targetClusterId: resourceId, imageLink: imageLink),
+                ArmCognitiveServicesModelFactory.CognitiveServicesWorkbenchPatchProperties(targetClusterId: resourceId)
+            };
+
+            foreach (object model in models)
+            {
+                var data = ModelReaderWriter.Write(model, options, AzureResourceManagerCognitiveServicesContext.Default);
+                using (JsonDocument document = JsonDocument.Parse(data.ToString()))
+                {
+                    Assert.AreEqual(clusterId, document.RootElement.GetProperty("targetClusterId").GetString());
+                }
+
+                var roundTrip = ModelReaderWriter.Read(data, model.GetType(), options, AzureResourceManagerCognitiveServicesContext.Default);
+                var roundTripData = ModelReaderWriter.Write(roundTrip, options, AzureResourceManagerCognitiveServicesContext.Default);
+                using (JsonDocument document = JsonDocument.Parse(roundTripData.ToString()))
+                {
+                    Assert.AreEqual(clusterId, document.RootElement.GetProperty("targetClusterId").GetString());
+                }
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void WorkbenchPatchOmitsUnspecifiedResourceId(bool useFactory)
+        {
+            var properties = useFactory
+                ? ArmCognitiveServicesModelFactory.CognitiveServicesWorkbenchPatchProperties()
+                : new CognitiveServicesWorkbenchPatchProperties();
+            var data = ModelReaderWriter.Write(properties, new ModelReaderWriterOptions("W"));
+            using (JsonDocument document = JsonDocument.Parse(data.ToString()))
+            {
+                Assert.IsFalse(document.RootElement.TryGetProperty("targetClusterId", out _));
+            }
         }
     }
 }

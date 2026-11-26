@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="instanceType"> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. Omit to preserve the current value; null resets to the Singularity.D4_v3 fallback. Foundry Compute ignores this override and uses the pool configuration. An actual instance type change requires the workbench to be stopped. </param>
         /// <param name="gpuCount"> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. Omit to preserve the current value; null clears the override to use the full node or the instance type's default count. Full-node Azure VM sizes permit partition selection. A supplied count must match an exact Singularity instance type; the Singularity.D4_v3 fallback accepts 4. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchPatchProperties(string targetClusterId, string idleTimeBeforeShutdown, string instanceType, int? gpuCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchPatchProperties(ResourceIdentifier targetClusterId, string idleTimeBeforeShutdown, string instanceType, int? gpuCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             IdleTimeBeforeShutdown = idleTimeBeforeShutdown;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </summary>
         [WirePath("targetClusterId")]
-        public string TargetClusterId { get; set; }
+        public ResourceIdentifier TargetClusterId { get; set; }
 
         /// <summary> ISO 8601 duration before the idle workbench is automatically shut down (e.g., 'PT30M'). </summary>
         [WirePath("idleTimeBeforeShutdown")]

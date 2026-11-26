@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this container instance. </param>
         /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the container instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetClusterId"/> or <paramref name="imageLink"/> is null. </exception>
-        public ContainerInstanceComputeProperties(AzureLocation location, string targetClusterId, string imageLink) : base(ComputeType.ContainerInstance, location)
+        public ContainerInstanceComputeProperties(AzureLocation location, ResourceIdentifier targetClusterId, string imageLink) : base(ComputeType.ContainerInstance, location)
         {
             Argument.AssertNotNull(targetClusterId, nameof(targetClusterId));
             Argument.AssertNotNull(imageLink, nameof(imageLink));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle instance is automatically shut down (e.g., 'PT30M'). </param>
         /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
-        internal ContainerInstanceComputeProperties(ComputeType computeType, AzureLocation location, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string targetClusterId, string imageLink, string idleTimeBeforeShutdown, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints) : base(computeType, location, provisioningState, errors, createdOn, additionalBinaryDataProperties)
+        internal ContainerInstanceComputeProperties(ComputeType computeType, AzureLocation location, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier targetClusterId, string imageLink, string idleTimeBeforeShutdown, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints) : base(computeType, location, provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> ARM resource ID of the parent cluster that hosts this container instance. </summary>
         [WirePath("targetClusterId")]
-        public string TargetClusterId { get; set; }
+        public ResourceIdentifier TargetClusterId { get; set; }
 
         /// <summary> Container image URI (e.g., MCR or ACR image path) for the container instance. </summary>
         [WirePath("imageLink")]

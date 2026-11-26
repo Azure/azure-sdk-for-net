@@ -12,6 +12,10 @@
 - Added `CognitiveServicesManagedComputeUsage.ScopeId`.
 - Added `ArcDeploymentModel.AssetId` and read-only `Version`, and a `force` option for deleting an Arc deployment when its extension is disconnected.
 
+### Breaking Changes
+
+- Changed `TargetClusterId` from `string` to `ResourceIdentifier` in the preview compute and workbench models `ContainerInstanceComputeProperties`, `CognitiveServicesWorkbenchProperties`, and `CognitiveServicesWorkbenchPatchProperties`, including their constructors and model-factory parameters.
+
 ### Bugs Fixed
 
 - Aligned new AKS attachment status properties, Foundry agent hosting models, project tool-control models, workbench models, and the AKS attachment deletion disposition with .NET naming conventions.

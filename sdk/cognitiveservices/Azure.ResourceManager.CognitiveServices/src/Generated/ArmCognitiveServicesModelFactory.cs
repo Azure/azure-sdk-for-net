@@ -4287,7 +4287,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceComputeProperties"/> instance for mocking. </returns>
-        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(AzureLocation location = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
+        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(AzureLocation location = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, ResourceIdentifier targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -4363,7 +4363,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string instanceType = default, int? gpuCount = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesWorkbenchProvisioningState? provisioningState = default, CognitiveServicesWorkbenchStatus? status = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(ResourceIdentifier targetClusterId = default, string imageLink = default, string instanceType = default, int? gpuCount = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesWorkbenchProvisioningState? provisioningState = default, CognitiveServicesWorkbenchStatus? status = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -4399,7 +4399,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="instanceType"> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. Omit to preserve the current value; null resets to the Singularity.D4_v3 fallback. Foundry Compute ignores this override and uses the pool configuration. An actual instance type change requires the workbench to be stopped. </param>
         /// <param name="gpuCount"> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. Omit to preserve the current value; null clears the override to use the full node or the instance type's default count. Full-node Azure VM sizes permit partition selection. A supplied count must match an exact Singularity instance type; the Singularity.D4_v3 fallback accepts 4. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchPatchProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchPatchProperties CognitiveServicesWorkbenchPatchProperties(string targetClusterId = default, string idleTimeBeforeShutdown = default, string instanceType = default, int? gpuCount = default)
+        public static CognitiveServicesWorkbenchPatchProperties CognitiveServicesWorkbenchPatchProperties(ResourceIdentifier targetClusterId = default, string idleTimeBeforeShutdown = default, string instanceType = default, int? gpuCount = default)
         {
             return new CognitiveServicesWorkbenchPatchProperties(targetClusterId, idleTimeBeforeShutdown, instanceType, gpuCount, default);
         }

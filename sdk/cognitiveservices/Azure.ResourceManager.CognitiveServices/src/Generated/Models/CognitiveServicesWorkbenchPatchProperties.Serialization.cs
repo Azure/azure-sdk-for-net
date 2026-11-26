@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string targetClusterId = default;
+            ResourceIdentifier targetClusterId = default;
             string idleTimeBeforeShutdown = default;
             bool instanceTypeIsDefined = false;
             string instanceType = default;
@@ -161,7 +162,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("targetClusterId"u8))
                 {
-                    targetClusterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetClusterId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("idleTimeBeforeShutdown"u8))

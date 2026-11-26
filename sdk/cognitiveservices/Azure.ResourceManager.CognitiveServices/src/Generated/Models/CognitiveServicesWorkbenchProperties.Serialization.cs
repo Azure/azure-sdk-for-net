@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string targetClusterId = default;
+            ResourceIdentifier targetClusterId = default;
             string imageLink = default;
             string instanceType = default;
             int? gpuCount = default;
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("targetClusterId"u8))
                 {
-                    targetClusterId = prop.Value.GetString();
+                    targetClusterId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("imageLink"u8))
