@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             }
             set
             {
-                Capabilities = new StorageDiscoveryCapabilities(value);
+                Capabilities = value is null ? default : new StorageDiscoveryCapabilities(value);
             }
         }
     }
