@@ -22,7 +22,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is SystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
-            EnsureFrameworkTypeRegistered(systemType);
         }
 
         if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
@@ -37,7 +36,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is SystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
-            EnsureFrameworkTypeRegistered(systemType);
         }
 
         if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
@@ -52,22 +50,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
         systemType.Update(@namespace: systemType.SystemType.Namespace);
-    }
-
-    /// <summary>
-    /// Registers the framework CSharpType (from KnownManagementTypes) as an alias in the CSharpTypeMap.
-    /// This allows BuildBaseModelProvider() to find SystemObjectModelProvider when custom code
-    /// uses a Roslyn-resolved framework CSharpType (which differs from the non-framework CSharpType
-    /// created by SystemObjectModelProvider).
-    /// </summary>
-    private static void EnsureFrameworkTypeRegistered(SystemObjectModelProvider systemType)
-    {
-        var frameworkType = new CSharpType(systemType.SystemType.FrameworkType);
-        var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
-        if (!typeMap.ContainsKey(frameworkType))
-        {
-            typeMap[frameworkType] = systemType;
-        }
     }
 
     private HashSet<ModelProvider> _regularUpdated = new();
@@ -104,6 +86,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         StripOrphanedVirtualModifiers(model.BaseModelProvider!, removedPropertyNames);
         // Reset cached constructors, serialization, and model factories so they do not keep
         // references to inherited ARM properties removed from the model surface.
+        // Defer rebuilding serialization to GetWriter: during PreVisitModel the factory has not
+        // registered this model yet, so unknown discriminator variants can cache a null base type.
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
 
         _regularUpdated.Add(model);

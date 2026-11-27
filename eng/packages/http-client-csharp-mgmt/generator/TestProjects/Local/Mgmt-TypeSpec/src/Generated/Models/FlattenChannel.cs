@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Converts a string to a <see cref="FlattenChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FlattenChannel?(string value) => value == null ? null : new FlattenChannel(value);
+        public static implicit operator FlattenChannel?(string value) => value == null ? (FlattenChannel?)null : new FlattenChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

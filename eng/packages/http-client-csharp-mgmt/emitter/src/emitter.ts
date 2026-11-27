@@ -23,13 +23,11 @@ import {
 import type {
   CodeModel,
   CodeModelMutator,
-  CSharpEmitterContext,
-  InputClient
+  CSharpEmitterContext
 } from "./code-model-types.js";
 import { ArmProviderSchema } from "./resource-metadata.js";
 import { removeReferenceIdsFromUnknownValues } from "./reference-metadata-sanitizer.js";
 import { markApiVersionOverrides } from "./api-version-override.js";
-import { traverseClient } from "./sdk-client-utils.js";
 
 export type ManagementCodeModelTransformer = (
   codeModel: CodeModel,
@@ -76,7 +74,6 @@ export async function emitManagementCodeModel(
     setHasClientNameOverride(codeModel, sdkContext);
     removeReferenceIdsFromUnknownValues(codeModel);
     removeConstructorRequirednessOverrides(codeModel);
-    removeUnsupportedDeprecations(codeModel);
     return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
 }
@@ -93,27 +90,6 @@ export function removeConstructorRequirednessOverrides(
   for (const model of codeModel.models) {
     for (const property of model.properties) {
       delete property.requiredInConstructor;
-    }
-  }
-}
-
-export function removeUnsupportedDeprecations(codeModel: CodeModel): void {
-  // Temporarily disable model, property, and operation deprecation until management references and flattening handle it consistently.
-  // https://github.com/Azure/azure-sdk-for-net/issues/65020
-  for (const model of codeModel.models) {
-    delete model.deprecation;
-    for (const property of model.properties) {
-      delete property.deprecation;
-    }
-  }
-
-  const clients: InputClient[] = [];
-  for (const client of codeModel.clients) {
-    traverseClient(client, clients);
-  }
-  for (const client of clients) {
-    for (const method of client.methods) {
-      delete method.operation.deprecated;
     }
   }
 }

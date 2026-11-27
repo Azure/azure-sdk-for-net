@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { createModel } from "@typespec/http-client-csharp";
 import {
-  removeConstructorRequirednessOverrides,
-  removeUnsupportedDeprecations
+  emitManagementCodeModel,
+  removeConstructorRequirednessOverrides
 } from "../src/emitter.js";
 import type { InputClient } from "../src/code-model-types.js";
 import { traverseClient } from "../src/sdk-client-utils.js";
@@ -16,8 +16,25 @@ import {
   typeSpecCompile
 } from "./test-util.js";
 
+vi.mock("@azure-typespec/http-client-csharp", async (importOriginal) => {
+  const original =
+    await importOriginal<typeof import("@azure-typespec/http-client-csharp")>();
+  return {
+    ...original,
+    emitAzureCodeModel: async (
+      context: Parameters<typeof original.emitAzureCodeModel>[0],
+      update: Parameters<typeof original.emitAzureCodeModel>[1]
+    ) => {
+      const sdkContext = await createCSharpSdkContext(context);
+      const [model, diagnostics] = createModel(sdkContext);
+      update?.(model, sdkContext);
+      return [undefined, diagnostics];
+    }
+  };
+});
+
 describe("Management code model", () => {
-  it("removes unsupported model, property, and child-client operation deprecation", async () => {
+  it("preserves model, property, and child-client operation deprecation", async () => {
     const host = await createEmitterTestHost();
     const program = await typeSpecCompile(
       `
@@ -49,9 +66,17 @@ describe("Management code model", () => {
     );
 
     const context = createEmitterContext(program);
-    const sdkContext = await createCSharpSdkContext(context);
-    const [original, diagnostics] = createModel(sdkContext);
-    expect(diagnostics.filter((d) => d.severity === "error")).toEqual([]);
+    let original:
+      | Parameters<
+          NonNullable<Parameters<typeof emitManagementCodeModel>[1]>
+        >[0]
+      | undefined;
+    await emitManagementCodeModel(context, (model) => {
+      original = model;
+      return model;
+    });
+    expect(original).toBeDefined();
+    if (!original) throw new Error("Management code model was not emitted");
     expect(
       original.models
         .filter((model) => model.deprecation)
@@ -59,8 +84,9 @@ describe("Management code model", () => {
     ).toEqual(
       expect.arrayContaining(["Deprecated resource.", "Deprecated properties."])
     );
-    const modelNames = original.models.map((model) => model.name);
-    expect(modelNames).toContain("CurrentDetails");
+    expect(original.models.map((model) => model.name)).toContain(
+      "CurrentDetails"
+    );
     const legacyProperty = original.models
       .flatMap((model) => model.properties)
       .find((property) => property.name === "legacy");
@@ -77,21 +103,6 @@ describe("Management code model", () => {
         (operation) => operation.deprecated === "Deprecated operation."
       )
     ).toBe(true);
-    const operationNames = operations.map((operation) => operation.name);
-
-    removeUnsupportedDeprecations(original);
-
-    for (const model of original.models) {
-      expect(model).not.toHaveProperty("deprecation");
-    }
-    expect(original.models.map((model) => model.name)).toEqual(modelNames);
-    expect(legacyProperty).not.toHaveProperty("deprecation");
-    for (const operation of operations) {
-      expect(operation).not.toHaveProperty("deprecated");
-    }
-    expect(operations.map((operation) => operation.name)).toEqual(
-      operationNames
-    );
   });
 
   it("removes constructor-requiredness overrides without changing wire requiredness", async () => {

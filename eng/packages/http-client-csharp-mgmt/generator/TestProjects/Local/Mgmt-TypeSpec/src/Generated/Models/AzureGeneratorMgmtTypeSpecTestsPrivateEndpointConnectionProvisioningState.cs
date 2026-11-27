@@ -62,7 +62,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Converts a string to a <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState?)null : new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Converts a string to a <see cref="TrafficRoutingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficRoutingMethod?(string value) => value == null ? null : new TrafficRoutingMethod(value);
+        public static implicit operator TrafficRoutingMethod?(string value) => value == null ? (TrafficRoutingMethod?)null : new TrafficRoutingMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
