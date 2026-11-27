@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("firewallSku"u8);
                 writer.WriteStringValue(FirewallSku);
             }
+            if (Optional.IsDefined(SessionDrainTimeoutInMinutes))
+            {
+                writer.WritePropertyName("sessionDrainTimeoutInMinutes"u8);
+                writer.WriteNumberValue(SessionDrainTimeoutInMinutes.Value);
+            }
             writer.WritePropertyName("networkProfile"u8);
             writer.WriteObjectValue(NetworkProfile, options);
             if (Optional.IsDefined(IsPanoramaManaged))
@@ -111,6 +116,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 writer.WritePropertyName("strataCloudManagerConfig"u8);
                 writer.WriteObjectValue(StrataCloudManagerConfig, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirewallMode))
+            {
+                writer.WritePropertyName("firewallMode"u8);
+                writer.WriteStringValue(FirewallMode.Value.ToString());
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
@@ -182,11 +192,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             ETag? panETag = default;
             string firewallSku = default;
+            int? sessionDrainTimeoutInMinutes = default;
             FirewallNetworkProfile networkProfile = default;
             FirewallBooleanType? isPanoramaManaged = default;
             FirewallBooleanType? isStrataCloudManaged = default;
             FirewallPanoramaConfiguration panoramaConfig = default;
             StrataCloudManagerConfig strataCloudManagerConfig = default;
+            FirewallMode? firewallMode = default;
             RulestackDetails associatedRulestack = default;
             FirewallDnsSettings dnsSettings = default;
             IList<FirewallFrontendSetting> frontEndSettings = default;
@@ -208,6 +220,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 if (prop.NameEquals("firewallSku"u8))
                 {
                     firewallSku = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sessionDrainTimeoutInMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionDrainTimeoutInMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -249,6 +270,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         continue;
                     }
                     strataCloudManagerConfig = StrataCloudManagerConfig.DeserializeStrataCloudManagerConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("firewallMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    firewallMode = new FirewallMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("associatedRulestack"u8))
@@ -306,11 +336,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallDeploymentProperties(
                 panETag,
                 firewallSku,
+                sessionDrainTimeoutInMinutes,
                 networkProfile,
                 isPanoramaManaged,
                 isStrataCloudManaged,
                 panoramaConfig,
                 strataCloudManagerConfig,
+                firewallMode,
                 associatedRulestack,
                 dnsSettings,
                 frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),
