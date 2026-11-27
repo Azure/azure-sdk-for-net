@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Migrate.ContainerAppsAssessments.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Migrate.ContainerAppsAssessments.Tests.csproj" />
+</Solution>
