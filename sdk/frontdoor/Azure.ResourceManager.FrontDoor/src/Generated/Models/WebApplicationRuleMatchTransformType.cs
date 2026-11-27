@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationRuleMatchTransformType?(string value) => value == null ? null : new WebApplicationRuleMatchTransformType(value);
+        public static implicit operator WebApplicationRuleMatchTransformType?(string value) => value == null ? (WebApplicationRuleMatchTransformType?)null : new WebApplicationRuleMatchTransformType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

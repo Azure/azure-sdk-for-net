@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterProvisioningState?(string value) => value == null ? null : new ClusterProvisioningState(value);
+        public static implicit operator ClusterProvisioningState?(string value) => value == null ? (ClusterProvisioningState?)null : new ClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

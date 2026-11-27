@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderAddressClassification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderAddressClassification?(string value) => value == null ? null : new EdgeOrderAddressClassification(value);
+        public static implicit operator EdgeOrderAddressClassification?(string value) => value == null ? (EdgeOrderAddressClassification?)null : new EdgeOrderAddressClassification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

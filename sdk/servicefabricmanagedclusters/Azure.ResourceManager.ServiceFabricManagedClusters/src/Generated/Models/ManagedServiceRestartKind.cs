@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedServiceRestartKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedServiceRestartKind?(string value) => value == null ? null : new ManagedServiceRestartKind(value);
+        public static implicit operator ManagedServiceRestartKind?(string value) => value == null ? (ManagedServiceRestartKind?)null : new ManagedServiceRestartKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

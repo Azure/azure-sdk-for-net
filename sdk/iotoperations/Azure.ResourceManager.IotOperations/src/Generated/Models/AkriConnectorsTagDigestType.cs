@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="AkriConnectorsTagDigestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AkriConnectorsTagDigestType?(string value) => value == null ? null : new AkriConnectorsTagDigestType(value);
+        public static implicit operator AkriConnectorsTagDigestType?(string value) => value == null ? (AkriConnectorsTagDigestType?)null : new AkriConnectorsTagDigestType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

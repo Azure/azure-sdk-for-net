@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CassandraProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraProvisioningState?(string value) => value == null ? null : new CassandraProvisioningState(value);
+        public static implicit operator CassandraProvisioningState?(string value) => value == null ? (CassandraProvisioningState?)null : new CassandraProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

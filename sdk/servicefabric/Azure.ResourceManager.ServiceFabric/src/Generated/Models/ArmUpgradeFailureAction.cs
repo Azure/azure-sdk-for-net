@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ArmUpgradeFailureAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArmUpgradeFailureAction?(string value) => value == null ? null : new ArmUpgradeFailureAction(value);
+        public static implicit operator ArmUpgradeFailureAction?(string value) => value == null ? (ArmUpgradeFailureAction?)null : new ArmUpgradeFailureAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

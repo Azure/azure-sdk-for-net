@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterScheduledType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterScheduledType?(string value) => value == null ? null : new DevCenterScheduledType(value);
+        public static implicit operator DevCenterScheduledType?(string value) => value == null ? (DevCenterScheduledType?)null : new DevCenterScheduledType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

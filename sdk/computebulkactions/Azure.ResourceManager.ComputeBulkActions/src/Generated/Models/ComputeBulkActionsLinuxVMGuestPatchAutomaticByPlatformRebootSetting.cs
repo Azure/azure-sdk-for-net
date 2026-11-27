@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? (ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting?)null : new ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

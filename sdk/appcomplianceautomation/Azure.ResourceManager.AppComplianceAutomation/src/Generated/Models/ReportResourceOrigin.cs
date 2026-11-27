@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ReportResourceOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReportResourceOrigin?(string value) => value == null ? null : new ReportResourceOrigin(value);
+        public static implicit operator ReportResourceOrigin?(string value) => value == null ? (ReportResourceOrigin?)null : new ReportResourceOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

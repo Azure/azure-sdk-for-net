@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveResourceVisibilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveResourceVisibilityMode?(string value) => value == null ? null : new VirtualEnclaveResourceVisibilityMode(value);
+        public static implicit operator VirtualEnclaveResourceVisibilityMode?(string value) => value == null ? (VirtualEnclaveResourceVisibilityMode?)null : new VirtualEnclaveResourceVisibilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

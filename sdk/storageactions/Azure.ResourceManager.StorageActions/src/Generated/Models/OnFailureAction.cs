@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> Converts a string to a <see cref="OnFailureAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnFailureAction?(string value) => value == null ? null : new OnFailureAction(value);
+        public static implicit operator OnFailureAction?(string value) => value == null ? (OnFailureAction?)null : new OnFailureAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

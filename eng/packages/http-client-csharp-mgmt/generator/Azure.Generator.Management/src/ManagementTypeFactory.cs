@@ -182,9 +182,9 @@ namespace Azure.Generator.Management
         {
             if (inputType is InputModelType model)
             {
-                if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var inheritableType))
+                if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out _))
                 {
-                    return inheritableType;
+                    return CreateModel(model)?.Type;
                 }
                 if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var systemType))
                 {
@@ -214,7 +214,17 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return new SystemObjectModelProvider(replacedType, model);
+                // ProxyResource and ExtensionResource add no CLR layer to ResourceData.
+                // Reuse the provider for their mapped ancestor so an empty alias cannot replace
+                // ResourceData's property/constructor contract in the type map.
+                if (model.BaseModel is { } baseModel &&
+                    KnownManagementTypes.TryGetInheritableSystemType(baseModel.CrossLanguageDefinitionId, out var baseType) &&
+                    replacedType.Equals(baseType))
+                {
+                    return CreateModel(baseModel);
+                }
+
+                return new MgmtObjectModelProvider(replacedType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {

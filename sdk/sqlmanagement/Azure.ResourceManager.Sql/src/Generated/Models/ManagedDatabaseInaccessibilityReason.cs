@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedDatabaseInaccessibilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedDatabaseInaccessibilityReason?(string value) => value == null ? null : new ManagedDatabaseInaccessibilityReason(value);
+        public static implicit operator ManagedDatabaseInaccessibilityReason?(string value) => value == null ? (ManagedDatabaseInaccessibilityReason?)null : new ManagedDatabaseInaccessibilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

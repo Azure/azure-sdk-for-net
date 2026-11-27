@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeStorageAlignmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeStorageAlignmentStatus?(string value) => value == null ? null : new ComputeStorageAlignmentStatus(value);
+        public static implicit operator ComputeStorageAlignmentStatus?(string value) => value == null ? (ComputeStorageAlignmentStatus?)null : new ComputeStorageAlignmentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

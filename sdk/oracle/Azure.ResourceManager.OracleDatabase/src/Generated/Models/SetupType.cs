@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="SetupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SetupType?(string value) => value == null ? null : new SetupType(value);
+        public static implicit operator SetupType?(string value) => value == null ? (SetupType?)null : new SetupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

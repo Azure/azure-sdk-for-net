@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="SyncTableMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncTableMigrationState?(string value) => value == null ? null : new SyncTableMigrationState(value);
+        public static implicit operator SyncTableMigrationState?(string value) => value == null ? (SyncTableMigrationState?)null : new SyncTableMigrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

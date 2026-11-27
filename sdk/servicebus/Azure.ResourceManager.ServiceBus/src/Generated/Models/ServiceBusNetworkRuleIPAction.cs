@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusNetworkRuleIPAction?(string value) => value == null ? null : new ServiceBusNetworkRuleIPAction(value);
+        public static implicit operator ServiceBusNetworkRuleIPAction?(string value) => value == null ? (ServiceBusNetworkRuleIPAction?)null : new ServiceBusNetworkRuleIPAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

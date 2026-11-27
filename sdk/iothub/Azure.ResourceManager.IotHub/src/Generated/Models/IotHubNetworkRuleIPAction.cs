@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubNetworkRuleIPAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubNetworkRuleIPAction?(string value) => value == null ? null : new IotHubNetworkRuleIPAction(value);
+        public static implicit operator IotHubNetworkRuleIPAction?(string value) => value == null ? (IotHubNetworkRuleIPAction?)null : new IotHubNetworkRuleIPAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

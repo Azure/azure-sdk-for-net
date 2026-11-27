@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ThreatIntelligenceQuerySortingDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatIntelligenceQuerySortingDirection?(string value) => value == null ? null : new ThreatIntelligenceQuerySortingDirection(value);
+        public static implicit operator ThreatIntelligenceQuerySortingDirection?(string value) => value == null ? (ThreatIntelligenceQuerySortingDirection?)null : new ThreatIntelligenceQuerySortingDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

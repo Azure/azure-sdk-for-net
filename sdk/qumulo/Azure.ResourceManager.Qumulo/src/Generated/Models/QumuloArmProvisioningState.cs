@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         /// <summary> Converts a string to a <see cref="QumuloArmProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QumuloArmProvisioningState?(string value) => value == null ? null : new QumuloArmProvisioningState(value);
+        public static implicit operator QumuloArmProvisioningState?(string value) => value == null ? (QumuloArmProvisioningState?)null : new QumuloArmProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

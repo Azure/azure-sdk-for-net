@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+        public static implicit operator ProvisioningState?(string value) => value == null ? (ProvisioningState?)null : new ProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

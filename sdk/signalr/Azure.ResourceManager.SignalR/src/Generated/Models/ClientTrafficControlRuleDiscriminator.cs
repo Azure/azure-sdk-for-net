@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="ClientTrafficControlRuleDiscriminator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientTrafficControlRuleDiscriminator?(string value) => value == null ? null : new ClientTrafficControlRuleDiscriminator(value);
+        public static implicit operator ClientTrafficControlRuleDiscriminator?(string value) => value == null ? (ClientTrafficControlRuleDiscriminator?)null : new ClientTrafficControlRuleDiscriminator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

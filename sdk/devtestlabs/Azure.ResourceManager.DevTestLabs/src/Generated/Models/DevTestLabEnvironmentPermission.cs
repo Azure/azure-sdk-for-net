@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabEnvironmentPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabEnvironmentPermission?(string value) => value == null ? null : new DevTestLabEnvironmentPermission(value);
+        public static implicit operator DevTestLabEnvironmentPermission?(string value) => value == null ? (DevTestLabEnvironmentPermission?)null : new DevTestLabEnvironmentPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

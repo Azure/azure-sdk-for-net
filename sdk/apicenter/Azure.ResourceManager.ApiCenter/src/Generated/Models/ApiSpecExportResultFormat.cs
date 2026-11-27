@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiSpecExportResultFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiSpecExportResultFormat?(string value) => value == null ? null : new ApiSpecExportResultFormat(value);
+        public static implicit operator ApiSpecExportResultFormat?(string value) => value == null ? (ApiSpecExportResultFormat?)null : new ApiSpecExportResultFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

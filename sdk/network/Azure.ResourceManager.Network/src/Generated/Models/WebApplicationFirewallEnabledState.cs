@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationFirewallEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationFirewallEnabledState?(string value) => value == null ? null : new WebApplicationFirewallEnabledState(value);
+        public static implicit operator WebApplicationFirewallEnabledState?(string value) => value == null ? (WebApplicationFirewallEnabledState?)null : new WebApplicationFirewallEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ConfidentialLedgerSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerSku?(string value) => value == null ? null : new ConfidentialLedgerSku(value);
+        public static implicit operator ConfidentialLedgerSku?(string value) => value == null ? (ConfidentialLedgerSku?)null : new ConfidentialLedgerSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="ImageValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageValidationStatus?(string value) => value == null ? null : new ImageValidationStatus(value);
+        public static implicit operator ImageValidationStatus?(string value) => value == null ? (ImageValidationStatus?)null : new ImageValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

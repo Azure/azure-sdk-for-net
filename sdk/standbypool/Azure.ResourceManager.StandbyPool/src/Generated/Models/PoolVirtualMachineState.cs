@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Converts a string to a <see cref="PoolVirtualMachineState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PoolVirtualMachineState?(string value) => value == null ? null : new PoolVirtualMachineState(value);
+        public static implicit operator PoolVirtualMachineState?(string value) => value == null ? (PoolVirtualMachineState?)null : new PoolVirtualMachineState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

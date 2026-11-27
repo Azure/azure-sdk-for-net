@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="UrgencyLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UrgencyLevel?(string value) => value == null ? null : new UrgencyLevel(value);
+        public static implicit operator UrgencyLevel?(string value) => value == null ? (UrgencyLevel?)null : new UrgencyLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

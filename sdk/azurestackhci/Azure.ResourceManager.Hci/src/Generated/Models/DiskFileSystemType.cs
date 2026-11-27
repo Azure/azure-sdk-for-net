@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="DiskFileSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskFileSystemType?(string value) => value == null ? null : new DiskFileSystemType(value);
+        public static implicit operator DiskFileSystemType?(string value) => value == null ? (DiskFileSystemType?)null : new DiskFileSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

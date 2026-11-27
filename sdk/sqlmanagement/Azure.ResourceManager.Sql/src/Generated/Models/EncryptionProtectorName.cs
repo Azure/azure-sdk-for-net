@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="EncryptionProtectorName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EncryptionProtectorName?(string value) => value == null ? null : new EncryptionProtectorName(value);
+        public static implicit operator EncryptionProtectorName?(string value) => value == null ? (EncryptionProtectorName?)null : new EncryptionProtectorName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

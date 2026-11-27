@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliScalarFunction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliScalarFunction?(string value) => value == null ? null : new SliScalarFunction(value);
+        public static implicit operator SliScalarFunction?(string value) => value == null ? (SliScalarFunction?)null : new SliScalarFunction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

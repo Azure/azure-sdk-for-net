@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="CriterionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CriterionType?(string value) => value == null ? null : new CriterionType(value);
+        public static implicit operator CriterionType?(string value) => value == null ? (CriterionType?)null : new CriterionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

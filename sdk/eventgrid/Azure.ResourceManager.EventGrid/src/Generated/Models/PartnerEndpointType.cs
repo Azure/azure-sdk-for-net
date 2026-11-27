@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PartnerEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerEndpointType?(string value) => value == null ? null : new PartnerEndpointType(value);
+        public static implicit operator PartnerEndpointType?(string value) => value == null ? (PartnerEndpointType?)null : new PartnerEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

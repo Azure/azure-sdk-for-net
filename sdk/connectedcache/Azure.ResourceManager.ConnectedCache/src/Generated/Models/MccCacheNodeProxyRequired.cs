@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="MccCacheNodeProxyRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MccCacheNodeProxyRequired?(string value) => value == null ? null : new MccCacheNodeProxyRequired(value);
+        public static implicit operator MccCacheNodeProxyRequired?(string value) => value == null ? (MccCacheNodeProxyRequired?)null : new MccCacheNodeProxyRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

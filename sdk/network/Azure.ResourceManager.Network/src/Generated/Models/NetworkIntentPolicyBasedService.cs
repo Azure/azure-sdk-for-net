@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkIntentPolicyBasedService"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkIntentPolicyBasedService?(string value) => value == null ? null : new NetworkIntentPolicyBasedService(value);
+        public static implicit operator NetworkIntentPolicyBasedService?(string value) => value == null ? (NetworkIntentPolicyBasedService?)null : new NetworkIntentPolicyBasedService(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

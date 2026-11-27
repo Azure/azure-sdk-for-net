@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="NotificationHubNamespaceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationHubNamespaceStatus?(string value) => value == null ? null : new NotificationHubNamespaceStatus(value);
+        public static implicit operator NotificationHubNamespaceStatus?(string value) => value == null ? (NotificationHubNamespaceStatus?)null : new NotificationHubNamespaceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

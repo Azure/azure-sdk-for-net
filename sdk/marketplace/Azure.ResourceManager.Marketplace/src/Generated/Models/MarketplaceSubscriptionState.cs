@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceSubscriptionState?(string value) => value == null ? null : new MarketplaceSubscriptionState(value);
+        public static implicit operator MarketplaceSubscriptionState?(string value) => value == null ? (MarketplaceSubscriptionState?)null : new MarketplaceSubscriptionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

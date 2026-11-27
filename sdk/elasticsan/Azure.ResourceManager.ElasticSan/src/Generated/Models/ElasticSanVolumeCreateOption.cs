@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanVolumeCreateOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanVolumeCreateOption?(string value) => value == null ? null : new ElasticSanVolumeCreateOption(value);
+        public static implicit operator ElasticSanVolumeCreateOption?(string value) => value == null ? (ElasticSanVolumeCreateOption?)null : new ElasticSanVolumeCreateOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

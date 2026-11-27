@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="AutomationRuleBooleanConditionSupportedOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationRuleBooleanConditionSupportedOperator?(string value) => value == null ? null : new AutomationRuleBooleanConditionSupportedOperator(value);
+        public static implicit operator AutomationRuleBooleanConditionSupportedOperator?(string value) => value == null ? (AutomationRuleBooleanConditionSupportedOperator?)null : new AutomationRuleBooleanConditionSupportedOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

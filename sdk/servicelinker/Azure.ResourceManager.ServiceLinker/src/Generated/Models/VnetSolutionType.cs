@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="VnetSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VnetSolutionType?(string value) => value == null ? null : new VnetSolutionType(value);
+        public static implicit operator VnetSolutionType?(string value) => value == null ? (VnetSolutionType?)null : new VnetSolutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

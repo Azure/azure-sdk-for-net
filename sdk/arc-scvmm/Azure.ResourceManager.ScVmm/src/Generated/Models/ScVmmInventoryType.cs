@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="ScVmmInventoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScVmmInventoryType?(string value) => value == null ? null : new ScVmmInventoryType(value);
+        public static implicit operator ScVmmInventoryType?(string value) => value == null ? (ScVmmInventoryType?)null : new ScVmmInventoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

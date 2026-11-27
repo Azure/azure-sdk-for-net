@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsAlertRuleEntityMappingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsAlertRuleEntityMappingType?(string value) => value == null ? null : new SecurityInsightsAlertRuleEntityMappingType(value);
+        public static implicit operator SecurityInsightsAlertRuleEntityMappingType?(string value) => value == null ? (SecurityInsightsAlertRuleEntityMappingType?)null : new SecurityInsightsAlertRuleEntityMappingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

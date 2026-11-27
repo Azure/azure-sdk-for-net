@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="PerfCounterDataSourceStream"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PerfCounterDataSourceStream?(string value) => value == null ? null : new PerfCounterDataSourceStream(value);
+        public static implicit operator PerfCounterDataSourceStream?(string value) => value == null ? (PerfCounterDataSourceStream?)null : new PerfCounterDataSourceStream(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

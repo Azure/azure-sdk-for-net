@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="HealthModelAuthenticationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthModelAuthenticationKind?(string value) => value == null ? null : new HealthModelAuthenticationKind(value);
+        public static implicit operator HealthModelAuthenticationKind?(string value) => value == null ? (HealthModelAuthenticationKind?)null : new HealthModelAuthenticationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

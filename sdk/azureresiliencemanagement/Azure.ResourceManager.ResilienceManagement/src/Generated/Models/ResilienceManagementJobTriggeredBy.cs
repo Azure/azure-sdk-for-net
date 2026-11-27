@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementJobTriggeredBy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementJobTriggeredBy?(string value) => value == null ? null : new ResilienceManagementJobTriggeredBy(value);
+        public static implicit operator ResilienceManagementJobTriggeredBy?(string value) => value == null ? (ResilienceManagementJobTriggeredBy?)null : new ResilienceManagementJobTriggeredBy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

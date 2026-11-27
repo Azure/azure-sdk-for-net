@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBFleetspaceServiceTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBFleetspaceServiceTier?(string value) => value == null ? null : new CosmosDBFleetspaceServiceTier(value);
+        public static implicit operator CosmosDBFleetspaceServiceTier?(string value) => value == null ? (CosmosDBFleetspaceServiceTier?)null : new CosmosDBFleetspaceServiceTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

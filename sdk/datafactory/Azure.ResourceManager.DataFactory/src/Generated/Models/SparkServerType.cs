@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SparkServerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SparkServerType?(string value) => value == null ? null : new SparkServerType(value);
+        public static implicit operator SparkServerType?(string value) => value == null ? (SparkServerType?)null : new SparkServerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="PublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicNetworkAccess?(string value) => value == null ? null : new PublicNetworkAccess(value);
+        public static implicit operator PublicNetworkAccess?(string value) => value == null ? (PublicNetworkAccess?)null : new PublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

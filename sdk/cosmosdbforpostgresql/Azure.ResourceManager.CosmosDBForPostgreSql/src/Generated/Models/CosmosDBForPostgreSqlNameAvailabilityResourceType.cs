@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlNameAvailabilityResourceType?(string value) => value == null ? null : new CosmosDBForPostgreSqlNameAvailabilityResourceType(value);
+        public static implicit operator CosmosDBForPostgreSqlNameAvailabilityResourceType?(string value) => value == null ? (CosmosDBForPostgreSqlNameAvailabilityResourceType?)null : new CosmosDBForPostgreSqlNameAvailabilityResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

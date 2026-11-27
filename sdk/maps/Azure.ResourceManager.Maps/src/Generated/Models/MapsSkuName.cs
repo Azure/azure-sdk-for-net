@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsSkuName?(string value) => value == null ? null : new MapsSkuName(value);
+        public static implicit operator MapsSkuName?(string value) => value == null ? (MapsSkuName?)null : new MapsSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

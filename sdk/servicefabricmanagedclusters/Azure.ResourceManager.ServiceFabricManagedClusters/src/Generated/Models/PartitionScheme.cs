@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="PartitionScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartitionScheme?(string value) => value == null ? null : new PartitionScheme(value);
+        public static implicit operator PartitionScheme?(string value) => value == null ? (PartitionScheme?)null : new PartitionScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

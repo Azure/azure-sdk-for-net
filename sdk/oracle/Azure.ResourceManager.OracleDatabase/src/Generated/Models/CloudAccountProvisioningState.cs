@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="CloudAccountProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudAccountProvisioningState?(string value) => value == null ? null : new CloudAccountProvisioningState(value);
+        public static implicit operator CloudAccountProvisioningState?(string value) => value == null ? (CloudAccountProvisioningState?)null : new CloudAccountProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

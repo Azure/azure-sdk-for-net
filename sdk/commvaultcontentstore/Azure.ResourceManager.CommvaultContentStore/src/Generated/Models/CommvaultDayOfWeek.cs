@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultDayOfWeek?(string value) => value == null ? null : new CommvaultDayOfWeek(value);
+        public static implicit operator CommvaultDayOfWeek?(string value) => value == null ? (CommvaultDayOfWeek?)null : new CommvaultDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

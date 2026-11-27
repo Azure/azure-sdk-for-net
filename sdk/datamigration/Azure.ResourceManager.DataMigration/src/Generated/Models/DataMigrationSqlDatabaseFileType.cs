@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationSqlDatabaseFileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationSqlDatabaseFileType?(string value) => value == null ? null : new DataMigrationSqlDatabaseFileType(value);
+        public static implicit operator DataMigrationSqlDatabaseFileType?(string value) => value == null ? (DataMigrationSqlDatabaseFileType?)null : new DataMigrationSqlDatabaseFileType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

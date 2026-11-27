@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="NotificationHubSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationHubSkuName?(string value) => value == null ? null : new NotificationHubSkuName(value);
+        public static implicit operator NotificationHubSkuName?(string value) => value == null ? (NotificationHubSkuName?)null : new NotificationHubSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

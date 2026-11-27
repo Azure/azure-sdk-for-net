@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="CommandOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommandOutputType?(string value) => value == null ? null : new CommandOutputType(value);
+        public static implicit operator CommandOutputType?(string value) => value == null ? (CommandOutputType?)null : new CommandOutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="ProgrammableConnectivityApplicationCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProgrammableConnectivityApplicationCategory?(string value) => value == null ? null : new ProgrammableConnectivityApplicationCategory(value);
+        public static implicit operator ProgrammableConnectivityApplicationCategory?(string value) => value == null ? (ProgrammableConnectivityApplicationCategory?)null : new ProgrammableConnectivityApplicationCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterprisePublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterprisePublicNetworkAccess?(string value) => value == null ? null : new RedisEnterprisePublicNetworkAccess(value);
+        public static implicit operator RedisEnterprisePublicNetworkAccess?(string value) => value == null ? (RedisEnterprisePublicNetworkAccess?)null : new RedisEnterprisePublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

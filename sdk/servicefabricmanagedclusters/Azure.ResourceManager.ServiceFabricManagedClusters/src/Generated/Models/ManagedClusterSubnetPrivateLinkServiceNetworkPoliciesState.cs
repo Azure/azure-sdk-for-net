@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState?(string value) => value == null ? null : new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(value);
+        public static implicit operator ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState?(string value) => value == null ? (ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState?)null : new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

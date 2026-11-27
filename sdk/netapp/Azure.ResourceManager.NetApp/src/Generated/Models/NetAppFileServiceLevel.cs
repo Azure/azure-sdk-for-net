@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppFileServiceLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppFileServiceLevel?(string value) => value == null ? null : new NetAppFileServiceLevel(value);
+        public static implicit operator NetAppFileServiceLevel?(string value) => value == null ? (NetAppFileServiceLevel?)null : new NetAppFileServiceLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

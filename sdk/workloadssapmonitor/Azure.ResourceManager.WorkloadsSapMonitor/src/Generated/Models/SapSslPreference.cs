@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="SapSslPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapSslPreference?(string value) => value == null ? null : new SapSslPreference(value);
+        public static implicit operator SapSslPreference?(string value) => value == null ? (SapSslPreference?)null : new SapSslPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

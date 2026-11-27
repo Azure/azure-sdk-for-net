@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ServerTrustGroupPropertiesTrustScopesItem"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerTrustGroupPropertiesTrustScopesItem?(string value) => value == null ? null : new ServerTrustGroupPropertiesTrustScopesItem(value);
+        public static implicit operator ServerTrustGroupPropertiesTrustScopesItem?(string value) => value == null ? (ServerTrustGroupPropertiesTrustScopesItem?)null : new ServerTrustGroupPropertiesTrustScopesItem(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

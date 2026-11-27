@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseClientProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseClientProtocol?(string value) => value == null ? null : new RedisEnterpriseClientProtocol(value);
+        public static implicit operator RedisEnterpriseClientProtocol?(string value) => value == null ? (RedisEnterpriseClientProtocol?)null : new RedisEnterpriseClientProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

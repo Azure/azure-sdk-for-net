@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="AkriConnectorsMqttProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AkriConnectorsMqttProtocolType?(string value) => value == null ? null : new AkriConnectorsMqttProtocolType(value);
+        public static implicit operator AkriConnectorsMqttProtocolType?(string value) => value == null ? (AkriConnectorsMqttProtocolType?)null : new AkriConnectorsMqttProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

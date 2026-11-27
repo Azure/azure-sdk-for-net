@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="TableTemporalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TableTemporalType?(string value) => value == null ? null : new TableTemporalType(value);
+        public static implicit operator TableTemporalType?(string value) => value == null ? (TableTemporalType?)null : new TableTemporalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="LegacyPortalStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LegacyPortalStatus?(string value) => value == null ? null : new LegacyPortalStatus(value);
+        public static implicit operator LegacyPortalStatus?(string value) => value == null ? (LegacyPortalStatus?)null : new LegacyPortalStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

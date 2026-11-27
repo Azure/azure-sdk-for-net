@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeState?(string value) => value == null ? null : new IntegrationRuntimeState(value);
+        public static implicit operator IntegrationRuntimeState?(string value) => value == null ? (IntegrationRuntimeState?)null : new IntegrationRuntimeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

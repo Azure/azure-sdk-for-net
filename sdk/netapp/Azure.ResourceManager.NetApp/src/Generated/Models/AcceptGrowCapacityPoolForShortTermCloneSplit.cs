@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="AcceptGrowCapacityPoolForShortTermCloneSplit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcceptGrowCapacityPoolForShortTermCloneSplit?(string value) => value == null ? null : new AcceptGrowCapacityPoolForShortTermCloneSplit(value);
+        public static implicit operator AcceptGrowCapacityPoolForShortTermCloneSplit?(string value) => value == null ? (AcceptGrowCapacityPoolForShortTermCloneSplit?)null : new AcceptGrowCapacityPoolForShortTermCloneSplit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="TroubleshooterValidationScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TroubleshooterValidationScope?(string value) => value == null ? null : new TroubleshooterValidationScope(value);
+        public static implicit operator TroubleshooterValidationScope?(string value) => value == null ? (TroubleshooterValidationScope?)null : new TroubleshooterValidationScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

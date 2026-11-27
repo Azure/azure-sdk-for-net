@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoClusterPrincipalRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoClusterPrincipalRole?(string value) => value == null ? null : new KustoClusterPrincipalRole(value);
+        public static implicit operator KustoClusterPrincipalRole?(string value) => value == null ? (KustoClusterPrincipalRole?)null : new KustoClusterPrincipalRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

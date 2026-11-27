@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EceDeploymentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EceDeploymentMode?(string value) => value == null ? null : new EceDeploymentMode(value);
+        public static implicit operator EceDeploymentMode?(string value) => value == null ? (EceDeploymentMode?)null : new EceDeploymentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

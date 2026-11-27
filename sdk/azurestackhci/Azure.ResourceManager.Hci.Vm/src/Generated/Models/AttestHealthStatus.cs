@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="AttestHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestHealthStatus?(string value) => value == null ? null : new AttestHealthStatus(value);
+        public static implicit operator AttestHealthStatus?(string value) => value == null ? (AttestHealthStatus?)null : new AttestHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="DedicatedGatewayType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DedicatedGatewayType?(string value) => value == null ? null : new DedicatedGatewayType(value);
+        public static implicit operator DedicatedGatewayType?(string value) => value == null ? (DedicatedGatewayType?)null : new DedicatedGatewayType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

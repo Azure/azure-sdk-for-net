@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeSkuVersion?(string value) => value == null ? null : new DataBoxEdgeSkuVersion(value);
+        public static implicit operator DataBoxEdgeSkuVersion?(string value) => value == null ? (DataBoxEdgeSkuVersion?)null : new DataBoxEdgeSkuVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

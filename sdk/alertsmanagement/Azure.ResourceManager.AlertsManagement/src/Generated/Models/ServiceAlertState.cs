@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="ServiceAlertState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceAlertState?(string value) => value == null ? null : new ServiceAlertState(value);
+        public static implicit operator ServiceAlertState?(string value) => value == null ? (ServiceAlertState?)null : new ServiceAlertState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

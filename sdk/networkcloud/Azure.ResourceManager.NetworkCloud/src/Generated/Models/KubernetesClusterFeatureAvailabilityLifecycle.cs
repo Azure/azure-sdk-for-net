@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureAvailabilityLifecycle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterFeatureAvailabilityLifecycle?(string value) => value == null ? null : new KubernetesClusterFeatureAvailabilityLifecycle(value);
+        public static implicit operator KubernetesClusterFeatureAvailabilityLifecycle?(string value) => value == null ? (KubernetesClusterFeatureAvailabilityLifecycle?)null : new KubernetesClusterFeatureAvailabilityLifecycle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

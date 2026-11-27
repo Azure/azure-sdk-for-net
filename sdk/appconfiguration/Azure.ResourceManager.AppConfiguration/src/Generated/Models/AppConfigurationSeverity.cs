@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationSeverity?(string value) => value == null ? null : new AppConfigurationSeverity(value);
+        public static implicit operator AppConfigurationSeverity?(string value) => value == null ? (AppConfigurationSeverity?)null : new AppConfigurationSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningBatchLoggingLevel?(string value) => value == null ? null : new MachineLearningBatchLoggingLevel(value);
+        public static implicit operator MachineLearningBatchLoggingLevel?(string value) => value == null ? (MachineLearningBatchLoggingLevel?)null : new MachineLearningBatchLoggingLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

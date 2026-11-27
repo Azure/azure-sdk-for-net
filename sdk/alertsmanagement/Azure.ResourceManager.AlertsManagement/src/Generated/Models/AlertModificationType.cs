@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertModificationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertModificationType?(string value) => value == null ? null : new AlertModificationType(value);
+        public static implicit operator AlertModificationType?(string value) => value == null ? (AlertModificationType?)null : new AlertModificationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

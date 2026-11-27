@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ServiceCorrelationScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceCorrelationScheme?(string value) => value == null ? null : new ServiceCorrelationScheme(value);
+        public static implicit operator ServiceCorrelationScheme?(string value) => value == null ? (ServiceCorrelationScheme?)null : new ServiceCorrelationScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyEnforcementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyEnforcementMode?(string value) => value == null ? null : new PolicyEnforcementMode(value);
+        public static implicit operator PolicyEnforcementMode?(string value) => value == null ? (PolicyEnforcementMode?)null : new PolicyEnforcementMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

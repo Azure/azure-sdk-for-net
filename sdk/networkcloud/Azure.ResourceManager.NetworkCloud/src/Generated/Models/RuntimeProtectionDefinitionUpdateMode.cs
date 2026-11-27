@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeProtectionDefinitionUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeProtectionDefinitionUpdateMode?(string value) => value == null ? null : new RuntimeProtectionDefinitionUpdateMode(value);
+        public static implicit operator RuntimeProtectionDefinitionUpdateMode?(string value) => value == null ? (RuntimeProtectionDefinitionUpdateMode?)null : new RuntimeProtectionDefinitionUpdateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

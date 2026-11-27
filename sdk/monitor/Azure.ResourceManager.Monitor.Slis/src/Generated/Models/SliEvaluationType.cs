@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliEvaluationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliEvaluationType?(string value) => value == null ? null : new SliEvaluationType(value);
+        public static implicit operator SliEvaluationType?(string value) => value == null ? (SliEvaluationType?)null : new SliEvaluationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

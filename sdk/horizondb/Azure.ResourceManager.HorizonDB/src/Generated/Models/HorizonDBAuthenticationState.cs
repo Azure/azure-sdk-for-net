@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBAuthenticationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBAuthenticationState?(string value) => value == null ? null : new HorizonDBAuthenticationState(value);
+        public static implicit operator HorizonDBAuthenticationState?(string value) => value == null ? (HorizonDBAuthenticationState?)null : new HorizonDBAuthenticationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

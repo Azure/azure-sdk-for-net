@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="ServiceAccountHostingModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceAccountHostingModel?(string value) => value == null ? null : new ServiceAccountHostingModel(value);
+        public static implicit operator ServiceAccountHostingModel?(string value) => value == null ? (ServiceAccountHostingModel?)null : new ServiceAccountHostingModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

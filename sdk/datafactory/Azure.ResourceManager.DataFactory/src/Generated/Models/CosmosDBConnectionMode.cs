@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBConnectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBConnectionMode?(string value) => value == null ? null : new CosmosDBConnectionMode(value);
+        public static implicit operator CosmosDBConnectionMode?(string value) => value == null ? (CosmosDBConnectionMode?)null : new CosmosDBConnectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

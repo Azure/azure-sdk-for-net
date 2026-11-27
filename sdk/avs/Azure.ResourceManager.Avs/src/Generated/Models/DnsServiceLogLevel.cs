@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="DnsServiceLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsServiceLogLevel?(string value) => value == null ? null : new DnsServiceLogLevel(value);
+        public static implicit operator DnsServiceLogLevel?(string value) => value == null ? (DnsServiceLogLevel?)null : new DnsServiceLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

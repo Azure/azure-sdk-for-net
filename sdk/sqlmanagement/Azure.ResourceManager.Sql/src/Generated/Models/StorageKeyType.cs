@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="StorageKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageKeyType?(string value) => value == null ? null : new StorageKeyType(value);
+        public static implicit operator StorageKeyType?(string value) => value == null ? (StorageKeyType?)null : new StorageKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

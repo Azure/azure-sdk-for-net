@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="HealthModelDiscoveryRuleRelationshipDiscoveryBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthModelDiscoveryRuleRelationshipDiscoveryBehavior?(string value) => value == null ? null : new HealthModelDiscoveryRuleRelationshipDiscoveryBehavior(value);
+        public static implicit operator HealthModelDiscoveryRuleRelationshipDiscoveryBehavior?(string value) => value == null ? (HealthModelDiscoveryRuleRelationshipDiscoveryBehavior?)null : new HealthModelDiscoveryRuleRelationshipDiscoveryBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

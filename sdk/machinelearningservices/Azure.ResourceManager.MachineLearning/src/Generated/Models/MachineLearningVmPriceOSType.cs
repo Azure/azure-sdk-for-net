@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningVmPriceOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningVmPriceOSType?(string value) => value == null ? null : new MachineLearningVmPriceOSType(value);
+        public static implicit operator MachineLearningVmPriceOSType?(string value) => value == null ? (MachineLearningVmPriceOSType?)null : new MachineLearningVmPriceOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

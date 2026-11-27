@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="ProductDisabledReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProductDisabledReason?(string value) => value == null ? null : new ProductDisabledReason(value);
+        public static implicit operator ProductDisabledReason?(string value) => value == null ? (ProductDisabledReason?)null : new ProductDisabledReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

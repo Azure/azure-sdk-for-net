@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionLotStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionLotStatus?(string value) => value == null ? null : new ConsumptionLotStatus(value);
+        public static implicit operator ConsumptionLotStatus?(string value) => value == null ? (ConsumptionLotStatus?)null : new ConsumptionLotStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

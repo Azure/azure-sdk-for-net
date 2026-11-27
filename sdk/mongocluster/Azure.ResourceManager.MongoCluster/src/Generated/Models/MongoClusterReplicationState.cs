@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterReplicationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterReplicationState?(string value) => value == null ? null : new MongoClusterReplicationState(value);
+        public static implicit operator MongoClusterReplicationState?(string value) => value == null ? (MongoClusterReplicationState?)null : new MongoClusterReplicationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

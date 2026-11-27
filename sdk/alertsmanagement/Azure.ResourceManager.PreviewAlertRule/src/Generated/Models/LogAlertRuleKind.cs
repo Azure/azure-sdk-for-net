@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="LogAlertRuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogAlertRuleKind?(string value) => value == null ? null : new LogAlertRuleKind(value);
+        public static implicit operator LogAlertRuleKind?(string value) => value == null ? (LogAlertRuleKind?)null : new LogAlertRuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

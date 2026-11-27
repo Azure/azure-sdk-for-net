@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppIdentitySettingsLifeCycle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppIdentitySettingsLifeCycle?(string value) => value == null ? null : new ContainerAppIdentitySettingsLifeCycle(value);
+        public static implicit operator ContainerAppIdentitySettingsLifeCycle?(string value) => value == null ? (ContainerAppIdentitySettingsLifeCycle?)null : new ContainerAppIdentitySettingsLifeCycle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

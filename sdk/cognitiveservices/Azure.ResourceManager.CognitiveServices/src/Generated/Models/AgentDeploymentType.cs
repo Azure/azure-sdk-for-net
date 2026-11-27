@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AgentDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentDeploymentType?(string value) => value == null ? null : new AgentDeploymentType(value);
+        public static implicit operator AgentDeploymentType?(string value) => value == null ? (AgentDeploymentType?)null : new AgentDeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

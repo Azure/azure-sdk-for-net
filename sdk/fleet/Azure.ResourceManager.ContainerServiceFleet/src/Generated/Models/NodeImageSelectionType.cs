@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="NodeImageSelectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeImageSelectionType?(string value) => value == null ? null : new NodeImageSelectionType(value);
+        public static implicit operator NodeImageSelectionType?(string value) => value == null ? (NodeImageSelectionType?)null : new NodeImageSelectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

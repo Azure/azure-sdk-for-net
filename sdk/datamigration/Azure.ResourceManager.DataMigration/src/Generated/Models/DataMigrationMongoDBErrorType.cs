@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationMongoDBErrorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationMongoDBErrorType?(string value) => value == null ? null : new DataMigrationMongoDBErrorType(value);
+        public static implicit operator DataMigrationMongoDBErrorType?(string value) => value == null ? (DataMigrationMongoDBErrorType?)null : new DataMigrationMongoDBErrorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

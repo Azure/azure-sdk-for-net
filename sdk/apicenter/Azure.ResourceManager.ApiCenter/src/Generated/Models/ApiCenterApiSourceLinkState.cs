@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiCenterApiSourceLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiCenterApiSourceLinkState?(string value) => value == null ? null : new ApiCenterApiSourceLinkState(value);
+        public static implicit operator ApiCenterApiSourceLinkState?(string value) => value == null ? (ApiCenterApiSourceLinkState?)null : new ApiCenterApiSourceLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AttachedAksClusterDeleteDisposition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttachedAksClusterDeleteDisposition?(string value) => value == null ? null : new AttachedAksClusterDeleteDisposition(value);
+        public static implicit operator AttachedAksClusterDeleteDisposition?(string value) => value == null ? (AttachedAksClusterDeleteDisposition?)null : new AttachedAksClusterDeleteDisposition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

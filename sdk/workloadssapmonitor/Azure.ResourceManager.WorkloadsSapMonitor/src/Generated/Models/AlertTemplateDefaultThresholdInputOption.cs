@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="AlertTemplateDefaultThresholdInputOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertTemplateDefaultThresholdInputOption?(string value) => value == null ? null : new AlertTemplateDefaultThresholdInputOption(value);
+        public static implicit operator AlertTemplateDefaultThresholdInputOption?(string value) => value == null ? (AlertTemplateDefaultThresholdInputOption?)null : new AlertTemplateDefaultThresholdInputOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

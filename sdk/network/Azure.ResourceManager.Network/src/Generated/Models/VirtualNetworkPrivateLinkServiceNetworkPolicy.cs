@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkPrivateLinkServiceNetworkPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkPrivateLinkServiceNetworkPolicy?(string value) => value == null ? null : new VirtualNetworkPrivateLinkServiceNetworkPolicy(value);
+        public static implicit operator VirtualNetworkPrivateLinkServiceNetworkPolicy?(string value) => value == null ? (VirtualNetworkPrivateLinkServiceNetworkPolicy?)null : new VirtualNetworkPrivateLinkServiceNetworkPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="NfsAccessRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NfsAccessRuleAccess?(string value) => value == null ? null : new NfsAccessRuleAccess(value);
+        public static implicit operator NfsAccessRuleAccess?(string value) => value == null ? (NfsAccessRuleAccess?)null : new NfsAccessRuleAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

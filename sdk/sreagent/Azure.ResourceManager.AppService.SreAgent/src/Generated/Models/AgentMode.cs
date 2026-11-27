@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="AgentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentMode?(string value) => value == null ? null : new AgentMode(value);
+        public static implicit operator AgentMode?(string value) => value == null ? (AgentMode?)null : new AgentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

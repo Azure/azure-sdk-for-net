@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetVmDeleteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetVmDeleteOption?(string value) => value == null ? null : new ComputeFleetVmDeleteOption(value);
+        public static implicit operator ComputeFleetVmDeleteOption?(string value) => value == null ? (ComputeFleetVmDeleteOption?)null : new ComputeFleetVmDeleteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

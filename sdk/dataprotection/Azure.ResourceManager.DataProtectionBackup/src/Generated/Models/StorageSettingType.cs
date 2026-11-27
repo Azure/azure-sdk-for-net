@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="StorageSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSettingType?(string value) => value == null ? null : new StorageSettingType(value);
+        public static implicit operator StorageSettingType?(string value) => value == null ? (StorageSettingType?)null : new StorageSettingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

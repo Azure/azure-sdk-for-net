@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="MigrationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationMode?(string value) => value == null ? null : new MigrationMode(value);
+        public static implicit operator MigrationMode?(string value) => value == null ? (MigrationMode?)null : new MigrationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

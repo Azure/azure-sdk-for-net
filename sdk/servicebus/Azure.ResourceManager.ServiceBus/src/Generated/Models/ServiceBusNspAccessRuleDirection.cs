@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusNspAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusNspAccessRuleDirection?(string value) => value == null ? null : new ServiceBusNspAccessRuleDirection(value);
+        public static implicit operator ServiceBusNspAccessRuleDirection?(string value) => value == null ? (ServiceBusNspAccessRuleDirection?)null : new ServiceBusNspAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationRisk"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationRisk?(string value) => value == null ? null : new RecommendationRisk(value);
+        public static implicit operator RecommendationRisk?(string value) => value == null ? (RecommendationRisk?)null : new RecommendationRisk(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmDiskFileFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmDiskFileFormat?(string value) => value == null ? null : new HciVmDiskFileFormat(value);
+        public static implicit operator HciVmDiskFileFormat?(string value) => value == null ? (HciVmDiskFileFormat?)null : new HciVmDiskFileFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

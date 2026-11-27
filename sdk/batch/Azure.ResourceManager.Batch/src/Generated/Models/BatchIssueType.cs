@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchIssueType?(string value) => value == null ? null : new BatchIssueType(value);
+        public static implicit operator BatchIssueType?(string value) => value == null ? (BatchIssueType?)null : new BatchIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

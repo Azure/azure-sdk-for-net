@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="DranetMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DranetMode?(string value) => value == null ? null : new DranetMode(value);
+        public static implicit operator DranetMode?(string value) => value == null ? (DranetMode?)null : new DranetMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

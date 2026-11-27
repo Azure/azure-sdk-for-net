@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyAssignmentType?(string value) => value == null ? null : new PolicyAssignmentType(value);
+        public static implicit operator PolicyAssignmentType?(string value) => value == null ? (PolicyAssignmentType?)null : new PolicyAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

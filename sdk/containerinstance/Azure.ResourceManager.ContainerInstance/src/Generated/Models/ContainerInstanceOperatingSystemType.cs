@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerInstanceOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerInstanceOperatingSystemType?(string value) => value == null ? null : new ContainerInstanceOperatingSystemType(value);
+        public static implicit operator ContainerInstanceOperatingSystemType?(string value) => value == null ? (ContainerInstanceOperatingSystemType?)null : new ContainerInstanceOperatingSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="BudgetTimeGrainType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BudgetTimeGrainType?(string value) => value == null ? null : new BudgetTimeGrainType(value);
+        public static implicit operator BudgetTimeGrainType?(string value) => value == null ? (BudgetTimeGrainType?)null : new BudgetTimeGrainType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

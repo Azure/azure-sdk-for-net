@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveDiagnosticDestination"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveDiagnosticDestination?(string value) => value == null ? null : new VirtualEnclaveDiagnosticDestination(value);
+        public static implicit operator VirtualEnclaveDiagnosticDestination?(string value) => value == null ? (VirtualEnclaveDiagnosticDestination?)null : new VirtualEnclaveDiagnosticDestination(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

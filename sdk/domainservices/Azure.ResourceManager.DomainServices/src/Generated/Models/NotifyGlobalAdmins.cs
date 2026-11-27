@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="NotifyGlobalAdmins"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotifyGlobalAdmins?(string value) => value == null ? null : new NotifyGlobalAdmins(value);
+        public static implicit operator NotifyGlobalAdmins?(string value) => value == null ? (NotifyGlobalAdmins?)null : new NotifyGlobalAdmins(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

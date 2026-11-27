@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="EntityTimelineKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityTimelineKind?(string value) => value == null ? null : new EntityTimelineKind(value);
+        public static implicit operator EntityTimelineKind?(string value) => value == null ? (EntityTimelineKind?)null : new EntityTimelineKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

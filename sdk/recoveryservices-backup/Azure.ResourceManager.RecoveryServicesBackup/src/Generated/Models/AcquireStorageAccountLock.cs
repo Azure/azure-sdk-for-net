@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="AcquireStorageAccountLock"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcquireStorageAccountLock?(string value) => value == null ? null : new AcquireStorageAccountLock(value);
+        public static implicit operator AcquireStorageAccountLock?(string value) => value == null ? (AcquireStorageAccountLock?)null : new AcquireStorageAccountLock(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

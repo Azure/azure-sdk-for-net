@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBClusterCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBClusterCreateMode?(string value) => value == null ? null : new HorizonDBClusterCreateMode(value);
+        public static implicit operator HorizonDBClusterCreateMode?(string value) => value == null ? (HorizonDBClusterCreateMode?)null : new HorizonDBClusterCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

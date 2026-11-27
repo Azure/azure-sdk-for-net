@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedNsgProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedNsgProtocol?(string value) => value == null ? null : new ServiceFabricManagedNsgProtocol(value);
+        public static implicit operator ServiceFabricManagedNsgProtocol?(string value) => value == null ? (ServiceFabricManagedNsgProtocol?)null : new ServiceFabricManagedNsgProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

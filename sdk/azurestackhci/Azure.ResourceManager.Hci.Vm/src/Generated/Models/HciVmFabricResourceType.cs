@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmFabricResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmFabricResourceType?(string value) => value == null ? null : new HciVmFabricResourceType(value);
+        public static implicit operator HciVmFabricResourceType?(string value) => value == null ? (HciVmFabricResourceType?)null : new HciVmFabricResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

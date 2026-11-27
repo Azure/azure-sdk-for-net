@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ProductAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProductAuthType?(string value) => value == null ? null : new ProductAuthType(value);
+        public static implicit operator ProductAuthType?(string value) => value == null ? (ProductAuthType?)null : new ProductAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

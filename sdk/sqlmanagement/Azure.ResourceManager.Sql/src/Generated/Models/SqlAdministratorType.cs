@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlAdministratorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlAdministratorType?(string value) => value == null ? null : new SqlAdministratorType(value);
+        public static implicit operator SqlAdministratorType?(string value) => value == null ? (SqlAdministratorType?)null : new SqlAdministratorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

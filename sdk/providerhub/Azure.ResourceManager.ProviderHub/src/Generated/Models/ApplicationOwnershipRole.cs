@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationOwnershipRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationOwnershipRole?(string value) => value == null ? null : new ApplicationOwnershipRole(value);
+        public static implicit operator ApplicationOwnershipRole?(string value) => value == null ? (ApplicationOwnershipRole?)null : new ApplicationOwnershipRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

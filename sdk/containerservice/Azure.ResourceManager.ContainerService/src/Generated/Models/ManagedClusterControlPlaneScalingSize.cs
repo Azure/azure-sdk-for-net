@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterControlPlaneScalingSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterControlPlaneScalingSize?(string value) => value == null ? null : new ManagedClusterControlPlaneScalingSize(value);
+        public static implicit operator ManagedClusterControlPlaneScalingSize?(string value) => value == null ? (ManagedClusterControlPlaneScalingSize?)null : new ManagedClusterControlPlaneScalingSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

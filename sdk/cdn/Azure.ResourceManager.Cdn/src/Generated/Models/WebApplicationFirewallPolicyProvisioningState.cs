@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationFirewallPolicyProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationFirewallPolicyProvisioningState?(string value) => value == null ? null : new WebApplicationFirewallPolicyProvisioningState(value);
+        public static implicit operator WebApplicationFirewallPolicyProvisioningState?(string value) => value == null ? (WebApplicationFirewallPolicyProvisioningState?)null : new WebApplicationFirewallPolicyProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

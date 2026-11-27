@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayClientAuthVerificationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayClientAuthVerificationMode?(string value) => value == null ? null : new ApplicationGatewayClientAuthVerificationMode(value);
+        public static implicit operator ApplicationGatewayClientAuthVerificationMode?(string value) => value == null ? (ApplicationGatewayClientAuthVerificationMode?)null : new ApplicationGatewayClientAuthVerificationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

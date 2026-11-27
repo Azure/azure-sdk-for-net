@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsZoneDistributionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsZoneDistributionStrategy?(string value) => value == null ? null : new ComputeBulkActionsZoneDistributionStrategy(value);
+        public static implicit operator ComputeBulkActionsZoneDistributionStrategy?(string value) => value == null ? (ComputeBulkActionsZoneDistributionStrategy?)null : new ComputeBulkActionsZoneDistributionStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

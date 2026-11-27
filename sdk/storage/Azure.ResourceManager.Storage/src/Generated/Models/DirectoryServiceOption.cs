@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="DirectoryServiceOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DirectoryServiceOption?(string value) => value == null ? null : new DirectoryServiceOption(value);
+        public static implicit operator DirectoryServiceOption?(string value) => value == null ? (DirectoryServiceOption?)null : new DirectoryServiceOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

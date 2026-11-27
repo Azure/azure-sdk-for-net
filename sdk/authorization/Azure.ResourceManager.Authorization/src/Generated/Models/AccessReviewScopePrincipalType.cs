@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewScopePrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewScopePrincipalType?(string value) => value == null ? null : new AccessReviewScopePrincipalType(value);
+        public static implicit operator AccessReviewScopePrincipalType?(string value) => value == null ? (AccessReviewScopePrincipalType?)null : new AccessReviewScopePrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

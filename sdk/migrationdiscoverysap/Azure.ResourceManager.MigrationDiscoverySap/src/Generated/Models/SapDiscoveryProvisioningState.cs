@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <summary> Converts a string to a <see cref="SapDiscoveryProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDiscoveryProvisioningState?(string value) => value == null ? null : new SapDiscoveryProvisioningState(value);
+        public static implicit operator SapDiscoveryProvisioningState?(string value) => value == null ? (SapDiscoveryProvisioningState?)null : new SapDiscoveryProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

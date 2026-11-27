@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFlowComputeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFlowComputeType?(string value) => value == null ? null : new DataFlowComputeType(value);
+        public static implicit operator DataFlowComputeType?(string value) => value == null ? (DataFlowComputeType?)null : new DataFlowComputeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

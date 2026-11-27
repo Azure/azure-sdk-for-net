@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceSkuCapacityScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceSkuCapacityScaleType?(string value) => value == null ? null : new ContainerServiceSkuCapacityScaleType(value);
+        public static implicit operator ContainerServiceSkuCapacityScaleType?(string value) => value == null ? (ContainerServiceSkuCapacityScaleType?)null : new ContainerServiceSkuCapacityScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

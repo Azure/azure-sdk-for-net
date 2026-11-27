@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="ControlPlaneAclTimeToLiveMatchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlPlaneAclTimeToLiveMatchType?(string value) => value == null ? null : new ControlPlaneAclTimeToLiveMatchType(value);
+        public static implicit operator ControlPlaneAclTimeToLiveMatchType?(string value) => value == null ? (ControlPlaneAclTimeToLiveMatchType?)null : new ControlPlaneAclTimeToLiveMatchType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

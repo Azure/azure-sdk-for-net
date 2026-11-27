@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="DiskDetachOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskDetachOptionType?(string value) => value == null ? null : new DiskDetachOptionType(value);
+        public static implicit operator DiskDetachOptionType?(string value) => value == null ? (DiskDetachOptionType?)null : new DiskDetachOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

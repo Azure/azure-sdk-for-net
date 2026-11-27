@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightTier?(string value) => value == null ? null : new HDInsightTier(value);
+        public static implicit operator HDInsightTier?(string value) => value == null ? (HDInsightTier?)null : new HDInsightTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

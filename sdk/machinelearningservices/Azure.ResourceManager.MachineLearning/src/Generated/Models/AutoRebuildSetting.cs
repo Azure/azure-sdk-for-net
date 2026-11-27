@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="AutoRebuildSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoRebuildSetting?(string value) => value == null ? null : new AutoRebuildSetting(value);
+        public static implicit operator AutoRebuildSetting?(string value) => value == null ? (AutoRebuildSetting?)null : new AutoRebuildSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

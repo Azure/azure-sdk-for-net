@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="CancelableLongRunningOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CancelableLongRunningOperationType?(string value) => value == null ? null : new CancelableLongRunningOperationType(value);
+        public static implicit operator CancelableLongRunningOperationType?(string value) => value == null ? (CancelableLongRunningOperationType?)null : new CancelableLongRunningOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

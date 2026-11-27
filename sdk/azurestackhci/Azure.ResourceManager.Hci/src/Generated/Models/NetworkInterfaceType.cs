@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="NetworkInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkInterfaceType?(string value) => value == null ? null : new NetworkInterfaceType(value);
+        public static implicit operator NetworkInterfaceType?(string value) => value == null ? (NetworkInterfaceType?)null : new NetworkInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

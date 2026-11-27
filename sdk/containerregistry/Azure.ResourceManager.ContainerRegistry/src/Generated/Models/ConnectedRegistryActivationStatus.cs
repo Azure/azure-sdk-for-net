@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedRegistryActivationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedRegistryActivationStatus?(string value) => value == null ? null : new ConnectedRegistryActivationStatus(value);
+        public static implicit operator ConnectedRegistryActivationStatus?(string value) => value == null ? (ConnectedRegistryActivationStatus?)null : new ConnectedRegistryActivationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

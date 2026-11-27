@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubAuthorizationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubAuthorizationStatus?(string value) => value == null ? null : new DevHubAuthorizationStatus(value);
+        public static implicit operator DevHubAuthorizationStatus?(string value) => value == null ? (DevHubAuthorizationStatus?)null : new DevHubAuthorizationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

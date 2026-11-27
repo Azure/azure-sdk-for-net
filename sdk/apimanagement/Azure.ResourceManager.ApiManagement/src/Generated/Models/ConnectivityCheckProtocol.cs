@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ConnectivityCheckProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectivityCheckProtocol?(string value) => value == null ? null : new ConnectivityCheckProtocol(value);
+        public static implicit operator ConnectivityCheckProtocol?(string value) => value == null ? (ConnectivityCheckProtocol?)null : new ConnectivityCheckProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

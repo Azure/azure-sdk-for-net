@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmHyperVGeneration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmHyperVGeneration?(string value) => value == null ? null : new HciVmHyperVGeneration(value);
+        public static implicit operator HciVmHyperVGeneration?(string value) => value == null ? (HciVmHyperVGeneration?)null : new HciVmHyperVGeneration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

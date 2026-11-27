@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetTolerationOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetTolerationOperator?(string value) => value == null ? null : new ContainerServiceFleetTolerationOperator(value);
+        public static implicit operator ContainerServiceFleetTolerationOperator?(string value) => value == null ? (ContainerServiceFleetTolerationOperator?)null : new ContainerServiceFleetTolerationOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

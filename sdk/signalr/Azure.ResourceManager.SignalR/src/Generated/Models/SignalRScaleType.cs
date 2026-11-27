@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRScaleType?(string value) => value == null ? null : new SignalRScaleType(value);
+        public static implicit operator SignalRScaleType?(string value) => value == null ? (SignalRScaleType?)null : new SignalRScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

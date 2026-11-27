@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="ImplementationEffort"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImplementationEffort?(string value) => value == null ? null : new ImplementationEffort(value);
+        public static implicit operator ImplementationEffort?(string value) => value == null ? (ImplementationEffort?)null : new ImplementationEffort(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="EnforceCertificateNameCheckEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnforceCertificateNameCheckEnabledState?(string value) => value == null ? null : new EnforceCertificateNameCheckEnabledState(value);
+        public static implicit operator EnforceCertificateNameCheckEnabledState?(string value) => value == null ? (EnforceCertificateNameCheckEnabledState?)null : new EnforceCertificateNameCheckEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

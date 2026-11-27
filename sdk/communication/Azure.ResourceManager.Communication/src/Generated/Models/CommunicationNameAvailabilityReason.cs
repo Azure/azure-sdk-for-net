@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="CommunicationNameAvailabilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationNameAvailabilityReason?(string value) => value == null ? null : new CommunicationNameAvailabilityReason(value);
+        public static implicit operator CommunicationNameAvailabilityReason?(string value) => value == null ? (CommunicationNameAvailabilityReason?)null : new CommunicationNameAvailabilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

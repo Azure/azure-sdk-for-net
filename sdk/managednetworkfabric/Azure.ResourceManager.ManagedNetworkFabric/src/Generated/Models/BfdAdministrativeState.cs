@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="BfdAdministrativeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BfdAdministrativeState?(string value) => value == null ? null : new BfdAdministrativeState(value);
+        public static implicit operator BfdAdministrativeState?(string value) => value == null ? (BfdAdministrativeState?)null : new BfdAdministrativeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

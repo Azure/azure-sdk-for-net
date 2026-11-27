@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataProtectionBackupMonth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupMonth?(string value) => value == null ? null : new DataProtectionBackupMonth(value);
+        public static implicit operator DataProtectionBackupMonth?(string value) => value == null ? (DataProtectionBackupMonth?)null : new DataProtectionBackupMonth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

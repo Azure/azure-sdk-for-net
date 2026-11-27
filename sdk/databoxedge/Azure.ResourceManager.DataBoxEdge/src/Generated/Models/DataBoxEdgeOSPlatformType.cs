@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeOSPlatformType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeOSPlatformType?(string value) => value == null ? null : new DataBoxEdgeOSPlatformType(value);
+        public static implicit operator DataBoxEdgeOSPlatformType?(string value) => value == null ? (DataBoxEdgeOSPlatformType?)null : new DataBoxEdgeOSPlatformType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

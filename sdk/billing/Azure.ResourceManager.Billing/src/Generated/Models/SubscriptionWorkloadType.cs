@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionWorkloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionWorkloadType?(string value) => value == null ? null : new SubscriptionWorkloadType(value);
+        public static implicit operator SubscriptionWorkloadType?(string value) => value == null ? (SubscriptionWorkloadType?)null : new SubscriptionWorkloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

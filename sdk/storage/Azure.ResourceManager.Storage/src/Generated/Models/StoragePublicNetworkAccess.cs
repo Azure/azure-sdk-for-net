@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StoragePublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StoragePublicNetworkAccess?(string value) => value == null ? null : new StoragePublicNetworkAccess(value);
+        public static implicit operator StoragePublicNetworkAccess?(string value) => value == null ? (StoragePublicNetworkAccess?)null : new StoragePublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

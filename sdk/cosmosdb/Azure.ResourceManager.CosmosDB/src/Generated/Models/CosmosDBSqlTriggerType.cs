@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBSqlTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBSqlTriggerType?(string value) => value == null ? null : new CosmosDBSqlTriggerType(value);
+        public static implicit operator CosmosDBSqlTriggerType?(string value) => value == null ? (CosmosDBSqlTriggerType?)null : new CosmosDBSqlTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

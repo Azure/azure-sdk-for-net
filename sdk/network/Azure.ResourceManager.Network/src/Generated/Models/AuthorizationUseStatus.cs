@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AuthorizationUseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthorizationUseStatus?(string value) => value == null ? null : new AuthorizationUseStatus(value);
+        public static implicit operator AuthorizationUseStatus?(string value) => value == null ? (AuthorizationUseStatus?)null : new AuthorizationUseStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

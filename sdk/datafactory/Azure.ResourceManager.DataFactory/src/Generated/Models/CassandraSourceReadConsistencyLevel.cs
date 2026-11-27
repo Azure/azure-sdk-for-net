@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraSourceReadConsistencyLevel?(string value) => value == null ? null : new CassandraSourceReadConsistencyLevel(value);
+        public static implicit operator CassandraSourceReadConsistencyLevel?(string value) => value == null ? (CassandraSourceReadConsistencyLevel?)null : new CassandraSourceReadConsistencyLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

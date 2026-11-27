@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabasePermissionLevelType?(string value) => value == null ? null : new AutonomousDatabasePermissionLevelType(value);
+        public static implicit operator AutonomousDatabasePermissionLevelType?(string value) => value == null ? (AutonomousDatabasePermissionLevelType?)null : new AutonomousDatabasePermissionLevelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

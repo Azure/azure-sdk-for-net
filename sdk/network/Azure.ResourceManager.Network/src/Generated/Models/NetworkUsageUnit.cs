@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkUsageUnit?(string value) => value == null ? null : new NetworkUsageUnit(value);
+        public static implicit operator NetworkUsageUnit?(string value) => value == null ? (NetworkUsageUnit?)null : new NetworkUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

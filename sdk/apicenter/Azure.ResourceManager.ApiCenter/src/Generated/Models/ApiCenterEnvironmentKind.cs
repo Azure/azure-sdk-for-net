@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiCenterEnvironmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiCenterEnvironmentKind?(string value) => value == null ? null : new ApiCenterEnvironmentKind(value);
+        public static implicit operator ApiCenterEnvironmentKind?(string value) => value == null ? (ApiCenterEnvironmentKind?)null : new ApiCenterEnvironmentKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

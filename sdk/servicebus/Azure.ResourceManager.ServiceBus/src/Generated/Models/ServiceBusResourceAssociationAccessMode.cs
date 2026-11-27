@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusResourceAssociationAccessMode?(string value) => value == null ? null : new ServiceBusResourceAssociationAccessMode(value);
+        public static implicit operator ServiceBusResourceAssociationAccessMode?(string value) => value == null ? (ServiceBusResourceAssociationAccessMode?)null : new ServiceBusResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

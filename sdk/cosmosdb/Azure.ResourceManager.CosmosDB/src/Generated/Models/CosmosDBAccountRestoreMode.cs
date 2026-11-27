@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBAccountRestoreMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBAccountRestoreMode?(string value) => value == null ? null : new CosmosDBAccountRestoreMode(value);
+        public static implicit operator CosmosDBAccountRestoreMode?(string value) => value == null ? (CosmosDBAccountRestoreMode?)null : new CosmosDBAccountRestoreMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

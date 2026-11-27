@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="QueryColumnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryColumnType?(string value) => value == null ? null : new QueryColumnType(value);
+        public static implicit operator QueryColumnType?(string value) => value == null ? (QueryColumnType?)null : new QueryColumnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

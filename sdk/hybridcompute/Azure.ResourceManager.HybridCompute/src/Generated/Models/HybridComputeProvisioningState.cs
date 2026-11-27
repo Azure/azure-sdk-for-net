@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeProvisioningState?(string value) => value == null ? null : new HybridComputeProvisioningState(value);
+        public static implicit operator HybridComputeProvisioningState?(string value) => value == null ? (HybridComputeProvisioningState?)null : new HybridComputeProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

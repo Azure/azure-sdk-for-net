@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryPlanActionLocation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryPlanActionLocation?(string value) => value == null ? null : new RecoveryPlanActionLocation(value);
+        public static implicit operator RecoveryPlanActionLocation?(string value) => value == null ? (RecoveryPlanActionLocation?)null : new RecoveryPlanActionLocation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

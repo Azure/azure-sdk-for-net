@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="DiskControllerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskControllerType?(string value) => value == null ? null : new DiskControllerType(value);
+        public static implicit operator DiskControllerType?(string value) => value == null ? (DiskControllerType?)null : new DiskControllerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

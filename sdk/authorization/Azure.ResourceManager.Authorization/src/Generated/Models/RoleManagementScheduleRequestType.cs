@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementScheduleRequestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementScheduleRequestType?(string value) => value == null ? null : new RoleManagementScheduleRequestType(value);
+        public static implicit operator RoleManagementScheduleRequestType?(string value) => value == null ? (RoleManagementScheduleRequestType?)null : new RoleManagementScheduleRequestType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

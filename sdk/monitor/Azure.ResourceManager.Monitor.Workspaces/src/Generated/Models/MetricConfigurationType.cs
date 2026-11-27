@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="MetricConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricConfigurationType?(string value) => value == null ? null : new MetricConfigurationType(value);
+        public static implicit operator MetricConfigurationType?(string value) => value == null ? (MetricConfigurationType?)null : new MetricConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

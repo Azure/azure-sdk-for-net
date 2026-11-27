@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingInvoiceFailedPaymentReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingInvoiceFailedPaymentReason?(string value) => value == null ? null : new BillingInvoiceFailedPaymentReason(value);
+        public static implicit operator BillingInvoiceFailedPaymentReason?(string value) => value == null ? (BillingInvoiceFailedPaymentReason?)null : new BillingInvoiceFailedPaymentReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledQueryRuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledQueryRuleKind?(string value) => value == null ? null : new ScheduledQueryRuleKind(value);
+        public static implicit operator ScheduledQueryRuleKind?(string value) => value == null ? (ScheduledQueryRuleKind?)null : new ScheduledQueryRuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

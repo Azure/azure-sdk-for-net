@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewComplianceDimension"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewComplianceDimension?(string value) => value == null ? null : new SovereignViewComplianceDimension(value);
+        public static implicit operator SovereignViewComplianceDimension?(string value) => value == null ? (SovereignViewComplianceDimension?)null : new SovereignViewComplianceDimension(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

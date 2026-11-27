@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHAMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerHAMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerHAMode(value);
+        public static implicit operator PostgreSqlFlexibleServerHAMode?(string value) => value == null ? (PostgreSqlFlexibleServerHAMode?)null : new PostgreSqlFlexibleServerHAMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

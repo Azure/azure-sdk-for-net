@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancingMode?(string value) => value == null ? null : new LoadBalancingMode(value);
+        public static implicit operator LoadBalancingMode?(string value) => value == null ? (LoadBalancingMode?)null : new LoadBalancingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

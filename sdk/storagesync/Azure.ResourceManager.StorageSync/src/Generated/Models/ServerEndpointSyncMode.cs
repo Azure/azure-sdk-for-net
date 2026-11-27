@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="ServerEndpointSyncMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerEndpointSyncMode?(string value) => value == null ? null : new ServerEndpointSyncMode(value);
+        public static implicit operator ServerEndpointSyncMode?(string value) => value == null ? (ServerEndpointSyncMode?)null : new ServerEndpointSyncMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

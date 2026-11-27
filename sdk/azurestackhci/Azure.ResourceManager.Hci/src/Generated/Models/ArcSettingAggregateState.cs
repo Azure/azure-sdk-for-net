@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="ArcSettingAggregateState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcSettingAggregateState?(string value) => value == null ? null : new ArcSettingAggregateState(value);
+        public static implicit operator ArcSettingAggregateState?(string value) => value == null ? (ArcSettingAggregateState?)null : new ArcSettingAggregateState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

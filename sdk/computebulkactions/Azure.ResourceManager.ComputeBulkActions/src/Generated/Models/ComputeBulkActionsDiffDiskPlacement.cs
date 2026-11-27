@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsDiffDiskPlacement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsDiffDiskPlacement?(string value) => value == null ? null : new ComputeBulkActionsDiffDiskPlacement(value);
+        public static implicit operator ComputeBulkActionsDiffDiskPlacement?(string value) => value == null ? (ComputeBulkActionsDiffDiskPlacement?)null : new ComputeBulkActionsDiffDiskPlacement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="IsWorkloadManagementNetworkEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsWorkloadManagementNetworkEnabled?(string value) => value == null ? null : new IsWorkloadManagementNetworkEnabled(value);
+        public static implicit operator IsWorkloadManagementNetworkEnabled?(string value) => value == null ? (IsWorkloadManagementNetworkEnabled?)null : new IsWorkloadManagementNetworkEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

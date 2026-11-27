@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="TapRuleActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TapRuleActionType?(string value) => value == null ? null : new TapRuleActionType(value);
+        public static implicit operator TapRuleActionType?(string value) => value == null ? (TapRuleActionType?)null : new TapRuleActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

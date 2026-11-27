@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="FhirResourceVersionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FhirResourceVersionPolicy?(string value) => value == null ? null : new FhirResourceVersionPolicy(value);
+        public static implicit operator FhirResourceVersionPolicy?(string value) => value == null ? (FhirResourceVersionPolicy?)null : new FhirResourceVersionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

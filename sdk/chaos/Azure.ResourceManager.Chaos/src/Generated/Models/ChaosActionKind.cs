@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ChaosActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChaosActionKind?(string value) => value == null ? null : new ChaosActionKind(value);
+        public static implicit operator ChaosActionKind?(string value) => value == null ? (ChaosActionKind?)null : new ChaosActionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="ProgrammableConnectivityProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProgrammableConnectivityProvisioningState?(string value) => value == null ? null : new ProgrammableConnectivityProvisioningState(value);
+        public static implicit operator ProgrammableConnectivityProvisioningState?(string value) => value == null ? (ProgrammableConnectivityProvisioningState?)null : new ProgrammableConnectivityProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

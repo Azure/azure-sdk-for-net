@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmGroupImageSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmGroupImageSku?(string value) => value == null ? null : new SqlVmGroupImageSku(value);
+        public static implicit operator SqlVmGroupImageSku?(string value) => value == null ? (SqlVmGroupImageSku?)null : new SqlVmGroupImageSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

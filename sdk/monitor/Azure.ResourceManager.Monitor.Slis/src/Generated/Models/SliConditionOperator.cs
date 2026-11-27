@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliConditionOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliConditionOperator?(string value) => value == null ? null : new SliConditionOperator(value);
+        public static implicit operator SliConditionOperator?(string value) => value == null ? (SliConditionOperator?)null : new SliConditionOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

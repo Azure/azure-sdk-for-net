@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewReviewerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewReviewerType?(string value) => value == null ? null : new AccessReviewReviewerType(value);
+        public static implicit operator AccessReviewReviewerType?(string value) => value == null ? (AccessReviewReviewerType?)null : new AccessReviewReviewerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

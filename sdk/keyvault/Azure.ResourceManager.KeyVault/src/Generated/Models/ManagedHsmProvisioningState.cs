@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="ManagedHsmProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmProvisioningState?(string value) => value == null ? null : new ManagedHsmProvisioningState(value);
+        public static implicit operator ManagedHsmProvisioningState?(string value) => value == null ? (ManagedHsmProvisioningState?)null : new ManagedHsmProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

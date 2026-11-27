@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="StorageSyncResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSyncResourceType?(string value) => value == null ? null : new StorageSyncResourceType(value);
+        public static implicit operator StorageSyncResourceType?(string value) => value == null ? (StorageSyncResourceType?)null : new StorageSyncResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

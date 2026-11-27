@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ActionDependencyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActionDependencyType?(string value) => value == null ? null : new ActionDependencyType(value);
+        public static implicit operator ActionDependencyType?(string value) => value == null ? (ActionDependencyType?)null : new ActionDependencyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

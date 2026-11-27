@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <summary> Converts a string to a <see cref="KoreAIArtemisResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KoreAIArtemisResourceProvisioningState?(string value) => value == null ? null : new KoreAIArtemisResourceProvisioningState(value);
+        public static implicit operator KoreAIArtemisResourceProvisioningState?(string value) => value == null ? (KoreAIArtemisResourceProvisioningState?)null : new KoreAIArtemisResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

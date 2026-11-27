@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="LoggingDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoggingDirection?(string value) => value == null ? null : new LoggingDirection(value);
+        public static implicit operator LoggingDirection?(string value) => value == null ? (LoggingDirection?)null : new LoggingDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

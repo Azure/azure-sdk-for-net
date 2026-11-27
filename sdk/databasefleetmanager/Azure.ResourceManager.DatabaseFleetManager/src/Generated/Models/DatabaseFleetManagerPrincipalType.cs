@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseFleetManagerPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseFleetManagerPrincipalType?(string value) => value == null ? null : new DatabaseFleetManagerPrincipalType(value);
+        public static implicit operator DatabaseFleetManagerPrincipalType?(string value) => value == null ? (DatabaseFleetManagerPrincipalType?)null : new DatabaseFleetManagerPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

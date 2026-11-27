@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskControllerType?(string value) => value == null ? null : new ComputeFleetDiskControllerType(value);
+        public static implicit operator ComputeFleetDiskControllerType?(string value) => value == null ? (ComputeFleetDiskControllerType?)null : new ComputeFleetDiskControllerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

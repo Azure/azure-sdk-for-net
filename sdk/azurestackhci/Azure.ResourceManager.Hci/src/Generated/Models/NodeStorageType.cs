@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="NodeStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeStorageType?(string value) => value == null ? null : new NodeStorageType(value);
+        public static implicit operator NodeStorageType?(string value) => value == null ? (NodeStorageType?)null : new NodeStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

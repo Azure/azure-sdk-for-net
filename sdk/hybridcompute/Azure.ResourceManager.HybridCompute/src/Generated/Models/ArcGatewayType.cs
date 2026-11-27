@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="ArcGatewayType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcGatewayType?(string value) => value == null ? null : new ArcGatewayType(value);
+        public static implicit operator ArcGatewayType?(string value) => value == null ? (ArcGatewayType?)null : new ArcGatewayType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

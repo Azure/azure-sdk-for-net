@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBPublicNetworkAccess?(string value) => value == null ? null : new CosmosDBPublicNetworkAccess(value);
+        public static implicit operator CosmosDBPublicNetworkAccess?(string value) => value == null ? (CosmosDBPublicNetworkAccess?)null : new CosmosDBPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="AutomationAccountAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationAccountAuthenticationType?(string value) => value == null ? null : new AutomationAccountAuthenticationType(value);
+        public static implicit operator AutomationAccountAuthenticationType?(string value) => value == null ? (AutomationAccountAuthenticationType?)null : new AutomationAccountAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

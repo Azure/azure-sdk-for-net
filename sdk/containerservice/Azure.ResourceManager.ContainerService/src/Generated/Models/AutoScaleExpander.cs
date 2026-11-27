@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AutoScaleExpander"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoScaleExpander?(string value) => value == null ? null : new AutoScaleExpander(value);
+        public static implicit operator AutoScaleExpander?(string value) => value == null ? (AutoScaleExpander?)null : new AutoScaleExpander(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

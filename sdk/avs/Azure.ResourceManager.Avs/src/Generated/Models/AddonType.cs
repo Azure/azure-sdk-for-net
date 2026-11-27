@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AddonType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AddonType?(string value) => value == null ? null : new AddonType(value);
+        public static implicit operator AddonType?(string value) => value == null ? (AddonType?)null : new AddonType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

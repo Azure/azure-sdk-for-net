@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiManagementNatGatewayState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiManagementNatGatewayState?(string value) => value == null ? null : new ApiManagementNatGatewayState(value);
+        public static implicit operator ApiManagementNatGatewayState?(string value) => value == null ? (ApiManagementNatGatewayState?)null : new ApiManagementNatGatewayState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Converts a string to a <see cref="TrafficControllerPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficControllerPublicNetworkAccess?(string value) => value == null ? null : new TrafficControllerPublicNetworkAccess(value);
+        public static implicit operator TrafficControllerPublicNetworkAccess?(string value) => value == null ? (TrafficControllerPublicNetworkAccess?)null : new TrafficControllerPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

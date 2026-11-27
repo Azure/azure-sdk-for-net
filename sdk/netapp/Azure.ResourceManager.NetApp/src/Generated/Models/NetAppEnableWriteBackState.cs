@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppEnableWriteBackState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppEnableWriteBackState?(string value) => value == null ? null : new NetAppEnableWriteBackState(value);
+        public static implicit operator NetAppEnableWriteBackState?(string value) => value == null ? (NetAppEnableWriteBackState?)null : new NetAppEnableWriteBackState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

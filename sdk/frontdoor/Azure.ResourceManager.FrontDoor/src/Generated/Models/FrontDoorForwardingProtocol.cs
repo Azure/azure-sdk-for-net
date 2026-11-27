@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorForwardingProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorForwardingProtocol?(string value) => value == null ? null : new FrontDoorForwardingProtocol(value);
+        public static implicit operator FrontDoorForwardingProtocol?(string value) => value == null ? (FrontDoorForwardingProtocol?)null : new FrontDoorForwardingProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

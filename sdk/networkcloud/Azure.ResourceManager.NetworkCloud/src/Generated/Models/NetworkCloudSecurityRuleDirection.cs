@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudSecurityRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudSecurityRuleDirection?(string value) => value == null ? null : new NetworkCloudSecurityRuleDirection(value);
+        public static implicit operator NetworkCloudSecurityRuleDirection?(string value) => value == null ? (NetworkCloudSecurityRuleDirection?)null : new NetworkCloudSecurityRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

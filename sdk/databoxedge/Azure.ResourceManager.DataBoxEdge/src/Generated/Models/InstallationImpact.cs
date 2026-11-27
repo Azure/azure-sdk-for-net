@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="InstallationImpact"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstallationImpact?(string value) => value == null ? null : new InstallationImpact(value);
+        public static implicit operator InstallationImpact?(string value) => value == null ? (InstallationImpact?)null : new InstallationImpact(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

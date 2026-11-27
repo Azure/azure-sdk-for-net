@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="CredentialsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CredentialsType?(string value) => value == null ? null : new CredentialsType(value);
+        public static implicit operator CredentialsType?(string value) => value == null ? (CredentialsType?)null : new CredentialsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

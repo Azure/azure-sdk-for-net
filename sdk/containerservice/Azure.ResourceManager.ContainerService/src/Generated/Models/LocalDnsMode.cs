@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="LocalDnsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDnsMode?(string value) => value == null ? null : new LocalDnsMode(value);
+        public static implicit operator LocalDnsMode?(string value) => value == null ? (LocalDnsMode?)null : new LocalDnsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

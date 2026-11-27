@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="StorageInsightState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageInsightState?(string value) => value == null ? null : new StorageInsightState(value);
+        public static implicit operator StorageInsightState?(string value) => value == null ? (StorageInsightState?)null : new StorageInsightState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

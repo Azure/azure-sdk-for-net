@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="TrafficManagerEndpointAlwaysServeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficManagerEndpointAlwaysServeStatus?(string value) => value == null ? null : new TrafficManagerEndpointAlwaysServeStatus(value);
+        public static implicit operator TrafficManagerEndpointAlwaysServeStatus?(string value) => value == null ? (TrafficManagerEndpointAlwaysServeStatus?)null : new TrafficManagerEndpointAlwaysServeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

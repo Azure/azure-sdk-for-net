@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="RestApiPollerRequestPagingKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestApiPollerRequestPagingKind?(string value) => value == null ? null : new RestApiPollerRequestPagingKind(value);
+        public static implicit operator RestApiPollerRequestPagingKind?(string value) => value == null ? (RestApiPollerRequestPagingKind?)null : new RestApiPollerRequestPagingKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

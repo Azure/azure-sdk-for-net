@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkTrafficDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkTrafficDirection?(string value) => value == null ? null : new NetworkTrafficDirection(value);
+        public static implicit operator NetworkTrafficDirection?(string value) => value == null ? (NetworkTrafficDirection?)null : new NetworkTrafficDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

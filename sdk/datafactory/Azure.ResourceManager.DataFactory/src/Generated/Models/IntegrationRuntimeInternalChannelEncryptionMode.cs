@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeInternalChannelEncryptionMode?(string value) => value == null ? null : new IntegrationRuntimeInternalChannelEncryptionMode(value);
+        public static implicit operator IntegrationRuntimeInternalChannelEncryptionMode?(string value) => value == null ? (IntegrationRuntimeInternalChannelEncryptionMode?)null : new IntegrationRuntimeInternalChannelEncryptionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

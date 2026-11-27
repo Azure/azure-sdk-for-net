@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmNetworkRuleAction?(string value) => value == null ? null : new ManagedHsmNetworkRuleAction(value);
+        public static implicit operator ManagedHsmNetworkRuleAction?(string value) => value == null ? (ManagedHsmNetworkRuleAction?)null : new ManagedHsmNetworkRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="MtpProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MtpProvider?(string value) => value == null ? null : new MtpProvider(value);
+        public static implicit operator MtpProvider?(string value) => value == null ? (MtpProvider?)null : new MtpProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

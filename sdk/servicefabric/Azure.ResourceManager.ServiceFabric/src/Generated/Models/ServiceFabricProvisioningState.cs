@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricProvisioningState?(string value) => value == null ? null : new ServiceFabricProvisioningState(value);
+        public static implicit operator ServiceFabricProvisioningState?(string value) => value == null ? (ServiceFabricProvisioningState?)null : new ServiceFabricProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

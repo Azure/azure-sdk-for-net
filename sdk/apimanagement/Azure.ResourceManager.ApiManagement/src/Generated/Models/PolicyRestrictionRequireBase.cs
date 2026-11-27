@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PolicyRestrictionRequireBase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyRestrictionRequireBase?(string value) => value == null ? null : new PolicyRestrictionRequireBase(value);
+        public static implicit operator PolicyRestrictionRequireBase?(string value) => value == null ? (PolicyRestrictionRequireBase?)null : new PolicyRestrictionRequireBase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

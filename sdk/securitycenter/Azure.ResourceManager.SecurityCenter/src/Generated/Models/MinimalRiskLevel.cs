@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="MinimalRiskLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MinimalRiskLevel?(string value) => value == null ? null : new MinimalRiskLevel(value);
+        public static implicit operator MinimalRiskLevel?(string value) => value == null ? (MinimalRiskLevel?)null : new MinimalRiskLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

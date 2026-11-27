@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ScriptCmdletProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptCmdletProvisioningState?(string value) => value == null ? null : new ScriptCmdletProvisioningState(value);
+        public static implicit operator ScriptCmdletProvisioningState?(string value) => value == null ? (ScriptCmdletProvisioningState?)null : new ScriptCmdletProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringKind?(string value) => value == null ? null : new PeeringKind(value);
+        public static implicit operator PeeringKind?(string value) => value == null ? (PeeringKind?)null : new PeeringKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

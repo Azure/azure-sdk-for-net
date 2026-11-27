@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="HighAvailabilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HighAvailabilityMode?(string value) => value == null ? null : new HighAvailabilityMode(value);
+        public static implicit operator HighAvailabilityMode?(string value) => value == null ? (HighAvailabilityMode?)null : new HighAvailabilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

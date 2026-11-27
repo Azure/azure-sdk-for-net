@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProbeNoHealthyBackendsBehavior?(string value) => value == null ? null : new ProbeNoHealthyBackendsBehavior(value);
+        public static implicit operator ProbeNoHealthyBackendsBehavior?(string value) => value == null ? (ProbeNoHealthyBackendsBehavior?)null : new ProbeNoHealthyBackendsBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

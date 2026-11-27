@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="ReservationErrorResponseCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationErrorResponseCode?(string value) => value == null ? null : new ReservationErrorResponseCode(value);
+        public static implicit operator ReservationErrorResponseCode?(string value) => value == null ? (ReservationErrorResponseCode?)null : new ReservationErrorResponseCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetOperatingSystemType?(string value) => value == null ? null : new ComputeFleetOperatingSystemType(value);
+        public static implicit operator ComputeFleetOperatingSystemType?(string value) => value == null ? (ComputeFleetOperatingSystemType?)null : new ComputeFleetOperatingSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

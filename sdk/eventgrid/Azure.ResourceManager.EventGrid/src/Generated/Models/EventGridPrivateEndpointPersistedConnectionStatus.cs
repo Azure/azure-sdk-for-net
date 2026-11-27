@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridPrivateEndpointPersistedConnectionStatus?(string value) => value == null ? null : new EventGridPrivateEndpointPersistedConnectionStatus(value);
+        public static implicit operator EventGridPrivateEndpointPersistedConnectionStatus?(string value) => value == null ? (EventGridPrivateEndpointPersistedConnectionStatus?)null : new EventGridPrivateEndpointPersistedConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

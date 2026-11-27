@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningRemoteLoginPortPublicAccess?(string value) => value == null ? null : new MachineLearningRemoteLoginPortPublicAccess(value);
+        public static implicit operator MachineLearningRemoteLoginPortPublicAccess?(string value) => value == null ? (MachineLearningRemoteLoginPortPublicAccess?)null : new MachineLearningRemoteLoginPortPublicAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="RulestackSecurityServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RulestackSecurityServiceType?(string value) => value == null ? null : new RulestackSecurityServiceType(value);
+        public static implicit operator RulestackSecurityServiceType?(string value) => value == null ? (RulestackSecurityServiceType?)null : new RulestackSecurityServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

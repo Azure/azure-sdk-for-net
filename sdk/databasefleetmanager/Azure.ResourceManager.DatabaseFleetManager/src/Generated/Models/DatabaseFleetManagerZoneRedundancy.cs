@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseFleetManagerZoneRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseFleetManagerZoneRedundancy?(string value) => value == null ? null : new DatabaseFleetManagerZoneRedundancy(value);
+        public static implicit operator DatabaseFleetManagerZoneRedundancy?(string value) => value == null ? (DatabaseFleetManagerZoneRedundancy?)null : new DatabaseFleetManagerZoneRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

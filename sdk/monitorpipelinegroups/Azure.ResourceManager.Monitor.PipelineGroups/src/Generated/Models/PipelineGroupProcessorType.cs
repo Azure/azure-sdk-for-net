@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupProcessorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupProcessorType?(string value) => value == null ? null : new PipelineGroupProcessorType(value);
+        public static implicit operator PipelineGroupProcessorType?(string value) => value == null ? (PipelineGroupProcessorType?)null : new PipelineGroupProcessorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

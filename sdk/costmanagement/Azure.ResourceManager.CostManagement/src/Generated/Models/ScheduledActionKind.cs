@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionKind?(string value) => value == null ? null : new ScheduledActionKind(value);
+        public static implicit operator ScheduledActionKind?(string value) => value == null ? (ScheduledActionKind?)null : new ScheduledActionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

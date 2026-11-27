@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertsSummaryGroupByField"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertsSummaryGroupByField?(string value) => value == null ? null : new AlertsSummaryGroupByField(value);
+        public static implicit operator AlertsSummaryGroupByField?(string value) => value == null ? (AlertsSummaryGroupByField?)null : new AlertsSummaryGroupByField(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

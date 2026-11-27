@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ConditionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConditionType?(string value) => value == null ? null : new ConditionType(value);
+        public static implicit operator ConditionType?(string value) => value == null ? (ConditionType?)null : new ConditionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

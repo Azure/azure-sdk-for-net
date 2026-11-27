@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="ServerEndpointSyncSessionWarningType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerEndpointSyncSessionWarningType?(string value) => value == null ? null : new ServerEndpointSyncSessionWarningType(value);
+        public static implicit operator ServerEndpointSyncSessionWarningType?(string value) => value == null ? (ServerEndpointSyncSessionWarningType?)null : new ServerEndpointSyncSessionWarningType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

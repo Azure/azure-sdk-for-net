@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="ArtifactStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArtifactStoreType?(string value) => value == null ? null : new ArtifactStoreType(value);
+        public static implicit operator ArtifactStoreType?(string value) => value == null ? (ArtifactStoreType?)null : new ArtifactStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

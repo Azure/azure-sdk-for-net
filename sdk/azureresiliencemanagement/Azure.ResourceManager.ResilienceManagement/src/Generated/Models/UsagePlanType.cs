@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="UsagePlanType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UsagePlanType?(string value) => value == null ? null : new UsagePlanType(value);
+        public static implicit operator UsagePlanType?(string value) => value == null ? (UsagePlanType?)null : new UsagePlanType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

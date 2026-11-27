@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterUpdateStrategyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterUpdateStrategyType?(string value) => value == null ? null : new ClusterUpdateStrategyType(value);
+        public static implicit operator ClusterUpdateStrategyType?(string value) => value == null ? (ClusterUpdateStrategyType?)null : new ClusterUpdateStrategyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

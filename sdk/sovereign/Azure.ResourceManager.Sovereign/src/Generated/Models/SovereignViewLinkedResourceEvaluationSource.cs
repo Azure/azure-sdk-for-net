@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewLinkedResourceEvaluationSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewLinkedResourceEvaluationSource?(string value) => value == null ? null : new SovereignViewLinkedResourceEvaluationSource(value);
+        public static implicit operator SovereignViewLinkedResourceEvaluationSource?(string value) => value == null ? (SovereignViewLinkedResourceEvaluationSource?)null : new SovereignViewLinkedResourceEvaluationSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

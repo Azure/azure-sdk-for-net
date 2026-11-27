@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> Converts a string to a <see cref="ClusterUserCredentialAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterUserCredentialAuthenticationMethod?(string value) => value == null ? null : new ClusterUserCredentialAuthenticationMethod(value);
+        public static implicit operator ClusterUserCredentialAuthenticationMethod?(string value) => value == null ? (ClusterUserCredentialAuthenticationMethod?)null : new ClusterUserCredentialAuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

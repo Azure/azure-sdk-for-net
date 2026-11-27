@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ScrubbingRuleEntryMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScrubbingRuleEntryMatchOperator?(string value) => value == null ? null : new ScrubbingRuleEntryMatchOperator(value);
+        public static implicit operator ScrubbingRuleEntryMatchOperator?(string value) => value == null ? (ScrubbingRuleEntryMatchOperator?)null : new ScrubbingRuleEntryMatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

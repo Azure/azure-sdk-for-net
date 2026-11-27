@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsKeySource?(string value) => value == null ? null : new EventHubsKeySource(value);
+        public static implicit operator EventHubsKeySource?(string value) => value == null ? (EventHubsKeySource?)null : new EventHubsKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

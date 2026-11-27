@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeCapacityReservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeCapacityReservationType?(string value) => value == null ? null : new ComputeCapacityReservationType(value);
+        public static implicit operator ComputeCapacityReservationType?(string value) => value == null ? (ComputeCapacityReservationType?)null : new ComputeCapacityReservationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

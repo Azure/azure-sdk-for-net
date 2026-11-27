@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityEventSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityEventSource?(string value) => value == null ? null : new SecurityEventSource(value);
+        public static implicit operator SecurityEventSource?(string value) => value == null ? (SecurityEventSource?)null : new SecurityEventSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

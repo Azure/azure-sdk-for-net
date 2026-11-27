@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="BastionHostSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BastionHostSkuName?(string value) => value == null ? null : new BastionHostSkuName(value);
+        public static implicit operator BastionHostSkuName?(string value) => value == null ? (BastionHostSkuName?)null : new BastionHostSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

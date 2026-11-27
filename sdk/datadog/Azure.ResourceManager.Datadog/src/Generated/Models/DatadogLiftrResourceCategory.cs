@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Converts a string to a <see cref="DatadogLiftrResourceCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatadogLiftrResourceCategory?(string value) => value == null ? null : new DatadogLiftrResourceCategory(value);
+        public static implicit operator DatadogLiftrResourceCategory?(string value) => value == null ? (DatadogLiftrResourceCategory?)null : new DatadogLiftrResourceCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

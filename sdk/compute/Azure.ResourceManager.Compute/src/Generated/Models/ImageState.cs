@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ImageState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageState?(string value) => value == null ? null : new ImageState(value);
+        public static implicit operator ImageState?(string value) => value == null ? (ImageState?)null : new ImageState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

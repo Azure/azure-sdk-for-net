@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningBatchOutputAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningBatchOutputAction?(string value) => value == null ? null : new MachineLearningBatchOutputAction(value);
+        public static implicit operator MachineLearningBatchOutputAction?(string value) => value == null ? (MachineLearningBatchOutputAction?)null : new MachineLearningBatchOutputAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

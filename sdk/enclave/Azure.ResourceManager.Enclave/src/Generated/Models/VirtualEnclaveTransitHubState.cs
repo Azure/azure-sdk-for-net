@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveTransitHubState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveTransitHubState?(string value) => value == null ? null : new VirtualEnclaveTransitHubState(value);
+        public static implicit operator VirtualEnclaveTransitHubState?(string value) => value == null ? (VirtualEnclaveTransitHubState?)null : new VirtualEnclaveTransitHubState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

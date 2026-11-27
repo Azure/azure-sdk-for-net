@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorResourceState?(string value) => value == null ? null : new FrontDoorResourceState(value);
+        public static implicit operator FrontDoorResourceState?(string value) => value == null ? (FrontDoorResourceState?)null : new FrontDoorResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

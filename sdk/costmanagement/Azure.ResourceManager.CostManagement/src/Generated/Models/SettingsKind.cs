@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="SettingsKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SettingsKind?(string value) => value == null ? null : new SettingsKind(value);
+        public static implicit operator SettingsKind?(string value) => value == null ? (SettingsKind?)null : new SettingsKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

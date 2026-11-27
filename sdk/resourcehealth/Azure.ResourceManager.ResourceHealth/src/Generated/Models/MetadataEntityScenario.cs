@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Converts a string to a <see cref="MetadataEntityScenario"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetadataEntityScenario?(string value) => value == null ? null : new MetadataEntityScenario(value);
+        public static implicit operator MetadataEntityScenario?(string value) => value == null ? (MetadataEntityScenario?)null : new MetadataEntityScenario(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Converts a string to a <see cref="TestRunOverallResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TestRunOverallResult?(string value) => value == null ? null : new TestRunOverallResult(value);
+        public static implicit operator TestRunOverallResult?(string value) => value == null ? (TestRunOverallResult?)null : new TestRunOverallResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

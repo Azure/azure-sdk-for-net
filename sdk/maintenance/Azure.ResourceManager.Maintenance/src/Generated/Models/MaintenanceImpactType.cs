@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceImpactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceImpactType?(string value) => value == null ? null : new MaintenanceImpactType(value);
+        public static implicit operator MaintenanceImpactType?(string value) => value == null ? (MaintenanceImpactType?)null : new MaintenanceImpactType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

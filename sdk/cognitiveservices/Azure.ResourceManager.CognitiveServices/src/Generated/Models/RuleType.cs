@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleType?(string value) => value == null ? null : new RuleType(value);
+        public static implicit operator RuleType?(string value) => value == null ? (RuleType?)null : new RuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

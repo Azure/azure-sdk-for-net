@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="CloudTieringLowDiskModeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudTieringLowDiskModeState?(string value) => value == null ? null : new CloudTieringLowDiskModeState(value);
+        public static implicit operator CloudTieringLowDiskModeState?(string value) => value == null ? (CloudTieringLowDiskModeState?)null : new CloudTieringLowDiskModeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

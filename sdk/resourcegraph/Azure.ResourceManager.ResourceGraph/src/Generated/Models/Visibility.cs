@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="Visibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Visibility?(string value) => value == null ? null : new Visibility(value);
+        public static implicit operator Visibility?(string value) => value == null ? (Visibility?)null : new Visibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

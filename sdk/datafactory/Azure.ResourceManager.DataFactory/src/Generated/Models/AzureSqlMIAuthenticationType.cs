@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="AzureSqlMIAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureSqlMIAuthenticationType?(string value) => value == null ? null : new AzureSqlMIAuthenticationType(value);
+        public static implicit operator AzureSqlMIAuthenticationType?(string value) => value == null ? (AzureSqlMIAuthenticationType?)null : new AzureSqlMIAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

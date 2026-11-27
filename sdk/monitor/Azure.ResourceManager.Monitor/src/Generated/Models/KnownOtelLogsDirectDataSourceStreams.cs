@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="KnownOtelLogsDirectDataSourceStreams"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownOtelLogsDirectDataSourceStreams?(string value) => value == null ? null : new KnownOtelLogsDirectDataSourceStreams(value);
+        public static implicit operator KnownOtelLogsDirectDataSourceStreams?(string value) => value == null ? (KnownOtelLogsDirectDataSourceStreams?)null : new KnownOtelLogsDirectDataSourceStreams(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

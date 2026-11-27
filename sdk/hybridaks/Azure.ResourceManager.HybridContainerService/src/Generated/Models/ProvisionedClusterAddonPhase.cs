@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ProvisionedClusterAddonPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisionedClusterAddonPhase?(string value) => value == null ? null : new ProvisionedClusterAddonPhase(value);
+        public static implicit operator ProvisionedClusterAddonPhase?(string value) => value == null ? (ProvisionedClusterAddonPhase?)null : new ProvisionedClusterAddonPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

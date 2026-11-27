@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 
         /// <summary> Converts a string to a <see cref="ArizeAIObservabilityEvalOfferProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArizeAIObservabilityEvalOfferProvisioningState?(string value) => value == null ? null : new ArizeAIObservabilityEvalOfferProvisioningState(value);
+        public static implicit operator ArizeAIObservabilityEvalOfferProvisioningState?(string value) => value == null ? (ArizeAIObservabilityEvalOfferProvisioningState?)null : new ArizeAIObservabilityEvalOfferProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterCmkIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterCmkIdentityType?(string value) => value == null ? null : new DevCenterCmkIdentityType(value);
+        public static implicit operator DevCenterCmkIdentityType?(string value) => value == null ? (DevCenterCmkIdentityType?)null : new DevCenterCmkIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

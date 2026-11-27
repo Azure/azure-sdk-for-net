@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="AccessKeysAuthentication"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessKeysAuthentication?(string value) => value == null ? null : new AccessKeysAuthentication(value);
+        public static implicit operator AccessKeysAuthentication?(string value) => value == null ? (AccessKeysAuthentication?)null : new AccessKeysAuthentication(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

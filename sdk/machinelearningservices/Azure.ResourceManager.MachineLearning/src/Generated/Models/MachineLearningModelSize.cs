@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningModelSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningModelSize?(string value) => value == null ? null : new MachineLearningModelSize(value);
+        public static implicit operator MachineLearningModelSize?(string value) => value == null ? (MachineLearningModelSize?)null : new MachineLearningModelSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

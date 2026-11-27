@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowEndpointFabricPathType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointFabricPathType?(string value) => value == null ? null : new DataflowEndpointFabricPathType(value);
+        public static implicit operator DataflowEndpointFabricPathType?(string value) => value == null ? (DataflowEndpointFabricPathType?)null : new DataflowEndpointFabricPathType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

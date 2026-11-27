@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="LocalDnsQueryLogging"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDnsQueryLogging?(string value) => value == null ? null : new LocalDnsQueryLogging(value);
+        public static implicit operator LocalDnsQueryLogging?(string value) => value == null ? (LocalDnsQueryLogging?)null : new LocalDnsQueryLogging(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentSafeguardsLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentSafeguardsLevel?(string value) => value == null ? null : new DeploymentSafeguardsLevel(value);
+        public static implicit operator DeploymentSafeguardsLevel?(string value) => value == null ? (DeploymentSafeguardsLevel?)null : new DeploymentSafeguardsLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

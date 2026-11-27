@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningOperatingSystemType?(string value) => value == null ? null : new MachineLearningOperatingSystemType(value);
+        public static implicit operator MachineLearningOperatingSystemType?(string value) => value == null ? (MachineLearningOperatingSystemType?)null : new MachineLearningOperatingSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultProtectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultProtectionStatus?(string value) => value == null ? null : new CommvaultProtectionStatus(value);
+        public static implicit operator CommvaultProtectionStatus?(string value) => value == null ? (CommvaultProtectionStatus?)null : new CommvaultProtectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

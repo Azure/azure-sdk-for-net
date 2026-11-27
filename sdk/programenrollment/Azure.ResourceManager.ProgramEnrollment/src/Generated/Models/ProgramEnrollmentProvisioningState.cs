@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
 
         /// <summary> Converts a string to a <see cref="ProgramEnrollmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProgramEnrollmentProvisioningState?(string value) => value == null ? null : new ProgramEnrollmentProvisioningState(value);
+        public static implicit operator ProgramEnrollmentProvisioningState?(string value) => value == null ? (ProgramEnrollmentProvisioningState?)null : new ProgramEnrollmentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

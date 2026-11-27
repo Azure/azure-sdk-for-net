@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsAlertConfidenceLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsAlertConfidenceLevel?(string value) => value == null ? null : new SecurityInsightsAlertConfidenceLevel(value);
+        public static implicit operator SecurityInsightsAlertConfidenceLevel?(string value) => value == null ? (SecurityInsightsAlertConfidenceLevel?)null : new SecurityInsightsAlertConfidenceLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

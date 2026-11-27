@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RequestUriOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestUriOperator?(string value) => value == null ? null : new RequestUriOperator(value);
+        public static implicit operator RequestUriOperator?(string value) => value == null ? (RequestUriOperator?)null : new RequestUriOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

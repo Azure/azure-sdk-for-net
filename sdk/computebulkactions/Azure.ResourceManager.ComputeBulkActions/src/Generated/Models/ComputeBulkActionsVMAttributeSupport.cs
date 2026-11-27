@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsVMAttributeSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsVMAttributeSupport?(string value) => value == null ? null : new ComputeBulkActionsVMAttributeSupport(value);
+        public static implicit operator ComputeBulkActionsVMAttributeSupport?(string value) => value == null ? (ComputeBulkActionsVMAttributeSupport?)null : new ComputeBulkActionsVMAttributeSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

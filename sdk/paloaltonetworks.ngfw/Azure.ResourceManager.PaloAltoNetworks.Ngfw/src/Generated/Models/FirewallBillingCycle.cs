@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallBillingCycle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallBillingCycle?(string value) => value == null ? null : new FirewallBillingCycle(value);
+        public static implicit operator FirewallBillingCycle?(string value) => value == null ? (FirewallBillingCycle?)null : new FirewallBillingCycle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

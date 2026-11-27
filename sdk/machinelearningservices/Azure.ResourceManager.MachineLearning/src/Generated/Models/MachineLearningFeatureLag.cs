@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningFeatureLag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningFeatureLag?(string value) => value == null ? null : new MachineLearningFeatureLag(value);
+        public static implicit operator MachineLearningFeatureLag?(string value) => value == null ? (MachineLearningFeatureLag?)null : new MachineLearningFeatureLag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

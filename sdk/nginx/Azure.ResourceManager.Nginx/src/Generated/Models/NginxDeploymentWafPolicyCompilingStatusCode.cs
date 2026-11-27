@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Converts a string to a <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NginxDeploymentWafPolicyCompilingStatusCode?(string value) => value == null ? null : new NginxDeploymentWafPolicyCompilingStatusCode(value);
+        public static implicit operator NginxDeploymentWafPolicyCompilingStatusCode?(string value) => value == null ? (NginxDeploymentWafPolicyCompilingStatusCode?)null : new NginxDeploymentWafPolicyCompilingStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesRoutingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesRoutingMethod?(string value) => value == null ? null : new CognitiveServicesRoutingMethod(value);
+        public static implicit operator CognitiveServicesRoutingMethod?(string value) => value == null ? (CognitiveServicesRoutingMethod?)null : new CognitiveServicesRoutingMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

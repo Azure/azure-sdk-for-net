@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionProvisioningState?(string value) => value == null ? null : new SubscriptionProvisioningState(value);
+        public static implicit operator SubscriptionProvisioningState?(string value) => value == null ? (SubscriptionProvisioningState?)null : new SubscriptionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="OrchestrationServiceStateAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrchestrationServiceStateAction?(string value) => value == null ? null : new OrchestrationServiceStateAction(value);
+        public static implicit operator OrchestrationServiceStateAction?(string value) => value == null ? (OrchestrationServiceStateAction?)null : new OrchestrationServiceStateAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

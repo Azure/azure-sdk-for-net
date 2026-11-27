@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadProviderInstanceHealthState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadProviderInstanceHealthState?(string value) => value == null ? null : new WorkloadProviderInstanceHealthState(value);
+        public static implicit operator WorkloadProviderInstanceHealthState?(string value) => value == null ? (WorkloadProviderInstanceHealthState?)null : new WorkloadProviderInstanceHealthState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

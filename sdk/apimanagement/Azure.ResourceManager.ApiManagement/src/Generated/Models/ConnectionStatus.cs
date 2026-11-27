@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionStatus?(string value) => value == null ? null : new ConnectionStatus(value);
+        public static implicit operator ConnectionStatus?(string value) => value == null ? (ConnectionStatus?)null : new ConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

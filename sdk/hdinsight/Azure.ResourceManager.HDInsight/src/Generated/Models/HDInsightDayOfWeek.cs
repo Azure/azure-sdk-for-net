@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightDayOfWeek?(string value) => value == null ? null : new HDInsightDayOfWeek(value);
+        public static implicit operator HDInsightDayOfWeek?(string value) => value == null ? (HDInsightDayOfWeek?)null : new HDInsightDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

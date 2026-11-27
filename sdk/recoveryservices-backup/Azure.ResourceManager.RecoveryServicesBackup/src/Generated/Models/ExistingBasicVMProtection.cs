@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="ExistingBasicVMProtection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExistingBasicVMProtection?(string value) => value == null ? null : new ExistingBasicVMProtection(value);
+        public static implicit operator ExistingBasicVMProtection?(string value) => value == null ? (ExistingBasicVMProtection?)null : new ExistingBasicVMProtection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

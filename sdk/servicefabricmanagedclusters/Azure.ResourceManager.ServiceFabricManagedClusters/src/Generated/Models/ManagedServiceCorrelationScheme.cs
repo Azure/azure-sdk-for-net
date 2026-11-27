@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedServiceCorrelationScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedServiceCorrelationScheme?(string value) => value == null ? null : new ManagedServiceCorrelationScheme(value);
+        public static implicit operator ManagedServiceCorrelationScheme?(string value) => value == null ? (ManagedServiceCorrelationScheme?)null : new ManagedServiceCorrelationScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

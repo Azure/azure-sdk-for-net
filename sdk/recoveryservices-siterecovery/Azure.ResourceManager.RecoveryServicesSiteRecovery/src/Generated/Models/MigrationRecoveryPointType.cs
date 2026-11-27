@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="MigrationRecoveryPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationRecoveryPointType?(string value) => value == null ? null : new MigrationRecoveryPointType(value);
+        public static implicit operator MigrationRecoveryPointType?(string value) => value == null ? (MigrationRecoveryPointType?)null : new MigrationRecoveryPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

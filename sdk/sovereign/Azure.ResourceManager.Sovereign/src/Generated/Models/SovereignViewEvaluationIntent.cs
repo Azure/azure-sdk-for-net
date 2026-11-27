@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewEvaluationIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewEvaluationIntent?(string value) => value == null ? null : new SovereignViewEvaluationIntent(value);
+        public static implicit operator SovereignViewEvaluationIntent?(string value) => value == null ? (SovereignViewEvaluationIntent?)null : new SovereignViewEvaluationIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

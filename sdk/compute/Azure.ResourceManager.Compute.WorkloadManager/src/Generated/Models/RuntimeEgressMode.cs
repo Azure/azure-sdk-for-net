@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeEgressMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeEgressMode?(string value) => value == null ? null : new RuntimeEgressMode(value);
+        public static implicit operator RuntimeEgressMode?(string value) => value == null ? (RuntimeEgressMode?)null : new RuntimeEgressMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

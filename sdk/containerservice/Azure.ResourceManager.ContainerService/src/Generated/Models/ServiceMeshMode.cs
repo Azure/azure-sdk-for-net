@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ServiceMeshMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceMeshMode?(string value) => value == null ? null : new ServiceMeshMode(value);
+        public static implicit operator ServiceMeshMode?(string value) => value == null ? (ServiceMeshMode?)null : new ServiceMeshMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

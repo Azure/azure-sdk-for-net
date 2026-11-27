@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ReservationRecommendationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationRecommendationKind?(string value) => value == null ? null : new ReservationRecommendationKind(value);
+        public static implicit operator ReservationRecommendationKind?(string value) => value == null ? (ReservationRecommendationKind?)null : new ReservationRecommendationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

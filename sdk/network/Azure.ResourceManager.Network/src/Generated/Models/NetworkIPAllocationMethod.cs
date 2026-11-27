@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkIPAllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkIPAllocationMethod?(string value) => value == null ? null : new NetworkIPAllocationMethod(value);
+        public static implicit operator NetworkIPAllocationMethod?(string value) => value == null ? (NetworkIPAllocationMethod?)null : new NetworkIPAllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

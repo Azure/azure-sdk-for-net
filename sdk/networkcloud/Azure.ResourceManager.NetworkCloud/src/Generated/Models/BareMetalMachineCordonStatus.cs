@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineCordonStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineCordonStatus?(string value) => value == null ? null : new BareMetalMachineCordonStatus(value);
+        public static implicit operator BareMetalMachineCordonStatus?(string value) => value == null ? (BareMetalMachineCordonStatus?)null : new BareMetalMachineCordonStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

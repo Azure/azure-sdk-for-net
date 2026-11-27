@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="AkriConnectorsImagePullPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AkriConnectorsImagePullPolicy?(string value) => value == null ? null : new AkriConnectorsImagePullPolicy(value);
+        public static implicit operator AkriConnectorsImagePullPolicy?(string value) => value == null ? (AkriConnectorsImagePullPolicy?)null : new AkriConnectorsImagePullPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

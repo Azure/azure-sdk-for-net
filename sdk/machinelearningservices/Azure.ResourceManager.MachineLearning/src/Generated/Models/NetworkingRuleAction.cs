@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="NetworkingRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkingRuleAction?(string value) => value == null ? null : new NetworkingRuleAction(value);
+        public static implicit operator NetworkingRuleAction?(string value) => value == null ? (NetworkingRuleAction?)null : new NetworkingRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

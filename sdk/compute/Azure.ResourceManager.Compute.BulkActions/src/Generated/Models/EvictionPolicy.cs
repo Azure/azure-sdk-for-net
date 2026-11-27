@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="EvictionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvictionPolicy?(string value) => value == null ? null : new EvictionPolicy(value);
+        public static implicit operator EvictionPolicy?(string value) => value == null ? (EvictionPolicy?)null : new EvictionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

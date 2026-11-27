@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsNamespaceGeoDrRoleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsNamespaceGeoDrRoleType?(string value) => value == null ? null : new EventHubsNamespaceGeoDrRoleType(value);
+        public static implicit operator EventHubsNamespaceGeoDrRoleType?(string value) => value == null ? (EventHubsNamespaceGeoDrRoleType?)null : new EventHubsNamespaceGeoDrRoleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

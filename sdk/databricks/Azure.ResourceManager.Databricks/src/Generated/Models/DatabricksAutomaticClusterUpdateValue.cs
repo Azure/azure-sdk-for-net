@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksAutomaticClusterUpdateValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksAutomaticClusterUpdateValue?(string value) => value == null ? null : new DatabricksAutomaticClusterUpdateValue(value);
+        public static implicit operator DatabricksAutomaticClusterUpdateValue?(string value) => value == null ? (DatabricksAutomaticClusterUpdateValue?)null : new DatabricksAutomaticClusterUpdateValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

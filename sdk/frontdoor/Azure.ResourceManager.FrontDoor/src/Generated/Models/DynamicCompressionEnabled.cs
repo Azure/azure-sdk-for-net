@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="DynamicCompressionEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynamicCompressionEnabled?(string value) => value == null ? null : new DynamicCompressionEnabled(value);
+        public static implicit operator DynamicCompressionEnabled?(string value) => value == null ? (DynamicCompressionEnabled?)null : new DynamicCompressionEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

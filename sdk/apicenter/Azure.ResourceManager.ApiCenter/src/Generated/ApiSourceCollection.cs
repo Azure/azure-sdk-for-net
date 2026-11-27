@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ApiSources_Get. </description>
+        /// <description> ApiSources_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -369,22 +369,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApiSourceData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiSourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiSourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -402,7 +394,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ApiSources_Get. </description>
+        /// <description> ApiSources_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -426,22 +418,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApiSourceData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiSourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiSourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {

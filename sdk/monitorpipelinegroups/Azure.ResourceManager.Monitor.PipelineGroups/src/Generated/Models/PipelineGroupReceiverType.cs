@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupReceiverType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupReceiverType?(string value) => value == null ? null : new PipelineGroupReceiverType(value);
+        public static implicit operator PipelineGroupReceiverType?(string value) => value == null ? (PipelineGroupReceiverType?)null : new PipelineGroupReceiverType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

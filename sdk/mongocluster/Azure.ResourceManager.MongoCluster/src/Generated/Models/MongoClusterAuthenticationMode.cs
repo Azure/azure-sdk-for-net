@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterAuthenticationMode?(string value) => value == null ? null : new MongoClusterAuthenticationMode(value);
+        public static implicit operator MongoClusterAuthenticationMode?(string value) => value == null ? (MongoClusterAuthenticationMode?)null : new MongoClusterAuthenticationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

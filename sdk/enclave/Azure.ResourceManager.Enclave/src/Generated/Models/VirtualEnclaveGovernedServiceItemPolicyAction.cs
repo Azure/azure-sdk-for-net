@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveGovernedServiceItemPolicyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveGovernedServiceItemPolicyAction?(string value) => value == null ? null : new VirtualEnclaveGovernedServiceItemPolicyAction(value);
+        public static implicit operator VirtualEnclaveGovernedServiceItemPolicyAction?(string value) => value == null ? (VirtualEnclaveGovernedServiceItemPolicyAction?)null : new VirtualEnclaveGovernedServiceItemPolicyAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

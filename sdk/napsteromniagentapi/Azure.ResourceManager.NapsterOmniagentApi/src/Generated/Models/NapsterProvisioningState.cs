@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 
         /// <summary> Converts a string to a <see cref="NapsterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NapsterProvisioningState?(string value) => value == null ? null : new NapsterProvisioningState(value);
+        public static implicit operator NapsterProvisioningState?(string value) => value == null ? (NapsterProvisioningState?)null : new NapsterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

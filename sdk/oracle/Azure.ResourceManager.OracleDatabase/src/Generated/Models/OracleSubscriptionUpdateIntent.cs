@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleSubscriptionUpdateIntent?(string value) => value == null ? null : new OracleSubscriptionUpdateIntent(value);
+        public static implicit operator OracleSubscriptionUpdateIntent?(string value) => value == null ? (OracleSubscriptionUpdateIntent?)null : new OracleSubscriptionUpdateIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

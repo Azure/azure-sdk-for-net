@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="IsMonitoringEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsMonitoringEnabled?(string value) => value == null ? null : new IsMonitoringEnabled(value);
+        public static implicit operator IsMonitoringEnabled?(string value) => value == null ? (IsMonitoringEnabled?)null : new IsMonitoringEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

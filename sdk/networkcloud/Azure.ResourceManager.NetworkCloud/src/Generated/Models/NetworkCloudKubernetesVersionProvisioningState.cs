@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudKubernetesVersionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudKubernetesVersionProvisioningState?(string value) => value == null ? null : new NetworkCloudKubernetesVersionProvisioningState(value);
+        public static implicit operator NetworkCloudKubernetesVersionProvisioningState?(string value) => value == null ? (NetworkCloudKubernetesVersionProvisioningState?)null : new NetworkCloudKubernetesVersionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

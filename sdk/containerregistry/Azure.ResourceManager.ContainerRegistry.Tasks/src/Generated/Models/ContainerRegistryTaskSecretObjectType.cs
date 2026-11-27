@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskSecretObjectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskSecretObjectType?(string value) => value == null ? null : new ContainerRegistryTaskSecretObjectType(value);
+        public static implicit operator ContainerRegistryTaskSecretObjectType?(string value) => value == null ? (ContainerRegistryTaskSecretObjectType?)null : new ContainerRegistryTaskSecretObjectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

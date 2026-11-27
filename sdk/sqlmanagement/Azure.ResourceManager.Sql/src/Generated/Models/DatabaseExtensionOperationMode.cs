@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseExtensionOperationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseExtensionOperationMode?(string value) => value == null ? null : new DatabaseExtensionOperationMode(value);
+        public static implicit operator DatabaseExtensionOperationMode?(string value) => value == null ? (DatabaseExtensionOperationMode?)null : new DatabaseExtensionOperationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeStorageFaultDomainAlignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeStorageFaultDomainAlignmentType?(string value) => value == null ? null : new ComputeStorageFaultDomainAlignmentType(value);
+        public static implicit operator ComputeStorageFaultDomainAlignmentType?(string value) => value == null ? (ComputeStorageFaultDomainAlignmentType?)null : new ComputeStorageFaultDomainAlignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

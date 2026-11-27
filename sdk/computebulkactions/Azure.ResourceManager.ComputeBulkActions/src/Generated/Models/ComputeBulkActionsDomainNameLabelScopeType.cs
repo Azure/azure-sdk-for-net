@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsDomainNameLabelScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsDomainNameLabelScopeType?(string value) => value == null ? null : new ComputeBulkActionsDomainNameLabelScopeType(value);
+        public static implicit operator ComputeBulkActionsDomainNameLabelScopeType?(string value) => value == null ? (ComputeBulkActionsDomainNameLabelScopeType?)null : new ComputeBulkActionsDomainNameLabelScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

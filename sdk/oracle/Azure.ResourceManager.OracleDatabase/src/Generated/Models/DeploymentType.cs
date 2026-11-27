@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentType?(string value) => value == null ? null : new DeploymentType(value);
+        public static implicit operator DeploymentType?(string value) => value == null ? (DeploymentType?)null : new DeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

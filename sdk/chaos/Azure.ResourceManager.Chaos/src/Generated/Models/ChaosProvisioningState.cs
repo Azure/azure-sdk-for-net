@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ChaosProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChaosProvisioningState?(string value) => value == null ? null : new ChaosProvisioningState(value);
+        public static implicit operator ChaosProvisioningState?(string value) => value == null ? (ChaosProvisioningState?)null : new ChaosProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

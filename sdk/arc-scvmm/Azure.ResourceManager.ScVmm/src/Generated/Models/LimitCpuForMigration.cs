@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="LimitCpuForMigration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LimitCpuForMigration?(string value) => value == null ? null : new LimitCpuForMigration(value);
+        public static implicit operator LimitCpuForMigration?(string value) => value == null ? (LimitCpuForMigration?)null : new LimitCpuForMigration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

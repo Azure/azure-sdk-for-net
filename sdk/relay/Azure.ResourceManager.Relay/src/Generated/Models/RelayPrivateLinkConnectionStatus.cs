@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayPrivateLinkConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayPrivateLinkConnectionStatus?(string value) => value == null ? null : new RelayPrivateLinkConnectionStatus(value);
+        public static implicit operator RelayPrivateLinkConnectionStatus?(string value) => value == null ? (RelayPrivateLinkConnectionStatus?)null : new RelayPrivateLinkConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

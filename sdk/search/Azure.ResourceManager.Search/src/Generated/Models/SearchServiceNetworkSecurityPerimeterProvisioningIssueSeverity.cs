@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity?(string value) => value == null ? null : new SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity(value);
+        public static implicit operator SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity?(string value) => value == null ? (SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity?)null : new SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

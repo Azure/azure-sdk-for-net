@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciSecretsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciSecretsType?(string value) => value == null ? null : new HciSecretsType(value);
+        public static implicit operator HciSecretsType?(string value) => value == null ? (HciSecretsType?)null : new HciSecretsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

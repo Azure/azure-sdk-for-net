@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseBackupLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseBackupLifecycleState?(string value) => value == null ? null : new AutonomousDatabaseBackupLifecycleState(value);
+        public static implicit operator AutonomousDatabaseBackupLifecycleState?(string value) => value == null ? (AutonomousDatabaseBackupLifecycleState?)null : new AutonomousDatabaseBackupLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

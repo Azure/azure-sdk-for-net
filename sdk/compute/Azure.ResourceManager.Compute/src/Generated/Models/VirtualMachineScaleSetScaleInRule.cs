@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineScaleSetScaleInRule?(string value) => value == null ? null : new VirtualMachineScaleSetScaleInRule(value);
+        public static implicit operator VirtualMachineScaleSetScaleInRule?(string value) => value == null ? (VirtualMachineScaleSetScaleInRule?)null : new VirtualMachineScaleSetScaleInRule(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

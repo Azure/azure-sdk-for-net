@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveRbacInheritanceMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveRbacInheritanceMode?(string value) => value == null ? null : new VirtualEnclaveRbacInheritanceMode(value);
+        public static implicit operator VirtualEnclaveRbacInheritanceMode?(string value) => value == null ? (VirtualEnclaveRbacInheritanceMode?)null : new VirtualEnclaveRbacInheritanceMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

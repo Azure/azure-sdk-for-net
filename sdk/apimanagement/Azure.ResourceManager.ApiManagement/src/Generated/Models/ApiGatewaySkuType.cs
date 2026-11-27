@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiGatewaySkuType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiGatewaySkuType?(string value) => value == null ? null : new ApiGatewaySkuType(value);
+        public static implicit operator ApiGatewaySkuType?(string value) => value == null ? (ApiGatewaySkuType?)null : new ApiGatewaySkuType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

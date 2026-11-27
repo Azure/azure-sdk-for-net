@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="StandardAssignmentAttestationComplianceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandardAssignmentAttestationComplianceState?(string value) => value == null ? null : new StandardAssignmentAttestationComplianceState(value);
+        public static implicit operator StandardAssignmentAttestationComplianceState?(string value) => value == null ? (StandardAssignmentAttestationComplianceState?)null : new StandardAssignmentAttestationComplianceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineReplaceSafeguardMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineReplaceSafeguardMode?(string value) => value == null ? null : new BareMetalMachineReplaceSafeguardMode(value);
+        public static implicit operator BareMetalMachineReplaceSafeguardMode?(string value) => value == null ? (BareMetalMachineReplaceSafeguardMode?)null : new BareMetalMachineReplaceSafeguardMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

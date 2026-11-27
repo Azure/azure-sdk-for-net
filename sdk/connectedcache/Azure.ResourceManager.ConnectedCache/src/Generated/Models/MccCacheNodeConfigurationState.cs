@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="MccCacheNodeConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MccCacheNodeConfigurationState?(string value) => value == null ? null : new MccCacheNodeConfigurationState(value);
+        public static implicit operator MccCacheNodeConfigurationState?(string value) => value == null ? (MccCacheNodeConfigurationState?)null : new MccCacheNodeConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

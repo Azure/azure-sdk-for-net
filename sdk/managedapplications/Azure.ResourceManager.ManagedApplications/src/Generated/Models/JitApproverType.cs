@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="JitApproverType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JitApproverType?(string value) => value == null ? null : new JitApproverType(value);
+        public static implicit operator JitApproverType?(string value) => value == null ? (JitApproverType?)null : new JitApproverType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

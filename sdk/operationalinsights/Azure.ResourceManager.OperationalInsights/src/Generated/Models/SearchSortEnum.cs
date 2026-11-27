@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="SearchSortEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchSortEnum?(string value) => value == null ? null : new SearchSortEnum(value);
+        public static implicit operator SearchSortEnum?(string value) => value == null ? (SearchSortEnum?)null : new SearchSortEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewScopeAssignmentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewScopeAssignmentState?(string value) => value == null ? null : new AccessReviewScopeAssignmentState(value);
+        public static implicit operator AccessReviewScopeAssignmentState?(string value) => value == null ? (AccessReviewScopeAssignmentState?)null : new AccessReviewScopeAssignmentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

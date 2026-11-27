@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionTransitioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionTransitioningState?(string value) => value == null ? null : new SubscriptionTransitioningState(value);
+        public static implicit operator SubscriptionTransitioningState?(string value) => value == null ? (SubscriptionTransitioningState?)null : new SubscriptionTransitioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="TransactionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransactionType?(string value) => value == null ? null : new TransactionType(value);
+        public static implicit operator TransactionType?(string value) => value == null ? (TransactionType?)null : new TransactionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

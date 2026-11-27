@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsAttackTactic"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsAttackTactic?(string value) => value == null ? null : new SecurityInsightsAttackTactic(value);
+        public static implicit operator SecurityInsightsAttackTactic?(string value) => value == null ? (SecurityInsightsAttackTactic?)null : new SecurityInsightsAttackTactic(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

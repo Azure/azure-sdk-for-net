@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="VcfLicenseKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VcfLicenseKind?(string value) => value == null ? null : new VcfLicenseKind(value);
+        public static implicit operator VcfLicenseKind?(string value) => value == null ? (VcfLicenseKind?)null : new VcfLicenseKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ChaosTargetReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChaosTargetReferenceType?(string value) => value == null ? null : new ChaosTargetReferenceType(value);
+        public static implicit operator ChaosTargetReferenceType?(string value) => value == null ? (ChaosTargetReferenceType?)null : new ChaosTargetReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

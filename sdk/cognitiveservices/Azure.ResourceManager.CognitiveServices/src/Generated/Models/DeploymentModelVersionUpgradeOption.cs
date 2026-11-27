@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentModelVersionUpgradeOption?(string value) => value == null ? null : new DeploymentModelVersionUpgradeOption(value);
+        public static implicit operator DeploymentModelVersionUpgradeOption?(string value) => value == null ? (DeploymentModelVersionUpgradeOption?)null : new DeploymentModelVersionUpgradeOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Converts a string to a <see cref="DatadogProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatadogProvisioningState?(string value) => value == null ? null : new DatadogProvisioningState(value);
+        public static implicit operator DatadogProvisioningState?(string value) => value == null ? (DatadogProvisioningState?)null : new DatadogProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

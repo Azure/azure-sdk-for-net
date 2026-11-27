@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryRuleSslProtocol?(string value) => value == null ? null : new DeliveryRuleSslProtocol(value);
+        public static implicit operator DeliveryRuleSslProtocol?(string value) => value == null ? (DeliveryRuleSslProtocol?)null : new DeliveryRuleSslProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

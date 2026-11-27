@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabNotificationChannelEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabNotificationChannelEventType?(string value) => value == null ? null : new DevTestLabNotificationChannelEventType(value);
+        public static implicit operator DevTestLabNotificationChannelEventType?(string value) => value == null ? (DevTestLabNotificationChannelEventType?)null : new DevTestLabNotificationChannelEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

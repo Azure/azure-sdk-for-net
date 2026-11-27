@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="DrillRunAutoFailover"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DrillRunAutoFailover?(string value) => value == null ? null : new DrillRunAutoFailover(value);
+        public static implicit operator DrillRunAutoFailover?(string value) => value == null ? (DrillRunAutoFailover?)null : new DrillRunAutoFailover(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PortalSettingsCspMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PortalSettingsCspMode?(string value) => value == null ? null : new PortalSettingsCspMode(value);
+        public static implicit operator PortalSettingsCspMode?(string value) => value == null ? (PortalSettingsCspMode?)null : new PortalSettingsCspMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="FeatureSupportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureSupportStatus?(string value) => value == null ? null : new FeatureSupportStatus(value);
+        public static implicit operator FeatureSupportStatus?(string value) => value == null ? (FeatureSupportStatus?)null : new FeatureSupportStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

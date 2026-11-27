@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DatasetReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatasetReferenceType?(string value) => value == null ? null : new DatasetReferenceType(value);
+        public static implicit operator DatasetReferenceType?(string value) => value == null ? (DatasetReferenceType?)null : new DatasetReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

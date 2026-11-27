@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupEncryptionAtRestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupEncryptionAtRestType?(string value) => value == null ? null : new BackupEncryptionAtRestType(value);
+        public static implicit operator BackupEncryptionAtRestType?(string value) => value == null ? (BackupEncryptionAtRestType?)null : new BackupEncryptionAtRestType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

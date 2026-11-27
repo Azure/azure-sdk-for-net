@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ThrottlingMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThrottlingMetricType?(string value) => value == null ? null : new ThrottlingMetricType(value);
+        public static implicit operator ThrottlingMetricType?(string value) => value == null ? (ThrottlingMetricType?)null : new ThrottlingMetricType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

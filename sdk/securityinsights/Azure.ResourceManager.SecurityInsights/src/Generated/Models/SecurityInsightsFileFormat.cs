@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsFileFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsFileFormat?(string value) => value == null ? null : new SecurityInsightsFileFormat(value);
+        public static implicit operator SecurityInsightsFileFormat?(string value) => value == null ? (SecurityInsightsFileFormat?)null : new SecurityInsightsFileFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

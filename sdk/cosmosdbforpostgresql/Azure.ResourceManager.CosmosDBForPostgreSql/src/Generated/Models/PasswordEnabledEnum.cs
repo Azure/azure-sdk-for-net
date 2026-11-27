@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="PasswordEnabledEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PasswordEnabledEnum?(string value) => value == null ? null : new PasswordEnabledEnum(value);
+        public static implicit operator PasswordEnabledEnum?(string value) => value == null ? (PasswordEnabledEnum?)null : new PasswordEnabledEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

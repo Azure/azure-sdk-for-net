@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudAccessBridgeDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudAccessBridgeDetailedStatus?(string value) => value == null ? null : new NetworkCloudAccessBridgeDetailedStatus(value);
+        public static implicit operator NetworkCloudAccessBridgeDetailedStatus?(string value) => value == null ? (NetworkCloudAccessBridgeDetailedStatus?)null : new NetworkCloudAccessBridgeDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

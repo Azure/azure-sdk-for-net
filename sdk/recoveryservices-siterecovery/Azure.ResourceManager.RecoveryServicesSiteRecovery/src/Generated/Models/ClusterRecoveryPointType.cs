@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="ClusterRecoveryPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterRecoveryPointType?(string value) => value == null ? null : new ClusterRecoveryPointType(value);
+        public static implicit operator ClusterRecoveryPointType?(string value) => value == null ? (ClusterRecoveryPointType?)null : new ClusterRecoveryPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

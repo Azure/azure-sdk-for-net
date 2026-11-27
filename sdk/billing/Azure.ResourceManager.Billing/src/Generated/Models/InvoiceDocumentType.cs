@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="InvoiceDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InvoiceDocumentType?(string value) => value == null ? null : new InvoiceDocumentType(value);
+        public static implicit operator InvoiceDocumentType?(string value) => value == null ? (InvoiceDocumentType?)null : new InvoiceDocumentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

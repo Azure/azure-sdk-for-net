@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="RegionalDataBoundary"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegionalDataBoundary?(string value) => value == null ? null : new RegionalDataBoundary(value);
+        public static implicit operator RegionalDataBoundary?(string value) => value == null ? (RegionalDataBoundary?)null : new RegionalDataBoundary(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

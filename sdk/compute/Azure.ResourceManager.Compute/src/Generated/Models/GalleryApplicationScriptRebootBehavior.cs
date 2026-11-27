@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryApplicationScriptRebootBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryApplicationScriptRebootBehavior?(string value) => value == null ? null : new GalleryApplicationScriptRebootBehavior(value);
+        public static implicit operator GalleryApplicationScriptRebootBehavior?(string value) => value == null ? (GalleryApplicationScriptRebootBehavior?)null : new GalleryApplicationScriptRebootBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

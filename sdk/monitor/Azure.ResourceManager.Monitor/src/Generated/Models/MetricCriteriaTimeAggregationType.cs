@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MetricCriteriaTimeAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricCriteriaTimeAggregationType?(string value) => value == null ? null : new MetricCriteriaTimeAggregationType(value);
+        public static implicit operator MetricCriteriaTimeAggregationType?(string value) => value == null ? (MetricCriteriaTimeAggregationType?)null : new MetricCriteriaTimeAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

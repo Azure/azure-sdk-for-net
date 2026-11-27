@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="ProtectionIntentItemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionIntentItemType?(string value) => value == null ? null : new ProtectionIntentItemType(value);
+        public static implicit operator ProtectionIntentItemType?(string value) => value == null ? (ProtectionIntentItemType?)null : new ProtectionIntentItemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotServiceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotServiceKind?(string value) => value == null ? null : new BotServiceKind(value);
+        public static implicit operator BotServiceKind?(string value) => value == null ? (BotServiceKind?)null : new BotServiceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

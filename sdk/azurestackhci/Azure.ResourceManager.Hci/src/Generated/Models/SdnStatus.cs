@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="SdnStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SdnStatus?(string value) => value == null ? null : new SdnStatus(value);
+        public static implicit operator SdnStatus?(string value) => value == null ? (SdnStatus?)null : new SdnStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

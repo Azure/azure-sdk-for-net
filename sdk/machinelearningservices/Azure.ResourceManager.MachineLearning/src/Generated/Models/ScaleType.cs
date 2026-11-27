@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScaleType?(string value) => value == null ? null : new ScaleType(value);
+        public static implicit operator ScaleType?(string value) => value == null ? (ScaleType?)null : new ScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

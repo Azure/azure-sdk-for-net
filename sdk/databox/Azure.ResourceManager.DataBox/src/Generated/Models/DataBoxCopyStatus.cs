@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxCopyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxCopyStatus?(string value) => value == null ? null : new DataBoxCopyStatus(value);
+        public static implicit operator DataBoxCopyStatus?(string value) => value == null ? (DataBoxCopyStatus?)null : new DataBoxCopyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

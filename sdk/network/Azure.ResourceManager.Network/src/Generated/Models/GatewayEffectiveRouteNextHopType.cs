@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="GatewayEffectiveRouteNextHopType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GatewayEffectiveRouteNextHopType?(string value) => value == null ? null : new GatewayEffectiveRouteNextHopType(value);
+        public static implicit operator GatewayEffectiveRouteNextHopType?(string value) => value == null ? (GatewayEffectiveRouteNextHopType?)null : new GatewayEffectiveRouteNextHopType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

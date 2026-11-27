@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlwaysLog"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlwaysLog?(string value) => value == null ? null : new AlwaysLog(value);
+        public static implicit operator AlwaysLog?(string value) => value == null ? (AlwaysLog?)null : new AlwaysLog(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

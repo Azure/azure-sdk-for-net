@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="AppType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppType?(string value) => value == null ? null : new AppType(value);
+        public static implicit operator AppType?(string value) => value == null ? (AppType?)null : new AppType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

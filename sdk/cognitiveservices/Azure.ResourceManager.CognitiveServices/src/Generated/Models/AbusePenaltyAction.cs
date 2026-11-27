@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AbusePenaltyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AbusePenaltyAction?(string value) => value == null ? null : new AbusePenaltyAction(value);
+        public static implicit operator AbusePenaltyAction?(string value) => value == null ? (AbusePenaltyAction?)null : new AbusePenaltyAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

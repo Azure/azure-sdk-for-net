@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceSingleSignOnState?(string value) => value == null ? null : new DynatraceSingleSignOnState(value);
+        public static implicit operator DynatraceSingleSignOnState?(string value) => value == null ? (DynatraceSingleSignOnState?)null : new DynatraceSingleSignOnState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

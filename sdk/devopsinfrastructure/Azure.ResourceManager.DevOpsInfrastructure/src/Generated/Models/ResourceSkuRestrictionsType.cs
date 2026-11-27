@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="ResourceSkuRestrictionsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceSkuRestrictionsType?(string value) => value == null ? null : new ResourceSkuRestrictionsType(value);
+        public static implicit operator ResourceSkuRestrictionsType?(string value) => value == null ? (ResourceSkuRestrictionsType?)null : new ResourceSkuRestrictionsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

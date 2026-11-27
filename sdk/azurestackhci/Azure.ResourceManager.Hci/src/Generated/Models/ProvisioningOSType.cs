@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="ProvisioningOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningOSType?(string value) => value == null ? null : new ProvisioningOSType(value);
+        public static implicit operator ProvisioningOSType?(string value) => value == null ? (ProvisioningOSType?)null : new ProvisioningOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

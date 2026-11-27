@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciIdentityProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciIdentityProvider?(string value) => value == null ? null : new HciIdentityProvider(value);
+        public static implicit operator HciIdentityProvider?(string value) => value == null ? (HciIdentityProvider?)null : new HciIdentityProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

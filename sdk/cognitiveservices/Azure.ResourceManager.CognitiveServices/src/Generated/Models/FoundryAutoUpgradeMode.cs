@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="FoundryAutoUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FoundryAutoUpgradeMode?(string value) => value == null ? null : new FoundryAutoUpgradeMode(value);
+        public static implicit operator FoundryAutoUpgradeMode?(string value) => value == null ? (FoundryAutoUpgradeMode?)null : new FoundryAutoUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

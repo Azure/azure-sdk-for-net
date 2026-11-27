@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="AuthMetadataLookupMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthMetadataLookupMode?(string value) => value == null ? null : new AuthMetadataLookupMode(value);
+        public static implicit operator AuthMetadataLookupMode?(string value) => value == null ? (AuthMetadataLookupMode?)null : new AuthMetadataLookupMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

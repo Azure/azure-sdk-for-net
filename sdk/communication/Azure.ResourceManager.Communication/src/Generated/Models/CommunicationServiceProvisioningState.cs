@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="CommunicationServiceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationServiceProvisioningState?(string value) => value == null ? null : new CommunicationServiceProvisioningState(value);
+        public static implicit operator CommunicationServiceProvisioningState?(string value) => value == null ? (CommunicationServiceProvisioningState?)null : new CommunicationServiceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

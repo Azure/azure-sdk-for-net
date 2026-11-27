@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoProvisioningState?(string value) => value == null ? null : new KustoProvisioningState(value);
+        public static implicit operator KustoProvisioningState?(string value) => value == null ? (KustoProvisioningState?)null : new KustoProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

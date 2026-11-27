@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="SyncNtlmPasswords"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncNtlmPasswords?(string value) => value == null ? null : new SyncNtlmPasswords(value);
+        public static implicit operator SyncNtlmPasswords?(string value) => value == null ? (SyncNtlmPasswords?)null : new SyncNtlmPasswords(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

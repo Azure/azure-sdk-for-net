@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryExtendedLocationType?(string value) => value == null ? null : new SiteRecoveryExtendedLocationType(value);
+        public static implicit operator SiteRecoveryExtendedLocationType?(string value) => value == null ? (SiteRecoveryExtendedLocationType?)null : new SiteRecoveryExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

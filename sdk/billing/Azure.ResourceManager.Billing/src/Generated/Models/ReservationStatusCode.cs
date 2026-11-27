@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="ReservationStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationStatusCode?(string value) => value == null ? null : new ReservationStatusCode(value);
+        public static implicit operator ReservationStatusCode?(string value) => value == null ? (ReservationStatusCode?)null : new ReservationStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

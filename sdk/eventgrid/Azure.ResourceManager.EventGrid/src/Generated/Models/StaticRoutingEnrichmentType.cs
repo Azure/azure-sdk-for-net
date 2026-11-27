@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="StaticRoutingEnrichmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StaticRoutingEnrichmentType?(string value) => value == null ? null : new StaticRoutingEnrichmentType(value);
+        public static implicit operator StaticRoutingEnrichmentType?(string value) => value == null ? (StaticRoutingEnrichmentType?)null : new StaticRoutingEnrichmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

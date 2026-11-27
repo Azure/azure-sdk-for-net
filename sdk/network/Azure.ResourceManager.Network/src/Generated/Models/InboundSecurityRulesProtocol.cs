@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="InboundSecurityRulesProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InboundSecurityRulesProtocol?(string value) => value == null ? null : new InboundSecurityRulesProtocol(value);
+        public static implicit operator InboundSecurityRulesProtocol?(string value) => value == null ? (InboundSecurityRulesProtocol?)null : new InboundSecurityRulesProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

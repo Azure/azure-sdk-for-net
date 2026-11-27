@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="StandardSupportedCloud"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandardSupportedCloud?(string value) => value == null ? null : new StandardSupportedCloud(value);
+        public static implicit operator StandardSupportedCloud?(string value) => value == null ? (StandardSupportedCloud?)null : new StandardSupportedCloud(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

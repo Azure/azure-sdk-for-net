@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicObservabilityAccountCreationSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilityAccountCreationSource?(string value) => value == null ? null : new NewRelicObservabilityAccountCreationSource(value);
+        public static implicit operator NewRelicObservabilityAccountCreationSource?(string value) => value == null ? (NewRelicObservabilityAccountCreationSource?)null : new NewRelicObservabilityAccountCreationSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

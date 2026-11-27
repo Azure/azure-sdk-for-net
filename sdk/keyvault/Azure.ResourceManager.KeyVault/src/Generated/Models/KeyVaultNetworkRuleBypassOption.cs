@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultNetworkRuleBypassOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultNetworkRuleBypassOption?(string value) => value == null ? null : new KeyVaultNetworkRuleBypassOption(value);
+        public static implicit operator KeyVaultNetworkRuleBypassOption?(string value) => value == null ? (KeyVaultNetworkRuleBypassOption?)null : new KeyVaultNetworkRuleBypassOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

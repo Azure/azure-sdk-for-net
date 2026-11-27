@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppActiveRevisionsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppActiveRevisionsMode?(string value) => value == null ? null : new ContainerAppActiveRevisionsMode(value);
+        public static implicit operator ContainerAppActiveRevisionsMode?(string value) => value == null ? (ContainerAppActiveRevisionsMode?)null : new ContainerAppActiveRevisionsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

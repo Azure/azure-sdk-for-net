@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkGatewayConnectionMode?(string value) => value == null ? null : new VirtualNetworkGatewayConnectionMode(value);
+        public static implicit operator VirtualNetworkGatewayConnectionMode?(string value) => value == null ? (VirtualNetworkGatewayConnectionMode?)null : new VirtualNetworkGatewayConnectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

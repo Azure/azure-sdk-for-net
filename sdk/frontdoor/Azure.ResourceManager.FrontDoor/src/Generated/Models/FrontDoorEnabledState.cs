@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorEnabledState?(string value) => value == null ? null : new FrontDoorEnabledState(value);
+        public static implicit operator FrontDoorEnabledState?(string value) => value == null ? (FrontDoorEnabledState?)null : new FrontDoorEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

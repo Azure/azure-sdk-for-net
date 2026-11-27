@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServersSourceType?(string value) => value == null ? null : new PostgreSqlFlexibleServersSourceType(value);
+        public static implicit operator PostgreSqlFlexibleServersSourceType?(string value) => value == null ? (PostgreSqlFlexibleServersSourceType?)null : new PostgreSqlFlexibleServersSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

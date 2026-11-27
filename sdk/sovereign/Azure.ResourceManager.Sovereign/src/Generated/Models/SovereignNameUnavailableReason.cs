@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignNameUnavailableReason?(string value) => value == null ? null : new SovereignNameUnavailableReason(value);
+        public static implicit operator SovereignNameUnavailableReason?(string value) => value == null ? (SovereignNameUnavailableReason?)null : new SovereignNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

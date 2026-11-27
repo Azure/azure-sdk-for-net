@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="JobExecutionLifecycle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobExecutionLifecycle?(string value) => value == null ? null : new JobExecutionLifecycle(value);
+        public static implicit operator JobExecutionLifecycle?(string value) => value == null ? (JobExecutionLifecycle?)null : new JobExecutionLifecycle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

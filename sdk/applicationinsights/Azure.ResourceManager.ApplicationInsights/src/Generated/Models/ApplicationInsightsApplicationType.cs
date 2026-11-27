@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationInsightsApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationInsightsApplicationType?(string value) => value == null ? null : new ApplicationInsightsApplicationType(value);
+        public static implicit operator ApplicationInsightsApplicationType?(string value) => value == null ? (ApplicationInsightsApplicationType?)null : new ApplicationInsightsApplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

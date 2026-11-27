@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRSkuTier?(string value) => value == null ? null : new SignalRSkuTier(value);
+        public static implicit operator SignalRSkuTier?(string value) => value == null ? (SignalRSkuTier?)null : new SignalRSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="AIManagerDeletePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AIManagerDeletePolicy?(string value) => value == null ? null : new AIManagerDeletePolicy(value);
+        public static implicit operator AIManagerDeletePolicy?(string value) => value == null ? (AIManagerDeletePolicy?)null : new AIManagerDeletePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

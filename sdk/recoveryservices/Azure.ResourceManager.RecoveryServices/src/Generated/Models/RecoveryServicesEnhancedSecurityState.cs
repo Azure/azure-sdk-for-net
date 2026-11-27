@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryServicesEnhancedSecurityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesEnhancedSecurityState?(string value) => value == null ? null : new RecoveryServicesEnhancedSecurityState(value);
+        public static implicit operator RecoveryServicesEnhancedSecurityState?(string value) => value == null ? (RecoveryServicesEnhancedSecurityState?)null : new RecoveryServicesEnhancedSecurityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageCacheRestrictionReasonCode?(string value) => value == null ? null : new StorageCacheRestrictionReasonCode(value);
+        public static implicit operator StorageCacheRestrictionReasonCode?(string value) => value == null ? (StorageCacheRestrictionReasonCode?)null : new StorageCacheRestrictionReasonCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="CentralServerVirtualMachineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CentralServerVirtualMachineType?(string value) => value == null ? null : new CentralServerVirtualMachineType(value);
+        public static implicit operator CentralServerVirtualMachineType?(string value) => value == null ? (CentralServerVirtualMachineType?)null : new CentralServerVirtualMachineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

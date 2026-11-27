@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> Converts a string to a <see cref="EmissionDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmissionDestinationType?(string value) => value == null ? null : new EmissionDestinationType(value);
+        public static implicit operator EmissionDestinationType?(string value) => value == null ? (EmissionDestinationType?)null : new EmissionDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteCircuitSkuFamily?(string value) => value == null ? null : new ExpressRouteCircuitSkuFamily(value);
+        public static implicit operator ExpressRouteCircuitSkuFamily?(string value) => value == null ? (ExpressRouteCircuitSkuFamily?)null : new ExpressRouteCircuitSkuFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

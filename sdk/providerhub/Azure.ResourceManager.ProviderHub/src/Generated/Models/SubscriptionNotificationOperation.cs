@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionNotificationOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionNotificationOperation?(string value) => value == null ? null : new SubscriptionNotificationOperation(value);
+        public static implicit operator SubscriptionNotificationOperation?(string value) => value == null ? (SubscriptionNotificationOperation?)null : new SubscriptionNotificationOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

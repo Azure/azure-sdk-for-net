@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="RepairAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RepairAction?(string value) => value == null ? null : new RepairAction(value);
+        public static implicit operator RepairAction?(string value) => value == null ? (RepairAction?)null : new RepairAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="AutoUpgradeNodeImageSelectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoUpgradeNodeImageSelectionType?(string value) => value == null ? null : new AutoUpgradeNodeImageSelectionType(value);
+        public static implicit operator AutoUpgradeNodeImageSelectionType?(string value) => value == null ? (AutoUpgradeNodeImageSelectionType?)null : new AutoUpgradeNodeImageSelectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

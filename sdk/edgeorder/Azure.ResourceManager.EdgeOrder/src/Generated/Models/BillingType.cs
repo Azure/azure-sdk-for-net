@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="BillingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingType?(string value) => value == null ? null : new BillingType(value);
+        public static implicit operator BillingType?(string value) => value == null ? (BillingType?)null : new BillingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningIssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterProvisioningIssueSeverity?(string value) => value == null ? null : new NetworkSecurityPerimeterProvisioningIssueSeverity(value);
+        public static implicit operator NetworkSecurityPerimeterProvisioningIssueSeverity?(string value) => value == null ? (NetworkSecurityPerimeterProvisioningIssueSeverity?)null : new NetworkSecurityPerimeterProvisioningIssueSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationSkuRestrictionsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationSkuRestrictionsType?(string value) => value == null ? null : new DataMigrationSkuRestrictionsType(value);
+        public static implicit operator DataMigrationSkuRestrictionsType?(string value) => value == null ? (DataMigrationSkuRestrictionsType?)null : new DataMigrationSkuRestrictionsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

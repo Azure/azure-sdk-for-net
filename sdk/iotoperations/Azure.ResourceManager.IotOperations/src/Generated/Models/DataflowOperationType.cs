@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowOperationType?(string value) => value == null ? null : new DataflowOperationType(value);
+        public static implicit operator DataflowOperationType?(string value) => value == null ? (DataflowOperationType?)null : new DataflowOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

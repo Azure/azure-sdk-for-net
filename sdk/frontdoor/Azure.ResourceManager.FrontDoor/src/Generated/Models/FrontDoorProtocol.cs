@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorProtocol?(string value) => value == null ? null : new FrontDoorProtocol(value);
+        public static implicit operator FrontDoorProtocol?(string value) => value == null ? (FrontDoorProtocol?)null : new FrontDoorProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

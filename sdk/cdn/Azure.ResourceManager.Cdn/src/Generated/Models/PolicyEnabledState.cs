@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="PolicyEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyEnabledState?(string value) => value == null ? null : new PolicyEnabledState(value);
+        public static implicit operator PolicyEnabledState?(string value) => value == null ? (PolicyEnabledState?)null : new PolicyEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

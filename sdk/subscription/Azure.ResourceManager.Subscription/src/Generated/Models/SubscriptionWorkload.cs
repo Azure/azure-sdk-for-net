@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionWorkload"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionWorkload?(string value) => value == null ? null : new SubscriptionWorkload(value);
+        public static implicit operator SubscriptionWorkload?(string value) => value == null ? (SubscriptionWorkload?)null : new SubscriptionWorkload(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Converts a string to a <see cref="NginxDiagnosticLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NginxDiagnosticLevel?(string value) => value == null ? null : new NginxDiagnosticLevel(value);
+        public static implicit operator NginxDiagnosticLevel?(string value) => value == null ? (NginxDiagnosticLevel?)null : new NginxDiagnosticLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

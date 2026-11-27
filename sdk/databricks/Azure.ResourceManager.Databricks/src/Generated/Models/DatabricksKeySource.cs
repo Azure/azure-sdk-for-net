@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksKeySource?(string value) => value == null ? null : new DatabricksKeySource(value);
+        public static implicit operator DatabricksKeySource?(string value) => value == null ? (DatabricksKeySource?)null : new DatabricksKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

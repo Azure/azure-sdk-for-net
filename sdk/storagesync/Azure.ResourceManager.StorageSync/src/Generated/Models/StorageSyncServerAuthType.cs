@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="StorageSyncServerAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSyncServerAuthType?(string value) => value == null ? null : new StorageSyncServerAuthType(value);
+        public static implicit operator StorageSyncServerAuthType?(string value) => value == null ? (StorageSyncServerAuthType?)null : new StorageSyncServerAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

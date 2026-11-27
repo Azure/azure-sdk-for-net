@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterExtensionIsEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterExtensionIsEnabled?(string value) => value == null ? null : new SecurityCenterExtensionIsEnabled(value);
+        public static implicit operator SecurityCenterExtensionIsEnabled?(string value) => value == null ? (SecurityCenterExtensionIsEnabled?)null : new SecurityCenterExtensionIsEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

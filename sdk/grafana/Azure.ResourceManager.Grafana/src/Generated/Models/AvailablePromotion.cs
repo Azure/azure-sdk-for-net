@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="AvailablePromotion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailablePromotion?(string value) => value == null ? null : new AvailablePromotion(value);
+        public static implicit operator AvailablePromotion?(string value) => value == null ? (AvailablePromotion?)null : new AvailablePromotion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

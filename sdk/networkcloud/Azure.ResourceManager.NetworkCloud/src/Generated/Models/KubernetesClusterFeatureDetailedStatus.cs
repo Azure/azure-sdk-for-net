@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterFeatureDetailedStatus?(string value) => value == null ? null : new KubernetesClusterFeatureDetailedStatus(value);
+        public static implicit operator KubernetesClusterFeatureDetailedStatus?(string value) => value == null ? (KubernetesClusterFeatureDetailedStatus?)null : new KubernetesClusterFeatureDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

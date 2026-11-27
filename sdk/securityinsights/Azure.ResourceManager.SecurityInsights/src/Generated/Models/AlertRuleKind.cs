@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="AlertRuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertRuleKind?(string value) => value == null ? null : new AlertRuleKind(value);
+        public static implicit operator AlertRuleKind?(string value) => value == null ? (AlertRuleKind?)null : new AlertRuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

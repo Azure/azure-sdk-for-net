@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="DataResidencyResourceEvaluationScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataResidencyResourceEvaluationScope?(string value) => value == null ? null : new DataResidencyResourceEvaluationScope(value);
+        public static implicit operator DataResidencyResourceEvaluationScope?(string value) => value == null ? (DataResidencyResourceEvaluationScope?)null : new DataResidencyResourceEvaluationScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

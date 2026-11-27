@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricAclType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricAclType?(string value) => value == null ? null : new NetworkFabricAclType(value);
+        public static implicit operator NetworkFabricAclType?(string value) => value == null ? (NetworkFabricAclType?)null : new NetworkFabricAclType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

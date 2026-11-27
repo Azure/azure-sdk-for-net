@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="WebPubSubServiceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubServiceKind?(string value) => value == null ? null : new WebPubSubServiceKind(value);
+        public static implicit operator WebPubSubServiceKind?(string value) => value == null ? (WebPubSubServiceKind?)null : new WebPubSubServiceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

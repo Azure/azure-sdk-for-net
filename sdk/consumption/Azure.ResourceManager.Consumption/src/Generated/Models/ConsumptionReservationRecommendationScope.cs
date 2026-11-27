@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionReservationRecommendationScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionReservationRecommendationScope?(string value) => value == null ? null : new ConsumptionReservationRecommendationScope(value);
+        public static implicit operator ConsumptionReservationRecommendationScope?(string value) => value == null ? (ConsumptionReservationRecommendationScope?)null : new ConsumptionReservationRecommendationScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

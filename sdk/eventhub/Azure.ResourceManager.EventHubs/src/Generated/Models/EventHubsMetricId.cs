@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsMetricId"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsMetricId?(string value) => value == null ? null : new EventHubsMetricId(value);
+        public static implicit operator EventHubsMetricId?(string value) => value == null ? (EventHubsMetricId?)null : new EventHubsMetricId(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

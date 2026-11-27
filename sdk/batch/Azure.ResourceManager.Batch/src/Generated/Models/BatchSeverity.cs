@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchSeverity?(string value) => value == null ? null : new BatchSeverity(value);
+        public static implicit operator BatchSeverity?(string value) => value == null ? (BatchSeverity?)null : new BatchSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

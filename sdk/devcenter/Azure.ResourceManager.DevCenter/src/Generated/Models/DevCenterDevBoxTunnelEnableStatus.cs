@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterDevBoxTunnelEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterDevBoxTunnelEnableStatus?(string value) => value == null ? null : new DevCenterDevBoxTunnelEnableStatus(value);
+        public static implicit operator DevCenterDevBoxTunnelEnableStatus?(string value) => value == null ? (DevCenterDevBoxTunnelEnableStatus?)null : new DevCenterDevBoxTunnelEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

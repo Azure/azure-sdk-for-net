@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeGalleryEndpointAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeGalleryEndpointAccess?(string value) => value == null ? null : new ComputeGalleryEndpointAccess(value);
+        public static implicit operator ComputeGalleryEndpointAccess?(string value) => value == null ? (ComputeGalleryEndpointAccess?)null : new ComputeGalleryEndpointAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

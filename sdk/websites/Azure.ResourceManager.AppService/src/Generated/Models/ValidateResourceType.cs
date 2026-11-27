@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="ValidateResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidateResourceType?(string value) => value == null ? null : new ValidateResourceType(value);
+        public static implicit operator ValidateResourceType?(string value) => value == null ? (ValidateResourceType?)null : new ValidateResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

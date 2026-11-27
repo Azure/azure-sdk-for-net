@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="OntologyEntryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OntologyEntryKind?(string value) => value == null ? null : new OntologyEntryKind(value);
+        public static implicit operator OntologyEntryKind?(string value) => value == null ? (OntologyEntryKind?)null : new OntologyEntryKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

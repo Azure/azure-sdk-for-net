@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="EnvironmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentType?(string value) => value == null ? null : new EnvironmentType(value);
+        public static implicit operator EnvironmentType?(string value) => value == null ? (EnvironmentType?)null : new EnvironmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="StorageManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageManagementType?(string value) => value == null ? null : new StorageManagementType(value);
+        public static implicit operator StorageManagementType?(string value) => value == null ? (StorageManagementType?)null : new StorageManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

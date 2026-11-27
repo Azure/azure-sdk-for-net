@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="TumblingWindowFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TumblingWindowFrequency?(string value) => value == null ? null : new TumblingWindowFrequency(value);
+        public static implicit operator TumblingWindowFrequency?(string value) => value == null ? (TumblingWindowFrequency?)null : new TumblingWindowFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

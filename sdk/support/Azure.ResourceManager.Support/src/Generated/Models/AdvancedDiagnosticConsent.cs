@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="AdvancedDiagnosticConsent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvancedDiagnosticConsent?(string value) => value == null ? null : new AdvancedDiagnosticConsent(value);
+        public static implicit operator AdvancedDiagnosticConsent?(string value) => value == null ? (AdvancedDiagnosticConsent?)null : new AdvancedDiagnosticConsent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

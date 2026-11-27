@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="StreamDestinationTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StreamDestinationTarget?(string value) => value == null ? null : new StreamDestinationTarget(value);
+        public static implicit operator StreamDestinationTarget?(string value) => value == null ? (StreamDestinationTarget?)null : new StreamDestinationTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

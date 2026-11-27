@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDeploymentType?(string value) => value == null ? null : new SapDeploymentType(value);
+        public static implicit operator SapDeploymentType?(string value) => value == null ? (SapDeploymentType?)null : new SapDeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

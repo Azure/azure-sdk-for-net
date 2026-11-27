@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CassandraClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraClusterType?(string value) => value == null ? null : new CassandraClusterType(value);
+        public static implicit operator CassandraClusterType?(string value) => value == null ? (CassandraClusterType?)null : new CassandraClusterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

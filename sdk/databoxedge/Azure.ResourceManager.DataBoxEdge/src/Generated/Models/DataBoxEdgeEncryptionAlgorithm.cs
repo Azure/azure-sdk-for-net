@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeEncryptionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeEncryptionAlgorithm?(string value) => value == null ? null : new DataBoxEdgeEncryptionAlgorithm(value);
+        public static implicit operator DataBoxEdgeEncryptionAlgorithm?(string value) => value == null ? (DataBoxEdgeEncryptionAlgorithm?)null : new DataBoxEdgeEncryptionAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

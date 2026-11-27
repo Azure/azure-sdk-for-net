@@ -46,7 +46,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void EnsureFrameworkTypeRegistered_RegistersBothTypes()
+        public void CustomFrameworkBaseResolvesCanonicalModelProvider()
         {
             // Set up the mock plugin to get access to CSharpTypeMap
             var proxyResourceModel = InputFactory.Model(
@@ -63,21 +63,28 @@ namespace Azure.Generator.Mgmt.Tests
             var crossLangProp = typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId));
             crossLangProp!.GetSetMethod(true)!.Invoke(proxyResourceModel, ["Azure.ResourceManager.CommonTypes.ProxyResource"]);
 
+            var widget = InputFactory.Model("Widget", properties: [],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [proxyResourceModel]);
+                inputModels: () => [proxyResourceModel, widget],
+                customizationSources:
+                [
+                    """
+                    namespace Samples.Models
+                    {
+                        public partial class Widget : Azure.ResourceManager.Models.ResourceData { }
+                    }
+                    """
+                ]);
 
             // Force creation of the model which triggers the visitor
             var modelProvider = plugin.Object.TypeFactory.CreateModel(proxyResourceModel);
             Assert.That(modelProvider, Is.Not.Null);
             Assert.That(modelProvider, Is.InstanceOf<SystemObjectModelProvider>());
 
-            // The CSharpTypeMap should now have both framework and non-framework entries
-            var typeMap = plugin.Object.TypeFactory.CSharpTypeMap;
-
-            // Check that a framework CSharpType for ResourceData can be found
-            var frameworkResourceData = new CSharpType(typeof(ResourceData));
-            Assert.That(typeMap.ContainsKey(frameworkResourceData), Is.True,
-                "CSharpTypeMap should contain a framework CSharpType entry for ResourceData after EnsureFrameworkTypeRegistered");
+            var widgetProvider = plugin.Object.TypeFactory.CreateModel(widget)!;
+            Assert.That(widgetProvider.BaseModelProvider, Is.SameAs(modelProvider),
+                "The base generator resolves custom framework bases by CLR identity without a visitor alias");
         }
 
         [Test]

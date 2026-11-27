@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="FunctionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FunctionType?(string value) => value == null ? null : new FunctionType(value);
+        public static implicit operator FunctionType?(string value) => value == null ? (FunctionType?)null : new FunctionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

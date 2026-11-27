@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="PaymentHsmClusterSkuFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PaymentHsmClusterSkuFamily?(string value) => value == null ? null : new PaymentHsmClusterSkuFamily(value);
+        public static implicit operator PaymentHsmClusterSkuFamily?(string value) => value == null ? (PaymentHsmClusterSkuFamily?)null : new PaymentHsmClusterSkuFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="NginxIngressControllerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NginxIngressControllerType?(string value) => value == null ? null : new NginxIngressControllerType(value);
+        public static implicit operator NginxIngressControllerType?(string value) => value == null ? (NginxIngressControllerType?)null : new NginxIngressControllerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

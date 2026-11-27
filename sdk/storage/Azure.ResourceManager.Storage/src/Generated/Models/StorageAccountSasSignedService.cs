@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountSasSignedService"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountSasSignedService?(string value) => value == null ? null : new StorageAccountSasSignedService(value);
+        public static implicit operator StorageAccountSasSignedService?(string value) => value == null ? (StorageAccountSasSignedService?)null : new StorageAccountSasSignedService(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

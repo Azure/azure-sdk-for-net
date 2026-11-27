@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="FreeLimitExhaustionBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FreeLimitExhaustionBehavior?(string value) => value == null ? null : new FreeLimitExhaustionBehavior(value);
+        public static implicit operator FreeLimitExhaustionBehavior?(string value) => value == null ? (FreeLimitExhaustionBehavior?)null : new FreeLimitExhaustionBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

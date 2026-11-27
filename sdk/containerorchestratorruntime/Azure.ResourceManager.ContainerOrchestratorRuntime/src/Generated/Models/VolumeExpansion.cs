@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="VolumeExpansion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeExpansion?(string value) => value == null ? null : new VolumeExpansion(value);
+        public static implicit operator VolumeExpansion?(string value) => value == null ? (VolumeExpansion?)null : new VolumeExpansion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

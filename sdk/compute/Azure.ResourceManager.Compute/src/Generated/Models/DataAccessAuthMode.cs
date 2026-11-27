@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DataAccessAuthMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataAccessAuthMode?(string value) => value == null ? null : new DataAccessAuthMode(value);
+        public static implicit operator DataAccessAuthMode?(string value) => value == null ? (DataAccessAuthMode?)null : new DataAccessAuthMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

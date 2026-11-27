@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ManagedVirtualNetworkReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedVirtualNetworkReferenceType?(string value) => value == null ? null : new ManagedVirtualNetworkReferenceType(value);
+        public static implicit operator ManagedVirtualNetworkReferenceType?(string value) => value == null ? (ManagedVirtualNetworkReferenceType?)null : new ManagedVirtualNetworkReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

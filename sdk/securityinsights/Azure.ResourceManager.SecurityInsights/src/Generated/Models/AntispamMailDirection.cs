@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="AntispamMailDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AntispamMailDirection?(string value) => value == null ? null : new AntispamMailDirection(value);
+        public static implicit operator AntispamMailDirection?(string value) => value == null ? (AntispamMailDirection?)null : new AntispamMailDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EapMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EapMethod?(string value) => value == null ? null : new EapMethod(value);
+        public static implicit operator EapMethod?(string value) => value == null ? (EapMethod?)null : new EapMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

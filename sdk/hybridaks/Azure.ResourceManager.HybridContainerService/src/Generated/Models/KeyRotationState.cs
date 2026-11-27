@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="KeyRotationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyRotationState?(string value) => value == null ? null : new KeyRotationState(value);
+        public static implicit operator KeyRotationState?(string value) => value == null ? (KeyRotationState?)null : new KeyRotationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="CertificateStoreNameOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateStoreNameOption?(string value) => value == null ? null : new CertificateStoreNameOption(value);
+        public static implicit operator CertificateStoreNameOption?(string value) => value == null ? (CertificateStoreNameOption?)null : new CertificateStoreNameOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PcError"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PcError?(string value) => value == null ? null : new PcError(value);
+        public static implicit operator PcError?(string value) => value == null ? (PcError?)null : new PcError(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

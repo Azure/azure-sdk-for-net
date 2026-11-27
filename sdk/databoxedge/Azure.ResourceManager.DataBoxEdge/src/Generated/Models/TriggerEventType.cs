@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="TriggerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TriggerEventType?(string value) => value == null ? null : new TriggerEventType(value);
+        public static implicit operator TriggerEventType?(string value) => value == null ? (TriggerEventType?)null : new TriggerEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

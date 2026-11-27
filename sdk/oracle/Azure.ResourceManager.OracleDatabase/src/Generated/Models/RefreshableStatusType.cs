@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="RefreshableStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RefreshableStatusType?(string value) => value == null ? null : new RefreshableStatusType(value);
+        public static implicit operator RefreshableStatusType?(string value) => value == null ? (RefreshableStatusType?)null : new RefreshableStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

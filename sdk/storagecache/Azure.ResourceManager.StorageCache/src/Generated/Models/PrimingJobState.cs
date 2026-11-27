@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="PrimingJobState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrimingJobState?(string value) => value == null ? null : new PrimingJobState(value);
+        public static implicit operator PrimingJobState?(string value) => value == null ? (PrimingJobState?)null : new PrimingJobState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

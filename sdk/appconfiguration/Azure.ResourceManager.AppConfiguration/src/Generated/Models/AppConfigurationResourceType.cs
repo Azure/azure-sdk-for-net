@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationResourceType?(string value) => value == null ? null : new AppConfigurationResourceType(value);
+        public static implicit operator AppConfigurationResourceType?(string value) => value == null ? (AppConfigurationResourceType?)null : new AppConfigurationResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> Converts a string to a <see cref="PlaywrightNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlaywrightNameUnavailableReason?(string value) => value == null ? null : new PlaywrightNameUnavailableReason(value);
+        public static implicit operator PlaywrightNameUnavailableReason?(string value) => value == null ? (PlaywrightNameUnavailableReason?)null : new PlaywrightNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

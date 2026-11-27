@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="LastAttemptStatusEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LastAttemptStatusEnum?(string value) => value == null ? null : new LastAttemptStatusEnum(value);
+        public static implicit operator LastAttemptStatusEnum?(string value) => value == null ? (LastAttemptStatusEnum?)null : new LastAttemptStatusEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

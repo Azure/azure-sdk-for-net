@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="RestServiceAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestServiceAuthenticationType?(string value) => value == null ? null : new RestServiceAuthenticationType(value);
+        public static implicit operator RestServiceAuthenticationType?(string value) => value == null ? (RestServiceAuthenticationType?)null : new RestServiceAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

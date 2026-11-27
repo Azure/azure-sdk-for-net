@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ComputeScheduleAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeScheduleAllocationStrategy?(string value) => value == null ? null : new ComputeScheduleAllocationStrategy(value);
+        public static implicit operator ComputeScheduleAllocationStrategy?(string value) => value == null ? (ComputeScheduleAllocationStrategy?)null : new ComputeScheduleAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBServiceType?(string value) => value == null ? null : new CosmosDBServiceType(value);
+        public static implicit operator CosmosDBServiceType?(string value) => value == null ? (CosmosDBServiceType?)null : new CosmosDBServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

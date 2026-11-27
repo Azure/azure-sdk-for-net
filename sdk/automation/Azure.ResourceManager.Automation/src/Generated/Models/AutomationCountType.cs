@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationCountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationCountType?(string value) => value == null ? null : new AutomationCountType(value);
+        public static implicit operator AutomationCountType?(string value) => value == null ? (AutomationCountType?)null : new AutomationCountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

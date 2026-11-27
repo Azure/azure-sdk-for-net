@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsSubscriptionTrialStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsSubscriptionTrialStatus?(string value) => value == null ? null : new AvsSubscriptionTrialStatus(value);
+        public static implicit operator AvsSubscriptionTrialStatus?(string value) => value == null ? (AvsSubscriptionTrialStatus?)null : new AvsSubscriptionTrialStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

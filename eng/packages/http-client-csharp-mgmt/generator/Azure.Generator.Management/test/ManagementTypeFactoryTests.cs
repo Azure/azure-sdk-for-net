@@ -9,14 +9,17 @@ using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -25,6 +28,120 @@ namespace Azure.Generator.Mgmt.Tests
         private static readonly InputPrimitiveType _armResourceIdentifier = new(InputPrimitiveTypeKind.String, "armResourceIdentifier", "Azure.Core.armResourceIdentifier");
         private static readonly InputPrimitiveType _armResourceType = new(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
         private static readonly InputPrimitiveType _azureLocation = new(InputPrimitiveTypeKind.String, "azureLocation", "Azure.Core.azureLocation");
+
+        [TestCase(typeof(Azure.ResourceManager.Models.ResourceData), true)]
+        [TestCase(typeof(Azure.ResourceManager.Models.TrackedResourceData), true)]
+        [TestCase(typeof(InheritedWriter), true)]
+        [TestCase(typeof(object), false)]
+        [TestCase(typeof(OverloadOnlyWriter), false)]
+        [TestCase(typeof(NonVirtualWriter), false)]
+        [TestCase(typeof(SealedWriter), false)]
+        [TestCase(typeof(PublicWriter), false)]
+        [TestCase(typeof(WrongReturnWriter), false)]
+        [TestCase(typeof(StaticWriter), false)]
+        [TestCase(typeof(GenericWriter), false)]
+        public void MappedFrameworkWriterRequiresCompatibleClrMethod(Type frameworkType, bool hasWriter)
+        {
+            var input = InputFactory.Model("Widget");
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
+            var provider = new MgmtObjectModelProvider(frameworkType, input);
+
+            Assert.That(provider.Methods.Any(method => method.Signature.Name == "JsonModelWriteCore"), Is.EqualTo(hasWriter));
+        }
+
+        [TestCase("Resource", false)]
+        [TestCase("Resource", true)]
+        [TestCase("TrackedResource", false)]
+        [TestCase("TrackedResource", true)]
+        public void MappedArmBaseUsesNativeWriterChaining(string commonType, bool intermediateBase)
+        {
+            var resource = InputFactory.Model(commonType, properties: [],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                .GetSetMethod(true)!.Invoke(resource, [$"Azure.ResourceManager.CommonTypes.{commonType}"]);
+            var parent = InputFactory.Model("WidgetBase", properties: [], baseModel: resource,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var widget = InputFactory.Model("Widget",
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)],
+                baseModel: intermediateBase ? parent : resource,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resource, parent, widget]);
+            var provider = plugin.Object.TypeFactory.CreateModel(widget)!;
+            var serialization = provider.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+
+            // Bypass GetWriter and its visitor repairs: MTG must construct the right methods itself.
+            var code = new TypeProviderWriter(serialization).Write().Content;
+
+            Assert.That(code, Does.Contain("protected override void JsonModelWriteCore"));
+            Assert.That(code, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+            foreach (var name in new[] { "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" })
+            {
+                var method = serialization.Methods.Single(method => method.Signature.Name == name);
+                Assert.That(method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.EqualTo(intermediateBase),
+                    $"{name} must not override a nonexistent ARM framework method");
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void CommonResourceAliasesPreserveInheritedContractRegardlessOfCreationOrder(bool proxyFirst)
+        {
+            var resource = InputFactory.Model("Resource",
+                properties:
+                [
+                    InputFactory.Property("id", _armResourceIdentifier, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", _armResourceType, isReadOnly: true),
+                    InputFactory.Property("systemData", InputFactory.Model("SystemData"), isReadOnly: true)
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var proxy = InputFactory.Model("ProxyResource", properties: [], baseModel: resource,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var tracked = InputFactory.Model("TrackedResource",
+                properties:
+                [
+                    InputFactory.Property("tags", new InputDictionaryType("tags", InputPrimitiveType.String, InputPrimitiveType.String)),
+                    InputFactory.Property("location", _azureLocation, isRequired: true)
+                ],
+                baseModel: resource,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            foreach (var model in new[] { resource, proxy, tracked })
+            {
+                typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                    .GetSetMethod(true)!.Invoke(model, [$"Azure.ResourceManager.CommonTypes.{model.Name}"]);
+            }
+            var widget = InputFactory.Model("Widget",
+                properties: [InputFactory.Property("name", InputPrimitiveType.String, isRequired: true)],
+                baseModel: proxy,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [proxy, resource, tracked, widget]);
+            var factory = plugin.Object.TypeFactory;
+            _ = factory.CreateModel(proxyFirst ? proxy : resource);
+            var proxyProvider = factory.CreateModel(proxy)!;
+            var resourceProvider = factory.CreateModel(resource)!;
+            var trackedProvider = factory.CreateModel(tracked)!;
+            var widgetProvider = factory.CreateModel(widget)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(proxyProvider, Is.SameAs(resourceProvider));
+                Assert.That(factory.CreateCSharpType(proxy), Is.SameAs(resourceProvider.Type));
+                Assert.That(trackedProvider.BaseModelProvider, Is.SameAs(resourceProvider));
+                Assert.That(widgetProvider.BaseModelProvider, Is.SameAs(resourceProvider));
+                Assert.That(widgetProvider.Properties.Select(property => property.Name), Does.Not.Contain("Name"));
+                Assert.That(widgetProvider.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
+                    Does.Contain("id").And.Contain("name").And.Contain("resourceType").And.Contain("systemData"));
+                Assert.That(trackedProvider.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
+                    Is.EqualTo(new[] { "id", "name", "resourceType", "systemData", "tags", "location" }));
+            });
+
+            var serialization = widgetProvider.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var code = plugin.Object.GetWriter(serialization).Write().Content;
+            Assert.That(code, Does.Contain("prop.NameEquals(\"id\"u8)"));
+            Assert.That(code, Does.Contain("prop.NameEquals(\"name\"u8)"));
+            Assert.That(code, Does.Contain("prop.NameEquals(\"type\"u8)"));
+            Assert.That(code, Does.Contain("prop.NameEquals(\"systemData\"u8)"));
+        }
 
         [TestCase("Azure.ResourceManager.Compute", ExpectedResult = "Compute")]
         [TestCase("Azure.ResourceManager.Storage", ExpectedResult = "Storage")]
@@ -211,6 +328,9 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [model],
                 primaryNamespace: "Azure.ResourceManager.Test",
+                customizationCompilation: () => Helpers.BuildCompilation([]).AddReferences(
+                    MetadataReference.CreateFromFile(typeof(Utf8JsonWriter).Assembly.Location),
+                    MetadataReference.CreateFromFile(typeof(ModelReaderWriterOptions).Assembly.Location)),
                 lastContractCompilation: () => Helpers.GetCompilationFromDirectory(
                     method: nameof(KnownLastContractResourceDataCreatesMappedProvider)));
             var provider = plugin.Object.TypeFactory.CreateModel(model)!;
@@ -225,6 +345,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(historicalBase.Properties.All(p => p.WireInfo is null), Is.True,
                 "Historical symbol properties must not be mutated with per-model fallback metadata");
             var serialization = new TypeProviderWriter(provider.SerializationProviders.Single()).Write().Content;
+            Assert.That(serialization, Does.Contain("protected override void JsonModelWriteCore"));
+            Assert.That(serialization, Does.Contain("base.JsonModelWriteCore(writer, options);"));
             foreach (string wireName in new[] { "id", "name", "type", "systemData" })
             {
                 Assert.That(serialization, Does.Contain($"prop.NameEquals(\"{wireName}\"u8)"));
@@ -636,6 +758,48 @@ namespace Azure.Generator.Mgmt.Tests
             // No ManagedServiceIdentityType enum at all
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => []);
             Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
+        }
+
+        private class OverridableWriter
+        {
+            protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class InheritedWriter : OverridableWriter { }
+
+        private class OverloadOnlyWriter
+        {
+            protected virtual void JsonModelWriteCore(object writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class NonVirtualWriter
+        {
+            protected void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class SealedWriter : OverridableWriter
+        {
+            protected sealed override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class PublicWriter
+        {
+            public virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class WrongReturnWriter
+        {
+            protected virtual int JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => 0;
+        }
+
+        private class StaticWriter
+        {
+            protected static void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class GenericWriter
+        {
+            protected virtual void JsonModelWriteCore<T>(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         }
     }
 }

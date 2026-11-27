@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new ServiceBusPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator ServiceBusPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (ServiceBusPrivateEndpointConnectionProvisioningState?)null : new ServiceBusPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

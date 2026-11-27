@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <summary> Converts a string to a <see cref="AlertsManagementDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertsManagementDayOfWeek?(string value) => value == null ? null : new AlertsManagementDayOfWeek(value);
+        public static implicit operator AlertsManagementDayOfWeek?(string value) => value == null ? (AlertsManagementDayOfWeek?)null : new AlertsManagementDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeExtendedLocationPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeExtendedLocationPolicy?(string value) => value == null ? null : new ResourceTypeExtendedLocationPolicy(value);
+        public static implicit operator ResourceTypeExtendedLocationPolicy?(string value) => value == null ? (ResourceTypeExtendedLocationPolicy?)null : new ResourceTypeExtendedLocationPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

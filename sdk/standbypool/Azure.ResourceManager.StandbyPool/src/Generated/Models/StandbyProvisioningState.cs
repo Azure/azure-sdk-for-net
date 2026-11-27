@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Converts a string to a <see cref="StandbyProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandbyProvisioningState?(string value) => value == null ? null : new StandbyProvisioningState(value);
+        public static implicit operator StandbyProvisioningState?(string value) => value == null ? (StandbyProvisioningState?)null : new StandbyProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

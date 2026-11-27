@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="BmpMonitoredAddressFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BmpMonitoredAddressFamily?(string value) => value == null ? null : new BmpMonitoredAddressFamily(value);
+        public static implicit operator BmpMonitoredAddressFamily?(string value) => value == null ? (BmpMonitoredAddressFamily?)null : new BmpMonitoredAddressFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

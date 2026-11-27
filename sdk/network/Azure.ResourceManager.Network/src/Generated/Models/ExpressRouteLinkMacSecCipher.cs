@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteLinkMacSecCipher"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteLinkMacSecCipher?(string value) => value == null ? null : new ExpressRouteLinkMacSecCipher(value);
+        public static implicit operator ExpressRouteLinkMacSecCipher?(string value) => value == null ? (ExpressRouteLinkMacSecCipher?)null : new ExpressRouteLinkMacSecCipher(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

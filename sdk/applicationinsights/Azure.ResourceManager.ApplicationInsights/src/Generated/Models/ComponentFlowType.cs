@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentFlowType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentFlowType?(string value) => value == null ? null : new ComponentFlowType(value);
+        public static implicit operator ComponentFlowType?(string value) => value == null ? (ComponentFlowType?)null : new ComponentFlowType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

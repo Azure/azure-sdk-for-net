@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="AffectedObjectDetailsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AffectedObjectDetailsType?(string value) => value == null ? null : new AffectedObjectDetailsType(value);
+        public static implicit operator AffectedObjectDetailsType?(string value) => value == null ? (AffectedObjectDetailsType?)null : new AffectedObjectDetailsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

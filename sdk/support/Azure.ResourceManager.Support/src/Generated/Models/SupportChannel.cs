@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="SupportChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportChannel?(string value) => value == null ? null : new SupportChannel(value);
+        public static implicit operator SupportChannel?(string value) => value == null ? (SupportChannel?)null : new SupportChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

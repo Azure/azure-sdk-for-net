@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="DeviceLogCollectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceLogCollectionStatus?(string value) => value == null ? null : new DeviceLogCollectionStatus(value);
+        public static implicit operator DeviceLogCollectionStatus?(string value) => value == null ? (DeviceLogCollectionStatus?)null : new DeviceLogCollectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

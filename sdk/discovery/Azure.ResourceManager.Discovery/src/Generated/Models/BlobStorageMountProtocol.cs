@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="BlobStorageMountProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobStorageMountProtocol?(string value) => value == null ? null : new BlobStorageMountProtocol(value);
+        public static implicit operator BlobStorageMountProtocol?(string value) => value == null ? (BlobStorageMountProtocol?)null : new BlobStorageMountProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

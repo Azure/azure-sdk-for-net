@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="SecurityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityTypes?(string value) => value == null ? null : new SecurityTypes(value);
+        public static implicit operator SecurityTypes?(string value) => value == null ? (SecurityTypes?)null : new SecurityTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppVolumeStorageToNetworkProximity?(string value) => value == null ? null : new NetAppVolumeStorageToNetworkProximity(value);
+        public static implicit operator NetAppVolumeStorageToNetworkProximity?(string value) => value == null ? (NetAppVolumeStorageToNetworkProximity?)null : new NetAppVolumeStorageToNetworkProximity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerZoneRedundantHaSupported(value);
+        public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaSupported?(string value) => value == null ? (PostgreSqlFlexibleServerZoneRedundantHaSupported?)null : new PostgreSqlFlexibleServerZoneRedundantHaSupported(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

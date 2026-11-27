@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="GovernanceRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GovernanceRuleType?(string value) => value == null ? null : new GovernanceRuleType(value);
+        public static implicit operator GovernanceRuleType?(string value) => value == null ? (GovernanceRuleType?)null : new GovernanceRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

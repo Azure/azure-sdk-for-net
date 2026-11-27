@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnLinkConnectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnLinkConnectionMode?(string value) => value == null ? null : new VpnLinkConnectionMode(value);
+        public static implicit operator VpnLinkConnectionMode?(string value) => value == null ? (VpnLinkConnectionMode?)null : new VpnLinkConnectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

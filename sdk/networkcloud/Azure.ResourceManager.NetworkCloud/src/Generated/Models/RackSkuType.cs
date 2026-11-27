@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RackSkuType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RackSkuType?(string value) => value == null ? null : new RackSkuType(value);
+        public static implicit operator RackSkuType?(string value) => value == null ? (RackSkuType?)null : new RackSkuType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="ServerEndpointSyncActivityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerEndpointSyncActivityState?(string value) => value == null ? null : new ServerEndpointSyncActivityState(value);
+        public static implicit operator ServerEndpointSyncActivityState?(string value) => value == null ? (ServerEndpointSyncActivityState?)null : new ServerEndpointSyncActivityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

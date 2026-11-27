@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterNodeOSUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterNodeOSUpgradeChannel?(string value) => value == null ? null : new ManagedClusterNodeOSUpgradeChannel(value);
+        public static implicit operator ManagedClusterNodeOSUpgradeChannel?(string value) => value == null ? (ManagedClusterNodeOSUpgradeChannel?)null : new ManagedClusterNodeOSUpgradeChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

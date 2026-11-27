@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppExtendedLocationType?(string value) => value == null ? null : new ContainerAppExtendedLocationType(value);
+        public static implicit operator ContainerAppExtendedLocationType?(string value) => value == null ? (ContainerAppExtendedLocationType?)null : new ContainerAppExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

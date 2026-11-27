@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ManagedRuleEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedRuleEnabledState?(string value) => value == null ? null : new ManagedRuleEnabledState(value);
+        public static implicit operator ManagedRuleEnabledState?(string value) => value == null ? (ManagedRuleEnabledState?)null : new ManagedRuleEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

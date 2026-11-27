@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="ActiveDirectoryServiceAccountProvisioningMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActiveDirectoryServiceAccountProvisioningMode?(string value) => value == null ? null : new ActiveDirectoryServiceAccountProvisioningMode(value);
+        public static implicit operator ActiveDirectoryServiceAccountProvisioningMode?(string value) => value == null ? (ActiveDirectoryServiceAccountProvisioningMode?)null : new ActiveDirectoryServiceAccountProvisioningMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

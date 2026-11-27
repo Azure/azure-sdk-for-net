@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereAllowCrashDumpCollectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereAllowCrashDumpCollectionStatus?(string value) => value == null ? null : new SphereAllowCrashDumpCollectionStatus(value);
+        public static implicit operator SphereAllowCrashDumpCollectionStatus?(string value) => value == null ? (SphereAllowCrashDumpCollectionStatus?)null : new SphereAllowCrashDumpCollectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

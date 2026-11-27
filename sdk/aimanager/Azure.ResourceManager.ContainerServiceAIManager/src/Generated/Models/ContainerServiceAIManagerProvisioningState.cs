@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceAIManagerProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceAIManagerProvisioningState?(string value) => value == null ? null : new ContainerServiceAIManagerProvisioningState(value);
+        public static implicit operator ContainerServiceAIManagerProvisioningState?(string value) => value == null ? (ContainerServiceAIManagerProvisioningState?)null : new ContainerServiceAIManagerProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

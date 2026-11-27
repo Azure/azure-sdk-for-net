@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="MccCacheNodeOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MccCacheNodeOSType?(string value) => value == null ? null : new MccCacheNodeOSType(value);
+        public static implicit operator MccCacheNodeOSType?(string value) => value == null ? (MccCacheNodeOSType?)null : new MccCacheNodeOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

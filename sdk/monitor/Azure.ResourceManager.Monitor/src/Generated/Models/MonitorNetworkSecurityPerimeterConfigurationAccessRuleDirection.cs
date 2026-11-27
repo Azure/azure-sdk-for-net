@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection?(string value) => value == null ? null : new MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection(value);
+        public static implicit operator MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection?(string value) => value == null ? (MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection?)null : new MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

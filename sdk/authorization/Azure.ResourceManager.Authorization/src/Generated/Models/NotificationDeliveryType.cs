@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="NotificationDeliveryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationDeliveryType?(string value) => value == null ? null : new NotificationDeliveryType(value);
+        public static implicit operator NotificationDeliveryType?(string value) => value == null ? (NotificationDeliveryType?)null : new NotificationDeliveryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

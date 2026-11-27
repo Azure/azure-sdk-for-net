@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VmssRebalanceStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmssRebalanceStrategy?(string value) => value == null ? null : new VmssRebalanceStrategy(value);
+        public static implicit operator VmssRebalanceStrategy?(string value) => value == null ? (VmssRebalanceStrategy?)null : new VmssRebalanceStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

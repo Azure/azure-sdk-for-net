@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="OriginAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OriginAuthenticationType?(string value) => value == null ? null : new OriginAuthenticationType(value);
+        public static implicit operator OriginAuthenticationType?(string value) => value == null ? (OriginAuthenticationType?)null : new OriginAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

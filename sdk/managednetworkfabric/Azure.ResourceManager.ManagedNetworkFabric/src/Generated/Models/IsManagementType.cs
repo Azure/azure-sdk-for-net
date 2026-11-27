@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="IsManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsManagementType?(string value) => value == null ? null : new IsManagementType(value);
+        public static implicit operator IsManagementType?(string value) => value == null ? (IsManagementType?)null : new IsManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

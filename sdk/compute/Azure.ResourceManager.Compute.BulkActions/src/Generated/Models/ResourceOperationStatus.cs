@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ResourceOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceOperationStatus?(string value) => value == null ? null : new ResourceOperationStatus(value);
+        public static implicit operator ResourceOperationStatus?(string value) => value == null ? (ResourceOperationStatus?)null : new ResourceOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

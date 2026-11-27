@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterDevboxDisksEncryptionEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterDevboxDisksEncryptionEnableStatus?(string value) => value == null ? null : new DevCenterDevboxDisksEncryptionEnableStatus(value);
+        public static implicit operator DevCenterDevboxDisksEncryptionEnableStatus?(string value) => value == null ? (DevCenterDevboxDisksEncryptionEnableStatus?)null : new DevCenterDevboxDisksEncryptionEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlReplicaConnectedState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlReplicaConnectedState?(string value) => value == null ? null : new SqlReplicaConnectedState(value);
+        public static implicit operator SqlReplicaConnectedState?(string value) => value == null ? (SqlReplicaConnectedState?)null : new SqlReplicaConnectedState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

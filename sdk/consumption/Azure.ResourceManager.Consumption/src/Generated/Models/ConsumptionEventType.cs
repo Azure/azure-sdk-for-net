@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionEventType?(string value) => value == null ? null : new ConsumptionEventType(value);
+        public static implicit operator ConsumptionEventType?(string value) => value == null ? (ConsumptionEventType?)null : new ConsumptionEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

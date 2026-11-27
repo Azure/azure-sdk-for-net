@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubJobType?(string value) => value == null ? null : new IotHubJobType(value);
+        public static implicit operator IotHubJobType?(string value) => value == null ? (IotHubJobType?)null : new IotHubJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

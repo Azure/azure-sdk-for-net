@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayFirewallMode?(string value) => value == null ? null : new ApplicationGatewayFirewallMode(value);
+        public static implicit operator ApplicationGatewayFirewallMode?(string value) => value == null ? (ApplicationGatewayFirewallMode?)null : new ApplicationGatewayFirewallMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

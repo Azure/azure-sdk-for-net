@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerServiceType?(string value) => value == null ? null : new SqlServerServiceType(value);
+        public static implicit operator SqlServerServiceType?(string value) => value == null ? (SqlServerServiceType?)null : new SqlServerServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

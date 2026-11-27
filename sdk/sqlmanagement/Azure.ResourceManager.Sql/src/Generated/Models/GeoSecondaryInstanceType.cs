@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="GeoSecondaryInstanceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GeoSecondaryInstanceType?(string value) => value == null ? null : new GeoSecondaryInstanceType(value);
+        public static implicit operator GeoSecondaryInstanceType?(string value) => value == null ? (GeoSecondaryInstanceType?)null : new GeoSecondaryInstanceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

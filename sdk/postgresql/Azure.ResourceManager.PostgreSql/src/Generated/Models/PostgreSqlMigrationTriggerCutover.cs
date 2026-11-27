@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationTriggerCutover?(string value) => value == null ? null : new PostgreSqlMigrationTriggerCutover(value);
+        public static implicit operator PostgreSqlMigrationTriggerCutover?(string value) => value == null ? (PostgreSqlMigrationTriggerCutover?)null : new PostgreSqlMigrationTriggerCutover(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="BlobStorageEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobStorageEventType?(string value) => value == null ? null : new BlobStorageEventType(value);
+        public static implicit operator BlobStorageEventType?(string value) => value == null ? (BlobStorageEventType?)null : new BlobStorageEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

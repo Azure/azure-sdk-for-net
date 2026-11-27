@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsGroupingMatchingMethod?(string value) => value == null ? null : new SecurityInsightsGroupingMatchingMethod(value);
+        public static implicit operator SecurityInsightsGroupingMatchingMethod?(string value) => value == null ? (SecurityInsightsGroupingMatchingMethod?)null : new SecurityInsightsGroupingMatchingMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

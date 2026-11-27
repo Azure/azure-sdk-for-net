@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerSecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerSecretType?(string value) => value == null ? null : new LinkerSecretType(value);
+        public static implicit operator LinkerSecretType?(string value) => value == null ? (LinkerSecretType?)null : new LinkerSecretType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

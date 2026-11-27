@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeAlertSeverity?(string value) => value == null ? null : new DataBoxEdgeAlertSeverity(value);
+        public static implicit operator DataBoxEdgeAlertSeverity?(string value) => value == null ? (DataBoxEdgeAlertSeverity?)null : new DataBoxEdgeAlertSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

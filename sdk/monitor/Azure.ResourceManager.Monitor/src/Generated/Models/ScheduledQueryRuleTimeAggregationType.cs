@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledQueryRuleTimeAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledQueryRuleTimeAggregationType?(string value) => value == null ? null : new ScheduledQueryRuleTimeAggregationType(value);
+        public static implicit operator ScheduledQueryRuleTimeAggregationType?(string value) => value == null ? (ScheduledQueryRuleTimeAggregationType?)null : new ScheduledQueryRuleTimeAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

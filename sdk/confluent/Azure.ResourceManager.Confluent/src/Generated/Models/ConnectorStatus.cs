@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConnectorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorStatus?(string value) => value == null ? null : new ConnectorStatus(value);
+        public static implicit operator ConnectorStatus?(string value) => value == null ? (ConnectorStatus?)null : new ConnectorStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

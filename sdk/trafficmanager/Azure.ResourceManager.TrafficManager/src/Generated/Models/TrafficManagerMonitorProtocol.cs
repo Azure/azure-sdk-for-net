@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="TrafficManagerMonitorProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficManagerMonitorProtocol?(string value) => value == null ? null : new TrafficManagerMonitorProtocol(value);
+        public static implicit operator TrafficManagerMonitorProtocol?(string value) => value == null ? (TrafficManagerMonitorProtocol?)null : new TrafficManagerMonitorProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

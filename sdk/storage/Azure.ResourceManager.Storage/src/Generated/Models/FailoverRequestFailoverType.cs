@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="FailoverRequestFailoverType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverRequestFailoverType?(string value) => value == null ? null : new FailoverRequestFailoverType(value);
+        public static implicit operator FailoverRequestFailoverType?(string value) => value == null ? (FailoverRequestFailoverType?)null : new FailoverRequestFailoverType(value);
     }
 }

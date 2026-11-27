@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeOrderState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeOrderState?(string value) => value == null ? null : new DataBoxEdgeOrderState(value);
+        public static implicit operator DataBoxEdgeOrderState?(string value) => value == null ? (DataBoxEdgeOrderState?)null : new DataBoxEdgeOrderState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

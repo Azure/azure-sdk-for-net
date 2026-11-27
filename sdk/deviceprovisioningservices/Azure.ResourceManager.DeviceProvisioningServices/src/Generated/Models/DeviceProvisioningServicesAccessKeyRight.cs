@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesAccessKeyRight?(string value) => value == null ? null : new DeviceProvisioningServicesAccessKeyRight(value);
+        public static implicit operator DeviceProvisioningServicesAccessKeyRight?(string value) => value == null ? (DeviceProvisioningServicesAccessKeyRight?)null : new DeviceProvisioningServicesAccessKeyRight(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

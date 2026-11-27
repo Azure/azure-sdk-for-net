@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="RedisTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisTlsVersion?(string value) => value == null ? null : new RedisTlsVersion(value);
+        public static implicit operator RedisTlsVersion?(string value) => value == null ? (RedisTlsVersion?)null : new RedisTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

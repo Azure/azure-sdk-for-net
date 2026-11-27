@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="LargeFileSharesState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LargeFileSharesState?(string value) => value == null ? null : new LargeFileSharesState(value);
+        public static implicit operator LargeFileSharesState?(string value) => value == null ? (LargeFileSharesState?)null : new LargeFileSharesState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

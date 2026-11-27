@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="RevisionRunningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RevisionRunningState?(string value) => value == null ? null : new RevisionRunningState(value);
+        public static implicit operator RevisionRunningState?(string value) => value == null ? (RevisionRunningState?)null : new RevisionRunningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

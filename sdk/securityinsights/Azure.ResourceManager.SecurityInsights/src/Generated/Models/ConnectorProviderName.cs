@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ConnectorProviderName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorProviderName?(string value) => value == null ? null : new ConnectorProviderName(value);
+        public static implicit operator ConnectorProviderName?(string value) => value == null ? (ConnectorProviderName?)null : new ConnectorProviderName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

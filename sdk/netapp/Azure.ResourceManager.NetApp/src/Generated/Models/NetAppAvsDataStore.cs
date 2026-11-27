@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppAvsDataStore"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppAvsDataStore?(string value) => value == null ? null : new NetAppAvsDataStore(value);
+        public static implicit operator NetAppAvsDataStore?(string value) => value == null ? (NetAppAvsDataStore?)null : new NetAppAvsDataStore(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

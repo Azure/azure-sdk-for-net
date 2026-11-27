@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="AgentReinstallBlockedReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentReinstallBlockedReason?(string value) => value == null ? null : new AgentReinstallBlockedReason(value);
+        public static implicit operator AgentReinstallBlockedReason?(string value) => value == null ? (AgentReinstallBlockedReason?)null : new AgentReinstallBlockedReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

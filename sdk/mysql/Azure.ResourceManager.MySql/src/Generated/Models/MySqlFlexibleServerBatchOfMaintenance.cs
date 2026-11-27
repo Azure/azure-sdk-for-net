@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerBatchOfMaintenance"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerBatchOfMaintenance?(string value) => value == null ? null : new MySqlFlexibleServerBatchOfMaintenance(value);
+        public static implicit operator MySqlFlexibleServerBatchOfMaintenance?(string value) => value == null ? (MySqlFlexibleServerBatchOfMaintenance?)null : new MySqlFlexibleServerBatchOfMaintenance(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

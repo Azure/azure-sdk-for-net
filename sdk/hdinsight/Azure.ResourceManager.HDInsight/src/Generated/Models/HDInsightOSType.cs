@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightOSType?(string value) => value == null ? null : new HDInsightOSType(value);
+        public static implicit operator HDInsightOSType?(string value) => value == null ? (HDInsightOSType?)null : new HDInsightOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

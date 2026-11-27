@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="EdgeJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeJobStatus?(string value) => value == null ? null : new EdgeJobStatus(value);
+        public static implicit operator EdgeJobStatus?(string value) => value == null ? (EdgeJobStatus?)null : new EdgeJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

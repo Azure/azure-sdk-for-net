@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningWorkspaceQuotaStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningWorkspaceQuotaStatus?(string value) => value == null ? null : new MachineLearningWorkspaceQuotaStatus(value);
+        public static implicit operator MachineLearningWorkspaceQuotaStatus?(string value) => value == null ? (MachineLearningWorkspaceQuotaStatus?)null : new MachineLearningWorkspaceQuotaStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

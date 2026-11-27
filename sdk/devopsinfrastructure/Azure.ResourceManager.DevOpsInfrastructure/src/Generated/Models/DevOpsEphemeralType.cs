@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsEphemeralType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsEphemeralType?(string value) => value == null ? null : new DevOpsEphemeralType(value);
+        public static implicit operator DevOpsEphemeralType?(string value) => value == null ? (DevOpsEphemeralType?)null : new DevOpsEphemeralType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

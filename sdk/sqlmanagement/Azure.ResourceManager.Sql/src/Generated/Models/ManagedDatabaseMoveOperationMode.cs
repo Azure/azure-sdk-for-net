@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedDatabaseMoveOperationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedDatabaseMoveOperationMode?(string value) => value == null ? null : new ManagedDatabaseMoveOperationMode(value);
+        public static implicit operator ManagedDatabaseMoveOperationMode?(string value) => value == null ? (ManagedDatabaseMoveOperationMode?)null : new ManagedDatabaseMoveOperationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

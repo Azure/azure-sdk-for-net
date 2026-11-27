@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryNetworkEgressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryNetworkEgressType?(string value) => value == null ? null : new DiscoveryNetworkEgressType(value);
+        public static implicit operator DiscoveryNetworkEgressType?(string value) => value == null ? (DiscoveryNetworkEgressType?)null : new DiscoveryNetworkEgressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="StaticSiteBuildStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StaticSiteBuildStatus?(string value) => value == null ? null : new StaticSiteBuildStatus(value);
+        public static implicit operator StaticSiteBuildStatus?(string value) => value == null ? (StaticSiteBuildStatus?)null : new StaticSiteBuildStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

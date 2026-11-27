@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringFamily?(string value) => value == null ? null : new PeeringFamily(value);
+        public static implicit operator PeeringFamily?(string value) => value == null ? (PeeringFamily?)null : new PeeringFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

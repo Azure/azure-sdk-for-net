@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryNetworkRuleDefaultAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryNetworkRuleDefaultAction?(string value) => value == null ? null : new ContainerRegistryNetworkRuleDefaultAction(value);
+        public static implicit operator ContainerRegistryNetworkRuleDefaultAction?(string value) => value == null ? (ContainerRegistryNetworkRuleDefaultAction?)null : new ContainerRegistryNetworkRuleDefaultAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

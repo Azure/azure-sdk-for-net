@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterPublicNetworkAccess?(string value) => value == null ? null : new MongoClusterPublicNetworkAccess(value);
+        public static implicit operator MongoClusterPublicNetworkAccess?(string value) => value == null ? (MongoClusterPublicNetworkAccess?)null : new MongoClusterPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

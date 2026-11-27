@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionBillingFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionBillingFrequency?(string value) => value == null ? null : new ConsumptionBillingFrequency(value);
+        public static implicit operator ConsumptionBillingFrequency?(string value) => value == null ? (ConsumptionBillingFrequency?)null : new ConsumptionBillingFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

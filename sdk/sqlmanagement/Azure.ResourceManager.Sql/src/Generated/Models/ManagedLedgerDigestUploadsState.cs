@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedLedgerDigestUploadsState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedLedgerDigestUploadsState?(string value) => value == null ? null : new ManagedLedgerDigestUploadsState(value);
+        public static implicit operator ManagedLedgerDigestUploadsState?(string value) => value == null ? (ManagedLedgerDigestUploadsState?)null : new ManagedLedgerDigestUploadsState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

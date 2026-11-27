@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="UefiKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UefiKeyType?(string value) => value == null ? null : new UefiKeyType(value);
+        public static implicit operator UefiKeyType?(string value) => value == null ? (UefiKeyType?)null : new UefiKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

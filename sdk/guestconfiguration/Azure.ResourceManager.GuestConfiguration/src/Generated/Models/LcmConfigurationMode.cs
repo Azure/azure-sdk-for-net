@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="LcmConfigurationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LcmConfigurationMode?(string value) => value == null ? null : new LcmConfigurationMode(value);
+        public static implicit operator LcmConfigurationMode?(string value) => value == null ? (LcmConfigurationMode?)null : new LcmConfigurationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="AmazonRdsForOracleAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AmazonRdsForOracleAuthenticationType?(string value) => value == null ? null : new AmazonRdsForOracleAuthenticationType(value);
+        public static implicit operator AmazonRdsForOracleAuthenticationType?(string value) => value == null ? (AmazonRdsForOracleAuthenticationType?)null : new AmazonRdsForOracleAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

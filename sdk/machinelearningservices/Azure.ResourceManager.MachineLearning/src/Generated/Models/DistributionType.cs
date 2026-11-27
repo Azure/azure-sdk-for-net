@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="DistributionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DistributionType?(string value) => value == null ? null : new DistributionType(value);
+        public static implicit operator DistributionType?(string value) => value == null ? (DistributionType?)null : new DistributionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskState?(string value) => value == null ? null : new DiskState(value);
+        public static implicit operator DiskState?(string value) => value == null ? (DiskState?)null : new DiskState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

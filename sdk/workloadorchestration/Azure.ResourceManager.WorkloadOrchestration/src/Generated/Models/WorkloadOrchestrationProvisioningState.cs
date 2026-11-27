@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadOrchestrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadOrchestrationProvisioningState?(string value) => value == null ? null : new WorkloadOrchestrationProvisioningState(value);
+        public static implicit operator WorkloadOrchestrationProvisioningState?(string value) => value == null ? (WorkloadOrchestrationProvisioningState?)null : new WorkloadOrchestrationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

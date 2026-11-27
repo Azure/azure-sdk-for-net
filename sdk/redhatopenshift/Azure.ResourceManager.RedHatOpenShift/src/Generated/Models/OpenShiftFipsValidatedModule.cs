@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Converts a string to a <see cref="OpenShiftFipsValidatedModule"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenShiftFipsValidatedModule?(string value) => value == null ? null : new OpenShiftFipsValidatedModule(value);
+        public static implicit operator OpenShiftFipsValidatedModule?(string value) => value == null ? (OpenShiftFipsValidatedModule?)null : new OpenShiftFipsValidatedModule(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

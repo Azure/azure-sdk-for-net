@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="EnclaveEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnclaveEndpointProtocol?(string value) => value == null ? null : new EnclaveEndpointProtocol(value);
+        public static implicit operator EnclaveEndpointProtocol?(string value) => value == null ? (EnclaveEndpointProtocol?)null : new EnclaveEndpointProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppIngressTransportMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppIngressTransportMethod?(string value) => value == null ? null : new ContainerAppIngressTransportMethod(value);
+        public static implicit operator ContainerAppIngressTransportMethod?(string value) => value == null ? (ContainerAppIngressTransportMethod?)null : new ContainerAppIngressTransportMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

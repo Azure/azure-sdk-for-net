@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="ExternalAuthProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalAuthProvisioningState?(string value) => value == null ? null : new ExternalAuthProvisioningState(value);
+        public static implicit operator ExternalAuthProvisioningState?(string value) => value == null ? (ExternalAuthProvisioningState?)null : new ExternalAuthProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

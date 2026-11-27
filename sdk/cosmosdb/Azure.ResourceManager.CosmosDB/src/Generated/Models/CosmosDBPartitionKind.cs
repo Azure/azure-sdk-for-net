@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBPartitionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBPartitionKind?(string value) => value == null ? null : new CosmosDBPartitionKind(value);
+        public static implicit operator CosmosDBPartitionKind?(string value) => value == null ? (CosmosDBPartitionKind?)null : new CosmosDBPartitionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RouteNextHopType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteNextHopType?(string value) => value == null ? null : new RouteNextHopType(value);
+        public static implicit operator RouteNextHopType?(string value) => value == null ? (RouteNextHopType?)null : new RouteNextHopType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

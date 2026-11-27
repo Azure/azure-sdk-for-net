@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MonitoringFeatureDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitoringFeatureDataType?(string value) => value == null ? null : new MonitoringFeatureDataType(value);
+        public static implicit operator MonitoringFeatureDataType?(string value) => value == null ? (MonitoringFeatureDataType?)null : new MonitoringFeatureDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

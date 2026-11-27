@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="FailoverDeploymentModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverDeploymentModel?(string value) => value == null ? null : new FailoverDeploymentModel(value);
+        public static implicit operator FailoverDeploymentModel?(string value) => value == null ? (FailoverDeploymentModel?)null : new FailoverDeploymentModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

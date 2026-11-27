@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new MongoClusterPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator MongoClusterPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (MongoClusterPrivateEndpointServiceConnectionStatus?)null : new MongoClusterPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayCustomErrorStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayCustomErrorStatusCode?(string value) => value == null ? null : new ApplicationGatewayCustomErrorStatusCode(value);
+        public static implicit operator ApplicationGatewayCustomErrorStatusCode?(string value) => value == null ? (ApplicationGatewayCustomErrorStatusCode?)null : new ApplicationGatewayCustomErrorStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

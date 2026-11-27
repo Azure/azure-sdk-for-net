@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="ResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceKind?(string value) => value == null ? null : new ResourceKind(value);
+        public static implicit operator ResourceKind?(string value) => value == null ? (ResourceKind?)null : new ResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

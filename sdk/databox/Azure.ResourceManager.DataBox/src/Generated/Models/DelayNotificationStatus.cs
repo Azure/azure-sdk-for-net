@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Converts a string to a <see cref="DelayNotificationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DelayNotificationStatus?(string value) => value == null ? null : new DelayNotificationStatus(value);
+        public static implicit operator DelayNotificationStatus?(string value) => value == null ? (DelayNotificationStatus?)null : new DelayNotificationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

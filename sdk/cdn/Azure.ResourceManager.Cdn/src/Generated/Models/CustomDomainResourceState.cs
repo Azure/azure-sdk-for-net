@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CustomDomainResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomDomainResourceState?(string value) => value == null ? null : new CustomDomainResourceState(value);
+        public static implicit operator CustomDomainResourceState?(string value) => value == null ? (CustomDomainResourceState?)null : new CustomDomainResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

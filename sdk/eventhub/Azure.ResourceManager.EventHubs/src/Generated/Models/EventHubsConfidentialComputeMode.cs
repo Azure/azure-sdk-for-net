@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsConfidentialComputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsConfidentialComputeMode?(string value) => value == null ? null : new EventHubsConfidentialComputeMode(value);
+        public static implicit operator EventHubsConfidentialComputeMode?(string value) => value == null ? (EventHubsConfidentialComputeMode?)null : new EventHubsConfidentialComputeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

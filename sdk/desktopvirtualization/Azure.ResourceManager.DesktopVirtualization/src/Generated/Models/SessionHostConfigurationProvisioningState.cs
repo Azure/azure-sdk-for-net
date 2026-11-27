@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHostConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHostConfigurationProvisioningState?(string value) => value == null ? null : new SessionHostConfigurationProvisioningState(value);
+        public static implicit operator SessionHostConfigurationProvisioningState?(string value) => value == null ? (SessionHostConfigurationProvisioningState?)null : new SessionHostConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

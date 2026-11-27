@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetProtocolType?(string value) => value == null ? null : new ComputeFleetProtocolType(value);
+        public static implicit operator ComputeFleetProtocolType?(string value) => value == null ? (ComputeFleetProtocolType?)null : new ComputeFleetProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

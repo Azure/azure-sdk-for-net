@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsRegistryValueKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsRegistryValueKind?(string value) => value == null ? null : new SecurityInsightsRegistryValueKind(value);
+        public static implicit operator SecurityInsightsRegistryValueKind?(string value) => value == null ? (SecurityInsightsRegistryValueKind?)null : new SecurityInsightsRegistryValueKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

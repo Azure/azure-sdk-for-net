@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkIPVersion?(string value) => value == null ? null : new NetworkIPVersion(value);
+        public static implicit operator NetworkIPVersion?(string value) => value == null ? (NetworkIPVersion?)null : new NetworkIPVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

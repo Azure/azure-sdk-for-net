@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="EdgeResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeResourceState?(string value) => value == null ? null : new EdgeResourceState(value);
+        public static implicit operator EdgeResourceState?(string value) => value == null ? (EdgeResourceState?)null : new EdgeResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

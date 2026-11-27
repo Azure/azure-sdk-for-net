@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <summary> Converts a string to a <see cref="QuantumWorkspaceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuantumWorkspaceKind?(string value) => value == null ? null : new QuantumWorkspaceKind(value);
+        public static implicit operator QuantumWorkspaceKind?(string value) => value == null ? (QuantumWorkspaceKind?)null : new QuantumWorkspaceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

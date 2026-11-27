@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseCustomerManagedKeyIdentityType?(string value) => value == null ? null : new RedisEnterpriseCustomerManagedKeyIdentityType(value);
+        public static implicit operator RedisEnterpriseCustomerManagedKeyIdentityType?(string value) => value == null ? (RedisEnterpriseCustomerManagedKeyIdentityType?)null : new RedisEnterpriseCustomerManagedKeyIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

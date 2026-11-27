@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteLinkFailoverBgpStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteLinkFailoverBgpStatus?(string value) => value == null ? null : new ExpressRouteLinkFailoverBgpStatus(value);
+        public static implicit operator ExpressRouteLinkFailoverBgpStatus?(string value) => value == null ? (ExpressRouteLinkFailoverBgpStatus?)null : new ExpressRouteLinkFailoverBgpStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

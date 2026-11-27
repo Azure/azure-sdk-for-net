@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="HealthcareApisIotIdentityResolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthcareApisIotIdentityResolutionType?(string value) => value == null ? null : new HealthcareApisIotIdentityResolutionType(value);
+        public static implicit operator HealthcareApisIotIdentityResolutionType?(string value) => value == null ? (HealthcareApisIotIdentityResolutionType?)null : new HealthcareApisIotIdentityResolutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

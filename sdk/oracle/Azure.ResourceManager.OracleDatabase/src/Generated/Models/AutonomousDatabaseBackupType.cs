@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseBackupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseBackupType?(string value) => value == null ? null : new AutonomousDatabaseBackupType(value);
+        public static implicit operator AutonomousDatabaseBackupType?(string value) => value == null ? (AutonomousDatabaseBackupType?)null : new AutonomousDatabaseBackupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerActionType?(string value) => value == null ? null : new LinkerActionType(value);
+        public static implicit operator LinkerActionType?(string value) => value == null ? (LinkerActionType?)null : new LinkerActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

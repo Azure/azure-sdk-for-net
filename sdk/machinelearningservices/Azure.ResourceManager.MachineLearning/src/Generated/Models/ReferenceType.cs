@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReferenceType?(string value) => value == null ? null : new ReferenceType(value);
+        public static implicit operator ReferenceType?(string value) => value == null ? (ReferenceType?)null : new ReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="BudgetCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BudgetCategory?(string value) => value == null ? null : new BudgetCategory(value);
+        public static implicit operator BudgetCategory?(string value) => value == null ? (BudgetCategory?)null : new BudgetCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

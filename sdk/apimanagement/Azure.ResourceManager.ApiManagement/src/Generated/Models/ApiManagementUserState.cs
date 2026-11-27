@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiManagementUserState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiManagementUserState?(string value) => value == null ? null : new ApiManagementUserState(value);
+        public static implicit operator ApiManagementUserState?(string value) => value == null ? (ApiManagementUserState?)null : new ApiManagementUserState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

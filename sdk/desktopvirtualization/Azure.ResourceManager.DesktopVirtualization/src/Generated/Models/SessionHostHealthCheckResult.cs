@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHostHealthCheckResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHostHealthCheckResult?(string value) => value == null ? null : new SessionHostHealthCheckResult(value);
+        public static implicit operator SessionHostHealthCheckResult?(string value) => value == null ? (SessionHostHealthCheckResult?)null : new SessionHostHealthCheckResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

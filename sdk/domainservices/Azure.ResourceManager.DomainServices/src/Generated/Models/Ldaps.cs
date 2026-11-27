@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="Ldaps"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Ldaps?(string value) => value == null ? null : new Ldaps(value);
+        public static implicit operator Ldaps?(string value) => value == null ? (Ldaps?)null : new Ldaps(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

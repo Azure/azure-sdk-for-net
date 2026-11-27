@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SharingProfileGroupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SharingProfileGroupType?(string value) => value == null ? null : new SharingProfileGroupType(value);
+        public static implicit operator SharingProfileGroupType?(string value) => value == null ? (SharingProfileGroupType?)null : new SharingProfileGroupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

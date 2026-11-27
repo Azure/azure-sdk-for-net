@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="SnapshotCompositionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotCompositionType?(string value) => value == null ? null : new SnapshotCompositionType(value);
+        public static implicit operator SnapshotCompositionType?(string value) => value == null ? (SnapshotCompositionType?)null : new SnapshotCompositionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

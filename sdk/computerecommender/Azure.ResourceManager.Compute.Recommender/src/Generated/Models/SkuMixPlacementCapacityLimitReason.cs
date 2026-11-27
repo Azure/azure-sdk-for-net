@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <summary> Converts a string to a <see cref="SkuMixPlacementCapacityLimitReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuMixPlacementCapacityLimitReason?(string value) => value == null ? null : new SkuMixPlacementCapacityLimitReason(value);
+        public static implicit operator SkuMixPlacementCapacityLimitReason?(string value) => value == null ? (SkuMixPlacementCapacityLimitReason?)null : new SkuMixPlacementCapacityLimitReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

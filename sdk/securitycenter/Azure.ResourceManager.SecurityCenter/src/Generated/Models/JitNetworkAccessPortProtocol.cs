@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="JitNetworkAccessPortProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JitNetworkAccessPortProtocol?(string value) => value == null ? null : new JitNetworkAccessPortProtocol(value);
+        public static implicit operator JitNetworkAccessPortProtocol?(string value) => value == null ? (JitNetworkAccessPortProtocol?)null : new JitNetworkAccessPortProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

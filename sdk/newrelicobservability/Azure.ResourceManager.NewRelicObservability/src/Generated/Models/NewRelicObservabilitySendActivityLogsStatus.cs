@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicObservabilitySendActivityLogsStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilitySendActivityLogsStatus?(string value) => value == null ? null : new NewRelicObservabilitySendActivityLogsStatus(value);
+        public static implicit operator NewRelicObservabilitySendActivityLogsStatus?(string value) => value == null ? (NewRelicObservabilitySendActivityLogsStatus?)null : new NewRelicObservabilitySendActivityLogsStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

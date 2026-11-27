@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringSize?(string value) => value == null ? null : new PeeringSize(value);
+        public static implicit operator PeeringSize?(string value) => value == null ? (PeeringSize?)null : new PeeringSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

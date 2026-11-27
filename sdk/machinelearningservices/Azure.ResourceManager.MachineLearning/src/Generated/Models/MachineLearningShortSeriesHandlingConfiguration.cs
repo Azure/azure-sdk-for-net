@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningShortSeriesHandlingConfiguration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningShortSeriesHandlingConfiguration?(string value) => value == null ? null : new MachineLearningShortSeriesHandlingConfiguration(value);
+        public static implicit operator MachineLearningShortSeriesHandlingConfiguration?(string value) => value == null ? (MachineLearningShortSeriesHandlingConfiguration?)null : new MachineLearningShortSeriesHandlingConfiguration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

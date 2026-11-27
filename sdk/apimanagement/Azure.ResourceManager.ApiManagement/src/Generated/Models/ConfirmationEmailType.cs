@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ConfirmationEmailType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfirmationEmailType?(string value) => value == null ? null : new ConfirmationEmailType(value);
+        public static implicit operator ConfirmationEmailType?(string value) => value == null ? (ConfirmationEmailType?)null : new ConfirmationEmailType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

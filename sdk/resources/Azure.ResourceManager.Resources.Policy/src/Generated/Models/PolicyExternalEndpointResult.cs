@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyExternalEndpointResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyExternalEndpointResult?(string value) => value == null ? null : new PolicyExternalEndpointResult(value);
+        public static implicit operator PolicyExternalEndpointResult?(string value) => value == null ? (PolicyExternalEndpointResult?)null : new PolicyExternalEndpointResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

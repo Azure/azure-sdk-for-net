@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerPersistencePolicyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerPersistencePolicyMode?(string value) => value == null ? null : new BrokerPersistencePolicyMode(value);
+        public static implicit operator BrokerPersistencePolicyMode?(string value) => value == null ? (BrokerPersistencePolicyMode?)null : new BrokerPersistencePolicyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

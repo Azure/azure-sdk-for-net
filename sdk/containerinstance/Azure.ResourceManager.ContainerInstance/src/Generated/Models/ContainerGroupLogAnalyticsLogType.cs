@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupLogAnalyticsLogType?(string value) => value == null ? null : new ContainerGroupLogAnalyticsLogType(value);
+        public static implicit operator ContainerGroupLogAnalyticsLogType?(string value) => value == null ? (ContainerGroupLogAnalyticsLogType?)null : new ContainerGroupLogAnalyticsLogType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

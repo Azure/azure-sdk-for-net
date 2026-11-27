@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryIPRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryIPRuleAction?(string value) => value == null ? null : new ContainerRegistryIPRuleAction(value);
+        public static implicit operator ContainerRegistryIPRuleAction?(string value) => value == null ? (ContainerRegistryIPRuleAction?)null : new ContainerRegistryIPRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

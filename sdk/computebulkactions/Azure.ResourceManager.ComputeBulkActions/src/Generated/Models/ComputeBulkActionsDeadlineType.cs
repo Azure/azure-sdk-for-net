@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsDeadlineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsDeadlineType?(string value) => value == null ? null : new ComputeBulkActionsDeadlineType(value);
+        public static implicit operator ComputeBulkActionsDeadlineType?(string value) => value == null ? (ComputeBulkActionsDeadlineType?)null : new ComputeBulkActionsDeadlineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

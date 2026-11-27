@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsLicenseName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsLicenseName?(string value) => value == null ? null : new AvsLicenseName(value);
+        public static implicit operator AvsLicenseName?(string value) => value == null ? (AvsLicenseName?)null : new AvsLicenseName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

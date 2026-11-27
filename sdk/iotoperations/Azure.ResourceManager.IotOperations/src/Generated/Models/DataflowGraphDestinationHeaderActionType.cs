@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowGraphDestinationHeaderActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowGraphDestinationHeaderActionType?(string value) => value == null ? null : new DataflowGraphDestinationHeaderActionType(value);
+        public static implicit operator DataflowGraphDestinationHeaderActionType?(string value) => value == null ? (DataflowGraphDestinationHeaderActionType?)null : new DataflowGraphDestinationHeaderActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

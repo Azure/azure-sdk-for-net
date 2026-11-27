@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="ThroughputPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThroughputPolicyType?(string value) => value == null ? null : new ThroughputPolicyType(value);
+        public static implicit operator ThroughputPolicyType?(string value) => value == null ? (ThroughputPolicyType?)null : new ThroughputPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

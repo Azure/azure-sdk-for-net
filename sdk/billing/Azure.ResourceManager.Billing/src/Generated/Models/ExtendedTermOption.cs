@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="ExtendedTermOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtendedTermOption?(string value) => value == null ? null : new ExtendedTermOption(value);
+        public static implicit operator ExtendedTermOption?(string value) => value == null ? (ExtendedTermOption?)null : new ExtendedTermOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

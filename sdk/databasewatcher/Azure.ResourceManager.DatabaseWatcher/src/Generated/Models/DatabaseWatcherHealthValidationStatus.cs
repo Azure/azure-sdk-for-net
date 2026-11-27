@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseWatcherHealthValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseWatcherHealthValidationStatus?(string value) => value == null ? null : new DatabaseWatcherHealthValidationStatus(value);
+        public static implicit operator DatabaseWatcherHealthValidationStatus?(string value) => value == null ? (DatabaseWatcherHealthValidationStatus?)null : new DatabaseWatcherHealthValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

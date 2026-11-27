@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="RegionalReplicationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegionalReplicationState?(string value) => value == null ? null : new RegionalReplicationState(value);
+        public static implicit operator RegionalReplicationState?(string value) => value == null ? (RegionalReplicationState?)null : new RegionalReplicationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

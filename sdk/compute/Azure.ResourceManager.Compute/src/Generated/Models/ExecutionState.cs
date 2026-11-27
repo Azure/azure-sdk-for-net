@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ExecutionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExecutionState?(string value) => value == null ? null : new ExecutionState(value);
+        public static implicit operator ExecutionState?(string value) => value == null ? (ExecutionState?)null : new ExecutionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

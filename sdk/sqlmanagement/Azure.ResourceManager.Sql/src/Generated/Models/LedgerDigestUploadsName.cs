@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="LedgerDigestUploadsName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LedgerDigestUploadsName?(string value) => value == null ? null : new LedgerDigestUploadsName(value);
+        public static implicit operator LedgerDigestUploadsName?(string value) => value == null ? (LedgerDigestUploadsName?)null : new LedgerDigestUploadsName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

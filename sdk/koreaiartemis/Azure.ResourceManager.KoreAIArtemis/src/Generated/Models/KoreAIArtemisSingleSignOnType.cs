@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <summary> Converts a string to a <see cref="KoreAIArtemisSingleSignOnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KoreAIArtemisSingleSignOnType?(string value) => value == null ? null : new KoreAIArtemisSingleSignOnType(value);
+        public static implicit operator KoreAIArtemisSingleSignOnType?(string value) => value == null ? (KoreAIArtemisSingleSignOnType?)null : new KoreAIArtemisSingleSignOnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

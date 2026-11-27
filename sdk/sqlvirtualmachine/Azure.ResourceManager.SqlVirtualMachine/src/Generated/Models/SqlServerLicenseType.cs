@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerLicenseType?(string value) => value == null ? null : new SqlServerLicenseType(value);
+        public static implicit operator SqlServerLicenseType?(string value) => value == null ? (SqlServerLicenseType?)null : new SqlServerLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

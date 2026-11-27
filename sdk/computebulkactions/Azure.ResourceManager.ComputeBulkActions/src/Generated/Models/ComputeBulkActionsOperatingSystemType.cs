@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsOperatingSystemType?(string value) => value == null ? null : new ComputeBulkActionsOperatingSystemType(value);
+        public static implicit operator ComputeBulkActionsOperatingSystemType?(string value) => value == null ? (ComputeBulkActionsOperatingSystemType?)null : new ComputeBulkActionsOperatingSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

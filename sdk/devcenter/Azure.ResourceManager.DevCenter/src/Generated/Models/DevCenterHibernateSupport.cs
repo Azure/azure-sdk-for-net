@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterHibernateSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterHibernateSupport?(string value) => value == null ? null : new DevCenterHibernateSupport(value);
+        public static implicit operator DevCenterHibernateSupport?(string value) => value == null ? (DevCenterHibernateSupport?)null : new DevCenterHibernateSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

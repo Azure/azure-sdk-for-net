@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="RulestackActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RulestackActionType?(string value) => value == null ? null : new RulestackActionType(value);
+        public static implicit operator RulestackActionType?(string value) => value == null ? (RulestackActionType?)null : new RulestackActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

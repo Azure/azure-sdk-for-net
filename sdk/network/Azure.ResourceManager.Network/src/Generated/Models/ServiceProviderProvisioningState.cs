@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ServiceProviderProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceProviderProvisioningState?(string value) => value == null ? null : new ServiceProviderProvisioningState(value);
+        public static implicit operator ServiceProviderProvisioningState?(string value) => value == null ? (ServiceProviderProvisioningState?)null : new ServiceProviderProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

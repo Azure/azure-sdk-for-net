@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkAddressLifecycleState?(string value) => value == null ? null : new VirtualNetworkAddressLifecycleState(value);
+        public static implicit operator VirtualNetworkAddressLifecycleState?(string value) => value == null ? (VirtualNetworkAddressLifecycleState?)null : new VirtualNetworkAddressLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

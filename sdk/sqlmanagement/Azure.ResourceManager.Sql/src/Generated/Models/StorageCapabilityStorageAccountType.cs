@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageCapabilityStorageAccountType?(string value) => value == null ? null : new StorageCapabilityStorageAccountType(value);
+        public static implicit operator StorageCapabilityStorageAccountType?(string value) => value == null ? (StorageCapabilityStorageAccountType?)null : new StorageCapabilityStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

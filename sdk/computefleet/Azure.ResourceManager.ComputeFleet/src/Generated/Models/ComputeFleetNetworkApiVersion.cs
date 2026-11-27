@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetNetworkApiVersion?(string value) => value == null ? null : new ComputeFleetNetworkApiVersion(value);
+        public static implicit operator ComputeFleetNetworkApiVersion?(string value) => value == null ? (ComputeFleetNetworkApiVersion?)null : new ComputeFleetNetworkApiVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

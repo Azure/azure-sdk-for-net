@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBPublicNetworkAccessState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBPublicNetworkAccessState?(string value) => value == null ? null : new HorizonDBPublicNetworkAccessState(value);
+        public static implicit operator HorizonDBPublicNetworkAccessState?(string value) => value == null ? (HorizonDBPublicNetworkAccessState?)null : new HorizonDBPublicNetworkAccessState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

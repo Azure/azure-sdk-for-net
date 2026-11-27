@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoDatabaseRouting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoDatabaseRouting?(string value) => value == null ? null : new KustoDatabaseRouting(value);
+        public static implicit operator KustoDatabaseRouting?(string value) => value == null ? (KustoDatabaseRouting?)null : new KustoDatabaseRouting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

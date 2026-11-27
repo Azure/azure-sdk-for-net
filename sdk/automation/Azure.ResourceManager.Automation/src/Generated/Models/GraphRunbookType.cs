@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="GraphRunbookType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphRunbookType?(string value) => value == null ? null : new GraphRunbookType(value);
+        public static implicit operator GraphRunbookType?(string value) => value == null ? (GraphRunbookType?)null : new GraphRunbookType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

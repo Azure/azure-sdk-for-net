@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudStepStateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudStepStateStatus?(string value) => value == null ? null : new NetworkCloudStepStateStatus(value);
+        public static implicit operator NetworkCloudStepStateStatus?(string value) => value == null ? (NetworkCloudStepStateStatus?)null : new NetworkCloudStepStateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

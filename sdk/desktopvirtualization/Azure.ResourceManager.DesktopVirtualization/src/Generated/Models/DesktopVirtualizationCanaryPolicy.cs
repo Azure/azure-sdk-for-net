@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationCanaryPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationCanaryPolicy?(string value) => value == null ? null : new DesktopVirtualizationCanaryPolicy(value);
+        public static implicit operator DesktopVirtualizationCanaryPolicy?(string value) => value == null ? (DesktopVirtualizationCanaryPolicy?)null : new DesktopVirtualizationCanaryPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

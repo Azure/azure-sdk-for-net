@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="AutoProtectionOfDataDisk"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoProtectionOfDataDisk?(string value) => value == null ? null : new AutoProtectionOfDataDisk(value);
+        public static implicit operator AutoProtectionOfDataDisk?(string value) => value == null ? (AutoProtectionOfDataDisk?)null : new AutoProtectionOfDataDisk(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

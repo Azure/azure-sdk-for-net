@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeUpdateStatus?(string value) => value == null ? null : new DataBoxEdgeUpdateStatus(value);
+        public static implicit operator DataBoxEdgeUpdateStatus?(string value) => value == null ? (DataBoxEdgeUpdateStatus?)null : new DataBoxEdgeUpdateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

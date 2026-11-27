@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="OperatorApiConnectionPurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperatorApiConnectionPurpose?(string value) => value == null ? null : new OperatorApiConnectionPurpose(value);
+        public static implicit operator OperatorApiConnectionPurpose?(string value) => value == null ? (OperatorApiConnectionPurpose?)null : new OperatorApiConnectionPurpose(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

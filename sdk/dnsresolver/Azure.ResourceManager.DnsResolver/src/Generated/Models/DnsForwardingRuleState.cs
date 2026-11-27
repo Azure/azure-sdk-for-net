@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Converts a string to a <see cref="DnsForwardingRuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsForwardingRuleState?(string value) => value == null ? null : new DnsForwardingRuleState(value);
+        public static implicit operator DnsForwardingRuleState?(string value) => value == null ? (DnsForwardingRuleState?)null : new DnsForwardingRuleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

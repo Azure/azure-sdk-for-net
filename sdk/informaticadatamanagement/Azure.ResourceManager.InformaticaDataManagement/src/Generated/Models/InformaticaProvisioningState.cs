@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Converts a string to a <see cref="InformaticaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InformaticaProvisioningState?(string value) => value == null ? null : new InformaticaProvisioningState(value);
+        public static implicit operator InformaticaProvisioningState?(string value) => value == null ? (InformaticaProvisioningState?)null : new InformaticaProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

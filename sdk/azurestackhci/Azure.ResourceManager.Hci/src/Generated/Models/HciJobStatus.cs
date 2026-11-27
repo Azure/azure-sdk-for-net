@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciJobStatus?(string value) => value == null ? null : new HciJobStatus(value);
+        public static implicit operator HciJobStatus?(string value) => value == null ? (HciJobStatus?)null : new HciJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

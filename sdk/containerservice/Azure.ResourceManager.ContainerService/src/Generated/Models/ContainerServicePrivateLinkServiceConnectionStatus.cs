@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServicePrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new ContainerServicePrivateLinkServiceConnectionStatus(value);
+        public static implicit operator ContainerServicePrivateLinkServiceConnectionStatus?(string value) => value == null ? (ContainerServicePrivateLinkServiceConnectionStatus?)null : new ContainerServicePrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskSchedulerSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskSchedulerSkuName?(string value) => value == null ? null : new DurableTaskSchedulerSkuName(value);
+        public static implicit operator DurableTaskSchedulerSkuName?(string value) => value == null ? (DurableTaskSchedulerSkuName?)null : new DurableTaskSchedulerSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

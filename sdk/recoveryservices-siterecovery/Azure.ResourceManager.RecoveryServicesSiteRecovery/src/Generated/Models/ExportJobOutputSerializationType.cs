@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="ExportJobOutputSerializationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportJobOutputSerializationType?(string value) => value == null ? null : new ExportJobOutputSerializationType(value);
+        public static implicit operator ExportJobOutputSerializationType?(string value) => value == null ? (ExportJobOutputSerializationType?)null : new ExportJobOutputSerializationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

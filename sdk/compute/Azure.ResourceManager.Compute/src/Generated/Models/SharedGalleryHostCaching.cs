@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SharedGalleryHostCaching"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SharedGalleryHostCaching?(string value) => value == null ? null : new SharedGalleryHostCaching(value);
+        public static implicit operator SharedGalleryHostCaching?(string value) => value == null ? (SharedGalleryHostCaching?)null : new SharedGalleryHostCaching(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

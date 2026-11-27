@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageEncryptionKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageEncryptionKeyType?(string value) => value == null ? null : new StorageEncryptionKeyType(value);
+        public static implicit operator StorageEncryptionKeyType?(string value) => value == null ? (StorageEncryptionKeyType?)null : new StorageEncryptionKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

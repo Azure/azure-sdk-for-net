@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Converts a string to a <see cref="TerraformResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TerraformResourceProvisioningState?(string value) => value == null ? null : new TerraformResourceProvisioningState(value);
+        public static implicit operator TerraformResourceProvisioningState?(string value) => value == null ? (TerraformResourceProvisioningState?)null : new TerraformResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

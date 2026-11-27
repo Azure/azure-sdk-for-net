@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafRankingGroupBy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafRankingGroupBy?(string value) => value == null ? null : new WafRankingGroupBy(value);
+        public static implicit operator WafRankingGroupBy?(string value) => value == null ? (WafRankingGroupBy?)null : new WafRankingGroupBy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

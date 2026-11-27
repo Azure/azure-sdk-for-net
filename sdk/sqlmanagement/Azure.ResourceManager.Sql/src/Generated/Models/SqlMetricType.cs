@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlMetricType?(string value) => value == null ? null : new SqlMetricType(value);
+        public static implicit operator SqlMetricType?(string value) => value == null ? (SqlMetricType?)null : new SqlMetricType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

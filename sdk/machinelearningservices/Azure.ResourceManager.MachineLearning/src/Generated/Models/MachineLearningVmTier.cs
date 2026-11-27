@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningVmTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningVmTier?(string value) => value == null ? null : new MachineLearningVmTier(value);
+        public static implicit operator MachineLearningVmTier?(string value) => value == null ? (MachineLearningVmTier?)null : new MachineLearningVmTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

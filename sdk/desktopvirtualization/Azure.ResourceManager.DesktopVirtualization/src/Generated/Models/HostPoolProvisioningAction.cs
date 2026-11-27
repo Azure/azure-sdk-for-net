@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="HostPoolProvisioningAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPoolProvisioningAction?(string value) => value == null ? null : new HostPoolProvisioningAction(value);
+        public static implicit operator HostPoolProvisioningAction?(string value) => value == null ? (HostPoolProvisioningAction?)null : new HostPoolProvisioningAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

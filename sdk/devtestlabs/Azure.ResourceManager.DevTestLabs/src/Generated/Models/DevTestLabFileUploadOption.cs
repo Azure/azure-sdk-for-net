@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabFileUploadOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabFileUploadOption?(string value) => value == null ? null : new DevTestLabFileUploadOption(value);
+        public static implicit operator DevTestLabFileUploadOption?(string value) => value == null ? (DevTestLabFileUploadOption?)null : new DevTestLabFileUploadOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

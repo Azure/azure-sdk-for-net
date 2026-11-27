@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityAssessmentResourceCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityAssessmentResourceCategory?(string value) => value == null ? null : new SecurityAssessmentResourceCategory(value);
+        public static implicit operator SecurityAssessmentResourceCategory?(string value) => value == null ? (SecurityAssessmentResourceCategory?)null : new SecurityAssessmentResourceCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

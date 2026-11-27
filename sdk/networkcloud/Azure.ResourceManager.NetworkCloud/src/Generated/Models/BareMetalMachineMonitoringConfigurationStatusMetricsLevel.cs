@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineMonitoringConfigurationStatusMetricsLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineMonitoringConfigurationStatusMetricsLevel?(string value) => value == null ? null : new BareMetalMachineMonitoringConfigurationStatusMetricsLevel(value);
+        public static implicit operator BareMetalMachineMonitoringConfigurationStatusMetricsLevel?(string value) => value == null ? (BareMetalMachineMonitoringConfigurationStatusMetricsLevel?)null : new BareMetalMachineMonitoringConfigurationStatusMetricsLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

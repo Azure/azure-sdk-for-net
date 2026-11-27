@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkDeviceAdministrativeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkDeviceAdministrativeState?(string value) => value == null ? null : new NetworkDeviceAdministrativeState(value);
+        public static implicit operator NetworkDeviceAdministrativeState?(string value) => value == null ? (NetworkDeviceAdministrativeState?)null : new NetworkDeviceAdministrativeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

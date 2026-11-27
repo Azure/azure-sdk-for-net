@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="ResourceScopeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceScopeKind?(string value) => value == null ? null : new ResourceScopeKind(value);
+        public static implicit operator ResourceScopeKind?(string value) => value == null ? (ResourceScopeKind?)null : new ResourceScopeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

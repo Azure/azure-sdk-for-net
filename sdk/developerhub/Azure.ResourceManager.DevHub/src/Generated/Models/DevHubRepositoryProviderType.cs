@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubRepositoryProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubRepositoryProviderType?(string value) => value == null ? null : new DevHubRepositoryProviderType(value);
+        public static implicit operator DevHubRepositoryProviderType?(string value) => value == null ? (DevHubRepositoryProviderType?)null : new DevHubRepositoryProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

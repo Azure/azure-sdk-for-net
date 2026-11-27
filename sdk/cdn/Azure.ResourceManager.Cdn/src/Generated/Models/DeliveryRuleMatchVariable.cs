@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="DeliveryRuleMatchVariable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryRuleMatchVariable?(string value) => value == null ? null : new DeliveryRuleMatchVariable(value);
+        public static implicit operator DeliveryRuleMatchVariable?(string value) => value == null ? (DeliveryRuleMatchVariable?)null : new DeliveryRuleMatchVariable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

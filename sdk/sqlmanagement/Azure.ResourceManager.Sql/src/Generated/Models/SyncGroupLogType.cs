@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SyncGroupLogType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncGroupLogType?(string value) => value == null ? null : new SyncGroupLogType(value);
+        public static implicit operator SyncGroupLogType?(string value) => value == null ? (SyncGroupLogType?)null : new SyncGroupLogType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

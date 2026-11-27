@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="CommissionedState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommissionedState?(string value) => value == null ? null : new CommissionedState(value);
+        public static implicit operator CommissionedState?(string value) => value == null ? (CommissionedState?)null : new CommissionedState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationStopHostsWhen"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationStopHostsWhen?(string value) => value == null ? null : new DesktopVirtualizationStopHostsWhen(value);
+        public static implicit operator DesktopVirtualizationStopHostsWhen?(string value) => value == null ? (DesktopVirtualizationStopHostsWhen?)null : new DesktopVirtualizationStopHostsWhen(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

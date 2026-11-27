@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterNodeResourceGroupRestrictionLevel?(string value) => value == null ? null : new ManagedClusterNodeResourceGroupRestrictionLevel(value);
+        public static implicit operator ManagedClusterNodeResourceGroupRestrictionLevel?(string value) => value == null ? (ManagedClusterNodeResourceGroupRestrictionLevel?)null : new ManagedClusterNodeResourceGroupRestrictionLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

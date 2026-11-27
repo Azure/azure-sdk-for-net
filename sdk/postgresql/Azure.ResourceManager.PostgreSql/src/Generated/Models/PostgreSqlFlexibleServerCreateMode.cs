@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerCreateMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerCreateMode(value);
+        public static implicit operator PostgreSqlFlexibleServerCreateMode?(string value) => value == null ? (PostgreSqlFlexibleServerCreateMode?)null : new PostgreSqlFlexibleServerCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

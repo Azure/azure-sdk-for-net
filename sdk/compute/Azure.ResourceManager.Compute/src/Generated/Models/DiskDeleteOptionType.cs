@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskDeleteOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskDeleteOptionType?(string value) => value == null ? null : new DiskDeleteOptionType(value);
+        public static implicit operator DiskDeleteOptionType?(string value) => value == null ? (DiskDeleteOptionType?)null : new DiskDeleteOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

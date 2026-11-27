@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusPrivateLinkConnectionStatus?(string value) => value == null ? null : new ServiceBusPrivateLinkConnectionStatus(value);
+        public static implicit operator ServiceBusPrivateLinkConnectionStatus?(string value) => value == null ? (ServiceBusPrivateLinkConnectionStatus?)null : new ServiceBusPrivateLinkConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

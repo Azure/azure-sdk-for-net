@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SybaseAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SybaseAuthenticationType?(string value) => value == null ? null : new SybaseAuthenticationType(value);
+        public static implicit operator SybaseAuthenticationType?(string value) => value == null ? (SybaseAuthenticationType?)null : new SybaseAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

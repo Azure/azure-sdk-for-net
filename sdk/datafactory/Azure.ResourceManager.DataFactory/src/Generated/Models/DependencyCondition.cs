@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DependencyCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DependencyCondition?(string value) => value == null ? null : new DependencyCondition(value);
+        public static implicit operator DependencyCondition?(string value) => value == null ? (DependencyCondition?)null : new DependencyCondition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

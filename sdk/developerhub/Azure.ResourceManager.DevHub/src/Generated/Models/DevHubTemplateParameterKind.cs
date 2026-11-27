@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubTemplateParameterKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubTemplateParameterKind?(string value) => value == null ? null : new DevHubTemplateParameterKind(value);
+        public static implicit operator DevHubTemplateParameterKind?(string value) => value == null ? (DevHubTemplateParameterKind?)null : new DevHubTemplateParameterKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

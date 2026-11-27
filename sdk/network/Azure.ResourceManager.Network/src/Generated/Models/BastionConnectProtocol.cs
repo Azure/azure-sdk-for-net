@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="BastionConnectProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BastionConnectProtocol?(string value) => value == null ? null : new BastionConnectProtocol(value);
+        public static implicit operator BastionConnectProtocol?(string value) => value == null ? (BastionConnectProtocol?)null : new BastionConnectProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

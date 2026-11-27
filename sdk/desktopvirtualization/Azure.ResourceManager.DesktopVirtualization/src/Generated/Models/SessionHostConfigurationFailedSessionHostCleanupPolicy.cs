@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHostConfigurationFailedSessionHostCleanupPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHostConfigurationFailedSessionHostCleanupPolicy?(string value) => value == null ? null : new SessionHostConfigurationFailedSessionHostCleanupPolicy(value);
+        public static implicit operator SessionHostConfigurationFailedSessionHostCleanupPolicy?(string value) => value == null ? (SessionHostConfigurationFailedSessionHostCleanupPolicy?)null : new SessionHostConfigurationFailedSessionHostCleanupPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

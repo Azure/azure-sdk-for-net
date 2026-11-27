@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="AddressFamilyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AddressFamilyType?(string value) => value == null ? null : new AddressFamilyType(value);
+        public static implicit operator AddressFamilyType?(string value) => value == null ? (AddressFamilyType?)null : new AddressFamilyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

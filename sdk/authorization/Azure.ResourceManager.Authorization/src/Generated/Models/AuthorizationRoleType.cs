@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AuthorizationRoleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthorizationRoleType?(string value) => value == null ? null : new AuthorizationRoleType(value);
+        public static implicit operator AuthorizationRoleType?(string value) => value == null ? (AuthorizationRoleType?)null : new AuthorizationRoleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

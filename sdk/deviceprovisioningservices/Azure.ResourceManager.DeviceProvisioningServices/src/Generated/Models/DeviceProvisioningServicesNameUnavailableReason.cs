@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesNameUnavailableReason?(string value) => value == null ? null : new DeviceProvisioningServicesNameUnavailableReason(value);
+        public static implicit operator DeviceProvisioningServicesNameUnavailableReason?(string value) => value == null ? (DeviceProvisioningServicesNameUnavailableReason?)null : new DeviceProvisioningServicesNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningListViewType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningListViewType?(string value) => value == null ? null : new MachineLearningListViewType(value);
+        public static implicit operator MachineLearningListViewType?(string value) => value == null ? (MachineLearningListViewType?)null : new MachineLearningListViewType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

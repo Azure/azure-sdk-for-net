@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Converts a string to a <see cref="DnsSecurityRuleActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsSecurityRuleActionType?(string value) => value == null ? null : new DnsSecurityRuleActionType(value);
+        public static implicit operator DnsSecurityRuleActionType?(string value) => value == null ? (DnsSecurityRuleActionType?)null : new DnsSecurityRuleActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

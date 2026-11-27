@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PfsGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PfsGroup?(string value) => value == null ? null : new PfsGroup(value);
+        public static implicit operator PfsGroup?(string value) => value == null ? (PfsGroup?)null : new PfsGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

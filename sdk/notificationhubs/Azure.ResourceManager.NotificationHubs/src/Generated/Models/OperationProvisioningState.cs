@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="OperationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationProvisioningState?(string value) => value == null ? null : new OperationProvisioningState(value);
+        public static implicit operator OperationProvisioningState?(string value) => value == null ? (OperationProvisioningState?)null : new OperationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

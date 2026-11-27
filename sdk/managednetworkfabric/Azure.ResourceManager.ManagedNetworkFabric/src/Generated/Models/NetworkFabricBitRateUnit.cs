@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricBitRateUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricBitRateUnit?(string value) => value == null ? null : new NetworkFabricBitRateUnit(value);
+        public static implicit operator NetworkFabricBitRateUnit?(string value) => value == null ? (NetworkFabricBitRateUnit?)null : new NetworkFabricBitRateUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

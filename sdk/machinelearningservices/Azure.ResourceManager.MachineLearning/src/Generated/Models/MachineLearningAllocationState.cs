@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningAllocationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningAllocationState?(string value) => value == null ? null : new MachineLearningAllocationState(value);
+        public static implicit operator MachineLearningAllocationState?(string value) => value == null ? (MachineLearningAllocationState?)null : new MachineLearningAllocationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

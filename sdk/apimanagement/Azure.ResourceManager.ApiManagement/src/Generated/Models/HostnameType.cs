@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="HostnameType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostnameType?(string value) => value == null ? null : new HostnameType(value);
+        public static implicit operator HostnameType?(string value) => value == null ? (HostnameType?)null : new HostnameType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

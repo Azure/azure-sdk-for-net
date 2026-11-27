@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ConnectorHttpMethodVerb"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorHttpMethodVerb?(string value) => value == null ? null : new ConnectorHttpMethodVerb(value);
+        public static implicit operator ConnectorHttpMethodVerb?(string value) => value == null ? (ConnectorHttpMethodVerb?)null : new ConnectorHttpMethodVerb(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

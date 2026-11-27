@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="StorageCacheUsernameSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageCacheUsernameSourceType?(string value) => value == null ? null : new StorageCacheUsernameSourceType(value);
+        public static implicit operator StorageCacheUsernameSourceType?(string value) => value == null ? (StorageCacheUsernameSourceType?)null : new StorageCacheUsernameSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

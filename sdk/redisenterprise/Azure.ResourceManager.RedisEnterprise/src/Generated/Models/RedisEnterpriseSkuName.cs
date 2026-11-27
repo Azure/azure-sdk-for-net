@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseSkuName?(string value) => value == null ? null : new RedisEnterpriseSkuName(value);
+        public static implicit operator RedisEnterpriseSkuName?(string value) => value == null ? (RedisEnterpriseSkuName?)null : new RedisEnterpriseSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

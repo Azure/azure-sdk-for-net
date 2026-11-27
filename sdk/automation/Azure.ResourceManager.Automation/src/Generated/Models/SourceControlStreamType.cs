@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlStreamType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlStreamType?(string value) => value == null ? null : new SourceControlStreamType(value);
+        public static implicit operator SourceControlStreamType?(string value) => value == null ? (SourceControlStreamType?)null : new SourceControlStreamType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

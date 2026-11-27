@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="AdvisorLowCpuEvaluationDuration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvisorLowCpuEvaluationDuration?(string value) => value == null ? null : new AdvisorLowCpuEvaluationDuration(value);
+        public static implicit operator AdvisorLowCpuEvaluationDuration?(string value) => value == null ? (AdvisorLowCpuEvaluationDuration?)null : new AdvisorLowCpuEvaluationDuration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

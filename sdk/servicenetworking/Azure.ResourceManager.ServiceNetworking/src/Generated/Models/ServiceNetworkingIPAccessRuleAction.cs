@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Converts a string to a <see cref="ServiceNetworkingIPAccessRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceNetworkingIPAccessRuleAction?(string value) => value == null ? null : new ServiceNetworkingIPAccessRuleAction(value);
+        public static implicit operator ServiceNetworkingIPAccessRuleAction?(string value) => value == null ? (ServiceNetworkingIPAccessRuleAction?)null : new ServiceNetworkingIPAccessRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

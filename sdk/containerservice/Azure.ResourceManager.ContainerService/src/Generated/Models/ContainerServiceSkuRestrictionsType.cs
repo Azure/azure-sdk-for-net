@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceSkuRestrictionsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceSkuRestrictionsType?(string value) => value == null ? null : new ContainerServiceSkuRestrictionsType(value);
+        public static implicit operator ContainerServiceSkuRestrictionsType?(string value) => value == null ? (ContainerServiceSkuRestrictionsType?)null : new ContainerServiceSkuRestrictionsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="EnclaveConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnclaveConnectionState?(string value) => value == null ? null : new EnclaveConnectionState(value);
+        public static implicit operator EnclaveConnectionState?(string value) => value == null ? (EnclaveConnectionState?)null : new EnclaveConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

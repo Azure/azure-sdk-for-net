@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="ArcSqlServerAvailabilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcSqlServerAvailabilityMode?(string value) => value == null ? null : new ArcSqlServerAvailabilityMode(value);
+        public static implicit operator ArcSqlServerAvailabilityMode?(string value) => value == null ? (ArcSqlServerAvailabilityMode?)null : new ArcSqlServerAvailabilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

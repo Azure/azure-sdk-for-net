@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="HostPoolSsoSecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPoolSsoSecretType?(string value) => value == null ? null : new HostPoolSsoSecretType(value);
+        public static implicit operator HostPoolSsoSecretType?(string value) => value == null ? (HostPoolSsoSecretType?)null : new HostPoolSsoSecretType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="SecureDeliveryProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecureDeliveryProtocolType?(string value) => value == null ? null : new SecureDeliveryProtocolType(value);
+        public static implicit operator SecureDeliveryProtocolType?(string value) => value == null ? (SecureDeliveryProtocolType?)null : new SecureDeliveryProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

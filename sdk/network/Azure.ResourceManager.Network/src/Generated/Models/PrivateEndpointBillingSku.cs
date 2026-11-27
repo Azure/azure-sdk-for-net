@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PrivateEndpointBillingSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateEndpointBillingSku?(string value) => value == null ? null : new PrivateEndpointBillingSku(value);
+        public static implicit operator PrivateEndpointBillingSku?(string value) => value == null ? (PrivateEndpointBillingSku?)null : new PrivateEndpointBillingSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

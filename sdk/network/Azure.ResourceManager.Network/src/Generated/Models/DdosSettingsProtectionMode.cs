@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DdosSettingsProtectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DdosSettingsProtectionMode?(string value) => value == null ? null : new DdosSettingsProtectionMode(value);
+        public static implicit operator DdosSettingsProtectionMode?(string value) => value == null ? (DdosSettingsProtectionMode?)null : new DdosSettingsProtectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

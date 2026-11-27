@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterResourceSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterResourceSource?(string value) => value == null ? null : new SecurityCenterResourceSource(value);
+        public static implicit operator SecurityCenterResourceSource?(string value) => value == null ? (SecurityCenterResourceSource?)null : new SecurityCenterResourceSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

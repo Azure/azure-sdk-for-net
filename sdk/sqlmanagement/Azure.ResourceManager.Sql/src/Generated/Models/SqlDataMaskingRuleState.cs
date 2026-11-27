@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlDataMaskingRuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlDataMaskingRuleState?(string value) => value == null ? null : new SqlDataMaskingRuleState(value);
+        public static implicit operator SqlDataMaskingRuleState?(string value) => value == null ? (SqlDataMaskingRuleState?)null : new SqlDataMaskingRuleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

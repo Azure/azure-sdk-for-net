@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementScopeType?(string value) => value == null ? null : new RoleManagementScopeType(value);
+        public static implicit operator RoleManagementScopeType?(string value) => value == null ? (RoleManagementScopeType?)null : new RoleManagementScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

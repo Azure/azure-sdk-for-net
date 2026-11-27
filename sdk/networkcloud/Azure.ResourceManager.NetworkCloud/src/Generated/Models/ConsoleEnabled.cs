@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ConsoleEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsoleEnabled?(string value) => value == null ? null : new ConsoleEnabled(value);
+        public static implicit operator ConsoleEnabled?(string value) => value == null ? (ConsoleEnabled?)null : new ConsoleEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

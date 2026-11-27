@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineDetailedStatus?(string value) => value == null ? null : new VirtualMachineDetailedStatus(value);
+        public static implicit operator VirtualMachineDetailedStatus?(string value) => value == null ? (VirtualMachineDetailedStatus?)null : new VirtualMachineDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

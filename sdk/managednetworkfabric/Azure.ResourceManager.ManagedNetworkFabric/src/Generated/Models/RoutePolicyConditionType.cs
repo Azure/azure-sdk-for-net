@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="RoutePolicyConditionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutePolicyConditionType?(string value) => value == null ? null : new RoutePolicyConditionType(value);
+        public static implicit operator RoutePolicyConditionType?(string value) => value == null ? (RoutePolicyConditionType?)null : new RoutePolicyConditionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

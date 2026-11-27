@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="ChatConversationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChatConversationStatus?(string value) => value == null ? null : new ChatConversationStatus(value);
+        public static implicit operator ChatConversationStatus?(string value) => value == null ? (ChatConversationStatus?)null : new ChatConversationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

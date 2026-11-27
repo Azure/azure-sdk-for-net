@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="CleanupPolicyRetentionDescription"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CleanupPolicyRetentionDescription?(string value) => value == null ? null : new CleanupPolicyRetentionDescription(value);
+        public static implicit operator CleanupPolicyRetentionDescription?(string value) => value == null ? (CleanupPolicyRetentionDescription?)null : new CleanupPolicyRetentionDescription(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

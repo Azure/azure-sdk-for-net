@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SecurityRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityRuleAccess?(string value) => value == null ? null : new SecurityRuleAccess(value);
+        public static implicit operator SecurityRuleAccess?(string value) => value == null ? (SecurityRuleAccess?)null : new SecurityRuleAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

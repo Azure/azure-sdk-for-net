@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="MonitorServiceSourceForAlert"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorServiceSourceForAlert?(string value) => value == null ? null : new MonitorServiceSourceForAlert(value);
+        public static implicit operator MonitorServiceSourceForAlert?(string value) => value == null ? (MonitorServiceSourceForAlert?)null : new MonitorServiceSourceForAlert(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeAllocationStrategy?(string value) => value == null ? null : new ComputeAllocationStrategy(value);
+        public static implicit operator ComputeAllocationStrategy?(string value) => value == null ? (ComputeAllocationStrategy?)null : new ComputeAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

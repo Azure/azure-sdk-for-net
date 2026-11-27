@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="VolumeRestoreRelationshipStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeRestoreRelationshipStatus?(string value) => value == null ? null : new VolumeRestoreRelationshipStatus(value);
+        public static implicit operator VolumeRestoreRelationshipStatus?(string value) => value == null ? (VolumeRestoreRelationshipStatus?)null : new VolumeRestoreRelationshipStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

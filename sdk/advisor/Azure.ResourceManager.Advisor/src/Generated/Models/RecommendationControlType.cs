@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationControlType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationControlType?(string value) => value == null ? null : new RecommendationControlType(value);
+        public static implicit operator RecommendationControlType?(string value) => value == null ? (RecommendationControlType?)null : new RecommendationControlType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

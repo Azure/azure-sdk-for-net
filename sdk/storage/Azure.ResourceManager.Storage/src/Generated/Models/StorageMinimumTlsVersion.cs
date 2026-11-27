@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageMinimumTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMinimumTlsVersion?(string value) => value == null ? null : new StorageMinimumTlsVersion(value);
+        public static implicit operator StorageMinimumTlsVersion?(string value) => value == null ? (StorageMinimumTlsVersion?)null : new StorageMinimumTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="InstancePoolLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstancePoolLicenseType?(string value) => value == null ? null : new InstancePoolLicenseType(value);
+        public static implicit operator InstancePoolLicenseType?(string value) => value == null ? (InstancePoolLicenseType?)null : new InstancePoolLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

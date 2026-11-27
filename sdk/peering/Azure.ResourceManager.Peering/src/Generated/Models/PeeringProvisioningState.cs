@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringProvisioningState?(string value) => value == null ? null : new PeeringProvisioningState(value);
+        public static implicit operator PeeringProvisioningState?(string value) => value == null ? (PeeringProvisioningState?)null : new PeeringProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

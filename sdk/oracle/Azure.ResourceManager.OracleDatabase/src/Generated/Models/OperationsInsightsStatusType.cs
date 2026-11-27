@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OperationsInsightsStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationsInsightsStatusType?(string value) => value == null ? null : new OperationsInsightsStatusType(value);
+        public static implicit operator OperationsInsightsStatusType?(string value) => value == null ? (OperationsInsightsStatusType?)null : new OperationsInsightsStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

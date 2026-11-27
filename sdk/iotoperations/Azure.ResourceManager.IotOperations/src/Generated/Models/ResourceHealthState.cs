@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="ResourceHealthState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthState?(string value) => value == null ? null : new ResourceHealthState(value);
+        public static implicit operator ResourceHealthState?(string value) => value == null ? (ResourceHealthState?)null : new ResourceHealthState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

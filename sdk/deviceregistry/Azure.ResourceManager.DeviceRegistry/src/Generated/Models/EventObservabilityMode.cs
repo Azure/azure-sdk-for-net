@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="EventObservabilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventObservabilityMode?(string value) => value == null ? null : new EventObservabilityMode(value);
+        public static implicit operator EventObservabilityMode?(string value) => value == null ? (EventObservabilityMode?)null : new EventObservabilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

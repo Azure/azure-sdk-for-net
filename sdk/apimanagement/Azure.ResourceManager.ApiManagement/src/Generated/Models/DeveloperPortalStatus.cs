@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="DeveloperPortalStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeveloperPortalStatus?(string value) => value == null ? null : new DeveloperPortalStatus(value);
+        public static implicit operator DeveloperPortalStatus?(string value) => value == null ? (DeveloperPortalStatus?)null : new DeveloperPortalStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

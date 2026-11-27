@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? (ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting?)null : new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

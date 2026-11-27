@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationPublicNetworkAccess?(string value) => value == null ? null : new AppConfigurationPublicNetworkAccess(value);
+        public static implicit operator AppConfigurationPublicNetworkAccess?(string value) => value == null ? (AppConfigurationPublicNetworkAccess?)null : new AppConfigurationPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

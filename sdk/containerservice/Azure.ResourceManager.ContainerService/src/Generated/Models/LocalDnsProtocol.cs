@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="LocalDnsProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDnsProtocol?(string value) => value == null ? null : new LocalDnsProtocol(value);
+        public static implicit operator LocalDnsProtocol?(string value) => value == null ? (LocalDnsProtocol?)null : new LocalDnsProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerStorageRedundancyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerStorageRedundancyType?(string value) => value == null ? null : new MySqlFlexibleServerStorageRedundancyType(value);
+        public static implicit operator MySqlFlexibleServerStorageRedundancyType?(string value) => value == null ? (MySqlFlexibleServerStorageRedundancyType?)null : new MySqlFlexibleServerStorageRedundancyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

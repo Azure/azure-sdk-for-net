@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetCapacityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetCapacityType?(string value) => value == null ? null : new ComputeFleetCapacityType(value);
+        public static implicit operator ComputeFleetCapacityType?(string value) => value == null ? (ComputeFleetCapacityType?)null : new ComputeFleetCapacityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="CustomCaptureConfigurationsProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomCaptureConfigurationsProtocol?(string value) => value == null ? null : new CustomCaptureConfigurationsProtocol(value);
+        public static implicit operator CustomCaptureConfigurationsProtocol?(string value) => value == null ? (CustomCaptureConfigurationsProtocol?)null : new CustomCaptureConfigurationsProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

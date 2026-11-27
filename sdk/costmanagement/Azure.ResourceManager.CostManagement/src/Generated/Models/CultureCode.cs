@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CultureCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CultureCode?(string value) => value == null ? null : new CultureCode(value);
+        public static implicit operator CultureCode?(string value) => value == null ? (CultureCode?)null : new CultureCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

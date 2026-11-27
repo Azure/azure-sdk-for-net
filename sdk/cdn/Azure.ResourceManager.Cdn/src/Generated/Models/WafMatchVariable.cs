@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafMatchVariable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafMatchVariable?(string value) => value == null ? null : new WafMatchVariable(value);
+        public static implicit operator WafMatchVariable?(string value) => value == null ? (WafMatchVariable?)null : new WafMatchVariable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

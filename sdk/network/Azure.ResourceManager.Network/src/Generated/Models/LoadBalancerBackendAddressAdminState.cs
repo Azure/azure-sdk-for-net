@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancerBackendAddressAdminState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancerBackendAddressAdminState?(string value) => value == null ? null : new LoadBalancerBackendAddressAdminState(value);
+        public static implicit operator LoadBalancerBackendAddressAdminState?(string value) => value == null ? (LoadBalancerBackendAddressAdminState?)null : new LoadBalancerBackendAddressAdminState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

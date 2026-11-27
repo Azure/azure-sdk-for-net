@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlDatabaseCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlDatabaseCreateMode?(string value) => value == null ? null : new SqlDatabaseCreateMode(value);
+        public static implicit operator SqlDatabaseCreateMode?(string value) => value == null ? (SqlDatabaseCreateMode?)null : new SqlDatabaseCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

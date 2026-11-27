@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="FeatureDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureDataType?(string value) => value == null ? null : new FeatureDataType(value);
+        public static implicit operator FeatureDataType?(string value) => value == null ? (FeatureDataType?)null : new FeatureDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

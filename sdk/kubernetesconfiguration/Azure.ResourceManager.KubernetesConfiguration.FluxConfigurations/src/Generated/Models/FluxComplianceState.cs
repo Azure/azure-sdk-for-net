@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <summary> Converts a string to a <see cref="FluxComplianceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FluxComplianceState?(string value) => value == null ? null : new FluxComplianceState(value);
+        public static implicit operator FluxComplianceState?(string value) => value == null ? (FluxComplianceState?)null : new FluxComplianceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

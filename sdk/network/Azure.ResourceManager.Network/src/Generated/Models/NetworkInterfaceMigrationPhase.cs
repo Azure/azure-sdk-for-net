@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkInterfaceMigrationPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkInterfaceMigrationPhase?(string value) => value == null ? null : new NetworkInterfaceMigrationPhase(value);
+        public static implicit operator NetworkInterfaceMigrationPhase?(string value) => value == null ? (NetworkInterfaceMigrationPhase?)null : new NetworkInterfaceMigrationPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

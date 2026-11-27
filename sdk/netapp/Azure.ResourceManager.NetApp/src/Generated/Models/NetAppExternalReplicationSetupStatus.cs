@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppExternalReplicationSetupStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppExternalReplicationSetupStatus?(string value) => value == null ? null : new NetAppExternalReplicationSetupStatus(value);
+        public static implicit operator NetAppExternalReplicationSetupStatus?(string value) => value == null ? (NetAppExternalReplicationSetupStatus?)null : new NetAppExternalReplicationSetupStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

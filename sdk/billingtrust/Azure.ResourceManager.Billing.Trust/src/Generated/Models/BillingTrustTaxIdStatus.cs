@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <summary> Converts a string to a <see cref="BillingTrustTaxIdStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingTrustTaxIdStatus?(string value) => value == null ? null : new BillingTrustTaxIdStatus(value);
+        public static implicit operator BillingTrustTaxIdStatus?(string value) => value == null ? (BillingTrustTaxIdStatus?)null : new BillingTrustTaxIdStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

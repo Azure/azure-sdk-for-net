@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="DscConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DscConfigurationProvisioningState?(string value) => value == null ? null : new DscConfigurationProvisioningState(value);
+        public static implicit operator DscConfigurationProvisioningState?(string value) => value == null ? (DscConfigurationProvisioningState?)null : new DscConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

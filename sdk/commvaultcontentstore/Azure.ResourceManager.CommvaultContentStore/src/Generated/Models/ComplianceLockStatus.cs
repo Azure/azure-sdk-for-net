@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="ComplianceLockStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComplianceLockStatus?(string value) => value == null ? null : new ComplianceLockStatus(value);
+        public static implicit operator ComplianceLockStatus?(string value) => value == null ? (ComplianceLockStatus?)null : new ComplianceLockStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

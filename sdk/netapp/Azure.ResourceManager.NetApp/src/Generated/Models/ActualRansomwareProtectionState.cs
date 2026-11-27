@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="ActualRansomwareProtectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActualRansomwareProtectionState?(string value) => value == null ? null : new ActualRansomwareProtectionState(value);
+        public static implicit operator ActualRansomwareProtectionState?(string value) => value == null ? (ActualRansomwareProtectionState?)null : new ActualRansomwareProtectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

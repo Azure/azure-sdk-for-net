@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetMeshMemberState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetMeshMemberState?(string value) => value == null ? null : new ContainerServiceFleetMeshMemberState(value);
+        public static implicit operator ContainerServiceFleetMeshMemberState?(string value) => value == null ? (ContainerServiceFleetMeshMemberState?)null : new ContainerServiceFleetMeshMemberState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

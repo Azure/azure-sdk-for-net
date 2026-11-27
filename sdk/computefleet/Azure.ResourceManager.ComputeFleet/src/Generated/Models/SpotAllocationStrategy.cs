@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="SpotAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SpotAllocationStrategy?(string value) => value == null ? null : new SpotAllocationStrategy(value);
+        public static implicit operator SpotAllocationStrategy?(string value) => value == null ? (SpotAllocationStrategy?)null : new SpotAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

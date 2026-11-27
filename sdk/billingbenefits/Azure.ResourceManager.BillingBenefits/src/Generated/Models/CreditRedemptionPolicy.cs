@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="CreditRedemptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreditRedemptionPolicy?(string value) => value == null ? null : new CreditRedemptionPolicy(value);
+        public static implicit operator CreditRedemptionPolicy?(string value) => value == null ? (CreditRedemptionPolicy?)null : new CreditRedemptionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

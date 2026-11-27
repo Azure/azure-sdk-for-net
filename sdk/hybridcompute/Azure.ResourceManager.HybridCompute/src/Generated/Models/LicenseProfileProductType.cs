@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="LicenseProfileProductType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LicenseProfileProductType?(string value) => value == null ? null : new LicenseProfileProductType(value);
+        public static implicit operator LicenseProfileProductType?(string value) => value == null ? (LicenseProfileProductType?)null : new LicenseProfileProductType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

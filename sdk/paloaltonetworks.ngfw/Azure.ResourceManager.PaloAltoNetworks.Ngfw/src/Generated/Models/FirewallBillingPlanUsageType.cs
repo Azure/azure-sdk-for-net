@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallBillingPlanUsageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallBillingPlanUsageType?(string value) => value == null ? null : new FirewallBillingPlanUsageType(value);
+        public static implicit operator FirewallBillingPlanUsageType?(string value) => value == null ? (FirewallBillingPlanUsageType?)null : new FirewallBillingPlanUsageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

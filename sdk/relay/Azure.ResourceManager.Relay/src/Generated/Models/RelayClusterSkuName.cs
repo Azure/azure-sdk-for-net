@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayClusterSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayClusterSkuName?(string value) => value == null ? null : new RelayClusterSkuName(value);
+        public static implicit operator RelayClusterSkuName?(string value) => value == null ? (RelayClusterSkuName?)null : new RelayClusterSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

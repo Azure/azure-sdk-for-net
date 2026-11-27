@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </summary>
+        /// <summary> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:*`. Defaults to `+@all ~*` if not specified. </summary>
         [WirePath("properties.accessString")]
         public string AccessString
         {

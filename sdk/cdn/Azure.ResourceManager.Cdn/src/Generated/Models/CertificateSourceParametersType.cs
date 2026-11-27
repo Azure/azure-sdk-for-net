@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CertificateSourceParametersType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateSourceParametersType?(string value) => value == null ? null : new CertificateSourceParametersType(value);
+        public static implicit operator CertificateSourceParametersType?(string value) => value == null ? (CertificateSourceParametersType?)null : new CertificateSourceParametersType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

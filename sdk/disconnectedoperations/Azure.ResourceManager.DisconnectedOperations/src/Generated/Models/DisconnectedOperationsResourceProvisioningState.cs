@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> Converts a string to a <see cref="DisconnectedOperationsResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsResourceProvisioningState?(string value) => value == null ? null : new DisconnectedOperationsResourceProvisioningState(value);
+        public static implicit operator DisconnectedOperationsResourceProvisioningState?(string value) => value == null ? (DisconnectedOperationsResourceProvisioningState?)null : new DisconnectedOperationsResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

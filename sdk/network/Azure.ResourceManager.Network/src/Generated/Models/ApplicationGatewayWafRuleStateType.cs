@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayWafRuleStateType?(string value) => value == null ? null : new ApplicationGatewayWafRuleStateType(value);
+        public static implicit operator ApplicationGatewayWafRuleStateType?(string value) => value == null ? (ApplicationGatewayWafRuleStateType?)null : new ApplicationGatewayWafRuleStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

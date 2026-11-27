@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="GlobalReachConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GlobalReachConnectionStatus?(string value) => value == null ? null : new GlobalReachConnectionStatus(value);
+        public static implicit operator GlobalReachConnectionStatus?(string value) => value == null ? (GlobalReachConnectionStatus?)null : new GlobalReachConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

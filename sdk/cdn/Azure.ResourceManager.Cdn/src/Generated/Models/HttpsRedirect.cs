@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="HttpsRedirect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HttpsRedirect?(string value) => value == null ? null : new HttpsRedirect(value);
+        public static implicit operator HttpsRedirect?(string value) => value == null ? (HttpsRedirect?)null : new HttpsRedirect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

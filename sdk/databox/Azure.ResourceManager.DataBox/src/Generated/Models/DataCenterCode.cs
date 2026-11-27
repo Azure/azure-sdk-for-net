@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Converts a string to a <see cref="DataCenterCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataCenterCode?(string value) => value == null ? null : new DataCenterCode(value);
+        public static implicit operator DataCenterCode?(string value) => value == null ? (DataCenterCode?)null : new DataCenterCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

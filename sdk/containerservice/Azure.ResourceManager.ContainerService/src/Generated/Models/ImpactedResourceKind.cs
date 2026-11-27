@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ImpactedResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactedResourceKind?(string value) => value == null ? null : new ImpactedResourceKind(value);
+        public static implicit operator ImpactedResourceKind?(string value) => value == null ? (ImpactedResourceKind?)null : new ImpactedResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

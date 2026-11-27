@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsAlertSeverity?(string value) => value == null ? null : new SecurityInsightsAlertSeverity(value);
+        public static implicit operator SecurityInsightsAlertSeverity?(string value) => value == null ? (SecurityInsightsAlertSeverity?)null : new SecurityInsightsAlertSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

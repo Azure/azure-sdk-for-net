@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsResourceSkuRestrictionsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsResourceSkuRestrictionsType?(string value) => value == null ? null : new AvsResourceSkuRestrictionsType(value);
+        public static implicit operator AvsResourceSkuRestrictionsType?(string value) => value == null ? (AvsResourceSkuRestrictionsType?)null : new AvsResourceSkuRestrictionsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

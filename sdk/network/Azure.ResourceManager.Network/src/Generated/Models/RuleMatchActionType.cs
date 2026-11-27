@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RuleMatchActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleMatchActionType?(string value) => value == null ? null : new RuleMatchActionType(value);
+        public static implicit operator RuleMatchActionType?(string value) => value == null ? (RuleMatchActionType?)null : new RuleMatchActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

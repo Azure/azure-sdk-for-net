@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="CloudNativeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudNativeType?(string value) => value == null ? null : new CloudNativeType(value);
+        public static implicit operator CloudNativeType?(string value) => value == null ? (CloudNativeType?)null : new CloudNativeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

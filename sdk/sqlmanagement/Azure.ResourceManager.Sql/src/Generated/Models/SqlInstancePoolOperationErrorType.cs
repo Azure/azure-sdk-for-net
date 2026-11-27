@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlInstancePoolOperationErrorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlInstancePoolOperationErrorType?(string value) => value == null ? null : new SqlInstancePoolOperationErrorType(value);
+        public static implicit operator SqlInstancePoolOperationErrorType?(string value) => value == null ? (SqlInstancePoolOperationErrorType?)null : new SqlInstancePoolOperationErrorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

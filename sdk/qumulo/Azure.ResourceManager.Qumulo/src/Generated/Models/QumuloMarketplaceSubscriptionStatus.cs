@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         /// <summary> Converts a string to a <see cref="QumuloMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QumuloMarketplaceSubscriptionStatus?(string value) => value == null ? null : new QumuloMarketplaceSubscriptionStatus(value);
+        public static implicit operator QumuloMarketplaceSubscriptionStatus?(string value) => value == null ? (QumuloMarketplaceSubscriptionStatus?)null : new QumuloMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

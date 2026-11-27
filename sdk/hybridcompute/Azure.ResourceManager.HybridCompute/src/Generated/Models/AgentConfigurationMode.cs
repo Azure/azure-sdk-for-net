@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="AgentConfigurationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentConfigurationMode?(string value) => value == null ? null : new AgentConfigurationMode(value);
+        public static implicit operator AgentConfigurationMode?(string value) => value == null ? (AgentConfigurationMode?)null : new AgentConfigurationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesState?(string value) => value == null ? null : new DeviceProvisioningServicesState(value);
+        public static implicit operator DeviceProvisioningServicesState?(string value) => value == null ? (DeviceProvisioningServicesState?)null : new DeviceProvisioningServicesState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

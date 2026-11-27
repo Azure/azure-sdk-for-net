@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="TrafficManagerHeatMapType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficManagerHeatMapType?(string value) => value == null ? null : new TrafficManagerHeatMapType(value);
+        public static implicit operator TrafficManagerHeatMapType?(string value) => value == null ? (TrafficManagerHeatMapType?)null : new TrafficManagerHeatMapType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

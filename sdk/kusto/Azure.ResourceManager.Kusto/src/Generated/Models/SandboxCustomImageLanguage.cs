@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="SandboxCustomImageLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SandboxCustomImageLanguage?(string value) => value == null ? null : new SandboxCustomImageLanguage(value);
+        public static implicit operator SandboxCustomImageLanguage?(string value) => value == null ? (SandboxCustomImageLanguage?)null : new SandboxCustomImageLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

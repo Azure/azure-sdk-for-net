@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BmcKeySetPrivilegeLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BmcKeySetPrivilegeLevel?(string value) => value == null ? null : new BmcKeySetPrivilegeLevel(value);
+        public static implicit operator BmcKeySetPrivilegeLevel?(string value) => value == null ? (BmcKeySetPrivilegeLevel?)null : new BmcKeySetPrivilegeLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="BackupPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupPolicyType?(string value) => value == null ? null : new BackupPolicyType(value);
+        public static implicit operator BackupPolicyType?(string value) => value == null ? (BackupPolicyType?)null : new BackupPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

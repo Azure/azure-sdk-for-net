@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ServerNetworkAccessFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerNetworkAccessFlag?(string value) => value == null ? null : new ServerNetworkAccessFlag(value);
+        public static implicit operator ServerNetworkAccessFlag?(string value) => value == null ? (ServerNetworkAccessFlag?)null : new ServerNetworkAccessFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

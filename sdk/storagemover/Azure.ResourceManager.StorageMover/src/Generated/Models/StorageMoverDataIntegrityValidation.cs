@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="StorageMoverDataIntegrityValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverDataIntegrityValidation?(string value) => value == null ? null : new StorageMoverDataIntegrityValidation(value);
+        public static implicit operator StorageMoverDataIntegrityValidation?(string value) => value == null ? (StorageMoverDataIntegrityValidation?)null : new StorageMoverDataIntegrityValidation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

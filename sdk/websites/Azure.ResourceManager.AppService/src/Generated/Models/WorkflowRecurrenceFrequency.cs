@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="WorkflowRecurrenceFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkflowRecurrenceFrequency?(string value) => value == null ? null : new WorkflowRecurrenceFrequency(value);
+        public static implicit operator WorkflowRecurrenceFrequency?(string value) => value == null ? (WorkflowRecurrenceFrequency?)null : new WorkflowRecurrenceFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

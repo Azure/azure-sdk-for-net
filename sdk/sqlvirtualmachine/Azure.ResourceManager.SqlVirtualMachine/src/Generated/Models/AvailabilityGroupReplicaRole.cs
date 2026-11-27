@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityGroupReplicaRole?(string value) => value == null ? null : new AvailabilityGroupReplicaRole(value);
+        public static implicit operator AvailabilityGroupReplicaRole?(string value) => value == null ? (AvailabilityGroupReplicaRole?)null : new AvailabilityGroupReplicaRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

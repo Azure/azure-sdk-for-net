@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="CrossRegionRestore"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CrossRegionRestore?(string value) => value == null ? null : new CrossRegionRestore(value);
+        public static implicit operator CrossRegionRestore?(string value) => value == null ? (CrossRegionRestore?)null : new CrossRegionRestore(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

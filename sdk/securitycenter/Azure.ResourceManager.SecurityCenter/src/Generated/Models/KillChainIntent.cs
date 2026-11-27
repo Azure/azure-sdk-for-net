@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="KillChainIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KillChainIntent?(string value) => value == null ? null : new KillChainIntent(value);
+        public static implicit operator KillChainIntent?(string value) => value == null ? (KillChainIntent?)null : new KillChainIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

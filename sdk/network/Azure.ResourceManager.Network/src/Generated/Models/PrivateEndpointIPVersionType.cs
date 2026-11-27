@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PrivateEndpointIPVersionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateEndpointIPVersionType?(string value) => value == null ? null : new PrivateEndpointIPVersionType(value);
+        public static implicit operator PrivateEndpointIPVersionType?(string value) => value == null ? (PrivateEndpointIPVersionType?)null : new PrivateEndpointIPVersionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

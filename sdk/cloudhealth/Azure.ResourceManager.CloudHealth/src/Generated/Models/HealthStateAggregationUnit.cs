@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="HealthStateAggregationUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthStateAggregationUnit?(string value) => value == null ? null : new HealthStateAggregationUnit(value);
+        public static implicit operator HealthStateAggregationUnit?(string value) => value == null ? (HealthStateAggregationUnit?)null : new HealthStateAggregationUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="HostPoolPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPoolPublicNetworkAccess?(string value) => value == null ? null : new HostPoolPublicNetworkAccess(value);
+        public static implicit operator HostPoolPublicNetworkAccess?(string value) => value == null ? (HostPoolPublicNetworkAccess?)null : new HostPoolPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

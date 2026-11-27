@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderAddressValidationStatus?(string value) => value == null ? null : new EdgeOrderAddressValidationStatus(value);
+        public static implicit operator EdgeOrderAddressValidationStatus?(string value) => value == null ? (EdgeOrderAddressValidationStatus?)null : new EdgeOrderAddressValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

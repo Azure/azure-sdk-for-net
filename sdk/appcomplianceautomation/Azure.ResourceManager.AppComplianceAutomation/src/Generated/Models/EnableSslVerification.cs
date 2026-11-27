@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="EnableSslVerification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnableSslVerification?(string value) => value == null ? null : new EnableSslVerification(value);
+        public static implicit operator EnableSslVerification?(string value) => value == null ? (EnableSslVerification?)null : new EnableSslVerification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="SettingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SettingName?(string value) => value == null ? null : new SettingName(value);
+        public static implicit operator SettingName?(string value) => value == null ? (SettingName?)null : new SettingName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ExpirationAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpirationAction?(string value) => value == null ? null : new ExpirationAction(value);
+        public static implicit operator ExpirationAction?(string value) => value == null ? (ExpirationAction?)null : new ExpirationAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <summary> Converts a string to a <see cref="ManufacturingPlatformProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManufacturingPlatformProvisioningState?(string value) => value == null ? null : new ManufacturingPlatformProvisioningState(value);
+        public static implicit operator ManufacturingPlatformProvisioningState?(string value) => value == null ? (ManufacturingPlatformProvisioningState?)null : new ManufacturingPlatformProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

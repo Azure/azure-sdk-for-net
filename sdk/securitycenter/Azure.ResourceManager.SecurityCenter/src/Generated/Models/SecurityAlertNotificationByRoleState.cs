@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityAlertNotificationByRoleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityAlertNotificationByRoleState?(string value) => value == null ? null : new SecurityAlertNotificationByRoleState(value);
+        public static implicit operator SecurityAlertNotificationByRoleState?(string value) => value == null ? (SecurityAlertNotificationByRoleState?)null : new SecurityAlertNotificationByRoleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

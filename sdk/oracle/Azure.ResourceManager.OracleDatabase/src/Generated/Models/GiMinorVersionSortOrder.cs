@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="GiMinorVersionSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GiMinorVersionSortOrder?(string value) => value == null ? null : new GiMinorVersionSortOrder(value);
+        public static implicit operator GiMinorVersionSortOrder?(string value) => value == null ? (GiMinorVersionSortOrder?)null : new GiMinorVersionSortOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

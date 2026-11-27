@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Converts a string to a <see cref="ValidationExecutionPlanProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationExecutionPlanProvisioningState?(string value) => value == null ? null : new ValidationExecutionPlanProvisioningState(value);
+        public static implicit operator ValidationExecutionPlanProvisioningState?(string value) => value == null ? (ValidationExecutionPlanProvisioningState?)null : new ValidationExecutionPlanProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

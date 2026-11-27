@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Converts a string to a <see cref="OpenShiftOutboundType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenShiftOutboundType?(string value) => value == null ? null : new OpenShiftOutboundType(value);
+        public static implicit operator OpenShiftOutboundType?(string value) => value == null ? (OpenShiftOutboundType?)null : new OpenShiftOutboundType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

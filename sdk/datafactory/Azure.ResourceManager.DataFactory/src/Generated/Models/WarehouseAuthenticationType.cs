@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="WarehouseAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WarehouseAuthenticationType?(string value) => value == null ? null : new WarehouseAuthenticationType(value);
+        public static implicit operator WarehouseAuthenticationType?(string value) => value == null ? (WarehouseAuthenticationType?)null : new WarehouseAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

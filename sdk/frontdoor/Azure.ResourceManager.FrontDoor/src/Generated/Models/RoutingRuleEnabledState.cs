@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="RoutingRuleEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingRuleEnabledState?(string value) => value == null ? null : new RoutingRuleEnabledState(value);
+        public static implicit operator RoutingRuleEnabledState?(string value) => value == null ? (RoutingRuleEnabledState?)null : new RoutingRuleEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

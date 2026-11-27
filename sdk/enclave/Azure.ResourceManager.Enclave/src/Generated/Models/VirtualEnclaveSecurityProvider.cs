@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveSecurityProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveSecurityProvider?(string value) => value == null ? null : new VirtualEnclaveSecurityProvider(value);
+        public static implicit operator VirtualEnclaveSecurityProvider?(string value) => value == null ? (VirtualEnclaveSecurityProvider?)null : new VirtualEnclaveSecurityProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterVersionsEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterVersionsEnvironment?(string value) => value == null ? null : new ClusterVersionsEnvironment(value);
+        public static implicit operator ClusterVersionsEnvironment?(string value) => value == null ? (ClusterVersionsEnvironment?)null : new ClusterVersionsEnvironment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

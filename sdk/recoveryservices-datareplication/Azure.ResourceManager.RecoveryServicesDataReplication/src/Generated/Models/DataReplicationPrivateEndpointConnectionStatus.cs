@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationPrivateEndpointConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationPrivateEndpointConnectionStatus?(string value) => value == null ? null : new DataReplicationPrivateEndpointConnectionStatus(value);
+        public static implicit operator DataReplicationPrivateEndpointConnectionStatus?(string value) => value == null ? (DataReplicationPrivateEndpointConnectionStatus?)null : new DataReplicationPrivateEndpointConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="ExecutionIdentityProvisioningMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExecutionIdentityProvisioningMode?(string value) => value == null ? null : new ExecutionIdentityProvisioningMode(value);
+        public static implicit operator ExecutionIdentityProvisioningMode?(string value) => value == null ? (ExecutionIdentityProvisioningMode?)null : new ExecutionIdentityProvisioningMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

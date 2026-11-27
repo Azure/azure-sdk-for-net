@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AzureFirewallSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureFirewallSkuName?(string value) => value == null ? null : new AzureFirewallSkuName(value);
+        public static implicit operator AzureFirewallSkuName?(string value) => value == null ? (AzureFirewallSkuName?)null : new AzureFirewallSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskSourceRegistryLoginMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskSourceRegistryLoginMode?(string value) => value == null ? null : new ContainerRegistryTaskSourceRegistryLoginMode(value);
+        public static implicit operator ContainerRegistryTaskSourceRegistryLoginMode?(string value) => value == null ? (ContainerRegistryTaskSourceRegistryLoginMode?)null : new ContainerRegistryTaskSourceRegistryLoginMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

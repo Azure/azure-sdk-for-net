@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <summary> Converts a string to a <see cref="EdgeActionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeActionProvisioningState?(string value) => value == null ? null : new EdgeActionProvisioningState(value);
+        public static implicit operator EdgeActionProvisioningState?(string value) => value == null ? (EdgeActionProvisioningState?)null : new EdgeActionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

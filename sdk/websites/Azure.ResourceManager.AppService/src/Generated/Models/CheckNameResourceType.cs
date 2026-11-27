@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="CheckNameResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CheckNameResourceType?(string value) => value == null ? null : new CheckNameResourceType(value);
+        public static implicit operator CheckNameResourceType?(string value) => value == null ? (CheckNameResourceType?)null : new CheckNameResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

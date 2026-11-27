@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryDiskAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryDiskAccountType?(string value) => value == null ? null : new SiteRecoveryDiskAccountType(value);
+        public static implicit operator SiteRecoveryDiskAccountType?(string value) => value == null ? (SiteRecoveryDiskAccountType?)null : new SiteRecoveryDiskAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringProtocol?(string value) => value == null ? null : new PeeringProtocol(value);
+        public static implicit operator PeeringProtocol?(string value) => value == null ? (PeeringProtocol?)null : new PeeringProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

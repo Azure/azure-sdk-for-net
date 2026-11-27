@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningClusterPurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningClusterPurpose?(string value) => value == null ? null : new MachineLearningClusterPurpose(value);
+        public static implicit operator MachineLearningClusterPurpose?(string value) => value == null ? (MachineLearningClusterPurpose?)null : new MachineLearningClusterPurpose(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

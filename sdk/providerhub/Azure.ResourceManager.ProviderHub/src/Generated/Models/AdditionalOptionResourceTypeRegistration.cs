@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="AdditionalOptionResourceTypeRegistration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalOptionResourceTypeRegistration?(string value) => value == null ? null : new AdditionalOptionResourceTypeRegistration(value);
+        public static implicit operator AdditionalOptionResourceTypeRegistration?(string value) => value == null ? (AdditionalOptionResourceTypeRegistration?)null : new AdditionalOptionResourceTypeRegistration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

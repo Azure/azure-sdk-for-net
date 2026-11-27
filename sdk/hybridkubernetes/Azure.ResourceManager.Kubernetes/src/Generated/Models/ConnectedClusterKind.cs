@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedClusterKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedClusterKind?(string value) => value == null ? null : new ConnectedClusterKind(value);
+        public static implicit operator ConnectedClusterKind?(string value) => value == null ? (ConnectedClusterKind?)null : new ConnectedClusterKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

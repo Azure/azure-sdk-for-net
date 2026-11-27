@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="ReplicationPromoteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationPromoteOption?(string value) => value == null ? null : new ReplicationPromoteOption(value);
+        public static implicit operator ReplicationPromoteOption?(string value) => value == null ? (ReplicationPromoteOption?)null : new ReplicationPromoteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

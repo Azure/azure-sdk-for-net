@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationFirewallActivationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationFirewallActivationState?(string value) => value == null ? null : new WebApplicationFirewallActivationState(value);
+        public static implicit operator WebApplicationFirewallActivationState?(string value) => value == null ? (WebApplicationFirewallActivationState?)null : new WebApplicationFirewallActivationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

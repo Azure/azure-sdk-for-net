@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="InitiatorCustomerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InitiatorCustomerType?(string value) => value == null ? null : new InitiatorCustomerType(value);
+        public static implicit operator InitiatorCustomerType?(string value) => value == null ? (InitiatorCustomerType?)null : new InitiatorCustomerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

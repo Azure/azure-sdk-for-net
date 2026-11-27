@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="HttpMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HttpMethod?(string value) => value == null ? null : new HttpMethod(value);
+        public static implicit operator HttpMethod?(string value) => value == null ? (HttpMethod?)null : new HttpMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

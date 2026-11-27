@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="AfdCustomizedCipherSuiteForTls12"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AfdCustomizedCipherSuiteForTls12?(string value) => value == null ? null : new AfdCustomizedCipherSuiteForTls12(value);
+        public static implicit operator AfdCustomizedCipherSuiteForTls12?(string value) => value == null ? (AfdCustomizedCipherSuiteForTls12?)null : new AfdCustomizedCipherSuiteForTls12(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

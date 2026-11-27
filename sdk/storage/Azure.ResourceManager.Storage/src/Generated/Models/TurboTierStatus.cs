@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="TurboTierStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TurboTierStatus?(string value) => value == null ? null : new TurboTierStatus(value);
+        public static implicit operator TurboTierStatus?(string value) => value == null ? (TurboTierStatus?)null : new TurboTierStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

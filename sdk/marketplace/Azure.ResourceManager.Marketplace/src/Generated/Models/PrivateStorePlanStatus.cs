@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Converts a string to a <see cref="PrivateStorePlanStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateStorePlanStatus?(string value) => value == null ? null : new PrivateStorePlanStatus(value);
+        public static implicit operator PrivateStorePlanStatus?(string value) => value == null ? (PrivateStorePlanStatus?)null : new PrivateStorePlanStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

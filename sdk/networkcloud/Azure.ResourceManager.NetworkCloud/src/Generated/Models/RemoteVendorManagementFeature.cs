@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RemoteVendorManagementFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RemoteVendorManagementFeature?(string value) => value == null ? null : new RemoteVendorManagementFeature(value);
+        public static implicit operator RemoteVendorManagementFeature?(string value) => value == null ? (RemoteVendorManagementFeature?)null : new RemoteVendorManagementFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

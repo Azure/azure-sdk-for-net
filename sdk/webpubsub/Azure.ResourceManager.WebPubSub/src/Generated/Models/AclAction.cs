@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="AclAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AclAction?(string value) => value == null ? null : new AclAction(value);
+        public static implicit operator AclAction?(string value) => value == null ? (AclAction?)null : new AclAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="RestoreOverwriteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestoreOverwriteOption?(string value) => value == null ? null : new RestoreOverwriteOption(value);
+        public static implicit operator RestoreOverwriteOption?(string value) => value == null ? (RestoreOverwriteOption?)null : new RestoreOverwriteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

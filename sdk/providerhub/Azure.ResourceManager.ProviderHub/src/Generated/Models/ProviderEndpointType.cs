@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderEndpointType?(string value) => value == null ? null : new ProviderEndpointType(value);
+        public static implicit operator ProviderEndpointType?(string value) => value == null ? (ProviderEndpointType?)null : new ProviderEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

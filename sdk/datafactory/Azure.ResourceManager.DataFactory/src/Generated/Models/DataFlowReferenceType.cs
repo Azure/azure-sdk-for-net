@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFlowReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFlowReferenceType?(string value) => value == null ? null : new DataFlowReferenceType(value);
+        public static implicit operator DataFlowReferenceType?(string value) => value == null ? (DataFlowReferenceType?)null : new DataFlowReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

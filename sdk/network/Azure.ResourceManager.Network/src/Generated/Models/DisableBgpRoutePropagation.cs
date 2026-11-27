@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DisableBgpRoutePropagation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisableBgpRoutePropagation?(string value) => value == null ? null : new DisableBgpRoutePropagation(value);
+        public static implicit operator DisableBgpRoutePropagation?(string value) => value == null ? (DisableBgpRoutePropagation?)null : new DisableBgpRoutePropagation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

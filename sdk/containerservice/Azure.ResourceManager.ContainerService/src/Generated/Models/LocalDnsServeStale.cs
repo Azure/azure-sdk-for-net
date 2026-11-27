@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="LocalDnsServeStale"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDnsServeStale?(string value) => value == null ? null : new LocalDnsServeStale(value);
+        public static implicit operator LocalDnsServeStale?(string value) => value == null ? (LocalDnsServeStale?)null : new LocalDnsServeStale(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

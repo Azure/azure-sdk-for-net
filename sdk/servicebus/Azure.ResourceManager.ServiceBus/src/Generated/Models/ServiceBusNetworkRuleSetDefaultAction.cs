@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusNetworkRuleSetDefaultAction?(string value) => value == null ? null : new ServiceBusNetworkRuleSetDefaultAction(value);
+        public static implicit operator ServiceBusNetworkRuleSetDefaultAction?(string value) => value == null ? (ServiceBusNetworkRuleSetDefaultAction?)null : new ServiceBusNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

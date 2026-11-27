@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointFilterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionMonitorEndpointFilterType?(string value) => value == null ? null : new ConnectionMonitorEndpointFilterType(value);
+        public static implicit operator ConnectionMonitorEndpointFilterType?(string value) => value == null ? (ConnectionMonitorEndpointFilterType?)null : new ConnectionMonitorEndpointFilterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

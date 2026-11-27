@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoClusterType?(string value) => value == null ? null : new KustoClusterType(value);
+        public static implicit operator KustoClusterType?(string value) => value == null ? (KustoClusterType?)null : new KustoClusterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

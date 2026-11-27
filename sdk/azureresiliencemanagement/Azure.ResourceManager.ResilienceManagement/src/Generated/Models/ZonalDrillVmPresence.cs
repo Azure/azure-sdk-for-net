@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ZonalDrillVmPresence"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonalDrillVmPresence?(string value) => value == null ? null : new ZonalDrillVmPresence(value);
+        public static implicit operator ZonalDrillVmPresence?(string value) => value == null ? (ZonalDrillVmPresence?)null : new ZonalDrillVmPresence(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

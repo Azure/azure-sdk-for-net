@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobContainerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobContainerState?(string value) => value == null ? null : new BlobContainerState(value);
+        public static implicit operator BlobContainerState?(string value) => value == null ? (BlobContainerState?)null : new BlobContainerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

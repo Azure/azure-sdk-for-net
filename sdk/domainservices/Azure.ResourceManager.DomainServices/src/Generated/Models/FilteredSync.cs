@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="FilteredSync"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilteredSync?(string value) => value == null ? null : new FilteredSync(value);
+        public static implicit operator FilteredSync?(string value) => value == null ? (FilteredSync?)null : new FilteredSync(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

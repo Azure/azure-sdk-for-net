@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="GenevaActionAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GenevaActionAuthenticationMode?(string value) => value == null ? null : new GenevaActionAuthenticationMode(value);
+        public static implicit operator GenevaActionAuthenticationMode?(string value) => value == null ? (GenevaActionAuthenticationMode?)null : new GenevaActionAuthenticationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

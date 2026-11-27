@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewMergeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewMergeStatus?(string value) => value == null ? null : new PurviewMergeStatus(value);
+        public static implicit operator PurviewMergeStatus?(string value) => value == null ? (PurviewMergeStatus?)null : new PurviewMergeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

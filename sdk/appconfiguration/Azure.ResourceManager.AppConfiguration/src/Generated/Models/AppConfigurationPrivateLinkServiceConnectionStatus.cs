@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new AppConfigurationPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator AppConfigurationPrivateLinkServiceConnectionStatus?(string value) => value == null ? (AppConfigurationPrivateLinkServiceConnectionStatus?)null : new AppConfigurationPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="CoolAccessRetrievalPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CoolAccessRetrievalPolicy?(string value) => value == null ? null : new CoolAccessRetrievalPolicy(value);
+        public static implicit operator CoolAccessRetrievalPolicy?(string value) => value == null ? (CoolAccessRetrievalPolicy?)null : new CoolAccessRetrievalPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

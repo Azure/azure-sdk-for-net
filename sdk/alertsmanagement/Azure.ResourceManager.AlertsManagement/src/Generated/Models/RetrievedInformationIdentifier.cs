@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="RetrievedInformationIdentifier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RetrievedInformationIdentifier?(string value) => value == null ? null : new RetrievedInformationIdentifier(value);
+        public static implicit operator RetrievedInformationIdentifier?(string value) => value == null ? (RetrievedInformationIdentifier?)null : new RetrievedInformationIdentifier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

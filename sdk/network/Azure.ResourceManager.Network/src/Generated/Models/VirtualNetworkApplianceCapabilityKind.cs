@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkApplianceCapabilityKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkApplianceCapabilityKind?(string value) => value == null ? null : new VirtualNetworkApplianceCapabilityKind(value);
+        public static implicit operator VirtualNetworkApplianceCapabilityKind?(string value) => value == null ? (VirtualNetworkApplianceCapabilityKind?)null : new VirtualNetworkApplianceCapabilityKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

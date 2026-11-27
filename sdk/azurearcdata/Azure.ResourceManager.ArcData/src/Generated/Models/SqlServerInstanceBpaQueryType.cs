@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerInstanceBpaQueryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerInstanceBpaQueryType?(string value) => value == null ? null : new SqlServerInstanceBpaQueryType(value);
+        public static implicit operator SqlServerInstanceBpaQueryType?(string value) => value == null ? (SqlServerInstanceBpaQueryType?)null : new SqlServerInstanceBpaQueryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

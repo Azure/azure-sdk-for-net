@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcxEnterpriseSiteStatus?(string value) => value == null ? null : new HcxEnterpriseSiteStatus(value);
+        public static implicit operator HcxEnterpriseSiteStatus?(string value) => value == null ? (HcxEnterpriseSiteStatus?)null : new HcxEnterpriseSiteStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

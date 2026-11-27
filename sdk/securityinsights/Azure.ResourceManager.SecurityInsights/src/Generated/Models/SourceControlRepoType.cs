@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlRepoType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlRepoType?(string value) => value == null ? null : new SourceControlRepoType(value);
+        public static implicit operator SourceControlRepoType?(string value) => value == null ? (SourceControlRepoType?)null : new SourceControlRepoType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

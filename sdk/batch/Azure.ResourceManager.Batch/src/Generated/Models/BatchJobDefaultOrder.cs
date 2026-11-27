@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchJobDefaultOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchJobDefaultOrder?(string value) => value == null ? null : new BatchJobDefaultOrder(value);
+        public static implicit operator BatchJobDefaultOrder?(string value) => value == null ? (BatchJobDefaultOrder?)null : new BatchJobDefaultOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

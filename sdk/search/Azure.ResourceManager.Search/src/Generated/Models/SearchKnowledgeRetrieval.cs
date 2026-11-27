@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchKnowledgeRetrieval"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchKnowledgeRetrieval?(string value) => value == null ? null : new SearchKnowledgeRetrieval(value);
+        public static implicit operator SearchKnowledgeRetrieval?(string value) => value == null ? (SearchKnowledgeRetrieval?)null : new SearchKnowledgeRetrieval(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

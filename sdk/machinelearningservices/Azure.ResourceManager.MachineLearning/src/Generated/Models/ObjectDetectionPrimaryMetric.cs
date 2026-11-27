@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ObjectDetectionPrimaryMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObjectDetectionPrimaryMetric?(string value) => value == null ? null : new ObjectDetectionPrimaryMetric(value);
+        public static implicit operator ObjectDetectionPrimaryMetric?(string value) => value == null ? (ObjectDetectionPrimaryMetric?)null : new ObjectDetectionPrimaryMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

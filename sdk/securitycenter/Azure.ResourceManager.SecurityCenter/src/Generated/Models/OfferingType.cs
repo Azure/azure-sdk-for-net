@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="OfferingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OfferingType?(string value) => value == null ? null : new OfferingType(value);
+        public static implicit operator OfferingType?(string value) => value == null ? (OfferingType?)null : new OfferingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

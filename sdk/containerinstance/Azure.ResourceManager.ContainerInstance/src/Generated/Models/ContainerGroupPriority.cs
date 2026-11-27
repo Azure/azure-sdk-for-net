@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupPriority?(string value) => value == null ? null : new ContainerGroupPriority(value);
+        public static implicit operator ContainerGroupPriority?(string value) => value == null ? (ContainerGroupPriority?)null : new ContainerGroupPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

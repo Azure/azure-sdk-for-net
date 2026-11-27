@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="HealthModelProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthModelProvisioningState?(string value) => value == null ? null : new HealthModelProvisioningState(value);
+        public static implicit operator HealthModelProvisioningState?(string value) => value == null ? (HealthModelProvisioningState?)null : new HealthModelProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

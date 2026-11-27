@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryRecurrenceFrequency?(string value) => value == null ? null : new DataFactoryRecurrenceFrequency(value);
+        public static implicit operator DataFactoryRecurrenceFrequency?(string value) => value == null ? (DataFactoryRecurrenceFrequency?)null : new DataFactoryRecurrenceFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

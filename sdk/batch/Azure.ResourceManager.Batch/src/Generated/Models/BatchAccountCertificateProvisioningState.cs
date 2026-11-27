@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchAccountCertificateProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchAccountCertificateProvisioningState?(string value) => value == null ? null : new BatchAccountCertificateProvisioningState(value);
+        public static implicit operator BatchAccountCertificateProvisioningState?(string value) => value == null ? (BatchAccountCertificateProvisioningState?)null : new BatchAccountCertificateProvisioningState(value);
     }
 }

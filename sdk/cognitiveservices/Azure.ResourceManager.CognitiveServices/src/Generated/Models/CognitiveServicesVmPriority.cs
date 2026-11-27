@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesVmPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesVmPriority?(string value) => value == null ? null : new CognitiveServicesVmPriority(value);
+        public static implicit operator CognitiveServicesVmPriority?(string value) => value == null ? (CognitiveServicesVmPriority?)null : new CognitiveServicesVmPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

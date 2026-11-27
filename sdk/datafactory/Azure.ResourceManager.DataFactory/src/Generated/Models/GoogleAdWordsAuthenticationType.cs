@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="GoogleAdWordsAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GoogleAdWordsAuthenticationType?(string value) => value == null ? null : new GoogleAdWordsAuthenticationType(value);
+        public static implicit operator GoogleAdWordsAuthenticationType?(string value) => value == null ? (GoogleAdWordsAuthenticationType?)null : new GoogleAdWordsAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

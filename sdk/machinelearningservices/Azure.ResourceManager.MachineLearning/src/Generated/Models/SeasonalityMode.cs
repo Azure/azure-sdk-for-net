@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="SeasonalityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SeasonalityMode?(string value) => value == null ? null : new SeasonalityMode(value);
+        public static implicit operator SeasonalityMode?(string value) => value == null ? (SeasonalityMode?)null : new SeasonalityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

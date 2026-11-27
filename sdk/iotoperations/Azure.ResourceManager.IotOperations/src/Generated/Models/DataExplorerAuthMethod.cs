@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataExplorerAuthMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataExplorerAuthMethod?(string value) => value == null ? null : new DataExplorerAuthMethod(value);
+        public static implicit operator DataExplorerAuthMethod?(string value) => value == null ? (DataExplorerAuthMethod?)null : new DataExplorerAuthMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

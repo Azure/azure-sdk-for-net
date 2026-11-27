@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SetLegalHoldImmutability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SetLegalHoldImmutability?(string value) => value == null ? null : new SetLegalHoldImmutability(value);
+        public static implicit operator SetLegalHoldImmutability?(string value) => value == null ? (SetLegalHoldImmutability?)null : new SetLegalHoldImmutability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

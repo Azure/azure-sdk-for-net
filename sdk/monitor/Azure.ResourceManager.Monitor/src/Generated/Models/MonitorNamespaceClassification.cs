@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorNamespaceClassification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorNamespaceClassification?(string value) => value == null ? null : new MonitorNamespaceClassification(value);
+        public static implicit operator MonitorNamespaceClassification?(string value) => value == null ? (MonitorNamespaceClassification?)null : new MonitorNamespaceClassification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

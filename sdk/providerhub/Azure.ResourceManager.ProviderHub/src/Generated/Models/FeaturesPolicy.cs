@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="FeaturesPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeaturesPolicy?(string value) => value == null ? null : new FeaturesPolicy(value);
+        public static implicit operator FeaturesPolicy?(string value) => value == null ? (FeaturesPolicy?)null : new FeaturesPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

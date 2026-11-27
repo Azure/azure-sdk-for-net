@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AddonProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AddonProvisioningState?(string value) => value == null ? null : new AddonProvisioningState(value);
+        public static implicit operator AddonProvisioningState?(string value) => value == null ? (AddonProvisioningState?)null : new AddonProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="MaccEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaccEntityType?(string value) => value == null ? null : new MaccEntityType(value);
+        public static implicit operator MaccEntityType?(string value) => value == null ? (MaccEntityType?)null : new MaccEntityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

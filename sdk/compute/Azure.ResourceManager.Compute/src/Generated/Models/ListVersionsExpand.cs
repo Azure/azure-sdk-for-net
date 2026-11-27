@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ListVersionsExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListVersionsExpand?(string value) => value == null ? null : new ListVersionsExpand(value);
+        public static implicit operator ListVersionsExpand?(string value) => value == null ? (ListVersionsExpand?)null : new ListVersionsExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="SelfHelpType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelfHelpType?(string value) => value == null ? null : new SelfHelpType(value);
+        public static implicit operator SelfHelpType?(string value) => value == null ? (SelfHelpType?)null : new SelfHelpType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

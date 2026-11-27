@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineKeySetProvisioningState?(string value) => value == null ? null : new BareMetalMachineKeySetProvisioningState(value);
+        public static implicit operator BareMetalMachineKeySetProvisioningState?(string value) => value == null ? (BareMetalMachineKeySetProvisioningState?)null : new BareMetalMachineKeySetProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

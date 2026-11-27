@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityPolicyEnforce"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityPolicyEnforce?(string value) => value == null ? null : new SecurityPolicyEnforce(value);
+        public static implicit operator SecurityPolicyEnforce?(string value) => value == null ? (SecurityPolicyEnforce?)null : new SecurityPolicyEnforce(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

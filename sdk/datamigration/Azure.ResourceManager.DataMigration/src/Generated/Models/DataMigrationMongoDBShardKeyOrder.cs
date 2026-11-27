@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationMongoDBShardKeyOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationMongoDBShardKeyOrder?(string value) => value == null ? null : new DataMigrationMongoDBShardKeyOrder(value);
+        public static implicit operator DataMigrationMongoDBShardKeyOrder?(string value) => value == null ? (DataMigrationMongoDBShardKeyOrder?)null : new DataMigrationMongoDBShardKeyOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

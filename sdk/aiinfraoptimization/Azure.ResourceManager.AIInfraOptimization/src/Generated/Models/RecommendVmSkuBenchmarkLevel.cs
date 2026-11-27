@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="RecommendVmSkuBenchmarkLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendVmSkuBenchmarkLevel?(string value) => value == null ? null : new RecommendVmSkuBenchmarkLevel(value);
+        public static implicit operator RecommendVmSkuBenchmarkLevel?(string value) => value == null ? (RecommendVmSkuBenchmarkLevel?)null : new RecommendVmSkuBenchmarkLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

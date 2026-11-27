@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBReplicaRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBReplicaRole?(string value) => value == null ? null : new HorizonDBReplicaRole(value);
+        public static implicit operator HorizonDBReplicaRole?(string value) => value == null ? (HorizonDBReplicaRole?)null : new HorizonDBReplicaRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="PatchOperationStartedBy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PatchOperationStartedBy?(string value) => value == null ? null : new PatchOperationStartedBy(value);
+        public static implicit operator PatchOperationStartedBy?(string value) => value == null ? (PatchOperationStartedBy?)null : new PatchOperationStartedBy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="OnboardingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnboardingStatus?(string value) => value == null ? null : new OnboardingStatus(value);
+        public static implicit operator OnboardingStatus?(string value) => value == null ? (OnboardingStatus?)null : new OnboardingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

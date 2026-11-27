@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationManagedPrivateUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationManagedPrivateUdp?(string value) => value == null ? null : new DesktopVirtualizationManagedPrivateUdp(value);
+        public static implicit operator DesktopVirtualizationManagedPrivateUdp?(string value) => value == null ? (DesktopVirtualizationManagedPrivateUdp?)null : new DesktopVirtualizationManagedPrivateUdp(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

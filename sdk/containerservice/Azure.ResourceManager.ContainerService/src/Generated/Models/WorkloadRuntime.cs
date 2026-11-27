@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadRuntime"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadRuntime?(string value) => value == null ? null : new WorkloadRuntime(value);
+        public static implicit operator WorkloadRuntime?(string value) => value == null ? (WorkloadRuntime?)null : new WorkloadRuntime(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

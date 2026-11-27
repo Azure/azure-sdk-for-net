@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="EnrollmentAuthLevelState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnrollmentAuthLevelState?(string value) => value == null ? null : new EnrollmentAuthLevelState(value);
+        public static implicit operator EnrollmentAuthLevelState?(string value) => value == null ? (EnrollmentAuthLevelState?)null : new EnrollmentAuthLevelState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

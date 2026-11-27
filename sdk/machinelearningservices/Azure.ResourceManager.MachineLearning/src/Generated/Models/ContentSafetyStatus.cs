@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ContentSafetyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentSafetyStatus?(string value) => value == null ? null : new ContentSafetyStatus(value);
+        public static implicit operator ContentSafetyStatus?(string value) => value == null ? (ContentSafetyStatus?)null : new ContentSafetyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

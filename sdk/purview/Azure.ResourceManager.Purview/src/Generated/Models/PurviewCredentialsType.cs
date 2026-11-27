@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewCredentialsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewCredentialsType?(string value) => value == null ? null : new PurviewCredentialsType(value);
+        public static implicit operator PurviewCredentialsType?(string value) => value == null ? (PurviewCredentialsType?)null : new PurviewCredentialsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="AzureManagedInstanceRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureManagedInstanceRole?(string value) => value == null ? null : new AzureManagedInstanceRole(value);
+        public static implicit operator AzureManagedInstanceRole?(string value) => value == null ? (AzureManagedInstanceRole?)null : new AzureManagedInstanceRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="SoapApiType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SoapApiType?(string value) => value == null ? null : new SoapApiType(value);
+        public static implicit operator SoapApiType?(string value) => value == null ? (SoapApiType?)null : new SoapApiType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

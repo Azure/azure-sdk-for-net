@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeNetworkInterfaceAuxiliarySku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeNetworkInterfaceAuxiliarySku?(string value) => value == null ? null : new ComputeNetworkInterfaceAuxiliarySku(value);
+        public static implicit operator ComputeNetworkInterfaceAuxiliarySku?(string value) => value == null ? (ComputeNetworkInterfaceAuxiliarySku?)null : new ComputeNetworkInterfaceAuxiliarySku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

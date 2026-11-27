@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="BillingBenefitsManagedServiceIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitsManagedServiceIdentityType?(string value) => value == null ? null : new BillingBenefitsManagedServiceIdentityType(value);
+        public static implicit operator BillingBenefitsManagedServiceIdentityType?(string value) => value == null ? (BillingBenefitsManagedServiceIdentityType?)null : new BillingBenefitsManagedServiceIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

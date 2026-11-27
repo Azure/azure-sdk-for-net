@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineAssignRelayType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineAssignRelayType?(string value) => value == null ? null : new VirtualMachineAssignRelayType(value);
+        public static implicit operator VirtualMachineAssignRelayType?(string value) => value == null ? (VirtualMachineAssignRelayType?)null : new VirtualMachineAssignRelayType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

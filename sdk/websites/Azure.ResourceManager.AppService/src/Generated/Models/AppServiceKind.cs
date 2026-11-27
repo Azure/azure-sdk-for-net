@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceKind?(string value) => value == null ? null : new AppServiceKind(value);
+        public static implicit operator AppServiceKind?(string value) => value == null ? (AppServiceKind?)null : new AppServiceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

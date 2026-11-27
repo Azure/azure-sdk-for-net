@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="EdgeSchemaConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeSchemaConfigurationType?(string value) => value == null ? null : new EdgeSchemaConfigurationType(value);
+        public static implicit operator EdgeSchemaConfigurationType?(string value) => value == null ? (EdgeSchemaConfigurationType?)null : new EdgeSchemaConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

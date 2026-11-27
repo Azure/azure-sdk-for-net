@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="BulkActionDeadlineKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BulkActionDeadlineKind?(string value) => value == null ? null : new BulkActionDeadlineKind(value);
+        public static implicit operator BulkActionDeadlineKind?(string value) => value == null ? (BulkActionDeadlineKind?)null : new BulkActionDeadlineKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

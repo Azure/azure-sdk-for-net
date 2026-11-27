@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="LearningRateScheduler"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LearningRateScheduler?(string value) => value == null ? null : new LearningRateScheduler(value);
+        public static implicit operator LearningRateScheduler?(string value) => value == null ? (LearningRateScheduler?)null : new LearningRateScheduler(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

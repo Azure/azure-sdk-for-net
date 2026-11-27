@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewFilterField"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewFilterField?(string value) => value == null ? null : new SovereignViewFilterField(value);
+        public static implicit operator SovereignViewFilterField?(string value) => value == null ? (SovereignViewFilterField?)null : new SovereignViewFilterField(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

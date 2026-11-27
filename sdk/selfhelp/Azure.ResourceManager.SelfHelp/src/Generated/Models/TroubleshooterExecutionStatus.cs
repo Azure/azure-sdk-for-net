@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="TroubleshooterExecutionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TroubleshooterExecutionStatus?(string value) => value == null ? null : new TroubleshooterExecutionStatus(value);
+        public static implicit operator TroubleshooterExecutionStatus?(string value) => value == null ? (TroubleshooterExecutionStatus?)null : new TroubleshooterExecutionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

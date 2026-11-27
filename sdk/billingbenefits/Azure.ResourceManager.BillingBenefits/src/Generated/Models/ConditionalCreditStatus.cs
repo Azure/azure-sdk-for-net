@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="ConditionalCreditStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConditionalCreditStatus?(string value) => value == null ? null : new ConditionalCreditStatus(value);
+        public static implicit operator ConditionalCreditStatus?(string value) => value == null ? (ConditionalCreditStatus?)null : new ConditionalCreditStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="AdvisorCpuThreshold"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvisorCpuThreshold?(string value) => value == null ? null : new AdvisorCpuThreshold(value);
+        public static implicit operator AdvisorCpuThreshold?(string value) => value == null ? (AdvisorCpuThreshold?)null : new AdvisorCpuThreshold(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="TaskUpdateActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskUpdateActionType?(string value) => value == null ? null : new TaskUpdateActionType(value);
+        public static implicit operator TaskUpdateActionType?(string value) => value == null ? (TaskUpdateActionType?)null : new TaskUpdateActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

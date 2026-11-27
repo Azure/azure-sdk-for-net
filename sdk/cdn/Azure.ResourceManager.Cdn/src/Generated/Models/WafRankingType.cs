@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafRankingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafRankingType?(string value) => value == null ? null : new WafRankingType(value);
+        public static implicit operator WafRankingType?(string value) => value == null ? (WafRankingType?)null : new WafRankingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

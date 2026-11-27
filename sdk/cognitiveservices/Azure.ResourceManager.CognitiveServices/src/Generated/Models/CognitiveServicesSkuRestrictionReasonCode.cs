@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesSkuRestrictionReasonCode?(string value) => value == null ? null : new CognitiveServicesSkuRestrictionReasonCode(value);
+        public static implicit operator CognitiveServicesSkuRestrictionReasonCode?(string value) => value == null ? (CognitiveServicesSkuRestrictionReasonCode?)null : new CognitiveServicesSkuRestrictionReasonCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

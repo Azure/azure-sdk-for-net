@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="DimensionOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DimensionOperator?(string value) => value == null ? null : new DimensionOperator(value);
+        public static implicit operator DimensionOperator?(string value) => value == null ? (DimensionOperator?)null : new DimensionOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="LongTermRetentionPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LongTermRetentionPolicyName?(string value) => value == null ? null : new LongTermRetentionPolicyName(value);
+        public static implicit operator LongTermRetentionPolicyName?(string value) => value == null ? (LongTermRetentionPolicyName?)null : new LongTermRetentionPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

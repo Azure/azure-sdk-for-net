@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="WebHookActivityMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebHookActivityMethod?(string value) => value == null ? null : new WebHookActivityMethod(value);
+        public static implicit operator WebHookActivityMethod?(string value) => value == null ? (WebHookActivityMethod?)null : new WebHookActivityMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

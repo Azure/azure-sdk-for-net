@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsEncryptionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsEncryptionState?(string value) => value == null ? null : new AvsEncryptionState(value);
+        public static implicit operator AvsEncryptionState?(string value) => value == null ? (AvsEncryptionState?)null : new AvsEncryptionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

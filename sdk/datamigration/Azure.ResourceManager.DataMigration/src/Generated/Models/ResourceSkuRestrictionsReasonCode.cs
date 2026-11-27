@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="ResourceSkuRestrictionsReasonCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceSkuRestrictionsReasonCode?(string value) => value == null ? null : new ResourceSkuRestrictionsReasonCode(value);
+        public static implicit operator ResourceSkuRestrictionsReasonCode?(string value) => value == null ? (ResourceSkuRestrictionsReasonCode?)null : new ResourceSkuRestrictionsReasonCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

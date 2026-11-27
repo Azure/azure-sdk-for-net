@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MigrationDbState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationDbState?(string value) => value == null ? null : new MigrationDbState(value);
+        public static implicit operator MigrationDbState?(string value) => value == null ? (MigrationDbState?)null : new MigrationDbState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

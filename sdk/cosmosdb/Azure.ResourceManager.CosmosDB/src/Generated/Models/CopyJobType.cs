@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CopyJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CopyJobType?(string value) => value == null ? null : new CopyJobType(value);
+        public static implicit operator CopyJobType?(string value) => value == null ? (CopyJobType?)null : new CopyJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

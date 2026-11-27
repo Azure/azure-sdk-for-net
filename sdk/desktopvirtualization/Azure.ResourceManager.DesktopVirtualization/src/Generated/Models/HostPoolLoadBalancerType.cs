@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="HostPoolLoadBalancerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPoolLoadBalancerType?(string value) => value == null ? null : new HostPoolLoadBalancerType(value);
+        public static implicit operator HostPoolLoadBalancerType?(string value) => value == null ? (HostPoolLoadBalancerType?)null : new HostPoolLoadBalancerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

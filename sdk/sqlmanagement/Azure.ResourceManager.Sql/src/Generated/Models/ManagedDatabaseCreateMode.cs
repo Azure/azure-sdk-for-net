@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedDatabaseCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedDatabaseCreateMode?(string value) => value == null ? null : new ManagedDatabaseCreateMode(value);
+        public static implicit operator ManagedDatabaseCreateMode?(string value) => value == null ? (ManagedDatabaseCreateMode?)null : new ManagedDatabaseCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

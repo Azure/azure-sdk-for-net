@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <summary> Converts a string to a <see cref="CertificateProfileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateProfileType?(string value) => value == null ? null : new CertificateProfileType(value);
+        public static implicit operator CertificateProfileType?(string value) => value == null ? (CertificateProfileType?)null : new CertificateProfileType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

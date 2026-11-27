@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ImmutabilityPolicyState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImmutabilityPolicyState?(string value) => value == null ? null : new ImmutabilityPolicyState(value);
+        public static implicit operator ImmutabilityPolicyState?(string value) => value == null ? (ImmutabilityPolicyState?)null : new ImmutabilityPolicyState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

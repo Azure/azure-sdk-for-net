@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerHighAvailabilityMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerHighAvailabilityMode(value);
+        public static implicit operator PostgreSqlFlexibleServerHighAvailabilityMode?(string value) => value == null ? (PostgreSqlFlexibleServerHighAvailabilityMode?)null : new PostgreSqlFlexibleServerHighAvailabilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

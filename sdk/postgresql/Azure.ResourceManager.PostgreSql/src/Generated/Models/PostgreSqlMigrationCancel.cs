@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationCancel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationCancel?(string value) => value == null ? null : new PostgreSqlMigrationCancel(value);
+        public static implicit operator PostgreSqlMigrationCancel?(string value) => value == null ? (PostgreSqlMigrationCancel?)null : new PostgreSqlMigrationCancel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ScenarioParameterFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScenarioParameterFormatType?(string value) => value == null ? null : new ScenarioParameterFormatType(value);
+        public static implicit operator ScenarioParameterFormatType?(string value) => value == null ? (ScenarioParameterFormatType?)null : new ScenarioParameterFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

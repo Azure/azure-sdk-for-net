@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="CreditExpirationPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreditExpirationPolicy?(string value) => value == null ? null : new CreditExpirationPolicy(value);
+        public static implicit operator CreditExpirationPolicy?(string value) => value == null ? (CreditExpirationPolicy?)null : new CreditExpirationPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

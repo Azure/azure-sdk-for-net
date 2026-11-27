@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesIdentityKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesIdentityKind?(string value) => value == null ? null : new CognitiveServicesIdentityKind(value);
+        public static implicit operator CognitiveServicesIdentityKind?(string value) => value == null ? (CognitiveServicesIdentityKind?)null : new CognitiveServicesIdentityKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

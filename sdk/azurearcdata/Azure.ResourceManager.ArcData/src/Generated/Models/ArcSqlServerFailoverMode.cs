@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="ArcSqlServerFailoverMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcSqlServerFailoverMode?(string value) => value == null ? null : new ArcSqlServerFailoverMode(value);
+        public static implicit operator ArcSqlServerFailoverMode?(string value) => value == null ? (ArcSqlServerFailoverMode?)null : new ArcSqlServerFailoverMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

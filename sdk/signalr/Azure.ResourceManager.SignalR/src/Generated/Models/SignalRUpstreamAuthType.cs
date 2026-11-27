@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRUpstreamAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRUpstreamAuthType?(string value) => value == null ? null : new SignalRUpstreamAuthType(value);
+        public static implicit operator SignalRUpstreamAuthType?(string value) => value == null ? (SignalRUpstreamAuthType?)null : new SignalRUpstreamAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceFailoverGroupReplicationRole?(string value) => value == null ? null : new InstanceFailoverGroupReplicationRole(value);
+        public static implicit operator InstanceFailoverGroupReplicationRole?(string value) => value == null ? (InstanceFailoverGroupReplicationRole?)null : new InstanceFailoverGroupReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

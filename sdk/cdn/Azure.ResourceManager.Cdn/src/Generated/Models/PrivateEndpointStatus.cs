@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="PrivateEndpointStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateEndpointStatus?(string value) => value == null ? null : new PrivateEndpointStatus(value);
+        public static implicit operator PrivateEndpointStatus?(string value) => value == null ? (PrivateEndpointStatus?)null : new PrivateEndpointStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="MessageScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageScope?(string value) => value == null ? null : new MessageScope(value);
+        public static implicit operator MessageScope?(string value) => value == null ? (MessageScope?)null : new MessageScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

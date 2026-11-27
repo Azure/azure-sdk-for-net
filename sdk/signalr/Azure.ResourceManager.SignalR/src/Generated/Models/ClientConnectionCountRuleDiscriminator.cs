@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="ClientConnectionCountRuleDiscriminator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientConnectionCountRuleDiscriminator?(string value) => value == null ? null : new ClientConnectionCountRuleDiscriminator(value);
+        public static implicit operator ClientConnectionCountRuleDiscriminator?(string value) => value == null ? (ClientConnectionCountRuleDiscriminator?)null : new ClientConnectionCountRuleDiscriminator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

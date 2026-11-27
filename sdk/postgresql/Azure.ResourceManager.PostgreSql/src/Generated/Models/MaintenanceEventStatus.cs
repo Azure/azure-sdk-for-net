@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceEventStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceEventStatus?(string value) => value == null ? null : new MaintenanceEventStatus(value);
+        public static implicit operator MaintenanceEventStatus?(string value) => value == null ? (MaintenanceEventStatus?)null : new MaintenanceEventStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

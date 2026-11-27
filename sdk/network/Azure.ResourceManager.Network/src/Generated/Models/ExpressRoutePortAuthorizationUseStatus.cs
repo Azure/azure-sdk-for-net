@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRoutePortAuthorizationUseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRoutePortAuthorizationUseStatus?(string value) => value == null ? null : new ExpressRoutePortAuthorizationUseStatus(value);
+        public static implicit operator ExpressRoutePortAuthorizationUseStatus?(string value) => value == null ? (ExpressRoutePortAuthorizationUseStatus?)null : new ExpressRoutePortAuthorizationUseStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

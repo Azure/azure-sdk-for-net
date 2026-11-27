@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityThreat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityThreat?(string value) => value == null ? null : new SecurityThreat(value);
+        public static implicit operator SecurityThreat?(string value) => value == null ? (SecurityThreat?)null : new SecurityThreat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="LocalAdminStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalAdminStatus?(string value) => value == null ? null : new LocalAdminStatus(value);
+        public static implicit operator LocalAdminStatus?(string value) => value == null ? (LocalAdminStatus?)null : new LocalAdminStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

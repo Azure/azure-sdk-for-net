@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationRunbookType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationRunbookType?(string value) => value == null ? null : new AutomationRunbookType(value);
+        public static implicit operator AutomationRunbookType?(string value) => value == null ? (AutomationRunbookType?)null : new AutomationRunbookType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

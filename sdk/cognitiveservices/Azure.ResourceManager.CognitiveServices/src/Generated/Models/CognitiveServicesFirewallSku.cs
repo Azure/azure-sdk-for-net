@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesFirewallSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesFirewallSku?(string value) => value == null ? null : new CognitiveServicesFirewallSku(value);
+        public static implicit operator CognitiveServicesFirewallSku?(string value) => value == null ? (CognitiveServicesFirewallSku?)null : new CognitiveServicesFirewallSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

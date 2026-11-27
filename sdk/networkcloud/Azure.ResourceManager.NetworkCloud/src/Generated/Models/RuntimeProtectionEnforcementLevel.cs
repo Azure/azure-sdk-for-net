@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeProtectionEnforcementLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeProtectionEnforcementLevel?(string value) => value == null ? null : new RuntimeProtectionEnforcementLevel(value);
+        public static implicit operator RuntimeProtectionEnforcementLevel?(string value) => value == null ? (RuntimeProtectionEnforcementLevel?)null : new RuntimeProtectionEnforcementLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

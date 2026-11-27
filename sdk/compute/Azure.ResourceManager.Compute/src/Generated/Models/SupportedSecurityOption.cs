@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SupportedSecurityOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportedSecurityOption?(string value) => value == null ? null : new SupportedSecurityOption(value);
+        public static implicit operator SupportedSecurityOption?(string value) => value == null ? (SupportedSecurityOption?)null : new SupportedSecurityOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

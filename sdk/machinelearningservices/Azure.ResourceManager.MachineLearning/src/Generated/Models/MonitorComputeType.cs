@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MonitorComputeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorComputeType?(string value) => value == null ? null : new MonitorComputeType(value);
+        public static implicit operator MonitorComputeType?(string value) => value == null ? (MonitorComputeType?)null : new MonitorComputeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

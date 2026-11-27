@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciCpuArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciCpuArchitecture?(string value) => value == null ? null : new HciCpuArchitecture(value);
+        public static implicit operator HciCpuArchitecture?(string value) => value == null ? (HciCpuArchitecture?)null : new HciCpuArchitecture(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

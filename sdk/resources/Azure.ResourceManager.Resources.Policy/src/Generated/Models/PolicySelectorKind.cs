@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicySelectorKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicySelectorKind?(string value) => value == null ? null : new PolicySelectorKind(value);
+        public static implicit operator PolicySelectorKind?(string value) => value == null ? (PolicySelectorKind?)null : new PolicySelectorKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

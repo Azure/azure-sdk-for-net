@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubDockerfileGenerationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubDockerfileGenerationMode?(string value) => value == null ? null : new DevHubDockerfileGenerationMode(value);
+        public static implicit operator DevHubDockerfileGenerationMode?(string value) => value == null ? (DevHubDockerfileGenerationMode?)null : new DevHubDockerfileGenerationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

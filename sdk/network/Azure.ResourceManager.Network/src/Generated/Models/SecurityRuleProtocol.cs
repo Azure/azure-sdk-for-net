@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SecurityRuleProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityRuleProtocol?(string value) => value == null ? null : new SecurityRuleProtocol(value);
+        public static implicit operator SecurityRuleProtocol?(string value) => value == null ? (SecurityRuleProtocol?)null : new SecurityRuleProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayConditionType?(string value) => value == null ? null : new AutomationRulePropertyArrayConditionSupportedArrayConditionType(value);
+        public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayConditionType?(string value) => value == null ? (AutomationRulePropertyArrayConditionSupportedArrayConditionType?)null : new AutomationRulePropertyArrayConditionSupportedArrayConditionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

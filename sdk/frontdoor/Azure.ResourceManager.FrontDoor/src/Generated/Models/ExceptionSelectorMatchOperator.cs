@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="ExceptionSelectorMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExceptionSelectorMatchOperator?(string value) => value == null ? null : new ExceptionSelectorMatchOperator(value);
+        public static implicit operator ExceptionSelectorMatchOperator?(string value) => value == null ? (ExceptionSelectorMatchOperator?)null : new ExceptionSelectorMatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

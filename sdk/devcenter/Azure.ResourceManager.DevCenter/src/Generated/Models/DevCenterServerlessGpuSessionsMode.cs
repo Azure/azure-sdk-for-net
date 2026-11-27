@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterServerlessGpuSessionsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterServerlessGpuSessionsMode?(string value) => value == null ? null : new DevCenterServerlessGpuSessionsMode(value);
+        public static implicit operator DevCenterServerlessGpuSessionsMode?(string value) => value == null ? (DevCenterServerlessGpuSessionsMode?)null : new DevCenterServerlessGpuSessionsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

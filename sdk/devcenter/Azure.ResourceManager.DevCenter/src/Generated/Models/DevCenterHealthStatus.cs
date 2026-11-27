@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterHealthStatus?(string value) => value == null ? null : new DevCenterHealthStatus(value);
+        public static implicit operator DevCenterHealthStatus?(string value) => value == null ? (DevCenterHealthStatus?)null : new DevCenterHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

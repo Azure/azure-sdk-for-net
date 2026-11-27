@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBNodeActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBNodeActionType?(string value) => value == null ? null : new DBNodeActionType(value);
+        public static implicit operator DBNodeActionType?(string value) => value == null ? (DBNodeActionType?)null : new DBNodeActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

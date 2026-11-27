@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveCommunityEndpointDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveCommunityEndpointDestinationType?(string value) => value == null ? null : new VirtualEnclaveCommunityEndpointDestinationType(value);
+        public static implicit operator VirtualEnclaveCommunityEndpointDestinationType?(string value) => value == null ? (VirtualEnclaveCommunityEndpointDestinationType?)null : new VirtualEnclaveCommunityEndpointDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="SmbOplocks"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SmbOplocks?(string value) => value == null ? null : new SmbOplocks(value);
+        public static implicit operator SmbOplocks?(string value) => value == null ? (SmbOplocks?)null : new SmbOplocks(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

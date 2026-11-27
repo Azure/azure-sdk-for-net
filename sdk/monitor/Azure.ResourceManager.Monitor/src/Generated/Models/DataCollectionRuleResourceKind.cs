@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataCollectionRuleResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataCollectionRuleResourceKind?(string value) => value == null ? null : new DataCollectionRuleResourceKind(value);
+        public static implicit operator DataCollectionRuleResourceKind?(string value) => value == null ? (DataCollectionRuleResourceKind?)null : new DataCollectionRuleResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

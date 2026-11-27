@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="CheckNameAvailabilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CheckNameAvailabilityReason?(string value) => value == null ? null : new CheckNameAvailabilityReason(value);
+        public static implicit operator CheckNameAvailabilityReason?(string value) => value == null ? (CheckNameAvailabilityReason?)null : new CheckNameAvailabilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

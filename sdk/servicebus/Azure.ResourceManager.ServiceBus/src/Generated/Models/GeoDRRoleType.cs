@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="GeoDRRoleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GeoDRRoleType?(string value) => value == null ? null : new GeoDRRoleType(value);
+        public static implicit operator GeoDRRoleType?(string value) => value == null ? (GeoDRRoleType?)null : new GeoDRRoleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

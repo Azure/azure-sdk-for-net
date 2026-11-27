@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="UserConsent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UserConsent?(string value) => value == null ? null : new UserConsent(value);
+        public static implicit operator UserConsent?(string value) => value == null ? (UserConsent?)null : new UserConsent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

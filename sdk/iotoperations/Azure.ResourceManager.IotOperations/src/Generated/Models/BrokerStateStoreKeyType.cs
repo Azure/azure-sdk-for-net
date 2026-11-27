@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerStateStoreKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerStateStoreKeyType?(string value) => value == null ? null : new BrokerStateStoreKeyType(value);
+        public static implicit operator BrokerStateStoreKeyType?(string value) => value == null ? (BrokerStateStoreKeyType?)null : new BrokerStateStoreKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

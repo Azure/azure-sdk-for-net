@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="ClusterPattern"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterPattern?(string value) => value == null ? null : new ClusterPattern(value);
+        public static implicit operator ClusterPattern?(string value) => value == null ? (ClusterPattern?)null : new ClusterPattern(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

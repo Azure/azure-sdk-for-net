@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubTemplateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubTemplateType?(string value) => value == null ? null : new DevHubTemplateType(value);
+        public static implicit operator DevHubTemplateType?(string value) => value == null ? (DevHubTemplateType?)null : new DevHubTemplateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

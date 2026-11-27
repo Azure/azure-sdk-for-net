@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsVMCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsVMCategory?(string value) => value == null ? null : new ComputeBulkActionsVMCategory(value);
+        public static implicit operator ComputeBulkActionsVMCategory?(string value) => value == null ? (ComputeBulkActionsVMCategory?)null : new ComputeBulkActionsVMCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

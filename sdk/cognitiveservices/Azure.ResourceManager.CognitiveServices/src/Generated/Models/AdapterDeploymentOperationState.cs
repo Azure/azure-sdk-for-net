@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AdapterDeploymentOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdapterDeploymentOperationState?(string value) => value == null ? null : new AdapterDeploymentOperationState(value);
+        public static implicit operator AdapterDeploymentOperationState?(string value) => value == null ? (AdapterDeploymentOperationState?)null : new AdapterDeploymentOperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

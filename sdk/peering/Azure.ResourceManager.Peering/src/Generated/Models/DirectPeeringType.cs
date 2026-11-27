@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="DirectPeeringType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DirectPeeringType?(string value) => value == null ? null : new DirectPeeringType(value);
+        public static implicit operator DirectPeeringType?(string value) => value == null ? (DirectPeeringType?)null : new DirectPeeringType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationMySqlTargetPlatformType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationMySqlTargetPlatformType?(string value) => value == null ? null : new DataMigrationMySqlTargetPlatformType(value);
+        public static implicit operator DataMigrationMySqlTargetPlatformType?(string value) => value == null ? (DataMigrationMySqlTargetPlatformType?)null : new DataMigrationMySqlTargetPlatformType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

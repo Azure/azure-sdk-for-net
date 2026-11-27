@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabReportingCycleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabReportingCycleType?(string value) => value == null ? null : new DevTestLabReportingCycleType(value);
+        public static implicit operator DevTestLabReportingCycleType?(string value) => value == null ? (DevTestLabReportingCycleType?)null : new DevTestLabReportingCycleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

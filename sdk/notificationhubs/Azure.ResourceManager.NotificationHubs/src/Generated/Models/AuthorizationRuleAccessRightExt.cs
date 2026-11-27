@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="AuthorizationRuleAccessRightExt"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthorizationRuleAccessRightExt?(string value) => value == null ? null : new AuthorizationRuleAccessRightExt(value);
+        public static implicit operator AuthorizationRuleAccessRightExt?(string value) => value == null ? (AuthorizationRuleAccessRightExt?)null : new AuthorizationRuleAccessRightExt(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

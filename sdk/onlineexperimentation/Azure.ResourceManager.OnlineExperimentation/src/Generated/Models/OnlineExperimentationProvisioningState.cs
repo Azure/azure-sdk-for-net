@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> Converts a string to a <see cref="OnlineExperimentationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnlineExperimentationProvisioningState?(string value) => value == null ? null : new OnlineExperimentationProvisioningState(value);
+        public static implicit operator OnlineExperimentationProvisioningState?(string value) => value == null ? (OnlineExperimentationProvisioningState?)null : new OnlineExperimentationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

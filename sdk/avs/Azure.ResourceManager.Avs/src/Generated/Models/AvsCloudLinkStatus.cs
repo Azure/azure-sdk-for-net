@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsCloudLinkStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsCloudLinkStatus?(string value) => value == null ? null : new AvsCloudLinkStatus(value);
+        public static implicit operator AvsCloudLinkStatus?(string value) => value == null ? (AvsCloudLinkStatus?)null : new AvsCloudLinkStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

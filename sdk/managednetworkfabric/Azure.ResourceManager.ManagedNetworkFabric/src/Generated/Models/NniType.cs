@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NniType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NniType?(string value) => value == null ? null : new NniType(value);
+        public static implicit operator NniType?(string value) => value == null ? (NniType?)null : new NniType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

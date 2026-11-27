@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Converts a string to a <see cref="OpenShiftEncryptionAtHost"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenShiftEncryptionAtHost?(string value) => value == null ? null : new OpenShiftEncryptionAtHost(value);
+        public static implicit operator OpenShiftEncryptionAtHost?(string value) => value == null ? (OpenShiftEncryptionAtHost?)null : new OpenShiftEncryptionAtHost(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

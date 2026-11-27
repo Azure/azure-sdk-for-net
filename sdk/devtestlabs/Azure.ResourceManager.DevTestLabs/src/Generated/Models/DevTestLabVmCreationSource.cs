@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabVmCreationSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabVmCreationSource?(string value) => value == null ? null : new DevTestLabVmCreationSource(value);
+        public static implicit operator DevTestLabVmCreationSource?(string value) => value == null ? (DevTestLabVmCreationSource?)null : new DevTestLabVmCreationSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

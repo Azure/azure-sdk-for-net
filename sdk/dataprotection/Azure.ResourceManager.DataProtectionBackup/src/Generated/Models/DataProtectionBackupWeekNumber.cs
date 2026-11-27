@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataProtectionBackupWeekNumber"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupWeekNumber?(string value) => value == null ? null : new DataProtectionBackupWeekNumber(value);
+        public static implicit operator DataProtectionBackupWeekNumber?(string value) => value == null ? (DataProtectionBackupWeekNumber?)null : new DataProtectionBackupWeekNumber(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingRelationshipType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingRelationshipType?(string value) => value == null ? null : new BillingRelationshipType(value);
+        public static implicit operator BillingRelationshipType?(string value) => value == null ? (BillingRelationshipType?)null : new BillingRelationshipType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

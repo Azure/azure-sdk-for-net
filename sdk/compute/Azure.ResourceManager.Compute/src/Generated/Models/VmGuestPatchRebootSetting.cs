@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VmGuestPatchRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmGuestPatchRebootSetting?(string value) => value == null ? null : new VmGuestPatchRebootSetting(value);
+        public static implicit operator VmGuestPatchRebootSetting?(string value) => value == null ? (VmGuestPatchRebootSetting?)null : new VmGuestPatchRebootSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

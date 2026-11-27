@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new MonitorPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator MonitorPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (MonitorPrivateEndpointServiceConnectionStatus?)null : new MonitorPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

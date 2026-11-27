@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="PortMirroringProfileStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PortMirroringProfileStatus?(string value) => value == null ? null : new PortMirroringProfileStatus(value);
+        public static implicit operator PortMirroringProfileStatus?(string value) => value == null ? (PortMirroringProfileStatus?)null : new PortMirroringProfileStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

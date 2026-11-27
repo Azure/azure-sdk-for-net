@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="DomainManagement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainManagement?(string value) => value == null ? null : new DomainManagement(value);
+        public static implicit operator DomainManagement?(string value) => value == null ? (DomainManagement?)null : new DomainManagement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

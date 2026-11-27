@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteLagLacpTimer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteLagLacpTimer?(string value) => value == null ? null : new ExpressRouteLagLacpTimer(value);
+        public static implicit operator ExpressRouteLagLacpTimer?(string value) => value == null ? (ExpressRouteLagLacpTimer?)null : new ExpressRouteLagLacpTimer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

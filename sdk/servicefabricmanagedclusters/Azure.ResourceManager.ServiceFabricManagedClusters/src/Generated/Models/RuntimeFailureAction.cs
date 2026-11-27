@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeFailureAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeFailureAction?(string value) => value == null ? null : new RuntimeFailureAction(value);
+        public static implicit operator RuntimeFailureAction?(string value) => value == null ? (RuntimeFailureAction?)null : new RuntimeFailureAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

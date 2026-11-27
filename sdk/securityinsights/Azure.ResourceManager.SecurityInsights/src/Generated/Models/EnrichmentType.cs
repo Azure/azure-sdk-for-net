@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="EnrichmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnrichmentType?(string value) => value == null ? null : new EnrichmentType(value);
+        public static implicit operator EnrichmentType?(string value) => value == null ? (EnrichmentType?)null : new EnrichmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubTestResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubTestResultStatus?(string value) => value == null ? null : new IotHubTestResultStatus(value);
+        public static implicit operator IotHubTestResultStatus?(string value) => value == null ? (IotHubTestResultStatus?)null : new IotHubTestResultStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

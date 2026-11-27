@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="SfmcOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SfmcOperationStatus?(string value) => value == null ? null : new SfmcOperationStatus(value);
+        public static implicit operator SfmcOperationStatus?(string value) => value == null ? (SfmcOperationStatus?)null : new SfmcOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

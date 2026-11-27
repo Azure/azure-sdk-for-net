@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="ProductAvailabilityStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProductAvailabilityStage?(string value) => value == null ? null : new ProductAvailabilityStage(value);
+        public static implicit operator ProductAvailabilityStage?(string value) => value == null ? (ProductAvailabilityStage?)null : new ProductAvailabilityStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

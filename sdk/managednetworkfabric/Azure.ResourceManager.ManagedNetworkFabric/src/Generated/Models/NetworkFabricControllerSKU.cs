@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricControllerSKU"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricControllerSKU?(string value) => value == null ? null : new NetworkFabricControllerSKU(value);
+        public static implicit operator NetworkFabricControllerSKU?(string value) => value == null ? (NetworkFabricControllerSKU?)null : new NetworkFabricControllerSKU(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

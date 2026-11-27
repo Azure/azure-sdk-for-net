@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceIdOptionsForGetCapacityReservationGroup?(string value) => value == null ? null : new ResourceIdOptionsForGetCapacityReservationGroup(value);
+        public static implicit operator ResourceIdOptionsForGetCapacityReservationGroup?(string value) => value == null ? (ResourceIdOptionsForGetCapacityReservationGroup?)null : new ResourceIdOptionsForGetCapacityReservationGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

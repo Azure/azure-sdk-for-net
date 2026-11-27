@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoScriptType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoScriptType?(string value) => value == null ? null : new KustoScriptType(value);
+        public static implicit operator KustoScriptType?(string value) => value == null ? (KustoScriptType?)null : new KustoScriptType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

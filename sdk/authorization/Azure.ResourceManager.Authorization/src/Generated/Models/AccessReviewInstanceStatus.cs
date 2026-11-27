@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewInstanceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewInstanceStatus?(string value) => value == null ? null : new AccessReviewInstanceStatus(value);
+        public static implicit operator AccessReviewInstanceStatus?(string value) => value == null ? (AccessReviewInstanceStatus?)null : new AccessReviewInstanceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

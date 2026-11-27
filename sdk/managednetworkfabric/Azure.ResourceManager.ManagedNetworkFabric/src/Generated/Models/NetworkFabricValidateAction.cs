@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricValidateAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricValidateAction?(string value) => value == null ? null : new NetworkFabricValidateAction(value);
+        public static implicit operator NetworkFabricValidateAction?(string value) => value == null ? (NetworkFabricValidateAction?)null : new NetworkFabricValidateAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

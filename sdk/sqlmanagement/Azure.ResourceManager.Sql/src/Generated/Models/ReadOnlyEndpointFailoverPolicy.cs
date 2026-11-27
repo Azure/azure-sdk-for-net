@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ReadOnlyEndpointFailoverPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReadOnlyEndpointFailoverPolicy?(string value) => value == null ? null : new ReadOnlyEndpointFailoverPolicy(value);
+        public static implicit operator ReadOnlyEndpointFailoverPolicy?(string value) => value == null ? (ReadOnlyEndpointFailoverPolicy?)null : new ReadOnlyEndpointFailoverPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

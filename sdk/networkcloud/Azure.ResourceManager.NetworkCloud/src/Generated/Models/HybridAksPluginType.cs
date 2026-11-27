@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="HybridAksPluginType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridAksPluginType?(string value) => value == null ? null : new HybridAksPluginType(value);
+        public static implicit operator HybridAksPluginType?(string value) => value == null ? (HybridAksPluginType?)null : new HybridAksPluginType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

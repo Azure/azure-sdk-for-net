@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeDataBoundary"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeDataBoundary?(string value) => value == null ? null : new ResourceTypeDataBoundary(value);
+        public static implicit operator ResourceTypeDataBoundary?(string value) => value == null ? (ResourceTypeDataBoundary?)null : new ResourceTypeDataBoundary(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

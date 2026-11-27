@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataMoveLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMoveLevel?(string value) => value == null ? null : new DataMoveLevel(value);
+        public static implicit operator DataMoveLevel?(string value) => value == null ? (DataMoveLevel?)null : new DataMoveLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

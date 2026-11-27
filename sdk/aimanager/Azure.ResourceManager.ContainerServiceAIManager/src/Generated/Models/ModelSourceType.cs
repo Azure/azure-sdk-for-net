@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="ModelSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelSourceType?(string value) => value == null ? null : new ModelSourceType(value);
+        public static implicit operator ModelSourceType?(string value) => value == null ? (ModelSourceType?)null : new ModelSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

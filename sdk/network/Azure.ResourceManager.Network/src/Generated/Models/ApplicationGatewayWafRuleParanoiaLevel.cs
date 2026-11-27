@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleParanoiaLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayWafRuleParanoiaLevel?(string value) => value == null ? null : new ApplicationGatewayWafRuleParanoiaLevel(value);
+        public static implicit operator ApplicationGatewayWafRuleParanoiaLevel?(string value) => value == null ? (ApplicationGatewayWafRuleParanoiaLevel?)null : new ApplicationGatewayWafRuleParanoiaLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

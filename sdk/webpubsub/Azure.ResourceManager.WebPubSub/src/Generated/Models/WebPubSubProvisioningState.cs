@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="WebPubSubProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubProvisioningState?(string value) => value == null ? null : new WebPubSubProvisioningState(value);
+        public static implicit operator WebPubSubProvisioningState?(string value) => value == null ? (WebPubSubProvisioningState?)null : new WebPubSubProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

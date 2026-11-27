@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="CommunityActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunityActionType?(string value) => value == null ? null : new CommunityActionType(value);
+        public static implicit operator CommunityActionType?(string value) => value == null ? (CommunityActionType?)null : new CommunityActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

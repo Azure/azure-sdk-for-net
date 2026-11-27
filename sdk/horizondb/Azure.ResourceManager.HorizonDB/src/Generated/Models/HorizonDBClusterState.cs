@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBClusterState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBClusterState?(string value) => value == null ? null : new HorizonDBClusterState(value);
+        public static implicit operator HorizonDBClusterState?(string value) => value == null ? (HorizonDBClusterState?)null : new HorizonDBClusterState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

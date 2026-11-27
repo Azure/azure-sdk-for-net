@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewPublicNetworkAccess?(string value) => value == null ? null : new PurviewPublicNetworkAccess(value);
+        public static implicit operator PurviewPublicNetworkAccess?(string value) => value == null ? (PurviewPublicNetworkAccess?)null : new PurviewPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

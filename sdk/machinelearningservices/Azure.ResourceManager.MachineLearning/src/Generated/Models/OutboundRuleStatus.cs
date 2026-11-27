@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="OutboundRuleStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutboundRuleStatus?(string value) => value == null ? null : new OutboundRuleStatus(value);
+        public static implicit operator OutboundRuleStatus?(string value) => value == null ? (OutboundRuleStatus?)null : new OutboundRuleStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogFileTextSettingsRecordStartTimestampFormat?(string value) => value == null ? null : new LogFileTextSettingsRecordStartTimestampFormat(value);
+        public static implicit operator LogFileTextSettingsRecordStartTimestampFormat?(string value) => value == null ? (LogFileTextSettingsRecordStartTimestampFormat?)null : new LogFileTextSettingsRecordStartTimestampFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

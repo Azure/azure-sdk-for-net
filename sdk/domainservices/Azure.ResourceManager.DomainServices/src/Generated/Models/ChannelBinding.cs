@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="ChannelBinding"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChannelBinding?(string value) => value == null ? null : new ChannelBinding(value);
+        public static implicit operator ChannelBinding?(string value) => value == null ? (ChannelBinding?)null : new ChannelBinding(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

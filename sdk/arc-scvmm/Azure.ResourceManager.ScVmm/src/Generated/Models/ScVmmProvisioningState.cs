@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="ScVmmProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScVmmProvisioningState?(string value) => value == null ? null : new ScVmmProvisioningState(value);
+        public static implicit operator ScVmmProvisioningState?(string value) => value == null ? (ScVmmProvisioningState?)null : new ScVmmProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

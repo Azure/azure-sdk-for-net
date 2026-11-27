@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="InfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InfrastructureEncryption?(string value) => value == null ? null : new InfrastructureEncryption(value);
+        public static implicit operator InfrastructureEncryption?(string value) => value == null ? (InfrastructureEncryption?)null : new InfrastructureEncryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

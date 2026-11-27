@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkEncryptionEnforcement?(string value) => value == null ? null : new VirtualNetworkEncryptionEnforcement(value);
+        public static implicit operator VirtualNetworkEncryptionEnforcement?(string value) => value == null ? (VirtualNetworkEncryptionEnforcement?)null : new VirtualNetworkEncryptionEnforcement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

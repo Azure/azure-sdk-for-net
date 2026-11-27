@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppQuotaAvailabilityResourceType?(string value) => value == null ? null : new NetAppQuotaAvailabilityResourceType(value);
+        public static implicit operator NetAppQuotaAvailabilityResourceType?(string value) => value == null ? (NetAppQuotaAvailabilityResourceType?)null : new NetAppQuotaAvailabilityResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsAccountKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsAccountKind?(string value) => value == null ? null : new MapsAccountKind(value);
+        public static implicit operator MapsAccountKind?(string value) => value == null ? (MapsAccountKind?)null : new MapsAccountKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

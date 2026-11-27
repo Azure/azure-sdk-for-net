@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationSnapshotStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationSnapshotStatus?(string value) => value == null ? null : new AppConfigurationSnapshotStatus(value);
+        public static implicit operator AppConfigurationSnapshotStatus?(string value) => value == null ? (AppConfigurationSnapshotStatus?)null : new AppConfigurationSnapshotStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

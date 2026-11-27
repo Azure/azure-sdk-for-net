@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="FailoverTestStatusForSingleTest"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverTestStatusForSingleTest?(string value) => value == null ? null : new FailoverTestStatusForSingleTest(value);
+        public static implicit operator FailoverTestStatusForSingleTest?(string value) => value == null ? (FailoverTestStatusForSingleTest?)null : new FailoverTestStatusForSingleTest(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

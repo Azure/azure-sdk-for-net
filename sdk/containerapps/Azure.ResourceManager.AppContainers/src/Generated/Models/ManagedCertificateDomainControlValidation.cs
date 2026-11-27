@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ManagedCertificateDomainControlValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedCertificateDomainControlValidation?(string value) => value == null ? null : new ManagedCertificateDomainControlValidation(value);
+        public static implicit operator ManagedCertificateDomainControlValidation?(string value) => value == null ? (ManagedCertificateDomainControlValidation?)null : new ManagedCertificateDomainControlValidation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

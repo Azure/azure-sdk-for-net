@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="ConditionalCreditEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConditionalCreditEntityType?(string value) => value == null ? null : new ConditionalCreditEntityType(value);
+        public static implicit operator ConditionalCreditEntityType?(string value) => value == null ? (ConditionalCreditEntityType?)null : new ConditionalCreditEntityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

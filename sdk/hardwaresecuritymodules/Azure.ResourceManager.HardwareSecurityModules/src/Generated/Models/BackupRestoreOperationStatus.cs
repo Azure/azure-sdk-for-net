@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="BackupRestoreOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupRestoreOperationStatus?(string value) => value == null ? null : new BackupRestoreOperationStatus(value);
+        public static implicit operator BackupRestoreOperationStatus?(string value) => value == null ? (BackupRestoreOperationStatus?)null : new BackupRestoreOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Converts a string to a <see cref="DatadogSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatadogSingleSignOnState?(string value) => value == null ? null : new DatadogSingleSignOnState(value);
+        public static implicit operator DatadogSingleSignOnState?(string value) => value == null ? (DatadogSingleSignOnState?)null : new DatadogSingleSignOnState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsInfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsInfrastructureEncryption?(string value) => value == null ? null : new MapsInfrastructureEncryption(value);
+        public static implicit operator MapsInfrastructureEncryption?(string value) => value == null ? (MapsInfrastructureEncryption?)null : new MapsInfrastructureEncryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

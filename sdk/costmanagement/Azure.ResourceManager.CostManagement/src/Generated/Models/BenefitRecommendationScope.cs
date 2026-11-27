@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="BenefitRecommendationScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BenefitRecommendationScope?(string value) => value == null ? null : new BenefitRecommendationScope(value);
+        public static implicit operator BenefitRecommendationScope?(string value) => value == null ? (BenefitRecommendationScope?)null : new BenefitRecommendationScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

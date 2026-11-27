@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="TrafficManagerRecordType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficManagerRecordType?(string value) => value == null ? null : new TrafficManagerRecordType(value);
+        public static implicit operator TrafficManagerRecordType?(string value) => value == null ? (TrafficManagerRecordType?)null : new TrafficManagerRecordType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

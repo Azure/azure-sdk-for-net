@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="SslCertificateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SslCertificateStatus?(string value) => value == null ? null : new SslCertificateStatus(value);
+        public static implicit operator SslCertificateStatus?(string value) => value == null ? (SslCertificateStatus?)null : new SslCertificateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

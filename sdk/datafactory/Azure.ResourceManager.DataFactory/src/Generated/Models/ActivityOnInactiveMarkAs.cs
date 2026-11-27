@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ActivityOnInactiveMarkAs"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActivityOnInactiveMarkAs?(string value) => value == null ? null : new ActivityOnInactiveMarkAs(value);
+        public static implicit operator ActivityOnInactiveMarkAs?(string value) => value == null ? (ActivityOnInactiveMarkAs?)null : new ActivityOnInactiveMarkAs(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

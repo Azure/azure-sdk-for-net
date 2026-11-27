@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceUsableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceUsableStatus?(string value) => value == null ? null : new WorkspaceUsableStatus(value);
+        public static implicit operator WorkspaceUsableStatus?(string value) => value == null ? (WorkspaceUsableStatus?)null : new WorkspaceUsableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

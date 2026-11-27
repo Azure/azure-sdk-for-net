@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="OperationOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationOrigin?(string value) => value == null ? null : new OperationOrigin(value);
+        public static implicit operator OperationOrigin?(string value) => value == null ? (OperationOrigin?)null : new OperationOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

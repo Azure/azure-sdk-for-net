@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="AdvertiseMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvertiseMode?(string value) => value == null ? null : new AdvertiseMode(value);
+        public static implicit operator AdvertiseMode?(string value) => value == null ? (AdvertiseMode?)null : new AdvertiseMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

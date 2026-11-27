@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="StorageApplianceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageApplianceProvisioningState?(string value) => value == null ? null : new StorageApplianceProvisioningState(value);
+        public static implicit operator StorageApplianceProvisioningState?(string value) => value == null ? (StorageApplianceProvisioningState?)null : new StorageApplianceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

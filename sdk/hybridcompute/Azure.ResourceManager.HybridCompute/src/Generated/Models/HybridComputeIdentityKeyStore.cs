@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeIdentityKeyStore"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeIdentityKeyStore?(string value) => value == null ? null : new HybridComputeIdentityKeyStore(value);
+        public static implicit operator HybridComputeIdentityKeyStore?(string value) => value == null ? (HybridComputeIdentityKeyStore?)null : new HybridComputeIdentityKeyStore(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

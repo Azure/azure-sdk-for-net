@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="GcpTemplateFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GcpTemplateFormat?(string value) => value == null ? null : new GcpTemplateFormat(value);
+        public static implicit operator GcpTemplateFormat?(string value) => value == null ? (GcpTemplateFormat?)null : new GcpTemplateFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

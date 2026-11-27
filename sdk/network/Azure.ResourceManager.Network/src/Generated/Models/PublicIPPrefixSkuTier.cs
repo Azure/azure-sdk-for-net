@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PublicIPPrefixSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicIPPrefixSkuTier?(string value) => value == null ? null : new PublicIPPrefixSkuTier(value);
+        public static implicit operator PublicIPPrefixSkuTier?(string value) => value == null ? (PublicIPPrefixSkuTier?)null : new PublicIPPrefixSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

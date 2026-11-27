@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterScheduleEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterScheduleEnableStatus?(string value) => value == null ? null : new DevCenterScheduleEnableStatus(value);
+        public static implicit operator DevCenterScheduleEnableStatus?(string value) => value == null ? (DevCenterScheduleEnableStatus?)null : new DevCenterScheduleEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

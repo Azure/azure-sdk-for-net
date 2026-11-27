@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="ImportStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImportStatusType?(string value) => value == null ? null : new ImportStatusType(value);
+        public static implicit operator ImportStatusType?(string value) => value == null ? (ImportStatusType?)null : new ImportStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

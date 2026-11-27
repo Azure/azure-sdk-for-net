@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="SupportSeverityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportSeverityLevel?(string value) => value == null ? null : new SupportSeverityLevel(value);
+        public static implicit operator SupportSeverityLevel?(string value) => value == null ? (SupportSeverityLevel?)null : new SupportSeverityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

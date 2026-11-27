@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CommitmentPlanProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommitmentPlanProvisioningState?(string value) => value == null ? null : new CommitmentPlanProvisioningState(value);
+        public static implicit operator CommitmentPlanProvisioningState?(string value) => value == null ? (CommitmentPlanProvisioningState?)null : new CommitmentPlanProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

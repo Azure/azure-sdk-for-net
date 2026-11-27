@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="CrossTenantTokenValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CrossTenantTokenValidation?(string value) => value == null ? null : new CrossTenantTokenValidation(value);
+        public static implicit operator CrossTenantTokenValidation?(string value) => value == null ? (CrossTenantTokenValidation?)null : new CrossTenantTokenValidation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

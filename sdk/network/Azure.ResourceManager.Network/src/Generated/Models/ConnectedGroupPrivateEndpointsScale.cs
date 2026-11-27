@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedGroupPrivateEndpointsScale"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedGroupPrivateEndpointsScale?(string value) => value == null ? null : new ConnectedGroupPrivateEndpointsScale(value);
+        public static implicit operator ConnectedGroupPrivateEndpointsScale?(string value) => value == null ? (ConnectedGroupPrivateEndpointsScale?)null : new ConnectedGroupPrivateEndpointsScale(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

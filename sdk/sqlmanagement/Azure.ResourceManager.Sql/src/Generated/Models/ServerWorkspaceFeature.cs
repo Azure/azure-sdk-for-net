@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ServerWorkspaceFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerWorkspaceFeature?(string value) => value == null ? null : new ServerWorkspaceFeature(value);
+        public static implicit operator ServerWorkspaceFeature?(string value) => value == null ? (ServerWorkspaceFeature?)null : new ServerWorkspaceFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

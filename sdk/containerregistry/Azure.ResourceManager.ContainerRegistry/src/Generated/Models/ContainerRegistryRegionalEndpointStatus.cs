@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryRegionalEndpointStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryRegionalEndpointStatus?(string value) => value == null ? null : new ContainerRegistryRegionalEndpointStatus(value);
+        public static implicit operator ContainerRegistryRegionalEndpointStatus?(string value) => value == null ? (ContainerRegistryRegionalEndpointStatus?)null : new ContainerRegistryRegionalEndpointStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

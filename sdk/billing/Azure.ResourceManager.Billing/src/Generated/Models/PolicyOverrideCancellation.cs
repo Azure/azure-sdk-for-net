@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="PolicyOverrideCancellation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyOverrideCancellation?(string value) => value == null ? null : new PolicyOverrideCancellation(value);
+        public static implicit operator PolicyOverrideCancellation?(string value) => value == null ? (PolicyOverrideCancellation?)null : new PolicyOverrideCancellation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

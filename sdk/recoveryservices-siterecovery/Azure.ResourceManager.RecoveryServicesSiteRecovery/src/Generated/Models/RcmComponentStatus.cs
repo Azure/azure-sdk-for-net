@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="RcmComponentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RcmComponentStatus?(string value) => value == null ? null : new RcmComponentStatus(value);
+        public static implicit operator RcmComponentStatus?(string value) => value == null ? (RcmComponentStatus?)null : new RcmComponentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

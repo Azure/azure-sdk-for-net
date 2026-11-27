@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ViewChartType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ViewChartType?(string value) => value == null ? null : new ViewChartType(value);
+        public static implicit operator ViewChartType?(string value) => value == null ? (ViewChartType?)null : new ViewChartType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="RunbookState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunbookState?(string value) => value == null ? null : new RunbookState(value);
+        public static implicit operator RunbookState?(string value) => value == null ? (RunbookState?)null : new RunbookState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

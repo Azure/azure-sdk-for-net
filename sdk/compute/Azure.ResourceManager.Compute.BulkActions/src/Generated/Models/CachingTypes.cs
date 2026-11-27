@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="CachingTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CachingTypes?(string value) => value == null ? null : new CachingTypes(value);
+        public static implicit operator CachingTypes?(string value) => value == null ? (CachingTypes?)null : new CachingTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

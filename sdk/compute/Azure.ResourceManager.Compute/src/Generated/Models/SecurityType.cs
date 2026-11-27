@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityType?(string value) => value == null ? null : new SecurityType(value);
+        public static implicit operator SecurityType?(string value) => value == null ? (SecurityType?)null : new SecurityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

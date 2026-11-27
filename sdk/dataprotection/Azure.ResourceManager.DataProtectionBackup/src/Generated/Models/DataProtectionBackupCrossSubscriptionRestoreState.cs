@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataProtectionBackupCrossSubscriptionRestoreState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupCrossSubscriptionRestoreState?(string value) => value == null ? null : new DataProtectionBackupCrossSubscriptionRestoreState(value);
+        public static implicit operator DataProtectionBackupCrossSubscriptionRestoreState?(string value) => value == null ? (DataProtectionBackupCrossSubscriptionRestoreState?)null : new DataProtectionBackupCrossSubscriptionRestoreState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

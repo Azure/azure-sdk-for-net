@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedClusterAzureHybridBenefit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedClusterAzureHybridBenefit?(string value) => value == null ? null : new ConnectedClusterAzureHybridBenefit(value);
+        public static implicit operator ConnectedClusterAzureHybridBenefit?(string value) => value == null ? (ConnectedClusterAzureHybridBenefit?)null : new ConnectedClusterAzureHybridBenefit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentStackDenySettingsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentStackDenySettingsMode?(string value) => value == null ? null : new DeploymentStackDenySettingsMode(value);
+        public static implicit operator DeploymentStackDenySettingsMode?(string value) => value == null ? (DeploymentStackDenySettingsMode?)null : new DeploymentStackDenySettingsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

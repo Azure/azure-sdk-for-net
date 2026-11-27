@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerEsuLicenseVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerEsuLicenseVersion?(string value) => value == null ? null : new SqlServerEsuLicenseVersion(value);
+        public static implicit operator SqlServerEsuLicenseVersion?(string value) => value == null ? (SqlServerEsuLicenseVersion?)null : new SqlServerEsuLicenseVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

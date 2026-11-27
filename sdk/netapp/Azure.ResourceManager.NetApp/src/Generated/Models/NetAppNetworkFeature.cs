@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppNetworkFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppNetworkFeature?(string value) => value == null ? null : new NetAppNetworkFeature(value);
+        public static implicit operator NetAppNetworkFeature?(string value) => value == null ? (NetAppNetworkFeature?)null : new NetAppNetworkFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

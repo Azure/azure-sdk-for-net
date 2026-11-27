@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="OSDiskCreateOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OSDiskCreateOption?(string value) => value == null ? null : new OSDiskCreateOption(value);
+        public static implicit operator OSDiskCreateOption?(string value) => value == null ? (OSDiskCreateOption?)null : new OSDiskCreateOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

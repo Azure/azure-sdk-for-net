@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceTrustedAccessRoleBindingProvisioningState?(string value) => value == null ? null : new ContainerServiceTrustedAccessRoleBindingProvisioningState(value);
+        public static implicit operator ContainerServiceTrustedAccessRoleBindingProvisioningState?(string value) => value == null ? (ContainerServiceTrustedAccessRoleBindingProvisioningState?)null : new ContainerServiceTrustedAccessRoleBindingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

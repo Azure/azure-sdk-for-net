@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceAlertConfigurationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceAlertConfigurationMode?(string value) => value == null ? null : new ContainerServiceAlertConfigurationMode(value);
+        public static implicit operator ContainerServiceAlertConfigurationMode?(string value) => value == null ? (ContainerServiceAlertConfigurationMode?)null : new ContainerServiceAlertConfigurationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

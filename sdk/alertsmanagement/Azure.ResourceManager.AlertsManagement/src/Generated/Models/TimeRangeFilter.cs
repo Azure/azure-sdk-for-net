@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="TimeRangeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeRangeFilter?(string value) => value == null ? null : new TimeRangeFilter(value);
+        public static implicit operator TimeRangeFilter?(string value) => value == null ? (TimeRangeFilter?)null : new TimeRangeFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

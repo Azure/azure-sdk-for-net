@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerReplicationRole?(string value) => value == null ? null : new MySqlFlexibleServerReplicationRole(value);
+        public static implicit operator MySqlFlexibleServerReplicationRole?(string value) => value == null ? (MySqlFlexibleServerReplicationRole?)null : new MySqlFlexibleServerReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

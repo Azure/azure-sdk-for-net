@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="MabServerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MabServerType?(string value) => value == null ? null : new MabServerType(value);
+        public static implicit operator MabServerType?(string value) => value == null ? (MabServerType?)null : new MabServerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

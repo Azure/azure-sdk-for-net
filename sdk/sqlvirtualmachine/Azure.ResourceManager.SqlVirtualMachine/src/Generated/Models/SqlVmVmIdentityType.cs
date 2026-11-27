@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmVmIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmVmIdentityType?(string value) => value == null ? null : new SqlVmVmIdentityType(value);
+        public static implicit operator SqlVmVmIdentityType?(string value) => value == null ? (SqlVmVmIdentityType?)null : new SqlVmVmIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

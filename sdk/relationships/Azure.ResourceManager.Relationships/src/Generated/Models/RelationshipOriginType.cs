@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Relationships.Models
 
         /// <summary> Converts a string to a <see cref="RelationshipOriginType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelationshipOriginType?(string value) => value == null ? null : new RelationshipOriginType(value);
+        public static implicit operator RelationshipOriginType?(string value) => value == null ? (RelationshipOriginType?)null : new RelationshipOriginType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

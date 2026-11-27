@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="SyslogDataSourceLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyslogDataSourceLogLevel?(string value) => value == null ? null : new SyslogDataSourceLogLevel(value);
+        public static implicit operator SyslogDataSourceLogLevel?(string value) => value == null ? (SyslogDataSourceLogLevel?)null : new SyslogDataSourceLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

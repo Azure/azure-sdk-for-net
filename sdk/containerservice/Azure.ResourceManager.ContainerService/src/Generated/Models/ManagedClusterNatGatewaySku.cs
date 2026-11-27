@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterNatGatewaySku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterNatGatewaySku?(string value) => value == null ? null : new ManagedClusterNatGatewaySku(value);
+        public static implicit operator ManagedClusterNatGatewaySku?(string value) => value == null ? (ManagedClusterNatGatewaySku?)null : new ManagedClusterNatGatewaySku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

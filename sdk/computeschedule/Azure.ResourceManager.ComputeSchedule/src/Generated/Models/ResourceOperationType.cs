@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ResourceOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceOperationType?(string value) => value == null ? null : new ResourceOperationType(value);
+        public static implicit operator ResourceOperationType?(string value) => value == null ? (ResourceOperationType?)null : new ResourceOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

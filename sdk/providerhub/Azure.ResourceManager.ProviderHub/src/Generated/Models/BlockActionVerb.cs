@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="BlockActionVerb"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlockActionVerb?(string value) => value == null ? null : new BlockActionVerb(value);
+        public static implicit operator BlockActionVerb?(string value) => value == null ? (BlockActionVerb?)null : new BlockActionVerb(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

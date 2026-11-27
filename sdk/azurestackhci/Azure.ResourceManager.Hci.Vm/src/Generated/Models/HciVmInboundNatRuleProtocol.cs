@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmInboundNatRuleProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmInboundNatRuleProtocol?(string value) => value == null ? null : new HciVmInboundNatRuleProtocol(value);
+        public static implicit operator HciVmInboundNatRuleProtocol?(string value) => value == null ? (HciVmInboundNatRuleProtocol?)null : new HciVmInboundNatRuleProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

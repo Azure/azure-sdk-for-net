@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="PostgresInstanceSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgresInstanceSkuTier?(string value) => value == null ? null : new PostgresInstanceSkuTier(value);
+        public static implicit operator PostgresInstanceSkuTier?(string value) => value == null ? (PostgresInstanceSkuTier?)null : new PostgresInstanceSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

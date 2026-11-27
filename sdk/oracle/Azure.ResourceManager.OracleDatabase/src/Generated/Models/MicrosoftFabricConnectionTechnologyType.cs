@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="MicrosoftFabricConnectionTechnologyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MicrosoftFabricConnectionTechnologyType?(string value) => value == null ? null : new MicrosoftFabricConnectionTechnologyType(value);
+        public static implicit operator MicrosoftFabricConnectionTechnologyType?(string value) => value == null ? (MicrosoftFabricConnectionTechnologyType?)null : new MicrosoftFabricConnectionTechnologyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

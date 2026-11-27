@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveGovernedServiceItemOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveGovernedServiceItemOption?(string value) => value == null ? null : new VirtualEnclaveGovernedServiceItemOption(value);
+        public static implicit operator VirtualEnclaveGovernedServiceItemOption?(string value) => value == null ? (VirtualEnclaveGovernedServiceItemOption?)null : new VirtualEnclaveGovernedServiceItemOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

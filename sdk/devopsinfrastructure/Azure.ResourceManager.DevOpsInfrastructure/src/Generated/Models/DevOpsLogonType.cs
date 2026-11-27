@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsLogonType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsLogonType?(string value) => value == null ? null : new DevOpsLogonType(value);
+        public static implicit operator DevOpsLogonType?(string value) => value == null ? (DevOpsLogonType?)null : new DevOpsLogonType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

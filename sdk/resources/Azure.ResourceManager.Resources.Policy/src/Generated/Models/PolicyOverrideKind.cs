@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyOverrideKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyOverrideKind?(string value) => value == null ? null : new PolicyOverrideKind(value);
+        public static implicit operator PolicyOverrideKind?(string value) => value == null ? (PolicyOverrideKind?)null : new PolicyOverrideKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

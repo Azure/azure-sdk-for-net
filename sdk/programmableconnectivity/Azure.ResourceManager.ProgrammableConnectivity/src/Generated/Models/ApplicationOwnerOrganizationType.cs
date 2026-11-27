@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationOwnerOrganizationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationOwnerOrganizationType?(string value) => value == null ? null : new ApplicationOwnerOrganizationType(value);
+        public static implicit operator ApplicationOwnerOrganizationType?(string value) => value == null ? (ApplicationOwnerOrganizationType?)null : new ApplicationOwnerOrganizationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

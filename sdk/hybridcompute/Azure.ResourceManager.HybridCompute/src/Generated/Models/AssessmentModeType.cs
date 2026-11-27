@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="AssessmentModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssessmentModeType?(string value) => value == null ? null : new AssessmentModeType(value);
+        public static implicit operator AssessmentModeType?(string value) => value == null ? (AssessmentModeType?)null : new AssessmentModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

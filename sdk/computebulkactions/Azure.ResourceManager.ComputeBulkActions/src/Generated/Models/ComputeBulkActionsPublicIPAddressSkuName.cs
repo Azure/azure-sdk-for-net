@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsPublicIPAddressSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsPublicIPAddressSkuName?(string value) => value == null ? null : new ComputeBulkActionsPublicIPAddressSkuName(value);
+        public static implicit operator ComputeBulkActionsPublicIPAddressSkuName?(string value) => value == null ? (ComputeBulkActionsPublicIPAddressSkuName?)null : new ComputeBulkActionsPublicIPAddressSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

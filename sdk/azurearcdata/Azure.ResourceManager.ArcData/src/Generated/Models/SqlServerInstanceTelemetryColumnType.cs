@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerInstanceTelemetryColumnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerInstanceTelemetryColumnType?(string value) => value == null ? null : new SqlServerInstanceTelemetryColumnType(value);
+        public static implicit operator SqlServerInstanceTelemetryColumnType?(string value) => value == null ? (SqlServerInstanceTelemetryColumnType?)null : new SqlServerInstanceTelemetryColumnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

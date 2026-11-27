@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryIPVersion?(string value) => value == null ? null : new SiteRecoveryIPVersion(value);
+        public static implicit operator SiteRecoveryIPVersion?(string value) => value == null ? (SiteRecoveryIPVersion?)null : new SiteRecoveryIPVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

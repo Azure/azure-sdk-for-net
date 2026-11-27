@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ExperimentActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExperimentActionType?(string value) => value == null ? null : new ExperimentActionType(value);
+        public static implicit operator ExperimentActionType?(string value) => value == null ? (ExperimentActionType?)null : new ExperimentActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

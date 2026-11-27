@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayDeploymentTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayDeploymentTier?(string value) => value == null ? null : new ApplicationGatewayDeploymentTier(value);
+        public static implicit operator ApplicationGatewayDeploymentTier?(string value) => value == null ? (ApplicationGatewayDeploymentTier?)null : new ApplicationGatewayDeploymentTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

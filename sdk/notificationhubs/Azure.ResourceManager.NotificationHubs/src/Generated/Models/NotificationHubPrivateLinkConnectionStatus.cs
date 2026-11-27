@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="NotificationHubPrivateLinkConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationHubPrivateLinkConnectionStatus?(string value) => value == null ? null : new NotificationHubPrivateLinkConnectionStatus(value);
+        public static implicit operator NotificationHubPrivateLinkConnectionStatus?(string value) => value == null ? (NotificationHubPrivateLinkConnectionStatus?)null : new NotificationHubPrivateLinkConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

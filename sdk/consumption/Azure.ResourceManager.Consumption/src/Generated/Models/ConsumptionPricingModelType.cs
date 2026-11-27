@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionPricingModelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionPricingModelType?(string value) => value == null ? null : new ConsumptionPricingModelType(value);
+        public static implicit operator ConsumptionPricingModelType?(string value) => value == null ? (ConsumptionPricingModelType?)null : new ConsumptionPricingModelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

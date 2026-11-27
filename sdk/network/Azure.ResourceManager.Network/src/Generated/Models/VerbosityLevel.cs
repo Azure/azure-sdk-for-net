@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VerbosityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VerbosityLevel?(string value) => value == null ? null : new VerbosityLevel(value);
+        public static implicit operator VerbosityLevel?(string value) => value == null ? (VerbosityLevel?)null : new VerbosityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

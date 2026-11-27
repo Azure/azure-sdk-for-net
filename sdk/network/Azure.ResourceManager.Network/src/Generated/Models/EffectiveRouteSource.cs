@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="EffectiveRouteSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EffectiveRouteSource?(string value) => value == null ? null : new EffectiveRouteSource(value);
+        public static implicit operator EffectiveRouteSource?(string value) => value == null ? (EffectiveRouteSource?)null : new EffectiveRouteSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

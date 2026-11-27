@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterEffect?(string value) => value == null ? null : new SecurityCenterEffect(value);
+        public static implicit operator SecurityCenterEffect?(string value) => value == null ? (SecurityCenterEffect?)null : new SecurityCenterEffect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceEnvironmentUpgradePreference?(string value) => value == null ? null : new AppServiceEnvironmentUpgradePreference(value);
+        public static implicit operator AppServiceEnvironmentUpgradePreference?(string value) => value == null ? (AppServiceEnvironmentUpgradePreference?)null : new AppServiceEnvironmentUpgradePreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

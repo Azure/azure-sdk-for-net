@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerRecommendationResourceUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerRecommendationResourceUpdateMode?(string value) => value == null ? null : new SqlServerRecommendationResourceUpdateMode(value);
+        public static implicit operator SqlServerRecommendationResourceUpdateMode?(string value) => value == null ? (SqlServerRecommendationResourceUpdateMode?)null : new SqlServerRecommendationResourceUpdateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

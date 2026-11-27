@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryReplicationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryReplicationMode?(string value) => value == null ? null : new GalleryReplicationMode(value);
+        public static implicit operator GalleryReplicationMode?(string value) => value == null ? (GalleryReplicationMode?)null : new GalleryReplicationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

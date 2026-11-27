@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanProvisioningState?(string value) => value == null ? null : new ElasticSanProvisioningState(value);
+        public static implicit operator ElasticSanProvisioningState?(string value) => value == null ? (ElasticSanProvisioningState?)null : new ElasticSanProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

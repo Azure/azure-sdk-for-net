@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderOrderMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderOrderMode?(string value) => value == null ? null : new EdgeOrderOrderMode(value);
+        public static implicit operator EdgeOrderOrderMode?(string value) => value == null ? (EdgeOrderOrderMode?)null : new EdgeOrderOrderMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

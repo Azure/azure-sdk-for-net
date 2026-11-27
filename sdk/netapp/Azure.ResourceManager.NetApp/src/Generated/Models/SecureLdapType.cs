@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="SecureLdapType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecureLdapType?(string value) => value == null ? null : new SecureLdapType(value);
+        public static implicit operator SecureLdapType?(string value) => value == null ? (SecureLdapType?)null : new SecureLdapType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GatewayListDebugCredentialsContractPurpose?(string value) => value == null ? null : new GatewayListDebugCredentialsContractPurpose(value);
+        public static implicit operator GatewayListDebugCredentialsContractPurpose?(string value) => value == null ? (GatewayListDebugCredentialsContractPurpose?)null : new GatewayListDebugCredentialsContractPurpose(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

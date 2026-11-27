@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <summary> Converts a string to a <see cref="KoreAIArtemisWorkspaceLifecycleStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KoreAIArtemisWorkspaceLifecycleStatus?(string value) => value == null ? null : new KoreAIArtemisWorkspaceLifecycleStatus(value);
+        public static implicit operator KoreAIArtemisWorkspaceLifecycleStatus?(string value) => value == null ? (KoreAIArtemisWorkspaceLifecycleStatus?)null : new KoreAIArtemisWorkspaceLifecycleStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

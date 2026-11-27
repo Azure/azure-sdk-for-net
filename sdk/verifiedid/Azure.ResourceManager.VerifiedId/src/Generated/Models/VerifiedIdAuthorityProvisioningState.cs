@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.VerifiedId.Models
 
         /// <summary> Converts a string to a <see cref="VerifiedIdAuthorityProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VerifiedIdAuthorityProvisioningState?(string value) => value == null ? null : new VerifiedIdAuthorityProvisioningState(value);
+        public static implicit operator VerifiedIdAuthorityProvisioningState?(string value) => value == null ? (VerifiedIdAuthorityProvisioningState?)null : new VerifiedIdAuthorityProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="ManagedHsmPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmPublicNetworkAccess?(string value) => value == null ? null : new ManagedHsmPublicNetworkAccess(value);
+        public static implicit operator ManagedHsmPublicNetworkAccess?(string value) => value == null ? (ManagedHsmPublicNetworkAccess?)null : new ManagedHsmPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

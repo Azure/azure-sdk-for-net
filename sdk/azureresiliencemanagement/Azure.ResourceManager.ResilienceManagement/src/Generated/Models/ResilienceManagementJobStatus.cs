@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementJobStatus?(string value) => value == null ? null : new ResilienceManagementJobStatus(value);
+        public static implicit operator ResilienceManagementJobStatus?(string value) => value == null ? (ResilienceManagementJobStatus?)null : new ResilienceManagementJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DataSyncParticipantIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataSyncParticipantIdentityType?(string value) => value == null ? null : new DataSyncParticipantIdentityType(value);
+        public static implicit operator DataSyncParticipantIdentityType?(string value) => value == null ? (DataSyncParticipantIdentityType?)null : new DataSyncParticipantIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

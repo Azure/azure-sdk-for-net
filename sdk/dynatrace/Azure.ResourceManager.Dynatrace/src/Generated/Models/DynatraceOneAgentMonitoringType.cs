@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceOneAgentMonitoringType?(string value) => value == null ? null : new DynatraceOneAgentMonitoringType(value);
+        public static implicit operator DynatraceOneAgentMonitoringType?(string value) => value == null ? (DynatraceOneAgentMonitoringType?)null : new DynatraceOneAgentMonitoringType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

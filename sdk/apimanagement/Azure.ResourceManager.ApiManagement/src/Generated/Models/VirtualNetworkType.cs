@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkType?(string value) => value == null ? null : new VirtualNetworkType(value);
+        public static implicit operator VirtualNetworkType?(string value) => value == null ? (VirtualNetworkType?)null : new VirtualNetworkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

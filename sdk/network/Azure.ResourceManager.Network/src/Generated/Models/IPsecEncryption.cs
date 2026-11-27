@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IPsecEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPsecEncryption?(string value) => value == null ? null : new IPsecEncryption(value);
+        public static implicit operator IPsecEncryption?(string value) => value == null ? (IPsecEncryption?)null : new IPsecEncryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

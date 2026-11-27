@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="AutoImportJobUpdatePropertiesAdminStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoImportJobUpdatePropertiesAdminStatus?(string value) => value == null ? null : new AutoImportJobUpdatePropertiesAdminStatus(value);
+        public static implicit operator AutoImportJobUpdatePropertiesAdminStatus?(string value) => value == null ? (AutoImportJobUpdatePropertiesAdminStatus?)null : new AutoImportJobUpdatePropertiesAdminStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

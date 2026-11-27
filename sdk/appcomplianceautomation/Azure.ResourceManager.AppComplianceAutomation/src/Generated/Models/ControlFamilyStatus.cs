@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ControlFamilyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlFamilyStatus?(string value) => value == null ? null : new ControlFamilyStatus(value);
+        public static implicit operator ControlFamilyStatus?(string value) => value == null ? (ControlFamilyStatus?)null : new ControlFamilyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

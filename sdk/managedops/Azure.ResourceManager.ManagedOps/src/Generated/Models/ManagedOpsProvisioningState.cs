@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <summary> Converts a string to a <see cref="ManagedOpsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedOpsProvisioningState?(string value) => value == null ? null : new ManagedOpsProvisioningState(value);
+        public static implicit operator ManagedOpsProvisioningState?(string value) => value == null ? (ManagedOpsProvisioningState?)null : new ManagedOpsProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

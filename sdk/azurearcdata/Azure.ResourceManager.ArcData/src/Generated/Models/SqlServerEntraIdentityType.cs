@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerEntraIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerEntraIdentityType?(string value) => value == null ? null : new SqlServerEntraIdentityType(value);
+        public static implicit operator SqlServerEntraIdentityType?(string value) => value == null ? (SqlServerEntraIdentityType?)null : new SqlServerEntraIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachinePowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachinePowerState?(string value) => value == null ? null : new VirtualMachinePowerState(value);
+        public static implicit operator VirtualMachinePowerState?(string value) => value == null ? (VirtualMachinePowerState?)null : new VirtualMachinePowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

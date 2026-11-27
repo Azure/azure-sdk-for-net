@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProviderType?(string value) => value == null ? null : new ResourceProviderType(value);
+        public static implicit operator ResourceProviderType?(string value) => value == null ? (ResourceProviderType?)null : new ResourceProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

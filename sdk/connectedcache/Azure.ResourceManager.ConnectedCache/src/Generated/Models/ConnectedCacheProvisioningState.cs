@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedCacheProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedCacheProvisioningState?(string value) => value == null ? null : new ConnectedCacheProvisioningState(value);
+        public static implicit operator ConnectedCacheProvisioningState?(string value) => value == null ? (ConnectedCacheProvisioningState?)null : new ConnectedCacheProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

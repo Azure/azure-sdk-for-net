@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceSafeguardsSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceSafeguardsSupport?(string value) => value == null ? null : new ContainerServiceSafeguardsSupport(value);
+        public static implicit operator ContainerServiceSafeguardsSupport?(string value) => value == null ? (ContainerServiceSafeguardsSupport?)null : new ContainerServiceSafeguardsSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

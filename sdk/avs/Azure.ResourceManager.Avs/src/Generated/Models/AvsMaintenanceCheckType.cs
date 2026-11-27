@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsMaintenanceCheckType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsMaintenanceCheckType?(string value) => value == null ? null : new AvsMaintenanceCheckType(value);
+        public static implicit operator AvsMaintenanceCheckType?(string value) => value == null ? (AvsMaintenanceCheckType?)null : new AvsMaintenanceCheckType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="InstallScriptType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstallScriptType?(string value) => value == null ? null : new InstallScriptType(value);
+        public static implicit operator InstallScriptType?(string value) => value == null ? (InstallScriptType?)null : new InstallScriptType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

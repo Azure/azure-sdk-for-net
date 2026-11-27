@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="AdvancedSecurityObjectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvancedSecurityObjectType?(string value) => value == null ? null : new AdvancedSecurityObjectType(value);
+        public static implicit operator AdvancedSecurityObjectType?(string value) => value == null ? (AdvancedSecurityObjectType?)null : new AdvancedSecurityObjectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

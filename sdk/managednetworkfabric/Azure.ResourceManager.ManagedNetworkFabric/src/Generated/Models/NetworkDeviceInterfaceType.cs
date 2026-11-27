@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkDeviceInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkDeviceInterfaceType?(string value) => value == null ? null : new NetworkDeviceInterfaceType(value);
+        public static implicit operator NetworkDeviceInterfaceType?(string value) => value == null ? (NetworkDeviceInterfaceType?)null : new NetworkDeviceInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

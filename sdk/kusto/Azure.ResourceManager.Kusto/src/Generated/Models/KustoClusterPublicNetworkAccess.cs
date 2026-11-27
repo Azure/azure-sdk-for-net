@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoClusterPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoClusterPublicNetworkAccess?(string value) => value == null ? null : new KustoClusterPublicNetworkAccess(value);
+        public static implicit operator KustoClusterPublicNetworkAccess?(string value) => value == null ? (KustoClusterPublicNetworkAccess?)null : new KustoClusterPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

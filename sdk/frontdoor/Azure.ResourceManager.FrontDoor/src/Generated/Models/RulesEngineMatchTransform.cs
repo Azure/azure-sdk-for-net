@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="RulesEngineMatchTransform"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RulesEngineMatchTransform?(string value) => value == null ? null : new RulesEngineMatchTransform(value);
+        public static implicit operator RulesEngineMatchTransform?(string value) => value == null ? (RulesEngineMatchTransform?)null : new RulesEngineMatchTransform(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

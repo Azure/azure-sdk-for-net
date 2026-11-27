@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="PollingFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PollingFrequency?(string value) => value == null ? null : new PollingFrequency(value);
+        public static implicit operator PollingFrequency?(string value) => value == null ? (PollingFrequency?)null : new PollingFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

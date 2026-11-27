@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteFailoverLinkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteFailoverLinkType?(string value) => value == null ? null : new ExpressRouteFailoverLinkType(value);
+        public static implicit operator ExpressRouteFailoverLinkType?(string value) => value == null ? (ExpressRouteFailoverLinkType?)null : new ExpressRouteFailoverLinkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

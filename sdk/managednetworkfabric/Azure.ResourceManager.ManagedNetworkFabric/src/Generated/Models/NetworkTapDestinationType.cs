@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkTapDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkTapDestinationType?(string value) => value == null ? null : new NetworkTapDestinationType(value);
+        public static implicit operator NetworkTapDestinationType?(string value) => value == null ? (NetworkTapDestinationType?)null : new NetworkTapDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

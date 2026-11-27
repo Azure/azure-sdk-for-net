@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupVaultInfrastructureEncryptionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupVaultInfrastructureEncryptionState?(string value) => value == null ? null : new BackupVaultInfrastructureEncryptionState(value);
+        public static implicit operator BackupVaultInfrastructureEncryptionState?(string value) => value == null ? (BackupVaultInfrastructureEncryptionState?)null : new BackupVaultInfrastructureEncryptionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

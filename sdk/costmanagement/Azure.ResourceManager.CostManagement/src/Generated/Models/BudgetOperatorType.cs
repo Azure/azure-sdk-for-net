@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="BudgetOperatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BudgetOperatorType?(string value) => value == null ? null : new BudgetOperatorType(value);
+        public static implicit operator BudgetOperatorType?(string value) => value == null ? (BudgetOperatorType?)null : new BudgetOperatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

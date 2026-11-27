@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="TransformationSerializationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransformationSerializationFormat?(string value) => value == null ? null : new TransformationSerializationFormat(value);
+        public static implicit operator TransformationSerializationFormat?(string value) => value == null ? (TransformationSerializationFormat?)null : new TransformationSerializationFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

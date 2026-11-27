@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningSshPublicAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningSshPublicAccess?(string value) => value == null ? null : new MachineLearningSshPublicAccess(value);
+        public static implicit operator MachineLearningSshPublicAccess?(string value) => value == null ? (MachineLearningSshPublicAccess?)null : new MachineLearningSshPublicAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

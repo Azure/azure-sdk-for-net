@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppNameUnavailableReason?(string value) => value == null ? null : new NetAppNameUnavailableReason(value);
+        public static implicit operator NetAppNameUnavailableReason?(string value) => value == null ? (NetAppNameUnavailableReason?)null : new NetAppNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

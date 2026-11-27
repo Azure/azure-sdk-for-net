@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedRegistryLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedRegistryLogLevel?(string value) => value == null ? null : new ConnectedRegistryLogLevel(value);
+        public static implicit operator ConnectedRegistryLogLevel?(string value) => value == null ? (ConnectedRegistryLogLevel?)null : new ConnectedRegistryLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

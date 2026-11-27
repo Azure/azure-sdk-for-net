@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Converts a string to a <see cref="AppLinkEastWestGatewayVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppLinkEastWestGatewayVisibility?(string value) => value == null ? null : new AppLinkEastWestGatewayVisibility(value);
+        public static implicit operator AppLinkEastWestGatewayVisibility?(string value) => value == null ? (AppLinkEastWestGatewayVisibility?)null : new AppLinkEastWestGatewayVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="L2NetworkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator L2NetworkProvisioningState?(string value) => value == null ? null : new L2NetworkProvisioningState(value);
+        public static implicit operator L2NetworkProvisioningState?(string value) => value == null ? (L2NetworkProvisioningState?)null : new L2NetworkProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

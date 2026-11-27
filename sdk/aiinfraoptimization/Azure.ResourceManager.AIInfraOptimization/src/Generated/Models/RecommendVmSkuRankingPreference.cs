@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="RecommendVmSkuRankingPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendVmSkuRankingPreference?(string value) => value == null ? null : new RecommendVmSkuRankingPreference(value);
+        public static implicit operator RecommendVmSkuRankingPreference?(string value) => value == null ? (RecommendVmSkuRankingPreference?)null : new RecommendVmSkuRankingPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

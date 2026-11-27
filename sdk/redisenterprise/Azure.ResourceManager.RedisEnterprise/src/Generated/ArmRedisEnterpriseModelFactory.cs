@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
         /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
-        /// <param name="accessString"> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </param>
+        /// <param name="accessString"> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:*`. Defaults to `+@all ~*` if not specified. </param>
         /// <param name="provisioningError"> Provisioning error details when the access string failed to apply (e.g., invalid ACL syntax). Null when provisioning succeeded. </param>
         /// <param name="userObjectId"> The object ID of the user. </param>
         /// <returns> A new <see cref="RedisEnterprise.AccessPolicyAssignmentData"/> instance for mocking. </returns>

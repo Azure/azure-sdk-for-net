@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTlsStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTlsStatus?(string value) => value == null ? null : new ContainerRegistryTlsStatus(value);
+        public static implicit operator ContainerRegistryTlsStatus?(string value) => value == null ? (ContainerRegistryTlsStatus?)null : new ContainerRegistryTlsStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

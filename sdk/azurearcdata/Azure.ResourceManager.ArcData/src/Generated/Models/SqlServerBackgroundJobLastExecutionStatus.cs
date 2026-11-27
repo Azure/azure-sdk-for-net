@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerBackgroundJobLastExecutionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerBackgroundJobLastExecutionStatus?(string value) => value == null ? null : new SqlServerBackgroundJobLastExecutionStatus(value);
+        public static implicit operator SqlServerBackgroundJobLastExecutionStatus?(string value) => value == null ? (SqlServerBackgroundJobLastExecutionStatus?)null : new SqlServerBackgroundJobLastExecutionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

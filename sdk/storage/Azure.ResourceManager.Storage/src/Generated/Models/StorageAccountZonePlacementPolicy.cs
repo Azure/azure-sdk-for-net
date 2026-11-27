@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountZonePlacementPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountZonePlacementPolicy?(string value) => value == null ? null : new StorageAccountZonePlacementPolicy(value);
+        public static implicit operator StorageAccountZonePlacementPolicy?(string value) => value == null ? (StorageAccountZonePlacementPolicy?)null : new StorageAccountZonePlacementPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> Converts a string to a <see cref="PlaywrightEnablementStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlaywrightEnablementStatus?(string value) => value == null ? null : new PlaywrightEnablementStatus(value);
+        public static implicit operator PlaywrightEnablementStatus?(string value) => value == null ? (PlaywrightEnablementStatus?)null : new PlaywrightEnablementStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

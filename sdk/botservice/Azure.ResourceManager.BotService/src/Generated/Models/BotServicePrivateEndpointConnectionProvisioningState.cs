@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotServicePrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotServicePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new BotServicePrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator BotServicePrivateEndpointConnectionProvisioningState?(string value) => value == null ? (BotServicePrivateEndpointConnectionProvisioningState?)null : new BotServicePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

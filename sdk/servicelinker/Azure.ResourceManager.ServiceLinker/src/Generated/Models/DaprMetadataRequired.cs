@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="DaprMetadataRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaprMetadataRequired?(string value) => value == null ? null : new DaprMetadataRequired(value);
+        public static implicit operator DaprMetadataRequired?(string value) => value == null ? (DaprMetadataRequired?)null : new DaprMetadataRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

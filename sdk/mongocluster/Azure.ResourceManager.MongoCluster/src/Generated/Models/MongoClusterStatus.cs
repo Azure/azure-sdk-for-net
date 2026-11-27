@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterStatus?(string value) => value == null ? null : new MongoClusterStatus(value);
+        public static implicit operator MongoClusterStatus?(string value) => value == null ? (MongoClusterStatus?)null : new MongoClusterStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

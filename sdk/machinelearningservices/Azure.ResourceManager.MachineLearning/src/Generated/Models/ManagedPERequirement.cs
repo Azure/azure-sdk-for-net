@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ManagedPERequirement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedPERequirement?(string value) => value == null ? null : new ManagedPERequirement(value);
+        public static implicit operator ManagedPERequirement?(string value) => value == null ? (ManagedPERequirement?)null : new ManagedPERequirement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

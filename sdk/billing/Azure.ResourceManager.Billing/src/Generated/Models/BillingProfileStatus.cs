@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingProfileStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingProfileStatus?(string value) => value == null ? null : new BillingProfileStatus(value);
+        public static implicit operator BillingProfileStatus?(string value) => value == null ? (BillingProfileStatus?)null : new BillingProfileStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

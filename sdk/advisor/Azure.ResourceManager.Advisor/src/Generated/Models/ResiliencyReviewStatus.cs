@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="ResiliencyReviewStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResiliencyReviewStatus?(string value) => value == null ? null : new ResiliencyReviewStatus(value);
+        public static implicit operator ResiliencyReviewStatus?(string value) => value == null ? (ResiliencyReviewStatus?)null : new ResiliencyReviewStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

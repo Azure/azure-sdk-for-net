@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ImmutableStorageWithVersioningMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImmutableStorageWithVersioningMigrationState?(string value) => value == null ? null : new ImmutableStorageWithVersioningMigrationState(value);
+        public static implicit operator ImmutableStorageWithVersioningMigrationState?(string value) => value == null ? (ImmutableStorageWithVersioningMigrationState?)null : new ImmutableStorageWithVersioningMigrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

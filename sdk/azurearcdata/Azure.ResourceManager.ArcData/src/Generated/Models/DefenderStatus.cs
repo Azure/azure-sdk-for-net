@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="DefenderStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DefenderStatus?(string value) => value == null ? null : new DefenderStatus(value);
+        public static implicit operator DefenderStatus?(string value) => value == null ? (DefenderStatus?)null : new DefenderStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

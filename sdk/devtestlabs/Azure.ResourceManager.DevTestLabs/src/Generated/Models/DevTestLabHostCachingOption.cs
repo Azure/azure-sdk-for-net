@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabHostCachingOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabHostCachingOption?(string value) => value == null ? null : new DevTestLabHostCachingOption(value);
+        public static implicit operator DevTestLabHostCachingOption?(string value) => value == null ? (DevTestLabHostCachingOption?)null : new DevTestLabHostCachingOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

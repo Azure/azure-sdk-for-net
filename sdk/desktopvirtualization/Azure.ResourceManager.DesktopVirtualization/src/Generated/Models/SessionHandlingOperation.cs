@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHandlingOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHandlingOperation?(string value) => value == null ? null : new SessionHandlingOperation(value);
+        public static implicit operator SessionHandlingOperation?(string value) => value == null ? (SessionHandlingOperation?)null : new SessionHandlingOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

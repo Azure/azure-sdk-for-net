@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallProvisioningState?(string value) => value == null ? null : new FirewallProvisioningState(value);
+        public static implicit operator FirewallProvisioningState?(string value) => value == null ? (FirewallProvisioningState?)null : new FirewallProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

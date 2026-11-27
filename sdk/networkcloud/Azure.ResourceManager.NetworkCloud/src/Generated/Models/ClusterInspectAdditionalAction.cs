@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterInspectAdditionalAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterInspectAdditionalAction?(string value) => value == null ? null : new ClusterInspectAdditionalAction(value);
+        public static implicit operator ClusterInspectAdditionalAction?(string value) => value == null ? (ClusterInspectAdditionalAction?)null : new ClusterInspectAdditionalAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

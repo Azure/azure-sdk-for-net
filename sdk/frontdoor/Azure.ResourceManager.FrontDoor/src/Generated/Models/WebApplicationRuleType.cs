@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationRuleType?(string value) => value == null ? null : new WebApplicationRuleType(value);
+        public static implicit operator WebApplicationRuleType?(string value) => value == null ? (WebApplicationRuleType?)null : new WebApplicationRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

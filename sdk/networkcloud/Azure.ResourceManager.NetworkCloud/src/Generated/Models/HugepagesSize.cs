@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="HugepagesSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HugepagesSize?(string value) => value == null ? null : new HugepagesSize(value);
+        public static implicit operator HugepagesSize?(string value) => value == null ? (HugepagesSize?)null : new HugepagesSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

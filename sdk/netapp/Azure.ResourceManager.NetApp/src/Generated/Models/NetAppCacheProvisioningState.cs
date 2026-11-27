@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppCacheProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppCacheProvisioningState?(string value) => value == null ? null : new NetAppCacheProvisioningState(value);
+        public static implicit operator NetAppCacheProvisioningState?(string value) => value == null ? (NetAppCacheProvisioningState?)null : new NetAppCacheProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

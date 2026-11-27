@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppLabelHistoryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppLabelHistoryStatus?(string value) => value == null ? null : new ContainerAppLabelHistoryStatus(value);
+        public static implicit operator ContainerAppLabelHistoryStatus?(string value) => value == null ? (ContainerAppLabelHistoryStatus?)null : new ContainerAppLabelHistoryStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

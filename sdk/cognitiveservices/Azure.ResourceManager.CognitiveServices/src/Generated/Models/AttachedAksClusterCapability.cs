@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AttachedAksClusterCapability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttachedAksClusterCapability?(string value) => value == null ? null : new AttachedAksClusterCapability(value);
+        public static implicit operator AttachedAksClusterCapability?(string value) => value == null ? (AttachedAksClusterCapability?)null : new AttachedAksClusterCapability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

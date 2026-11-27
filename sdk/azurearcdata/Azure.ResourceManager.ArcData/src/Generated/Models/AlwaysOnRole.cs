@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="AlwaysOnRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlwaysOnRole?(string value) => value == null ? null : new AlwaysOnRole(value);
+        public static implicit operator AlwaysOnRole?(string value) => value == null ? (AlwaysOnRole?)null : new AlwaysOnRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

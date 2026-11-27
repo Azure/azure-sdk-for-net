@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CapabilityHostKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapabilityHostKind?(string value) => value == null ? null : new CapabilityHostKind(value);
+        public static implicit operator CapabilityHostKind?(string value) => value == null ? (CapabilityHostKind?)null : new CapabilityHostKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

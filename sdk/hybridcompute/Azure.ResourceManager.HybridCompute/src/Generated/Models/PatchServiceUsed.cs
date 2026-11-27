@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="PatchServiceUsed"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PatchServiceUsed?(string value) => value == null ? null : new PatchServiceUsed(value);
+        public static implicit operator PatchServiceUsed?(string value) => value == null ? (PatchServiceUsed?)null : new PatchServiceUsed(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

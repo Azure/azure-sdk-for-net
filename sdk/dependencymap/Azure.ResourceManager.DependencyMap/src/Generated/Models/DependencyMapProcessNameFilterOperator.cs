@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
 
         /// <summary> Converts a string to a <see cref="DependencyMapProcessNameFilterOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DependencyMapProcessNameFilterOperator?(string value) => value == null ? null : new DependencyMapProcessNameFilterOperator(value);
+        public static implicit operator DependencyMapProcessNameFilterOperator?(string value) => value == null ? (DependencyMapProcessNameFilterOperator?)null : new DependencyMapProcessNameFilterOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

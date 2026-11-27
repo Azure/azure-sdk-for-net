@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppProvisioningState?(string value) => value == null ? null : new NetAppProvisioningState(value);
+        public static implicit operator NetAppProvisioningState?(string value) => value == null ? (NetAppProvisioningState?)null : new NetAppProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

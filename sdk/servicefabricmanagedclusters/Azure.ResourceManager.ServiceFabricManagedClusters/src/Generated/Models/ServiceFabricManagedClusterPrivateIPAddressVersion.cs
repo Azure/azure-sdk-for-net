@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterPrivateIPAddressVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedClusterPrivateIPAddressVersion?(string value) => value == null ? null : new ServiceFabricManagedClusterPrivateIPAddressVersion(value);
+        public static implicit operator ServiceFabricManagedClusterPrivateIPAddressVersion?(string value) => value == null ? (ServiceFabricManagedClusterPrivateIPAddressVersion?)null : new ServiceFabricManagedClusterPrivateIPAddressVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

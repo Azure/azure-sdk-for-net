@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="OAuth2GrantType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OAuth2GrantType?(string value) => value == null ? null : new OAuth2GrantType(value);
+        public static implicit operator OAuth2GrantType?(string value) => value == null ? (OAuth2GrantType?)null : new OAuth2GrantType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

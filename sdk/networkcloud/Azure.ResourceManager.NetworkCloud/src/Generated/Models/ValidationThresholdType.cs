@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ValidationThresholdType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationThresholdType?(string value) => value == null ? null : new ValidationThresholdType(value);
+        public static implicit operator ValidationThresholdType?(string value) => value == null ? (ValidationThresholdType?)null : new ValidationThresholdType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="DrillInitialConfig"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DrillInitialConfig?(string value) => value == null ? null : new DrillInitialConfig(value);
+        public static implicit operator DrillInitialConfig?(string value) => value == null ? (DrillInitialConfig?)null : new DrillInitialConfig(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

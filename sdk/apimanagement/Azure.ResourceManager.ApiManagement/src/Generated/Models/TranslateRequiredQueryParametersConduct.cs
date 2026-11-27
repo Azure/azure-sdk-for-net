@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TranslateRequiredQueryParametersConduct?(string value) => value == null ? null : new TranslateRequiredQueryParametersConduct(value);
+        public static implicit operator TranslateRequiredQueryParametersConduct?(string value) => value == null ? (TranslateRequiredQueryParametersConduct?)null : new TranslateRequiredQueryParametersConduct(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

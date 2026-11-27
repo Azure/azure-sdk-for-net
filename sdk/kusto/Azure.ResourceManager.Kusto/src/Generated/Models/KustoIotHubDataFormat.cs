@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoIotHubDataFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoIotHubDataFormat?(string value) => value == null ? null : new KustoIotHubDataFormat(value);
+        public static implicit operator KustoIotHubDataFormat?(string value) => value == null ? (KustoIotHubDataFormat?)null : new KustoIotHubDataFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerActiveDirectoryAuthEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerActiveDirectoryAuthEnum?(string value) => value == null ? null : new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(value);
+        public static implicit operator PostgreSqlFlexibleServerActiveDirectoryAuthEnum?(string value) => value == null ? (PostgreSqlFlexibleServerActiveDirectoryAuthEnum?)null : new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

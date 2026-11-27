@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceNetworkPolicy?(string value) => value == null ? null : new ContainerServiceNetworkPolicy(value);
+        public static implicit operator ContainerServiceNetworkPolicy?(string value) => value == null ? (ContainerServiceNetworkPolicy?)null : new ContainerServiceNetworkPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

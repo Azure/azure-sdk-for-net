@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Converts a string to a <see cref="EnforcementState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnforcementState?(string value) => value == null ? null : new EnforcementState(value);
+        public static implicit operator EnforcementState?(string value) => value == null ? (EnforcementState?)null : new EnforcementState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

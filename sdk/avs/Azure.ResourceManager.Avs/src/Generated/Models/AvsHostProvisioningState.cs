@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsHostProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsHostProvisioningState?(string value) => value == null ? null : new AvsHostProvisioningState(value);
+        public static implicit operator AvsHostProvisioningState?(string value) => value == null ? (AvsHostProvisioningState?)null : new AvsHostProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

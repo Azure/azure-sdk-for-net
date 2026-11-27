@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiManagementAuthorizationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiManagementAuthorizationType?(string value) => value == null ? null : new ApiManagementAuthorizationType(value);
+        public static implicit operator ApiManagementAuthorizationType?(string value) => value == null ? (ApiManagementAuthorizationType?)null : new ApiManagementAuthorizationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

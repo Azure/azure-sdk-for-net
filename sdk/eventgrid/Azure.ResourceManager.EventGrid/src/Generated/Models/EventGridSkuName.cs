@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridSkuName?(string value) => value == null ? null : new EventGridSkuName(value);
+        public static implicit operator EventGridSkuName?(string value) => value == null ? (EventGridSkuName?)null : new EventGridSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

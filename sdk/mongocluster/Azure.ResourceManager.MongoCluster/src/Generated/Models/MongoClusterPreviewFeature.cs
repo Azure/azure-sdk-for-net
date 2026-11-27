@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterPreviewFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterPreviewFeature?(string value) => value == null ? null : new MongoClusterPreviewFeature(value);
+        public static implicit operator MongoClusterPreviewFeature?(string value) => value == null ? (MongoClusterPreviewFeature?)null : new MongoClusterPreviewFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

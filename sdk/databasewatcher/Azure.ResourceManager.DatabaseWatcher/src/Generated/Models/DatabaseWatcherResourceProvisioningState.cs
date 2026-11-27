@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseWatcherResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseWatcherResourceProvisioningState?(string value) => value == null ? null : new DatabaseWatcherResourceProvisioningState(value);
+        public static implicit operator DatabaseWatcherResourceProvisioningState?(string value) => value == null ? (DatabaseWatcherResourceProvisioningState?)null : new DatabaseWatcherResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

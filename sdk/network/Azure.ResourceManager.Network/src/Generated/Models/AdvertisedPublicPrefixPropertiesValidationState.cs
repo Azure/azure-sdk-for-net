@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AdvertisedPublicPrefixPropertiesValidationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvertisedPublicPrefixPropertiesValidationState?(string value) => value == null ? null : new AdvertisedPublicPrefixPropertiesValidationState(value);
+        public static implicit operator AdvertisedPublicPrefixPropertiesValidationState?(string value) => value == null ? (AdvertisedPublicPrefixPropertiesValidationState?)null : new AdvertisedPublicPrefixPropertiesValidationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

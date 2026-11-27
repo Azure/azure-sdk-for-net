@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightFilterMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightFilterMode?(string value) => value == null ? null : new HDInsightFilterMode(value);
+        public static implicit operator HDInsightFilterMode?(string value) => value == null ? (HDInsightFilterMode?)null : new HDInsightFilterMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DeleteExistingPeering"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeleteExistingPeering?(string value) => value == null ? null : new DeleteExistingPeering(value);
+        public static implicit operator DeleteExistingPeering?(string value) => value == null ? (DeleteExistingPeering?)null : new DeleteExistingPeering(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

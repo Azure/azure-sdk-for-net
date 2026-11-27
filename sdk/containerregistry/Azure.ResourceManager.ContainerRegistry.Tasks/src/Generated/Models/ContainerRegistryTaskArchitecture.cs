@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskArchitecture?(string value) => value == null ? null : new ContainerRegistryTaskArchitecture(value);
+        public static implicit operator ContainerRegistryTaskArchitecture?(string value) => value == null ? (ContainerRegistryTaskArchitecture?)null : new ContainerRegistryTaskArchitecture(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

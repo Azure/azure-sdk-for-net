@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="ProtectionGroupMatchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionGroupMatchType?(string value) => value == null ? null : new ProtectionGroupMatchType(value);
+        public static implicit operator ProtectionGroupMatchType?(string value) => value == null ? (ProtectionGroupMatchType?)null : new ProtectionGroupMatchType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

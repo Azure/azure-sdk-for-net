@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="MetricsEmitted"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricsEmitted?(string value) => value == null ? null : new MetricsEmitted(value);
+        public static implicit operator MetricsEmitted?(string value) => value == null ? (MetricsEmitted?)null : new MetricsEmitted(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

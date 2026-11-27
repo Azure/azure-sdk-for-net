@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseClusteringPolicy?(string value) => value == null ? null : new RedisEnterpriseClusteringPolicy(value);
+        public static implicit operator RedisEnterpriseClusteringPolicy?(string value) => value == null ? (RedisEnterpriseClusteringPolicy?)null : new RedisEnterpriseClusteringPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

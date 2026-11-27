@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ReplicationLinkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationLinkType?(string value) => value == null ? null : new ReplicationLinkType(value);
+        public static implicit operator ReplicationLinkType?(string value) => value == null ? (ReplicationLinkType?)null : new ReplicationLinkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

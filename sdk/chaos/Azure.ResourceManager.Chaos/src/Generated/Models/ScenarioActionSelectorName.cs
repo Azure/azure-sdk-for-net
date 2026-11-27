@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ScenarioActionSelectorName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScenarioActionSelectorName?(string value) => value == null ? null : new ScenarioActionSelectorName(value);
+        public static implicit operator ScenarioActionSelectorName?(string value) => value == null ? (ScenarioActionSelectorName?)null : new ScenarioActionSelectorName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

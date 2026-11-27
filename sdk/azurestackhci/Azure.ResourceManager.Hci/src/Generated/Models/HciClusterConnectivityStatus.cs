@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciClusterConnectivityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterConnectivityStatus?(string value) => value == null ? null : new HciClusterConnectivityStatus(value);
+        public static implicit operator HciClusterConnectivityStatus?(string value) => value == null ? (HciClusterConnectivityStatus?)null : new HciClusterConnectivityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

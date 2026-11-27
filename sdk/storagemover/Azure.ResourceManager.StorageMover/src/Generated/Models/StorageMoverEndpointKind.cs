@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="StorageMoverEndpointKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverEndpointKind?(string value) => value == null ? null : new StorageMoverEndpointKind(value);
+        public static implicit operator StorageMoverEndpointKind?(string value) => value == null ? (StorageMoverEndpointKind?)null : new StorageMoverEndpointKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

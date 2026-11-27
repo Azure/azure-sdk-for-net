@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DatasetSourceValueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatasetSourceValueType?(string value) => value == null ? null : new DatasetSourceValueType(value);
+        public static implicit operator DatasetSourceValueType?(string value) => value == null ? (DatasetSourceValueType?)null : new DatasetSourceValueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

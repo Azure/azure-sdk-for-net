@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="AuthenticationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthenticationName?(string value) => value == null ? null : new AuthenticationName(value);
+        public static implicit operator AuthenticationName?(string value) => value == null ? (AuthenticationName?)null : new AuthenticationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

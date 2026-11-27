@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="TieringMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TieringMode?(string value) => value == null ? null : new TieringMode(value);
+        public static implicit operator TieringMode?(string value) => value == null ? (TieringMode?)null : new TieringMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

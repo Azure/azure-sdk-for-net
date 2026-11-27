@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionReregistrationResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionReregistrationResult?(string value) => value == null ? null : new SubscriptionReregistrationResult(value);
+        public static implicit operator SubscriptionReregistrationResult?(string value) => value == null ? (SubscriptionReregistrationResult?)null : new SubscriptionReregistrationResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

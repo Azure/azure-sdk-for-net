@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SyncConflictResolutionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncConflictResolutionPolicy?(string value) => value == null ? null : new SyncConflictResolutionPolicy(value);
+        public static implicit operator SyncConflictResolutionPolicy?(string value) => value == null ? (SyncConflictResolutionPolicy?)null : new SyncConflictResolutionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

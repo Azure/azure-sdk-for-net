@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsCpuManufacturer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsCpuManufacturer?(string value) => value == null ? null : new ComputeBulkActionsCpuManufacturer(value);
+        public static implicit operator ComputeBulkActionsCpuManufacturer?(string value) => value == null ? (ComputeBulkActionsCpuManufacturer?)null : new ComputeBulkActionsCpuManufacturer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

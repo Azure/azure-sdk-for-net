@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmLoadBalancerBackendAddressAdminState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmLoadBalancerBackendAddressAdminState?(string value) => value == null ? null : new HciVmLoadBalancerBackendAddressAdminState(value);
+        public static implicit operator HciVmLoadBalancerBackendAddressAdminState?(string value) => value == null ? (HciVmLoadBalancerBackendAddressAdminState?)null : new HciVmLoadBalancerBackendAddressAdminState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

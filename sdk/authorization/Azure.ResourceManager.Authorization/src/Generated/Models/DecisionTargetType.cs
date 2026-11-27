@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="DecisionTargetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DecisionTargetType?(string value) => value == null ? null : new DecisionTargetType(value);
+        public static implicit operator DecisionTargetType?(string value) => value == null ? (DecisionTargetType?)null : new DecisionTargetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

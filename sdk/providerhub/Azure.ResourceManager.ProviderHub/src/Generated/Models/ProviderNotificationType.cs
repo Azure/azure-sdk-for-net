@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderNotificationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderNotificationType?(string value) => value == null ? null : new ProviderNotificationType(value);
+        public static implicit operator ProviderNotificationType?(string value) => value == null ? (ProviderNotificationType?)null : new ProviderNotificationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

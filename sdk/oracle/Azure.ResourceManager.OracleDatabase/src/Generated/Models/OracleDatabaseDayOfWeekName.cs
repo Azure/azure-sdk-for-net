@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleDatabaseDayOfWeekName?(string value) => value == null ? null : new OracleDatabaseDayOfWeekName(value);
+        public static implicit operator OracleDatabaseDayOfWeekName?(string value) => value == null ? (OracleDatabaseDayOfWeekName?)null : new OracleDatabaseDayOfWeekName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

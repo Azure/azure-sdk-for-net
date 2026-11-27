@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new GrafanaPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator GrafanaPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (GrafanaPrivateEndpointServiceConnectionStatus?)null : new GrafanaPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

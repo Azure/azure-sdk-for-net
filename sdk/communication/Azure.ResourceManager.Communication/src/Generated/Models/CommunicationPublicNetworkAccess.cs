@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="CommunicationPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationPublicNetworkAccess?(string value) => value == null ? null : new CommunicationPublicNetworkAccess(value);
+        public static implicit operator CommunicationPublicNetworkAccess?(string value) => value == null ? (CommunicationPublicNetworkAccess?)null : new CommunicationPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

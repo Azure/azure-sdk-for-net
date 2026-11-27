@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppAccessMode?(string value) => value == null ? null : new ContainerAppAccessMode(value);
+        public static implicit operator ContainerAppAccessMode?(string value) => value == null ? (ContainerAppAccessMode?)null : new ContainerAppAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

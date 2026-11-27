@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="DomainProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainProvisioningState?(string value) => value == null ? null : new DomainProvisioningState(value);
+        public static implicit operator DomainProvisioningState?(string value) => value == null ? (DomainProvisioningState?)null : new DomainProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

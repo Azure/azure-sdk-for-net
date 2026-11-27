@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ScaleInPolicyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScaleInPolicyMode?(string value) => value == null ? null : new ScaleInPolicyMode(value);
+        public static implicit operator ScaleInPolicyMode?(string value) => value == null ? (ScaleInPolicyMode?)null : new ScaleInPolicyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

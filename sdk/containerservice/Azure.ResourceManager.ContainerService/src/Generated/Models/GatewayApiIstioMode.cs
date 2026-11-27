@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="GatewayApiIstioMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GatewayApiIstioMode?(string value) => value == null ? null : new GatewayApiIstioMode(value);
+        public static implicit operator GatewayApiIstioMode?(string value) => value == null ? (GatewayApiIstioMode?)null : new GatewayApiIstioMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

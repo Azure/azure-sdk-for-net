@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SiteManager.Models
 
         /// <summary> Converts a string to a <see cref="EdgeSiteProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeSiteProvisioningState?(string value) => value == null ? null : new EdgeSiteProvisioningState(value);
+        public static implicit operator EdgeSiteProvisioningState?(string value) => value == null ? (EdgeSiteProvisioningState?)null : new EdgeSiteProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

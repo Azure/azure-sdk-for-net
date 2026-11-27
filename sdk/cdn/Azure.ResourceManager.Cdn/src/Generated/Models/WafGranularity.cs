@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafGranularity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafGranularity?(string value) => value == null ? null : new WafGranularity(value);
+        public static implicit operator WafGranularity?(string value) => value == null ? (WafGranularity?)null : new WafGranularity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="PrivilegedJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivilegedJobType?(string value) => value == null ? null : new PrivilegedJobType(value);
+        public static implicit operator PrivilegedJobType?(string value) => value == null ? (PrivilegedJobType?)null : new PrivilegedJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

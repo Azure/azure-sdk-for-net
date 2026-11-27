@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="DomainServiceValidatorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainServiceValidatorStatus?(string value) => value == null ? null : new DomainServiceValidatorStatus(value);
+        public static implicit operator DomainServiceValidatorStatus?(string value) => value == null ? (DomainServiceValidatorStatus?)null : new DomainServiceValidatorStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

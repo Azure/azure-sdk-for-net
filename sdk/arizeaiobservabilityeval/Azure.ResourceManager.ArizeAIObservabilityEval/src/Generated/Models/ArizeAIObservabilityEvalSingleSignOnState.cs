@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 
         /// <summary> Converts a string to a <see cref="ArizeAIObservabilityEvalSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArizeAIObservabilityEvalSingleSignOnState?(string value) => value == null ? null : new ArizeAIObservabilityEvalSingleSignOnState(value);
+        public static implicit operator ArizeAIObservabilityEvalSingleSignOnState?(string value) => value == null ? (ArizeAIObservabilityEvalSingleSignOnState?)null : new ArizeAIObservabilityEvalSingleSignOnState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

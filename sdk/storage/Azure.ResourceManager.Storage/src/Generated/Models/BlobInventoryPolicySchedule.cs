@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobInventoryPolicySchedule"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobInventoryPolicySchedule?(string value) => value == null ? null : new BlobInventoryPolicySchedule(value);
+        public static implicit operator BlobInventoryPolicySchedule?(string value) => value == null ? (BlobInventoryPolicySchedule?)null : new BlobInventoryPolicySchedule(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

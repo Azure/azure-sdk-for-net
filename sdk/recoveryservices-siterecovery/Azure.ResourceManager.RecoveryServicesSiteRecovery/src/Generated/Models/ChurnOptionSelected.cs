@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="ChurnOptionSelected"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChurnOptionSelected?(string value) => value == null ? null : new ChurnOptionSelected(value);
+        public static implicit operator ChurnOptionSelected?(string value) => value == null ? (ChurnOptionSelected?)null : new ChurnOptionSelected(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

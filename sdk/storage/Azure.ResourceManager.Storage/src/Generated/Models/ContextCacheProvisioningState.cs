@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ContextCacheProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextCacheProvisioningState?(string value) => value == null ? null : new ContextCacheProvisioningState(value);
+        public static implicit operator ContextCacheProvisioningState?(string value) => value == null ? (ContextCacheProvisioningState?)null : new ContextCacheProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

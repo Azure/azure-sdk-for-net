@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="DataOverwriteBehaviorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataOverwriteBehaviorType?(string value) => value == null ? null : new DataOverwriteBehaviorType(value);
+        public static implicit operator DataOverwriteBehaviorType?(string value) => value == null ? (DataOverwriteBehaviorType?)null : new DataOverwriteBehaviorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

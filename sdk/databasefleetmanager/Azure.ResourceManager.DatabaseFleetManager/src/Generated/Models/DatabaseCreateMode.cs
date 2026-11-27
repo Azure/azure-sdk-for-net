@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseCreateMode?(string value) => value == null ? null : new DatabaseCreateMode(value);
+        public static implicit operator DatabaseCreateMode?(string value) => value == null ? (DatabaseCreateMode?)null : new DatabaseCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

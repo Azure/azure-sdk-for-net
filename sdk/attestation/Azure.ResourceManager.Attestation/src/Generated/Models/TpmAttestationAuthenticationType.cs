@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <summary> Converts a string to a <see cref="TpmAttestationAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TpmAttestationAuthenticationType?(string value) => value == null ? null : new TpmAttestationAuthenticationType(value);
+        public static implicit operator TpmAttestationAuthenticationType?(string value) => value == null ? (TpmAttestationAuthenticationType?)null : new TpmAttestationAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

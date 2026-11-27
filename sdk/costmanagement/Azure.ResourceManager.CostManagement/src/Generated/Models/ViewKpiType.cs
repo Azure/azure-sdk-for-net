@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ViewKpiType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ViewKpiType?(string value) => value == null ? null : new ViewKpiType(value);
+        public static implicit operator ViewKpiType?(string value) => value == null ? (ViewKpiType?)null : new ViewKpiType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

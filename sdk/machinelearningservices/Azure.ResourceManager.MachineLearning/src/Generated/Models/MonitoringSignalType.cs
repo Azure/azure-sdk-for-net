@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MonitoringSignalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitoringSignalType?(string value) => value == null ? null : new MonitoringSignalType(value);
+        public static implicit operator MonitoringSignalType?(string value) => value == null ? (MonitoringSignalType?)null : new MonitoringSignalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

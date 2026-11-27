@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesNodePowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesNodePowerState?(string value) => value == null ? null : new KubernetesNodePowerState(value);
+        public static implicit operator KubernetesNodePowerState?(string value) => value == null ? (KubernetesNodePowerState?)null : new KubernetesNodePowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

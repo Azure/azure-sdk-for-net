@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedClusterPrivateLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedClusterPrivateLinkState?(string value) => value == null ? null : new ConnectedClusterPrivateLinkState(value);
+        public static implicit operator ConnectedClusterPrivateLinkState?(string value) => value == null ? (ConnectedClusterPrivateLinkState?)null : new ConnectedClusterPrivateLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

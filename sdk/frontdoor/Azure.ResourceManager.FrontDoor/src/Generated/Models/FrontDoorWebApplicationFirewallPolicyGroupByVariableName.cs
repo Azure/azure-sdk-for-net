@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorWebApplicationFirewallPolicyGroupByVariableName?(string value) => value == null ? null : new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(value);
+        public static implicit operator FrontDoorWebApplicationFirewallPolicyGroupByVariableName?(string value) => value == null ? (FrontDoorWebApplicationFirewallPolicyGroupByVariableName?)null : new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

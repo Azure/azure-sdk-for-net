@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsProvisioningState?(string value) => value == null ? null : new DevOpsProvisioningState(value);
+        public static implicit operator DevOpsProvisioningState?(string value) => value == null ? (DevOpsProvisioningState?)null : new DevOpsProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

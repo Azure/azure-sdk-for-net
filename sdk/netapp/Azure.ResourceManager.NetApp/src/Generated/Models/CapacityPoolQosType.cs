@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="CapacityPoolQosType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityPoolQosType?(string value) => value == null ? null : new CapacityPoolQosType(value);
+        public static implicit operator CapacityPoolQosType?(string value) => value == null ? (CapacityPoolQosType?)null : new CapacityPoolQosType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

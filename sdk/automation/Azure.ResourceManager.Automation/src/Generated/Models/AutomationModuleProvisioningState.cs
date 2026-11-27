@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationModuleProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationModuleProvisioningState?(string value) => value == null ? null : new AutomationModuleProvisioningState(value);
+        public static implicit operator AutomationModuleProvisioningState?(string value) => value == null ? (AutomationModuleProvisioningState?)null : new AutomationModuleProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

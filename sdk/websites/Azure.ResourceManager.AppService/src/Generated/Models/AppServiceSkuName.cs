@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceSkuName?(string value) => value == null ? null : new AppServiceSkuName(value);
+        public static implicit operator AppServiceSkuName?(string value) => value == null ? (AppServiceSkuName?)null : new AppServiceSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

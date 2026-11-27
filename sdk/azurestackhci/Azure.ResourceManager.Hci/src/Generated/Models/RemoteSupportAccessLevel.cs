@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="RemoteSupportAccessLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RemoteSupportAccessLevel?(string value) => value == null ? null : new RemoteSupportAccessLevel(value);
+        public static implicit operator RemoteSupportAccessLevel?(string value) => value == null ? (RemoteSupportAccessLevel?)null : new RemoteSupportAccessLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

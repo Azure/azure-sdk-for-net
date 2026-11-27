@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="PrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new PrivateLinkServiceConnectionStatus(value);
+        public static implicit operator PrivateLinkServiceConnectionStatus?(string value) => value == null ? (PrivateLinkServiceConnectionStatus?)null : new PrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

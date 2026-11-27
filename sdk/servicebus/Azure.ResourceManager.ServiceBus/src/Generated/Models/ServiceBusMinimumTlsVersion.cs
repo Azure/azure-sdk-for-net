@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusMinimumTlsVersion?(string value) => value == null ? null : new ServiceBusMinimumTlsVersion(value);
+        public static implicit operator ServiceBusMinimumTlsVersion?(string value) => value == null ? (ServiceBusMinimumTlsVersion?)null : new ServiceBusMinimumTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

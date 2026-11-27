@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsPublicNetworkAccessFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsPublicNetworkAccessFlag?(string value) => value == null ? null : new EventHubsPublicNetworkAccessFlag(value);
+        public static implicit operator EventHubsPublicNetworkAccessFlag?(string value) => value == null ? (EventHubsPublicNetworkAccessFlag?)null : new EventHubsPublicNetworkAccessFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

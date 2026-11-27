@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="SapMonitorAppServicePlanTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapMonitorAppServicePlanTier?(string value) => value == null ? null : new SapMonitorAppServicePlanTier(value);
+        public static implicit operator SapMonitorAppServicePlanTier?(string value) => value == null ? (SapMonitorAppServicePlanTier?)null : new SapMonitorAppServicePlanTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

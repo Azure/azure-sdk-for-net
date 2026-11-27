@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryExpressionV2Type"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryExpressionV2Type?(string value) => value == null ? null : new DataFactoryExpressionV2Type(value);
+        public static implicit operator DataFactoryExpressionV2Type?(string value) => value == null ? (DataFactoryExpressionV2Type?)null : new DataFactoryExpressionV2Type(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

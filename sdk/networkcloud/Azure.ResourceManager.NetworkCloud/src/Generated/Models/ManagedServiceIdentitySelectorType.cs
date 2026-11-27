@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ManagedServiceIdentitySelectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedServiceIdentitySelectorType?(string value) => value == null ? null : new ManagedServiceIdentitySelectorType(value);
+        public static implicit operator ManagedServiceIdentitySelectorType?(string value) => value == null ? (ManagedServiceIdentitySelectorType?)null : new ManagedServiceIdentitySelectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

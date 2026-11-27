@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="GrantType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrantType?(string value) => value == null ? null : new GrantType(value);
+        public static implicit operator GrantType?(string value) => value == null ? (GrantType?)null : new GrantType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

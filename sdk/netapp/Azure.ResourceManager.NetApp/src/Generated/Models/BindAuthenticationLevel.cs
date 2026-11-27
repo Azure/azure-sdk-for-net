@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="BindAuthenticationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BindAuthenticationLevel?(string value) => value == null ? null : new BindAuthenticationLevel(value);
+        public static implicit operator BindAuthenticationLevel?(string value) => value == null ? (BindAuthenticationLevel?)null : new BindAuthenticationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

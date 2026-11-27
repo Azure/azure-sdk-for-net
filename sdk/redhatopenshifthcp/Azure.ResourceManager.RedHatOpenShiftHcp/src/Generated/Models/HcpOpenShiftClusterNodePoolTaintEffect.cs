@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterNodePoolTaintEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterNodePoolTaintEffect?(string value) => value == null ? null : new HcpOpenShiftClusterNodePoolTaintEffect(value);
+        public static implicit operator HcpOpenShiftClusterNodePoolTaintEffect?(string value) => value == null ? (HcpOpenShiftClusterNodePoolTaintEffect?)null : new HcpOpenShiftClusterNodePoolTaintEffect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

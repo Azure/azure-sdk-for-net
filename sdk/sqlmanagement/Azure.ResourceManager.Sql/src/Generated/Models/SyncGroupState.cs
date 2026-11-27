@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SyncGroupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncGroupState?(string value) => value == null ? null : new SyncGroupState(value);
+        public static implicit operator SyncGroupState?(string value) => value == null ? (SyncGroupState?)null : new SyncGroupState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

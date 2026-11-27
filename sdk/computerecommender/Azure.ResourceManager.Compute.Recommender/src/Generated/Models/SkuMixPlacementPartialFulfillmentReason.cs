@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <summary> Converts a string to a <see cref="SkuMixPlacementPartialFulfillmentReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuMixPlacementPartialFulfillmentReason?(string value) => value == null ? null : new SkuMixPlacementPartialFulfillmentReason(value);
+        public static implicit operator SkuMixPlacementPartialFulfillmentReason?(string value) => value == null ? (SkuMixPlacementPartialFulfillmentReason?)null : new SkuMixPlacementPartialFulfillmentReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

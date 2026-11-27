@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="StorageMoverJobTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverJobTriggerType?(string value) => value == null ? null : new StorageMoverJobTriggerType(value);
+        public static implicit operator StorageMoverJobTriggerType?(string value) => value == null ? (StorageMoverJobTriggerType?)null : new StorageMoverJobTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

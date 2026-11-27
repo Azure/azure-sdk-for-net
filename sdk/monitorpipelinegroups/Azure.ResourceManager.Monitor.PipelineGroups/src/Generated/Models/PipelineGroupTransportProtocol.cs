@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupTransportProtocol?(string value) => value == null ? null : new PipelineGroupTransportProtocol(value);
+        public static implicit operator PipelineGroupTransportProtocol?(string value) => value == null ? (PipelineGroupTransportProtocol?)null : new PipelineGroupTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

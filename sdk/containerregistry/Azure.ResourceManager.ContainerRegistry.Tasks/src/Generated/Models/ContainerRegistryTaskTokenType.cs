@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskTokenType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskTokenType?(string value) => value == null ? null : new ContainerRegistryTaskTokenType(value);
+        public static implicit operator ContainerRegistryTaskTokenType?(string value) => value == null ? (ContainerRegistryTaskTokenType?)null : new ContainerRegistryTaskTokenType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

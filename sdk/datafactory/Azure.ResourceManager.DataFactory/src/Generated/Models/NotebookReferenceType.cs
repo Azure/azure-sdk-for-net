@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="NotebookReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotebookReferenceType?(string value) => value == null ? null : new NotebookReferenceType(value);
+        public static implicit operator NotebookReferenceType?(string value) => value == null ? (NotebookReferenceType?)null : new NotebookReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

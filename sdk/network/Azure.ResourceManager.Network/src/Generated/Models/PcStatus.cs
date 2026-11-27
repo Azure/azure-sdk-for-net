@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PcStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PcStatus?(string value) => value == null ? null : new PcStatus(value);
+        public static implicit operator PcStatus?(string value) => value == null ? (PcStatus?)null : new PcStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

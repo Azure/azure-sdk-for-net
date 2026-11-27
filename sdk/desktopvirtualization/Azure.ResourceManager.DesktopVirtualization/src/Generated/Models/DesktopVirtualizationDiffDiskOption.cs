@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationDiffDiskOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationDiffDiskOption?(string value) => value == null ? null : new DesktopVirtualizationDiffDiskOption(value);
+        public static implicit operator DesktopVirtualizationDiffDiskOption?(string value) => value == null ? (DesktopVirtualizationDiffDiskOption?)null : new DesktopVirtualizationDiffDiskOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

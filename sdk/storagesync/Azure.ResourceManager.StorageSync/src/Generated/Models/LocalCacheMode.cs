@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="LocalCacheMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalCacheMode?(string value) => value == null ? null : new LocalCacheMode(value);
+        public static implicit operator LocalCacheMode?(string value) => value == null ? (LocalCacheMode?)null : new LocalCacheMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

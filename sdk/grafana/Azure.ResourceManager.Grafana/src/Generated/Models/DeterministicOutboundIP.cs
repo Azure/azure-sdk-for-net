@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="DeterministicOutboundIP"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeterministicOutboundIP?(string value) => value == null ? null : new DeterministicOutboundIP(value);
+        public static implicit operator DeterministicOutboundIP?(string value) => value == null ? (DeterministicOutboundIP?)null : new DeterministicOutboundIP(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="UpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeChannel?(string value) => value == null ? null : new UpgradeChannel(value);
+        public static implicit operator UpgradeChannel?(string value) => value == null ? (UpgradeChannel?)null : new UpgradeChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowOpenTelemetryAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowOpenTelemetryAuthenticationMethod?(string value) => value == null ? null : new DataflowOpenTelemetryAuthenticationMethod(value);
+        public static implicit operator DataflowOpenTelemetryAuthenticationMethod?(string value) => value == null ? (DataflowOpenTelemetryAuthenticationMethod?)null : new DataflowOpenTelemetryAuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

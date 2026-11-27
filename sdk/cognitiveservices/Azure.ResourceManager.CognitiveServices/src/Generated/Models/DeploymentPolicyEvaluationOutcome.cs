@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentPolicyEvaluationOutcome"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentPolicyEvaluationOutcome?(string value) => value == null ? null : new DeploymentPolicyEvaluationOutcome(value);
+        public static implicit operator DeploymentPolicyEvaluationOutcome?(string value) => value == null ? (DeploymentPolicyEvaluationOutcome?)null : new DeploymentPolicyEvaluationOutcome(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServersStorageType?(string value) => value == null ? null : new PostgreSqlFlexibleServersStorageType(value);
+        public static implicit operator PostgreSqlFlexibleServersStorageType?(string value) => value == null ? (PostgreSqlFlexibleServersStorageType?)null : new PostgreSqlFlexibleServersStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterPricingTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterPricingTier?(string value) => value == null ? null : new SecurityCenterPricingTier(value);
+        public static implicit operator SecurityCenterPricingTier?(string value) => value == null ? (SecurityCenterPricingTier?)null : new SecurityCenterPricingTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

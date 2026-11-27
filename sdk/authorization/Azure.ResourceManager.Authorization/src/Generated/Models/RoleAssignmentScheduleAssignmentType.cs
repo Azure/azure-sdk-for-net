@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleAssignmentScheduleAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleAssignmentScheduleAssignmentType?(string value) => value == null ? null : new RoleAssignmentScheduleAssignmentType(value);
+        public static implicit operator RoleAssignmentScheduleAssignmentType?(string value) => value == null ? (RoleAssignmentScheduleAssignmentType?)null : new RoleAssignmentScheduleAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

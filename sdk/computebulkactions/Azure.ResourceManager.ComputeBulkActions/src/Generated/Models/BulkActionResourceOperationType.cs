@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="BulkActionResourceOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BulkActionResourceOperationType?(string value) => value == null ? null : new BulkActionResourceOperationType(value);
+        public static implicit operator BulkActionResourceOperationType?(string value) => value == null ? (BulkActionResourceOperationType?)null : new BulkActionResourceOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

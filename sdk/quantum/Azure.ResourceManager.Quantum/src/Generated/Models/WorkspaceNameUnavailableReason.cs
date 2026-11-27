@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceNameUnavailableReason?(string value) => value == null ? null : new WorkspaceNameUnavailableReason(value);
+        public static implicit operator WorkspaceNameUnavailableReason?(string value) => value == null ? (WorkspaceNameUnavailableReason?)null : new WorkspaceNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

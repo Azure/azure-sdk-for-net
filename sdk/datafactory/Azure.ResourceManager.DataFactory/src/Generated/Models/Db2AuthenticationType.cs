@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="Db2AuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Db2AuthenticationType?(string value) => value == null ? null : new Db2AuthenticationType(value);
+        public static implicit operator Db2AuthenticationType?(string value) => value == null ? (Db2AuthenticationType?)null : new Db2AuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

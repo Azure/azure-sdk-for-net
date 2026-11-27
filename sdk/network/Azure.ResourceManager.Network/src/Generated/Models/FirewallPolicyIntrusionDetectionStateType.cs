@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallPolicyIntrusionDetectionStateType?(string value) => value == null ? null : new FirewallPolicyIntrusionDetectionStateType(value);
+        public static implicit operator FirewallPolicyIntrusionDetectionStateType?(string value) => value == null ? (FirewallPolicyIntrusionDetectionStateType?)null : new FirewallPolicyIntrusionDetectionStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

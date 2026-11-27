@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksRequiredNsgRules"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksRequiredNsgRules?(string value) => value == null ? null : new DatabricksRequiredNsgRules(value);
+        public static implicit operator DatabricksRequiredNsgRules?(string value) => value == null ? (DatabricksRequiredNsgRules?)null : new DatabricksRequiredNsgRules(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

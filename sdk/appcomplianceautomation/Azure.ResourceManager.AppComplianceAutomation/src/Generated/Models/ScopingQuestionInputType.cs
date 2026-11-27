@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ScopingQuestionInputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScopingQuestionInputType?(string value) => value == null ? null : new ScopingQuestionInputType(value);
+        public static implicit operator ScopingQuestionInputType?(string value) => value == null ? (ScopingQuestionInputType?)null : new ScopingQuestionInputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

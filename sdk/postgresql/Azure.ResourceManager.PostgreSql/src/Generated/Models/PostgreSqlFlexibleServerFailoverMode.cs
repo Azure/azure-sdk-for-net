@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerFailoverMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerFailoverMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerFailoverMode(value);
+        public static implicit operator PostgreSqlFlexibleServerFailoverMode?(string value) => value == null ? (PostgreSqlFlexibleServerFailoverMode?)null : new PostgreSqlFlexibleServerFailoverMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

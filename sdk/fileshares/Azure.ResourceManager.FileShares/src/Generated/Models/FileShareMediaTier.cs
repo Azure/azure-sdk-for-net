@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="FileShareMediaTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareMediaTier?(string value) => value == null ? null : new FileShareMediaTier(value);
+        public static implicit operator FileShareMediaTier?(string value) => value == null ? (FileShareMediaTier?)null : new FileShareMediaTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

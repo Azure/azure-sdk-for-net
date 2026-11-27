@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CertificateUpdateAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateUpdateAction?(string value) => value == null ? null : new CertificateUpdateAction(value);
+        public static implicit operator CertificateUpdateAction?(string value) => value == null ? (CertificateUpdateAction?)null : new CertificateUpdateAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

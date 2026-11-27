@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightActivityDebugInfoOptionSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightActivityDebugInfoOptionSetting?(string value) => value == null ? null : new HDInsightActivityDebugInfoOptionSetting(value);
+        public static implicit operator HDInsightActivityDebugInfoOptionSetting?(string value) => value == null ? (HDInsightActivityDebugInfoOptionSetting?)null : new HDInsightActivityDebugInfoOptionSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="VaultSubResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultSubResourceType?(string value) => value == null ? null : new VaultSubResourceType(value);
+        public static implicit operator VaultSubResourceType?(string value) => value == null ? (VaultSubResourceType?)null : new VaultSubResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

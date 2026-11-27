@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertsManagementResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertsManagementResultStatus?(string value) => value == null ? null : new AlertsManagementResultStatus(value);
+        public static implicit operator AlertsManagementResultStatus?(string value) => value == null ? (AlertsManagementResultStatus?)null : new AlertsManagementResultStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

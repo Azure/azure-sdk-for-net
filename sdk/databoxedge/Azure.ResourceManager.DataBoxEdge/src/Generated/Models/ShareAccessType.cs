@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="ShareAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShareAccessType?(string value) => value == null ? null : new ShareAccessType(value);
+        public static implicit operator ShareAccessType?(string value) => value == null ? (ShareAccessType?)null : new ShareAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

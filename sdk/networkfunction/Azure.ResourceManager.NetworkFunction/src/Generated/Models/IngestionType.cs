@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> Converts a string to a <see cref="IngestionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IngestionType?(string value) => value == null ? null : new IngestionType(value);
+        public static implicit operator IngestionType?(string value) => value == null ? (IngestionType?)null : new IngestionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

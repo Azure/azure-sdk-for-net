@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="InstanceActiveState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceActiveState?(string value) => value == null ? null : new InstanceActiveState(value);
+        public static implicit operator InstanceActiveState?(string value) => value == null ? (InstanceActiveState?)null : new InstanceActiveState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsSigningKey"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsSigningKey?(string value) => value == null ? null : new MapsSigningKey(value);
+        public static implicit operator MapsSigningKey?(string value) => value == null ? (MapsSigningKey?)null : new MapsSigningKey(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

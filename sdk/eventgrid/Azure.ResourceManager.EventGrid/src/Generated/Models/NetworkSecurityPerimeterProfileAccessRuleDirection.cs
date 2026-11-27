@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProfileAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterProfileAccessRuleDirection?(string value) => value == null ? null : new NetworkSecurityPerimeterProfileAccessRuleDirection(value);
+        public static implicit operator NetworkSecurityPerimeterProfileAccessRuleDirection?(string value) => value == null ? (NetworkSecurityPerimeterProfileAccessRuleDirection?)null : new NetworkSecurityPerimeterProfileAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
 
         /// <summary> Converts a string to a <see cref="ServiceGroupProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceGroupProvisioningState?(string value) => value == null ? null : new ServiceGroupProvisioningState(value);
+        public static implicit operator ServiceGroupProvisioningState?(string value) => value == null ? (ServiceGroupProvisioningState?)null : new ServiceGroupProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

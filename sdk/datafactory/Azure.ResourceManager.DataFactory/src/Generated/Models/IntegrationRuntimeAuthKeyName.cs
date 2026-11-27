@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeAuthKeyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeAuthKeyName?(string value) => value == null ? null : new IntegrationRuntimeAuthKeyName(value);
+        public static implicit operator IntegrationRuntimeAuthKeyName?(string value) => value == null ? (IntegrationRuntimeAuthKeyName?)null : new IntegrationRuntimeAuthKeyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="WebhookKeyEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebhookKeyEnabled?(string value) => value == null ? null : new WebhookKeyEnabled(value);
+        public static implicit operator WebhookKeyEnabled?(string value) => value == null ? (WebhookKeyEnabled?)null : new WebhookKeyEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

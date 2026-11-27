@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="ProductLinkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProductLinkType?(string value) => value == null ? null : new ProductLinkType(value);
+        public static implicit operator ProductLinkType?(string value) => value == null ? (ProductLinkType?)null : new ProductLinkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

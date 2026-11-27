@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataProtectionBackupRecoveryPointCompletionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupRecoveryPointCompletionState?(string value) => value == null ? null : new DataProtectionBackupRecoveryPointCompletionState(value);
+        public static implicit operator DataProtectionBackupRecoveryPointCompletionState?(string value) => value == null ? (DataProtectionBackupRecoveryPointCompletionState?)null : new DataProtectionBackupRecoveryPointCompletionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

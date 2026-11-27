@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorDeploymentStatus?(string value) => value == null ? null : new FrontDoorDeploymentStatus(value);
+        public static implicit operator FrontDoorDeploymentStatus?(string value) => value == null ? (FrontDoorDeploymentStatus?)null : new FrontDoorDeploymentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

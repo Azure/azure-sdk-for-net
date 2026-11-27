@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementRbacState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementRbacState?(string value) => value == null ? null : new ResilienceManagementRbacState(value);
+        public static implicit operator ResilienceManagementRbacState?(string value) => value == null ? (ResilienceManagementRbacState?)null : new ResilienceManagementRbacState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchAccountPoolProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchAccountPoolProvisioningState?(string value) => value == null ? null : new BatchAccountPoolProvisioningState(value);
+        public static implicit operator BatchAccountPoolProvisioningState?(string value) => value == null ? (BatchAccountPoolProvisioningState?)null : new BatchAccountPoolProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

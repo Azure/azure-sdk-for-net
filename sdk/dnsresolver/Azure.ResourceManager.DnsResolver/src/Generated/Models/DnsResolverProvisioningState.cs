@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Converts a string to a <see cref="DnsResolverProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsResolverProvisioningState?(string value) => value == null ? null : new DnsResolverProvisioningState(value);
+        public static implicit operator DnsResolverProvisioningState?(string value) => value == null ? (DnsResolverProvisioningState?)null : new DnsResolverProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

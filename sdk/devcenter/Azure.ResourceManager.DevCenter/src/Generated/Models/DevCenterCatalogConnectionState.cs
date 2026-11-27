@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterCatalogConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterCatalogConnectionState?(string value) => value == null ? null : new DevCenterCatalogConnectionState(value);
+        public static implicit operator DevCenterCatalogConnectionState?(string value) => value == null ? (DevCenterCatalogConnectionState?)null : new DevCenterCatalogConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

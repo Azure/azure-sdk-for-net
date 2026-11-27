@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadsSapMonitorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadsSapMonitorProvisioningState?(string value) => value == null ? null : new WorkloadsSapMonitorProvisioningState(value);
+        public static implicit operator WorkloadsSapMonitorProvisioningState?(string value) => value == null ? (WorkloadsSapMonitorProvisioningState?)null : new WorkloadsSapMonitorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

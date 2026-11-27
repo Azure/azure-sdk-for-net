@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="AzurePostgreSqlWriteMethodEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzurePostgreSqlWriteMethodEnum?(string value) => value == null ? null : new AzurePostgreSqlWriteMethodEnum(value);
+        public static implicit operator AzurePostgreSqlWriteMethodEnum?(string value) => value == null ? (AzurePostgreSqlWriteMethodEnum?)null : new AzurePostgreSqlWriteMethodEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

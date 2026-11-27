@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AttachedAksClusterExtensionInstallationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttachedAksClusterExtensionInstallationMode?(string value) => value == null ? null : new AttachedAksClusterExtensionInstallationMode(value);
+        public static implicit operator AttachedAksClusterExtensionInstallationMode?(string value) => value == null ? (AttachedAksClusterExtensionInstallationMode?)null : new AttachedAksClusterExtensionInstallationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

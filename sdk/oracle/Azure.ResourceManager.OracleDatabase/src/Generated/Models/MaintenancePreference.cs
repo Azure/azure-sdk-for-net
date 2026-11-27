@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="MaintenancePreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenancePreference?(string value) => value == null ? null : new MaintenancePreference(value);
+        public static implicit operator MaintenancePreference?(string value) => value == null ? (MaintenancePreference?)null : new MaintenancePreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

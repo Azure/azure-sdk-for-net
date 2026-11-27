@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="SfZonalUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SfZonalUpgradeMode?(string value) => value == null ? null : new SfZonalUpgradeMode(value);
+        public static implicit operator SfZonalUpgradeMode?(string value) => value == null ? (SfZonalUpgradeMode?)null : new SfZonalUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

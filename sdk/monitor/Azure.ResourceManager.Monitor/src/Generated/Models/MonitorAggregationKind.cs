@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorAggregationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorAggregationKind?(string value) => value == null ? null : new MonitorAggregationKind(value);
+        public static implicit operator MonitorAggregationKind?(string value) => value == null ? (MonitorAggregationKind?)null : new MonitorAggregationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseReadScale"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseReadScale?(string value) => value == null ? null : new DatabaseReadScale(value);
+        public static implicit operator DatabaseReadScale?(string value) => value == null ? (DatabaseReadScale?)null : new DatabaseReadScale(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

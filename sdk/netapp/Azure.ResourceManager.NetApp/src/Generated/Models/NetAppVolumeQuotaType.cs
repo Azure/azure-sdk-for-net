@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppVolumeQuotaType?(string value) => value == null ? null : new NetAppVolumeQuotaType(value);
+        public static implicit operator NetAppVolumeQuotaType?(string value) => value == null ? (NetAppVolumeQuotaType?)null : new NetAppVolumeQuotaType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

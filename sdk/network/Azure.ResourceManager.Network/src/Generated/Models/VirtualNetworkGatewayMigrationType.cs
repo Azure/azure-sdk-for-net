@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayMigrationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkGatewayMigrationType?(string value) => value == null ? null : new VirtualNetworkGatewayMigrationType(value);
+        public static implicit operator VirtualNetworkGatewayMigrationType?(string value) => value == null ? (VirtualNetworkGatewayMigrationType?)null : new VirtualNetworkGatewayMigrationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

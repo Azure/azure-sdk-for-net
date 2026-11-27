@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PolicyExportFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyExportFormat?(string value) => value == null ? null : new PolicyExportFormat(value);
+        public static implicit operator PolicyExportFormat?(string value) => value == null ? (PolicyExportFormat?)null : new PolicyExportFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

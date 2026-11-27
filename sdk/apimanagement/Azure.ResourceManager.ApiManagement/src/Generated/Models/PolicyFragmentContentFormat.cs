@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PolicyFragmentContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyFragmentContentFormat?(string value) => value == null ? null : new PolicyFragmentContentFormat(value);
+        public static implicit operator PolicyFragmentContentFormat?(string value) => value == null ? (PolicyFragmentContentFormat?)null : new PolicyFragmentContentFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

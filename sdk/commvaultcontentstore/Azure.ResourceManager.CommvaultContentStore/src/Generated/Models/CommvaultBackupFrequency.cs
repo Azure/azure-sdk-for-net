@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultBackupFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultBackupFrequency?(string value) => value == null ? null : new CommvaultBackupFrequency(value);
+        public static implicit operator CommvaultBackupFrequency?(string value) => value == null ? (CommvaultBackupFrequency?)null : new CommvaultBackupFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeLicenseTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeLicenseTarget?(string value) => value == null ? null : new HybridComputeLicenseTarget(value);
+        public static implicit operator HybridComputeLicenseTarget?(string value) => value == null ? (HybridComputeLicenseTarget?)null : new HybridComputeLicenseTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

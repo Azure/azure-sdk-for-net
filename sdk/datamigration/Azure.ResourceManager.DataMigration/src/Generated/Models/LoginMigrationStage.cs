@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="LoginMigrationStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoginMigrationStage?(string value) => value == null ? null : new LoginMigrationStage(value);
+        public static implicit operator LoginMigrationStage?(string value) => value == null ? (LoginMigrationStage?)null : new LoginMigrationStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="DatasetDestinationTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatasetDestinationTarget?(string value) => value == null ? null : new DatasetDestinationTarget(value);
+        public static implicit operator DatasetDestinationTarget?(string value) => value == null ? (DatasetDestinationTarget?)null : new DatasetDestinationTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

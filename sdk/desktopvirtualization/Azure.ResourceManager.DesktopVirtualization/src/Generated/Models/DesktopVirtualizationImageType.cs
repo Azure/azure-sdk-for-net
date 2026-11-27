@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationImageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationImageType?(string value) => value == null ? null : new DesktopVirtualizationImageType(value);
+        public static implicit operator DesktopVirtualizationImageType?(string value) => value == null ? (DesktopVirtualizationImageType?)null : new DesktopVirtualizationImageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningSkuScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningSkuScaleType?(string value) => value == null ? null : new MachineLearningSkuScaleType(value);
+        public static implicit operator MachineLearningSkuScaleType?(string value) => value == null ? (MachineLearningSkuScaleType?)null : new MachineLearningSkuScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

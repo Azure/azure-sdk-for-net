@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolNicPublicIPAddressVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolNicPublicIPAddressVersion?(string value) => value == null ? null : new AgentPoolNicPublicIPAddressVersion(value);
+        public static implicit operator AgentPoolNicPublicIPAddressVersion?(string value) => value == null ? (AgentPoolNicPublicIPAddressVersion?)null : new AgentPoolNicPublicIPAddressVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

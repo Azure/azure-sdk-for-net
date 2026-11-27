@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobInventoryRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobInventoryRuleType?(string value) => value == null ? null : new BlobInventoryRuleType(value);
+        public static implicit operator BlobInventoryRuleType?(string value) => value == null ? (BlobInventoryRuleType?)null : new BlobInventoryRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

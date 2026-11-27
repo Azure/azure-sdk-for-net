@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="IPAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPAssignmentType?(string value) => value == null ? null : new IPAssignmentType(value);
+        public static implicit operator IPAssignmentType?(string value) => value == null ? (IPAssignmentType?)null : new IPAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

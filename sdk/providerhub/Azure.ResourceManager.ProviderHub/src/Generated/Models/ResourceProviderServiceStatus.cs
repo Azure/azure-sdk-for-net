@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceProviderServiceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProviderServiceStatus?(string value) => value == null ? null : new ResourceProviderServiceStatus(value);
+        public static implicit operator ResourceProviderServiceStatus?(string value) => value == null ? (ResourceProviderServiceStatus?)null : new ResourceProviderServiceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

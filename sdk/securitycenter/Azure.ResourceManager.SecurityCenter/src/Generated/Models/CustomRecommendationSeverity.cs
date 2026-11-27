@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="CustomRecommendationSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomRecommendationSeverity?(string value) => value == null ? null : new CustomRecommendationSeverity(value);
+        public static implicit operator CustomRecommendationSeverity?(string value) => value == null ? (CustomRecommendationSeverity?)null : new CustomRecommendationSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

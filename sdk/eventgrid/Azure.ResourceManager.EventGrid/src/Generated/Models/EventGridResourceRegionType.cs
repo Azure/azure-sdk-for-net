@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridResourceRegionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridResourceRegionType?(string value) => value == null ? null : new EventGridResourceRegionType(value);
+        public static implicit operator EventGridResourceRegionType?(string value) => value == null ? (EventGridResourceRegionType?)null : new EventGridResourceRegionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

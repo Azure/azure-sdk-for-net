@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotServiceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotServiceProvisioningState?(string value) => value == null ? null : new BotServiceProvisioningState(value);
+        public static implicit operator BotServiceProvisioningState?(string value) => value == null ? (BotServiceProvisioningState?)null : new BotServiceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ImageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageType?(string value) => value == null ? null : new ImageType(value);
+        public static implicit operator ImageType?(string value) => value == null ? (ImageType?)null : new ImageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

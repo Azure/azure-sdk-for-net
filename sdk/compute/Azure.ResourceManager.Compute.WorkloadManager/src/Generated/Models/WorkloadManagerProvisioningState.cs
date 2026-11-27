@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadManagerProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadManagerProvisioningState?(string value) => value == null ? null : new WorkloadManagerProvisioningState(value);
+        public static implicit operator WorkloadManagerProvisioningState?(string value) => value == null ? (WorkloadManagerProvisioningState?)null : new WorkloadManagerProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

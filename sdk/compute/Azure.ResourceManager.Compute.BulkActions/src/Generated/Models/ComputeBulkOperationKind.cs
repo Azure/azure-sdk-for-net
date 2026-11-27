@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkOperationKind?(string value) => value == null ? null : new ComputeBulkOperationKind(value);
+        public static implicit operator ComputeBulkOperationKind?(string value) => value == null ? (ComputeBulkOperationKind?)null : new ComputeBulkOperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

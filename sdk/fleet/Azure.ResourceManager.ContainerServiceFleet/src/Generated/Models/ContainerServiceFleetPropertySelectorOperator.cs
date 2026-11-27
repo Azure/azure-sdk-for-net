@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetPropertySelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetPropertySelectorOperator?(string value) => value == null ? null : new ContainerServiceFleetPropertySelectorOperator(value);
+        public static implicit operator ContainerServiceFleetPropertySelectorOperator?(string value) => value == null ? (ContainerServiceFleetPropertySelectorOperator?)null : new ContainerServiceFleetPropertySelectorOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

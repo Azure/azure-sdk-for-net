@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudHsmClusterPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new CloudHsmClusterPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator CloudHsmClusterPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (CloudHsmClusterPrivateEndpointServiceConnectionStatus?)null : new CloudHsmClusterPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="GroupMembershipState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GroupMembershipState?(string value) => value == null ? null : new GroupMembershipState(value);
+        public static implicit operator GroupMembershipState?(string value) => value == null ? (GroupMembershipState?)null : new GroupMembershipState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

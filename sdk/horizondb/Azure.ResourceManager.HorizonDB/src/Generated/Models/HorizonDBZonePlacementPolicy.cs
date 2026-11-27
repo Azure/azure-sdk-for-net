@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBZonePlacementPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBZonePlacementPolicy?(string value) => value == null ? null : new HorizonDBZonePlacementPolicy(value);
+        public static implicit operator HorizonDBZonePlacementPolicy?(string value) => value == null ? (HorizonDBZonePlacementPolicy?)null : new HorizonDBZonePlacementPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

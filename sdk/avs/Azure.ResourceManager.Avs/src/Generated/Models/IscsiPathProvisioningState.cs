@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="IscsiPathProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IscsiPathProvisioningState?(string value) => value == null ? null : new IscsiPathProvisioningState(value);
+        public static implicit operator IscsiPathProvisioningState?(string value) => value == null ? (IscsiPathProvisioningState?)null : new IscsiPathProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationJobObjectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationJobObjectType?(string value) => value == null ? null : new DataReplicationJobObjectType(value);
+        public static implicit operator DataReplicationJobObjectType?(string value) => value == null ? (DataReplicationJobObjectType?)null : new DataReplicationJobObjectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

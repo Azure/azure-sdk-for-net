@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafRuleType?(string value) => value == null ? null : new WafRuleType(value);
+        public static implicit operator WafRuleType?(string value) => value == null ? (WafRuleType?)null : new WafRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

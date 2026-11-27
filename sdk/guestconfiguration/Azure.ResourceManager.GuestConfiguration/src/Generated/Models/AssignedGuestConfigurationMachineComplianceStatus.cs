@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AssignedGuestConfigurationMachineComplianceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssignedGuestConfigurationMachineComplianceStatus?(string value) => value == null ? null : new AssignedGuestConfigurationMachineComplianceStatus(value);
+        public static implicit operator AssignedGuestConfigurationMachineComplianceStatus?(string value) => value == null ? (AssignedGuestConfigurationMachineComplianceStatus?)null : new AssignedGuestConfigurationMachineComplianceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

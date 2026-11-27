@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityAssessmentResourceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityAssessmentResourceStatus?(string value) => value == null ? null : new SecurityAssessmentResourceStatus(value);
+        public static implicit operator SecurityAssessmentResourceStatus?(string value) => value == null ? (SecurityAssessmentResourceStatus?)null : new SecurityAssessmentResourceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

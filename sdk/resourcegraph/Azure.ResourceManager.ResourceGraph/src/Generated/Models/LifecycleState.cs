@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="LifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleState?(string value) => value == null ? null : new LifecycleState(value);
+        public static implicit operator LifecycleState?(string value) => value == null ? (LifecycleState?)null : new LifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

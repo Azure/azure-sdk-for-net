@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkInterfaceAuxiliarySku?(string value) => value == null ? null : new NetworkInterfaceAuxiliarySku(value);
+        public static implicit operator NetworkInterfaceAuxiliarySku?(string value) => value == null ? (NetworkInterfaceAuxiliarySku?)null : new NetworkInterfaceAuxiliarySku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

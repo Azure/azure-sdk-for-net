@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NniDerivedUniqueRouteDistinguisherConfigurationState?(string value) => value == null ? null : new NniDerivedUniqueRouteDistinguisherConfigurationState(value);
+        public static implicit operator NniDerivedUniqueRouteDistinguisherConfigurationState?(string value) => value == null ? (NniDerivedUniqueRouteDistinguisherConfigurationState?)null : new NniDerivedUniqueRouteDistinguisherConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

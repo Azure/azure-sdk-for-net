@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancingTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancingTransportProtocol?(string value) => value == null ? null : new LoadBalancingTransportProtocol(value);
+        public static implicit operator LoadBalancingTransportProtocol?(string value) => value == null ? (LoadBalancingTransportProtocol?)null : new LoadBalancingTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

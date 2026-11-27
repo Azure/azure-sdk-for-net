@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="AlertTemplateSelectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertTemplateSelectionMode?(string value) => value == null ? null : new AlertTemplateSelectionMode(value);
+        public static implicit operator AlertTemplateSelectionMode?(string value) => value == null ? (AlertTemplateSelectionMode?)null : new AlertTemplateSelectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

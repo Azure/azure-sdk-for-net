@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="PublicIPAddressSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicIPAddressSkuTier?(string value) => value == null ? null : new PublicIPAddressSkuTier(value);
+        public static implicit operator PublicIPAddressSkuTier?(string value) => value == null ? (PublicIPAddressSkuTier?)null : new PublicIPAddressSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

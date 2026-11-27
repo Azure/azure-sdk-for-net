@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeRegistrationCapacityPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeRegistrationCapacityPolicy?(string value) => value == null ? null : new ResourceTypeRegistrationCapacityPolicy(value);
+        public static implicit operator ResourceTypeRegistrationCapacityPolicy?(string value) => value == null ? (ResourceTypeRegistrationCapacityPolicy?)null : new ResourceTypeRegistrationCapacityPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

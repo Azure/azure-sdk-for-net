@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppBucketPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppBucketPermission?(string value) => value == null ? null : new NetAppBucketPermission(value);
+        public static implicit operator NetAppBucketPermission?(string value) => value == null ? (NetAppBucketPermission?)null : new NetAppBucketPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

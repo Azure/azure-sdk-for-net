@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryDataSyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryDataSyncStatus?(string value) => value == null ? null : new SiteRecoveryDataSyncStatus(value);
+        public static implicit operator SiteRecoveryDataSyncStatus?(string value) => value == null ? (SiteRecoveryDataSyncStatus?)null : new SiteRecoveryDataSyncStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="HubGatewayUsageFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HubGatewayUsageFlag?(string value) => value == null ? null : new HubGatewayUsageFlag(value);
+        public static implicit operator HubGatewayUsageFlag?(string value) => value == null ? (HubGatewayUsageFlag?)null : new HubGatewayUsageFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

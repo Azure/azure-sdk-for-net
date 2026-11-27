@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ListKeysRequestExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListKeysRequestExpand?(string value) => value == null ? null : new ListKeysRequestExpand(value);
+        public static implicit operator ListKeysRequestExpand?(string value) => value == null ? (ListKeysRequestExpand?)null : new ListKeysRequestExpand(value);
     }
 }

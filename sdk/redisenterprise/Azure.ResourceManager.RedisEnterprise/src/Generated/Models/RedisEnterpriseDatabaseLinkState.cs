@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseDatabaseLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseDatabaseLinkState?(string value) => value == null ? null : new RedisEnterpriseDatabaseLinkState(value);
+        public static implicit operator RedisEnterpriseDatabaseLinkState?(string value) => value == null ? (RedisEnterpriseDatabaseLinkState?)null : new RedisEnterpriseDatabaseLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

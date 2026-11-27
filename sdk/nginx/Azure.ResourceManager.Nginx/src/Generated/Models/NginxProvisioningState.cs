@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Converts a string to a <see cref="NginxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NginxProvisioningState?(string value) => value == null ? null : new NginxProvisioningState(value);
+        public static implicit operator NginxProvisioningState?(string value) => value == null ? (NginxProvisioningState?)null : new NginxProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerEditionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerEditionType?(string value) => value == null ? null : new SqlServerEditionType(value);
+        public static implicit operator SqlServerEditionType?(string value) => value == null ? (SqlServerEditionType?)null : new SqlServerEditionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

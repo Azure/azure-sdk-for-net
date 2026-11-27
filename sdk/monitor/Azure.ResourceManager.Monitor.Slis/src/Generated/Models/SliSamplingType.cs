@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliSamplingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliSamplingType?(string value) => value == null ? null : new SliSamplingType(value);
+        public static implicit operator SliSamplingType?(string value) => value == null ? (SliSamplingType?)null : new SliSamplingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

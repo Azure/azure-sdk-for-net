@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
 
         /// <summary> Converts a string to a <see cref="PreparedImageSpecificationExecutionPoint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PreparedImageSpecificationExecutionPoint?(string value) => value == null ? null : new PreparedImageSpecificationExecutionPoint(value);
+        public static implicit operator PreparedImageSpecificationExecutionPoint?(string value) => value == null ? (PreparedImageSpecificationExecutionPoint?)null : new PreparedImageSpecificationExecutionPoint(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

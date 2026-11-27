@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterUpgradeCadence"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterUpgradeCadence?(string value) => value == null ? null : new ManagedClusterUpgradeCadence(value);
+        public static implicit operator ManagedClusterUpgradeCadence?(string value) => value == null ? (ManagedClusterUpgradeCadence?)null : new ManagedClusterUpgradeCadence(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

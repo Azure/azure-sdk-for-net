@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <summary> Converts a string to a <see cref="ManufacturingPlatformResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManufacturingPlatformResourceState?(string value) => value == null ? null : new ManufacturingPlatformResourceState(value);
+        public static implicit operator ManufacturingPlatformResourceState?(string value) => value == null ? (ManufacturingPlatformResourceState?)null : new ManufacturingPlatformResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsPrivateCloudDatastoreProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsPrivateCloudDatastoreProvisioningState?(string value) => value == null ? null : new AvsPrivateCloudDatastoreProvisioningState(value);
+        public static implicit operator AvsPrivateCloudDatastoreProvisioningState?(string value) => value == null ? (AvsPrivateCloudDatastoreProvisioningState?)null : new AvsPrivateCloudDatastoreProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

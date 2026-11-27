@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SnapshotStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotStorageAccountType?(string value) => value == null ? null : new SnapshotStorageAccountType(value);
+        public static implicit operator SnapshotStorageAccountType?(string value) => value == null ? (SnapshotStorageAccountType?)null : new SnapshotStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

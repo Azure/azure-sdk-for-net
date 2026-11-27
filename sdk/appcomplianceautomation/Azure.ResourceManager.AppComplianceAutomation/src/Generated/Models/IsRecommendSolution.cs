@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="IsRecommendSolution"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsRecommendSolution?(string value) => value == null ? null : new IsRecommendSolution(value);
+        public static implicit operator IsRecommendSolution?(string value) => value == null ? (IsRecommendSolution?)null : new IsRecommendSolution(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="AggregationFunctionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AggregationFunctionType?(string value) => value == null ? null : new AggregationFunctionType(value);
+        public static implicit operator AggregationFunctionType?(string value) => value == null ? (AggregationFunctionType?)null : new AggregationFunctionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

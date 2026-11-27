@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="SupportedKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportedKeyType?(string value) => value == null ? null : new SupportedKeyType(value);
+        public static implicit operator SupportedKeyType?(string value) => value == null ? (SupportedKeyType?)null : new SupportedKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

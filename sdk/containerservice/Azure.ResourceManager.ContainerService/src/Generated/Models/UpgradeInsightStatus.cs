@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="UpgradeInsightStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeInsightStatus?(string value) => value == null ? null : new UpgradeInsightStatus(value);
+        public static implicit operator UpgradeInsightStatus?(string value) => value == null ? (UpgradeInsightStatus?)null : new UpgradeInsightStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

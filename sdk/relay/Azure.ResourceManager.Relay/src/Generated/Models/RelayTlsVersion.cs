@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayTlsVersion?(string value) => value == null ? null : new RelayTlsVersion(value);
+        public static implicit operator RelayTlsVersion?(string value) => value == null ? (RelayTlsVersion?)null : new RelayTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

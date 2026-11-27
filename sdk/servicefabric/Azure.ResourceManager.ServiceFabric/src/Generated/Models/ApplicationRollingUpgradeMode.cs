@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationRollingUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationRollingUpgradeMode?(string value) => value == null ? null : new ApplicationRollingUpgradeMode(value);
+        public static implicit operator ApplicationRollingUpgradeMode?(string value) => value == null ? (ApplicationRollingUpgradeMode?)null : new ApplicationRollingUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

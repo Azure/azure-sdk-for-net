@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="ManagedHsmSkuFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmSkuFamily?(string value) => value == null ? null : new ManagedHsmSkuFamily(value);
+        public static implicit operator ManagedHsmSkuFamily?(string value) => value == null ? (ManagedHsmSkuFamily?)null : new ManagedHsmSkuFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

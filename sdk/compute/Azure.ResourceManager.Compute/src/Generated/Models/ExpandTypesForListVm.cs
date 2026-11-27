@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ExpandTypesForListVm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpandTypesForListVm?(string value) => value == null ? null : new ExpandTypesForListVm(value);
+        public static implicit operator ExpandTypesForListVm?(string value) => value == null ? (ExpandTypesForListVm?)null : new ExpandTypesForListVm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

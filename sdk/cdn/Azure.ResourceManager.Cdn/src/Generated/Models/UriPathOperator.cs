@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="UriPathOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UriPathOperator?(string value) => value == null ? null : new UriPathOperator(value);
+        public static implicit operator UriPathOperator?(string value) => value == null ? (UriPathOperator?)null : new UriPathOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

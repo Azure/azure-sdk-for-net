@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="PimOnlyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PimOnlyMode?(string value) => value == null ? null : new PimOnlyMode(value);
+        public static implicit operator PimOnlyMode?(string value) => value == null ? (PimOnlyMode?)null : new PimOnlyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

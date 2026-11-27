@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="OrderItemCancellationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrderItemCancellationStatus?(string value) => value == null ? null : new OrderItemCancellationStatus(value);
+        public static implicit operator OrderItemCancellationStatus?(string value) => value == null ? (OrderItemCancellationStatus?)null : new OrderItemCancellationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

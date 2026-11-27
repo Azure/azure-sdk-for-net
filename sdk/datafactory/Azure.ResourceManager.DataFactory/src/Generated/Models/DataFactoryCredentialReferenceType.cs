@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryCredentialReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryCredentialReferenceType?(string value) => value == null ? null : new DataFactoryCredentialReferenceType(value);
+        public static implicit operator DataFactoryCredentialReferenceType?(string value) => value == null ? (DataFactoryCredentialReferenceType?)null : new DataFactoryCredentialReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

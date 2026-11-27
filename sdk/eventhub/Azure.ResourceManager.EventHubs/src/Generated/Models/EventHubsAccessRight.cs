@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsAccessRight"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsAccessRight?(string value) => value == null ? null : new EventHubsAccessRight(value);
+        public static implicit operator EventHubsAccessRight?(string value) => value == null ? (EventHubsAccessRight?)null : new EventHubsAccessRight(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

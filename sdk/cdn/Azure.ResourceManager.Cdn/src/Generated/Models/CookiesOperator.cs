@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CookiesOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CookiesOperator?(string value) => value == null ? null : new CookiesOperator(value);
+        public static implicit operator CookiesOperator?(string value) => value == null ? (CookiesOperator?)null : new CookiesOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

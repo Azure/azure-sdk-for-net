@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="ResourcePropertiesObjectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcePropertiesObjectType?(string value) => value == null ? null : new ResourcePropertiesObjectType(value);
+        public static implicit operator ResourcePropertiesObjectType?(string value) => value == null ? (ResourcePropertiesObjectType?)null : new ResourcePropertiesObjectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

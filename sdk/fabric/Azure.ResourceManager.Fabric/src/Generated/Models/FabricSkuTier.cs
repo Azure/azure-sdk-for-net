@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> Converts a string to a <see cref="FabricSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricSkuTier?(string value) => value == null ? null : new FabricSkuTier(value);
+        public static implicit operator FabricSkuTier?(string value) => value == null ? (FabricSkuTier?)null : new FabricSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="JobTargetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobTargetType?(string value) => value == null ? null : new JobTargetType(value);
+        public static implicit operator JobTargetType?(string value) => value == null ? (JobTargetType?)null : new JobTargetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

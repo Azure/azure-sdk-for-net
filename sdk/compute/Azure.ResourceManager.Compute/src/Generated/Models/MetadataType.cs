@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="MetadataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetadataType?(string value) => value == null ? null : new MetadataType(value);
+        public static implicit operator MetadataType?(string value) => value == null ? (MetadataType?)null : new MetadataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryDiskState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesSiteRecoveryDiskState?(string value) => value == null ? null : new RecoveryServicesSiteRecoveryDiskState(value);
+        public static implicit operator RecoveryServicesSiteRecoveryDiskState?(string value) => value == null ? (RecoveryServicesSiteRecoveryDiskState?)null : new RecoveryServicesSiteRecoveryDiskState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

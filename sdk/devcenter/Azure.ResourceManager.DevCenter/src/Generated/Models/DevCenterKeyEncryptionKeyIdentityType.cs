@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterKeyEncryptionKeyIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterKeyEncryptionKeyIdentityType?(string value) => value == null ? null : new DevCenterKeyEncryptionKeyIdentityType(value);
+        public static implicit operator DevCenterKeyEncryptionKeyIdentityType?(string value) => value == null ? (DevCenterKeyEncryptionKeyIdentityType?)null : new DevCenterKeyEncryptionKeyIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

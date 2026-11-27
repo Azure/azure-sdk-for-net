@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
 
         /// <summary> Converts a string to a <see cref="DellFileSystemProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DellFileSystemProvisioningState?(string value) => value == null ? null : new DellFileSystemProvisioningState(value);
+        public static implicit operator DellFileSystemProvisioningState?(string value) => value == null ? (DellFileSystemProvisioningState?)null : new DellFileSystemProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

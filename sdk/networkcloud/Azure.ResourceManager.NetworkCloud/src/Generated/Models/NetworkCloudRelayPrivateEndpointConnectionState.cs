@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudRelayPrivateEndpointConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudRelayPrivateEndpointConnectionState?(string value) => value == null ? null : new NetworkCloudRelayPrivateEndpointConnectionState(value);
+        public static implicit operator NetworkCloudRelayPrivateEndpointConnectionState?(string value) => value == null ? (NetworkCloudRelayPrivateEndpointConnectionState?)null : new NetworkCloudRelayPrivateEndpointConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

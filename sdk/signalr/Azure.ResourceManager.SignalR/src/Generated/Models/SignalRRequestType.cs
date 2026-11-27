@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRRequestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRRequestType?(string value) => value == null ? null : new SignalRRequestType(value);
+        public static implicit operator SignalRRequestType?(string value) => value == null ? (SignalRRequestType?)null : new SignalRRequestType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

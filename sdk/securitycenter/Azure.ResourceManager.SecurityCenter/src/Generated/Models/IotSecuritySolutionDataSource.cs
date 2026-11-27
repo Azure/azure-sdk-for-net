@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="IotSecuritySolutionDataSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotSecuritySolutionDataSource?(string value) => value == null ? null : new IotSecuritySolutionDataSource(value);
+        public static implicit operator IotSecuritySolutionDataSource?(string value) => value == null ? (IotSecuritySolutionDataSource?)null : new IotSecuritySolutionDataSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

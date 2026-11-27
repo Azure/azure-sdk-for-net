@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeShipmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeShipmentType?(string value) => value == null ? null : new DataBoxEdgeShipmentType(value);
+        public static implicit operator DataBoxEdgeShipmentType?(string value) => value == null ? (DataBoxEdgeShipmentType?)null : new DataBoxEdgeShipmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

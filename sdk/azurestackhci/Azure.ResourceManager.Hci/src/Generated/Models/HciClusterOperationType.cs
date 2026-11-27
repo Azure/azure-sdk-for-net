@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciClusterOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterOperationType?(string value) => value == null ? null : new HciClusterOperationType(value);
+        public static implicit operator HciClusterOperationType?(string value) => value == null ? (HciClusterOperationType?)null : new HciClusterOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

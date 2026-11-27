@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionsScheduleWeekDay"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionsScheduleWeekDay?(string value) => value == null ? null : new ScheduledActionsScheduleWeekDay(value);
+        public static implicit operator ScheduledActionsScheduleWeekDay?(string value) => value == null ? (ScheduledActionsScheduleWeekDay?)null : new ScheduledActionsScheduleWeekDay(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

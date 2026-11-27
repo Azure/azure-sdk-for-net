@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliTemporalAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliTemporalAggregationType?(string value) => value == null ? null : new SliTemporalAggregationType(value);
+        public static implicit operator SliTemporalAggregationType?(string value) => value == null ? (SliTemporalAggregationType?)null : new SliTemporalAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

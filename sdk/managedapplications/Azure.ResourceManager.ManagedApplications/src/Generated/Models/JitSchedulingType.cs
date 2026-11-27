@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="JitSchedulingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JitSchedulingType?(string value) => value == null ? null : new JitSchedulingType(value);
+        public static implicit operator JitSchedulingType?(string value) => value == null ? (JitSchedulingType?)null : new JitSchedulingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

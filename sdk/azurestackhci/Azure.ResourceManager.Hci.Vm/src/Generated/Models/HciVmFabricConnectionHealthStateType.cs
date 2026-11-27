@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmFabricConnectionHealthStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmFabricConnectionHealthStateType?(string value) => value == null ? null : new HciVmFabricConnectionHealthStateType(value);
+        public static implicit operator HciVmFabricConnectionHealthStateType?(string value) => value == null ? (HciVmFabricConnectionHealthStateType?)null : new HciVmFabricConnectionHealthStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

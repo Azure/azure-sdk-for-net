@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SparkConfigurationReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SparkConfigurationReferenceType?(string value) => value == null ? null : new SparkConfigurationReferenceType(value);
+        public static implicit operator SparkConfigurationReferenceType?(string value) => value == null ? (SparkConfigurationReferenceType?)null : new SparkConfigurationReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

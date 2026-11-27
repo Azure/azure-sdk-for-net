@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteLinkConnectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteLinkConnectorType?(string value) => value == null ? null : new ExpressRouteLinkConnectorType(value);
+        public static implicit operator ExpressRouteLinkConnectorType?(string value) => value == null ? (ExpressRouteLinkConnectorType?)null : new ExpressRouteLinkConnectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

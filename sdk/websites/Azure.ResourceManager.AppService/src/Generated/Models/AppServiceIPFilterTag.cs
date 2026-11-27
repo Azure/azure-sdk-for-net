@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceIPFilterTag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceIPFilterTag?(string value) => value == null ? null : new AppServiceIPFilterTag(value);
+        public static implicit operator AppServiceIPFilterTag?(string value) => value == null ? (AppServiceIPFilterTag?)null : new AppServiceIPFilterTag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

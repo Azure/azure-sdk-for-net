@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="TaskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskType?(string value) => value == null ? null : new TaskType(value);
+        public static implicit operator TaskType?(string value) => value == null ? (TaskType?)null : new TaskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

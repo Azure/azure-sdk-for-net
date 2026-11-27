@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineBootMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineBootMethod?(string value) => value == null ? null : new VirtualMachineBootMethod(value);
+        public static implicit operator VirtualMachineBootMethod?(string value) => value == null ? (VirtualMachineBootMethod?)null : new VirtualMachineBootMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

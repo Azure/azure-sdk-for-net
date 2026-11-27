@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="BmpConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BmpConfigurationState?(string value) => value == null ? null : new BmpConfigurationState(value);
+        public static implicit operator BmpConfigurationState?(string value) => value == null ? (BmpConfigurationState?)null : new BmpConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

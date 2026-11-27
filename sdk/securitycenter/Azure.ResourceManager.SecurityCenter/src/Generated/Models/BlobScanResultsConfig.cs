@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="BlobScanResultsConfig"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobScanResultsConfig?(string value) => value == null ? null : new BlobScanResultsConfig(value);
+        public static implicit operator BlobScanResultsConfig?(string value) => value == null ? (BlobScanResultsConfig?)null : new BlobScanResultsConfig(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

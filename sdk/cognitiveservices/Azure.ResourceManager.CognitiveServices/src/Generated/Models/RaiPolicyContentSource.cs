@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiPolicyContentSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiPolicyContentSource?(string value) => value == null ? null : new RaiPolicyContentSource(value);
+        public static implicit operator RaiPolicyContentSource?(string value) => value == null ? (RaiPolicyContentSource?)null : new RaiPolicyContentSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationSubState?(string value) => value == null ? null : new PostgreSqlMigrationSubState(value);
+        public static implicit operator PostgreSqlMigrationSubState?(string value) => value == null ? (PostgreSqlMigrationSubState?)null : new PostgreSqlMigrationSubState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

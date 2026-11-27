@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsSetupAdditionalInformationComponentName?(string value) => value == null ? null : new WindowsSetupAdditionalInformationComponentName(value);
+        public static implicit operator WindowsSetupAdditionalInformationComponentName?(string value) => value == null ? (WindowsSetupAdditionalInformationComponentName?)null : new WindowsSetupAdditionalInformationComponentName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

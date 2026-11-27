@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetGateType?(string value) => value == null ? null : new ContainerServiceFleetGateType(value);
+        public static implicit operator ContainerServiceFleetGateType?(string value) => value == null ? (ContainerServiceFleetGateType?)null : new ContainerServiceFleetGateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

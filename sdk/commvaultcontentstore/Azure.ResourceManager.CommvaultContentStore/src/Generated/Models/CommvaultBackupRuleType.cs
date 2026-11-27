@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultBackupRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultBackupRuleType?(string value) => value == null ? null : new CommvaultBackupRuleType(value);
+        public static implicit operator CommvaultBackupRuleType?(string value) => value == null ? (CommvaultBackupRuleType?)null : new CommvaultBackupRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RoutingRuleNextHopType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingRuleNextHopType?(string value) => value == null ? null : new RoutingRuleNextHopType(value);
+        public static implicit operator RoutingRuleNextHopType?(string value) => value == null ? (RoutingRuleNextHopType?)null : new RoutingRuleNextHopType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

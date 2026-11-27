@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubRoutingSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubRoutingSource?(string value) => value == null ? null : new IotHubRoutingSource(value);
+        public static implicit operator IotHubRoutingSource?(string value) => value == null ? (IotHubRoutingSource?)null : new IotHubRoutingSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

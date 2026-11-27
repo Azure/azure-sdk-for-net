@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppChownMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppChownMode?(string value) => value == null ? null : new NetAppChownMode(value);
+        public static implicit operator NetAppChownMode?(string value) => value == null ? (NetAppChownMode?)null : new NetAppChownMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

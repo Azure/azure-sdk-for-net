@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ImdsAccessControlMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImdsAccessControlMode?(string value) => value == null ? null : new ImdsAccessControlMode(value);
+        public static implicit operator ImdsAccessControlMode?(string value) => value == null ? (ImdsAccessControlMode?)null : new ImdsAccessControlMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

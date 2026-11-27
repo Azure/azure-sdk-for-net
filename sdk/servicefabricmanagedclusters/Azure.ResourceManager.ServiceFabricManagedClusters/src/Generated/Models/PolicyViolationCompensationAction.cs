@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="PolicyViolationCompensationAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyViolationCompensationAction?(string value) => value == null ? null : new PolicyViolationCompensationAction(value);
+        public static implicit operator PolicyViolationCompensationAction?(string value) => value == null ? (PolicyViolationCompensationAction?)null : new PolicyViolationCompensationAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

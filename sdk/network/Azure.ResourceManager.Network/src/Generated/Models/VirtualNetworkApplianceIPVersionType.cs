@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkApplianceIPVersionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkApplianceIPVersionType?(string value) => value == null ? null : new VirtualNetworkApplianceIPVersionType(value);
+        public static implicit operator VirtualNetworkApplianceIPVersionType?(string value) => value == null ? (VirtualNetworkApplianceIPVersionType?)null : new VirtualNetworkApplianceIPVersionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

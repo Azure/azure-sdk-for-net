@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="DataTransferComponent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataTransferComponent?(string value) => value == null ? null : new DataTransferComponent(value);
+        public static implicit operator DataTransferComponent?(string value) => value == null ? (DataTransferComponent?)null : new DataTransferComponent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterStorageType?(string value) => value == null ? null : new MongoClusterStorageType(value);
+        public static implicit operator MongoClusterStorageType?(string value) => value == null ? (MongoClusterStorageType?)null : new MongoClusterStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

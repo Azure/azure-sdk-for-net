@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="CapacityReservationGroupGetExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityReservationGroupGetExpand?(string value) => value == null ? null : new CapacityReservationGroupGetExpand(value);
+        public static implicit operator CapacityReservationGroupGetExpand?(string value) => value == null ? (CapacityReservationGroupGetExpand?)null : new CapacityReservationGroupGetExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

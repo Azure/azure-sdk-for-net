@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterEntraPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterEntraPrincipalType?(string value) => value == null ? null : new MongoClusterEntraPrincipalType(value);
+        public static implicit operator MongoClusterEntraPrincipalType?(string value) => value == null ? (MongoClusterEntraPrincipalType?)null : new MongoClusterEntraPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

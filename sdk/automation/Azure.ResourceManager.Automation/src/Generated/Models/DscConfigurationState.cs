@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="DscConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DscConfigurationState?(string value) => value == null ? null : new DscConfigurationState(value);
+        public static implicit operator DscConfigurationState?(string value) => value == null ? (DscConfigurationState?)null : new DscConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

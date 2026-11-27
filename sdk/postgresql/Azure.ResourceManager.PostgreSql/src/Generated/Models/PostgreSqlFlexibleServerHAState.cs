@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerHAState?(string value) => value == null ? null : new PostgreSqlFlexibleServerHAState(value);
+        public static implicit operator PostgreSqlFlexibleServerHAState?(string value) => value == null ? (PostgreSqlFlexibleServerHAState?)null : new PostgreSqlFlexibleServerHAState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

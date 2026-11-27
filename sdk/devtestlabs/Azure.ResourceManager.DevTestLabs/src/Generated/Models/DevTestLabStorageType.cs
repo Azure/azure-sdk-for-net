@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabStorageType?(string value) => value == null ? null : new DevTestLabStorageType(value);
+        public static implicit operator DevTestLabStorageType?(string value) => value == null ? (DevTestLabStorageType?)null : new DevTestLabStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

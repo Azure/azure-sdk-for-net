@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="TransitEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransitEncryptionType?(string value) => value == null ? null : new TransitEncryptionType(value);
+        public static implicit operator TransitEncryptionType?(string value) => value == null ? (TransitEncryptionType?)null : new TransitEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

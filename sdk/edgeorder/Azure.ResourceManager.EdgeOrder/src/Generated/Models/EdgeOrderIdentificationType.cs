@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderIdentificationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderIdentificationType?(string value) => value == null ? null : new EdgeOrderIdentificationType(value);
+        public static implicit operator EdgeOrderIdentificationType?(string value) => value == null ? (EdgeOrderIdentificationType?)null : new EdgeOrderIdentificationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="Nat64State"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Nat64State?(string value) => value == null ? null : new Nat64State(value);
+        public static implicit operator Nat64State?(string value) => value == null ? (Nat64State?)null : new Nat64State(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

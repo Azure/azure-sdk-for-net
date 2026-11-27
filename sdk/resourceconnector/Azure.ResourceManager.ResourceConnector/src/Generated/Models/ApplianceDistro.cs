@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <summary> Converts a string to a <see cref="ApplianceDistro"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplianceDistro?(string value) => value == null ? null : new ApplianceDistro(value);
+        public static implicit operator ApplianceDistro?(string value) => value == null ? (ApplianceDistro?)null : new ApplianceDistro(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

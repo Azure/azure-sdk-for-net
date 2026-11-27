@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBSystemDatabaseEditionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBSystemDatabaseEditionType?(string value) => value == null ? null : new DBSystemDatabaseEditionType(value);
+        public static implicit operator DBSystemDatabaseEditionType?(string value) => value == null ? (DBSystemDatabaseEditionType?)null : new DBSystemDatabaseEditionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

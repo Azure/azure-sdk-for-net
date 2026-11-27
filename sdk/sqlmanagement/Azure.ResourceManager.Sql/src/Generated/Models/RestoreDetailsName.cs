@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="RestoreDetailsName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestoreDetailsName?(string value) => value == null ? null : new RestoreDetailsName(value);
+        public static implicit operator RestoreDetailsName?(string value) => value == null ? (RestoreDetailsName?)null : new RestoreDetailsName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

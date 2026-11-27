@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeNetworkInterfaceAuxiliaryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeNetworkInterfaceAuxiliaryMode?(string value) => value == null ? null : new ComputeNetworkInterfaceAuxiliaryMode(value);
+        public static implicit operator ComputeNetworkInterfaceAuxiliaryMode?(string value) => value == null ? (ComputeNetworkInterfaceAuxiliaryMode?)null : new ComputeNetworkInterfaceAuxiliaryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

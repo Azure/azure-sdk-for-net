@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="OutboundDependenciesManagedType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutboundDependenciesManagedType?(string value) => value == null ? null : new OutboundDependenciesManagedType(value);
+        public static implicit operator OutboundDependenciesManagedType?(string value) => value == null ? (OutboundDependenciesManagedType?)null : new OutboundDependenciesManagedType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

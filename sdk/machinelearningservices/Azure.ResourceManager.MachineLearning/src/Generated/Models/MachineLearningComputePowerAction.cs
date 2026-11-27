@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningComputePowerAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningComputePowerAction?(string value) => value == null ? null : new MachineLearningComputePowerAction(value);
+        public static implicit operator MachineLearningComputePowerAction?(string value) => value == null ? (MachineLearningComputePowerAction?)null : new MachineLearningComputePowerAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

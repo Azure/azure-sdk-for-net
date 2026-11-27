@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiActionType?(string value) => value == null ? null : new RaiActionType(value);
+        public static implicit operator RaiActionType?(string value) => value == null ? (RaiActionType?)null : new RaiActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

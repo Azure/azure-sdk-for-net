@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveUpdateMode?(string value) => value == null ? null : new VirtualEnclaveUpdateMode(value);
+        public static implicit operator VirtualEnclaveUpdateMode?(string value) => value == null ? (VirtualEnclaveUpdateMode?)null : new VirtualEnclaveUpdateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ODataAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ODataAuthenticationType?(string value) => value == null ? null : new ODataAuthenticationType(value);
+        public static implicit operator ODataAuthenticationType?(string value) => value == null ? (ODataAuthenticationType?)null : new ODataAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

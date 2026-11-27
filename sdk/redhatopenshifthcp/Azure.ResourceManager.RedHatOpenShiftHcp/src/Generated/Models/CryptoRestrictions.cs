@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="CryptoRestrictions"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CryptoRestrictions?(string value) => value == null ? null : new CryptoRestrictions(value);
+        public static implicit operator CryptoRestrictions?(string value) => value == null ? (CryptoRestrictions?)null : new CryptoRestrictions(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

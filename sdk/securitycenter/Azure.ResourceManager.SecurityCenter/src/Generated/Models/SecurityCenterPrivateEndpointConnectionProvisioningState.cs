@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new SecurityCenterPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator SecurityCenterPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (SecurityCenterPrivateEndpointConnectionProvisioningState?)null : new SecurityCenterPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

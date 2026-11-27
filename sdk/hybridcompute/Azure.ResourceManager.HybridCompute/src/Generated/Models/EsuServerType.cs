@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="EsuServerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EsuServerType?(string value) => value == null ? null : new EsuServerType(value);
+        public static implicit operator EsuServerType?(string value) => value == null ? (EsuServerType?)null : new EsuServerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

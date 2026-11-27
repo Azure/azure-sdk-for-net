@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="QueryOperatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryOperatorType?(string value) => value == null ? null : new QueryOperatorType(value);
+        public static implicit operator QueryOperatorType?(string value) => value == null ? (QueryOperatorType?)null : new QueryOperatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

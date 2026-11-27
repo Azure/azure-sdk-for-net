@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterNetworkBypassMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterNetworkBypassMode?(string value) => value == null ? null : new MongoClusterNetworkBypassMode(value);
+        public static implicit operator MongoClusterNetworkBypassMode?(string value) => value == null ? (MongoClusterNetworkBypassMode?)null : new MongoClusterNetworkBypassMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

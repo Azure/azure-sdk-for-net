@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="FeatureDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureDetailedStatus?(string value) => value == null ? null : new FeatureDetailedStatus(value);
+        public static implicit operator FeatureDetailedStatus?(string value) => value == null ? (FeatureDetailedStatus?)null : new FeatureDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkGatewayConnectionProtocol?(string value) => value == null ? null : new VirtualNetworkGatewayConnectionProtocol(value);
+        public static implicit operator VirtualNetworkGatewayConnectionProtocol?(string value) => value == null ? (VirtualNetworkGatewayConnectionProtocol?)null : new VirtualNetworkGatewayConnectionProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBMetricUnitType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBMetricUnitType?(string value) => value == null ? null : new CosmosDBMetricUnitType(value);
+        public static implicit operator CosmosDBMetricUnitType?(string value) => value == null ? (CosmosDBMetricUnitType?)null : new CosmosDBMetricUnitType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

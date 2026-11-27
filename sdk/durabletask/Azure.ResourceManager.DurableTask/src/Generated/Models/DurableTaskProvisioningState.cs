@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskProvisioningState?(string value) => value == null ? null : new DurableTaskProvisioningState(value);
+        public static implicit operator DurableTaskProvisioningState?(string value) => value == null ? (DurableTaskProvisioningState?)null : new DurableTaskProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

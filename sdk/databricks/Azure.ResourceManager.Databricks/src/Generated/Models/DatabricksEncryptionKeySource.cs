@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksEncryptionKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksEncryptionKeySource?(string value) => value == null ? null : new DatabricksEncryptionKeySource(value);
+        public static implicit operator DatabricksEncryptionKeySource?(string value) => value == null ? (DatabricksEncryptionKeySource?)null : new DatabricksEncryptionKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

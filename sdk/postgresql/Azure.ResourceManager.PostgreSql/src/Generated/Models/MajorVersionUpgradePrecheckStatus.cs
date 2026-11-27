@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MajorVersionUpgradePrecheckStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MajorVersionUpgradePrecheckStatus?(string value) => value == null ? null : new MajorVersionUpgradePrecheckStatus(value);
+        public static implicit operator MajorVersionUpgradePrecheckStatus?(string value) => value == null ? (MajorVersionUpgradePrecheckStatus?)null : new MajorVersionUpgradePrecheckStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

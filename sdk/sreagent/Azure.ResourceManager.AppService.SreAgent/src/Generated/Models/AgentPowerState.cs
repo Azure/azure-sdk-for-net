@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="AgentPowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPowerState?(string value) => value == null ? null : new AgentPowerState(value);
+        public static implicit operator AgentPowerState?(string value) => value == null ? (AgentPowerState?)null : new AgentPowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

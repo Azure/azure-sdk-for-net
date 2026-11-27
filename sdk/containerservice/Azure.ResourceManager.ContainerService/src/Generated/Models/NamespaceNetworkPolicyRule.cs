@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="NamespaceNetworkPolicyRule"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NamespaceNetworkPolicyRule?(string value) => value == null ? null : new NamespaceNetworkPolicyRule(value);
+        public static implicit operator NamespaceNetworkPolicyRule?(string value) => value == null ? (NamespaceNetworkPolicyRule?)null : new NamespaceNetworkPolicyRule(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="KnownStorageBlobLookupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownStorageBlobLookupType?(string value) => value == null ? null : new KnownStorageBlobLookupType(value);
+        public static implicit operator KnownStorageBlobLookupType?(string value) => value == null ? (KnownStorageBlobLookupType?)null : new KnownStorageBlobLookupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ManagedRuleSensitivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedRuleSensitivityType?(string value) => value == null ? null : new ManagedRuleSensitivityType(value);
+        public static implicit operator ManagedRuleSensitivityType?(string value) => value == null ? (ManagedRuleSensitivityType?)null : new ManagedRuleSensitivityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

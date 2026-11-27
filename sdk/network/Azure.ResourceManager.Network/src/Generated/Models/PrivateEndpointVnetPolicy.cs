@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PrivateEndpointVnetPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateEndpointVnetPolicy?(string value) => value == null ? null : new PrivateEndpointVnetPolicy(value);
+        public static implicit operator PrivateEndpointVnetPolicy?(string value) => value == null ? (PrivateEndpointVnetPolicy?)null : new PrivateEndpointVnetPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

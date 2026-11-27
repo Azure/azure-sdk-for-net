@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="A2ARpRecoveryPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator A2ARpRecoveryPointType?(string value) => value == null ? null : new A2ARpRecoveryPointType(value);
+        public static implicit operator A2ARpRecoveryPointType?(string value) => value == null ? (A2ARpRecoveryPointType?)null : new A2ARpRecoveryPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

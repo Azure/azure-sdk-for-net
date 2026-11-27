@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="GIMinorVersionShapeFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GIMinorVersionShapeFamily?(string value) => value == null ? null : new GIMinorVersionShapeFamily(value);
+        public static implicit operator GIMinorVersionShapeFamily?(string value) => value == null ? (GIMinorVersionShapeFamily?)null : new GIMinorVersionShapeFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

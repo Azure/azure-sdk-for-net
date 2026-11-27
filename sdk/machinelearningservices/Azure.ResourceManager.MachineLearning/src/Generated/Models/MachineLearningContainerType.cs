@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningContainerType?(string value) => value == null ? null : new MachineLearningContainerType(value);
+        public static implicit operator MachineLearningContainerType?(string value) => value == null ? (MachineLearningContainerType?)null : new MachineLearningContainerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

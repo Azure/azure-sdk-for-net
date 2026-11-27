@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ReleaseCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReleaseCategory?(string value) => value == null ? null : new ReleaseCategory(value);
+        public static implicit operator ReleaseCategory?(string value) => value == null ? (ReleaseCategory?)null : new ReleaseCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

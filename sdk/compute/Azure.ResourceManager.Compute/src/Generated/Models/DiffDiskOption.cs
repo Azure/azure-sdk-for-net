@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiffDiskOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiffDiskOption?(string value) => value == null ? null : new DiffDiskOption(value);
+        public static implicit operator DiffDiskOption?(string value) => value == null ? (DiffDiskOption?)null : new DiffDiskOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

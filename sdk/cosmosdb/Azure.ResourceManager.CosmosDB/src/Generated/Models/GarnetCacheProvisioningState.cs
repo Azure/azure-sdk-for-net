@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="GarnetCacheProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GarnetCacheProvisioningState?(string value) => value == null ? null : new GarnetCacheProvisioningState(value);
+        public static implicit operator GarnetCacheProvisioningState?(string value) => value == null ? (GarnetCacheProvisioningState?)null : new GarnetCacheProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

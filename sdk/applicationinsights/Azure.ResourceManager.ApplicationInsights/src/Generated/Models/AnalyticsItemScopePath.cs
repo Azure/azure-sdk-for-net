@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="AnalyticsItemScopePath"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyticsItemScopePath?(string value) => value == null ? null : new AnalyticsItemScopePath(value);
+        public static implicit operator AnalyticsItemScopePath?(string value) => value == null ? (AnalyticsItemScopePath?)null : new AnalyticsItemScopePath(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

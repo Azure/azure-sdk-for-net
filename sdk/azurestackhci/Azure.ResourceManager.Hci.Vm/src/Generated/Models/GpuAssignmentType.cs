@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="GpuAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GpuAssignmentType?(string value) => value == null ? null : new GpuAssignmentType(value);
+        public static implicit operator GpuAssignmentType?(string value) => value == null ? (GpuAssignmentType?)null : new GpuAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

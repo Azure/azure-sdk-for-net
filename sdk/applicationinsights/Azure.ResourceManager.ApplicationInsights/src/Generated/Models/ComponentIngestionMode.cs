@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentIngestionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentIngestionMode?(string value) => value == null ? null : new ComponentIngestionMode(value);
+        public static implicit operator ComponentIngestionMode?(string value) => value == null ? (ComponentIngestionMode?)null : new ComponentIngestionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

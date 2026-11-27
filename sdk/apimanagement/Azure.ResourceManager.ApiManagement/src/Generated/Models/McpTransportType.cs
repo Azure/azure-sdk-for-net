@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="McpTransportType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator McpTransportType?(string value) => value == null ? null : new McpTransportType(value);
+        public static implicit operator McpTransportType?(string value) => value == null ? (McpTransportType?)null : new McpTransportType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="CaCertificateProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CaCertificateProvisioningState?(string value) => value == null ? null : new CaCertificateProvisioningState(value);
+        public static implicit operator CaCertificateProvisioningState?(string value) => value == null ? (CaCertificateProvisioningState?)null : new CaCertificateProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

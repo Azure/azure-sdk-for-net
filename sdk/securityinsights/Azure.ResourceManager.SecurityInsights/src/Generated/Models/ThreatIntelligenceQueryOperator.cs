@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ThreatIntelligenceQueryOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatIntelligenceQueryOperator?(string value) => value == null ? null : new ThreatIntelligenceQueryOperator(value);
+        public static implicit operator ThreatIntelligenceQueryOperator?(string value) => value == null ? (ThreatIntelligenceQueryOperator?)null : new ThreatIntelligenceQueryOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

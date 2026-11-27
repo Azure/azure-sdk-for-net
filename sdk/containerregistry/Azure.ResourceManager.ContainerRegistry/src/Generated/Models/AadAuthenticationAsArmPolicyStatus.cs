@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="AadAuthenticationAsArmPolicyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AadAuthenticationAsArmPolicyStatus?(string value) => value == null ? null : new AadAuthenticationAsArmPolicyStatus(value);
+        public static implicit operator AadAuthenticationAsArmPolicyStatus?(string value) => value == null ? (AadAuthenticationAsArmPolicyStatus?)null : new AadAuthenticationAsArmPolicyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

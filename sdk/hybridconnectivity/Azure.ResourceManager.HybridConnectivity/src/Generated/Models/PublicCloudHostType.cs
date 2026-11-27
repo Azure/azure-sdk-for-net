@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="PublicCloudHostType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicCloudHostType?(string value) => value == null ? null : new PublicCloudHostType(value);
+        public static implicit operator PublicCloudHostType?(string value) => value == null ? (PublicCloudHostType?)null : new PublicCloudHostType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

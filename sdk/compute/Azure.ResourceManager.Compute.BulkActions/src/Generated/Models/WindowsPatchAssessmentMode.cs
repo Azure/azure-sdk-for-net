@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="WindowsPatchAssessmentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsPatchAssessmentMode?(string value) => value == null ? null : new WindowsPatchAssessmentMode(value);
+        public static implicit operator WindowsPatchAssessmentMode?(string value) => value == null ? (WindowsPatchAssessmentMode?)null : new WindowsPatchAssessmentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

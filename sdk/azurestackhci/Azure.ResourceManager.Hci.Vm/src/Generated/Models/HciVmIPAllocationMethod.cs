@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmIPAllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmIPAllocationMethod?(string value) => value == null ? null : new HciVmIPAllocationMethod(value);
+        public static implicit operator HciVmIPAllocationMethod?(string value) => value == null ? (HciVmIPAllocationMethod?)null : new HciVmIPAllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

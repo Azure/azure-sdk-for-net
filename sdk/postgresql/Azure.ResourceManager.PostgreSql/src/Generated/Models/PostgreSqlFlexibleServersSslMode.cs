@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersSslMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServersSslMode?(string value) => value == null ? null : new PostgreSqlFlexibleServersSslMode(value);
+        public static implicit operator PostgreSqlFlexibleServersSslMode?(string value) => value == null ? (PostgreSqlFlexibleServersSslMode?)null : new PostgreSqlFlexibleServersSslMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

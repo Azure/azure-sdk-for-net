@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="TrunkedNetworkDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrunkedNetworkDetailedStatus?(string value) => value == null ? null : new TrunkedNetworkDetailedStatus(value);
+        public static implicit operator TrunkedNetworkDetailedStatus?(string value) => value == null ? (TrunkedNetworkDetailedStatus?)null : new TrunkedNetworkDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

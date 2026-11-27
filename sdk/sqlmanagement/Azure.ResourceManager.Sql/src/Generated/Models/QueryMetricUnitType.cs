@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="QueryMetricUnitType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryMetricUnitType?(string value) => value == null ? null : new QueryMetricUnitType(value);
+        public static implicit operator QueryMetricUnitType?(string value) => value == null ? (QueryMetricUnitType?)null : new QueryMetricUnitType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

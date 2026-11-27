@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="AggregatedReplicationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AggregatedReplicationState?(string value) => value == null ? null : new AggregatedReplicationState(value);
+        public static implicit operator AggregatedReplicationState?(string value) => value == null ? (AggregatedReplicationState?)null : new AggregatedReplicationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

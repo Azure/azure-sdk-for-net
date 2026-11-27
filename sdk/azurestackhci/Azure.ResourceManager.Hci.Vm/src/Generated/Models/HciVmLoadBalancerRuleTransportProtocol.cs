@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmLoadBalancerRuleTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmLoadBalancerRuleTransportProtocol?(string value) => value == null ? null : new HciVmLoadBalancerRuleTransportProtocol(value);
+        public static implicit operator HciVmLoadBalancerRuleTransportProtocol?(string value) => value == null ? (HciVmLoadBalancerRuleTransportProtocol?)null : new HciVmLoadBalancerRuleTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

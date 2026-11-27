@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="SystemDatastoresAuthMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SystemDatastoresAuthMode?(string value) => value == null ? null : new SystemDatastoresAuthMode(value);
+        public static implicit operator SystemDatastoresAuthMode?(string value) => value == null ? (SystemDatastoresAuthMode?)null : new SystemDatastoresAuthMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

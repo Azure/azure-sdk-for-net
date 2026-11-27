@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="SpotNodeVmEvictionPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SpotNodeVmEvictionPolicyType?(string value) => value == null ? null : new SpotNodeVmEvictionPolicyType(value);
+        public static implicit operator SpotNodeVmEvictionPolicyType?(string value) => value == null ? (SpotNodeVmEvictionPolicyType?)null : new SpotNodeVmEvictionPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

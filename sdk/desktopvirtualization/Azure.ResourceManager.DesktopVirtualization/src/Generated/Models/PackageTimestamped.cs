@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="PackageTimestamped"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PackageTimestamped?(string value) => value == null ? null : new PackageTimestamped(value);
+        public static implicit operator PackageTimestamped?(string value) => value == null ? (PackageTimestamped?)null : new PackageTimestamped(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Converts a string to a <see cref="LargeInstanceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LargeInstanceProvisioningState?(string value) => value == null ? null : new LargeInstanceProvisioningState(value);
+        public static implicit operator LargeInstanceProvisioningState?(string value) => value == null ? (LargeInstanceProvisioningState?)null : new LargeInstanceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

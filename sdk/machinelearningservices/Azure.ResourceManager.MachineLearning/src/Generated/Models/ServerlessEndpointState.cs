@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ServerlessEndpointState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerlessEndpointState?(string value) => value == null ? null : new ServerlessEndpointState(value);
+        public static implicit operator ServerlessEndpointState?(string value) => value == null ? (ServerlessEndpointState?)null : new ServerlessEndpointState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

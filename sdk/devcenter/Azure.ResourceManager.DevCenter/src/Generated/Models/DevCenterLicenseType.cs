@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterLicenseType?(string value) => value == null ? null : new DevCenterLicenseType(value);
+        public static implicit operator DevCenterLicenseType?(string value) => value == null ? (DevCenterLicenseType?)null : new DevCenterLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

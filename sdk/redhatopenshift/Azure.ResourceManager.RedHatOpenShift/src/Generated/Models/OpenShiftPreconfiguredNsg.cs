@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Converts a string to a <see cref="OpenShiftPreconfiguredNsg"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenShiftPreconfiguredNsg?(string value) => value == null ? null : new OpenShiftPreconfiguredNsg(value);
+        public static implicit operator OpenShiftPreconfiguredNsg?(string value) => value == null ? (OpenShiftPreconfiguredNsg?)null : new OpenShiftPreconfiguredNsg(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

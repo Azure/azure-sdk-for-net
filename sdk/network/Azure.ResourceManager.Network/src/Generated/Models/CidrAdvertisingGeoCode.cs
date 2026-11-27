@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="CidrAdvertisingGeoCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CidrAdvertisingGeoCode?(string value) => value == null ? null : new CidrAdvertisingGeoCode(value);
+        public static implicit operator CidrAdvertisingGeoCode?(string value) => value == null ? (CidrAdvertisingGeoCode?)null : new CidrAdvertisingGeoCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

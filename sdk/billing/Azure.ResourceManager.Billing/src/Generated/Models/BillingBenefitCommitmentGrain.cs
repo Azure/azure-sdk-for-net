@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingBenefitCommitmentGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitCommitmentGrain?(string value) => value == null ? null : new BillingBenefitCommitmentGrain(value);
+        public static implicit operator BillingBenefitCommitmentGrain?(string value) => value == null ? (BillingBenefitCommitmentGrain?)null : new BillingBenefitCommitmentGrain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

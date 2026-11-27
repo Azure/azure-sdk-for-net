@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CassandraAutoReplicateForm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraAutoReplicateForm?(string value) => value == null ? null : new CassandraAutoReplicateForm(value);
+        public static implicit operator CassandraAutoReplicateForm?(string value) => value == null ? (CassandraAutoReplicateForm?)null : new CassandraAutoReplicateForm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

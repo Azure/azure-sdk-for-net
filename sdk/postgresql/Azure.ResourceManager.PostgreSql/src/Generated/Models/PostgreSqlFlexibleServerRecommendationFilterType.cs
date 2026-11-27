@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerRecommendationFilterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerRecommendationFilterType?(string value) => value == null ? null : new PostgreSqlFlexibleServerRecommendationFilterType(value);
+        public static implicit operator PostgreSqlFlexibleServerRecommendationFilterType?(string value) => value == null ? (PostgreSqlFlexibleServerRecommendationFilterType?)null : new PostgreSqlFlexibleServerRecommendationFilterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

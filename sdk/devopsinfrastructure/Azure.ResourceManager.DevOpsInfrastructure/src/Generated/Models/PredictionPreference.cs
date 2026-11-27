@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="PredictionPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PredictionPreference?(string value) => value == null ? null : new PredictionPreference(value);
+        public static implicit operator PredictionPreference?(string value) => value == null ? (PredictionPreference?)null : new PredictionPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

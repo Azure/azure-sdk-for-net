@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchHostEndpointSettingsModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchHostEndpointSettingsModeType?(string value) => value == null ? null : new BatchHostEndpointSettingsModeType(value);
+        public static implicit operator BatchHostEndpointSettingsModeType?(string value) => value == null ? (BatchHostEndpointSettingsModeType?)null : new BatchHostEndpointSettingsModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

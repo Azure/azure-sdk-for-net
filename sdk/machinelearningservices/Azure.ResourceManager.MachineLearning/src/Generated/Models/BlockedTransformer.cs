@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="BlockedTransformer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlockedTransformer?(string value) => value == null ? null : new BlockedTransformer(value);
+        public static implicit operator BlockedTransformer?(string value) => value == null ? (BlockedTransformer?)null : new BlockedTransformer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceDatabaseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceDatabaseType?(string value) => value == null ? null : new AppServiceDatabaseType(value);
+        public static implicit operator AppServiceDatabaseType?(string value) => value == null ? (AppServiceDatabaseType?)null : new AppServiceDatabaseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

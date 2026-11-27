@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="DeviceRegistrySchemaType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceRegistrySchemaType?(string value) => value == null ? null : new DeviceRegistrySchemaType(value);
+        public static implicit operator DeviceRegistrySchemaType?(string value) => value == null ? (DeviceRegistrySchemaType?)null : new DeviceRegistrySchemaType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryExpand?(string value) => value == null ? null : new GalleryExpand(value);
+        public static implicit operator GalleryExpand?(string value) => value == null ? (GalleryExpand?)null : new GalleryExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

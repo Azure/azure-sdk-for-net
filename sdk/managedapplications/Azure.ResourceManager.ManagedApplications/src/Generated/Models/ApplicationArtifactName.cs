@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationArtifactName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationArtifactName?(string value) => value == null ? null : new ApplicationArtifactName(value);
+        public static implicit operator ApplicationArtifactName?(string value) => value == null ? (ApplicationArtifactName?)null : new ApplicationArtifactName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

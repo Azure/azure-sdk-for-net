@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Converts a string to a <see cref="CatalogAudience"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CatalogAudience?(string value) => value == null ? null : new CatalogAudience(value);
+        public static implicit operator CatalogAudience?(string value) => value == null ? (CatalogAudience?)null : new CatalogAudience(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

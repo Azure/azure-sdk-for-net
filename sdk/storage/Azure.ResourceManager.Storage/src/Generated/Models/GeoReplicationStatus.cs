@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="GeoReplicationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GeoReplicationStatus?(string value) => value == null ? null : new GeoReplicationStatus(value);
+        public static implicit operator GeoReplicationStatus?(string value) => value == null ? (GeoReplicationStatus?)null : new GeoReplicationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

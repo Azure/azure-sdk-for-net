@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppVolumeSecurityStyle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppVolumeSecurityStyle?(string value) => value == null ? null : new NetAppVolumeSecurityStyle(value);
+        public static implicit operator NetAppVolumeSecurityStyle?(string value) => value == null ? (NetAppVolumeSecurityStyle?)null : new NetAppVolumeSecurityStyle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

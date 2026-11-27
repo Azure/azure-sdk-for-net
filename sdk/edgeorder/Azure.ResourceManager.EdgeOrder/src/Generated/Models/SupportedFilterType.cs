@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="SupportedFilterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportedFilterType?(string value) => value == null ? null : new SupportedFilterType(value);
+        public static implicit operator SupportedFilterType?(string value) => value == null ? (SupportedFilterType?)null : new SupportedFilterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

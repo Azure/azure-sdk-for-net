@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="LegacyApiState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LegacyApiState?(string value) => value == null ? null : new LegacyApiState(value);
+        public static implicit operator LegacyApiState?(string value) => value == null ? (LegacyApiState?)null : new LegacyApiState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

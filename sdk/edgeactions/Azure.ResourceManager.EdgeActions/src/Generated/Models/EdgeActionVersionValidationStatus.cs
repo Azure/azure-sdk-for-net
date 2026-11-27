@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <summary> Converts a string to a <see cref="EdgeActionVersionValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeActionVersionValidationStatus?(string value) => value == null ? null : new EdgeActionVersionValidationStatus(value);
+        public static implicit operator EdgeActionVersionValidationStatus?(string value) => value == null ? (EdgeActionVersionValidationStatus?)null : new EdgeActionVersionValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

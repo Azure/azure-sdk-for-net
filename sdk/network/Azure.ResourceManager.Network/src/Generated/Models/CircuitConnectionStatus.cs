@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="CircuitConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CircuitConnectionStatus?(string value) => value == null ? null : new CircuitConnectionStatus(value);
+        public static implicit operator CircuitConnectionStatus?(string value) => value == null ? (CircuitConnectionStatus?)null : new CircuitConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

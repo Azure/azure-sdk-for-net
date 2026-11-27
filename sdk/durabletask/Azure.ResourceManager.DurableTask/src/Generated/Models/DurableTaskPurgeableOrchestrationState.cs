@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskPurgeableOrchestrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskPurgeableOrchestrationState?(string value) => value == null ? null : new DurableTaskPurgeableOrchestrationState(value);
+        public static implicit operator DurableTaskPurgeableOrchestrationState?(string value) => value == null ? (DurableTaskPurgeableOrchestrationState?)null : new DurableTaskPurgeableOrchestrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

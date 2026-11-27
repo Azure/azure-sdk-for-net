@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteLagEncapsulation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteLagEncapsulation?(string value) => value == null ? null : new ExpressRouteLagEncapsulation(value);
+        public static implicit operator ExpressRouteLagEncapsulation?(string value) => value == null ? (ExpressRouteLagEncapsulation?)null : new ExpressRouteLagEncapsulation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

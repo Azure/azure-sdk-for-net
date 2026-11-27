@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationAuthenticationType?(string value) => value == null ? null : new DataMigrationAuthenticationType(value);
+        public static implicit operator DataMigrationAuthenticationType?(string value) => value == null ? (DataMigrationAuthenticationType?)null : new DataMigrationAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricMicroBfdState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricMicroBfdState?(string value) => value == null ? null : new NetworkFabricMicroBfdState(value);
+        public static implicit operator NetworkFabricMicroBfdState?(string value) => value == null ? (NetworkFabricMicroBfdState?)null : new NetworkFabricMicroBfdState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

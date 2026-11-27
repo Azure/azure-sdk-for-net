@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServicePublicInternetAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServicePublicInternetAccess?(string value) => value == null ? null : new SearchServicePublicInternetAccess(value);
+        public static implicit operator SearchServicePublicInternetAccess?(string value) => value == null ? (SearchServicePublicInternetAccess?)null : new SearchServicePublicInternetAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterContinueUpdateVersionMachineGroupTargetingMode?(string value) => value == null ? null : new ClusterContinueUpdateVersionMachineGroupTargetingMode(value);
+        public static implicit operator ClusterContinueUpdateVersionMachineGroupTargetingMode?(string value) => value == null ? (ClusterContinueUpdateVersionMachineGroupTargetingMode?)null : new ClusterContinueUpdateVersionMachineGroupTargetingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResourceProtectionSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProtectionSolutionType?(string value) => value == null ? null : new ResourceProtectionSolutionType(value);
+        public static implicit operator ResourceProtectionSolutionType?(string value) => value == null ? (ResourceProtectionSolutionType?)null : new ResourceProtectionSolutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

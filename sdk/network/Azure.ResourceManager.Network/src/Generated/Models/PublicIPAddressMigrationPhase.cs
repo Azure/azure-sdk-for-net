@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PublicIPAddressMigrationPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicIPAddressMigrationPhase?(string value) => value == null ? null : new PublicIPAddressMigrationPhase(value);
+        public static implicit operator PublicIPAddressMigrationPhase?(string value) => value == null ? (PublicIPAddressMigrationPhase?)null : new PublicIPAddressMigrationPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="AzureStorageAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureStorageAuthenticationType?(string value) => value == null ? null : new AzureStorageAuthenticationType(value);
+        public static implicit operator AzureStorageAuthenticationType?(string value) => value == null ? (AzureStorageAuthenticationType?)null : new AzureStorageAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

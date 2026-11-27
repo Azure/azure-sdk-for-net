@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="DiskCreateOptionTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskCreateOptionTypes?(string value) => value == null ? null : new DiskCreateOptionTypes(value);
+        public static implicit operator DiskCreateOptionTypes?(string value) => value == null ? (DiskCreateOptionTypes?)null : new DiskCreateOptionTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

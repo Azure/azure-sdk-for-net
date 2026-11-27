@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountProvisioningState?(string value) => value == null ? null : new StorageAccountProvisioningState(value);
+        public static implicit operator StorageAccountProvisioningState?(string value) => value == null ? (StorageAccountProvisioningState?)null : new StorageAccountProvisioningState(value);
     }
 }

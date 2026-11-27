@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="EdgeZoneStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeZoneStorageAccountType?(string value) => value == null ? null : new EdgeZoneStorageAccountType(value);
+        public static implicit operator EdgeZoneStorageAccountType?(string value) => value == null ? (EdgeZoneStorageAccountType?)null : new EdgeZoneStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

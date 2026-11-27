@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="ArchiveStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArchiveStatusType?(string value) => value == null ? null : new ArchiveStatusType(value);
+        public static implicit operator ArchiveStatusType?(string value) => value == null ? (ArchiveStatusType?)null : new ArchiveStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

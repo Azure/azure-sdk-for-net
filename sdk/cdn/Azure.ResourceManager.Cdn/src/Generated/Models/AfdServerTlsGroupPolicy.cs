@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="AfdServerTlsGroupPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AfdServerTlsGroupPolicy?(string value) => value == null ? null : new AfdServerTlsGroupPolicy(value);
+        public static implicit operator AfdServerTlsGroupPolicy?(string value) => value == null ? (AfdServerTlsGroupPolicy?)null : new AfdServerTlsGroupPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

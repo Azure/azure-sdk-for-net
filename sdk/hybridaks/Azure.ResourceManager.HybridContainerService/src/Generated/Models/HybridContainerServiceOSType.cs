@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="HybridContainerServiceOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridContainerServiceOSType?(string value) => value == null ? null : new HybridContainerServiceOSType(value);
+        public static implicit operator HybridContainerServiceOSType?(string value) => value == null ? (HybridContainerServiceOSType?)null : new HybridContainerServiceOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

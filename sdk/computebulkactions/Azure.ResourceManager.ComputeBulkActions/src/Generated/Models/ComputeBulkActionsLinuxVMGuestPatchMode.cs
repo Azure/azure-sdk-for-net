@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsLinuxVMGuestPatchMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsLinuxVMGuestPatchMode?(string value) => value == null ? null : new ComputeBulkActionsLinuxVMGuestPatchMode(value);
+        public static implicit operator ComputeBulkActionsLinuxVMGuestPatchMode?(string value) => value == null ? (ComputeBulkActionsLinuxVMGuestPatchMode?)null : new ComputeBulkActionsLinuxVMGuestPatchMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

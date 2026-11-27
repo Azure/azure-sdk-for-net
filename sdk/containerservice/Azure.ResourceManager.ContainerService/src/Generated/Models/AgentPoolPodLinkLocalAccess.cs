@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolPodLinkLocalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolPodLinkLocalAccess?(string value) => value == null ? null : new AgentPoolPodLinkLocalAccess(value);
+        public static implicit operator AgentPoolPodLinkLocalAccess?(string value) => value == null ? (AgentPoolPodLinkLocalAccess?)null : new AgentPoolPodLinkLocalAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

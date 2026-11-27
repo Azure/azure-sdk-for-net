@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="WorkflowState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkflowState?(string value) => value == null ? null : new WorkflowState(value);
+        public static implicit operator WorkflowState?(string value) => value == null ? (WorkflowState?)null : new WorkflowState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

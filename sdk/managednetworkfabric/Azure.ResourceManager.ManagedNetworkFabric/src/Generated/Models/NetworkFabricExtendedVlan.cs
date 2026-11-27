@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricExtendedVlan"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricExtendedVlan?(string value) => value == null ? null : new NetworkFabricExtendedVlan(value);
+        public static implicit operator NetworkFabricExtendedVlan?(string value) => value == null ? (NetworkFabricExtendedVlan?)null : new NetworkFabricExtendedVlan(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

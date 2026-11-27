@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicObservabilityUsageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilityUsageType?(string value) => value == null ? null : new NewRelicObservabilityUsageType(value);
+        public static implicit operator NewRelicObservabilityUsageType?(string value) => value == null ? (NewRelicObservabilityUsageType?)null : new NewRelicObservabilityUsageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

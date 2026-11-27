@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="EdgeActionInvocationPoint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeActionInvocationPoint?(string value) => value == null ? null : new EdgeActionInvocationPoint(value);
+        public static implicit operator EdgeActionInvocationPoint?(string value) => value == null ? (EdgeActionInvocationPoint?)null : new EdgeActionInvocationPoint(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

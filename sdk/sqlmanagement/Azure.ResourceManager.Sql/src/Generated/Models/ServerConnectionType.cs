@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ServerConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerConnectionType?(string value) => value == null ? null : new ServerConnectionType(value);
+        public static implicit operator ServerConnectionType?(string value) => value == null ? (ServerConnectionType?)null : new ServerConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

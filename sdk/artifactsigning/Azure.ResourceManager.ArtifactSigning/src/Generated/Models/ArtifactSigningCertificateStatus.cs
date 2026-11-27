@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <summary> Converts a string to a <see cref="ArtifactSigningCertificateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArtifactSigningCertificateStatus?(string value) => value == null ? null : new ArtifactSigningCertificateStatus(value);
+        public static implicit operator ArtifactSigningCertificateStatus?(string value) => value == null ? (ArtifactSigningCertificateStatus?)null : new ArtifactSigningCertificateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

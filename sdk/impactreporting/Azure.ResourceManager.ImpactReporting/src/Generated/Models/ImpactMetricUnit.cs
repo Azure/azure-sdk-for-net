@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactMetricUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactMetricUnit?(string value) => value == null ? null : new ImpactMetricUnit(value);
+        public static implicit operator ImpactMetricUnit?(string value) => value == null ? (ImpactMetricUnit?)null : new ImpactMetricUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultRestoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultRestoreType?(string value) => value == null ? null : new CommvaultRestoreType(value);
+        public static implicit operator CommvaultRestoreType?(string value) => value == null ? (CommvaultRestoreType?)null : new CommvaultRestoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

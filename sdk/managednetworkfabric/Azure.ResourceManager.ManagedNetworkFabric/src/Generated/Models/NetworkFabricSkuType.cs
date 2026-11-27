@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricSkuType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricSkuType?(string value) => value == null ? null : new NetworkFabricSkuType(value);
+        public static implicit operator NetworkFabricSkuType?(string value) => value == null ? (NetworkFabricSkuType?)null : new NetworkFabricSkuType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

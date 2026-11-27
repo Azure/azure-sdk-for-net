@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ViewPivotType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ViewPivotType?(string value) => value == null ? null : new ViewPivotType(value);
+        public static implicit operator ViewPivotType?(string value) => value == null ? (ViewPivotType?)null : new ViewPivotType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

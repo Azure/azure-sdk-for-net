@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBSystemDiskRedundancyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBSystemDiskRedundancyType?(string value) => value == null ? null : new DBSystemDiskRedundancyType(value);
+        public static implicit operator DBSystemDiskRedundancyType?(string value) => value == null ? (DBSystemDiskRedundancyType?)null : new DBSystemDiskRedundancyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

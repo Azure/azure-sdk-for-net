@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="CpuManufacturer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CpuManufacturer?(string value) => value == null ? null : new CpuManufacturer(value);
+        public static implicit operator CpuManufacturer?(string value) => value == null ? (CpuManufacturer?)null : new CpuManufacturer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

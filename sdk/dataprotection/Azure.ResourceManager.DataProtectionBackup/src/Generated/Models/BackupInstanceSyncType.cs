@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupInstanceSyncType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupInstanceSyncType?(string value) => value == null ? null : new BackupInstanceSyncType(value);
+        public static implicit operator BackupInstanceSyncType?(string value) => value == null ? (BackupInstanceSyncType?)null : new BackupInstanceSyncType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

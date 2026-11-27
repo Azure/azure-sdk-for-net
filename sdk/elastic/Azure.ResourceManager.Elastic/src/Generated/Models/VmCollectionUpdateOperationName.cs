@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="VmCollectionUpdateOperationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmCollectionUpdateOperationName?(string value) => value == null ? null : new VmCollectionUpdateOperationName(value);
+        public static implicit operator VmCollectionUpdateOperationName?(string value) => value == null ? (VmCollectionUpdateOperationName?)null : new VmCollectionUpdateOperationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

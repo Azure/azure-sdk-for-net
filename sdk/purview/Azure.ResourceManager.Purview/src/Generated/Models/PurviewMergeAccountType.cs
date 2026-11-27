@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewMergeAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewMergeAccountType?(string value) => value == null ? null : new PurviewMergeAccountType(value);
+        public static implicit operator PurviewMergeAccountType?(string value) => value == null ? (PurviewMergeAccountType?)null : new PurviewMergeAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

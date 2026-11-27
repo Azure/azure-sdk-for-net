@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="FeatureImportanceMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureImportanceMode?(string value) => value == null ? null : new FeatureImportanceMode(value);
+        public static implicit operator FeatureImportanceMode?(string value) => value == null ? (FeatureImportanceMode?)null : new FeatureImportanceMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

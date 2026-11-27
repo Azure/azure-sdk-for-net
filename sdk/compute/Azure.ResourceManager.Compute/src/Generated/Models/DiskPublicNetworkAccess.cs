@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskPublicNetworkAccess?(string value) => value == null ? null : new DiskPublicNetworkAccess(value);
+        public static implicit operator DiskPublicNetworkAccess?(string value) => value == null ? (DiskPublicNetworkAccess?)null : new DiskPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

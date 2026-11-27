@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="DeviceConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceConnectionType?(string value) => value == null ? null : new DeviceConnectionType(value);
+        public static implicit operator DeviceConnectionType?(string value) => value == null ? (DeviceConnectionType?)null : new DeviceConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

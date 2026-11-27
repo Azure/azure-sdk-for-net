@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="DomainJoinedType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainJoinedType?(string value) => value == null ? null : new DomainJoinedType(value);
+        public static implicit operator DomainJoinedType?(string value) => value == null ? (DomainJoinedType?)null : new DomainJoinedType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

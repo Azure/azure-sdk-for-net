@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <summary> Converts a string to a <see cref="SkuMixPlacementZonalDistributionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuMixPlacementZonalDistributionStrategy?(string value) => value == null ? null : new SkuMixPlacementZonalDistributionStrategy(value);
+        public static implicit operator SkuMixPlacementZonalDistributionStrategy?(string value) => value == null ? (SkuMixPlacementZonalDistributionStrategy?)null : new SkuMixPlacementZonalDistributionStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

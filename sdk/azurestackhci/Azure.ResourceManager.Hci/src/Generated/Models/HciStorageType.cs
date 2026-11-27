@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciStorageType?(string value) => value == null ? null : new HciStorageType(value);
+        public static implicit operator HciStorageType?(string value) => value == null ? (HciStorageType?)null : new HciStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

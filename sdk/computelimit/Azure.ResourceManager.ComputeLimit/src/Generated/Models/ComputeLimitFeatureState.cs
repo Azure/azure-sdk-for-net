@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
 
         /// <summary> Converts a string to a <see cref="ComputeLimitFeatureState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeLimitFeatureState?(string value) => value == null ? null : new ComputeLimitFeatureState(value);
+        public static implicit operator ComputeLimitFeatureState?(string value) => value == null ? (ComputeLimitFeatureState?)null : new ComputeLimitFeatureState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

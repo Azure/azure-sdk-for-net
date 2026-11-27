@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="DefaultGateway"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DefaultGateway?(string value) => value == null ? null : new DefaultGateway(value);
+        public static implicit operator DefaultGateway?(string value) => value == null ? (DefaultGateway?)null : new DefaultGateway(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

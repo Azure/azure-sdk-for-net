@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ServicePlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServicePlacementPolicyType?(string value) => value == null ? null : new ServicePlacementPolicyType(value);
+        public static implicit operator ServicePlacementPolicyType?(string value) => value == null ? (ServicePlacementPolicyType?)null : new ServicePlacementPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

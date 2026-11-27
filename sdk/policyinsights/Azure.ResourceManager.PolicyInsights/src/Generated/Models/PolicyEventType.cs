@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Converts a string to a <see cref="PolicyEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyEventType?(string value) => value == null ? null : new PolicyEventType(value);
+        public static implicit operator PolicyEventType?(string value) => value == null ? (PolicyEventType?)null : new PolicyEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

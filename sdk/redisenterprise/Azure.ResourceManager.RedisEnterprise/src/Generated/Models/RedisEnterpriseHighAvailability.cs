@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseHighAvailability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseHighAvailability?(string value) => value == null ? null : new RedisEnterpriseHighAvailability(value);
+        public static implicit operator RedisEnterpriseHighAvailability?(string value) => value == null ? (RedisEnterpriseHighAvailability?)null : new RedisEnterpriseHighAvailability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

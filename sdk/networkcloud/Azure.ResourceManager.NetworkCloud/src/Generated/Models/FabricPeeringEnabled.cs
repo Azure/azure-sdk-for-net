@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="FabricPeeringEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricPeeringEnabled?(string value) => value == null ? null : new FabricPeeringEnabled(value);
+        public static implicit operator FabricPeeringEnabled?(string value) => value == null ? (FabricPeeringEnabled?)null : new FabricPeeringEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

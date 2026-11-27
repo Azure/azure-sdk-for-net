@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="AggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AggregationType?(string value) => value == null ? null : new AggregationType(value);
+        public static implicit operator AggregationType?(string value) => value == null ? (AggregationType?)null : new AggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

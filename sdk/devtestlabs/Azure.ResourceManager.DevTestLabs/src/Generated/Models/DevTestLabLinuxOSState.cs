@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabLinuxOSState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabLinuxOSState?(string value) => value == null ? null : new DevTestLabLinuxOSState(value);
+        public static implicit operator DevTestLabLinuxOSState?(string value) => value == null ? (DevTestLabLinuxOSState?)null : new DevTestLabLinuxOSState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

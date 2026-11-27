@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaPartitionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointKafkaPartitionStrategy?(string value) => value == null ? null : new DataflowEndpointKafkaPartitionStrategy(value);
+        public static implicit operator DataflowEndpointKafkaPartitionStrategy?(string value) => value == null ? (DataflowEndpointKafkaPartitionStrategy?)null : new DataflowEndpointKafkaPartitionStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

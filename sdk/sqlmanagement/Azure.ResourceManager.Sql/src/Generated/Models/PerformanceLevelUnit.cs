@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="PerformanceLevelUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PerformanceLevelUnit?(string value) => value == null ? null : new PerformanceLevelUnit(value);
+        public static implicit operator PerformanceLevelUnit?(string value) => value == null ? (PerformanceLevelUnit?)null : new PerformanceLevelUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

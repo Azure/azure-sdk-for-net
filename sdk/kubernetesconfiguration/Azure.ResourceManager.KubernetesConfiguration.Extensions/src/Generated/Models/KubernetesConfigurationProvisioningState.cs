@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesConfigurationProvisioningState?(string value) => value == null ? null : new KubernetesConfigurationProvisioningState(value);
+        public static implicit operator KubernetesConfigurationProvisioningState?(string value) => value == null ? (KubernetesConfigurationProvisioningState?)null : new KubernetesConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

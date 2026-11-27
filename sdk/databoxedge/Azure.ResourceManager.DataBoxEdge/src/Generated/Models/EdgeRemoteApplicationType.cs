@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="EdgeRemoteApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeRemoteApplicationType?(string value) => value == null ? null : new EdgeRemoteApplicationType(value);
+        public static implicit operator EdgeRemoteApplicationType?(string value) => value == null ? (EdgeRemoteApplicationType?)null : new EdgeRemoteApplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

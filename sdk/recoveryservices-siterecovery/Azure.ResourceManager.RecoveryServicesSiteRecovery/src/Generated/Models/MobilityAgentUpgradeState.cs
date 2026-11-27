@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="MobilityAgentUpgradeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MobilityAgentUpgradeState?(string value) => value == null ? null : new MobilityAgentUpgradeState(value);
+        public static implicit operator MobilityAgentUpgradeState?(string value) => value == null ? (MobilityAgentUpgradeState?)null : new MobilityAgentUpgradeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

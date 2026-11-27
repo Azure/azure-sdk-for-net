@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SecurityProviderName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityProviderName?(string value) => value == null ? null : new SecurityProviderName(value);
+        public static implicit operator SecurityProviderName?(string value) => value == null ? (SecurityProviderName?)null : new SecurityProviderName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

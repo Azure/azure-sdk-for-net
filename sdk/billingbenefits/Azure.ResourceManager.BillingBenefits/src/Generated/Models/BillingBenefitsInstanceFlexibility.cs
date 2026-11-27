@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="BillingBenefitsInstanceFlexibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitsInstanceFlexibility?(string value) => value == null ? null : new BillingBenefitsInstanceFlexibility(value);
+        public static implicit operator BillingBenefitsInstanceFlexibility?(string value) => value == null ? (BillingBenefitsInstanceFlexibility?)null : new BillingBenefitsInstanceFlexibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetPropagationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetPropagationType?(string value) => value == null ? null : new ContainerServiceFleetPropagationType(value);
+        public static implicit operator ContainerServiceFleetPropagationType?(string value) => value == null ? (ContainerServiceFleetPropagationType?)null : new ContainerServiceFleetPropagationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationMongoDBClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationMongoDBClusterType?(string value) => value == null ? null : new DataMigrationMongoDBClusterType(value);
+        public static implicit operator DataMigrationMongoDBClusterType?(string value) => value == null ? (DataMigrationMongoDBClusterType?)null : new DataMigrationMongoDBClusterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

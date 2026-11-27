@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlDeploymentResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlDeploymentResult?(string value) => value == null ? null : new SourceControlDeploymentResult(value);
+        public static implicit operator SourceControlDeploymentResult?(string value) => value == null ? (SourceControlDeploymentResult?)null : new SourceControlDeploymentResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

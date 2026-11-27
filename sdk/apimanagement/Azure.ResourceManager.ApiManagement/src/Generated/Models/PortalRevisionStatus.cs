@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PortalRevisionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PortalRevisionStatus?(string value) => value == null ? null : new PortalRevisionStatus(value);
+        public static implicit operator PortalRevisionStatus?(string value) => value == null ? (PortalRevisionStatus?)null : new PortalRevisionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="AccessPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessPolicyType?(string value) => value == null ? null : new AccessPolicyType(value);
+        public static implicit operator AccessPolicyType?(string value) => value == null ? (AccessPolicyType?)null : new AccessPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

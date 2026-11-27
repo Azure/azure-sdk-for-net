@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlAvailabilityZoneType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlAvailabilityZoneType?(string value) => value == null ? null : new SqlAvailabilityZoneType(value);
+        public static implicit operator SqlAvailabilityZoneType?(string value) => value == null ? (SqlAvailabilityZoneType?)null : new SqlAvailabilityZoneType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

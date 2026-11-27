@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterReplicationRole?(string value) => value == null ? null : new MongoClusterReplicationRole(value);
+        public static implicit operator MongoClusterReplicationRole?(string value) => value == null ? (MongoClusterReplicationRole?)null : new MongoClusterReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsDiskDetachOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsDiskDetachOptionType?(string value) => value == null ? null : new ComputeBulkActionsDiskDetachOptionType(value);
+        public static implicit operator ComputeBulkActionsDiskDetachOptionType?(string value) => value == null ? (ComputeBulkActionsDiskDetachOptionType?)null : new ComputeBulkActionsDiskDetachOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

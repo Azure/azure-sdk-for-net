@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="InputSchemaMappingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InputSchemaMappingType?(string value) => value == null ? null : new InputSchemaMappingType(value);
+        public static implicit operator InputSchemaMappingType?(string value) => value == null ? (InputSchemaMappingType?)null : new InputSchemaMappingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

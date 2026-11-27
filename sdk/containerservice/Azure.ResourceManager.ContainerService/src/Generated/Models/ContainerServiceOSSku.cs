@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceOSSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceOSSku?(string value) => value == null ? null : new ContainerServiceOSSku(value);
+        public static implicit operator ContainerServiceOSSku?(string value) => value == null ? (ContainerServiceOSSku?)null : new ContainerServiceOSSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

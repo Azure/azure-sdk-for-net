@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppDaprLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppDaprLogLevel?(string value) => value == null ? null : new ContainerAppDaprLogLevel(value);
+        public static implicit operator ContainerAppDaprLogLevel?(string value) => value == null ? (ContainerAppDaprLogLevel?)null : new ContainerAppDaprLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceNetworkSecurityPerimeterAccessRuleDirection?(string value) => value == null ? null : new SearchServiceNetworkSecurityPerimeterAccessRuleDirection(value);
+        public static implicit operator SearchServiceNetworkSecurityPerimeterAccessRuleDirection?(string value) => value == null ? (SearchServiceNetworkSecurityPerimeterAccessRuleDirection?)null : new SearchServiceNetworkSecurityPerimeterAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

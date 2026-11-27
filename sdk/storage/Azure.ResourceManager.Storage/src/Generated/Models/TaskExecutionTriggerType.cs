@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="TaskExecutionTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskExecutionTriggerType?(string value) => value == null ? null : new TaskExecutionTriggerType(value);
+        public static implicit operator TaskExecutionTriggerType?(string value) => value == null ? (TaskExecutionTriggerType?)null : new TaskExecutionTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsClusterProvisioningState?(string value) => value == null ? null : new EventHubsClusterProvisioningState(value);
+        public static implicit operator EventHubsClusterProvisioningState?(string value) => value == null ? (EventHubsClusterProvisioningState?)null : new EventHubsClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

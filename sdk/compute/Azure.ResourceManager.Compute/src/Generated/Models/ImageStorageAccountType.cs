@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ImageStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageStorageAccountType?(string value) => value == null ? null : new ImageStorageAccountType(value);
+        public static implicit operator ImageStorageAccountType?(string value) => value == null ? (ImageStorageAccountType?)null : new ImageStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

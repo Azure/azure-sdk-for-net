@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="VmSetupAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmSetupAction?(string value) => value == null ? null : new VmSetupAction(value);
+        public static implicit operator VmSetupAction?(string value) => value == null ? (VmSetupAction?)null : new VmSetupAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

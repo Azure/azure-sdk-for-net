@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="FleetAnalyticsPropertiesStorageLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FleetAnalyticsPropertiesStorageLocationType?(string value) => value == null ? null : new FleetAnalyticsPropertiesStorageLocationType(value);
+        public static implicit operator FleetAnalyticsPropertiesStorageLocationType?(string value) => value == null ? (FleetAnalyticsPropertiesStorageLocationType?)null : new FleetAnalyticsPropertiesStorageLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

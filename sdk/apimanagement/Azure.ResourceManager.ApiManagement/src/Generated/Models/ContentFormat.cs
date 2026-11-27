@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentFormat?(string value) => value == null ? null : new ContentFormat(value);
+        public static implicit operator ContentFormat?(string value) => value == null ? (ContentFormat?)null : new ContentFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

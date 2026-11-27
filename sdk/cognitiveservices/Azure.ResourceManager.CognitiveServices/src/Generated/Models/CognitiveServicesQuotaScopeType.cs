@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesQuotaScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesQuotaScopeType?(string value) => value == null ? null : new CognitiveServicesQuotaScopeType(value);
+        public static implicit operator CognitiveServicesQuotaScopeType?(string value) => value == null ? (CognitiveServicesQuotaScopeType?)null : new CognitiveServicesQuotaScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

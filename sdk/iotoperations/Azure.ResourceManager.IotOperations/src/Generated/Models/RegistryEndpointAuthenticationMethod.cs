@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="RegistryEndpointAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegistryEndpointAuthenticationMethod?(string value) => value == null ? null : new RegistryEndpointAuthenticationMethod(value);
+        public static implicit operator RegistryEndpointAuthenticationMethod?(string value) => value == null ? (RegistryEndpointAuthenticationMethod?)null : new RegistryEndpointAuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

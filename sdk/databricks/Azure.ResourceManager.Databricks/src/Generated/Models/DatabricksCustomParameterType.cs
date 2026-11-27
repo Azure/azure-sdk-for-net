@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksCustomParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksCustomParameterType?(string value) => value == null ? null : new DatabricksCustomParameterType(value);
+        public static implicit operator DatabricksCustomParameterType?(string value) => value == null ? (DatabricksCustomParameterType?)null : new DatabricksCustomParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

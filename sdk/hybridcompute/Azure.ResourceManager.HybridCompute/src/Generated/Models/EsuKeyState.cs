@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="EsuKeyState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EsuKeyState?(string value) => value == null ? null : new EsuKeyState(value);
+        public static implicit operator EsuKeyState?(string value) => value == null ? (EsuKeyState?)null : new EsuKeyState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

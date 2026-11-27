@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Converts a string to a <see cref="ReasonChronicityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReasonChronicityType?(string value) => value == null ? null : new ReasonChronicityType(value);
+        public static implicit operator ReasonChronicityType?(string value) => value == null ? (ReasonChronicityType?)null : new ReasonChronicityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="TemplateDeploymentPreflightOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemplateDeploymentPreflightOption?(string value) => value == null ? null : new TemplateDeploymentPreflightOption(value);
+        public static implicit operator TemplateDeploymentPreflightOption?(string value) => value == null ? (TemplateDeploymentPreflightOption?)null : new TemplateDeploymentPreflightOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

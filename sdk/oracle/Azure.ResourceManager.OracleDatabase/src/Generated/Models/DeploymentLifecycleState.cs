@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentLifecycleState?(string value) => value == null ? null : new DeploymentLifecycleState(value);
+        public static implicit operator DeploymentLifecycleState?(string value) => value == null ? (DeploymentLifecycleState?)null : new DeploymentLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

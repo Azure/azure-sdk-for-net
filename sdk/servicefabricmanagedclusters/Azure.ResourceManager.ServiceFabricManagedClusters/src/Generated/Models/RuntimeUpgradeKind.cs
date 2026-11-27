@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeUpgradeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeUpgradeKind?(string value) => value == null ? null : new RuntimeUpgradeKind(value);
+        public static implicit operator RuntimeUpgradeKind?(string value) => value == null ? (RuntimeUpgradeKind?)null : new RuntimeUpgradeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

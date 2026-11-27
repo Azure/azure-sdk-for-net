@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="AdvisorConfigurationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvisorConfigurationName?(string value) => value == null ? null : new AdvisorConfigurationName(value);
+        public static implicit operator AdvisorConfigurationName?(string value) => value == null ? (AdvisorConfigurationName?)null : new AdvisorConfigurationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

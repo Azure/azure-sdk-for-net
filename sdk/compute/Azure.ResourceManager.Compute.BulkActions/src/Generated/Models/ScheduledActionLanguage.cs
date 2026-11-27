@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionLanguage?(string value) => value == null ? null : new ScheduledActionLanguage(value);
+        public static implicit operator ScheduledActionLanguage?(string value) => value == null ? (ScheduledActionLanguage?)null : new ScheduledActionLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

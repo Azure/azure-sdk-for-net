@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="CloudServicesNetworkEnableDefaultEgressEndpoint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudServicesNetworkEnableDefaultEgressEndpoint?(string value) => value == null ? null : new CloudServicesNetworkEnableDefaultEgressEndpoint(value);
+        public static implicit operator CloudServicesNetworkEnableDefaultEgressEndpoint?(string value) => value == null ? (CloudServicesNetworkEnableDefaultEgressEndpoint?)null : new CloudServicesNetworkEnableDefaultEgressEndpoint(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

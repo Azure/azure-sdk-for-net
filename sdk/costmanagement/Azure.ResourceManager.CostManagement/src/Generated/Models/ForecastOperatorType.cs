@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ForecastOperatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForecastOperatorType?(string value) => value == null ? null : new ForecastOperatorType(value);
+        public static implicit operator ForecastOperatorType?(string value) => value == null ? (ForecastOperatorType?)null : new ForecastOperatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

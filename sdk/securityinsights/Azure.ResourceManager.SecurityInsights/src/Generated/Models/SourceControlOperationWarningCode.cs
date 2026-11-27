@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlOperationWarningCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlOperationWarningCode?(string value) => value == null ? null : new SourceControlOperationWarningCode(value);
+        public static implicit operator SourceControlOperationWarningCode?(string value) => value == null ? (SourceControlOperationWarningCode?)null : new SourceControlOperationWarningCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

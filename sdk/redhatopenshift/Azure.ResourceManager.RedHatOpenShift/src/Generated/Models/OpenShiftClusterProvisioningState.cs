@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Converts a string to a <see cref="OpenShiftClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenShiftClusterProvisioningState?(string value) => value == null ? null : new OpenShiftClusterProvisioningState(value);
+        public static implicit operator OpenShiftClusterProvisioningState?(string value) => value == null ? (OpenShiftClusterProvisioningState?)null : new OpenShiftClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

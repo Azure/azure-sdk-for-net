@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="NotificationThresholdType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationThresholdType?(string value) => value == null ? null : new NotificationThresholdType(value);
+        public static implicit operator NotificationThresholdType?(string value) => value == null ? (NotificationThresholdType?)null : new NotificationThresholdType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

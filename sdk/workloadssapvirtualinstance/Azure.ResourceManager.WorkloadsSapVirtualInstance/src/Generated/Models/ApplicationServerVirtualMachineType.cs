@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationServerVirtualMachineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationServerVirtualMachineType?(string value) => value == null ? null : new ApplicationServerVirtualMachineType(value);
+        public static implicit operator ApplicationServerVirtualMachineType?(string value) => value == null ? (ApplicationServerVirtualMachineType?)null : new ApplicationServerVirtualMachineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

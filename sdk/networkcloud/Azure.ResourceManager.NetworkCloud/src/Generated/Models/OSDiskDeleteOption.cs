@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="OSDiskDeleteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OSDiskDeleteOption?(string value) => value == null ? null : new OSDiskDeleteOption(value);
+        public static implicit operator OSDiskDeleteOption?(string value) => value == null ? (OSDiskDeleteOption?)null : new OSDiskDeleteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

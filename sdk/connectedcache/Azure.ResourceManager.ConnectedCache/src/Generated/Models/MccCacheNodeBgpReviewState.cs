@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="MccCacheNodeBgpReviewState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MccCacheNodeBgpReviewState?(string value) => value == null ? null : new MccCacheNodeBgpReviewState(value);
+        public static implicit operator MccCacheNodeBgpReviewState?(string value) => value == null ? (MccCacheNodeBgpReviewState?)null : new MccCacheNodeBgpReviewState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

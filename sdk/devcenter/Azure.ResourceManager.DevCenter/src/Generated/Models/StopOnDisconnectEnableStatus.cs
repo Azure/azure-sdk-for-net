@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="StopOnDisconnectEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StopOnDisconnectEnableStatus?(string value) => value == null ? null : new StopOnDisconnectEnableStatus(value);
+        public static implicit operator StopOnDisconnectEnableStatus?(string value) => value == null ? (StopOnDisconnectEnableStatus?)null : new StopOnDisconnectEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

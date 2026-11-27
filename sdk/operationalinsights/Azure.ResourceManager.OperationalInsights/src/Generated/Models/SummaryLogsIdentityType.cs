@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="SummaryLogsIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryLogsIdentityType?(string value) => value == null ? null : new SummaryLogsIdentityType(value);
+        public static implicit operator SummaryLogsIdentityType?(string value) => value == null ? (SummaryLogsIdentityType?)null : new SummaryLogsIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceNetworkIpvsScheduler"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceNetworkIpvsScheduler?(string value) => value == null ? null : new ContainerServiceNetworkIpvsScheduler(value);
+        public static implicit operator ContainerServiceNetworkIpvsScheduler?(string value) => value == null ? (ContainerServiceNetworkIpvsScheduler?)null : new ContainerServiceNetworkIpvsScheduler(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

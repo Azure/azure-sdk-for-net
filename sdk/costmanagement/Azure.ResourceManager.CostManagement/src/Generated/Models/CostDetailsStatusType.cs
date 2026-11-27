@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostDetailsStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostDetailsStatusType?(string value) => value == null ? null : new CostDetailsStatusType(value);
+        public static implicit operator CostDetailsStatusType?(string value) => value == null ? (CostDetailsStatusType?)null : new CostDetailsStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

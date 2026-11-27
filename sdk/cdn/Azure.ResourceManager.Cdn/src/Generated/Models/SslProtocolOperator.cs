@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="SslProtocolOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SslProtocolOperator?(string value) => value == null ? null : new SslProtocolOperator(value);
+        public static implicit operator SslProtocolOperator?(string value) => value == null ? (SslProtocolOperator?)null : new SslProtocolOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

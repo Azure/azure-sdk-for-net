@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="AnalyticalStorageSchemaType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyticalStorageSchemaType?(string value) => value == null ? null : new AnalyticalStorageSchemaType(value);
+        public static implicit operator AnalyticalStorageSchemaType?(string value) => value == null ? (AnalyticalStorageSchemaType?)null : new AnalyticalStorageSchemaType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

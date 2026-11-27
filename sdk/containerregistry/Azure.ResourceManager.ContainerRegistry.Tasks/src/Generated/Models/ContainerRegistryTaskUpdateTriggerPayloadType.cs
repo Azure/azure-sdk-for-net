@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskUpdateTriggerPayloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskUpdateTriggerPayloadType?(string value) => value == null ? null : new ContainerRegistryTaskUpdateTriggerPayloadType(value);
+        public static implicit operator ContainerRegistryTaskUpdateTriggerPayloadType?(string value) => value == null ? (ContainerRegistryTaskUpdateTriggerPayloadType?)null : new ContainerRegistryTaskUpdateTriggerPayloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningStackMetaLearnerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningStackMetaLearnerType?(string value) => value == null ? null : new MachineLearningStackMetaLearnerType(value);
+        public static implicit operator MachineLearningStackMetaLearnerType?(string value) => value == null ? (MachineLearningStackMetaLearnerType?)null : new MachineLearningStackMetaLearnerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

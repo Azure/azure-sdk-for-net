@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="SyncOnPremSamAccountName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncOnPremSamAccountName?(string value) => value == null ? null : new SyncOnPremSamAccountName(value);
+        public static implicit operator SyncOnPremSamAccountName?(string value) => value == null ? (SyncOnPremSamAccountName?)null : new SyncOnPremSamAccountName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

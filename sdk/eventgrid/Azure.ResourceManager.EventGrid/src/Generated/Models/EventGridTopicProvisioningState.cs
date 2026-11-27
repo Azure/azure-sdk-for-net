@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridTopicProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridTopicProvisioningState?(string value) => value == null ? null : new EventGridTopicProvisioningState(value);
+        public static implicit operator EventGridTopicProvisioningState?(string value) => value == null ? (EventGridTopicProvisioningState?)null : new EventGridTopicProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

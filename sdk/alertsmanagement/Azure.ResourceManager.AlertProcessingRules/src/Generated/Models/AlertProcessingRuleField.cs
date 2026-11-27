@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <summary> Converts a string to a <see cref="AlertProcessingRuleField"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertProcessingRuleField?(string value) => value == null ? null : new AlertProcessingRuleField(value);
+        public static implicit operator AlertProcessingRuleField?(string value) => value == null ? (AlertProcessingRuleField?)null : new AlertProcessingRuleField(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

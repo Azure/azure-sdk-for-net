@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolNetworkPortProtocol?(string value) => value == null ? null : new AgentPoolNetworkPortProtocol(value);
+        public static implicit operator AgentPoolNetworkPortProtocol?(string value) => value == null ? (AgentPoolNetworkPortProtocol?)null : new AgentPoolNetworkPortProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

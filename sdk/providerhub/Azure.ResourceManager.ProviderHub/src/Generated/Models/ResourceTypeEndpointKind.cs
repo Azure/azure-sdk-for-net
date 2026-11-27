@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeEndpointKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeEndpointKind?(string value) => value == null ? null : new ResourceTypeEndpointKind(value);
+        public static implicit operator ResourceTypeEndpointKind?(string value) => value == null ? (ResourceTypeEndpointKind?)null : new ResourceTypeEndpointKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

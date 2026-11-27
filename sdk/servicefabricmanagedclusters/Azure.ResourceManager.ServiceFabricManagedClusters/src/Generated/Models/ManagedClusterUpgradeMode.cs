@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterUpgradeMode?(string value) => value == null ? null : new ManagedClusterUpgradeMode(value);
+        public static implicit operator ManagedClusterUpgradeMode?(string value) => value == null ? (ManagedClusterUpgradeMode?)null : new ManagedClusterUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsSchemaCompatibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsSchemaCompatibility?(string value) => value == null ? null : new EventHubsSchemaCompatibility(value);
+        public static implicit operator EventHubsSchemaCompatibility?(string value) => value == null ? (EventHubsSchemaCompatibility?)null : new EventHubsSchemaCompatibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

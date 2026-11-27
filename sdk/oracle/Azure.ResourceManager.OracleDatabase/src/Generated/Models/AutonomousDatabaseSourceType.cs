@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseSourceType?(string value) => value == null ? null : new AutonomousDatabaseSourceType(value);
+        public static implicit operator AutonomousDatabaseSourceType?(string value) => value == null ? (AutonomousDatabaseSourceType?)null : new AutonomousDatabaseSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

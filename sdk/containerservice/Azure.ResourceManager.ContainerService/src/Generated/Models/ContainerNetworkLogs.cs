@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerNetworkLogs"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerNetworkLogs?(string value) => value == null ? null : new ContainerNetworkLogs(value);
+        public static implicit operator ContainerNetworkLogs?(string value) => value == null ? (ContainerNetworkLogs?)null : new ContainerNetworkLogs(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

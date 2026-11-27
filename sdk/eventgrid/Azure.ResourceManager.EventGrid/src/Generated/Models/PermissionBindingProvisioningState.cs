@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PermissionBindingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PermissionBindingProvisioningState?(string value) => value == null ? null : new PermissionBindingProvisioningState(value);
+        public static implicit operator PermissionBindingProvisioningState?(string value) => value == null ? (PermissionBindingProvisioningState?)null : new PermissionBindingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

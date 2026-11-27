@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="MachineSkuDiskConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineSkuDiskConnectionType?(string value) => value == null ? null : new MachineSkuDiskConnectionType(value);
+        public static implicit operator MachineSkuDiskConnectionType?(string value) => value == null ? (MachineSkuDiskConnectionType?)null : new MachineSkuDiskConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

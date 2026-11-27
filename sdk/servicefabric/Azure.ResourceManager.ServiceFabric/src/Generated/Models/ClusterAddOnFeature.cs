@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterAddOnFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterAddOnFeature?(string value) => value == null ? null : new ClusterAddOnFeature(value);
+        public static implicit operator ClusterAddOnFeature?(string value) => value == null ? (ClusterAddOnFeature?)null : new ClusterAddOnFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

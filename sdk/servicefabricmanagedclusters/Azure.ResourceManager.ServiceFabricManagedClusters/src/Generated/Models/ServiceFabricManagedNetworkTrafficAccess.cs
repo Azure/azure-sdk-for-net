@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedNetworkTrafficAccess?(string value) => value == null ? null : new ServiceFabricManagedNetworkTrafficAccess(value);
+        public static implicit operator ServiceFabricManagedNetworkTrafficAccess?(string value) => value == null ? (ServiceFabricManagedNetworkTrafficAccess?)null : new ServiceFabricManagedNetworkTrafficAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

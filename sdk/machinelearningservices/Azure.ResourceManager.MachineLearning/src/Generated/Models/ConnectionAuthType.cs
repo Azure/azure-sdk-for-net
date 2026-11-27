@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionAuthType?(string value) => value == null ? null : new ConnectionAuthType(value);
+        public static implicit operator ConnectionAuthType?(string value) => value == null ? (ConnectionAuthType?)null : new ConnectionAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

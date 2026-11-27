@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> Converts a string to a <see cref="ProvisioningStateNeuroShield"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningStateNeuroShield?(string value) => value == null ? null : new ProvisioningStateNeuroShield(value);
+        public static implicit operator ProvisioningStateNeuroShield?(string value) => value == null ? (ProvisioningStateNeuroShield?)null : new ProvisioningStateNeuroShield(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

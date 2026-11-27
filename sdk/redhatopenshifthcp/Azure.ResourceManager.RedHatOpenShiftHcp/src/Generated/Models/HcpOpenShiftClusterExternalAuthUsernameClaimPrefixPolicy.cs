@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy?(string value) => value == null ? null : new HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy(value);
+        public static implicit operator HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy?(string value) => value == null ? (HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy?)null : new HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

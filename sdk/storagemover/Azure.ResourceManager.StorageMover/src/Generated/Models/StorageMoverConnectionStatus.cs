@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="StorageMoverConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverConnectionStatus?(string value) => value == null ? null : new StorageMoverConnectionStatus(value);
+        public static implicit operator StorageMoverConnectionStatus?(string value) => value == null ? (StorageMoverConnectionStatus?)null : new StorageMoverConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

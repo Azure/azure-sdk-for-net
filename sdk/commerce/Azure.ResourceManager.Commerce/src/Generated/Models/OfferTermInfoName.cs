@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Commerce.Models
 
         /// <summary> Converts a string to a <see cref="OfferTermInfoName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OfferTermInfoName?(string value) => value == null ? null : new OfferTermInfoName(value);
+        public static implicit operator OfferTermInfoName?(string value) => value == null ? (OfferTermInfoName?)null : new OfferTermInfoName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

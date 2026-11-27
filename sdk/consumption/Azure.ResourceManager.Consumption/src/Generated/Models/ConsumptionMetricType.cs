@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionMetricType?(string value) => value == null ? null : new ConsumptionMetricType(value);
+        public static implicit operator ConsumptionMetricType?(string value) => value == null ? (ConsumptionMetricType?)null : new ConsumptionMetricType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

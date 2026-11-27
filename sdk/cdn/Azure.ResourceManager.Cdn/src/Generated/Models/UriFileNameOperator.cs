@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="UriFileNameOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UriFileNameOperator?(string value) => value == null ? null : new UriFileNameOperator(value);
+        public static implicit operator UriFileNameOperator?(string value) => value == null ? (UriFileNameOperator?)null : new UriFileNameOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

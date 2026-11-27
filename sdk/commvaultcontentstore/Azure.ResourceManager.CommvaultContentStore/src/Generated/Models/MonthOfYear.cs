@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="MonthOfYear"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonthOfYear?(string value) => value == null ? null : new MonthOfYear(value);
+        public static implicit operator MonthOfYear?(string value) => value == null ? (MonthOfYear?)null : new MonthOfYear(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

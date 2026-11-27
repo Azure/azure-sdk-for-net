@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="EventHubMessagesCompressionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubMessagesCompressionType?(string value) => value == null ? null : new EventHubMessagesCompressionType(value);
+        public static implicit operator EventHubMessagesCompressionType?(string value) => value == null ? (EventHubMessagesCompressionType?)null : new EventHubMessagesCompressionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

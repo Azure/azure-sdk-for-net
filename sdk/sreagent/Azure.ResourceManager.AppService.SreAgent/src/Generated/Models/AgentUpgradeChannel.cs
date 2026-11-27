@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="AgentUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentUpgradeChannel?(string value) => value == null ? null : new AgentUpgradeChannel(value);
+        public static implicit operator AgentUpgradeChannel?(string value) => value == null ? (AgentUpgradeChannel?)null : new AgentUpgradeChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="QuotaTierUpgradeAvailabilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuotaTierUpgradeAvailabilityStatus?(string value) => value == null ? null : new QuotaTierUpgradeAvailabilityStatus(value);
+        public static implicit operator QuotaTierUpgradeAvailabilityStatus?(string value) => value == null ? (QuotaTierUpgradeAvailabilityStatus?)null : new QuotaTierUpgradeAvailabilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewaySslCipherSuite"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewaySslCipherSuite?(string value) => value == null ? null : new ApplicationGatewaySslCipherSuite(value);
+        public static implicit operator ApplicationGatewaySslCipherSuite?(string value) => value == null ? (ApplicationGatewaySslCipherSuite?)null : new ApplicationGatewaySslCipherSuite(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

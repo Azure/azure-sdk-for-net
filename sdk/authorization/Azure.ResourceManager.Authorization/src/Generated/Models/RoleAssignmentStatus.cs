@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleAssignmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleAssignmentStatus?(string value) => value == null ? null : new RoleAssignmentStatus(value);
+        public static implicit operator RoleAssignmentStatus?(string value) => value == null ? (RoleAssignmentStatus?)null : new RoleAssignmentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

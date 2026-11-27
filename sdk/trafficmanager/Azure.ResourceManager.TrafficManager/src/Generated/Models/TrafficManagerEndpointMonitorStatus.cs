@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficManagerEndpointMonitorStatus?(string value) => value == null ? null : new TrafficManagerEndpointMonitorStatus(value);
+        public static implicit operator TrafficManagerEndpointMonitorStatus?(string value) => value == null ? (TrafficManagerEndpointMonitorStatus?)null : new TrafficManagerEndpointMonitorStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

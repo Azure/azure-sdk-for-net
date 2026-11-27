@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppKind?(string value) => value == null ? null : new ContainerAppKind(value);
+        public static implicit operator ContainerAppKind?(string value) => value == null ? (ContainerAppKind?)null : new ContainerAppKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

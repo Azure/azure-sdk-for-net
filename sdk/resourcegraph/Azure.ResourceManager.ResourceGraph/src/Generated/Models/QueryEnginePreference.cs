@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="QueryEnginePreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryEnginePreference?(string value) => value == null ? null : new QueryEnginePreference(value);
+        public static implicit operator QueryEnginePreference?(string value) => value == null ? (QueryEnginePreference?)null : new QueryEnginePreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

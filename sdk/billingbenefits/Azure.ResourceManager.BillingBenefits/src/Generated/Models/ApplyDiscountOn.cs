@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="ApplyDiscountOn"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplyDiscountOn?(string value) => value == null ? null : new ApplyDiscountOn(value);
+        public static implicit operator ApplyDiscountOn?(string value) => value == null ? (ApplyDiscountOn?)null : new ApplyDiscountOn(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

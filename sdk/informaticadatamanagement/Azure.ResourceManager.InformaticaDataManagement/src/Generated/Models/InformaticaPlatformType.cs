@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Converts a string to a <see cref="InformaticaPlatformType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InformaticaPlatformType?(string value) => value == null ? null : new InformaticaPlatformType(value);
+        public static implicit operator InformaticaPlatformType?(string value) => value == null ? (InformaticaPlatformType?)null : new InformaticaPlatformType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

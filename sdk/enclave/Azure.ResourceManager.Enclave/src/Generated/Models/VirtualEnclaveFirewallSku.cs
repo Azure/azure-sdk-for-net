@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveFirewallSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveFirewallSku?(string value) => value == null ? null : new VirtualEnclaveFirewallSku(value);
+        public static implicit operator VirtualEnclaveFirewallSku?(string value) => value == null ? (VirtualEnclaveFirewallSku?)null : new VirtualEnclaveFirewallSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

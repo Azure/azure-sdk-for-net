@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityAssessmentUserImpact"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityAssessmentUserImpact?(string value) => value == null ? null : new SecurityAssessmentUserImpact(value);
+        public static implicit operator SecurityAssessmentUserImpact?(string value) => value == null ? (SecurityAssessmentUserImpact?)null : new SecurityAssessmentUserImpact(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

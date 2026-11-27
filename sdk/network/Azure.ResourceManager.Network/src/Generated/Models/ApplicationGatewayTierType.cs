@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayTierType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayTierType?(string value) => value == null ? null : new ApplicationGatewayTierType(value);
+        public static implicit operator ApplicationGatewayTierType?(string value) => value == null ? (ApplicationGatewayTierType?)null : new ApplicationGatewayTierType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

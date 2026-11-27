@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResourceReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceReplicationRole?(string value) => value == null ? null : new ResourceReplicationRole(value);
+        public static implicit operator ResourceReplicationRole?(string value) => value == null ? (ResourceReplicationRole?)null : new ResourceReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

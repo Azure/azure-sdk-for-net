@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HiveServerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HiveServerType?(string value) => value == null ? null : new HiveServerType(value);
+        public static implicit operator HiveServerType?(string value) => value == null ? (HiveServerType?)null : new HiveServerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceAutosave"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningComputeInstanceAutosave?(string value) => value == null ? null : new MachineLearningComputeInstanceAutosave(value);
+        public static implicit operator MachineLearningComputeInstanceAutosave?(string value) => value == null ? (MachineLearningComputeInstanceAutosave?)null : new MachineLearningComputeInstanceAutosave(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

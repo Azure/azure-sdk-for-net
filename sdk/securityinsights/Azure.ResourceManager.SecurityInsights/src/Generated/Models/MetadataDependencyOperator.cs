@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="MetadataDependencyOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetadataDependencyOperator?(string value) => value == null ? null : new MetadataDependencyOperator(value);
+        public static implicit operator MetadataDependencyOperator?(string value) => value == null ? (MetadataDependencyOperator?)null : new MetadataDependencyOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

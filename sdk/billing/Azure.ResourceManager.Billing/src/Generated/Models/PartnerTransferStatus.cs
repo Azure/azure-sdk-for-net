@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="PartnerTransferStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerTransferStatus?(string value) => value == null ? null : new PartnerTransferStatus(value);
+        public static implicit operator PartnerTransferStatus?(string value) => value == null ? (PartnerTransferStatus?)null : new PartnerTransferStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

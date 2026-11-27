@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostManagementSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostManagementSettingType?(string value) => value == null ? null : new CostManagementSettingType(value);
+        public static implicit operator CostManagementSettingType?(string value) => value == null ? (CostManagementSettingType?)null : new CostManagementSettingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

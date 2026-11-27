@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskImageFileFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskImageFileFormat?(string value) => value == null ? null : new DiskImageFileFormat(value);
+        public static implicit operator DiskImageFileFormat?(string value) => value == null ? (DiskImageFileFormat?)null : new DiskImageFileFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

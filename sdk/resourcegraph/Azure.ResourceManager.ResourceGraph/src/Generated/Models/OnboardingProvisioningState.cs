@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="OnboardingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnboardingProvisioningState?(string value) => value == null ? null : new OnboardingProvisioningState(value);
+        public static implicit operator OnboardingProvisioningState?(string value) => value == null ? (OnboardingProvisioningState?)null : new OnboardingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

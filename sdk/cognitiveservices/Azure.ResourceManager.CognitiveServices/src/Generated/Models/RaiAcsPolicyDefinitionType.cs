@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiAcsPolicyDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiAcsPolicyDefinitionType?(string value) => value == null ? null : new RaiAcsPolicyDefinitionType(value);
+        public static implicit operator RaiAcsPolicyDefinitionType?(string value) => value == null ? (RaiAcsPolicyDefinitionType?)null : new RaiAcsPolicyDefinitionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

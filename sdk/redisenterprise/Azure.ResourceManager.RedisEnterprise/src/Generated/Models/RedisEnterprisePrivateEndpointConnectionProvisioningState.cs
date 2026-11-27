@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterprisePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new RedisEnterprisePrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator RedisEnterprisePrivateEndpointConnectionProvisioningState?(string value) => value == null ? (RedisEnterprisePrivateEndpointConnectionProvisioningState?)null : new RedisEnterprisePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

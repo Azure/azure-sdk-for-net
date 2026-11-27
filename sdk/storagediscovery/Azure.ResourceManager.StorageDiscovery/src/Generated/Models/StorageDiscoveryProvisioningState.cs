@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> Converts a string to a <see cref="StorageDiscoveryProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDiscoveryProvisioningState?(string value) => value == null ? null : new StorageDiscoveryProvisioningState(value);
+        public static implicit operator StorageDiscoveryProvisioningState?(string value) => value == null ? (StorageDiscoveryProvisioningState?)null : new StorageDiscoveryProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

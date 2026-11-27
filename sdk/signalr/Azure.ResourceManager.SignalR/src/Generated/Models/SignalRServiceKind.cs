@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRServiceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRServiceKind?(string value) => value == null ? null : new SignalRServiceKind(value);
+        public static implicit operator SignalRServiceKind?(string value) => value == null ? (SignalRServiceKind?)null : new SignalRServiceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningStorageAccountType?(string value) => value == null ? null : new MachineLearningStorageAccountType(value);
+        public static implicit operator MachineLearningStorageAccountType?(string value) => value == null ? (MachineLearningStorageAccountType?)null : new MachineLearningStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

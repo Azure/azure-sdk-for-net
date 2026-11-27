@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="WriteLockState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WriteLockState?(string value) => value == null ? null : new WriteLockState(value);
+        public static implicit operator WriteLockState?(string value) => value == null ? (WriteLockState?)null : new WriteLockState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator DesktopVirtualizationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (DesktopVirtualizationPrivateEndpointServiceConnectionStatus?)null : new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

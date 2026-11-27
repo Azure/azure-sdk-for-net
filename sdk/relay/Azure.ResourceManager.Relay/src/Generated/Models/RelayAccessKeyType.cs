@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayAccessKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayAccessKeyType?(string value) => value == null ? null : new RelayAccessKeyType(value);
+        public static implicit operator RelayAccessKeyType?(string value) => value == null ? (RelayAccessKeyType?)null : new RelayAccessKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

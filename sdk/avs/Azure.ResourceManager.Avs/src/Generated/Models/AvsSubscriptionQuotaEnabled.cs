@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsSubscriptionQuotaEnabled?(string value) => value == null ? null : new AvsSubscriptionQuotaEnabled(value);
+        public static implicit operator AvsSubscriptionQuotaEnabled?(string value) => value == null ? (AvsSubscriptionQuotaEnabled?)null : new AvsSubscriptionQuotaEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

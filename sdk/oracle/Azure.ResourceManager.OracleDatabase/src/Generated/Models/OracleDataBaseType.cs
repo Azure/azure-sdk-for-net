@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleDataBaseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleDataBaseType?(string value) => value == null ? null : new OracleDataBaseType(value);
+        public static implicit operator OracleDataBaseType?(string value) => value == null ? (OracleDataBaseType?)null : new OracleDataBaseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

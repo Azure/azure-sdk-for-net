@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> Converts a string to a <see cref="DisconnectedOperationsBenefitPlanStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsBenefitPlanStatus?(string value) => value == null ? null : new DisconnectedOperationsBenefitPlanStatus(value);
+        public static implicit operator DisconnectedOperationsBenefitPlanStatus?(string value) => value == null ? (DisconnectedOperationsBenefitPlanStatus?)null : new DisconnectedOperationsBenefitPlanStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

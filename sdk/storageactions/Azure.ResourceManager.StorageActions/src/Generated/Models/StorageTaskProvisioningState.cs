@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> Converts a string to a <see cref="StorageTaskProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageTaskProvisioningState?(string value) => value == null ? null : new StorageTaskProvisioningState(value);
+        public static implicit operator StorageTaskProvisioningState?(string value) => value == null ? (StorageTaskProvisioningState?)null : new StorageTaskProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <summary> Converts a string to a <see cref="AccessProfileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessProfileType?(string value) => value == null ? null : new AccessProfileType(value);
+        public static implicit operator AccessProfileType?(string value) => value == null ? (AccessProfileType?)null : new AccessProfileType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

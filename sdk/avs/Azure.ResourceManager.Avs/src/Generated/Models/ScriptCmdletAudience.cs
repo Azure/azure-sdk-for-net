@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ScriptCmdletAudience"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptCmdletAudience?(string value) => value == null ? null : new ScriptCmdletAudience(value);
+        public static implicit operator ScriptCmdletAudience?(string value) => value == null ? (ScriptCmdletAudience?)null : new ScriptCmdletAudience(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

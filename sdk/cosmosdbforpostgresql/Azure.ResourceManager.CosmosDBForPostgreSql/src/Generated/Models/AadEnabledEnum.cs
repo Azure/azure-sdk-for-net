@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="AadEnabledEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AadEnabledEnum?(string value) => value == null ? null : new AadEnabledEnum(value);
+        public static implicit operator AadEnabledEnum?(string value) => value == null ? (AadEnabledEnum?)null : new AadEnabledEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

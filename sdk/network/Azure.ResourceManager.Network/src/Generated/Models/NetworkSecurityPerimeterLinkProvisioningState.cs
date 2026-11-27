@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterLinkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterLinkProvisioningState?(string value) => value == null ? null : new NetworkSecurityPerimeterLinkProvisioningState(value);
+        public static implicit operator NetworkSecurityPerimeterLinkProvisioningState?(string value) => value == null ? (NetworkSecurityPerimeterLinkProvisioningState?)null : new NetworkSecurityPerimeterLinkProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

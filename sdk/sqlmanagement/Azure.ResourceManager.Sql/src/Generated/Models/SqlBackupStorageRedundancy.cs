@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlBackupStorageRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlBackupStorageRedundancy?(string value) => value == null ? null : new SqlBackupStorageRedundancy(value);
+        public static implicit operator SqlBackupStorageRedundancy?(string value) => value == null ? (SqlBackupStorageRedundancy?)null : new SqlBackupStorageRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

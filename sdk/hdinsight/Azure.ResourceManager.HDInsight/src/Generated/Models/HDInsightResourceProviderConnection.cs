@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightResourceProviderConnection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightResourceProviderConnection?(string value) => value == null ? null : new HDInsightResourceProviderConnection(value);
+        public static implicit operator HDInsightResourceProviderConnection?(string value) => value == null ? (HDInsightResourceProviderConnection?)null : new HDInsightResourceProviderConnection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

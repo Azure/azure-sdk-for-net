@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterConfigProvisioningState?(string value) => value == null ? null : new NetworkSecurityPerimeterConfigProvisioningState(value);
+        public static implicit operator NetworkSecurityPerimeterConfigProvisioningState?(string value) => value == null ? (NetworkSecurityPerimeterConfigProvisioningState?)null : new NetworkSecurityPerimeterConfigProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

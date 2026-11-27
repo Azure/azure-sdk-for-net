@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoSkuTier?(string value) => value == null ? null : new KustoSkuTier(value);
+        public static implicit operator KustoSkuTier?(string value) => value == null ? (KustoSkuTier?)null : new KustoSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

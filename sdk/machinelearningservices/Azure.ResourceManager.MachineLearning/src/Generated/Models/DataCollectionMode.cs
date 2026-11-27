@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="DataCollectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataCollectionMode?(string value) => value == null ? null : new DataCollectionMode(value);
+        public static implicit operator DataCollectionMode?(string value) => value == null ? (DataCollectionMode?)null : new DataCollectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

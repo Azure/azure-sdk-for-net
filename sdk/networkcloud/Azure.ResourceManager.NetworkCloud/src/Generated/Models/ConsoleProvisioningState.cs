@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ConsoleProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsoleProvisioningState?(string value) => value == null ? null : new ConsoleProvisioningState(value);
+        public static implicit operator ConsoleProvisioningState?(string value) => value == null ? (ConsoleProvisioningState?)null : new ConsoleProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerInstanceTargetRecommendationReportSectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerInstanceTargetRecommendationReportSectionType?(string value) => value == null ? null : new SqlServerInstanceTargetRecommendationReportSectionType(value);
+        public static implicit operator SqlServerInstanceTargetRecommendationReportSectionType?(string value) => value == null ? (SqlServerInstanceTargetRecommendationReportSectionType?)null : new SqlServerInstanceTargetRecommendationReportSectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

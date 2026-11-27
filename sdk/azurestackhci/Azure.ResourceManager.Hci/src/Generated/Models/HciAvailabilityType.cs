@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciAvailabilityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciAvailabilityType?(string value) => value == null ? null : new HciAvailabilityType(value);
+        public static implicit operator HciAvailabilityType?(string value) => value == null ? (HciAvailabilityType?)null : new HciAvailabilityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

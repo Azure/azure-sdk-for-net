@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ResponsibilitySeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponsibilitySeverity?(string value) => value == null ? null : new ResponsibilitySeverity(value);
+        public static implicit operator ResponsibilitySeverity?(string value) => value == null ? (ResponsibilitySeverity?)null : new ResponsibilitySeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

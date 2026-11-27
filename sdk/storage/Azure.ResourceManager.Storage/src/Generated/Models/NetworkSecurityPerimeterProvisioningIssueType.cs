@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterProvisioningIssueType?(string value) => value == null ? null : new NetworkSecurityPerimeterProvisioningIssueType(value);
+        public static implicit operator NetworkSecurityPerimeterProvisioningIssueType?(string value) => value == null ? (NetworkSecurityPerimeterProvisioningIssueType?)null : new NetworkSecurityPerimeterProvisioningIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

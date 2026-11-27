@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabTransportProtocol?(string value) => value == null ? null : new DevTestLabTransportProtocol(value);
+        public static implicit operator DevTestLabTransportProtocol?(string value) => value == null ? (DevTestLabTransportProtocol?)null : new DevTestLabTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

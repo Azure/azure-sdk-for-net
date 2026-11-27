@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmSecurityRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmSecurityRuleAccess?(string value) => value == null ? null : new HciVmSecurityRuleAccess(value);
+        public static implicit operator HciVmSecurityRuleAccess?(string value) => value == null ? (HciVmSecurityRuleAccess?)null : new HciVmSecurityRuleAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

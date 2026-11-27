@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="EncryptionScopesIncludeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EncryptionScopesIncludeType?(string value) => value == null ? null : new EncryptionScopesIncludeType(value);
+        public static implicit operator EncryptionScopesIncludeType?(string value) => value == null ? (EncryptionScopesIncludeType?)null : new EncryptionScopesIncludeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

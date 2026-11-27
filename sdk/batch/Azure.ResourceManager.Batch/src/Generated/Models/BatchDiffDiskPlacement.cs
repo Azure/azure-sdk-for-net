@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchDiffDiskPlacement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchDiffDiskPlacement?(string value) => value == null ? null : new BatchDiffDiskPlacement(value);
+        public static implicit operator BatchDiffDiskPlacement?(string value) => value == null ? (BatchDiffDiskPlacement?)null : new BatchDiffDiskPlacement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

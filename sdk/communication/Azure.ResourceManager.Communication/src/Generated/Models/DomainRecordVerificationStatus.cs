@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="DomainRecordVerificationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainRecordVerificationStatus?(string value) => value == null ? null : new DomainRecordVerificationStatus(value);
+        public static implicit operator DomainRecordVerificationStatus?(string value) => value == null ? (DomainRecordVerificationStatus?)null : new DomainRecordVerificationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryDiskReplicationProgressHealth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryDiskReplicationProgressHealth?(string value) => value == null ? null : new SiteRecoveryDiskReplicationProgressHealth(value);
+        public static implicit operator SiteRecoveryDiskReplicationProgressHealth?(string value) => value == null ? (SiteRecoveryDiskReplicationProgressHealth?)null : new SiteRecoveryDiskReplicationProgressHealth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

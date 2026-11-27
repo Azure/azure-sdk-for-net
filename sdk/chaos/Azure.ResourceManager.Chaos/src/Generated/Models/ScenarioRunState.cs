@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ScenarioRunState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScenarioRunState?(string value) => value == null ? null : new ScenarioRunState(value);
+        public static implicit operator ScenarioRunState?(string value) => value == null ? (ScenarioRunState?)null : new ScenarioRunState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

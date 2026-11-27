@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="InheritFromParentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InheritFromParentState?(string value) => value == null ? null : new InheritFromParentState(value);
+        public static implicit operator InheritFromParentState?(string value) => value == null ? (InheritFromParentState?)null : new InheritFromParentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

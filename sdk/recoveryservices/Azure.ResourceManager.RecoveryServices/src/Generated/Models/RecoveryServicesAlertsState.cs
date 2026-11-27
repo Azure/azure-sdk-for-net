@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryServicesAlertsState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesAlertsState?(string value) => value == null ? null : new RecoveryServicesAlertsState(value);
+        public static implicit operator RecoveryServicesAlertsState?(string value) => value == null ? (RecoveryServicesAlertsState?)null : new RecoveryServicesAlertsState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

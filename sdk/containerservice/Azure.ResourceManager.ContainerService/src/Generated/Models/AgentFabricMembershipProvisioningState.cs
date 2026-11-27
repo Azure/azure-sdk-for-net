@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentFabricMembershipProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentFabricMembershipProvisioningState?(string value) => value == null ? null : new AgentFabricMembershipProvisioningState(value);
+        public static implicit operator AgentFabricMembershipProvisioningState?(string value) => value == null ? (AgentFabricMembershipProvisioningState?)null : new AgentFabricMembershipProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

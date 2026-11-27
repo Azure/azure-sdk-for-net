@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="VaultUpgradeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultUpgradeState?(string value) => value == null ? null : new VaultUpgradeState(value);
+        public static implicit operator VaultUpgradeState?(string value) => value == null ? (VaultUpgradeState?)null : new VaultUpgradeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

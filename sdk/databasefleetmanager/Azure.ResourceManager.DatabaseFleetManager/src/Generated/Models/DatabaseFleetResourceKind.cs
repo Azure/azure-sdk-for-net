@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseFleetResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseFleetResourceKind?(string value) => value == null ? null : new DatabaseFleetResourceKind(value);
+        public static implicit operator DatabaseFleetResourceKind?(string value) => value == null ? (DatabaseFleetResourceKind?)null : new DatabaseFleetResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

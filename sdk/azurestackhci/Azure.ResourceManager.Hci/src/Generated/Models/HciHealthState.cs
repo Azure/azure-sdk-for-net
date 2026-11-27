@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciHealthState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciHealthState?(string value) => value == null ? null : new HciHealthState(value);
+        public static implicit operator HciHealthState?(string value) => value == null ? (HciHealthState?)null : new HciHealthState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

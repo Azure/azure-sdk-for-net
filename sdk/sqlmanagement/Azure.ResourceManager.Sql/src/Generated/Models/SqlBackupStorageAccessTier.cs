@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlBackupStorageAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlBackupStorageAccessTier?(string value) => value == null ? null : new SqlBackupStorageAccessTier(value);
+        public static implicit operator SqlBackupStorageAccessTier?(string value) => value == null ? (SqlBackupStorageAccessTier?)null : new SqlBackupStorageAccessTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmOSType?(string value) => value == null ? null : new HciVmOSType(value);
+        public static implicit operator HciVmOSType?(string value) => value == null ? (HciVmOSType?)null : new HciVmOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

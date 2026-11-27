@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupFabricName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupFabricName?(string value) => value == null ? null : new BackupFabricName(value);
+        public static implicit operator BackupFabricName?(string value) => value == null ? (BackupFabricName?)null : new BackupFabricName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SnapshotAccessState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotAccessState?(string value) => value == null ? null : new SnapshotAccessState(value);
+        public static implicit operator SnapshotAccessState?(string value) => value == null ? (SnapshotAccessState?)null : new SnapshotAccessState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

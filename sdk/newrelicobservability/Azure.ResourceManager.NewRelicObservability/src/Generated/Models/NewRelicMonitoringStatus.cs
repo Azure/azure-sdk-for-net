@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicMonitoringStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicMonitoringStatus?(string value) => value == null ? null : new NewRelicMonitoringStatus(value);
+        public static implicit operator NewRelicMonitoringStatus?(string value) => value == null ? (NewRelicMonitoringStatus?)null : new NewRelicMonitoringStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

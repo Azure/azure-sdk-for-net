@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         /// <summary> Converts a string to a <see cref="CustomLocationHostType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomLocationHostType?(string value) => value == null ? null : new CustomLocationHostType(value);
+        public static implicit operator CustomLocationHostType?(string value) => value == null ? (CustomLocationHostType?)null : new CustomLocationHostType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

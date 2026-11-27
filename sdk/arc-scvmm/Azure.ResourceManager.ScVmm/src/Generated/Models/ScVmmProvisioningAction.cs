@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="ScVmmProvisioningAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScVmmProvisioningAction?(string value) => value == null ? null : new ScVmmProvisioningAction(value);
+        public static implicit operator ScVmmProvisioningAction?(string value) => value == null ? (ScVmmProvisioningAction?)null : new ScVmmProvisioningAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

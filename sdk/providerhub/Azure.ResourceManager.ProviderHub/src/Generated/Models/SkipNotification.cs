@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="SkipNotification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkipNotification?(string value) => value == null ? null : new SkipNotification(value);
+        public static implicit operator SkipNotification?(string value) => value == null ? (SkipNotification?)null : new SkipNotification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

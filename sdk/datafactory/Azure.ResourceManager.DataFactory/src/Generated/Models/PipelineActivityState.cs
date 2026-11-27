@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="PipelineActivityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineActivityState?(string value) => value == null ? null : new PipelineActivityState(value);
+        public static implicit operator PipelineActivityState?(string value) => value == null ? (PipelineActivityState?)null : new PipelineActivityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

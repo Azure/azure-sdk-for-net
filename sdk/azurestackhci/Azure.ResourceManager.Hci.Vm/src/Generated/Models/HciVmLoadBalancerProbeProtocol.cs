@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmLoadBalancerProbeProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmLoadBalancerProbeProtocol?(string value) => value == null ? null : new HciVmLoadBalancerProbeProtocol(value);
+        public static implicit operator HciVmLoadBalancerProbeProtocol?(string value) => value == null ? (HciVmLoadBalancerProbeProtocol?)null : new HciVmLoadBalancerProbeProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

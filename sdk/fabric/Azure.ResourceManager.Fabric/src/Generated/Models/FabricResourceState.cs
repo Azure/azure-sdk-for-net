@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> Converts a string to a <see cref="FabricResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricResourceState?(string value) => value == null ? null : new FabricResourceState(value);
+        public static implicit operator FabricResourceState?(string value) => value == null ? (FabricResourceState?)null : new FabricResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

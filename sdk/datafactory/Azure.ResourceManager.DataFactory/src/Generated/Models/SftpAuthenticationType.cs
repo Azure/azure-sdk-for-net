@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SftpAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SftpAuthenticationType?(string value) => value == null ? null : new SftpAuthenticationType(value);
+        public static implicit operator SftpAuthenticationType?(string value) => value == null ? (SftpAuthenticationType?)null : new SftpAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

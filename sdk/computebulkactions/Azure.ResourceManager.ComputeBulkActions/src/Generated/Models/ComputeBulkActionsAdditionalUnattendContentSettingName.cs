@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsAdditionalUnattendContentSettingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsAdditionalUnattendContentSettingName?(string value) => value == null ? null : new ComputeBulkActionsAdditionalUnattendContentSettingName(value);
+        public static implicit operator ComputeBulkActionsAdditionalUnattendContentSettingName?(string value) => value == null ? (ComputeBulkActionsAdditionalUnattendContentSettingName?)null : new ComputeBulkActionsAdditionalUnattendContentSettingName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

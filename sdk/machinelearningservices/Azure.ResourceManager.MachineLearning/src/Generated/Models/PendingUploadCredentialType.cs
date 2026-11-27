@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="PendingUploadCredentialType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PendingUploadCredentialType?(string value) => value == null ? null : new PendingUploadCredentialType(value);
+        public static implicit operator PendingUploadCredentialType?(string value) => value == null ? (PendingUploadCredentialType?)null : new PendingUploadCredentialType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

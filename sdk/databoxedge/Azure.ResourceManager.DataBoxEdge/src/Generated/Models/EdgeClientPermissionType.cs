@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="EdgeClientPermissionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeClientPermissionType?(string value) => value == null ? null : new EdgeClientPermissionType(value);
+        public static implicit operator EdgeClientPermissionType?(string value) => value == null ? (EdgeClientPermissionType?)null : new EdgeClientPermissionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

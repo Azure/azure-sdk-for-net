@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="ResourcesWithoutDeleteSupportAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcesWithoutDeleteSupportAction?(string value) => value == null ? null : new ResourcesWithoutDeleteSupportAction(value);
+        public static implicit operator ResourcesWithoutDeleteSupportAction?(string value) => value == null ? (ResourcesWithoutDeleteSupportAction?)null : new ResourcesWithoutDeleteSupportAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="HighSpeedInterconnectPlacement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HighSpeedInterconnectPlacement?(string value) => value == null ? null : new HighSpeedInterconnectPlacement(value);
+        public static implicit operator HighSpeedInterconnectPlacement?(string value) => value == null ? (HighSpeedInterconnectPlacement?)null : new HighSpeedInterconnectPlacement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> Converts a string to a <see cref="KeyEncryptionKeyIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyEncryptionKeyIdentityType?(string value) => value == null ? null : new KeyEncryptionKeyIdentityType(value);
+        public static implicit operator KeyEncryptionKeyIdentityType?(string value) => value == null ? (KeyEncryptionKeyIdentityType?)null : new KeyEncryptionKeyIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

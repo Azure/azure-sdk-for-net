@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="ResourceIdentifierType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceIdentifierType?(string value) => value == null ? null : new ResourceIdentifierType(value);
+        public static implicit operator ResourceIdentifierType?(string value) => value == null ? (ResourceIdentifierType?)null : new ResourceIdentifierType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

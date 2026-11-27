@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeRegistrationRegionality"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeRegistrationRegionality?(string value) => value == null ? null : new ResourceTypeRegistrationRegionality(value);
+        public static implicit operator ResourceTypeRegistrationRegionality?(string value) => value == null ? (ResourceTypeRegistrationRegionality?)null : new ResourceTypeRegistrationRegionality(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

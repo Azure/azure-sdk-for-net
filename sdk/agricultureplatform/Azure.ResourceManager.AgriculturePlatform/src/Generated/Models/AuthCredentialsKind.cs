@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
 
         /// <summary> Converts a string to a <see cref="AuthCredentialsKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthCredentialsKind?(string value) => value == null ? null : new AuthCredentialsKind(value);
+        public static implicit operator AuthCredentialsKind?(string value) => value == null ? (AuthCredentialsKind?)null : new AuthCredentialsKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

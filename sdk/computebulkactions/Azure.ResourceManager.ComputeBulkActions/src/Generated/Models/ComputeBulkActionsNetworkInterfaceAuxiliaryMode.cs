@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsNetworkInterfaceAuxiliaryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsNetworkInterfaceAuxiliaryMode?(string value) => value == null ? null : new ComputeBulkActionsNetworkInterfaceAuxiliaryMode(value);
+        public static implicit operator ComputeBulkActionsNetworkInterfaceAuxiliaryMode?(string value) => value == null ? (ComputeBulkActionsNetworkInterfaceAuxiliaryMode?)null : new ComputeBulkActionsNetworkInterfaceAuxiliaryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

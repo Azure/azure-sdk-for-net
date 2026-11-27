@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceSaasAutoRenew"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceSaasAutoRenew?(string value) => value == null ? null : new MarketplaceSaasAutoRenew(value);
+        public static implicit operator MarketplaceSaasAutoRenew?(string value) => value == null ? (MarketplaceSaasAutoRenew?)null : new MarketplaceSaasAutoRenew(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="DiscountEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscountEntityType?(string value) => value == null ? null : new DiscountEntityType(value);
+        public static implicit operator DiscountEntityType?(string value) => value == null ? (DiscountEntityType?)null : new DiscountEntityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

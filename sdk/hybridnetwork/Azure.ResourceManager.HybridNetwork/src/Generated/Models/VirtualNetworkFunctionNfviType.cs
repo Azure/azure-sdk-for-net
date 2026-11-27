@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkFunctionNfviType?(string value) => value == null ? null : new VirtualNetworkFunctionNfviType(value);
+        public static implicit operator VirtualNetworkFunctionNfviType?(string value) => value == null ? (VirtualNetworkFunctionNfviType?)null : new VirtualNetworkFunctionNfviType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

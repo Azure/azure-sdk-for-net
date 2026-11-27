@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Converts a string to a <see cref="ValidationTestInputDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationTestInputDataType?(string value) => value == null ? null : new ValidationTestInputDataType(value);
+        public static implicit operator ValidationTestInputDataType?(string value) => value == null ? (ValidationTestInputDataType?)null : new ValidationTestInputDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

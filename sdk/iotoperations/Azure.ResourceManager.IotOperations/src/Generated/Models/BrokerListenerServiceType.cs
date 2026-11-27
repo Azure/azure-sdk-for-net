@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerListenerServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerListenerServiceType?(string value) => value == null ? null : new BrokerListenerServiceType(value);
+        public static implicit operator BrokerListenerServiceType?(string value) => value == null ? (BrokerListenerServiceType?)null : new BrokerListenerServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

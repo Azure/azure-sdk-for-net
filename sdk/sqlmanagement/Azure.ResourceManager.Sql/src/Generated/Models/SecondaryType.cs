@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SecondaryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecondaryType?(string value) => value == null ? null : new SecondaryType(value);
+        public static implicit operator SecondaryType?(string value) => value == null ? (SecondaryType?)null : new SecondaryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

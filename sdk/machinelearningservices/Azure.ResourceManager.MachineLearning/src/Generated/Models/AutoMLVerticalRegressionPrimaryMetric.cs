@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="AutoMLVerticalRegressionPrimaryMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoMLVerticalRegressionPrimaryMetric?(string value) => value == null ? null : new AutoMLVerticalRegressionPrimaryMetric(value);
+        public static implicit operator AutoMLVerticalRegressionPrimaryMetric?(string value) => value == null ? (AutoMLVerticalRegressionPrimaryMetric?)null : new AutoMLVerticalRegressionPrimaryMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

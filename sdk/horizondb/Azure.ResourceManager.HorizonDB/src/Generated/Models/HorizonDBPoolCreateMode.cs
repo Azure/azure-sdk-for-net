@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBPoolCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBPoolCreateMode?(string value) => value == null ? null : new HorizonDBPoolCreateMode(value);
+        public static implicit operator HorizonDBPoolCreateMode?(string value) => value == null ? (HorizonDBPoolCreateMode?)null : new HorizonDBPoolCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

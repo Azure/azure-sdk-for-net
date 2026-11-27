@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorPrivateLinkScopeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorPrivateLinkScopeProvisioningState?(string value) => value == null ? null : new MonitorPrivateLinkScopeProvisioningState(value);
+        public static implicit operator MonitorPrivateLinkScopeProvisioningState?(string value) => value == null ? (MonitorPrivateLinkScopeProvisioningState?)null : new MonitorPrivateLinkScopeProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

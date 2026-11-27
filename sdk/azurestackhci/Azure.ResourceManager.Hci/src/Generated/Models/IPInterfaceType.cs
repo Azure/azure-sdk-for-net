@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="IPInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPInterfaceType?(string value) => value == null ? null : new IPInterfaceType(value);
+        public static implicit operator IPInterfaceType?(string value) => value == null ? (IPInterfaceType?)null : new IPInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

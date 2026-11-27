@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="DiskDetailsDiskSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskDetailsDiskSkuName?(string value) => value == null ? null : new DiskDetailsDiskSkuName(value);
+        public static implicit operator DiskDetailsDiskSkuName?(string value) => value == null ? (DiskDetailsDiskSkuName?)null : new DiskDetailsDiskSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

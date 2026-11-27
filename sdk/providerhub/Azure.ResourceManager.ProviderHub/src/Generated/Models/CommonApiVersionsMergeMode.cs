@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="CommonApiVersionsMergeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommonApiVersionsMergeMode?(string value) => value == null ? null : new CommonApiVersionsMergeMode(value);
+        public static implicit operator CommonApiVersionsMergeMode?(string value) => value == null ? (CommonApiVersionsMergeMode?)null : new CommonApiVersionsMergeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

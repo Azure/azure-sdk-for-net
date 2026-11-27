@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingPolicyType?(string value) => value == null ? null : new BillingPolicyType(value);
+        public static implicit operator BillingPolicyType?(string value) => value == null ? (BillingPolicyType?)null : new BillingPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

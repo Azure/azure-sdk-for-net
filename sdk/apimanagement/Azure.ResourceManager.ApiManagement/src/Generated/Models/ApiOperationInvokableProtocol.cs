@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiOperationInvokableProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiOperationInvokableProtocol?(string value) => value == null ? null : new ApiOperationInvokableProtocol(value);
+        public static implicit operator ApiOperationInvokableProtocol?(string value) => value == null ? (ApiOperationInvokableProtocol?)null : new ApiOperationInvokableProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactConnectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactConnectorType?(string value) => value == null ? null : new ImpactConnectorType(value);
+        public static implicit operator ImpactConnectorType?(string value) => value == null ? (ImpactConnectorType?)null : new ImpactConnectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

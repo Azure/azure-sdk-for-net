@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceVirtualNetworkRouteType?(string value) => value == null ? null : new AppServiceVirtualNetworkRouteType(value);
+        public static implicit operator AppServiceVirtualNetworkRouteType?(string value) => value == null ? (AppServiceVirtualNetworkRouteType?)null : new AppServiceVirtualNetworkRouteType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

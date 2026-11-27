@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmDiskConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmDiskConfigurationType?(string value) => value == null ? null : new SqlVmDiskConfigurationType(value);
+        public static implicit operator SqlVmDiskConfigurationType?(string value) => value == null ? (SqlVmDiskConfigurationType?)null : new SqlVmDiskConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

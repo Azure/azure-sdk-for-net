@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBServerPatchingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBServerPatchingStatus?(string value) => value == null ? null : new DBServerPatchingStatus(value);
+        public static implicit operator DBServerPatchingStatus?(string value) => value == null ? (DBServerPatchingStatus?)null : new DBServerPatchingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

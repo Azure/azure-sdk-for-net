@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator DeviceProvisioningServicesPrivateLinkServiceConnectionStatus?(string value) => value == null ? (DeviceProvisioningServicesPrivateLinkServiceConnectionStatus?)null : new DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

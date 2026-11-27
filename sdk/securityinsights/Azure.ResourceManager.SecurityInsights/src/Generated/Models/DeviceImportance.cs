@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="DeviceImportance"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceImportance?(string value) => value == null ? null : new DeviceImportance(value);
+        public static implicit operator DeviceImportance?(string value) => value == null ? (DeviceImportance?)null : new DeviceImportance(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="FunctionAppStorageAccountAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FunctionAppStorageAccountAuthenticationType?(string value) => value == null ? null : new FunctionAppStorageAccountAuthenticationType(value);
+        public static implicit operator FunctionAppStorageAccountAuthenticationType?(string value) => value == null ? (FunctionAppStorageAccountAuthenticationType?)null : new FunctionAppStorageAccountAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

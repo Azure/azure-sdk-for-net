@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRoutePortsBillingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRoutePortsBillingType?(string value) => value == null ? null : new ExpressRoutePortsBillingType(value);
+        public static implicit operator ExpressRoutePortsBillingType?(string value) => value == null ? (ExpressRoutePortsBillingType?)null : new ExpressRoutePortsBillingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

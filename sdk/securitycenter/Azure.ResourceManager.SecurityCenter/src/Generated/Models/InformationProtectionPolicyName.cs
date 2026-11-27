@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="InformationProtectionPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InformationProtectionPolicyName?(string value) => value == null ? null : new InformationProtectionPolicyName(value);
+        public static implicit operator InformationProtectionPolicyName?(string value) => value == null ? (InformationProtectionPolicyName?)null : new InformationProtectionPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesSku?(string value) => value == null ? null : new DeviceProvisioningServicesSku(value);
+        public static implicit operator DeviceProvisioningServicesSku?(string value) => value == null ? (DeviceProvisioningServicesSku?)null : new DeviceProvisioningServicesSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

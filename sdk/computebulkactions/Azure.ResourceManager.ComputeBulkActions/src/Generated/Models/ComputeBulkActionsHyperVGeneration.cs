@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsHyperVGeneration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsHyperVGeneration?(string value) => value == null ? null : new ComputeBulkActionsHyperVGeneration(value);
+        public static implicit operator ComputeBulkActionsHyperVGeneration?(string value) => value == null ? (ComputeBulkActionsHyperVGeneration?)null : new ComputeBulkActionsHyperVGeneration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

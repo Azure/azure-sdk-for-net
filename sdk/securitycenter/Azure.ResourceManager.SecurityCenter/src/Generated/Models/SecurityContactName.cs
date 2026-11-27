@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityContactName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityContactName?(string value) => value == null ? null : new SecurityContactName(value);
+        public static implicit operator SecurityContactName?(string value) => value == null ? (SecurityContactName?)null : new SecurityContactName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

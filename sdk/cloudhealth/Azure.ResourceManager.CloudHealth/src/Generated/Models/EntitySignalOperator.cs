@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="EntitySignalOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntitySignalOperator?(string value) => value == null ? null : new EntitySignalOperator(value);
+        public static implicit operator EntitySignalOperator?(string value) => value == null ? (EntitySignalOperator?)null : new EntitySignalOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

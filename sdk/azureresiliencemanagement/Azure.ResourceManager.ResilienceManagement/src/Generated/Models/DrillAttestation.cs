@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="DrillAttestation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DrillAttestation?(string value) => value == null ? null : new DrillAttestation(value);
+        public static implicit operator DrillAttestation?(string value) => value == null ? (DrillAttestation?)null : new DrillAttestation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

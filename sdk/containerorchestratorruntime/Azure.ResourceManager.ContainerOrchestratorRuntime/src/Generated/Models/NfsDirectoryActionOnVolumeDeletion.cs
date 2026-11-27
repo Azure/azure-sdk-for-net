@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="NfsDirectoryActionOnVolumeDeletion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NfsDirectoryActionOnVolumeDeletion?(string value) => value == null ? null : new NfsDirectoryActionOnVolumeDeletion(value);
+        public static implicit operator NfsDirectoryActionOnVolumeDeletion?(string value) => value == null ? (NfsDirectoryActionOnVolumeDeletion?)null : new NfsDirectoryActionOnVolumeDeletion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

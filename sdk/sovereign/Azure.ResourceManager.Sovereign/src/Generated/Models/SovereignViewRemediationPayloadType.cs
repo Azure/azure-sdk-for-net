@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewRemediationPayloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewRemediationPayloadType?(string value) => value == null ? null : new SovereignViewRemediationPayloadType(value);
+        public static implicit operator SovereignViewRemediationPayloadType?(string value) => value == null ? (SovereignViewRemediationPayloadType?)null : new SovereignViewRemediationPayloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PartnerClientAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerClientAuthenticationType?(string value) => value == null ? null : new PartnerClientAuthenticationType(value);
+        public static implicit operator PartnerClientAuthenticationType?(string value) => value == null ? (PartnerClientAuthenticationType?)null : new PartnerClientAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

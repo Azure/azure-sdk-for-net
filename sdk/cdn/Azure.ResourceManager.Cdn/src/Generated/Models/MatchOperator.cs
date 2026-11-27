@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="MatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchOperator?(string value) => value == null ? null : new MatchOperator(value);
+        public static implicit operator MatchOperator?(string value) => value == null ? (MatchOperator?)null : new MatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

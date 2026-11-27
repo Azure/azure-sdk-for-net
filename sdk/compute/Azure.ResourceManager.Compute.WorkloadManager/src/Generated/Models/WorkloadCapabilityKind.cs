@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadCapabilityKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadCapabilityKind?(string value) => value == null ? null : new WorkloadCapabilityKind(value);
+        public static implicit operator WorkloadCapabilityKind?(string value) => value == null ? (WorkloadCapabilityKind?)null : new WorkloadCapabilityKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

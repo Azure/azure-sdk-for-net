@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="TemplateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemplateType?(string value) => value == null ? null : new TemplateType(value);
+        public static implicit operator TemplateType?(string value) => value == null ? (TemplateType?)null : new TemplateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

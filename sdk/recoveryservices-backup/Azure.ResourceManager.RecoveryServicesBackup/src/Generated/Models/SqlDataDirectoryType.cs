@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="SqlDataDirectoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlDataDirectoryType?(string value) => value == null ? null : new SqlDataDirectoryType(value);
+        public static implicit operator SqlDataDirectoryType?(string value) => value == null ? (SqlDataDirectoryType?)null : new SqlDataDirectoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

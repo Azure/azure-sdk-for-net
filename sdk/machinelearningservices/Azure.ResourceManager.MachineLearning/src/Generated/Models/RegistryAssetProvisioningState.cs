@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="RegistryAssetProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegistryAssetProvisioningState?(string value) => value == null ? null : new RegistryAssetProvisioningState(value);
+        public static implicit operator RegistryAssetProvisioningState?(string value) => value == null ? (RegistryAssetProvisioningState?)null : new RegistryAssetProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

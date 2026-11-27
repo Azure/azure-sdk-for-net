@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabPolicyEvaluatorType?(string value) => value == null ? null : new DevTestLabPolicyEvaluatorType(value);
+        public static implicit operator DevTestLabPolicyEvaluatorType?(string value) => value == null ? (DevTestLabPolicyEvaluatorType?)null : new DevTestLabPolicyEvaluatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

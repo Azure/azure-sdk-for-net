@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultBackupLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultBackupLevel?(string value) => value == null ? null : new CommvaultBackupLevel(value);
+        public static implicit operator CommvaultBackupLevel?(string value) => value == null ? (CommvaultBackupLevel?)null : new CommvaultBackupLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

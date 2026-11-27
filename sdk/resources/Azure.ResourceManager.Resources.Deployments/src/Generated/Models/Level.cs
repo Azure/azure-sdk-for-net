@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
 
         /// <summary> Converts a string to a <see cref="Level"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Level?(string value) => value == null ? null : new Level(value);
+        public static implicit operator Level?(string value) => value == null ? (Level?)null : new Level(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

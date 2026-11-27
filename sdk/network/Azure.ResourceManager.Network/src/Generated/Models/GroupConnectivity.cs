@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="GroupConnectivity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GroupConnectivity?(string value) => value == null ? null : new GroupConnectivity(value);
+        public static implicit operator GroupConnectivity?(string value) => value == null ? (GroupConnectivity?)null : new GroupConnectivity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

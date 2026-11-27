@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppKeySource?(string value) => value == null ? null : new NetAppKeySource(value);
+        public static implicit operator NetAppKeySource?(string value) => value == null ? (NetAppKeySource?)null : new NetAppKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

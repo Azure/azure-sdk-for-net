@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="ServiceAlertSignalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceAlertSignalType?(string value) => value == null ? null : new ServiceAlertSignalType(value);
+        public static implicit operator ServiceAlertSignalType?(string value) => value == null ? (ServiceAlertSignalType?)null : new ServiceAlertSignalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

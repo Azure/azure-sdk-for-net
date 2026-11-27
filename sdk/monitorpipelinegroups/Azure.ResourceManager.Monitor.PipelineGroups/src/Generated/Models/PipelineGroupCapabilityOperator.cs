@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupCapabilityOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupCapabilityOperator?(string value) => value == null ? null : new PipelineGroupCapabilityOperator(value);
+        public static implicit operator PipelineGroupCapabilityOperator?(string value) => value == null ? (PipelineGroupCapabilityOperator?)null : new PipelineGroupCapabilityOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

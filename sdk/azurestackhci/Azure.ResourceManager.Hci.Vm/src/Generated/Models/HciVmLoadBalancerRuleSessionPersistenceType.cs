@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmLoadBalancerRuleSessionPersistenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmLoadBalancerRuleSessionPersistenceType?(string value) => value == null ? null : new HciVmLoadBalancerRuleSessionPersistenceType(value);
+        public static implicit operator HciVmLoadBalancerRuleSessionPersistenceType?(string value) => value == null ? (HciVmLoadBalancerRuleSessionPersistenceType?)null : new HciVmLoadBalancerRuleSessionPersistenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

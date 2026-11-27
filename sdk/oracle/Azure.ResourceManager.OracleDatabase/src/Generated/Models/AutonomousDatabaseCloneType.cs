@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseCloneType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseCloneType?(string value) => value == null ? null : new AutonomousDatabaseCloneType(value);
+        public static implicit operator AutonomousDatabaseCloneType?(string value) => value == null ? (AutonomousDatabaseCloneType?)null : new AutonomousDatabaseCloneType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

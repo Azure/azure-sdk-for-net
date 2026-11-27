@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="IsCustomizable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsCustomizable?(string value) => value == null ? null : new IsCustomizable(value);
+        public static implicit operator IsCustomizable?(string value) => value == null ? (IsCustomizable?)null : new IsCustomizable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

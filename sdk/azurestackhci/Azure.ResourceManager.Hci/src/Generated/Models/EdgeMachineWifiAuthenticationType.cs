@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EdgeMachineWifiAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeMachineWifiAuthenticationType?(string value) => value == null ? null : new EdgeMachineWifiAuthenticationType(value);
+        public static implicit operator EdgeMachineWifiAuthenticationType?(string value) => value == null ? (EdgeMachineWifiAuthenticationType?)null : new EdgeMachineWifiAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

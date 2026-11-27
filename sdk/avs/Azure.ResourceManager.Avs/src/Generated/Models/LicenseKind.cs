@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="LicenseKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LicenseKind?(string value) => value == null ? null : new LicenseKind(value);
+        public static implicit operator LicenseKind?(string value) => value == null ? (LicenseKind?)null : new LicenseKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

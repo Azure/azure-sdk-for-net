@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingAppliedScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingAppliedScopeType?(string value) => value == null ? null : new BillingAppliedScopeType(value);
+        public static implicit operator BillingAppliedScopeType?(string value) => value == null ? (BillingAppliedScopeType?)null : new BillingAppliedScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

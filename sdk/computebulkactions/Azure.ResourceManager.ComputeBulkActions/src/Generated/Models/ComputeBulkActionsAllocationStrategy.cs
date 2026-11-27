@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsAllocationStrategy?(string value) => value == null ? null : new ComputeBulkActionsAllocationStrategy(value);
+        public static implicit operator ComputeBulkActionsAllocationStrategy?(string value) => value == null ? (ComputeBulkActionsAllocationStrategy?)null : new ComputeBulkActionsAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

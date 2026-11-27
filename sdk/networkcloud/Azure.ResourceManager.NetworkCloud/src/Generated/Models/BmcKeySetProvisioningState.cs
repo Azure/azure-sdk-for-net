@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BmcKeySetProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BmcKeySetProvisioningState?(string value) => value == null ? null : new BmcKeySetProvisioningState(value);
+        public static implicit operator BmcKeySetProvisioningState?(string value) => value == null ? (BmcKeySetProvisioningState?)null : new BmcKeySetProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

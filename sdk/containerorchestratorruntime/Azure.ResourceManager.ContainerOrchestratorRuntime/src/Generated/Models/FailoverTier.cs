@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="FailoverTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverTier?(string value) => value == null ? null : new FailoverTier(value);
+        public static implicit operator FailoverTier?(string value) => value == null ? (FailoverTier?)null : new FailoverTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

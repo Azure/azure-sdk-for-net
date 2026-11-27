@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionOccurrenceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionOccurrenceState?(string value) => value == null ? null : new ScheduledActionOccurrenceState(value);
+        public static implicit operator ScheduledActionOccurrenceState?(string value) => value == null ? (ScheduledActionOccurrenceState?)null : new ScheduledActionOccurrenceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

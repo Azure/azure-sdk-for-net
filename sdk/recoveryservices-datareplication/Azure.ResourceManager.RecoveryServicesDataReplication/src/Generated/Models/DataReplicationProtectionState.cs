@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationProtectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationProtectionState?(string value) => value == null ? null : new DataReplicationProtectionState(value);
+        public static implicit operator DataReplicationProtectionState?(string value) => value == null ? (DataReplicationProtectionState?)null : new DataReplicationProtectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

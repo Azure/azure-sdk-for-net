@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsDataTypeConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsDataTypeConnectionState?(string value) => value == null ? null : new SecurityInsightsDataTypeConnectionState(value);
+        public static implicit operator SecurityInsightsDataTypeConnectionState?(string value) => value == null ? (SecurityInsightsDataTypeConnectionState?)null : new SecurityInsightsDataTypeConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

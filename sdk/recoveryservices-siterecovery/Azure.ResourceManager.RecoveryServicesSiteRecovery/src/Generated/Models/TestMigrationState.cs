@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="TestMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TestMigrationState?(string value) => value == null ? null : new TestMigrationState(value);
+        public static implicit operator TestMigrationState?(string value) => value == null ? (TestMigrationState?)null : new TestMigrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

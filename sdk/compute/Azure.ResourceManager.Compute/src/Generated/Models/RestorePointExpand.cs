@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="RestorePointExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestorePointExpand?(string value) => value == null ? null : new RestorePointExpand(value);
+        public static implicit operator RestorePointExpand?(string value) => value == null ? (RestorePointExpand?)null : new RestorePointExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

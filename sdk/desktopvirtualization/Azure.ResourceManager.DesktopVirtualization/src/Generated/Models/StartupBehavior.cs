@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="StartupBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StartupBehavior?(string value) => value == null ? null : new StartupBehavior(value);
+        public static implicit operator StartupBehavior?(string value) => value == null ? (StartupBehavior?)null : new StartupBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

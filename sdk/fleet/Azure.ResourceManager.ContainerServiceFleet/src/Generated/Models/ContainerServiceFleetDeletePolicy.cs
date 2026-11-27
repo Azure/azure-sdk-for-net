@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetDeletePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetDeletePolicy?(string value) => value == null ? null : new ContainerServiceFleetDeletePolicy(value);
+        public static implicit operator ContainerServiceFleetDeletePolicy?(string value) => value == null ? (ContainerServiceFleetDeletePolicy?)null : new ContainerServiceFleetDeletePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

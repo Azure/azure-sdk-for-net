@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereImageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereImageType?(string value) => value == null ? null : new SphereImageType(value);
+        public static implicit operator SphereImageType?(string value) => value == null ? (SphereImageType?)null : new SphereImageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

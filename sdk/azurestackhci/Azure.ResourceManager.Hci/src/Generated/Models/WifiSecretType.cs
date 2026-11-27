@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="WifiSecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WifiSecretType?(string value) => value == null ? null : new WifiSecretType(value);
+        public static implicit operator WifiSecretType?(string value) => value == null ? (WifiSecretType?)null : new WifiSecretType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

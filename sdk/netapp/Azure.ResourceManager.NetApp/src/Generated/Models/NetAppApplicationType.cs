@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppApplicationType?(string value) => value == null ? null : new NetAppApplicationType(value);
+        public static implicit operator NetAppApplicationType?(string value) => value == null ? (NetAppApplicationType?)null : new NetAppApplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

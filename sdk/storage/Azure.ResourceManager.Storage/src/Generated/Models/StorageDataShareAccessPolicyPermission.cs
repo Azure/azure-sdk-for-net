@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageDataShareAccessPolicyPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDataShareAccessPolicyPermission?(string value) => value == null ? null : new StorageDataShareAccessPolicyPermission(value);
+        public static implicit operator StorageDataShareAccessPolicyPermission?(string value) => value == null ? (StorageDataShareAccessPolicyPermission?)null : new StorageDataShareAccessPolicyPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

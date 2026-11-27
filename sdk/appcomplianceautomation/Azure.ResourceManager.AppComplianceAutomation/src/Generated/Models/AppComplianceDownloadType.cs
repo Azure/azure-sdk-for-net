@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="AppComplianceDownloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppComplianceDownloadType?(string value) => value == null ? null : new AppComplianceDownloadType(value);
+        public static implicit operator AppComplianceDownloadType?(string value) => value == null ? (AppComplianceDownloadType?)null : new AppComplianceDownloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

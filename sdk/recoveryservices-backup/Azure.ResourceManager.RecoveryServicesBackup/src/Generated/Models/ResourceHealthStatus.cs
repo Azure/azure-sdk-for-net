@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="ResourceHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthStatus?(string value) => value == null ? null : new ResourceHealthStatus(value);
+        public static implicit operator ResourceHealthStatus?(string value) => value == null ? (ResourceHealthStatus?)null : new ResourceHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

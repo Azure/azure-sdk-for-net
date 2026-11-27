@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsIncidentOwnerType?(string value) => value == null ? null : new SecurityInsightsIncidentOwnerType(value);
+        public static implicit operator SecurityInsightsIncidentOwnerType?(string value) => value == null ? (SecurityInsightsIncidentOwnerType?)null : new SecurityInsightsIncidentOwnerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

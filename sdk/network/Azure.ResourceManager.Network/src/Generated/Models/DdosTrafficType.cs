@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DdosTrafficType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DdosTrafficType?(string value) => value == null ? null : new DdosTrafficType(value);
+        public static implicit operator DdosTrafficType?(string value) => value == null ? (DdosTrafficType?)null : new DdosTrafficType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

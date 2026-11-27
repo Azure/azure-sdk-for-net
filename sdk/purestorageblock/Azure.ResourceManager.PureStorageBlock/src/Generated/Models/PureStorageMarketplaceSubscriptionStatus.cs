@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Converts a string to a <see cref="PureStorageMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PureStorageMarketplaceSubscriptionStatus?(string value) => value == null ? null : new PureStorageMarketplaceSubscriptionStatus(value);
+        public static implicit operator PureStorageMarketplaceSubscriptionStatus?(string value) => value == null ? (PureStorageMarketplaceSubscriptionStatus?)null : new PureStorageMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

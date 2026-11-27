@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesClusterExtensionStatusLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterExtensionStatusLevel?(string value) => value == null ? null : new KubernetesClusterExtensionStatusLevel(value);
+        public static implicit operator KubernetesClusterExtensionStatusLevel?(string value) => value == null ? (KubernetesClusterExtensionStatusLevel?)null : new KubernetesClusterExtensionStatusLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="AutoMLVerticalRegressionModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoMLVerticalRegressionModel?(string value) => value == null ? null : new AutoMLVerticalRegressionModel(value);
+        public static implicit operator AutoMLVerticalRegressionModel?(string value) => value == null ? (AutoMLVerticalRegressionModel?)null : new AutoMLVerticalRegressionModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

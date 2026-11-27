@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionConsumerGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionConsumerGroup?(string value) => value == null ? null : new ConnectionConsumerGroup(value);
+        public static implicit operator ConnectionConsumerGroup?(string value) => value == null ? (ConnectionConsumerGroup?)null : new ConnectionConsumerGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

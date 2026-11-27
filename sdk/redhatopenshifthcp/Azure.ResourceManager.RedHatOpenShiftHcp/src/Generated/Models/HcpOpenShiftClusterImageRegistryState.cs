@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterImageRegistryState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterImageRegistryState?(string value) => value == null ? null : new HcpOpenShiftClusterImageRegistryState(value);
+        public static implicit operator HcpOpenShiftClusterImageRegistryState?(string value) => value == null ? (HcpOpenShiftClusterImageRegistryState?)null : new HcpOpenShiftClusterImageRegistryState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

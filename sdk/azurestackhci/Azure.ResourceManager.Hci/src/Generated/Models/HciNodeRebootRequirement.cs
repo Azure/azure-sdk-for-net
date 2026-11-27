@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciNodeRebootRequirement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciNodeRebootRequirement?(string value) => value == null ? null : new HciNodeRebootRequirement(value);
+        public static implicit operator HciNodeRebootRequirement?(string value) => value == null ? (HciNodeRebootRequirement?)null : new HciNodeRebootRequirement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

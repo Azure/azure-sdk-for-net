@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsIPAddressType?(string value) => value == null ? null : new EventHubsIPAddressType(value);
+        public static implicit operator EventHubsIPAddressType?(string value) => value == null ? (EventHubsIPAddressType?)null : new EventHubsIPAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

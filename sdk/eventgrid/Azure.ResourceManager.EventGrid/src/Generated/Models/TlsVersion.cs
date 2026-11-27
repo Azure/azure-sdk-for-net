@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="TlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TlsVersion?(string value) => value == null ? null : new TlsVersion(value);
+        public static implicit operator TlsVersion?(string value) => value == null ? (TlsVersion?)null : new TlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

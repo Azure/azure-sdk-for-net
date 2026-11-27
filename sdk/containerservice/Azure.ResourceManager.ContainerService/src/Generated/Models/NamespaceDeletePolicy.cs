@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="NamespaceDeletePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NamespaceDeletePolicy?(string value) => value == null ? null : new NamespaceDeletePolicy(value);
+        public static implicit operator NamespaceDeletePolicy?(string value) => value == null ? (NamespaceDeletePolicy?)null : new NamespaceDeletePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

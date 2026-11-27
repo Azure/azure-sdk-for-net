@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="VolumeReplicationRelationshipStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeReplicationRelationshipStatus?(string value) => value == null ? null : new VolumeReplicationRelationshipStatus(value);
+        public static implicit operator VolumeReplicationRelationshipStatus?(string value) => value == null ? (VolumeReplicationRelationshipStatus?)null : new VolumeReplicationRelationshipStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

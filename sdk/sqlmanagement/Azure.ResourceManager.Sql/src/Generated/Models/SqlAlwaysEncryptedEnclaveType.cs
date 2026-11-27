@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlAlwaysEncryptedEnclaveType?(string value) => value == null ? null : new SqlAlwaysEncryptedEnclaveType(value);
+        public static implicit operator SqlAlwaysEncryptedEnclaveType?(string value) => value == null ? (SqlAlwaysEncryptedEnclaveType?)null : new SqlAlwaysEncryptedEnclaveType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

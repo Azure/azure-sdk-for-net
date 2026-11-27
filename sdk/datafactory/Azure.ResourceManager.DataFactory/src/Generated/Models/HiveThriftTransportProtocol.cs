@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HiveThriftTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HiveThriftTransportProtocol?(string value) => value == null ? null : new HiveThriftTransportProtocol(value);
+        public static implicit operator HiveThriftTransportProtocol?(string value) => value == null ? (HiveThriftTransportProtocol?)null : new HiveThriftTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

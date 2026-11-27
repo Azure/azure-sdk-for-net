@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="CustomDomainIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomDomainIdentityType?(string value) => value == null ? null : new CustomDomainIdentityType(value);
+        public static implicit operator CustomDomainIdentityType?(string value) => value == null ? (CustomDomainIdentityType?)null : new CustomDomainIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeSkuTier?(string value) => value == null ? null : new DataBoxEdgeSkuTier(value);
+        public static implicit operator DataBoxEdgeSkuTier?(string value) => value == null ? (DataBoxEdgeSkuTier?)null : new DataBoxEdgeSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

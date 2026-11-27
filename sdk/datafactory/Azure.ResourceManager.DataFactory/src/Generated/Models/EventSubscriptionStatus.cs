@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="EventSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventSubscriptionStatus?(string value) => value == null ? null : new EventSubscriptionStatus(value);
+        public static implicit operator EventSubscriptionStatus?(string value) => value == null ? (EventSubscriptionStatus?)null : new EventSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

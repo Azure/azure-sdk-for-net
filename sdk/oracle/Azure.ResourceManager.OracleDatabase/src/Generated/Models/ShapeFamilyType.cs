@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ShapeFamilyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShapeFamilyType?(string value) => value == null ? null : new ShapeFamilyType(value);
+        public static implicit operator ShapeFamilyType?(string value) => value == null ? (ShapeFamilyType?)null : new ShapeFamilyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceScope?(string value) => value == null ? null : new MaintenanceScope(value);
+        public static implicit operator MaintenanceScope?(string value) => value == null ? (MaintenanceScope?)null : new MaintenanceScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

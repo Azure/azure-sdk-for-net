@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ClientClassificationSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientClassificationSource?(string value) => value == null ? null : new ClientClassificationSource(value);
+        public static implicit operator ClientClassificationSource?(string value) => value == null ? (ClientClassificationSource?)null : new ClientClassificationSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

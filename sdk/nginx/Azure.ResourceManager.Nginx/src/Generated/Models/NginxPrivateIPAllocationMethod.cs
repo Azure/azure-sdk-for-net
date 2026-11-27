@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Converts a string to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NginxPrivateIPAllocationMethod?(string value) => value == null ? null : new NginxPrivateIPAllocationMethod(value);
+        public static implicit operator NginxPrivateIPAllocationMethod?(string value) => value == null ? (NginxPrivateIPAllocationMethod?)null : new NginxPrivateIPAllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

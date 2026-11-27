@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="TimeGrainType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeGrainType?(string value) => value == null ? null : new TimeGrainType(value);
+        public static implicit operator TimeGrainType?(string value) => value == null ? (TimeGrainType?)null : new TimeGrainType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

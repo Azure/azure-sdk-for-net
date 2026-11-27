@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceOSType?(string value) => value == null ? null : new ContainerServiceOSType(value);
+        public static implicit operator ContainerServiceOSType?(string value) => value == null ? (ContainerServiceOSType?)null : new ContainerServiceOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

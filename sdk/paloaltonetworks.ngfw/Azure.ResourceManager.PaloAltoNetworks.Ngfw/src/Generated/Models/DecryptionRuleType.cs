@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="DecryptionRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DecryptionRuleType?(string value) => value == null ? null : new DecryptionRuleType(value);
+        public static implicit operator DecryptionRuleType?(string value) => value == null ? (DecryptionRuleType?)null : new DecryptionRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

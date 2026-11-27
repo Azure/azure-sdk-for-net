@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="AlertRuleConditionalOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertRuleConditionalOperator?(string value) => value == null ? null : new AlertRuleConditionalOperator(value);
+        public static implicit operator AlertRuleConditionalOperator?(string value) => value == null ? (AlertRuleConditionalOperator?)null : new AlertRuleConditionalOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

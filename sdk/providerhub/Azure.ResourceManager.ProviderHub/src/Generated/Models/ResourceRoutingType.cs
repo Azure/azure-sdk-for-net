@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceRoutingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceRoutingType?(string value) => value == null ? null : new ResourceRoutingType(value);
+        public static implicit operator ResourceRoutingType?(string value) => value == null ? (ResourceRoutingType?)null : new ResourceRoutingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

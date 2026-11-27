@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertTimeGrainType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertTimeGrainType?(string value) => value == null ? null : new AlertTimeGrainType(value);
+        public static implicit operator AlertTimeGrainType?(string value) => value == null ? (AlertTimeGrainType?)null : new AlertTimeGrainType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

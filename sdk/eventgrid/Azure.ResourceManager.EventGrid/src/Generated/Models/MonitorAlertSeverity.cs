@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="MonitorAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorAlertSeverity?(string value) => value == null ? null : new MonitorAlertSeverity(value);
+        public static implicit operator MonitorAlertSeverity?(string value) => value == null ? (MonitorAlertSeverity?)null : new MonitorAlertSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

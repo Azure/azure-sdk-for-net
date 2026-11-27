@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="HybridSecondaryUsage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridSecondaryUsage?(string value) => value == null ? null : new HybridSecondaryUsage(value);
+        public static implicit operator HybridSecondaryUsage?(string value) => value == null ? (HybridSecondaryUsage?)null : new HybridSecondaryUsage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

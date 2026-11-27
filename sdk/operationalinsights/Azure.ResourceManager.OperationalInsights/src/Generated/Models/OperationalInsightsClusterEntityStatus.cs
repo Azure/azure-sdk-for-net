@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsClusterEntityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsClusterEntityStatus?(string value) => value == null ? null : new OperationalInsightsClusterEntityStatus(value);
+        public static implicit operator OperationalInsightsClusterEntityStatus?(string value) => value == null ? (OperationalInsightsClusterEntityStatus?)null : new OperationalInsightsClusterEntityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

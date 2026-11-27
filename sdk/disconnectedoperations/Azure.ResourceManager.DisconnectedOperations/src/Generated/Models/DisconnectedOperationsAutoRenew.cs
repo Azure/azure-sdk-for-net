@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> Converts a string to a <see cref="DisconnectedOperationsAutoRenew"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsAutoRenew?(string value) => value == null ? null : new DisconnectedOperationsAutoRenew(value);
+        public static implicit operator DisconnectedOperationsAutoRenew?(string value) => value == null ? (DisconnectedOperationsAutoRenew?)null : new DisconnectedOperationsAutoRenew(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

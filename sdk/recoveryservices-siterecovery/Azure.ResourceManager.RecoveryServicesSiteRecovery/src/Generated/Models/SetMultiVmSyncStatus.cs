@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SetMultiVmSyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SetMultiVmSyncStatus?(string value) => value == null ? null : new SetMultiVmSyncStatus(value);
+        public static implicit operator SetMultiVmSyncStatus?(string value) => value == null ? (SetMultiVmSyncStatus?)null : new SetMultiVmSyncStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

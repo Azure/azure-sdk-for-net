@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowGraphNodeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowGraphNodeType?(string value) => value == null ? null : new DataflowGraphNodeType(value);
+        public static implicit operator DataflowGraphNodeType?(string value) => value == null ? (DataflowGraphNodeType?)null : new DataflowGraphNodeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

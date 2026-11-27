@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerJobStatus?(string value) => value == null ? null : new SqlServerJobStatus(value);
+        public static implicit operator SqlServerJobStatus?(string value) => value == null ? (SqlServerJobStatus?)null : new SqlServerJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

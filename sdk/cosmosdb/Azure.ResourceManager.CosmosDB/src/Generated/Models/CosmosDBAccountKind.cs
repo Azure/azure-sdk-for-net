@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBAccountKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBAccountKind?(string value) => value == null ? null : new CosmosDBAccountKind(value);
+        public static implicit operator CosmosDBAccountKind?(string value) => value == null ? (CosmosDBAccountKind?)null : new CosmosDBAccountKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterCloudName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterCloudName?(string value) => value == null ? null : new SecurityCenterCloudName(value);
+        public static implicit operator SecurityCenterCloudName?(string value) => value == null ? (SecurityCenterCloudName?)null : new SecurityCenterCloudName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

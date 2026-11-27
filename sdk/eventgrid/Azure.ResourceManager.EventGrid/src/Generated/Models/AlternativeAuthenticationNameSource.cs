@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="AlternativeAuthenticationNameSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlternativeAuthenticationNameSource?(string value) => value == null ? null : new AlternativeAuthenticationNameSource(value);
+        public static implicit operator AlternativeAuthenticationNameSource?(string value) => value == null ? (AlternativeAuthenticationNameSource?)null : new AlternativeAuthenticationNameSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

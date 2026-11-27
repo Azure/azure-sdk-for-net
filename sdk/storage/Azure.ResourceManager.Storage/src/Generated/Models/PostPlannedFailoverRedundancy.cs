@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="PostPlannedFailoverRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostPlannedFailoverRedundancy?(string value) => value == null ? null : new PostPlannedFailoverRedundancy(value);
+        public static implicit operator PostPlannedFailoverRedundancy?(string value) => value == null ? (PostPlannedFailoverRedundancy?)null : new PostPlannedFailoverRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

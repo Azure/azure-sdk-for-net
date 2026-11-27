@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="StaticSiteBasicAuthName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StaticSiteBasicAuthName?(string value) => value == null ? null : new StaticSiteBasicAuthName(value);
+        public static implicit operator StaticSiteBasicAuthName?(string value) => value == null ? (StaticSiteBasicAuthName?)null : new StaticSiteBasicAuthName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

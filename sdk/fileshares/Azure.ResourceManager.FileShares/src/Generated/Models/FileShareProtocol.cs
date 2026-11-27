@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="FileShareProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareProtocol?(string value) => value == null ? null : new FileShareProtocol(value);
+        public static implicit operator FileShareProtocol?(string value) => value == null ? (FileShareProtocol?)null : new FileShareProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

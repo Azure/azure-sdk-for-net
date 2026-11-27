@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ElasticPoolState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticPoolState?(string value) => value == null ? null : new ElasticPoolState(value);
+        public static implicit operator ElasticPoolState?(string value) => value == null ? (ElasticPoolState?)null : new ElasticPoolState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

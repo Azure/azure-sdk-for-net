@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuAvailability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeSkuAvailability?(string value) => value == null ? null : new DataBoxEdgeSkuAvailability(value);
+        public static implicit operator DataBoxEdgeSkuAvailability?(string value) => value == null ? (DataBoxEdgeSkuAvailability?)null : new DataBoxEdgeSkuAvailability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

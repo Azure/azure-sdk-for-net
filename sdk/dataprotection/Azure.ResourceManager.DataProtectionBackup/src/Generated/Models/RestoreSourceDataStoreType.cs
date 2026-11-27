@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="RestoreSourceDataStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestoreSourceDataStoreType?(string value) => value == null ? null : new RestoreSourceDataStoreType(value);
+        public static implicit operator RestoreSourceDataStoreType?(string value) => value == null ? (RestoreSourceDataStoreType?)null : new RestoreSourceDataStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

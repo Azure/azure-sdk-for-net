@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeAccessRuleDirection?(string value) => value == null ? null : new HybridComputeAccessRuleDirection(value);
+        public static implicit operator HybridComputeAccessRuleDirection?(string value) => value == null ? (HybridComputeAccessRuleDirection?)null : new HybridComputeAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

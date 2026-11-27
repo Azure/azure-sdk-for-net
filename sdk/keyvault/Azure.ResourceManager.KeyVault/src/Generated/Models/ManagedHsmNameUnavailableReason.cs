@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="ManagedHsmNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmNameUnavailableReason?(string value) => value == null ? null : new ManagedHsmNameUnavailableReason(value);
+        public static implicit operator ManagedHsmNameUnavailableReason?(string value) => value == null ? (ManagedHsmNameUnavailableReason?)null : new ManagedHsmNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

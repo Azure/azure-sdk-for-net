@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsBillingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsBillingType?(string value) => value == null ? null : new OperationalInsightsBillingType(value);
+        public static implicit operator OperationalInsightsBillingType?(string value) => value == null ? (OperationalInsightsBillingType?)null : new OperationalInsightsBillingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

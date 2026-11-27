@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkTapPollingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkTapPollingType?(string value) => value == null ? null : new NetworkTapPollingType(value);
+        public static implicit operator NetworkTapPollingType?(string value) => value == null ? (NetworkTapPollingType?)null : new NetworkTapPollingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

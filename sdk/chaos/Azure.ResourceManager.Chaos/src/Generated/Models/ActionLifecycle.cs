@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ActionLifecycle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActionLifecycle?(string value) => value == null ? null : new ActionLifecycle(value);
+        public static implicit operator ActionLifecycle?(string value) => value == null ? (ActionLifecycle?)null : new ActionLifecycle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

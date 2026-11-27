@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="HybridNetworkSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridNetworkSkuTier?(string value) => value == null ? null : new HybridNetworkSkuTier(value);
+        public static implicit operator HybridNetworkSkuTier?(string value) => value == null ? (HybridNetworkSkuTier?)null : new HybridNetworkSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

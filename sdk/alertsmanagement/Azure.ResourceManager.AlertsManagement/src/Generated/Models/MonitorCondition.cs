@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="MonitorCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorCondition?(string value) => value == null ? null : new MonitorCondition(value);
+        public static implicit operator MonitorCondition?(string value) => value == null ? (MonitorCondition?)null : new MonitorCondition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesPublicNetworkAccess?(string value) => value == null ? null : new DeviceProvisioningServicesPublicNetworkAccess(value);
+        public static implicit operator DeviceProvisioningServicesPublicNetworkAccess?(string value) => value == null ? (DeviceProvisioningServicesPublicNetworkAccess?)null : new DeviceProvisioningServicesPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

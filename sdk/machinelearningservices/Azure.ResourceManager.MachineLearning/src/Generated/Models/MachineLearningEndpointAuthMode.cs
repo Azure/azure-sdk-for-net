@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningEndpointAuthMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningEndpointAuthMode?(string value) => value == null ? null : new MachineLearningEndpointAuthMode(value);
+        public static implicit operator MachineLearningEndpointAuthMode?(string value) => value == null ? (MachineLearningEndpointAuthMode?)null : new MachineLearningEndpointAuthMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

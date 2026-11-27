@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppCustomDomainBindingType?(string value) => value == null ? null : new ContainerAppCustomDomainBindingType(value);
+        public static implicit operator ContainerAppCustomDomainBindingType?(string value) => value == null ? (ContainerAppCustomDomainBindingType?)null : new ContainerAppCustomDomainBindingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SyncMemberDbType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncMemberDbType?(string value) => value == null ? null : new SyncMemberDbType(value);
+        public static implicit operator SyncMemberDbType?(string value) => value == null ? (SyncMemberDbType?)null : new SyncMemberDbType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

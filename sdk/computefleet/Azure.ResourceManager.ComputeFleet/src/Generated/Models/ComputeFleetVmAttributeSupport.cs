@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetVmAttributeSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetVmAttributeSupport?(string value) => value == null ? null : new ComputeFleetVmAttributeSupport(value);
+        public static implicit operator ComputeFleetVmAttributeSupport?(string value) => value == null ? (ComputeFleetVmAttributeSupport?)null : new ComputeFleetVmAttributeSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="DataReferenceCredentialType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReferenceCredentialType?(string value) => value == null ? null : new DataReferenceCredentialType(value);
+        public static implicit operator DataReferenceCredentialType?(string value) => value == null ? (DataReferenceCredentialType?)null : new DataReferenceCredentialType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

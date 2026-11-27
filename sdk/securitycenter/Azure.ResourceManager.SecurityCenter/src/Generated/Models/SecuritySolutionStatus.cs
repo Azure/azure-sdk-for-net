@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecuritySolutionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecuritySolutionStatus?(string value) => value == null ? null : new SecuritySolutionStatus(value);
+        public static implicit operator SecuritySolutionStatus?(string value) => value == null ? (SecuritySolutionStatus?)null : new SecuritySolutionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

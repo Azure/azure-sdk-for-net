@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ScriptShellType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptShellType?(string value) => value == null ? null : new ScriptShellType(value);
+        public static implicit operator ScriptShellType?(string value) => value == null ? (ScriptShellType?)null : new ScriptShellType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="MatchProcessingBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchProcessingBehavior?(string value) => value == null ? null : new MatchProcessingBehavior(value);
+        public static implicit operator MatchProcessingBehavior?(string value) => value == null ? (MatchProcessingBehavior?)null : new MatchProcessingBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

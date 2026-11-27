@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ElasticPoolLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticPoolLicenseType?(string value) => value == null ? null : new ElasticPoolLicenseType(value);
+        public static implicit operator ElasticPoolLicenseType?(string value) => value == null ? (ElasticPoolLicenseType?)null : new ElasticPoolLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

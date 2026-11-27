@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="NamespaceDiscoveredManagementActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NamespaceDiscoveredManagementActionType?(string value) => value == null ? null : new NamespaceDiscoveredManagementActionType(value);
+        public static implicit operator NamespaceDiscoveredManagementActionType?(string value) => value == null ? (NamespaceDiscoveredManagementActionType?)null : new NamespaceDiscoveredManagementActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

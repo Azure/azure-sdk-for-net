@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Converts a string to a <see cref="PureStorageBillingUsageSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PureStorageBillingUsageSeverity?(string value) => value == null ? null : new PureStorageBillingUsageSeverity(value);
+        public static implicit operator PureStorageBillingUsageSeverity?(string value) => value == null ? (PureStorageBillingUsageSeverity?)null : new PureStorageBillingUsageSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

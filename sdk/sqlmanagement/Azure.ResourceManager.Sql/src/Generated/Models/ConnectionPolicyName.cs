@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionPolicyName?(string value) => value == null ? null : new ConnectionPolicyName(value);
+        public static implicit operator ConnectionPolicyName?(string value) => value == null ? (ConnectionPolicyName?)null : new ConnectionPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

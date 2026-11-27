@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaStartTlsPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaStartTlsPolicy?(string value) => value == null ? null : new GrafanaStartTlsPolicy(value);
+        public static implicit operator GrafanaStartTlsPolicy?(string value) => value == null ? (GrafanaStartTlsPolicy?)null : new GrafanaStartTlsPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

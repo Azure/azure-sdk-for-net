@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryGlobalParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryGlobalParameterType?(string value) => value == null ? null : new DataFactoryGlobalParameterType(value);
+        public static implicit operator DataFactoryGlobalParameterType?(string value) => value == null ? (DataFactoryGlobalParameterType?)null : new DataFactoryGlobalParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

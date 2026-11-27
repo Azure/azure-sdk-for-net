@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ThreatIntelligenceQueryConnective"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatIntelligenceQueryConnective?(string value) => value == null ? null : new ThreatIntelligenceQueryConnective(value);
+        public static implicit operator ThreatIntelligenceQueryConnective?(string value) => value == null ? (ThreatIntelligenceQueryConnective?)null : new ThreatIntelligenceQueryConnective(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

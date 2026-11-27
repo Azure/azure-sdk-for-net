@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HttpAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HttpAuthenticationType?(string value) => value == null ? null : new HttpAuthenticationType(value);
+        public static implicit operator HttpAuthenticationType?(string value) => value == null ? (HttpAuthenticationType?)null : new HttpAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

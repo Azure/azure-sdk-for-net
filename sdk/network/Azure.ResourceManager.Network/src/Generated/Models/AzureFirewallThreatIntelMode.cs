@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AzureFirewallThreatIntelMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureFirewallThreatIntelMode?(string value) => value == null ? null : new AzureFirewallThreatIntelMode(value);
+        public static implicit operator AzureFirewallThreatIntelMode?(string value) => value == null ? (AzureFirewallThreatIntelMode?)null : new AzureFirewallThreatIntelMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsWorkspaceFailoverState?(string value) => value == null ? null : new OperationalInsightsWorkspaceFailoverState(value);
+        public static implicit operator OperationalInsightsWorkspaceFailoverState?(string value) => value == null ? (OperationalInsightsWorkspaceFailoverState?)null : new OperationalInsightsWorkspaceFailoverState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

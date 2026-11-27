@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoClusterPublicIPType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoClusterPublicIPType?(string value) => value == null ? null : new KustoClusterPublicIPType(value);
+        public static implicit operator KustoClusterPublicIPType?(string value) => value == null ? (KustoClusterPublicIPType?)null : new KustoClusterPublicIPType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

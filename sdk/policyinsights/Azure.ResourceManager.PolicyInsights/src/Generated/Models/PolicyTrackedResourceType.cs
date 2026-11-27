@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Converts a string to a <see cref="PolicyTrackedResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyTrackedResourceType?(string value) => value == null ? null : new PolicyTrackedResourceType(value);
+        public static implicit operator PolicyTrackedResourceType?(string value) => value == null ? (PolicyTrackedResourceType?)null : new PolicyTrackedResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

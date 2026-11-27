@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionsProvisioningState?(string value) => value == null ? null : new ScheduledActionsProvisioningState(value);
+        public static implicit operator ScheduledActionsProvisioningState?(string value) => value == null ? (ScheduledActionsProvisioningState?)null : new ScheduledActionsProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

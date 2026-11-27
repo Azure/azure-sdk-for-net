@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistenceSettingAofFrequency?(string value) => value == null ? null : new PersistenceSettingAofFrequency(value);
+        public static implicit operator PersistenceSettingAofFrequency?(string value) => value == null ? (PersistenceSettingAofFrequency?)null : new PersistenceSettingAofFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

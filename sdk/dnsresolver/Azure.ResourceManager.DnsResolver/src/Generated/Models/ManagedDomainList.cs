@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Converts a string to a <see cref="ManagedDomainList"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedDomainList?(string value) => value == null ? null : new ManagedDomainList(value);
+        public static implicit operator ManagedDomainList?(string value) => value == null ? (ManagedDomainList?)null : new ManagedDomainList(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

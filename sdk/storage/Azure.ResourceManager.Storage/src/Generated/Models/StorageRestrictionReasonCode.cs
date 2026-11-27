@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageRestrictionReasonCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageRestrictionReasonCode?(string value) => value == null ? null : new StorageRestrictionReasonCode(value);
+        public static implicit operator StorageRestrictionReasonCode?(string value) => value == null ? (StorageRestrictionReasonCode?)null : new StorageRestrictionReasonCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingStorageContainerPropertiesEncoding?(string value) => value == null ? null : new RoutingStorageContainerPropertiesEncoding(value);
+        public static implicit operator RoutingStorageContainerPropertiesEncoding?(string value) => value == null ? (RoutingStorageContainerPropertiesEncoding?)null : new RoutingStorageContainerPropertiesEncoding(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

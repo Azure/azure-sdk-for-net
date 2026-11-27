@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceSkuRestrictionsReasonCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceSkuRestrictionsReasonCode?(string value) => value == null ? null : new ContainerServiceSkuRestrictionsReasonCode(value);
+        public static implicit operator ContainerServiceSkuRestrictionsReasonCode?(string value) => value == null ? (ContainerServiceSkuRestrictionsReasonCode?)null : new ContainerServiceSkuRestrictionsReasonCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

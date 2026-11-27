@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="FailoverConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverConnectionStatus?(string value) => value == null ? null : new FailoverConnectionStatus(value);
+        public static implicit operator FailoverConnectionStatus?(string value) => value == null ? (FailoverConnectionStatus?)null : new FailoverConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

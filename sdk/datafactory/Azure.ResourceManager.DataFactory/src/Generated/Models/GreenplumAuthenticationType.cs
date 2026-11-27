@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="GreenplumAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GreenplumAuthenticationType?(string value) => value == null ? null : new GreenplumAuthenticationType(value);
+        public static implicit operator GreenplumAuthenticationType?(string value) => value == null ? (GreenplumAuthenticationType?)null : new GreenplumAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

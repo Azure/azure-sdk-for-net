@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryPublicNetworkAccess?(string value) => value == null ? null : new DataFactoryPublicNetworkAccess(value);
+        public static implicit operator DataFactoryPublicNetworkAccess?(string value) => value == null ? (DataFactoryPublicNetworkAccess?)null : new DataFactoryPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

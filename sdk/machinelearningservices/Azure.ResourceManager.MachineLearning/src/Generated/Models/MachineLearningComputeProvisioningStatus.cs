@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningComputeProvisioningStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningComputeProvisioningStatus?(string value) => value == null ? null : new MachineLearningComputeProvisioningStatus(value);
+        public static implicit operator MachineLearningComputeProvisioningStatus?(string value) => value == null ? (MachineLearningComputeProvisioningStatus?)null : new MachineLearningComputeProvisioningStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

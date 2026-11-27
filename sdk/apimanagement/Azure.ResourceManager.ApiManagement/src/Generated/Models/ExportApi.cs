@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportApi"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportApi?(string value) => value == null ? null : new ExportApi(value);
+        public static implicit operator ExportApi?(string value) => value == null ? (ExportApi?)null : new ExportApi(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

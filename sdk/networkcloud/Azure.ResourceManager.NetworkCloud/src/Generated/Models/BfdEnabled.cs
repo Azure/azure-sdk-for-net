@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BfdEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BfdEnabled?(string value) => value == null ? null : new BfdEnabled(value);
+        public static implicit operator BfdEnabled?(string value) => value == null ? (BfdEnabled?)null : new BfdEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

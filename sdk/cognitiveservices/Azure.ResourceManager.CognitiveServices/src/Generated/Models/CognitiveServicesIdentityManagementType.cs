@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesIdentityManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesIdentityManagementType?(string value) => value == null ? null : new CognitiveServicesIdentityManagementType(value);
+        public static implicit operator CognitiveServicesIdentityManagementType?(string value) => value == null ? (CognitiveServicesIdentityManagementType?)null : new CognitiveServicesIdentityManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

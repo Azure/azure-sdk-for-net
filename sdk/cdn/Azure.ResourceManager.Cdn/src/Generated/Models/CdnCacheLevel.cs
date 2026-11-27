@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CdnCacheLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CdnCacheLevel?(string value) => value == null ? null : new CdnCacheLevel(value);
+        public static implicit operator CdnCacheLevel?(string value) => value == null ? (CdnCacheLevel?)null : new CdnCacheLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

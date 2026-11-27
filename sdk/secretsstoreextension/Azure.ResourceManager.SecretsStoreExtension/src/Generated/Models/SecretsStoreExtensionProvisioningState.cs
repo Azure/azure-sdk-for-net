@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> Converts a string to a <see cref="SecretsStoreExtensionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretsStoreExtensionProvisioningState?(string value) => value == null ? null : new SecretsStoreExtensionProvisioningState(value);
+        public static implicit operator SecretsStoreExtensionProvisioningState?(string value) => value == null ? (SecretsStoreExtensionProvisioningState?)null : new SecretsStoreExtensionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

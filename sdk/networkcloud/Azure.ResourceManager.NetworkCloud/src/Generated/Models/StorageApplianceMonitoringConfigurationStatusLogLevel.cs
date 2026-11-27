@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="StorageApplianceMonitoringConfigurationStatusLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageApplianceMonitoringConfigurationStatusLogLevel?(string value) => value == null ? null : new StorageApplianceMonitoringConfigurationStatusLogLevel(value);
+        public static implicit operator StorageApplianceMonitoringConfigurationStatusLogLevel?(string value) => value == null ? (StorageApplianceMonitoringConfigurationStatusLogLevel?)null : new StorageApplianceMonitoringConfigurationStatusLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

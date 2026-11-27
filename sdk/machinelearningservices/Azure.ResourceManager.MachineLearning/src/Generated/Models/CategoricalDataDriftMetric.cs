@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="CategoricalDataDriftMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CategoricalDataDriftMetric?(string value) => value == null ? null : new CategoricalDataDriftMetric(value);
+        public static implicit operator CategoricalDataDriftMetric?(string value) => value == null ? (CategoricalDataDriftMetric?)null : new CategoricalDataDriftMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkVirtualApplianceMigrationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkVirtualApplianceMigrationType?(string value) => value == null ? null : new NetworkVirtualApplianceMigrationType(value);
+        public static implicit operator NetworkVirtualApplianceMigrationType?(string value) => value == null ? (NetworkVirtualApplianceMigrationType?)null : new NetworkVirtualApplianceMigrationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

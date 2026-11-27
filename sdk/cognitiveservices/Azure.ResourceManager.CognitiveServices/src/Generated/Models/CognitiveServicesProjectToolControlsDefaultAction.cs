@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesProjectToolControlsDefaultAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesProjectToolControlsDefaultAction?(string value) => value == null ? null : new CognitiveServicesProjectToolControlsDefaultAction(value);
+        public static implicit operator CognitiveServicesProjectToolControlsDefaultAction?(string value) => value == null ? (CognitiveServicesProjectToolControlsDefaultAction?)null : new CognitiveServicesProjectToolControlsDefaultAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

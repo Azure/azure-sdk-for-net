@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterUsageUnit?(string value) => value == null ? null : new DevCenterUsageUnit(value);
+        public static implicit operator DevCenterUsageUnit?(string value) => value == null ? (DevCenterUsageUnit?)null : new DevCenterUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

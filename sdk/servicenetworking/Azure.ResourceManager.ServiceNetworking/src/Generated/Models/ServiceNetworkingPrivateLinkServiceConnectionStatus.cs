@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Converts a string to a <see cref="ServiceNetworkingPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceNetworkingPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new ServiceNetworkingPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator ServiceNetworkingPrivateLinkServiceConnectionStatus?(string value) => value == null ? (ServiceNetworkingPrivateLinkServiceConnectionStatus?)null : new ServiceNetworkingPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppUsageUnit?(string value) => value == null ? null : new ContainerAppUsageUnit(value);
+        public static implicit operator ContainerAppUsageUnit?(string value) => value == null ? (ContainerAppUsageUnit?)null : new ContainerAppUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

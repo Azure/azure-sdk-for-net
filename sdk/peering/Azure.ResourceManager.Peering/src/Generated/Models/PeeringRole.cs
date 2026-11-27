@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringRole?(string value) => value == null ? null : new PeeringRole(value);
+        public static implicit operator PeeringRole?(string value) => value == null ? (PeeringRole?)null : new PeeringRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ConnectorConnectivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorConnectivityType?(string value) => value == null ? null : new ConnectorConnectivityType(value);
+        public static implicit operator ConnectorConnectivityType?(string value) => value == null ? (ConnectorConnectivityType?)null : new ConnectorConnectivityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

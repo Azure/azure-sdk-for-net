@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="TokenBindingStrength"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TokenBindingStrength?(string value) => value == null ? null : new TokenBindingStrength(value);
+        public static implicit operator TokenBindingStrength?(string value) => value == null ? (TokenBindingStrength?)null : new TokenBindingStrength(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

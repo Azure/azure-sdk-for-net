@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceOutboundType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceOutboundType?(string value) => value == null ? null : new ContainerServiceOutboundType(value);
+        public static implicit operator ContainerServiceOutboundType?(string value) => value == null ? (ContainerServiceOutboundType?)null : new ContainerServiceOutboundType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

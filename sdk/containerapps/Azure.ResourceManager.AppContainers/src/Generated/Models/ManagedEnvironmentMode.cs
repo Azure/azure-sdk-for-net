@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ManagedEnvironmentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedEnvironmentMode?(string value) => value == null ? null : new ManagedEnvironmentMode(value);
+        public static implicit operator ManagedEnvironmentMode?(string value) => value == null ? (ManagedEnvironmentMode?)null : new ManagedEnvironmentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

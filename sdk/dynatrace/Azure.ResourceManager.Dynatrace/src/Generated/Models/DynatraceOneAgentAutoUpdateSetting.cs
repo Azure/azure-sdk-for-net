@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceOneAgentAutoUpdateSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceOneAgentAutoUpdateSetting?(string value) => value == null ? null : new DynatraceOneAgentAutoUpdateSetting(value);
+        public static implicit operator DynatraceOneAgentAutoUpdateSetting?(string value) => value == null ? (DynatraceOneAgentAutoUpdateSetting?)null : new DynatraceOneAgentAutoUpdateSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

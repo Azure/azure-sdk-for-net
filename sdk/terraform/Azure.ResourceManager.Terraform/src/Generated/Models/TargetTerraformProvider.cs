@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Converts a string to a <see cref="TargetTerraformProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TargetTerraformProvider?(string value) => value == null ? null : new TargetTerraformProvider(value);
+        public static implicit operator TargetTerraformProvider?(string value) => value == null ? (TargetTerraformProvider?)null : new TargetTerraformProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

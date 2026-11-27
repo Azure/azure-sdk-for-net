@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVersion?(string value) => value == null ? null : new SqlVersion(value);
+        public static implicit operator SqlVersion?(string value) => value == null ? (SqlVersion?)null : new SqlVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

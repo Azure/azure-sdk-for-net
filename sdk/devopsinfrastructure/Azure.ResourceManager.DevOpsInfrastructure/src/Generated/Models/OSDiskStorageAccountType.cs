@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="OSDiskStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OSDiskStorageAccountType?(string value) => value == null ? null : new OSDiskStorageAccountType(value);
+        public static implicit operator OSDiskStorageAccountType?(string value) => value == null ? (OSDiskStorageAccountType?)null : new OSDiskStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

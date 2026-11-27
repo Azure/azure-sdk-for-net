@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="JobExecutionRunningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobExecutionRunningState?(string value) => value == null ? null : new JobExecutionRunningState(value);
+        public static implicit operator JobExecutionRunningState?(string value) => value == null ? (JobExecutionRunningState?)null : new JobExecutionRunningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

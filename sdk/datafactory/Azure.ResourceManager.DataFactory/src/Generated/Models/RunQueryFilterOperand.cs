@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="RunQueryFilterOperand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunQueryFilterOperand?(string value) => value == null ? null : new RunQueryFilterOperand(value);
+        public static implicit operator RunQueryFilterOperand?(string value) => value == null ? (RunQueryFilterOperand?)null : new RunQueryFilterOperand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

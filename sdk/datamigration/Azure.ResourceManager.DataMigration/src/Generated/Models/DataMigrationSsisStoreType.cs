@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationSsisStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationSsisStoreType?(string value) => value == null ? null : new DataMigrationSsisStoreType(value);
+        public static implicit operator DataMigrationSsisStoreType?(string value) => value == null ? (DataMigrationSsisStoreType?)null : new DataMigrationSsisStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

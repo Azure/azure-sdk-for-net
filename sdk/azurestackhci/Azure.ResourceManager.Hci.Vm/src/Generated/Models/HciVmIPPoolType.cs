@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmIPPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmIPPoolType?(string value) => value == null ? null : new HciVmIPPoolType(value);
+        public static implicit operator HciVmIPPoolType?(string value) => value == null ? (HciVmIPPoolType?)null : new HciVmIPPoolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PeeringEnforcement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringEnforcement?(string value) => value == null ? null : new PeeringEnforcement(value);
+        public static implicit operator PeeringEnforcement?(string value) => value == null ? (PeeringEnforcement?)null : new PeeringEnforcement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

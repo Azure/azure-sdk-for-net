@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterKeyEncryptionKeyIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterKeyEncryptionKeyIdentityType?(string value) => value == null ? null : new MongoClusterKeyEncryptionKeyIdentityType(value);
+        public static implicit operator MongoClusterKeyEncryptionKeyIdentityType?(string value) => value == null ? (MongoClusterKeyEncryptionKeyIdentityType?)null : new MongoClusterKeyEncryptionKeyIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

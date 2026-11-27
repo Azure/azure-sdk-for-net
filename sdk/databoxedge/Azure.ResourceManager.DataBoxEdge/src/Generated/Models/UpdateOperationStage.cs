@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="UpdateOperationStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateOperationStage?(string value) => value == null ? null : new UpdateOperationStage(value);
+        public static implicit operator UpdateOperationStage?(string value) => value == null ? (UpdateOperationStage?)null : new UpdateOperationStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

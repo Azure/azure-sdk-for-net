@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetDiffDiskOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiffDiskOption?(string value) => value == null ? null : new ComputeFleetDiffDiskOption(value);
+        public static implicit operator ComputeFleetDiffDiskOption?(string value) => value == null ? (ComputeFleetDiffDiskOption?)null : new ComputeFleetDiffDiskOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

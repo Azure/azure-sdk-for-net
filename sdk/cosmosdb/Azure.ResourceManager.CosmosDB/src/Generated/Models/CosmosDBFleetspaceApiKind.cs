@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBFleetspaceApiKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBFleetspaceApiKind?(string value) => value == null ? null : new CosmosDBFleetspaceApiKind(value);
+        public static implicit operator CosmosDBFleetspaceApiKind?(string value) => value == null ? (CosmosDBFleetspaceApiKind?)null : new CosmosDBFleetspaceApiKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

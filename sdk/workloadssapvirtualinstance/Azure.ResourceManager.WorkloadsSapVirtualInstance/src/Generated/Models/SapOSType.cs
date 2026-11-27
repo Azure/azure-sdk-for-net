@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapOSType?(string value) => value == null ? null : new SapOSType(value);
+        public static implicit operator SapOSType?(string value) => value == null ? (SapOSType?)null : new SapOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

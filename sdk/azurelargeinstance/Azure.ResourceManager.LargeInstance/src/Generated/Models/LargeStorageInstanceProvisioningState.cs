@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Converts a string to a <see cref="LargeStorageInstanceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LargeStorageInstanceProvisioningState?(string value) => value == null ? null : new LargeStorageInstanceProvisioningState(value);
+        public static implicit operator LargeStorageInstanceProvisioningState?(string value) => value == null ? (LargeStorageInstanceProvisioningState?)null : new LargeStorageInstanceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

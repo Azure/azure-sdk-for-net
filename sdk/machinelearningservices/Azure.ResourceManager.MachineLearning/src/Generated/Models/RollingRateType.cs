@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="RollingRateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RollingRateType?(string value) => value == null ? null : new RollingRateType(value);
+        public static implicit operator RollingRateType?(string value) => value == null ? (RollingRateType?)null : new RollingRateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

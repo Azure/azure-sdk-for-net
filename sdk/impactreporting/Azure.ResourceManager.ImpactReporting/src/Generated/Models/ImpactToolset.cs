@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactToolset"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactToolset?(string value) => value == null ? null : new ImpactToolset(value);
+        public static implicit operator ImpactToolset?(string value) => value == null ? (ImpactToolset?)null : new ImpactToolset(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

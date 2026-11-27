@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsMaintenanceReadinessStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsMaintenanceReadinessStatus?(string value) => value == null ? null : new AvsMaintenanceReadinessStatus(value);
+        public static implicit operator AvsMaintenanceReadinessStatus?(string value) => value == null ? (AvsMaintenanceReadinessStatus?)null : new AvsMaintenanceReadinessStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

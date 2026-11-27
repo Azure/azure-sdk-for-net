@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="InstanceFlexibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceFlexibility?(string value) => value == null ? null : new InstanceFlexibility(value);
+        public static implicit operator InstanceFlexibility?(string value) => value == null ? (InstanceFlexibility?)null : new InstanceFlexibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

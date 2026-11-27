@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="GarnetAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GarnetAuthenticationType?(string value) => value == null ? null : new GarnetAuthenticationType(value);
+        public static implicit operator GarnetAuthenticationType?(string value) => value == null ? (GarnetAuthenticationType?)null : new GarnetAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RoutingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingState?(string value) => value == null ? null : new RoutingState(value);
+        public static implicit operator RoutingState?(string value) => value == null ? (RoutingState?)null : new RoutingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

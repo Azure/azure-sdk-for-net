@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="EventDestinationTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventDestinationTarget?(string value) => value == null ? null : new EventDestinationTarget(value);
+        public static implicit operator EventDestinationTarget?(string value) => value == null ? (EventDestinationTarget?)null : new EventDestinationTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

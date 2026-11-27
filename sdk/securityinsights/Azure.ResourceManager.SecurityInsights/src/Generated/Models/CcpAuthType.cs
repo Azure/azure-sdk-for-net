@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="CcpAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CcpAuthType?(string value) => value == null ? null : new CcpAuthType(value);
+        public static implicit operator CcpAuthType?(string value) => value == null ? (CcpAuthType?)null : new CcpAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

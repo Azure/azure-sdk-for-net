@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="NfviType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NfviType?(string value) => value == null ? null : new NfviType(value);
+        public static implicit operator NfviType?(string value) => value == null ? (NfviType?)null : new NfviType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

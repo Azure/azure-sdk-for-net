@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBNodeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBNodeProvisioningState?(string value) => value == null ? null : new DBNodeProvisioningState(value);
+        public static implicit operator DBNodeProvisioningState?(string value) => value == null ? (DBNodeProvisioningState?)null : new DBNodeProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

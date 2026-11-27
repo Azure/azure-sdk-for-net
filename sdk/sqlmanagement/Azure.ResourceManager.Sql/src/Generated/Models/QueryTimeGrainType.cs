@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="QueryTimeGrainType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryTimeGrainType?(string value) => value == null ? null : new QueryTimeGrainType(value);
+        public static implicit operator QueryTimeGrainType?(string value) => value == null ? (QueryTimeGrainType?)null : new QueryTimeGrainType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ControlImpact"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlImpact?(string value) => value == null ? null : new ControlImpact(value);
+        public static implicit operator ControlImpact?(string value) => value == null ? (ControlImpact?)null : new ControlImpact(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

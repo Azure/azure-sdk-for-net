@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedIntegrationRuntimeNodeStatus?(string value) => value == null ? null : new ManagedIntegrationRuntimeNodeStatus(value);
+        public static implicit operator ManagedIntegrationRuntimeNodeStatus?(string value) => value == null ? (ManagedIntegrationRuntimeNodeStatus?)null : new ManagedIntegrationRuntimeNodeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

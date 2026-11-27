@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceSupportedTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceSupportedTlsVersion?(string value) => value == null ? null : new AppServiceSupportedTlsVersion(value);
+        public static implicit operator AppServiceSupportedTlsVersion?(string value) => value == null ? (AppServiceSupportedTlsVersion?)null : new AppServiceSupportedTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

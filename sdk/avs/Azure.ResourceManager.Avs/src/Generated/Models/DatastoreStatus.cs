@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="DatastoreStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatastoreStatus?(string value) => value == null ? null : new DatastoreStatus(value);
+        public static implicit operator DatastoreStatus?(string value) => value == null ? (DatastoreStatus?)null : new DatastoreStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

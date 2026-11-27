@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterPricingInheritance"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterPricingInheritance?(string value) => value == null ? null : new SecurityCenterPricingInheritance(value);
+        public static implicit operator SecurityCenterPricingInheritance?(string value) => value == null ? (SecurityCenterPricingInheritance?)null : new SecurityCenterPricingInheritance(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

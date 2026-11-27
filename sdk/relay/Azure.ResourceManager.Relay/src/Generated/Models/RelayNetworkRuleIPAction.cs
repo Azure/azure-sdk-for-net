@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayNetworkRuleIPAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayNetworkRuleIPAction?(string value) => value == null ? null : new RelayNetworkRuleIPAction(value);
+        public static implicit operator RelayNetworkRuleIPAction?(string value) => value == null ? (RelayNetworkRuleIPAction?)null : new RelayNetworkRuleIPAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

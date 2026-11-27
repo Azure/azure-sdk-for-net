@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="SsisMigrationOverwriteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SsisMigrationOverwriteOption?(string value) => value == null ? null : new SsisMigrationOverwriteOption(value);
+        public static implicit operator SsisMigrationOverwriteOption?(string value) => value == null ? (SsisMigrationOverwriteOption?)null : new SsisMigrationOverwriteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

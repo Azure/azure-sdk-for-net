@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState?)null : new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

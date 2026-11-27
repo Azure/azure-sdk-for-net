@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Converts a string to a <see cref="InboundEndpointIPAllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InboundEndpointIPAllocationMethod?(string value) => value == null ? null : new InboundEndpointIPAllocationMethod(value);
+        public static implicit operator InboundEndpointIPAllocationMethod?(string value) => value == null ? (InboundEndpointIPAllocationMethod?)null : new InboundEndpointIPAllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

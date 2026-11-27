@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="GridImageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GridImageType?(string value) => value == null ? null : new GridImageType(value);
+        public static implicit operator GridImageType?(string value) => value == null ? (GridImageType?)null : new GridImageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

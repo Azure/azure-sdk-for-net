@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DdosContinent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DdosContinent?(string value) => value == null ? null : new DdosContinent(value);
+        public static implicit operator DdosContinent?(string value) => value == null ? (DdosContinent?)null : new DdosContinent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

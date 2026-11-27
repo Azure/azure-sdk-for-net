@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkRackType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkRackType?(string value) => value == null ? null : new NetworkRackType(value);
+        public static implicit operator NetworkRackType?(string value) => value == null ? (NetworkRackType?)null : new NetworkRackType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

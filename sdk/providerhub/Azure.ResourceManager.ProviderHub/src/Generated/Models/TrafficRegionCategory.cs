@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="TrafficRegionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficRegionCategory?(string value) => value == null ? null : new TrafficRegionCategory(value);
+        public static implicit operator TrafficRegionCategory?(string value) => value == null ? (TrafficRegionCategory?)null : new TrafficRegionCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

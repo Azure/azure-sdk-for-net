@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="IormLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IormLifecycleState?(string value) => value == null ? null : new IormLifecycleState(value);
+        public static implicit operator IormLifecycleState?(string value) => value == null ? (IormLifecycleState?)null : new IormLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MountMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MountMode?(string value) => value == null ? null : new MountMode(value);
+        public static implicit operator MountMode?(string value) => value == null ? (MountMode?)null : new MountMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

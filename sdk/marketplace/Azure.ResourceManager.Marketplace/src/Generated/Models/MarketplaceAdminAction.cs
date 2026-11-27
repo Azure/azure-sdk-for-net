@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceAdminAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceAdminAction?(string value) => value == null ? null : new MarketplaceAdminAction(value);
+        public static implicit operator MarketplaceAdminAction?(string value) => value == null ? (MarketplaceAdminAction?)null : new MarketplaceAdminAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

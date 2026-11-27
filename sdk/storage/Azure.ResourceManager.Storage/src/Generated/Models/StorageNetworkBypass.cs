@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageNetworkBypass"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageNetworkBypass?(string value) => value == null ? null : new StorageNetworkBypass(value);
+        public static implicit operator StorageNetworkBypass?(string value) => value == null ? (StorageNetworkBypass?)null : new StorageNetworkBypass(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

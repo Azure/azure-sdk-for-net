@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorDimensionOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorDimensionOperator?(string value) => value == null ? null : new MonitorDimensionOperator(value);
+        public static implicit operator MonitorDimensionOperator?(string value) => value == null ? (MonitorDimensionOperator?)null : new MonitorDimensionOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

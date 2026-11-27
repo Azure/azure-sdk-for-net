@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="OperationNameFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationNameFormat?(string value) => value == null ? null : new OperationNameFormat(value);
+        public static implicit operator OperationNameFormat?(string value) => value == null ? (OperationNameFormat?)null : new OperationNameFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

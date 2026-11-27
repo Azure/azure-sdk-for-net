@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ExascaleStorageShapeAttribute"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExascaleStorageShapeAttribute?(string value) => value == null ? null : new ExascaleStorageShapeAttribute(value);
+        public static implicit operator ExascaleStorageShapeAttribute?(string value) => value == null ? (ExascaleStorageShapeAttribute?)null : new ExascaleStorageShapeAttribute(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

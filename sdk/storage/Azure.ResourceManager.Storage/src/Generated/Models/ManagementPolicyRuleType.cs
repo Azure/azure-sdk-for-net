@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ManagementPolicyRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagementPolicyRuleType?(string value) => value == null ? null : new ManagementPolicyRuleType(value);
+        public static implicit operator ManagementPolicyRuleType?(string value) => value == null ? (ManagementPolicyRuleType?)null : new ManagementPolicyRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

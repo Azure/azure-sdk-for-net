@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceMonthName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceMonthName?(string value) => value == null ? null : new MaintenanceMonthName(value);
+        public static implicit operator MaintenanceMonthName?(string value) => value == null ? (MaintenanceMonthName?)null : new MaintenanceMonthName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <summary> Converts a string to a <see cref="BillingTrustAssessmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingTrustAssessmentType?(string value) => value == null ? null : new BillingTrustAssessmentType(value);
+        public static implicit operator BillingTrustAssessmentType?(string value) => value == null ? (BillingTrustAssessmentType?)null : new BillingTrustAssessmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

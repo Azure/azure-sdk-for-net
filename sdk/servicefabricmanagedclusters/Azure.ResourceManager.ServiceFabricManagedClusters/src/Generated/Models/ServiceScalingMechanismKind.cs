@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceScalingMechanismKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceScalingMechanismKind?(string value) => value == null ? null : new ServiceScalingMechanismKind(value);
+        public static implicit operator ServiceScalingMechanismKind?(string value) => value == null ? (ServiceScalingMechanismKind?)null : new ServiceScalingMechanismKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

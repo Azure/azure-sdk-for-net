@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceNameUnavailableReason?(string value) => value == null ? null : new AppServiceNameUnavailableReason(value);
+        public static implicit operator AppServiceNameUnavailableReason?(string value) => value == null ? (AppServiceNameUnavailableReason?)null : new AppServiceNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

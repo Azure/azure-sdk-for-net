@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewScopeType?(string value) => value == null ? null : new SovereignViewScopeType(value);
+        public static implicit operator SovereignViewScopeType?(string value) => value == null ? (SovereignViewScopeType?)null : new SovereignViewScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingManagementTenantState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingManagementTenantState?(string value) => value == null ? null : new BillingManagementTenantState(value);
+        public static implicit operator BillingManagementTenantState?(string value) => value == null ? (BillingManagementTenantState?)null : new BillingManagementTenantState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

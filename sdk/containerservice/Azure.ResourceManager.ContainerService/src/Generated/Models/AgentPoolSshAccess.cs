@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolSshAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolSshAccess?(string value) => value == null ? null : new AgentPoolSshAccess(value);
+        public static implicit operator AgentPoolSshAccess?(string value) => value == null ? (AgentPoolSshAccess?)null : new AgentPoolSshAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

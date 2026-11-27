@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiSpecImportSourceFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiSpecImportSourceFormat?(string value) => value == null ? null : new ApiSpecImportSourceFormat(value);
+        public static implicit operator ApiSpecImportSourceFormat?(string value) => value == null ? (ApiSpecImportSourceFormat?)null : new ApiSpecImportSourceFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

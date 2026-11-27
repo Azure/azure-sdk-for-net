@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="PossibleOperationsDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PossibleOperationsDirection?(string value) => value == null ? null : new PossibleOperationsDirection(value);
+        public static implicit operator PossibleOperationsDirection?(string value) => value == null ? (PossibleOperationsDirection?)null : new PossibleOperationsDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

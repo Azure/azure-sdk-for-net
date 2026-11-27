@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterApiVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterApiVisibility?(string value) => value == null ? null : new HcpOpenShiftClusterApiVisibility(value);
+        public static implicit operator HcpOpenShiftClusterApiVisibility?(string value) => value == null ? (HcpOpenShiftClusterApiVisibility?)null : new HcpOpenShiftClusterApiVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

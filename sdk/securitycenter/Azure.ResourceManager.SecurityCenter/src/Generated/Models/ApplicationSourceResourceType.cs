@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationSourceResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationSourceResourceType?(string value) => value == null ? null : new ApplicationSourceResourceType(value);
+        public static implicit operator ApplicationSourceResourceType?(string value) => value == null ? (ApplicationSourceResourceType?)null : new ApplicationSourceResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

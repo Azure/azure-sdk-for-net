@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiManagementResourceSkuCapacityScaleType?(string value) => value == null ? null : new ApiManagementResourceSkuCapacityScaleType(value);
+        public static implicit operator ApiManagementResourceSkuCapacityScaleType?(string value) => value == null ? (ApiManagementResourceSkuCapacityScaleType?)null : new ApiManagementResourceSkuCapacityScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

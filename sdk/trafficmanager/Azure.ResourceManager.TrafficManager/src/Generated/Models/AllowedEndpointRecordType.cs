@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="AllowedEndpointRecordType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowedEndpointRecordType?(string value) => value == null ? null : new AllowedEndpointRecordType(value);
+        public static implicit operator AllowedEndpointRecordType?(string value) => value == null ? (AllowedEndpointRecordType?)null : new AllowedEndpointRecordType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="NetworkAdapterJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkAdapterJobType?(string value) => value == null ? null : new NetworkAdapterJobType(value);
+        public static implicit operator NetworkAdapterJobType?(string value) => value == null ? (NetworkAdapterJobType?)null : new NetworkAdapterJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

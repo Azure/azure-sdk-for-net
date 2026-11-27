@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryExtendedLocationType?(string value) => value == null ? null : new GalleryExtendedLocationType(value);
+        public static implicit operator GalleryExtendedLocationType?(string value) => value == null ? (GalleryExtendedLocationType?)null : new GalleryExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

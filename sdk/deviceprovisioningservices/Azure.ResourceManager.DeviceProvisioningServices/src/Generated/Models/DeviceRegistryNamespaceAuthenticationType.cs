@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceRegistryNamespaceAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceRegistryNamespaceAuthenticationType?(string value) => value == null ? null : new DeviceRegistryNamespaceAuthenticationType(value);
+        public static implicit operator DeviceRegistryNamespaceAuthenticationType?(string value) => value == null ? (DeviceRegistryNamespaceAuthenticationType?)null : new DeviceRegistryNamespaceAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

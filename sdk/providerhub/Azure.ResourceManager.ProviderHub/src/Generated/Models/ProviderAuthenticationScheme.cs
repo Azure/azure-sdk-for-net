@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderAuthenticationScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderAuthenticationScheme?(string value) => value == null ? null : new ProviderAuthenticationScheme(value);
+        public static implicit operator ProviderAuthenticationScheme?(string value) => value == null ? (ProviderAuthenticationScheme?)null : new ProviderAuthenticationScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

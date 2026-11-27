@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskRunStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskRunStatus?(string value) => value == null ? null : new ContainerRegistryTaskRunStatus(value);
+        public static implicit operator ContainerRegistryTaskRunStatus?(string value) => value == null ? (ContainerRegistryTaskRunStatus?)null : new ContainerRegistryTaskRunStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

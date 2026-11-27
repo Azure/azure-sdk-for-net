@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerKeyType?(string value) => value == null ? null : new SqlServerKeyType(value);
+        public static implicit operator SqlServerKeyType?(string value) => value == null ? (SqlServerKeyType?)null : new SqlServerKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

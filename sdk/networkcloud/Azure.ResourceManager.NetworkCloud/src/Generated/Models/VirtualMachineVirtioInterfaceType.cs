@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineVirtioInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineVirtioInterfaceType?(string value) => value == null ? null : new VirtualMachineVirtioInterfaceType(value);
+        public static implicit operator VirtualMachineVirtioInterfaceType?(string value) => value == null ? (VirtualMachineVirtioInterfaceType?)null : new VirtualMachineVirtioInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

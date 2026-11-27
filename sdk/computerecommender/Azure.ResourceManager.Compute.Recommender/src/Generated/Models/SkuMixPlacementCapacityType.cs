@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <summary> Converts a string to a <see cref="SkuMixPlacementCapacityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuMixPlacementCapacityType?(string value) => value == null ? null : new SkuMixPlacementCapacityType(value);
+        public static implicit operator SkuMixPlacementCapacityType?(string value) => value == null ? (SkuMixPlacementCapacityType?)null : new SkuMixPlacementCapacityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

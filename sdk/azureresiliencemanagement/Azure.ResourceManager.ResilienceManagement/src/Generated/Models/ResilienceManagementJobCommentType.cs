@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementJobCommentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementJobCommentType?(string value) => value == null ? null : new ResilienceManagementJobCommentType(value);
+        public static implicit operator ResilienceManagementJobCommentType?(string value) => value == null ? (ResilienceManagementJobCommentType?)null : new ResilienceManagementJobCommentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

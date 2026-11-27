@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="VaultPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultPublicNetworkAccess?(string value) => value == null ? null : new VaultPublicNetworkAccess(value);
+        public static implicit operator VaultPublicNetworkAccess?(string value) => value == null ? (VaultPublicNetworkAccess?)null : new VaultPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

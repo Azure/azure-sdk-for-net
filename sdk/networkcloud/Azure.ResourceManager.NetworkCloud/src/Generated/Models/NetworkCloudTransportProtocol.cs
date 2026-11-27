@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudTransportProtocol?(string value) => value == null ? null : new NetworkCloudTransportProtocol(value);
+        public static implicit operator NetworkCloudTransportProtocol?(string value) => value == null ? (NetworkCloudTransportProtocol?)null : new NetworkCloudTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(value);
+        public static implicit operator MonitorNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? (MonitorNetworkSecurityPerimeterConfigurationProvisioningState?)null : new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

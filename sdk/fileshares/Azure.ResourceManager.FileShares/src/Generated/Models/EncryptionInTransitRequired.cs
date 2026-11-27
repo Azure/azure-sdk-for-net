@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="EncryptionInTransitRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EncryptionInTransitRequired?(string value) => value == null ? null : new EncryptionInTransitRequired(value);
+        public static implicit operator EncryptionInTransitRequired?(string value) => value == null ? (EncryptionInTransitRequired?)null : new EncryptionInTransitRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

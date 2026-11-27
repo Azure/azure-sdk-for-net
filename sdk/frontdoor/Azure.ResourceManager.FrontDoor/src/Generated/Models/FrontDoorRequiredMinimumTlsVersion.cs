@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorRequiredMinimumTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorRequiredMinimumTlsVersion?(string value) => value == null ? null : new FrontDoorRequiredMinimumTlsVersion(value);
+        public static implicit operator FrontDoorRequiredMinimumTlsVersion?(string value) => value == null ? (FrontDoorRequiredMinimumTlsVersion?)null : new FrontDoorRequiredMinimumTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

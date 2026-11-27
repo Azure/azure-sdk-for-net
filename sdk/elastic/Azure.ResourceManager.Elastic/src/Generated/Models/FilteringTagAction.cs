@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="FilteringTagAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilteringTagAction?(string value) => value == null ? null : new FilteringTagAction(value);
+        public static implicit operator FilteringTagAction?(string value) => value == null ? (FilteringTagAction?)null : new FilteringTagAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

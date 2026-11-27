@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="CreateDiffDisk"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreateDiffDisk?(string value) => value == null ? null : new CreateDiffDisk(value);
+        public static implicit operator CreateDiffDisk?(string value) => value == null ? (CreateDiffDisk?)null : new CreateDiffDisk(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

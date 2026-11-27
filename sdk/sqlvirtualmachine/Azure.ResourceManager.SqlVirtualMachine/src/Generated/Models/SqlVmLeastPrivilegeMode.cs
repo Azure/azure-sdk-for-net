@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmLeastPrivilegeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmLeastPrivilegeMode?(string value) => value == null ? null : new SqlVmLeastPrivilegeMode(value);
+        public static implicit operator SqlVmLeastPrivilegeMode?(string value) => value == null ? (SqlVmLeastPrivilegeMode?)null : new SqlVmLeastPrivilegeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

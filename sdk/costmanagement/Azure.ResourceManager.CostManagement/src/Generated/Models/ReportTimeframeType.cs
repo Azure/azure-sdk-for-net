@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ReportTimeframeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReportTimeframeType?(string value) => value == null ? null : new ReportTimeframeType(value);
+        public static implicit operator ReportTimeframeType?(string value) => value == null ? (ReportTimeframeType?)null : new ReportTimeframeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

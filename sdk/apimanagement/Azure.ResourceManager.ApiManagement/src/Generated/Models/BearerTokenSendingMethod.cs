@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="BearerTokenSendingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BearerTokenSendingMethod?(string value) => value == null ? null : new BearerTokenSendingMethod(value);
+        public static implicit operator BearerTokenSendingMethod?(string value) => value == null ? (BearerTokenSendingMethod?)null : new BearerTokenSendingMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="L3NetworkConfigurationIpamEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator L3NetworkConfigurationIpamEnabled?(string value) => value == null ? null : new L3NetworkConfigurationIpamEnabled(value);
+        public static implicit operator L3NetworkConfigurationIpamEnabled?(string value) => value == null ? (L3NetworkConfigurationIpamEnabled?)null : new L3NetworkConfigurationIpamEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

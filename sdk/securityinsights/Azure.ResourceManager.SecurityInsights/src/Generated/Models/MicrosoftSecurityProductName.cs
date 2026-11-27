@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="MicrosoftSecurityProductName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MicrosoftSecurityProductName?(string value) => value == null ? null : new MicrosoftSecurityProductName(value);
+        public static implicit operator MicrosoftSecurityProductName?(string value) => value == null ? (MicrosoftSecurityProductName?)null : new MicrosoftSecurityProductName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

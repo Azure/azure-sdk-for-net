@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RecordAllDecisionsResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecordAllDecisionsResult?(string value) => value == null ? null : new RecordAllDecisionsResult(value);
+        public static implicit operator RecordAllDecisionsResult?(string value) => value == null ? (RecordAllDecisionsResult?)null : new RecordAllDecisionsResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

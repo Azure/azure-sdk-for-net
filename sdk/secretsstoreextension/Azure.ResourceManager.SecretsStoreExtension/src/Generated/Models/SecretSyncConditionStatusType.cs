@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> Converts a string to a <see cref="SecretSyncConditionStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretSyncConditionStatusType?(string value) => value == null ? null : new SecretSyncConditionStatusType(value);
+        public static implicit operator SecretSyncConditionStatusType?(string value) => value == null ? (SecretSyncConditionStatusType?)null : new SecretSyncConditionStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

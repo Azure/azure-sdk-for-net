@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CassandraAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraAuthenticationMethod?(string value) => value == null ? null : new CassandraAuthenticationMethod(value);
+        public static implicit operator CassandraAuthenticationMethod?(string value) => value == null ? (CassandraAuthenticationMethod?)null : new CassandraAuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

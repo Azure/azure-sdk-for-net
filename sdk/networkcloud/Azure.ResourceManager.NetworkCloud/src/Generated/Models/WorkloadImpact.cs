@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadImpact"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadImpact?(string value) => value == null ? null : new WorkloadImpact(value);
+        public static implicit operator WorkloadImpact?(string value) => value == null ? (WorkloadImpact?)null : new WorkloadImpact(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

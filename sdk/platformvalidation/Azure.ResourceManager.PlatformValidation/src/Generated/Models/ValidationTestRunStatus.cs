@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Converts a string to a <see cref="ValidationTestRunStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationTestRunStatus?(string value) => value == null ? null : new ValidationTestRunStatus(value);
+        public static implicit operator ValidationTestRunStatus?(string value) => value == null ? (ValidationTestRunStatus?)null : new ValidationTestRunStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

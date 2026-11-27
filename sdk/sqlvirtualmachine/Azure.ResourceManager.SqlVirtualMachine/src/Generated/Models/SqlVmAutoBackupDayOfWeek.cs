@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmAutoBackupDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmAutoBackupDayOfWeek?(string value) => value == null ? null : new SqlVmAutoBackupDayOfWeek(value);
+        public static implicit operator SqlVmAutoBackupDayOfWeek?(string value) => value == null ? (SqlVmAutoBackupDayOfWeek?)null : new SqlVmAutoBackupDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new KeyVaultPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator KeyVaultPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (KeyVaultPrivateEndpointServiceConnectionStatus?)null : new KeyVaultPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskBaseImageDependencyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskBaseImageDependencyType?(string value) => value == null ? null : new ContainerRegistryTaskBaseImageDependencyType(value);
+        public static implicit operator ContainerRegistryTaskBaseImageDependencyType?(string value) => value == null ? (ContainerRegistryTaskBaseImageDependencyType?)null : new ContainerRegistryTaskBaseImageDependencyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

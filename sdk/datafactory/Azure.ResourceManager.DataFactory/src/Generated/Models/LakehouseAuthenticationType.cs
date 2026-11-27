@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="LakehouseAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LakehouseAuthenticationType?(string value) => value == null ? null : new LakehouseAuthenticationType(value);
+        public static implicit operator LakehouseAuthenticationType?(string value) => value == null ? (LakehouseAuthenticationType?)null : new LakehouseAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

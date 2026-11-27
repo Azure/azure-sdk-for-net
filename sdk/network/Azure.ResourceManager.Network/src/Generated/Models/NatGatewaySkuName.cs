@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NatGatewaySkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NatGatewaySkuName?(string value) => value == null ? null : new NatGatewaySkuName(value);
+        public static implicit operator NatGatewaySkuName?(string value) => value == null ? (NatGatewaySkuName?)null : new NatGatewaySkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

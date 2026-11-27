@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="AmlFileSystemSquashMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AmlFileSystemSquashMode?(string value) => value == null ? null : new AmlFileSystemSquashMode(value);
+        public static implicit operator AmlFileSystemSquashMode?(string value) => value == null ? (AmlFileSystemSquashMode?)null : new AmlFileSystemSquashMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

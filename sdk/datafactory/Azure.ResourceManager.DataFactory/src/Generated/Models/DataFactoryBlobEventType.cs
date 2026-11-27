@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryBlobEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryBlobEventType?(string value) => value == null ? null : new DataFactoryBlobEventType(value);
+        public static implicit operator DataFactoryBlobEventType?(string value) => value == null ? (DataFactoryBlobEventType?)null : new DataFactoryBlobEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="ServiceAccountPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceAccountPublicNetworkAccess?(string value) => value == null ? null : new ServiceAccountPublicNetworkAccess(value);
+        public static implicit operator ServiceAccountPublicNetworkAccess?(string value) => value == null ? (ServiceAccountPublicNetworkAccess?)null : new ServiceAccountPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

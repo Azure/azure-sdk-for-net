@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchSemanticSearch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchSemanticSearch?(string value) => value == null ? null : new SearchSemanticSearch(value);
+        public static implicit operator SearchSemanticSearch?(string value) => value == null ? (SearchSemanticSearch?)null : new SearchSemanticSearch(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringSessionStateV6"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringSessionStateV6?(string value) => value == null ? null : new PeeringSessionStateV6(value);
+        public static implicit operator PeeringSessionStateV6?(string value) => value == null ? (PeeringSessionStateV6?)null : new PeeringSessionStateV6(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="DevicePresenceVerificationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevicePresenceVerificationStatus?(string value) => value == null ? null : new DevicePresenceVerificationStatus(value);
+        public static implicit operator DevicePresenceVerificationStatus?(string value) => value == null ? (DevicePresenceVerificationStatus?)null : new DevicePresenceVerificationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

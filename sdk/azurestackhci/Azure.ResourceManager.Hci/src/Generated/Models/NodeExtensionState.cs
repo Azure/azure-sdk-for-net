@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="NodeExtensionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeExtensionState?(string value) => value == null ? null : new NodeExtensionState(value);
+        public static implicit operator NodeExtensionState?(string value) => value == null ? (NodeExtensionState?)null : new NodeExtensionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="DenyAssignmentEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DenyAssignmentEffect?(string value) => value == null ? null : new DenyAssignmentEffect(value);
+        public static implicit operator DenyAssignmentEffect?(string value) => value == null ? (DenyAssignmentEffect?)null : new DenyAssignmentEffect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

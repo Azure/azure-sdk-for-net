@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceManagementOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceManagementOperationKind?(string value) => value == null ? null : new MaintenanceManagementOperationKind(value);
+        public static implicit operator MaintenanceManagementOperationKind?(string value) => value == null ? (MaintenanceManagementOperationKind?)null : new MaintenanceManagementOperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

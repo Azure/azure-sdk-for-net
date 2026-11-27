@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <summary> Converts a string to a <see cref="ManagedOpsEnablementStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedOpsEnablementStatus?(string value) => value == null ? null : new ManagedOpsEnablementStatus(value);
+        public static implicit operator ManagedOpsEnablementStatus?(string value) => value == null ? (ManagedOpsEnablementStatus?)null : new ManagedOpsEnablementStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

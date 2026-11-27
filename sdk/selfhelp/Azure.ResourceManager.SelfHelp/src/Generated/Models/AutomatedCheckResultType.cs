@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="AutomatedCheckResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomatedCheckResultType?(string value) => value == null ? null : new AutomatedCheckResultType(value);
+        public static implicit operator AutomatedCheckResultType?(string value) => value == null ? (AutomatedCheckResultType?)null : new AutomatedCheckResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

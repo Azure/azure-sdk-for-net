@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CustomHttpsAvailabilityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomHttpsAvailabilityState?(string value) => value == null ? null : new CustomHttpsAvailabilityState(value);
+        public static implicit operator CustomHttpsAvailabilityState?(string value) => value == null ? (CustomHttpsAvailabilityState?)null : new CustomHttpsAvailabilityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

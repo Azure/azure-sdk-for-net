@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Converts a string to a <see cref="TrafficProfileStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficProfileStatus?(string value) => value == null ? null : new TrafficProfileStatus(value);
+        public static implicit operator TrafficProfileStatus?(string value) => value == null ? (TrafficProfileStatus?)null : new TrafficProfileStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

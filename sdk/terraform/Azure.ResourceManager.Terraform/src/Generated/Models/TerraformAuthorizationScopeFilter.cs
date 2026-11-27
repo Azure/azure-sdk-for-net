@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Converts a string to a <see cref="TerraformAuthorizationScopeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TerraformAuthorizationScopeFilter?(string value) => value == null ? null : new TerraformAuthorizationScopeFilter(value);
+        public static implicit operator TerraformAuthorizationScopeFilter?(string value) => value == null ? (TerraformAuthorizationScopeFilter?)null : new TerraformAuthorizationScopeFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

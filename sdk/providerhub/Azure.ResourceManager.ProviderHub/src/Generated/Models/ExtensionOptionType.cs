@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ExtensionOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtensionOptionType?(string value) => value == null ? null : new ExtensionOptionType(value);
+        public static implicit operator ExtensionOptionType?(string value) => value == null ? (ExtensionOptionType?)null : new ExtensionOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

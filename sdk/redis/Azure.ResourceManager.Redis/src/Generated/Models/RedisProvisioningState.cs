@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="RedisProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisProvisioningState?(string value) => value == null ? null : new RedisProvisioningState(value);
+        public static implicit operator RedisProvisioningState?(string value) => value == null ? (RedisProvisioningState?)null : new RedisProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

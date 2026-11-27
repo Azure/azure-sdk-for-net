@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppSmbEncryptionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppSmbEncryptionState?(string value) => value == null ? null : new NetAppSmbEncryptionState(value);
+        public static implicit operator NetAppSmbEncryptionState?(string value) => value == null ? (NetAppSmbEncryptionState?)null : new NetAppSmbEncryptionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

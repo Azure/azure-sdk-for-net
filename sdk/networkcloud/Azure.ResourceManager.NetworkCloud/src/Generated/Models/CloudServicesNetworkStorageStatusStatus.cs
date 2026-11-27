@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="CloudServicesNetworkStorageStatusStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudServicesNetworkStorageStatusStatus?(string value) => value == null ? null : new CloudServicesNetworkStorageStatusStatus(value);
+        public static implicit operator CloudServicesNetworkStorageStatusStatus?(string value) => value == null ? (CloudServicesNetworkStorageStatusStatus?)null : new CloudServicesNetworkStorageStatusStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

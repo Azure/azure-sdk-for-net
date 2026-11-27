@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ReservationReportSchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationReportSchema?(string value) => value == null ? null : new ReservationReportSchema(value);
+        public static implicit operator ReservationReportSchema?(string value) => value == null ? (ReservationReportSchema?)null : new ReservationReportSchema(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

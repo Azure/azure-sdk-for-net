@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DynamicThresholdSensitivity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynamicThresholdSensitivity?(string value) => value == null ? null : new DynamicThresholdSensitivity(value);
+        public static implicit operator DynamicThresholdSensitivity?(string value) => value == null ? (DynamicThresholdSensitivity?)null : new DynamicThresholdSensitivity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerGeoRedundantBackupEnum?(string value) => value == null ? null : new PostgreSqlFlexibleServerGeoRedundantBackupEnum(value);
+        public static implicit operator PostgreSqlFlexibleServerGeoRedundantBackupEnum?(string value) => value == null ? (PostgreSqlFlexibleServerGeoRedundantBackupEnum?)null : new PostgreSqlFlexibleServerGeoRedundantBackupEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

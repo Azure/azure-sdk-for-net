@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsInfrastructureResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsInfrastructureResourceType?(string value) => value == null ? null : new DevOpsInfrastructureResourceType(value);
+        public static implicit operator DevOpsInfrastructureResourceType?(string value) => value == null ? (DevOpsInfrastructureResourceType?)null : new DevOpsInfrastructureResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

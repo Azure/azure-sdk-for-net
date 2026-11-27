@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterSkuTier?(string value) => value == null ? null : new ManagedClusterSkuTier(value);
+        public static implicit operator ManagedClusterSkuTier?(string value) => value == null ? (ManagedClusterSkuTier?)null : new ManagedClusterSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

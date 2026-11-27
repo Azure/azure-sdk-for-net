@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="RepositoryAccessKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RepositoryAccessKind?(string value) => value == null ? null : new RepositoryAccessKind(value);
+        public static implicit operator RepositoryAccessKind?(string value) => value == null ? (RepositoryAccessKind?)null : new RepositoryAccessKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

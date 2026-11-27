@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlTokenType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlTokenType?(string value) => value == null ? null : new SourceControlTokenType(value);
+        public static implicit operator SourceControlTokenType?(string value) => value == null ? (SourceControlTokenType?)null : new SourceControlTokenType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

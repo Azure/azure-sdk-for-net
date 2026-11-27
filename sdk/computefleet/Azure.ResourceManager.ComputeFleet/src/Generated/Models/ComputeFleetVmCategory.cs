@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetVmCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetVmCategory?(string value) => value == null ? null : new ComputeFleetVmCategory(value);
+        public static implicit operator ComputeFleetVmCategory?(string value) => value == null ? (ComputeFleetVmCategory?)null : new ComputeFleetVmCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

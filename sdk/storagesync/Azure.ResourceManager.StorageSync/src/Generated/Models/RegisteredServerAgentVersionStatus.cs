@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="RegisteredServerAgentVersionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegisteredServerAgentVersionStatus?(string value) => value == null ? null : new RegisteredServerAgentVersionStatus(value);
+        public static implicit operator RegisteredServerAgentVersionStatus?(string value) => value == null ? (RegisteredServerAgentVersionStatus?)null : new RegisteredServerAgentVersionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

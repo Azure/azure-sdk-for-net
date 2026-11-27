@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridIPActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridIPActionType?(string value) => value == null ? null : new EventGridIPActionType(value);
+        public static implicit operator EventGridIPActionType?(string value) => value == null ? (EventGridIPActionType?)null : new EventGridIPActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

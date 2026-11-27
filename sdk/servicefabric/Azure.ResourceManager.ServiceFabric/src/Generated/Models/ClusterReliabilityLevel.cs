@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterReliabilityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterReliabilityLevel?(string value) => value == null ? null : new ClusterReliabilityLevel(value);
+        public static implicit operator ClusterReliabilityLevel?(string value) => value == null ? (ClusterReliabilityLevel?)null : new ClusterReliabilityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

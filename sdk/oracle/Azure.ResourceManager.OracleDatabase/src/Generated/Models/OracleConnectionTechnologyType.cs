@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleConnectionTechnologyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleConnectionTechnologyType?(string value) => value == null ? null : new OracleConnectionTechnologyType(value);
+        public static implicit operator OracleConnectionTechnologyType?(string value) => value == null ? (OracleConnectionTechnologyType?)null : new OracleConnectionTechnologyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

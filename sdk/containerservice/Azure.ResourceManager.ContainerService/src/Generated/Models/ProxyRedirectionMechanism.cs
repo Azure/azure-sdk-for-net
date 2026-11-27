@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ProxyRedirectionMechanism"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProxyRedirectionMechanism?(string value) => value == null ? null : new ProxyRedirectionMechanism(value);
+        public static implicit operator ProxyRedirectionMechanism?(string value) => value == null ? (ProxyRedirectionMechanism?)null : new ProxyRedirectionMechanism(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

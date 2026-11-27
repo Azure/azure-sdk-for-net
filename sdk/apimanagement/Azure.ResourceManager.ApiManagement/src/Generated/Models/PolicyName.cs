@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyName?(string value) => value == null ? null : new PolicyName(value);
+        public static implicit operator PolicyName?(string value) => value == null ? (PolicyName?)null : new PolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

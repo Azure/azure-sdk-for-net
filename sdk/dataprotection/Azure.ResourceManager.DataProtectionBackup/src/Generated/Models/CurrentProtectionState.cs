@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="CurrentProtectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CurrentProtectionState?(string value) => value == null ? null : new CurrentProtectionState(value);
+        public static implicit operator CurrentProtectionState?(string value) => value == null ? (CurrentProtectionState?)null : new CurrentProtectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

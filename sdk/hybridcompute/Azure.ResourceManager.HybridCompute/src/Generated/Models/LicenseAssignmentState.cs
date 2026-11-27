@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="LicenseAssignmentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LicenseAssignmentState?(string value) => value == null ? null : new LicenseAssignmentState(value);
+        public static implicit operator LicenseAssignmentState?(string value) => value == null ? (LicenseAssignmentState?)null : new LicenseAssignmentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

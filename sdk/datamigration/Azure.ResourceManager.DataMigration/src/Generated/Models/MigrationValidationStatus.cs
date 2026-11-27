@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="MigrationValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationValidationStatus?(string value) => value == null ? null : new MigrationValidationStatus(value);
+        public static implicit operator MigrationValidationStatus?(string value) => value == null ? (MigrationValidationStatus?)null : new MigrationValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

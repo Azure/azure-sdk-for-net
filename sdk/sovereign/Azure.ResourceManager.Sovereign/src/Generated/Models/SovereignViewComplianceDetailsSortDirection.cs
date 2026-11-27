@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewComplianceDetailsSortDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewComplianceDetailsSortDirection?(string value) => value == null ? null : new SovereignViewComplianceDetailsSortDirection(value);
+        public static implicit operator SovereignViewComplianceDetailsSortDirection?(string value) => value == null ? (SovereignViewComplianceDetailsSortDirection?)null : new SovereignViewComplianceDetailsSortDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

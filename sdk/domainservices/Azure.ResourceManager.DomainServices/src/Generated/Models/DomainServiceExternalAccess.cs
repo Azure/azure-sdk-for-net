@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="DomainServiceExternalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainServiceExternalAccess?(string value) => value == null ? null : new DomainServiceExternalAccess(value);
+        public static implicit operator DomainServiceExternalAccess?(string value) => value == null ? (DomainServiceExternalAccess?)null : new DomainServiceExternalAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

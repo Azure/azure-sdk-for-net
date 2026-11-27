@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBBackupStorageRedundancy?(string value) => value == null ? null : new CosmosDBBackupStorageRedundancy(value);
+        public static implicit operator CosmosDBBackupStorageRedundancy?(string value) => value == null ? (CosmosDBBackupStorageRedundancy?)null : new CosmosDBBackupStorageRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

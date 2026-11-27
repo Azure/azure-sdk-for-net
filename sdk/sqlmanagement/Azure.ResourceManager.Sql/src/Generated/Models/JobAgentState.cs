@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="JobAgentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobAgentState?(string value) => value == null ? null : new JobAgentState(value);
+        public static implicit operator JobAgentState?(string value) => value == null ? (JobAgentState?)null : new JobAgentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Converts a string to a <see cref="TrafficControllerAssociationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficControllerAssociationType?(string value) => value == null ? null : new TrafficControllerAssociationType(value);
+        public static implicit operator TrafficControllerAssociationType?(string value) => value == null ? (TrafficControllerAssociationType?)null : new TrafficControllerAssociationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="EntityAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityAlertSeverity?(string value) => value == null ? null : new EntityAlertSeverity(value);
+        public static implicit operator EntityAlertSeverity?(string value) => value == null ? (EntityAlertSeverity?)null : new EntityAlertSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

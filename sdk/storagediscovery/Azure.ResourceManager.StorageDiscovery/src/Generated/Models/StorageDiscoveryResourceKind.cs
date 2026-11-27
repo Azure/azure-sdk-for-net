@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDiscoveryResourceKind?(string value) => value == null ? null : new StorageDiscoveryResourceKind(value);
+        public static implicit operator StorageDiscoveryResourceKind?(string value) => value == null ? (StorageDiscoveryResourceKind?)null : new StorageDiscoveryResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

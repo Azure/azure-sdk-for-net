@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBProvisioningState?(string value) => value == null ? null : new HorizonDBProvisioningState(value);
+        public static implicit operator HorizonDBProvisioningState?(string value) => value == null ? (HorizonDBProvisioningState?)null : new HorizonDBProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

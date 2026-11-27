@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationActionsRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationActionsRequired?(string value) => value == null ? null : new AppConfigurationActionsRequired(value);
+        public static implicit operator AppConfigurationActionsRequired?(string value) => value == null ? (AppConfigurationActionsRequired?)null : new AppConfigurationActionsRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

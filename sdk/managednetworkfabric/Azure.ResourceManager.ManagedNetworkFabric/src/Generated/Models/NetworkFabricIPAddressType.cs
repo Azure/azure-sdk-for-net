@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricIPAddressType?(string value) => value == null ? null : new NetworkFabricIPAddressType(value);
+        public static implicit operator NetworkFabricIPAddressType?(string value) => value == null ? (NetworkFabricIPAddressType?)null : new NetworkFabricIPAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

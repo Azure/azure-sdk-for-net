@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppProtocolType?(string value) => value == null ? null : new NetAppProtocolType(value);
+        public static implicit operator NetAppProtocolType?(string value) => value == null ? (NetAppProtocolType?)null : new NetAppProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

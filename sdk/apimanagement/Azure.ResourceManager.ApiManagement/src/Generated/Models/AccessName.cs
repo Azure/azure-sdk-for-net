@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="AccessName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessName?(string value) => value == null ? null : new AccessName(value);
+        public static implicit operator AccessName?(string value) => value == null ? (AccessName?)null : new AccessName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

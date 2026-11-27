@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterUpdateVersionSafeguardMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterUpdateVersionSafeguardMode?(string value) => value == null ? null : new ClusterUpdateVersionSafeguardMode(value);
+        public static implicit operator ClusterUpdateVersionSafeguardMode?(string value) => value == null ? (ClusterUpdateVersionSafeguardMode?)null : new ClusterUpdateVersionSafeguardMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

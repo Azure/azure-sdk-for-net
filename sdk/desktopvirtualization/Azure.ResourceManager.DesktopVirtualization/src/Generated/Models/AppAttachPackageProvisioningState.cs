@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="AppAttachPackageProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppAttachPackageProvisioningState?(string value) => value == null ? null : new AppAttachPackageProvisioningState(value);
+        public static implicit operator AppAttachPackageProvisioningState?(string value) => value == null ? (AppAttachPackageProvisioningState?)null : new AppAttachPackageProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

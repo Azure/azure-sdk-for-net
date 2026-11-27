@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRNetworkAclAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRNetworkAclAction?(string value) => value == null ? null : new SignalRNetworkAclAction(value);
+        public static implicit operator SignalRNetworkAclAction?(string value) => value == null ? (SignalRNetworkAclAction?)null : new SignalRNetworkAclAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

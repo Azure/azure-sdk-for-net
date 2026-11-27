@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="LookBackPeriod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LookBackPeriod?(string value) => value == null ? null : new LookBackPeriod(value);
+        public static implicit operator LookBackPeriod?(string value) => value == null ? (LookBackPeriod?)null : new LookBackPeriod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

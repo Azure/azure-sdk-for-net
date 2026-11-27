@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationKeyPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationKeyPermission?(string value) => value == null ? null : new AutomationKeyPermission(value);
+        public static implicit operator AutomationKeyPermission?(string value) => value == null ? (AutomationKeyPermission?)null : new AutomationKeyPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

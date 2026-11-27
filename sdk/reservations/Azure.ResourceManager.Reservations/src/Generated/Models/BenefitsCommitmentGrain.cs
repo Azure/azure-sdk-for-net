@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="BenefitsCommitmentGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BenefitsCommitmentGrain?(string value) => value == null ? null : new BenefitsCommitmentGrain(value);
+        public static implicit operator BenefitsCommitmentGrain?(string value) => value == null ? (BenefitsCommitmentGrain?)null : new BenefitsCommitmentGrain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

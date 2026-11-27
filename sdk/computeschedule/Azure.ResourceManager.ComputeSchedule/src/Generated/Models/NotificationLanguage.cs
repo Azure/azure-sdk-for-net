@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="NotificationLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationLanguage?(string value) => value == null ? null : new NotificationLanguage(value);
+        public static implicit operator NotificationLanguage?(string value) => value == null ? (NotificationLanguage?)null : new NotificationLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

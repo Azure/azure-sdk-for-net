@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryUsageUnit?(string value) => value == null ? null : new ContainerRegistryUsageUnit(value);
+        public static implicit operator ContainerRegistryUsageUnit?(string value) => value == null ? (ContainerRegistryUsageUnit?)null : new ContainerRegistryUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

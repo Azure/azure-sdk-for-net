@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeProtectionAgentHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeProtectionAgentHealthStatus?(string value) => value == null ? null : new RuntimeProtectionAgentHealthStatus(value);
+        public static implicit operator RuntimeProtectionAgentHealthStatus?(string value) => value == null ? (RuntimeProtectionAgentHealthStatus?)null : new RuntimeProtectionAgentHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

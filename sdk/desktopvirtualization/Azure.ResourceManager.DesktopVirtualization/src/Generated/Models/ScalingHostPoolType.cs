@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="ScalingHostPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScalingHostPoolType?(string value) => value == null ? null : new ScalingHostPoolType(value);
+        public static implicit operator ScalingHostPoolType?(string value) => value == null ? (ScalingHostPoolType?)null : new ScalingHostPoolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

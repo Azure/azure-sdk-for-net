@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmStatusLevelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmStatusLevelType?(string value) => value == null ? null : new HciVmStatusLevelType(value);
+        public static implicit operator HciVmStatusLevelType?(string value) => value == null ? (HciVmStatusLevelType?)null : new HciVmStatusLevelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

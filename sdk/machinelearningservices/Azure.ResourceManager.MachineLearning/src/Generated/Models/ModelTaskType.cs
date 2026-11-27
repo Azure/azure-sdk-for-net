@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ModelTaskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelTaskType?(string value) => value == null ? null : new ModelTaskType(value);
+        public static implicit operator ModelTaskType?(string value) => value == null ? (ModelTaskType?)null : new ModelTaskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="IPMatchConditionPrefixType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPMatchConditionPrefixType?(string value) => value == null ? null : new IPMatchConditionPrefixType(value);
+        public static implicit operator IPMatchConditionPrefixType?(string value) => value == null ? (IPMatchConditionPrefixType?)null : new IPMatchConditionPrefixType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

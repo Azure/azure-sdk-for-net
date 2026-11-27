@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="BackendEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackendEnabledState?(string value) => value == null ? null : new BackendEnabledState(value);
+        public static implicit operator BackendEnabledState?(string value) => value == null ? (BackendEnabledState?)null : new BackendEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ListLocalUserIncludeParam"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListLocalUserIncludeParam?(string value) => value == null ? null : new ListLocalUserIncludeParam(value);
+        public static implicit operator ListLocalUserIncludeParam?(string value) => value == null ? (ListLocalUserIncludeParam?)null : new ListLocalUserIncludeParam(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

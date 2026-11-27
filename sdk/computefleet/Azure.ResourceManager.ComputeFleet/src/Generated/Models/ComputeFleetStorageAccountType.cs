@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetStorageAccountType?(string value) => value == null ? null : new ComputeFleetStorageAccountType(value);
+        public static implicit operator ComputeFleetStorageAccountType?(string value) => value == null ? (ComputeFleetStorageAccountType?)null : new ComputeFleetStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

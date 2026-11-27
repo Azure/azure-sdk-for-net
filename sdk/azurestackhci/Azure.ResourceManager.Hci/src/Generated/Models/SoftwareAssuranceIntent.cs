@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="SoftwareAssuranceIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SoftwareAssuranceIntent?(string value) => value == null ? null : new SoftwareAssuranceIntent(value);
+        public static implicit operator SoftwareAssuranceIntent?(string value) => value == null ? (SoftwareAssuranceIntent?)null : new SoftwareAssuranceIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

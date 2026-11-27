@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubReplicaRoleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubReplicaRoleType?(string value) => value == null ? null : new IotHubReplicaRoleType(value);
+        public static implicit operator IotHubReplicaRoleType?(string value) => value == null ? (IotHubReplicaRoleType?)null : new IotHubReplicaRoleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

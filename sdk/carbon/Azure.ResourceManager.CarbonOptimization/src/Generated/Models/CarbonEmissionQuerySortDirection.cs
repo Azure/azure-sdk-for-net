@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
         /// <summary> Converts a string to a <see cref="CarbonEmissionQuerySortDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CarbonEmissionQuerySortDirection?(string value) => value == null ? null : new CarbonEmissionQuerySortDirection(value);
+        public static implicit operator CarbonEmissionQuerySortDirection?(string value) => value == null ? (CarbonEmissionQuerySortDirection?)null : new CarbonEmissionQuerySortDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

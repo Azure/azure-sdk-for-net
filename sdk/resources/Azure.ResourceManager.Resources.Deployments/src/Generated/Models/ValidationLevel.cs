@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
 
         /// <summary> Converts a string to a <see cref="ValidationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationLevel?(string value) => value == null ? null : new ValidationLevel(value);
+        public static implicit operator ValidationLevel?(string value) => value == null ? (ValidationLevel?)null : new ValidationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

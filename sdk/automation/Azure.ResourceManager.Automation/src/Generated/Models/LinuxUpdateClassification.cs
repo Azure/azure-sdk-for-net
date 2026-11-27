@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="LinuxUpdateClassification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinuxUpdateClassification?(string value) => value == null ? null : new LinuxUpdateClassification(value);
+        public static implicit operator LinuxUpdateClassification?(string value) => value == null ? (LinuxUpdateClassification?)null : new LinuxUpdateClassification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

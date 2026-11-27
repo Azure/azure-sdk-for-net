@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridKeyEncryptionIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridKeyEncryptionIdentityType?(string value) => value == null ? null : new EventGridKeyEncryptionIdentityType(value);
+        public static implicit operator EventGridKeyEncryptionIdentityType?(string value) => value == null ? (EventGridKeyEncryptionIdentityType?)null : new EventGridKeyEncryptionIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

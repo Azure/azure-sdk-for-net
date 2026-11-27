@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="RedistributeConnectedSubnet"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedistributeConnectedSubnet?(string value) => value == null ? null : new RedistributeConnectedSubnet(value);
+        public static implicit operator RedistributeConnectedSubnet?(string value) => value == null ? (RedistributeConnectedSubnet?)null : new RedistributeConnectedSubnet(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

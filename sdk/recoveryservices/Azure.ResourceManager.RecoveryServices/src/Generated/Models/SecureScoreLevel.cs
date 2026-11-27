@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="SecureScoreLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecureScoreLevel?(string value) => value == null ? null : new SecureScoreLevel(value);
+        public static implicit operator SecureScoreLevel?(string value) => value == null ? (SecureScoreLevel?)null : new SecureScoreLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

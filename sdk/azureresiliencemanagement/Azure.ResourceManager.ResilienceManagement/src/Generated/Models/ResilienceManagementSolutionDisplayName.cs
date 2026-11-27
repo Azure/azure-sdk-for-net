@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementSolutionDisplayName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementSolutionDisplayName?(string value) => value == null ? null : new ResilienceManagementSolutionDisplayName(value);
+        public static implicit operator ResilienceManagementSolutionDisplayName?(string value) => value == null ? (ResilienceManagementSolutionDisplayName?)null : new ResilienceManagementSolutionDisplayName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

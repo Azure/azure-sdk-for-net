@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="ScVmmOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScVmmOSType?(string value) => value == null ? null : new ScVmmOSType(value);
+        public static implicit operator ScVmmOSType?(string value) => value == null ? (ScVmmOSType?)null : new ScVmmOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

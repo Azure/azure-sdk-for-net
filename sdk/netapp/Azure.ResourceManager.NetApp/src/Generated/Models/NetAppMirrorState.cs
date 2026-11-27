@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppMirrorState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppMirrorState?(string value) => value == null ? null : new NetAppMirrorState(value);
+        public static implicit operator NetAppMirrorState?(string value) => value == null ? (NetAppMirrorState?)null : new NetAppMirrorState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

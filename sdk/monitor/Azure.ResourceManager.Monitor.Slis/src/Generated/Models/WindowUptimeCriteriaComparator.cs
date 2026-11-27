@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="WindowUptimeCriteriaComparator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowUptimeCriteriaComparator?(string value) => value == null ? null : new WindowUptimeCriteriaComparator(value);
+        public static implicit operator WindowUptimeCriteriaComparator?(string value) => value == null ? (WindowUptimeCriteriaComparator?)null : new WindowUptimeCriteriaComparator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

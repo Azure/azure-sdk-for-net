@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryPipelineReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryPipelineReferenceType?(string value) => value == null ? null : new DataFactoryPipelineReferenceType(value);
+        public static implicit operator DataFactoryPipelineReferenceType?(string value) => value == null ? (DataFactoryPipelineReferenceType?)null : new DataFactoryPipelineReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

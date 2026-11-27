@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiType?(string value) => value == null ? null : new ApiType(value);
+        public static implicit operator ApiType?(string value) => value == null ? (ApiType?)null : new ApiType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="AdvancedThreatProtectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvancedThreatProtectionProvisioningState?(string value) => value == null ? null : new AdvancedThreatProtectionProvisioningState(value);
+        public static implicit operator AdvancedThreatProtectionProvisioningState?(string value) => value == null ? (AdvancedThreatProtectionProvisioningState?)null : new AdvancedThreatProtectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

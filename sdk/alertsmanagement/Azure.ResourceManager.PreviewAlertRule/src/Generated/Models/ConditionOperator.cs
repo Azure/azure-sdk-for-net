@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="ConditionOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConditionOperator?(string value) => value == null ? null : new ConditionOperator(value);
+        public static implicit operator ConditionOperator?(string value) => value == null ? (ConditionOperator?)null : new ConditionOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="AnomalySecurityMLAnalyticsSettingsStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnomalySecurityMLAnalyticsSettingsStatus?(string value) => value == null ? null : new AnomalySecurityMLAnalyticsSettingsStatus(value);
+        public static implicit operator AnomalySecurityMLAnalyticsSettingsStatus?(string value) => value == null ? (AnomalySecurityMLAnalyticsSettingsStatus?)null : new AnomalySecurityMLAnalyticsSettingsStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

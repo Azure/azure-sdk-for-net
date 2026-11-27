@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="PatchModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PatchModeType?(string value) => value == null ? null : new PatchModeType(value);
+        public static implicit operator PatchModeType?(string value) => value == null ? (PatchModeType?)null : new PatchModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

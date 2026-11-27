@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="AllowedCopyScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowedCopyScope?(string value) => value == null ? null : new AllowedCopyScope(value);
+        public static implicit operator AllowedCopyScope?(string value) => value == null ? (AllowedCopyScope?)null : new AllowedCopyScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

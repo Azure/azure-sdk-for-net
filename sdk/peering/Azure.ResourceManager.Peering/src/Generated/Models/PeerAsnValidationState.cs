@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeerAsnValidationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeerAsnValidationState?(string value) => value == null ? null : new PeerAsnValidationState(value);
+        public static implicit operator PeerAsnValidationState?(string value) => value == null ? (PeerAsnValidationState?)null : new PeerAsnValidationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

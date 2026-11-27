@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="MaxSizeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaxSizeUnit?(string value) => value == null ? null : new MaxSizeUnit(value);
+        public static implicit operator MaxSizeUnit?(string value) => value == null ? (MaxSizeUnit?)null : new MaxSizeUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

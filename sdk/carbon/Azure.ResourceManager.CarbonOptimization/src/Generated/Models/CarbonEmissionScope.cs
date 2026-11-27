@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
         /// <summary> Converts a string to a <see cref="CarbonEmissionScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CarbonEmissionScope?(string value) => value == null ? null : new CarbonEmissionScope(value);
+        public static implicit operator CarbonEmissionScope?(string value) => value == null ? (CarbonEmissionScope?)null : new CarbonEmissionScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

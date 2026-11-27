@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    trackedResource = ModelReaderWriter.Read<TrackedResourceData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAutomationContext.Default);
+                    trackedResource = TrackedResourceData.DeserializeTrackedResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

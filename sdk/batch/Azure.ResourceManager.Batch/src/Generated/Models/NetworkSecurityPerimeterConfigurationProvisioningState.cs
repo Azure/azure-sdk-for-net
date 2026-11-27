@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new NetworkSecurityPerimeterConfigurationProvisioningState(value);
+        public static implicit operator NetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? (NetworkSecurityPerimeterConfigurationProvisioningState?)null : new NetworkSecurityPerimeterConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

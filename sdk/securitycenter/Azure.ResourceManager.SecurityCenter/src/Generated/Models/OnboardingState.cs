@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="OnboardingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnboardingState?(string value) => value == null ? null : new OnboardingState(value);
+        public static implicit operator OnboardingState?(string value) => value == null ? (OnboardingState?)null : new OnboardingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultVendor"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultVendor?(string value) => value == null ? null : new CommvaultVendor(value);
+        public static implicit operator CommvaultVendor?(string value) => value == null ? (CommvaultVendor?)null : new CommvaultVendor(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

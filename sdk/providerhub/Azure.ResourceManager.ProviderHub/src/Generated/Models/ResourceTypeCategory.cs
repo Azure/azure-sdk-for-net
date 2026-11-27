@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeCategory?(string value) => value == null ? null : new ResourceTypeCategory(value);
+        public static implicit operator ResourceTypeCategory?(string value) => value == null ? (ResourceTypeCategory?)null : new ResourceTypeCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

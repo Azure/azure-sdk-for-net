@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ChargeSummaryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChargeSummaryKind?(string value) => value == null ? null : new ChargeSummaryKind(value);
+        public static implicit operator ChargeSummaryKind?(string value) => value == null ? (ChargeSummaryKind?)null : new ChargeSummaryKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

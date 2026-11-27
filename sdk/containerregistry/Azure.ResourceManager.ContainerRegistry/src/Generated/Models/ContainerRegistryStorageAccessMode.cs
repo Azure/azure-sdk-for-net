@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryStorageAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryStorageAccessMode?(string value) => value == null ? null : new ContainerRegistryStorageAccessMode(value);
+        public static implicit operator ContainerRegistryStorageAccessMode?(string value) => value == null ? (ContainerRegistryStorageAccessMode?)null : new ContainerRegistryStorageAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

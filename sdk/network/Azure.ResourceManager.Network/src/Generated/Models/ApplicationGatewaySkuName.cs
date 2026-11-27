@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewaySkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewaySkuName?(string value) => value == null ? null : new ApplicationGatewaySkuName(value);
+        public static implicit operator ApplicationGatewaySkuName?(string value) => value == null ? (ApplicationGatewaySkuName?)null : new ApplicationGatewaySkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

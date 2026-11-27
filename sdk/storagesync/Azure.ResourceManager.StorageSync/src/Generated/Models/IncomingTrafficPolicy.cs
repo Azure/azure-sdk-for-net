@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="IncomingTrafficPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IncomingTrafficPolicy?(string value) => value == null ? null : new IncomingTrafficPolicy(value);
+        public static implicit operator IncomingTrafficPolicy?(string value) => value == null ? (IncomingTrafficPolicy?)null : new IncomingTrafficPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

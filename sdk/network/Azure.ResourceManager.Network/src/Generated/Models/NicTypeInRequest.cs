@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NicTypeInRequest"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NicTypeInRequest?(string value) => value == null ? null : new NicTypeInRequest(value);
+        public static implicit operator NicTypeInRequest?(string value) => value == null ? (NicTypeInRequest?)null : new NicTypeInRequest(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

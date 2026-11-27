@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ExadbVmClusterLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExadbVmClusterLifecycleState?(string value) => value == null ? null : new ExadbVmClusterLifecycleState(value);
+        public static implicit operator ExadbVmClusterLifecycleState?(string value) => value == null ? (ExadbVmClusterLifecycleState?)null : new ExadbVmClusterLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DestinationPortBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DestinationPortBehavior?(string value) => value == null ? null : new DestinationPortBehavior(value);
+        public static implicit operator DestinationPortBehavior?(string value) => value == null ? (DestinationPortBehavior?)null : new DestinationPortBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

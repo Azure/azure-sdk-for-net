@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="IssueState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IssueState?(string value) => value == null ? null : new IssueState(value);
+        public static implicit operator IssueState?(string value) => value == null ? (IssueState?)null : new IssueState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

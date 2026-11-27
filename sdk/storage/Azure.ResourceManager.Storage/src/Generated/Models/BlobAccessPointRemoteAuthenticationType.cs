@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobAccessPointRemoteAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobAccessPointRemoteAuthenticationType?(string value) => value == null ? null : new BlobAccessPointRemoteAuthenticationType(value);
+        public static implicit operator BlobAccessPointRemoteAuthenticationType?(string value) => value == null ? (BlobAccessPointRemoteAuthenticationType?)null : new BlobAccessPointRemoteAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

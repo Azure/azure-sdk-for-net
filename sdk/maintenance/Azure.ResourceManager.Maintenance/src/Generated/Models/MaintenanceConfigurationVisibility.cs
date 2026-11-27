@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceConfigurationVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceConfigurationVisibility?(string value) => value == null ? null : new MaintenanceConfigurationVisibility(value);
+        public static implicit operator MaintenanceConfigurationVisibility?(string value) => value == null ? (MaintenanceConfigurationVisibility?)null : new MaintenanceConfigurationVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="VirtualApplicationGroupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualApplicationGroupType?(string value) => value == null ? null : new VirtualApplicationGroupType(value);
+        public static implicit operator VirtualApplicationGroupType?(string value) => value == null ? (VirtualApplicationGroupType?)null : new VirtualApplicationGroupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

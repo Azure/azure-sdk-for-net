@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="RetentionScheduleFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RetentionScheduleFormat?(string value) => value == null ? null : new RetentionScheduleFormat(value);
+        public static implicit operator RetentionScheduleFormat?(string value) => value == null ? (RetentionScheduleFormat?)null : new RetentionScheduleFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

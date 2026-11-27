@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppGlobalFileLockingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppGlobalFileLockingState?(string value) => value == null ? null : new NetAppGlobalFileLockingState(value);
+        public static implicit operator NetAppGlobalFileLockingState?(string value) => value == null ? (NetAppGlobalFileLockingState?)null : new NetAppGlobalFileLockingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

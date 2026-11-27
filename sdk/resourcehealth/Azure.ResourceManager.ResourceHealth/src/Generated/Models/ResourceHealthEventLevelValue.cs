@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Converts a string to a <see cref="ResourceHealthEventLevelValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthEventLevelValue?(string value) => value == null ? null : new ResourceHealthEventLevelValue(value);
+        public static implicit operator ResourceHealthEventLevelValue?(string value) => value == null ? (ResourceHealthEventLevelValue?)null : new ResourceHealthEventLevelValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

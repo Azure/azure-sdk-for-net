@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection?(string value) => value == null ? null : new OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection(value);
+        public static implicit operator OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection?(string value) => value == null ? (OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection?)null : new OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

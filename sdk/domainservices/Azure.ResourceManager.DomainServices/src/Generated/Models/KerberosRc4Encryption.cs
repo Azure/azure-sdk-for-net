@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="KerberosRc4Encryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KerberosRc4Encryption?(string value) => value == null ? null : new KerberosRc4Encryption(value);
+        public static implicit operator KerberosRc4Encryption?(string value) => value == null ? (KerberosRc4Encryption?)null : new KerberosRc4Encryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

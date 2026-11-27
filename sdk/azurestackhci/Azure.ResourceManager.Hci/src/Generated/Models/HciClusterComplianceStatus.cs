@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciClusterComplianceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterComplianceStatus?(string value) => value == null ? null : new HciClusterComplianceStatus(value);
+        public static implicit operator HciClusterComplianceStatus?(string value) => value == null ? (HciClusterComplianceStatus?)null : new HciClusterComplianceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

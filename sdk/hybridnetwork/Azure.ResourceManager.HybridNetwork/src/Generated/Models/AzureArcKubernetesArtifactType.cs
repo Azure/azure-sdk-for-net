@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="AzureArcKubernetesArtifactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureArcKubernetesArtifactType?(string value) => value == null ? null : new AzureArcKubernetesArtifactType(value);
+        public static implicit operator AzureArcKubernetesArtifactType?(string value) => value == null ? (AzureArcKubernetesArtifactType?)null : new AzureArcKubernetesArtifactType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="RedisPatchScheduleDefaultName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisPatchScheduleDefaultName?(string value) => value == null ? null : new RedisPatchScheduleDefaultName(value);
+        public static implicit operator RedisPatchScheduleDefaultName?(string value) => value == null ? (RedisPatchScheduleDefaultName?)null : new RedisPatchScheduleDefaultName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

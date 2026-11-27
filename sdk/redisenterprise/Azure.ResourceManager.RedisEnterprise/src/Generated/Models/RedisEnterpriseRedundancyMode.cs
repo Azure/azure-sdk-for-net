@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseRedundancyMode?(string value) => value == null ? null : new RedisEnterpriseRedundancyMode(value);
+        public static implicit operator RedisEnterpriseRedundancyMode?(string value) => value == null ? (RedisEnterpriseRedundancyMode?)null : new RedisEnterpriseRedundancyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

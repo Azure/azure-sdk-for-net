@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterNetworkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterNetworkType?(string value) => value == null ? null : new HcpOpenShiftClusterNetworkType(value);
+        public static implicit operator HcpOpenShiftClusterNetworkType?(string value) => value == null ? (HcpOpenShiftClusterNetworkType?)null : new HcpOpenShiftClusterNetworkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

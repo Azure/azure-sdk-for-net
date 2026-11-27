@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="RegistryEndpointTrustedSigningKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegistryEndpointTrustedSigningKeyType?(string value) => value == null ? null : new RegistryEndpointTrustedSigningKeyType(value);
+        public static implicit operator RegistryEndpointTrustedSigningKeyType?(string value) => value == null ? (RegistryEndpointTrustedSigningKeyType?)null : new RegistryEndpointTrustedSigningKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

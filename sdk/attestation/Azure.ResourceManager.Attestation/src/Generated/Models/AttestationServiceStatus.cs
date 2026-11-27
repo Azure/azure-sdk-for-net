@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <summary> Converts a string to a <see cref="AttestationServiceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestationServiceStatus?(string value) => value == null ? null : new AttestationServiceStatus(value);
+        public static implicit operator AttestationServiceStatus?(string value) => value == null ? (AttestationServiceStatus?)null : new AttestationServiceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

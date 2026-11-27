@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationFirewallScrubbingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationFirewallScrubbingState?(string value) => value == null ? null : new WebApplicationFirewallScrubbingState(value);
+        public static implicit operator WebApplicationFirewallScrubbingState?(string value) => value == null ? (WebApplicationFirewallScrubbingState?)null : new WebApplicationFirewallScrubbingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

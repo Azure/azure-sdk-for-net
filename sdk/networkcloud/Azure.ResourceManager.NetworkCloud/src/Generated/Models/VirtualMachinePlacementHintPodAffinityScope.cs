@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachinePlacementHintPodAffinityScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachinePlacementHintPodAffinityScope?(string value) => value == null ? null : new VirtualMachinePlacementHintPodAffinityScope(value);
+        public static implicit operator VirtualMachinePlacementHintPodAffinityScope?(string value) => value == null ? (VirtualMachinePlacementHintPodAffinityScope?)null : new VirtualMachinePlacementHintPodAffinityScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

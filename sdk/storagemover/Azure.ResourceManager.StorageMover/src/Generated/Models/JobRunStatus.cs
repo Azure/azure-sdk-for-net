@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="JobRunStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobRunStatus?(string value) => value == null ? null : new JobRunStatus(value);
+        public static implicit operator JobRunStatus?(string value) => value == null ? (JobRunStatus?)null : new JobRunStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

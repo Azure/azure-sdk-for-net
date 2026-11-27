@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="StorageClassType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageClassType?(string value) => value == null ? null : new StorageClassType(value);
+        public static implicit operator StorageClassType?(string value) => value == null ? (StorageClassType?)null : new StorageClassType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

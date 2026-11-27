@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="PlatformReleaseChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlatformReleaseChannel?(string value) => value == null ? null : new PlatformReleaseChannel(value);
+        public static implicit operator PlatformReleaseChannel?(string value) => value == null ? (PlatformReleaseChannel?)null : new PlatformReleaseChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

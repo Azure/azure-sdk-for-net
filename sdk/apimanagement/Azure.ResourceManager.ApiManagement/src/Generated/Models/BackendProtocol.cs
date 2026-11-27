@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="BackendProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackendProtocol?(string value) => value == null ? null : new BackendProtocol(value);
+        public static implicit operator BackendProtocol?(string value) => value == null ? (BackendProtocol?)null : new BackendProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

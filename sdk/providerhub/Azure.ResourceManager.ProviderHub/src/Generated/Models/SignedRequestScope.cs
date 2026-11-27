@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="SignedRequestScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignedRequestScope?(string value) => value == null ? null : new SignedRequestScope(value);
+        public static implicit operator SignedRequestScope?(string value) => value == null ? (SignedRequestScope?)null : new SignedRequestScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

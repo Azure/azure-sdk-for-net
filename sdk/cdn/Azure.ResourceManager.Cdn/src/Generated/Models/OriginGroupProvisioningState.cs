@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="OriginGroupProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OriginGroupProvisioningState?(string value) => value == null ? null : new OriginGroupProvisioningState(value);
+        public static implicit operator OriginGroupProvisioningState?(string value) => value == null ? (OriginGroupProvisioningState?)null : new OriginGroupProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

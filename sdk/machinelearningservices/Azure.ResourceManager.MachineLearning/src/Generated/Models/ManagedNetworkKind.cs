@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ManagedNetworkKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedNetworkKind?(string value) => value == null ? null : new ManagedNetworkKind(value);
+        public static implicit operator ManagedNetworkKind?(string value) => value == null ? (ManagedNetworkKind?)null : new ManagedNetworkKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

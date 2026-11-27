@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeServiceExtensionPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeServiceExtensionPublicNetworkAccess?(string value) => value == null ? null : new HybridComputeServiceExtensionPublicNetworkAccess(value);
+        public static implicit operator HybridComputeServiceExtensionPublicNetworkAccess?(string value) => value == null ? (HybridComputeServiceExtensionPublicNetworkAccess?)null : new HybridComputeServiceExtensionPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsColumnDataTypeHint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsColumnDataTypeHint?(string value) => value == null ? null : new OperationalInsightsColumnDataTypeHint(value);
+        public static implicit operator OperationalInsightsColumnDataTypeHint?(string value) => value == null ? (OperationalInsightsColumnDataTypeHint?)null : new OperationalInsightsColumnDataTypeHint(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

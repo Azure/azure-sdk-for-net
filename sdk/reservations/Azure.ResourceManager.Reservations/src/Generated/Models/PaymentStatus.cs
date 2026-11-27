@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="PaymentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PaymentStatus?(string value) => value == null ? null : new PaymentStatus(value);
+        public static implicit operator PaymentStatus?(string value) => value == null ? (PaymentStatus?)null : new PaymentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

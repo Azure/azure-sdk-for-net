@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="NodeTypeFrontendConfigurationIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeTypeFrontendConfigurationIPAddressType?(string value) => value == null ? null : new NodeTypeFrontendConfigurationIPAddressType(value);
+        public static implicit operator NodeTypeFrontendConfigurationIPAddressType?(string value) => value == null ? (NodeTypeFrontendConfigurationIPAddressType?)null : new NodeTypeFrontendConfigurationIPAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

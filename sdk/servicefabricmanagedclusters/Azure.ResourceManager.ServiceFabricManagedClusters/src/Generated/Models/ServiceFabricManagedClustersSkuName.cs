@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedClustersSkuName?(string value) => value == null ? null : new ServiceFabricManagedClustersSkuName(value);
+        public static implicit operator ServiceFabricManagedClustersSkuName?(string value) => value == null ? (ServiceFabricManagedClustersSkuName?)null : new ServiceFabricManagedClustersSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

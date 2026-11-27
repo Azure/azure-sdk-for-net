@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="AutomationRulePropertyChangedConditionSupportedChangedType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationRulePropertyChangedConditionSupportedChangedType?(string value) => value == null ? null : new AutomationRulePropertyChangedConditionSupportedChangedType(value);
+        public static implicit operator AutomationRulePropertyChangedConditionSupportedChangedType?(string value) => value == null ? (AutomationRulePropertyChangedConditionSupportedChangedType?)null : new AutomationRulePropertyChangedConditionSupportedChangedType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

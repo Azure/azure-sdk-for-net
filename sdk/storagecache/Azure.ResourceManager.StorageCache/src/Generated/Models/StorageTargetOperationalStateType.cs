@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="StorageTargetOperationalStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageTargetOperationalStateType?(string value) => value == null ? null : new StorageTargetOperationalStateType(value);
+        public static implicit operator StorageTargetOperationalStateType?(string value) => value == null ? (StorageTargetOperationalStateType?)null : new StorageTargetOperationalStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

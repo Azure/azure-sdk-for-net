@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="WindowsVmLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsVmLicenseType?(string value) => value == null ? null : new WindowsVmLicenseType(value);
+        public static implicit operator WindowsVmLicenseType?(string value) => value == null ? (WindowsVmLicenseType?)null : new WindowsVmLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

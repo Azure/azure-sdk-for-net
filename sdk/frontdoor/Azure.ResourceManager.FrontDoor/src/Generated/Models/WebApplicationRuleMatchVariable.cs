@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchVariable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationRuleMatchVariable?(string value) => value == null ? null : new WebApplicationRuleMatchVariable(value);
+        public static implicit operator WebApplicationRuleMatchVariable?(string value) => value == null ? (WebApplicationRuleMatchVariable?)null : new WebApplicationRuleMatchVariable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

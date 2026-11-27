@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="PricingPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PricingPolicy?(string value) => value == null ? null : new PricingPolicy(value);
+        public static implicit operator PricingPolicy?(string value) => value == null ? (PricingPolicy?)null : new PricingPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

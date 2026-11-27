@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchDomainNameLabelScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchDomainNameLabelScope?(string value) => value == null ? null : new SearchDomainNameLabelScope(value);
+        public static implicit operator SearchDomainNameLabelScope?(string value) => value == null ? (SearchDomainNameLabelScope?)null : new SearchDomainNameLabelScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

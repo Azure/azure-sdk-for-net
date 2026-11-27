@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="OrganizationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrganizationType?(string value) => value == null ? null : new OrganizationType(value);
+        public static implicit operator OrganizationType?(string value) => value == null ? (OrganizationType?)null : new OrganizationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

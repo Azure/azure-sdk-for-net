@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectivityIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectivityIssueType?(string value) => value == null ? null : new ConnectivityIssueType(value);
+        public static implicit operator ConnectivityIssueType?(string value) => value == null ? (ConnectivityIssueType?)null : new ConnectivityIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

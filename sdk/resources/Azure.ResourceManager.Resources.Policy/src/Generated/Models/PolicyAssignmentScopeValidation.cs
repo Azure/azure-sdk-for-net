@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyAssignmentScopeValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyAssignmentScopeValidation?(string value) => value == null ? null : new PolicyAssignmentScopeValidation(value);
+        public static implicit operator PolicyAssignmentScopeValidation?(string value) => value == null ? (PolicyAssignmentScopeValidation?)null : new PolicyAssignmentScopeValidation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="JobExecutionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobExecutionProvisioningState?(string value) => value == null ? null : new JobExecutionProvisioningState(value);
+        public static implicit operator JobExecutionProvisioningState?(string value) => value == null ? (JobExecutionProvisioningState?)null : new JobExecutionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

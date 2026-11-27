@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderExtendedLocationType?(string value) => value == null ? null : new ProviderExtendedLocationType(value);
+        public static implicit operator ProviderExtendedLocationType?(string value) => value == null ? (ProviderExtendedLocationType?)null : new ProviderExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

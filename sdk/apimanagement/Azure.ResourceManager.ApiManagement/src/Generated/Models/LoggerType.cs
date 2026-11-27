@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="LoggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoggerType?(string value) => value == null ? null : new LoggerType(value);
+        public static implicit operator LoggerType?(string value) => value == null ? (LoggerType?)null : new LoggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

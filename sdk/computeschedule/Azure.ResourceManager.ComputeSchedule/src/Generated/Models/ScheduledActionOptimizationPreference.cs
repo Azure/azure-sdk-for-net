@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionOptimizationPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionOptimizationPreference?(string value) => value == null ? null : new ScheduledActionOptimizationPreference(value);
+        public static implicit operator ScheduledActionOptimizationPreference?(string value) => value == null ? (ScheduledActionOptimizationPreference?)null : new ScheduledActionOptimizationPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="LinkToDefaultDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkToDefaultDomain?(string value) => value == null ? null : new LinkToDefaultDomain(value);
+        public static implicit operator LinkToDefaultDomain?(string value) => value == null ? (LinkToDefaultDomain?)null : new LinkToDefaultDomain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

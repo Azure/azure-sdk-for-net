@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="MonitorResourceHostingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorResourceHostingType?(string value) => value == null ? null : new MonitorResourceHostingType(value);
+        public static implicit operator MonitorResourceHostingType?(string value) => value == null ? (MonitorResourceHostingType?)null : new MonitorResourceHostingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="RuleCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleCategory?(string value) => value == null ? null : new RuleCategory(value);
+        public static implicit operator RuleCategory?(string value) => value == null ? (RuleCategory?)null : new RuleCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EdgeMachineWifiConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeMachineWifiConnectionState?(string value) => value == null ? null : new EdgeMachineWifiConnectionState(value);
+        public static implicit operator EdgeMachineWifiConnectionState?(string value) => value == null ? (EdgeMachineWifiConnectionState?)null : new EdgeMachineWifiConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

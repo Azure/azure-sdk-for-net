@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceProvisioningState?(string value) => value == null ? null : new DynatraceProvisioningState(value);
+        public static implicit operator DynatraceProvisioningState?(string value) => value == null ? (DynatraceProvisioningState?)null : new DynatraceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="EdgeKubernetesNodeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeKubernetesNodeType?(string value) => value == null ? null : new EdgeKubernetesNodeType(value);
+        public static implicit operator EdgeKubernetesNodeType?(string value) => value == null ? (EdgeKubernetesNodeType?)null : new EdgeKubernetesNodeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

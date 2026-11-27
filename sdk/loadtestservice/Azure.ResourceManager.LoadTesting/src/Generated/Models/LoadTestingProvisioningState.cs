@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         /// <summary> Converts a string to a <see cref="LoadTestingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadTestingProvisioningState?(string value) => value == null ? null : new LoadTestingProvisioningState(value);
+        public static implicit operator LoadTestingProvisioningState?(string value) => value == null ? (LoadTestingProvisioningState?)null : new LoadTestingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

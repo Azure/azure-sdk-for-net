@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="DataProcessingContext"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProcessingContext?(string value) => value == null ? null : new DataProcessingContext(value);
+        public static implicit operator DataProcessingContext?(string value) => value == null ? (DataProcessingContext?)null : new DataProcessingContext(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

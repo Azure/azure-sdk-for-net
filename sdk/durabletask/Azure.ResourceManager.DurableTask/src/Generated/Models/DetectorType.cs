@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DetectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DetectorType?(string value) => value == null ? null : new DetectorType(value);
+        public static implicit operator DetectorType?(string value) => value == null ? (DetectorType?)null : new DetectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

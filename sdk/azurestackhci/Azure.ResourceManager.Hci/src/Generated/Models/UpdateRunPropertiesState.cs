@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="UpdateRunPropertiesState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateRunPropertiesState?(string value) => value == null ? null : new UpdateRunPropertiesState(value);
+        public static implicit operator UpdateRunPropertiesState?(string value) => value == null ? (UpdateRunPropertiesState?)null : new UpdateRunPropertiesState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

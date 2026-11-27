@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleSensitivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayWafRuleSensitivityType?(string value) => value == null ? null : new ApplicationGatewayWafRuleSensitivityType(value);
+        public static implicit operator ApplicationGatewayWafRuleSensitivityType?(string value) => value == null ? (ApplicationGatewayWafRuleSensitivityType?)null : new ApplicationGatewayWafRuleSensitivityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

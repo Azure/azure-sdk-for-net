@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightPrivateLinkState?(string value) => value == null ? null : new HDInsightPrivateLinkState(value);
+        public static implicit operator HDInsightPrivateLinkState?(string value) => value == null ? (HDInsightPrivateLinkState?)null : new HDInsightPrivateLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="JobTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobTier?(string value) => value == null ? null : new JobTier(value);
+        public static implicit operator JobTier?(string value) => value == null ? (JobTier?)null : new JobTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

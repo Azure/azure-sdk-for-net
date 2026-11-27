@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="SubProtectionPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubProtectionPolicyType?(string value) => value == null ? null : new SubProtectionPolicyType(value);
+        public static implicit operator SubProtectionPolicyType?(string value) => value == null ? (SubProtectionPolicyType?)null : new SubProtectionPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

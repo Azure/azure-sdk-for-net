@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="StorageMoverAgentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverAgentStatus?(string value) => value == null ? null : new StorageMoverAgentStatus(value);
+        public static implicit operator StorageMoverAgentStatus?(string value) => value == null ? (StorageMoverAgentStatus?)null : new StorageMoverAgentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDownloadPhase?(string value) => value == null ? null : new DataBoxEdgeDownloadPhase(value);
+        public static implicit operator DataBoxEdgeDownloadPhase?(string value) => value == null ? (DataBoxEdgeDownloadPhase?)null : new DataBoxEdgeDownloadPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

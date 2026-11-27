@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayCookieBasedAffinity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayCookieBasedAffinity?(string value) => value == null ? null : new ApplicationGatewayCookieBasedAffinity(value);
+        public static implicit operator ApplicationGatewayCookieBasedAffinity?(string value) => value == null ? (ApplicationGatewayCookieBasedAffinity?)null : new ApplicationGatewayCookieBasedAffinity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterSecretArchiveEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterSecretArchiveEnabled?(string value) => value == null ? null : new ClusterSecretArchiveEnabled(value);
+        public static implicit operator ClusterSecretArchiveEnabled?(string value) => value == null ? (ClusterSecretArchiveEnabled?)null : new ClusterSecretArchiveEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

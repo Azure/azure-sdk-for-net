@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="IPAllocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPAllocationType?(string value) => value == null ? null : new IPAllocationType(value);
+        public static implicit operator IPAllocationType?(string value) => value == null ? (IPAllocationType?)null : new IPAllocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

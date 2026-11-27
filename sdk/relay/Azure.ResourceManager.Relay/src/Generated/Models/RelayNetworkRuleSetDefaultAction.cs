@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayNetworkRuleSetDefaultAction?(string value) => value == null ? null : new RelayNetworkRuleSetDefaultAction(value);
+        public static implicit operator RelayNetworkRuleSetDefaultAction?(string value) => value == null ? (RelayNetworkRuleSetDefaultAction?)null : new RelayNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

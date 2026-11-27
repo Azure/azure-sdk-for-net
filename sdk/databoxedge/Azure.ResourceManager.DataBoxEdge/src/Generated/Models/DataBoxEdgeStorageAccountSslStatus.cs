@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageAccountSslStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeStorageAccountSslStatus?(string value) => value == null ? null : new DataBoxEdgeStorageAccountSslStatus(value);
+        public static implicit operator DataBoxEdgeStorageAccountSslStatus?(string value) => value == null ? (DataBoxEdgeStorageAccountSslStatus?)null : new DataBoxEdgeStorageAccountSslStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

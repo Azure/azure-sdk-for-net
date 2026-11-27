@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkLinkState?(string value) => value == null ? null : new VirtualNetworkLinkState(value);
+        public static implicit operator VirtualNetworkLinkState?(string value) => value == null ? (VirtualNetworkLinkState?)null : new VirtualNetworkLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

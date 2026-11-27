@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="HttpVersionOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HttpVersionOperator?(string value) => value == null ? null : new HttpVersionOperator(value);
+        public static implicit operator HttpVersionOperator?(string value) => value == null ? (HttpVersionOperator?)null : new HttpVersionOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

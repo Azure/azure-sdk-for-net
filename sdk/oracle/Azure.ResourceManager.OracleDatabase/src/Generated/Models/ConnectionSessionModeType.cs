@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionSessionModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionSessionModeType?(string value) => value == null ? null : new ConnectionSessionModeType(value);
+        public static implicit operator ConnectionSessionModeType?(string value) => value == null ? (ConnectionSessionModeType?)null : new ConnectionSessionModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

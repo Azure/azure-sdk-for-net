@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaSize?(string value) => value == null ? null : new GrafanaSize(value);
+        public static implicit operator GrafanaSize?(string value) => value == null ? (GrafanaSize?)null : new GrafanaSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

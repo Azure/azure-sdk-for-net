@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="BackendSessionIdSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackendSessionIdSource?(string value) => value == null ? null : new BackendSessionIdSource(value);
+        public static implicit operator BackendSessionIdSource?(string value) => value == null ? (BackendSessionIdSource?)null : new BackendSessionIdSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

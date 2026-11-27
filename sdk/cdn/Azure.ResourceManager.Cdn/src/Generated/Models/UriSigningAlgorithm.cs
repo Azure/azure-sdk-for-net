@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="UriSigningAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UriSigningAlgorithm?(string value) => value == null ? null : new UriSigningAlgorithm(value);
+        public static implicit operator UriSigningAlgorithm?(string value) => value == null ? (UriSigningAlgorithm?)null : new UriSigningAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

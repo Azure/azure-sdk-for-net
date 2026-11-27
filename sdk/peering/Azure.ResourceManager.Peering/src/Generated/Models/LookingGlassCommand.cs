@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="LookingGlassCommand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LookingGlassCommand?(string value) => value == null ? null : new LookingGlassCommand(value);
+        public static implicit operator LookingGlassCommand?(string value) => value == null ? (LookingGlassCommand?)null : new LookingGlassCommand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

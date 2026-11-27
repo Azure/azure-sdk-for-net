@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetUpgradeChannel?(string value) => value == null ? null : new ContainerServiceFleetUpgradeChannel(value);
+        public static implicit operator ContainerServiceFleetUpgradeChannel?(string value) => value == null ? (ContainerServiceFleetUpgradeChannel?)null : new ContainerServiceFleetUpgradeChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

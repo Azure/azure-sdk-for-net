@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerGeoBackupSupported"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerGeoBackupSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerGeoBackupSupported(value);
+        public static implicit operator PostgreSqlFlexibleServerGeoBackupSupported?(string value) => value == null ? (PostgreSqlFlexibleServerGeoBackupSupported?)null : new PostgreSqlFlexibleServerGeoBackupSupported(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

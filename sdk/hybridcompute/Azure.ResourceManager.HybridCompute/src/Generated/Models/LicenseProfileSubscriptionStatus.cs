@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="LicenseProfileSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LicenseProfileSubscriptionStatus?(string value) => value == null ? null : new LicenseProfileSubscriptionStatus(value);
+        public static implicit operator LicenseProfileSubscriptionStatus?(string value) => value == null ? (LicenseProfileSubscriptionStatus?)null : new LicenseProfileSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

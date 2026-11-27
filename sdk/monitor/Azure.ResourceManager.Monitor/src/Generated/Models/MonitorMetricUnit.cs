@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorMetricUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorMetricUnit?(string value) => value == null ? null : new MonitorMetricUnit(value);
+        public static implicit operator MonitorMetricUnit?(string value) => value == null ? (MonitorMetricUnit?)null : new MonitorMetricUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

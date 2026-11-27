@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkbookUpdateSharedTypeKind?(string value) => value == null ? null : new WorkbookUpdateSharedTypeKind(value);
+        public static implicit operator WorkbookUpdateSharedTypeKind?(string value) => value == null ? (WorkbookUpdateSharedTypeKind?)null : new WorkbookUpdateSharedTypeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

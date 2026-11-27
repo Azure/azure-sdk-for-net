@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleAssignmentEnablementRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleAssignmentEnablementRuleType?(string value) => value == null ? null : new RoleAssignmentEnablementRuleType(value);
+        public static implicit operator RoleAssignmentEnablementRuleType?(string value) => value == null ? (RoleAssignmentEnablementRuleType?)null : new RoleAssignmentEnablementRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

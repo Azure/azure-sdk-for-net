@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Converts a string to a <see cref="AppLinkUpgradeReleaseChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppLinkUpgradeReleaseChannel?(string value) => value == null ? null : new AppLinkUpgradeReleaseChannel(value);
+        public static implicit operator AppLinkUpgradeReleaseChannel?(string value) => value == null ? (AppLinkUpgradeReleaseChannel?)null : new AppLinkUpgradeReleaseChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

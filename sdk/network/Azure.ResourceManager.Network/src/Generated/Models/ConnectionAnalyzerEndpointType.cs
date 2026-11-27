@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionAnalyzerEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionAnalyzerEndpointType?(string value) => value == null ? null : new ConnectionAnalyzerEndpointType(value);
+        public static implicit operator ConnectionAnalyzerEndpointType?(string value) => value == null ? (ConnectionAnalyzerEndpointType?)null : new ConnectionAnalyzerEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationDomainJoinType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationDomainJoinType?(string value) => value == null ? null : new DesktopVirtualizationDomainJoinType(value);
+        public static implicit operator DesktopVirtualizationDomainJoinType?(string value) => value == null ? (DesktopVirtualizationDomainJoinType?)null : new DesktopVirtualizationDomainJoinType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

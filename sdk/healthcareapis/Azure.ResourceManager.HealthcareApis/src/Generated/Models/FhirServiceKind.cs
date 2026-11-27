@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="FhirServiceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FhirServiceKind?(string value) => value == null ? null : new FhirServiceKind(value);
+        public static implicit operator FhirServiceKind?(string value) => value == null ? (FhirServiceKind?)null : new FhirServiceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

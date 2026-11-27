@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseKind?(string value) => value == null ? null : new RedisEnterpriseKind(value);
+        public static implicit operator RedisEnterpriseKind?(string value) => value == null ? (RedisEnterpriseKind?)null : new RedisEnterpriseKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SecurityConfigurationRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityConfigurationRuleDirection?(string value) => value == null ? null : new SecurityConfigurationRuleDirection(value);
+        public static implicit operator SecurityConfigurationRuleDirection?(string value) => value == null ? (SecurityConfigurationRuleDirection?)null : new SecurityConfigurationRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

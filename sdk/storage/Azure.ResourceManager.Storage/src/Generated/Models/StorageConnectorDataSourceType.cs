@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageConnectorDataSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageConnectorDataSourceType?(string value) => value == null ? null : new StorageConnectorDataSourceType(value);
+        public static implicit operator StorageConnectorDataSourceType?(string value) => value == null ? (StorageConnectorDataSourceType?)null : new StorageConnectorDataSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

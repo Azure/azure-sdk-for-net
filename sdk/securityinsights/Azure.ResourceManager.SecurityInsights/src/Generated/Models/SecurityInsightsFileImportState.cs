@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsFileImportState?(string value) => value == null ? null : new SecurityInsightsFileImportState(value);
+        public static implicit operator SecurityInsightsFileImportState?(string value) => value == null ? (SecurityInsightsFileImportState?)null : new SecurityInsightsFileImportState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

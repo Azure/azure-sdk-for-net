@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsDnsZoneType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsDnsZoneType?(string value) => value == null ? null : new AvsDnsZoneType(value);
+        public static implicit operator AvsDnsZoneType?(string value) => value == null ? (AvsDnsZoneType?)null : new AvsDnsZoneType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

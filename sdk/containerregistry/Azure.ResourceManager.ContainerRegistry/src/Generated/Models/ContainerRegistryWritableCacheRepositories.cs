@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryWritableCacheRepositories"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryWritableCacheRepositories?(string value) => value == null ? null : new ContainerRegistryWritableCacheRepositories(value);
+        public static implicit operator ContainerRegistryWritableCacheRepositories?(string value) => value == null ? (ContainerRegistryWritableCacheRepositories?)null : new ContainerRegistryWritableCacheRepositories(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

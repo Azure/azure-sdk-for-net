@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetLifecycleHookAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineScaleSetLifecycleHookAction?(string value) => value == null ? null : new VirtualMachineScaleSetLifecycleHookAction(value);
+        public static implicit operator VirtualMachineScaleSetLifecycleHookAction?(string value) => value == null ? (VirtualMachineScaleSetLifecycleHookAction?)null : new VirtualMachineScaleSetLifecycleHookAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

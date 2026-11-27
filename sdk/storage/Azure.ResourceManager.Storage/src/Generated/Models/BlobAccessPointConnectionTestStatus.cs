@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobAccessPointConnectionTestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobAccessPointConnectionTestStatus?(string value) => value == null ? null : new BlobAccessPointConnectionTestStatus(value);
+        public static implicit operator BlobAccessPointConnectionTestStatus?(string value) => value == null ? (BlobAccessPointConnectionTestStatus?)null : new BlobAccessPointConnectionTestStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

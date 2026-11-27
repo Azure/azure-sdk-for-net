@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Converts a string to a <see cref="AppLinkClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppLinkClusterType?(string value) => value == null ? null : new AppLinkClusterType(value);
+        public static implicit operator AppLinkClusterType?(string value) => value == null ? (AppLinkClusterType?)null : new AppLinkClusterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

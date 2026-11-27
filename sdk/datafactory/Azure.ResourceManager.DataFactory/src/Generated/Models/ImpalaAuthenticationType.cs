@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ImpalaAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpalaAuthenticationType?(string value) => value == null ? null : new ImpalaAuthenticationType(value);
+        public static implicit operator ImpalaAuthenticationType?(string value) => value == null ? (ImpalaAuthenticationType?)null : new ImpalaAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="WebhookContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebhookContentType?(string value) => value == null ? null : new WebhookContentType(value);
+        public static implicit operator WebhookContentType?(string value) => value == null ? (WebhookContentType?)null : new WebhookContentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

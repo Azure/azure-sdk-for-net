@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterIngressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterIngressType?(string value) => value == null ? null : new HcpOpenShiftClusterIngressType(value);
+        public static implicit operator HcpOpenShiftClusterIngressType?(string value) => value == null ? (HcpOpenShiftClusterIngressType?)null : new HcpOpenShiftClusterIngressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

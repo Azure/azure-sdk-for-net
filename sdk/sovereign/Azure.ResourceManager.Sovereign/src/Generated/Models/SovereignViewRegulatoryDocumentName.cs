@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewRegulatoryDocumentName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewRegulatoryDocumentName?(string value) => value == null ? null : new SovereignViewRegulatoryDocumentName(value);
+        public static implicit operator SovereignViewRegulatoryDocumentName?(string value) => value == null ? (SovereignViewRegulatoryDocumentName?)null : new SovereignViewRegulatoryDocumentName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

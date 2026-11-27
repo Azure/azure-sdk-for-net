@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiAcsModerationSubjectFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiAcsModerationSubjectFormat?(string value) => value == null ? null : new RaiAcsModerationSubjectFormat(value);
+        public static implicit operator RaiAcsModerationSubjectFormat?(string value) => value == null ? (RaiAcsModerationSubjectFormat?)null : new RaiAcsModerationSubjectFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="SpendingLimitStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SpendingLimitStatus?(string value) => value == null ? null : new SpendingLimitStatus(value);
+        public static implicit operator SpendingLimitStatus?(string value) => value == null ? (SpendingLimitStatus?)null : new SpendingLimitStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="AIModelInfeasibleCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AIModelInfeasibleCode?(string value) => value == null ? null : new AIModelInfeasibleCode(value);
+        public static implicit operator AIModelInfeasibleCode?(string value) => value == null ? (AIModelInfeasibleCode?)null : new AIModelInfeasibleCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

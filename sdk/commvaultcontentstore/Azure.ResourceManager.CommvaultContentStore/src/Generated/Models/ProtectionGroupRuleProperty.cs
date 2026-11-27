@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="ProtectionGroupRuleProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionGroupRuleProperty?(string value) => value == null ? null : new ProtectionGroupRuleProperty(value);
+        public static implicit operator ProtectionGroupRuleProperty?(string value) => value == null ? (ProtectionGroupRuleProperty?)null : new ProtectionGroupRuleProperty(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

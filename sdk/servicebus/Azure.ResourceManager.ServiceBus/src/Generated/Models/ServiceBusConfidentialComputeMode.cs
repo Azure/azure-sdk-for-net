@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusConfidentialComputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusConfidentialComputeMode?(string value) => value == null ? null : new ServiceBusConfidentialComputeMode(value);
+        public static implicit operator ServiceBusConfidentialComputeMode?(string value) => value == null ? (ServiceBusConfidentialComputeMode?)null : new ServiceBusConfidentialComputeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

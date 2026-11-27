@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationOverwriteDbsInTarget?(string value) => value == null ? null : new PostgreSqlMigrationOverwriteDbsInTarget(value);
+        public static implicit operator PostgreSqlMigrationOverwriteDbsInTarget?(string value) => value == null ? (PostgreSqlMigrationOverwriteDbsInTarget?)null : new PostgreSqlMigrationOverwriteDbsInTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

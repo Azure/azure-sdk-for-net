@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisionedClusterAzureHybridBenefit?(string value) => value == null ? null : new ProvisionedClusterAzureHybridBenefit(value);
+        public static implicit operator ProvisionedClusterAzureHybridBenefit?(string value) => value == null ? (ProvisionedClusterAzureHybridBenefit?)null : new ProvisionedClusterAzureHybridBenefit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

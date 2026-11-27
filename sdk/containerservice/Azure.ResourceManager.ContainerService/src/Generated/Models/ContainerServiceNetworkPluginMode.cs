@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPluginMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceNetworkPluginMode?(string value) => value == null ? null : new ContainerServiceNetworkPluginMode(value);
+        public static implicit operator ContainerServiceNetworkPluginMode?(string value) => value == null ? (ContainerServiceNetworkPluginMode?)null : new ContainerServiceNetworkPluginMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

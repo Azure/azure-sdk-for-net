@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesTrustedCertificateSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesTrustedCertificateSourceType?(string value) => value == null ? null : new CognitiveServicesTrustedCertificateSourceType(value);
+        public static implicit operator CognitiveServicesTrustedCertificateSourceType?(string value) => value == null ? (CognitiveServicesTrustedCertificateSourceType?)null : new CognitiveServicesTrustedCertificateSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

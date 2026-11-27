@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubManifestGenerationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubManifestGenerationMode?(string value) => value == null ? null : new DevHubManifestGenerationMode(value);
+        public static implicit operator DevHubManifestGenerationMode?(string value) => value == null ? (DevHubManifestGenerationMode?)null : new DevHubManifestGenerationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

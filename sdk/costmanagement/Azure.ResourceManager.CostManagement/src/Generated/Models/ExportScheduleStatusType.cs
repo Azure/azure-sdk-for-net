@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportScheduleStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportScheduleStatusType?(string value) => value == null ? null : new ExportScheduleStatusType(value);
+        public static implicit operator ExportScheduleStatusType?(string value) => value == null ? (ExportScheduleStatusType?)null : new ExportScheduleStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

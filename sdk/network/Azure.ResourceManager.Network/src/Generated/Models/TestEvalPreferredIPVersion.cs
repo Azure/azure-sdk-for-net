@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="TestEvalPreferredIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TestEvalPreferredIPVersion?(string value) => value == null ? null : new TestEvalPreferredIPVersion(value);
+        public static implicit operator TestEvalPreferredIPVersion?(string value) => value == null ? (TestEvalPreferredIPVersion?)null : new TestEvalPreferredIPVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <summary> Converts a string to a <see cref="PowerPlatformPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PowerPlatformPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new PowerPlatformPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator PowerPlatformPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (PowerPlatformPrivateEndpointServiceConnectionStatus?)null : new PowerPlatformPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

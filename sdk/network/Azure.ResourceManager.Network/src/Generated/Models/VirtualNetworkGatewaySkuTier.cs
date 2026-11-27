@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkGatewaySkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkGatewaySkuTier?(string value) => value == null ? null : new VirtualNetworkGatewaySkuTier(value);
+        public static implicit operator VirtualNetworkGatewaySkuTier?(string value) => value == null ? (VirtualNetworkGatewaySkuTier?)null : new VirtualNetworkGatewaySkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

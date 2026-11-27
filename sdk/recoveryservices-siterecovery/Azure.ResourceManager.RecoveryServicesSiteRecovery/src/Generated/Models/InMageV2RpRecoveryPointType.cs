@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="InMageV2RpRecoveryPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InMageV2RpRecoveryPointType?(string value) => value == null ? null : new InMageV2RpRecoveryPointType(value);
+        public static implicit operator InMageV2RpRecoveryPointType?(string value) => value == null ? (InMageV2RpRecoveryPointType?)null : new InMageV2RpRecoveryPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

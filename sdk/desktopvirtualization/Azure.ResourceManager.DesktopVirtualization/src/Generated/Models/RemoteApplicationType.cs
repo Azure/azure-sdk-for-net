@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="RemoteApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RemoteApplicationType?(string value) => value == null ? null : new RemoteApplicationType(value);
+        public static implicit operator RemoteApplicationType?(string value) => value == null ? (RemoteApplicationType?)null : new RemoteApplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

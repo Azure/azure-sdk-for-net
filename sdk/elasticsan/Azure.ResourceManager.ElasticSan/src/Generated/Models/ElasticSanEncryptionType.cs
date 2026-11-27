@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanEncryptionType?(string value) => value == null ? null : new ElasticSanEncryptionType(value);
+        public static implicit operator ElasticSanEncryptionType?(string value) => value == null ? (ElasticSanEncryptionType?)null : new ElasticSanEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

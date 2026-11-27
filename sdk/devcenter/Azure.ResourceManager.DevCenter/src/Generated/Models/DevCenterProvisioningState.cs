@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterProvisioningState?(string value) => value == null ? null : new DevCenterProvisioningState(value);
+        public static implicit operator DevCenterProvisioningState?(string value) => value == null ? (DevCenterProvisioningState?)null : new DevCenterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

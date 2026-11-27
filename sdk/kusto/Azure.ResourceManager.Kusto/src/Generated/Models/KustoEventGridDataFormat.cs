@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoEventGridDataFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoEventGridDataFormat?(string value) => value == null ? null : new KustoEventGridDataFormat(value);
+        public static implicit operator KustoEventGridDataFormat?(string value) => value == null ? (KustoEventGridDataFormat?)null : new KustoEventGridDataFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

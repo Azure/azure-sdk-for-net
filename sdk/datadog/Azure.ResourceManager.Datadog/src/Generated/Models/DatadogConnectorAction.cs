@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Converts a string to a <see cref="DatadogConnectorAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatadogConnectorAction?(string value) => value == null ? null : new DatadogConnectorAction(value);
+        public static implicit operator DatadogConnectorAction?(string value) => value == null ? (DatadogConnectorAction?)null : new DatadogConnectorAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

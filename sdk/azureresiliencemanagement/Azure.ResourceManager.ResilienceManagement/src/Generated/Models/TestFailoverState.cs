@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="TestFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TestFailoverState?(string value) => value == null ? null : new TestFailoverState(value);
+        public static implicit operator TestFailoverState?(string value) => value == null ? (TestFailoverState?)null : new TestFailoverState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

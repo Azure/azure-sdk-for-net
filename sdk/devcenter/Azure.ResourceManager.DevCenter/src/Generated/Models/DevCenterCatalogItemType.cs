@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterCatalogItemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterCatalogItemType?(string value) => value == null ? null : new DevCenterCatalogItemType(value);
+        public static implicit operator DevCenterCatalogItemType?(string value) => value == null ? (DevCenterCatalogItemType?)null : new DevCenterCatalogItemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

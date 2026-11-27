@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="FrequencyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrequencyType?(string value) => value == null ? null : new FrequencyType(value);
+        public static implicit operator FrequencyType?(string value) => value == null ? (FrequencyType?)null : new FrequencyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

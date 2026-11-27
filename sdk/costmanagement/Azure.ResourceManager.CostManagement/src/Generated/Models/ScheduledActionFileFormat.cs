@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionFileFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionFileFormat?(string value) => value == null ? null : new ScheduledActionFileFormat(value);
+        public static implicit operator ScheduledActionFileFormat?(string value) => value == null ? (ScheduledActionFileFormat?)null : new ScheduledActionFileFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

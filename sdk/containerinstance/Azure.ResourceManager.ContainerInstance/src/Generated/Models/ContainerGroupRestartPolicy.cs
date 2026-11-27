@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupRestartPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupRestartPolicy?(string value) => value == null ? null : new ContainerGroupRestartPolicy(value);
+        public static implicit operator ContainerGroupRestartPolicy?(string value) => value == null ? (ContainerGroupRestartPolicy?)null : new ContainerGroupRestartPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

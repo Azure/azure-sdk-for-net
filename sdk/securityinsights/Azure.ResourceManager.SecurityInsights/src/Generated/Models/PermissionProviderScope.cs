@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="PermissionProviderScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PermissionProviderScope?(string value) => value == null ? null : new PermissionProviderScope(value);
+        public static implicit operator PermissionProviderScope?(string value) => value == null ? (PermissionProviderScope?)null : new PermissionProviderScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

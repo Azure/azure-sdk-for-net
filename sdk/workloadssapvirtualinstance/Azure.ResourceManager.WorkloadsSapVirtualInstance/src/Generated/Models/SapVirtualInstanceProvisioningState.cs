@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapVirtualInstanceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapVirtualInstanceProvisioningState?(string value) => value == null ? null : new SapVirtualInstanceProvisioningState(value);
+        public static implicit operator SapVirtualInstanceProvisioningState?(string value) => value == null ? (SapVirtualInstanceProvisioningState?)null : new SapVirtualInstanceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

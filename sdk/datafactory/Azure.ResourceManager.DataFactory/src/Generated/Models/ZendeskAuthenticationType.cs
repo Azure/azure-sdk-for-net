@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ZendeskAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZendeskAuthenticationType?(string value) => value == null ? null : new ZendeskAuthenticationType(value);
+        public static implicit operator ZendeskAuthenticationType?(string value) => value == null ? (ZendeskAuthenticationType?)null : new ZendeskAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

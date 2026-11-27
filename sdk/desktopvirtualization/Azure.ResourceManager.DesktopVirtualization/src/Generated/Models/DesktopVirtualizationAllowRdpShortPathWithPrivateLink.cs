@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationAllowRdpShortPathWithPrivateLink"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationAllowRdpShortPathWithPrivateLink?(string value) => value == null ? null : new DesktopVirtualizationAllowRdpShortPathWithPrivateLink(value);
+        public static implicit operator DesktopVirtualizationAllowRdpShortPathWithPrivateLink?(string value) => value == null ? (DesktopVirtualizationAllowRdpShortPathWithPrivateLink?)null : new DesktopVirtualizationAllowRdpShortPathWithPrivateLink(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

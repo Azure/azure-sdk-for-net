@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningVmPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningVmPriority?(string value) => value == null ? null : new MachineLearningVmPriority(value);
+        public static implicit operator MachineLearningVmPriority?(string value) => value == null ? (MachineLearningVmPriority?)null : new MachineLearningVmPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

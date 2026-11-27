@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> Converts a string to a <see cref="NeuroShieldResponseMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NeuroShieldResponseMode?(string value) => value == null ? null : new NeuroShieldResponseMode(value);
+        public static implicit operator NeuroShieldResponseMode?(string value) => value == null ? (NeuroShieldResponseMode?)null : new NeuroShieldResponseMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

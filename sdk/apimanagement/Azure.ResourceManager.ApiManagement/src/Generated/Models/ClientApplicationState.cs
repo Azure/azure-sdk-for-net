@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ClientApplicationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientApplicationState?(string value) => value == null ? null : new ClientApplicationState(value);
+        public static implicit operator ClientApplicationState?(string value) => value == null ? (ClientApplicationState?)null : new ClientApplicationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationForLinux"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmGuestPatchClassificationForLinux?(string value) => value == null ? null : new VmGuestPatchClassificationForLinux(value);
+        public static implicit operator VmGuestPatchClassificationForLinux?(string value) => value == null ? (VmGuestPatchClassificationForLinux?)null : new VmGuestPatchClassificationForLinux(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

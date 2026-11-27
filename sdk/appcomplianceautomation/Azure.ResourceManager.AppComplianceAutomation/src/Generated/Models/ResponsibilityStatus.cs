@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ResponsibilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponsibilityStatus?(string value) => value == null ? null : new ResponsibilityStatus(value);
+        public static implicit operator ResponsibilityStatus?(string value) => value == null ? (ResponsibilityStatus?)null : new ResponsibilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceConnectionGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceConnectionGroup?(string value) => value == null ? null : new WorkspaceConnectionGroup(value);
+        public static implicit operator WorkspaceConnectionGroup?(string value) => value == null ? (WorkspaceConnectionGroup?)null : new WorkspaceConnectionGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

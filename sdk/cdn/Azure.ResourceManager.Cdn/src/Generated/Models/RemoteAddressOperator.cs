@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RemoteAddressOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RemoteAddressOperator?(string value) => value == null ? null : new RemoteAddressOperator(value);
+        public static implicit operator RemoteAddressOperator?(string value) => value == null ? (RemoteAddressOperator?)null : new RemoteAddressOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

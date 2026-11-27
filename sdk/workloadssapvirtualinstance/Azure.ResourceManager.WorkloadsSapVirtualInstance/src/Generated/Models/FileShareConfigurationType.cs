@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="FileShareConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareConfigurationType?(string value) => value == null ? null : new FileShareConfigurationType(value);
+        public static implicit operator FileShareConfigurationType?(string value) => value == null ? (FileShareConfigurationType?)null : new FileShareConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

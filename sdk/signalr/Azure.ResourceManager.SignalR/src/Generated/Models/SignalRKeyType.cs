@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRKeyType?(string value) => value == null ? null : new SignalRKeyType(value);
+        public static implicit operator SignalRKeyType?(string value) => value == null ? (SignalRKeyType?)null : new SignalRKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

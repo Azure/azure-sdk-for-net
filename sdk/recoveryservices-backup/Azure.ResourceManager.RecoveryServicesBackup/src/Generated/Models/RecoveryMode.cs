@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryMode?(string value) => value == null ? null : new RecoveryMode(value);
+        public static implicit operator RecoveryMode?(string value) => value == null ? (RecoveryMode?)null : new RecoveryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

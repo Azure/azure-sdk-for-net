@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskSchedulerReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskSchedulerReplicationRole?(string value) => value == null ? null : new DurableTaskSchedulerReplicationRole(value);
+        public static implicit operator DurableTaskSchedulerReplicationRole?(string value) => value == null ? (DurableTaskSchedulerReplicationRole?)null : new DurableTaskSchedulerReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

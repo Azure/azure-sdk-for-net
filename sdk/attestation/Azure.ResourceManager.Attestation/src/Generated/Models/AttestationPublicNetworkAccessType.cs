@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <summary> Converts a string to a <see cref="AttestationPublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestationPublicNetworkAccessType?(string value) => value == null ? null : new AttestationPublicNetworkAccessType(value);
+        public static implicit operator AttestationPublicNetworkAccessType?(string value) => value == null ? (AttestationPublicNetworkAccessType?)null : new AttestationPublicNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

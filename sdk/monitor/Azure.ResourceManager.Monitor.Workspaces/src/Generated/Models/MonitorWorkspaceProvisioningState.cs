@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="MonitorWorkspaceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorWorkspaceProvisioningState?(string value) => value == null ? null : new MonitorWorkspaceProvisioningState(value);
+        public static implicit operator MonitorWorkspaceProvisioningState?(string value) => value == null ? (MonitorWorkspaceProvisioningState?)null : new MonitorWorkspaceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="SmbNonBrowsable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SmbNonBrowsable?(string value) => value == null ? null : new SmbNonBrowsable(value);
+        public static implicit operator SmbNonBrowsable?(string value) => value == null ? (SmbNonBrowsable?)null : new SmbNonBrowsable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="TargetAggregationFunction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TargetAggregationFunction?(string value) => value == null ? null : new TargetAggregationFunction(value);
+        public static implicit operator TargetAggregationFunction?(string value) => value == null ? (TargetAggregationFunction?)null : new TargetAggregationFunction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

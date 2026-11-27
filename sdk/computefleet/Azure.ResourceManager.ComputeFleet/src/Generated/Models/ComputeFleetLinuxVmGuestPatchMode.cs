@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetLinuxVmGuestPatchMode?(string value) => value == null ? null : new ComputeFleetLinuxVmGuestPatchMode(value);
+        public static implicit operator ComputeFleetLinuxVmGuestPatchMode?(string value) => value == null ? (ComputeFleetLinuxVmGuestPatchMode?)null : new ComputeFleetLinuxVmGuestPatchMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

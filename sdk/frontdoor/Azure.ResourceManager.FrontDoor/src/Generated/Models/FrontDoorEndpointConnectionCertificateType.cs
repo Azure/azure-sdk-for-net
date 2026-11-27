@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorEndpointConnectionCertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorEndpointConnectionCertificateType?(string value) => value == null ? null : new FrontDoorEndpointConnectionCertificateType(value);
+        public static implicit operator FrontDoorEndpointConnectionCertificateType?(string value) => value == null ? (FrontDoorEndpointConnectionCertificateType?)null : new FrontDoorEndpointConnectionCertificateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

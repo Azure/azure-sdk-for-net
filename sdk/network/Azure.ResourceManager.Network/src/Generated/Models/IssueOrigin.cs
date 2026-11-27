@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IssueOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IssueOrigin?(string value) => value == null ? null : new IssueOrigin(value);
+        public static implicit operator IssueOrigin?(string value) => value == null ? (IssueOrigin?)null : new IssueOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

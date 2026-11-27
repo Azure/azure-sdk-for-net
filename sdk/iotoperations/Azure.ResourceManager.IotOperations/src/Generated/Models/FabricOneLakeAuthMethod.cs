@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="FabricOneLakeAuthMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricOneLakeAuthMethod?(string value) => value == null ? null : new FabricOneLakeAuthMethod(value);
+        public static implicit operator FabricOneLakeAuthMethod?(string value) => value == null ? (FabricOneLakeAuthMethod?)null : new FabricOneLakeAuthMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

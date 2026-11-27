@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorSensitivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorSensitivityType?(string value) => value == null ? null : new FrontDoorSensitivityType(value);
+        public static implicit operator FrontDoorSensitivityType?(string value) => value == null ? (FrontDoorSensitivityType?)null : new FrontDoorSensitivityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

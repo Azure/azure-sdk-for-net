@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="PasswordAuth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PasswordAuth?(string value) => value == null ? null : new PasswordAuth(value);
+        public static implicit operator PasswordAuth?(string value) => value == null ? (PasswordAuth?)null : new PasswordAuth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

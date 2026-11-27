@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceSubscriptionStatus?(string value) => value == null ? null : new MarketplaceSubscriptionStatus(value);
+        public static implicit operator MarketplaceSubscriptionStatus?(string value) => value == null ? (MarketplaceSubscriptionStatus?)null : new MarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

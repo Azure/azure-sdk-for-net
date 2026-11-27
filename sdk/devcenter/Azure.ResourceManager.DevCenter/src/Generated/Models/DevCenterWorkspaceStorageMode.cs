@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterWorkspaceStorageMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterWorkspaceStorageMode?(string value) => value == null ? null : new DevCenterWorkspaceStorageMode(value);
+        public static implicit operator DevCenterWorkspaceStorageMode?(string value) => value == null ? (DevCenterWorkspaceStorageMode?)null : new DevCenterWorkspaceStorageMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

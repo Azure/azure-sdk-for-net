@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementAssignmentLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementAssignmentLevel?(string value) => value == null ? null : new RoleManagementAssignmentLevel(value);
+        public static implicit operator RoleManagementAssignmentLevel?(string value) => value == null ? (RoleManagementAssignmentLevel?)null : new RoleManagementAssignmentLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

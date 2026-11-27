@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkManagerDeploymentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkManagerDeploymentState?(string value) => value == null ? null : new NetworkManagerDeploymentState(value);
+        public static implicit operator NetworkManagerDeploymentState?(string value) => value == null ? (NetworkManagerDeploymentState?)null : new NetworkManagerDeploymentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

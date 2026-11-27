@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerResourceDefinitionMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerResourceDefinitionMethod?(string value) => value == null ? null : new BrokerResourceDefinitionMethod(value);
+        public static implicit operator BrokerResourceDefinitionMethod?(string value) => value == null ? (BrokerResourceDefinitionMethod?)null : new BrokerResourceDefinitionMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <summary> Converts a string to a <see cref="FluxConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FluxConfigurationProvisioningState?(string value) => value == null ? null : new FluxConfigurationProvisioningState(value);
+        public static implicit operator FluxConfigurationProvisioningState?(string value) => value == null ? (FluxConfigurationProvisioningState?)null : new FluxConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

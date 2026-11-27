@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanStorageTargetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanStorageTargetType?(string value) => value == null ? null : new ElasticSanStorageTargetType(value);
+        public static implicit operator ElasticSanStorageTargetType?(string value) => value == null ? (ElasticSanStorageTargetType?)null : new ElasticSanStorageTargetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

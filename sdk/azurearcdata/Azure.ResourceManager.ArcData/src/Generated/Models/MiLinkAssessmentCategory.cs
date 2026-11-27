@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="MiLinkAssessmentCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MiLinkAssessmentCategory?(string value) => value == null ? null : new MiLinkAssessmentCategory(value);
+        public static implicit operator MiLinkAssessmentCategory?(string value) => value == null ? (MiLinkAssessmentCategory?)null : new MiLinkAssessmentCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

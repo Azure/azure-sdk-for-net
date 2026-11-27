@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="PublicCloudConnectorSolutionConfigurationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicCloudConnectorSolutionConfigurationStatus?(string value) => value == null ? null : new PublicCloudConnectorSolutionConfigurationStatus(value);
+        public static implicit operator PublicCloudConnectorSolutionConfigurationStatus?(string value) => value == null ? (PublicCloudConnectorSolutionConfigurationStatus?)null : new PublicCloudConnectorSolutionConfigurationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

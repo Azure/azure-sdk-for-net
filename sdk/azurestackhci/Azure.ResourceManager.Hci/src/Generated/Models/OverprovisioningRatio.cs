@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="OverprovisioningRatio"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OverprovisioningRatio?(string value) => value == null ? null : new OverprovisioningRatio(value);
+        public static implicit operator OverprovisioningRatio?(string value) => value == null ? (OverprovisioningRatio?)null : new OverprovisioningRatio(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

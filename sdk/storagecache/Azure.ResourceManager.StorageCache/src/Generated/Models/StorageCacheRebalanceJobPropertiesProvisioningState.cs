@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="StorageCacheRebalanceJobPropertiesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageCacheRebalanceJobPropertiesProvisioningState?(string value) => value == null ? null : new StorageCacheRebalanceJobPropertiesProvisioningState(value);
+        public static implicit operator StorageCacheRebalanceJobPropertiesProvisioningState?(string value) => value == null ? (StorageCacheRebalanceJobPropertiesProvisioningState?)null : new StorageCacheRebalanceJobPropertiesProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

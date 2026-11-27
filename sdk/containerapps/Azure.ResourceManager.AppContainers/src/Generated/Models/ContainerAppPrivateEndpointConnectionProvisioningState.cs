@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new ContainerAppPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator ContainerAppPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (ContainerAppPrivateEndpointConnectionProvisioningState?)null : new ContainerAppPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

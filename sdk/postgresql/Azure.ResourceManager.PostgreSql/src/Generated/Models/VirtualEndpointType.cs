@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEndpointType?(string value) => value == null ? null : new VirtualEndpointType(value);
+        public static implicit operator VirtualEndpointType?(string value) => value == null ? (VirtualEndpointType?)null : new VirtualEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

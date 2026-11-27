@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ThresholdType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThresholdType?(string value) => value == null ? null : new ThresholdType(value);
+        public static implicit operator ThresholdType?(string value) => value == null ? (ThresholdType?)null : new ThresholdType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

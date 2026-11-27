@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="EnvironmentVariableType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentVariableType?(string value) => value == null ? null : new EnvironmentVariableType(value);
+        public static implicit operator EnvironmentVariableType?(string value) => value == null ? (EnvironmentVariableType?)null : new EnvironmentVariableType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PublisherType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublisherType?(string value) => value == null ? null : new PublisherType(value);
+        public static implicit operator PublisherType?(string value) => value == null ? (PublisherType?)null : new PublisherType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

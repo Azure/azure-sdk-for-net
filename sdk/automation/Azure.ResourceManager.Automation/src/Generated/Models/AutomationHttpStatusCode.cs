@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationHttpStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationHttpStatusCode?(string value) => value == null ? null : new AutomationHttpStatusCode(value);
+        public static implicit operator AutomationHttpStatusCode?(string value) => value == null ? (AutomationHttpStatusCode?)null : new AutomationHttpStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="AllowEgressNatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowEgressNatType?(string value) => value == null ? null : new AllowEgressNatType(value);
+        public static implicit operator AllowEgressNatType?(string value) => value == null ? (AllowEgressNatType?)null : new AllowEgressNatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

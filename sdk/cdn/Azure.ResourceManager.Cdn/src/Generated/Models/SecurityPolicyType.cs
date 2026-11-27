@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="SecurityPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityPolicyType?(string value) => value == null ? null : new SecurityPolicyType(value);
+        public static implicit operator SecurityPolicyType?(string value) => value == null ? (SecurityPolicyType?)null : new SecurityPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

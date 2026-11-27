@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IkeIntegrity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IkeIntegrity?(string value) => value == null ? null : new IkeIntegrity(value);
+        public static implicit operator IkeIntegrity?(string value) => value == null ? (IkeIntegrity?)null : new IkeIntegrity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="MigrationConfigurationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationConfigurationName?(string value) => value == null ? null : new MigrationConfigurationName(value);
+        public static implicit operator MigrationConfigurationName?(string value) => value == null ? (MigrationConfigurationName?)null : new MigrationConfigurationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

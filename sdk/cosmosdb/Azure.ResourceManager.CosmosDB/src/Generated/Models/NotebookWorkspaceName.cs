@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="NotebookWorkspaceName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotebookWorkspaceName?(string value) => value == null ? null : new NotebookWorkspaceName(value);
+        public static implicit operator NotebookWorkspaceName?(string value) => value == null ? (NotebookWorkspaceName?)null : new NotebookWorkspaceName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

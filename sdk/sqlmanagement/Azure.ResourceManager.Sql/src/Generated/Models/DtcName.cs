@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DtcName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DtcName?(string value) => value == null ? null : new DtcName(value);
+        public static implicit operator DtcName?(string value) => value == null ? (DtcName?)null : new DtcName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

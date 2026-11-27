@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="TemplateName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemplateName?(string value) => value == null ? null : new TemplateName(value);
+        public static implicit operator TemplateName?(string value) => value == null ? (TemplateName?)null : new TemplateName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

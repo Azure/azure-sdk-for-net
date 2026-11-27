@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SyncAgentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncAgentState?(string value) => value == null ? null : new SyncAgentState(value);
+        public static implicit operator SyncAgentState?(string value) => value == null ? (SyncAgentState?)null : new SyncAgentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
