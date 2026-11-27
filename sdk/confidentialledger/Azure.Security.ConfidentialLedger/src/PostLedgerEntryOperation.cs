@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Security.ConfidentialLedger.Models;
 
 namespace Azure.Security.ConfidentialLedger
 {
@@ -69,6 +70,7 @@ namespace Azure.Security.ConfidentialLedger
             _client = client;
             _mode = mode;
             _id = id;
+            InitialResult = LedgerWriteResult.TryFromResponse(initialResponse);
             _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: initialResponse, nameof(PostLedgerEntryOperation));
         }
 
@@ -82,8 +84,31 @@ namespace Azure.Security.ConfidentialLedger
         public PostLedgerEntryOperation(string transactionId, Response rawResponse)
         {
             _id = transactionId;
+            CompletedState = TransactionState.Committed;
+            InitialResult = LedgerWriteResult.TryFromResponse(rawResponse);
             _operationInternal = OperationInternal.Succeeded(rawResponse);
         }
+
+        /// <summary>
+        /// The final transaction state once the operation has completed successfully; <see langword="null"/>
+        /// while the operation is pending or if it failed.
+        /// </summary>
+        internal TransactionState? CompletedState { get; private set; }
+
+        /// <summary>
+        /// The write result parsed from the initial create-ledger-entry response, captured before polling
+        /// replaces <see cref="GetRawResponse"/>; <see langword="null"/> when that response carried no body
+        /// (for example, an HTTP 202 from the Ledger Gateway).
+        /// </summary>
+        internal LedgerWriteResult InitialResult { get; }
+
+        /// <summary>
+        /// The collection the entry was written to, taken from the initial write response or, for queued
+        /// Ledger Gateway writes, from the committed operation status.
+        /// </summary>
+        internal string CollectionId => InitialResult?.CollectionId ?? _committedCollectionId;
+
+        private string _committedCollectionId;
 
         /// <summary>
         /// A constructor for mocking.
@@ -153,6 +178,7 @@ namespace Azure.Security.ConfidentialLedger
                 .GetString();
             if (status != "Pending")
             {
+                CompletedState = new TransactionState(status);
                 return OperationState.Success(statusResponse);
             }
             return OperationState.Pending(statusResponse);
@@ -184,6 +210,7 @@ namespace Azure.Security.ConfidentialLedger
 
             string status;
             string transactionId = null;
+            string collectionId = null;
             string code = null;
             string detail = null;
             using (JsonDocument doc = JsonDocument.Parse(statusResponse.Content))
@@ -194,6 +221,11 @@ namespace Azure.Security.ConfidentialLedger
                 if (root.TryGetProperty("transactionId", out JsonElement txIdProp))
                 {
                     transactionId = txIdProp.GetString();
+                }
+
+                if (root.TryGetProperty("collectionId", out JsonElement collectionIdProp) && collectionIdProp.ValueKind == JsonValueKind.String)
+                {
+                    collectionId = collectionIdProp.GetString();
                 }
 
                 if (root.TryGetProperty("error", out JsonElement errProp) && errProp.ValueKind == JsonValueKind.Object)
@@ -227,6 +259,8 @@ namespace Azure.Security.ConfidentialLedger
                     // Swap the public Id from the gateway operation id to the CCF transaction id
                     // so downstream code can use it with GetReceipt / GetLedgerEntry / etc.
                     _id = transactionId;
+                    _committedCollectionId = collectionId;
+                    CompletedState = TransactionState.Committed;
                     return OperationState.Success(statusResponse);
 
                 case "failed":

@@ -34,8 +34,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
 #endif
-            Response response = identityClient.GetLedgerIdentity(ledgerId);
-            X509Certificate2 ledgerTlsCert = ConfidentialLedgerCertificateClient.ParseCertificate(response);
+            LedgerIdentityInformation identity = identityClient.GetLedgerIdentityInformation(ledgerId).Value;
+            Console.WriteLine($"Ledger {identity.LedgerId} TLS certificate: {identity.LedgerTlsCertificate}");
+#if SNIPPET
+            X509Certificate2 ledgerTlsCert = X509Certificate2.CreateFromPem(identity.LedgerTlsCertificate);
+#else
+            X509Certificate2 ledgerTlsCert = ConfidentialLedgerCertificateClient.ParseCertificate(identityClient.GetLedgerIdentity(ledgerId));
+#endif
 
             X509Chain certificateChain = new();
             // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.

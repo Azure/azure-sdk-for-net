@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Security.ConfidentialLedger.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
@@ -192,6 +193,34 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual(operationPolls, 2);
             // POST + 2 operation status polls.
             Assert.AreEqual(3, transport.Requests.Count);
+        }
+
+        [Test]
+        public async Task TypedPostLedgerEntry_Queued_ValueUsesCommittedCollectionId()
+        {
+            var transport = new MockTransport(req =>
+            {
+                if (req.Method == RequestMethod.Post && req.Uri.Path.EndsWith("/app/transactions", StringComparison.Ordinal))
+                {
+                    var queued = new MockResponse(202);
+                    queued.AddHeader(ConfidentialLedgerConstants.OperationIdHeaderName, OperationId);
+                    queued.SetContent("{\"operationId\":\"" + OperationId + "\",\"status\":\"queued\"}");
+                    return queued;
+                }
+                var committed = new MockResponse(200);
+                committed.SetContent("{\"operationId\":\"" + OperationId + "\",\"status\":\"committed\",\"transactionId\":\"" + TransactionId + "\",\"collectionId\":\"" + CollectionId + "\"}");
+                return committed;
+            });
+
+            var client = CreateClient(transport);
+            Operation<LedgerWriteResult> operation = await client.PostLedgerEntryAsync(WaitUntil.Started, new LedgerEntry("queued"));
+            Assert.IsFalse(operation.HasValue);
+
+            Response<LedgerWriteResult> result = await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual(TransactionId, result.Value.TransactionId);
+            Assert.AreEqual(CollectionId, result.Value.CollectionId);
+            Assert.AreEqual(TransactionState.Committed, result.Value.State);
         }
 
         // W6: 202 with no header but with a body-level operationId is honored.

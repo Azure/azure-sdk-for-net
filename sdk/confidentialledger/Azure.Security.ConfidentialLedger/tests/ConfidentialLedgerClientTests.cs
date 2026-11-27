@@ -1,11 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Security.ConfidentialLedger.Certificate;
+using Azure.Security.ConfidentialLedger.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
@@ -236,6 +241,144 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.IsTrue(statusEndpointCalled, "The status endpoint must be polled when the waitForCommit response body does not report a committed state.");
             Assert.IsTrue(operation.HasCompleted);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task TypedPostLedgerEntryReturnsWriteResultWithTransactionId(bool waitForCommit)
+        {
+            string requestBody = null;
+            var client = CreateClient(req =>
+            {
+                if (req.Uri.Path.Contains($"transactions/{transactionId}/status"))
+                {
+                    var status = new MockResponse(200);
+                    status.SetContent(@"{""state"":""Committed"",""transactionId"":""1234""}");
+                    return status;
+                }
+
+                requestBody = ReadBody(req);
+                StringAssert.DoesNotContain("collectionId", req.Uri.Query);
+                var response = new MockResponse(200);
+                response.AddHeader("x-ms-ccf-transaction-id", transactionId);
+                // The service selects the collection when none is requested.
+                response.SetContent(waitForCommit
+                    ? @"{""collectionId"":""subledger:0"",""state"":""Committed""}"
+                    : @"{""collectionId"":""subledger:0""}");
+                return response;
+            });
+
+            Operation<LedgerWriteResult> operation = await client.PostLedgerEntryAsync(
+                WaitUntil.Completed,
+                new LedgerEntry("hello"),
+                waitForCommit: waitForCommit);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(transactionId, operation.Id);
+            Assert.AreEqual(transactionId, operation.Value.TransactionId);
+            Assert.AreEqual("subledger:0", operation.Value.CollectionId);
+            Assert.AreEqual(TransactionState.Committed, operation.Value.State);
+            Assert.AreEqual("hello", JsonDocument.Parse(requestBody).RootElement.GetProperty("contents").GetString());
+        }
+
+        [Test]
+        public async Task TypedCreateLedgerEntryPopulatesTransactionIdFromHeader()
+        {
+            var client = CreateClient(req =>
+            {
+                var response = new MockResponse(200);
+                response.AddHeader("x-ms-ccf-transaction-id", transactionId);
+                response.SetContent(@"{""collectionId"":""subledger:0""}");
+                return response;
+            });
+
+            Response<LedgerWriteResult> result = await client.CreateLedgerEntryAsync(new LedgerEntry("hello"));
+
+            Assert.AreEqual(transactionId, result.Value.TransactionId);
+            Assert.AreEqual("subledger:0", result.Value.CollectionId);
+        }
+
+        [Test]
+        public async Task TypedCreateOrUpdateLedgerUserSendsMergePatchBody()
+        {
+            string contentType = null;
+            string requestBody = null;
+            var client = CreateClient(req =>
+            {
+                req.Headers.TryGetValue("Content-Type", out contentType);
+                requestBody = ReadBody(req);
+                var response = new MockResponse(200);
+                response.SetContent(@"{""userId"":""user1"",""assignedRoles"":[""Reader""]}");
+                return response;
+            });
+
+            Response<LedgerUserMultipleRoles> result = await client.CreateOrUpdateLedgerUserAsync(
+                "user1",
+                new LedgerUserMultipleRoles(new[] { ConfidentialLedgerUserRoleName.Reader }));
+
+            Assert.AreEqual("application/merge-patch+json", contentType);
+            JsonElement body = JsonDocument.Parse(requestBody).RootElement;
+            Assert.IsFalse(body.TryGetProperty("userId", out _), "Read-only userId must not be sent.");
+            Assert.AreEqual("Reader", body.GetProperty("assignedRoles")[0].GetString());
+            Assert.AreEqual("user1", result.Value.UserId);
+            CollectionAssert.AreEqual(new[] { ConfidentialLedgerUserRoleName.Reader }, result.Value.AssignedRoles);
+        }
+
+        [Test]
+        public async Task TypedUpdateRuntimeOptionsOmitsUnsetProperties()
+        {
+            string requestBody = null;
+            var client = CreateClient(req =>
+            {
+                requestBody = ReadBody(req);
+                var response = new MockResponse(200);
+                response.SetContent(@"{""max_heap_bytes"":1024,""max_stack_bytes"":512}");
+                return response;
+            });
+
+            Response<JsRuntimeOptions> result = await client.UpdateRuntimeOptionsStableAsync(new JsRuntimeOptions { MaxHeapBytes = 1024 });
+
+            JsonElement body = JsonDocument.Parse(requestBody).RootElement;
+            Assert.AreEqual(1024, body.GetProperty("max_heap_bytes").GetInt64());
+            Assert.AreEqual(1, body.EnumerateObject().Count(), "Only explicitly set properties should be sent in a merge patch.");
+            Assert.AreEqual(512, result.Value.MaxStackBytes);
+        }
+
+        [Test]
+        public async Task TypedGetLedgerIdentityInformationReturnsModel()
+        {
+            var identityClient = InstrumentClient(new ConfidentialLedgerCertificateClient(
+                new Uri("https://identity.confidential-ledger.core.azure.com"),
+                CreateCertificateClientOptions()));
+
+            Response<LedgerIdentityInformation> identity = await identityClient.GetLedgerIdentityInformationAsync("chrissconfidentialledger");
+
+            Assert.AreEqual("chrissconfidentialledger", identity.Value.LedgerId);
+            StringAssert.StartsWith("-----BEGIN CERTIFICATE-----", identity.Value.LedgerTlsCertificate);
+        }
+
+        private ConfidentialLedgerClient CreateClient(Func<MockRequest, MockResponse> handler) =>
+            InstrumentClient(
+                new ConfidentialLedgerClient(
+                    new("https://client.name"),
+                    new MockCredential(),
+                    ledgerOptions: new ConfidentialLedgerClientOptions
+                    {
+                        Retry = { Delay = TimeSpan.Zero, MaxRetries = 0 },
+                        Transport = new MockTransport(handler),
+                    },
+                    certificateClientOptions: CreateCertificateClientOptions()));
+
+        private static string ReadBody(MockRequest request)
+        {
+            if (request.Content == null)
+            {
+                return null;
+            }
+            using var stream = new MemoryStream();
+            request.Content.WriteTo(stream, default);
+            return Encoding.UTF8.GetString(stream.ToArray());
         }
 
         private static ConfidentialLedgerCertificateClientOptions CreateCertificateClientOptions() =>

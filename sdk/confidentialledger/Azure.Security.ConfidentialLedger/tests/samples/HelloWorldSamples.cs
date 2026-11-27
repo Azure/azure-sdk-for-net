@@ -12,6 +12,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Security.ConfidentialLedger.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests.samples
@@ -31,35 +32,26 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #endregion
             #region Snippet:ConfidentialLedger_AppendToLedger
 
-            Operation postOperation = ledgerClient.PostLedgerEntry(
+            Operation<LedgerWriteResult> postOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(
-                    new { contents = "Hello world!" }));
+                new LedgerEntry("Hello world!"));
 
-            string transactionId = postOperation.Id;
-            Console.WriteLine($"Appended transaction with Id: {transactionId}");
+            string transactionId = postOperation.Value.TransactionId;
+            Console.WriteLine($"Appended transaction with Id: {transactionId} to collection {postOperation.Value.CollectionId}");
 
             #endregion
 
             #region Snippet:ConfidentialLedger_GetStatus
 
-            Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
-
-            string status = JsonDocument.Parse(statusResponse.Content)
-                .RootElement
-                .GetProperty("state")
-                .GetString();
+            TransactionStatus transactionStatus = ledgerClient.GetTransactionStatus(transactionId).Value;
+            TransactionState status = transactionStatus.State;
 
             Console.WriteLine($"Transaction status: {status}");
 
             // Wait for the entry to be committed
-            while (status == "Pending")
+            while (status == TransactionState.Pending)
             {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
-                status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
+                status = ledgerClient.GetTransactionStatus(transactionId).Value.State;
             }
 
             Console.WriteLine($"Transaction status: {status}");
@@ -79,54 +71,41 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(
-                    new { contents = "Hello from Chris!", collectionId = "Chris' messages" }));
+                new LedgerEntry("Hello from Chris!"),
+                collectionId: "Chris' messages");
 
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(
-                    new { contents = "Hello from Allison!", collectionId = "Allison's messages" }));
+                new LedgerEntry("Hello from Allison!"),
+                collectionId: "Allison's messages");
 
             #endregion
 
             #region Snippet:ConfidentialLedger_NoCollectionId
             postOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(
-                    new { contents = "Hello world!" }));
+                new LedgerEntry("Hello world!"));
 
-            string content = postOperation.GetRawResponse().Content.ToString();
-            transactionId = postOperation.Id;
-            string collectionId = "subledger:0";
+            transactionId = postOperation.Value.TransactionId;
+            string collectionId = postOperation.Value.CollectionId; // "subledger:0"
 
             // Try fetching the ledger entry until it is "loaded".
-            Response getByCollectionResponse = default;
-            JsonElement rootElement = default;
-            bool loaded = false;
-
-            while (!loaded)
+            LedgerQueryResult queryResult;
+            do
             {
                 // Provide both the transactionId and collectionId.
-                getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
-                rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
-                loaded = rootElement.GetProperty("state").GetString() != "Loading";
+                queryResult = ledgerClient.GetLedgerEntry(transactionId, collectionId).Value;
             }
+            while (queryResult.State == ConfidentialLedgerQueryState.Loading);
 
-            string contents = rootElement
-                .GetProperty("entry")
-                .GetProperty("contents")
-                .GetString();
+            string contents = queryResult.Entry.Contents;
 
             Console.WriteLine(contents); // "Hello world!"
 
             // Now just provide the transactionId.
-            getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
+            queryResult = ledgerClient.GetLedgerEntry(transactionId).Value;
 
-            string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
-                .RootElement
-                .GetProperty("entry")
-                .GetProperty("collectionId")
-                .GetString();
+            string collectionId2 = queryResult.Entry.CollectionId;
 
             Console.WriteLine($"{collectionId} == {collectionId2}");
 
@@ -134,119 +113,54 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:ConfidentialLedger_GetEnteryWithNoTransactionId
 
-            Operation firstPostOperation = ledgerClient.PostLedgerEntry(
+            Operation<LedgerWriteResult> firstPostOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = "Hello world 0" }));
+                new LedgerEntry("Hello world 0"));
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = "Hello world 1" }));
-            Operation collectionPostOperation = ledgerClient.PostLedgerEntry(
+                new LedgerEntry("Hello world 1"));
+            Operation<LedgerWriteResult> collectionPostOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = "Hello world collection 0" }),
-                "my collection");
+                new LedgerEntry("Hello world collection 0"),
+                collectionId: "my collection");
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = "Hello world collection 1" }),
-                "my collection");
+                new LedgerEntry("Hello world collection 1"),
+                collectionId: "my collection");
 
-            transactionId = firstPostOperation.Id;
+            transactionId = firstPostOperation.Value.TransactionId;
 
-            // Wait for the entry to be committed
-            status = "Pending";
-            while (status == "Pending")
-            {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
-                status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-            }
-
-            // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
-            Response getResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
-
+            // The ledger entry written at the transactionId in firstPostOperation is retrieved from the default collection.
             // Try until the entry is available.
-            loaded = false;
-            JsonElement element = default;
-            contents = null;
-            while (!loaded)
+            do
             {
-                loaded = JsonDocument.Parse(getResponse.Content)
-                    .RootElement
-                    .TryGetProperty("entry", out element);
-                if (loaded)
-                {
-                    contents = element.GetProperty("contents").GetString();
-                }
-                else
-                {
-                    getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
-                }
+                queryResult = ledgerClient.GetLedgerEntry(transactionId).Value;
             }
+            while (queryResult.State == ConfidentialLedgerQueryState.Loading);
 
-            string firstEntryContents = JsonDocument.Parse(getResponse.Content)
-                .RootElement
-                .GetProperty("entry")
-                .GetProperty("contents")
-                .GetString();
+            string firstEntryContents = queryResult.Entry.Contents;
 
             Console.WriteLine(firstEntryContents); // "Hello world 0"
 
             // This will return the latest entry available in the default collection.
-            getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
+            LedgerEntry latestDefaultCollection = ledgerClient.GetCurrentLedgerEntry().Value;
 
-            // Try until the entry is available.
-            loaded = false;
-            element = default;
-            string latestDefaultCollection = null;
-            while (!loaded)
-            {
-                loaded = JsonDocument.Parse(getResponse.Content)
-                    .RootElement
-                    .TryGetProperty("contents", out element);
-                if (loaded)
-                {
-                    latestDefaultCollection = element.GetString();
-                }
-                else
-                {
-                    getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
-                }
-            }
-
-            Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultCollection}"); //"Hello world 1"
+            Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultCollection.Contents}"); //"Hello world 1"
 
             // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
-            string collectionTransactionId = collectionPostOperation.Id;
+            string collectionTransactionId = collectionPostOperation.Value.TransactionId;
 
-            getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
             // Try until the entry is available.
-            loaded = false;
-            element = default;
-            string collectionEntry = null;
-            while (!loaded)
+            do
             {
-                loaded = JsonDocument.Parse(getResponse.Content)
-                    .RootElement
-                    .TryGetProperty("entry", out element);
-                if (loaded)
-                {
-                    collectionEntry = element.GetProperty("contents").GetString();
-                }
-                else
-                {
-                    getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
-                }
+                queryResult = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection").Value;
             }
+            while (queryResult.State == ConfidentialLedgerQueryState.Loading);
 
-            Console.WriteLine(collectionEntry); // "Hello world collection 0"
+            Console.WriteLine(queryResult.Entry.Contents); // "Hello world collection 0"
 
             // This will return the latest entry available in the collection.
-            getResponse = ledgerClient.GetCurrentLedgerEntry("my collection", new RequestContext());
-            string latestCollection = JsonDocument.Parse(getResponse.Content)
-                .RootElement
-                .GetProperty("contents")
-                .GetString();
+            string latestCollection = ledgerClient.GetCurrentLedgerEntry("my collection").Value.Contents;
 
             Console.WriteLine($"The latest ledger entry from the collection is {latestCollection}"); // "Hello world collection 1"
 
@@ -265,9 +179,11 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             string newUserAadObjectId = Guid.NewGuid().ToString();
 #endif
-            ledgerClient.CreateOrUpdateLedgerUser(
+            LedgerUserMultipleRoles newUser = ledgerClient.CreateOrUpdateLedgerUser(
                 newUserAadObjectId,
-                RequestContent.Create(new { assignedRoles = new[] { "Reader" } }));
+                new LedgerUserMultipleRoles(new[] { ConfidentialLedgerUserRoleName.Reader })).Value;
+
+            Console.WriteLine($"User {newUser.UserId} has roles: {string.Join(", ", newUser.AssignedRoles)}");
 
             #endregion
 

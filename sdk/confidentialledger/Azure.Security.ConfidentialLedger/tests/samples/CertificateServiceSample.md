@@ -11,8 +11,9 @@ var identityClient = new ConfidentialLedgerCertificateClient(identityServiceEndp
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
-Response response = identityClient.GetLedgerIdentity(ledgerId);
-X509Certificate2 ledgerTlsCert = ConfidentialLedgerCertificateClient.ParseCertificate(response);
+LedgerIdentityInformation identity = identityClient.GetLedgerIdentityInformation(ledgerId).Value;
+Console.WriteLine($"Ledger {identity.LedgerId} TLS certificate: {identity.LedgerTlsCertificate}");
+X509Certificate2 ledgerTlsCert = X509Certificate2.CreateFromPem(identity.LedgerTlsCertificate);
 
 X509Chain certificateChain = new();
 // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
