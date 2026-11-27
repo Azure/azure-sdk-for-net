@@ -53,9 +53,14 @@ public partial struct JsonPatch
     }
 
     /// <summary>
-    /// Determines whether the specified JSON path exists in the patch.
+    /// Determines whether the patch stores an entry at the specified JSON path.
     /// </summary>
     /// <param name="jsonPath">The JSON path to check.</param>
+    /// <remarks>
+    /// This method is used by model serializers to check for stored overrides, including removals but excluding
+    /// array appends. It does not resolve values from the original JSON or getter propagators.
+    /// Use <see cref="ContainsValue"/> to check whether a value can be read.
+    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(ReadOnlySpan<byte> jsonPath)
     {
@@ -67,6 +72,21 @@ public partial struct JsonPatch
         // if someone called Append on an array, we don't want to consider that as "contains" for the array path
         // since the entire array wasn't set it was just one item appended to it.
         return _properties.TryGetValue(jsonPath, out var value) && !value.Kind.HasFlag(ValueKind.ArrayItemAppend);
+    }
+
+    /// <summary>
+    /// Determines whether a value can be read at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to check.</param>
+    /// <returns>True if a value exists, including JSON null; false if the path is missing or removed.</returns>
+    /// <remarks>
+    /// Uses the same path resolution as the Get methods, including getter propagators, original JSON,
+    /// and array appends. Unlike <see cref="Contains(ReadOnlySpan{byte})"/>, this method does not indicate
+    /// whether the patch stores an entry for serialization.
+    /// </remarks>
+    public bool ContainsValue(ReadOnlySpan<byte> jsonPath)
+    {
+        return TryGetEncodedValueInternal(jsonPath, out var value) && value.Kind != ValueKind.Removed;
     }
 
     #region Set Methods
