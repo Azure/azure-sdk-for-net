@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-11-30)
 
 ### Features Added
 
@@ -9,9 +9,3 @@
 - Added support for validating proposed Professional Service purchases and resource updates.
 - Added support for checking Professional Service resource name availability.
 - Added support for unsubscribing from a Professional Service subscription.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
