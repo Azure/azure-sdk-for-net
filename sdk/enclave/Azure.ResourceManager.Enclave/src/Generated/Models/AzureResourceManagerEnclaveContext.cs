@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Enclave
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AddressSpaceEntry))]
     [ModelReaderWriterBuildable(typeof(ApprovalActionContent))]
     [ModelReaderWriterBuildable(typeof(ApprovalActionResult))]
     [ModelReaderWriterBuildable(typeof(ApprovalCallbackContent))]
@@ -28,8 +29,8 @@ namespace Azure.ResourceManager.Enclave
     [ModelReaderWriterBuildable(typeof(CheckAddressSpaceAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(CommunityEndpointResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CommunityResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ComputedAddressSpaceEntry))]
     [ModelReaderWriterBuildable(typeof(DedicatedHubResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(EnclaveAddressSpaces))]
     [ModelReaderWriterBuildable(typeof(EnclaveConnectionPatchProperties))]
     [ModelReaderWriterBuildable(typeof(EnclaveConnectionResourceListResult))]
     [ModelReaderWriterBuildable(typeof(EnclaveDefaultSettings))]
@@ -37,9 +38,10 @@ namespace Azure.ResourceManager.Enclave
     [ModelReaderWriterBuildable(typeof(EnclaveEndpointDestinationRule))]
     [ModelReaderWriterBuildable(typeof(EnclaveEndpointResourceListResult))]
     [ModelReaderWriterBuildable(typeof(EnclaveResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(EnclaveVirtualNetwork))]
     [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(SyncDestinationStatus))]
+    [ModelReaderWriterBuildable(typeof(SyncPerformedBy))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransitHubResourceListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

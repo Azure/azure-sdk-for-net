@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("transitHubResourceId"u8);
                 writer.WriteStringValue(TransitHubResourceId);
             }
+            if (Optional.IsDefined(Direction))
+            {
+                writer.WritePropertyName("direction"u8);
+                writer.WriteStringValue(Direction.Value.ToString());
+            }
             if (Optional.IsDefined(EndpointRuleName))
             {
                 writer.WritePropertyName("endpointRuleName"u8);
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.Enclave.Models
             VirtualEnclaveCommunityEndpointDestinationType? destinationType = default;
             IList<VirtualEnclaveCommunityEndpointProtocol> protocols = default;
             ResourceIdentifier transitHubResourceId = default;
+            RuleDirection? direction = default;
             string endpointRuleName = default;
             string destination = default;
             string ports = default;
@@ -193,6 +199,15 @@ namespace Azure.ResourceManager.Enclave.Models
                     transitHubResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("direction"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    direction = new RuleDirection(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("endpointRuleName"u8))
                 {
                     endpointRuleName = prop.Value.GetString();
@@ -217,6 +232,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 destinationType,
                 protocols ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointProtocol>(),
                 transitHubResourceId,
+                direction,
                 endpointRuleName,
                 destination,
                 ports,

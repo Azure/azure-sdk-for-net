@@ -32,18 +32,20 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="policyOverride"> Policy override setting for the community. Specifies whether to apply enclave-specific policies or disable policy enforcement. </param>
         /// <param name="communityRoleAssignments"> Community role assignments. </param>
         /// <param name="firewallSku"> SKU of the community's Azure Firewall (Basic, Standard, Premium). Standard is the default. </param>
+        /// <param name="subnetJoinPolicyMode"> Desired enforcement mode for the subscription-scoped subnet join deny policy. Defaults to 'Deny' on api-version 2026-10-01-preview and later. </param>
         /// <param name="granularApprovalSettings"> Granular approval requirements for various actions on the community's resources. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityPatchProperties(IList<string> dnsServers, IList<VirtualEnclaveGovernedService> governedServiceList, CommunityPropertiesPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, ApprovalSettingsPatchProperties granularApprovalSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityPatchProperties(IList<string> dnsServers, IList<VirtualEnclaveGovernedService> governedServiceList, Models.CommunityPropertiesPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, SubnetJoinPolicyMode? subnetJoinPolicyMode, ApprovalSettingsPatchProperties granularApprovalSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsServers = dnsServers;
             GovernedServiceList = governedServiceList;
             PolicyOverride = policyOverride;
             CommunityRoleAssignments = communityRoleAssignments;
             FirewallSku = firewallSku;
+            SubnetJoinPolicyMode = subnetJoinPolicyMode;
             GranularApprovalSettings = granularApprovalSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
             MonitoringSettings = monitoringSettings;
@@ -58,13 +60,16 @@ namespace Azure.ResourceManager.Enclave.Models
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
 
         /// <summary> Policy override setting for the community. Specifies whether to apply enclave-specific policies or disable policy enforcement. </summary>
-        public CommunityPropertiesPolicyOverride? PolicyOverride { get; set; }
+        public Models.CommunityPropertiesPolicyOverride? PolicyOverride { get; set; }
 
         /// <summary> Community role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> CommunityRoleAssignments { get; }
 
         /// <summary> SKU of the community's Azure Firewall (Basic, Standard, Premium). Standard is the default. </summary>
         public VirtualEnclaveFirewallSku? FirewallSku { get; set; }
+
+        /// <summary> Desired enforcement mode for the subscription-scoped subnet join deny policy. Defaults to 'Deny' on api-version 2026-10-01-preview and later. </summary>
+        public SubnetJoinPolicyMode? SubnetJoinPolicyMode { get; set; }
 
         /// <summary> Granular approval requirements for various actions on the community's resources. </summary>
         public ApprovalSettingsPatchProperties GranularApprovalSettings { get; set; }

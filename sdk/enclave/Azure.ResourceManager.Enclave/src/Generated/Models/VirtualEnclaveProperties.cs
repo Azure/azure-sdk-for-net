@@ -19,26 +19,24 @@ namespace Azure.ResourceManager.Enclave.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProperties"/>. </summary>
-        /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
         /// <param name="communityResourceId"> Community Resource Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveVirtualNetwork"/> or <paramref name="communityResourceId"/> is null. </exception>
-        public VirtualEnclaveProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, ResourceIdentifier communityResourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="communityResourceId"/> is null. </exception>
+        public VirtualEnclaveProperties(ResourceIdentifier communityResourceId)
         {
-            Argument.AssertNotNull(enclaveVirtualNetwork, nameof(enclaveVirtualNetwork));
             Argument.AssertNotNull(communityResourceId, nameof(communityResourceId));
 
-            EnclaveVirtualNetwork = enclaveVirtualNetwork;
             CommunityResourceId = communityResourceId;
             ResourceCollection = new ChangeTrackingList<ResourceIdentifier>();
             EnclaveRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
             WorkloadRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
             GovernedServiceList = new ChangeTrackingList<VirtualEnclaveGovernedService>();
+            AddressSpaces = new ChangeTrackingList<AddressSpaceEntry>();
+            ComputedAddressSpaces = new ChangeTrackingList<ComputedAddressSpaceEntry>();
+            SubnetConfigurations = new ChangeTrackingList<VirtualEnclaveSubnetConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
-        /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
-        /// <param name="enclaveAddressSpaces"> Enclave Address Spaces. </param>
         /// <param name="communityResourceId"> Community Resource Id. </param>
         /// <param name="resourceCollection"> List of resource ids created by Virtual Enclave. </param>
         /// <param name="managedResourceGroupName"> Managed resource group name. </param>
@@ -49,17 +47,20 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
+        /// <param name="addressSpaces"> Customer-requested address spaces for the enclave. Supports multiple entries. Each entry specifies a prefixLength for the RP to allocate, or a custom addressSpace CIDR. The RP returns these entries exactly as provided; allocated values are reported in computedAddressSpaces. </param>
+        /// <param name="computedAddressSpaces"> Address spaces computed by the RP for the enclave. Contains an entry for each customer-requested address space with its allocated CIDR, followed by the product-managed address space. </param>
+        /// <param name="networkName"> The name of the enclave's virtual network. </param>
+        /// <param name="subnetConfigurations"> Subnet configurations for the enclave network. </param>
+        /// <param name="allowSubnetCommunication"> Whether subnets within the enclave can communicate with each other. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <param name="dedicatedHubResourceId"> DedicatedHub Resource ID. </param>
         /// <param name="approvalSettings"> Approval requirements for various actions on the enclave's resources. </param>
         /// <param name="monitoringSettings"> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, EnclaveVirtualNetwork enclaveVirtualNetwork, EnclaveAddressSpaces enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility, VirtualEnclaveRbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettings approvalSettings, VirtualEnclaveMonitoringSettings monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility, VirtualEnclaveRbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, IList<AddressSpaceEntry> addressSpaces, IReadOnlyList<ComputedAddressSpaceEntry> computedAddressSpaces, string networkName, IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations, bool? allowSubnetCommunication, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettings approvalSettings, VirtualEnclaveMonitoringSettings monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            EnclaveVirtualNetwork = enclaveVirtualNetwork;
-            EnclaveAddressSpaces = enclaveAddressSpaces;
             CommunityResourceId = communityResourceId;
             ResourceCollection = resourceCollection;
             ManagedResourceGroupName = managedResourceGroupName;
@@ -70,6 +71,11 @@ namespace Azure.ResourceManager.Enclave.Models
             EnclaveRoleAssignments = enclaveRoleAssignments;
             WorkloadRoleAssignments = workloadRoleAssignments;
             GovernedServiceList = governedServiceList;
+            AddressSpaces = addressSpaces;
+            ComputedAddressSpaces = computedAddressSpaces;
+            NetworkName = networkName;
+            SubnetConfigurations = subnetConfigurations;
+            AllowSubnetCommunication = allowSubnetCommunication;
             EnclaveDefaultSettings = enclaveDefaultSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
             DedicatedHubResourceId = dedicatedHubResourceId;
@@ -80,12 +86,6 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Provisioning State. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Virtual Network. </summary>
-        public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; set; }
-
-        /// <summary> Enclave Address Spaces. </summary>
-        public EnclaveAddressSpaces EnclaveAddressSpaces { get; }
 
         /// <summary> Community Resource Id. </summary>
         public ResourceIdentifier CommunityResourceId { get; set; }
@@ -116,6 +116,21 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Enclave specific policies. </summary>
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
+
+        /// <summary> Customer-requested address spaces for the enclave. Supports multiple entries. Each entry specifies a prefixLength for the RP to allocate, or a custom addressSpace CIDR. The RP returns these entries exactly as provided; allocated values are reported in computedAddressSpaces. </summary>
+        public IList<AddressSpaceEntry> AddressSpaces { get; }
+
+        /// <summary> Address spaces computed by the RP for the enclave. Contains an entry for each customer-requested address space with its allocated CIDR, followed by the product-managed address space. </summary>
+        public IReadOnlyList<ComputedAddressSpaceEntry> ComputedAddressSpaces { get; }
+
+        /// <summary> The name of the enclave's virtual network. </summary>
+        public string NetworkName { get; }
+
+        /// <summary> Subnet configurations for the enclave network. </summary>
+        public IList<VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get; }
+
+        /// <summary> Whether subnets within the enclave can communicate with each other. </summary>
+        public bool? AllowSubnetCommunication { get; set; }
 
         /// <summary> Enclave default settings. </summary>
         public EnclaveDefaultSettings EnclaveDefaultSettings { get; set; }

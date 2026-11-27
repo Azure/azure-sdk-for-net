@@ -85,13 +85,6 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("enclaveVirtualNetwork"u8);
-            writer.WriteObjectValue(EnclaveVirtualNetwork, options);
-            if (options.Format != "W" && Optional.IsDefined(EnclaveAddressSpaces))
-            {
-                writer.WritePropertyName("enclaveAddressSpaces"u8);
-                writer.WriteObjectValue(EnclaveAddressSpaces, options);
-            }
             writer.WritePropertyName("communityResourceId"u8);
             writer.WriteStringValue(CommunityResourceId);
             if (options.Format != "W" && Optional.IsCollectionDefined(ResourceCollection))
@@ -164,6 +157,46 @@ namespace Azure.ResourceManager.Enclave.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(AddressSpaces))
+            {
+                writer.WritePropertyName("addressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (AddressSpaceEntry item in AddressSpaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ComputedAddressSpaces))
+            {
+                writer.WritePropertyName("computedAddressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (ComputedAddressSpaceEntry item in ComputedAddressSpaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            {
+                writer.WritePropertyName("networkName"u8);
+                writer.WriteStringValue(NetworkName);
+            }
+            if (Optional.IsCollectionDefined(SubnetConfigurations))
+            {
+                writer.WritePropertyName("subnetConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (VirtualEnclaveSubnetConfiguration item in SubnetConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AllowSubnetCommunication))
+            {
+                writer.WritePropertyName("allowSubnetCommunication"u8);
+                writer.WriteBooleanValue(AllowSubnetCommunication.Value);
+            }
             if (Optional.IsDefined(EnclaveDefaultSettings))
             {
                 writer.WritePropertyName("enclaveDefaultSettings"u8);
@@ -232,8 +265,6 @@ namespace Azure.ResourceManager.Enclave.Models
                 return null;
             }
             VirtualEnclaveProvisioningState? provisioningState = default;
-            EnclaveVirtualNetwork enclaveVirtualNetwork = default;
-            EnclaveAddressSpaces enclaveAddressSpaces = default;
             ResourceIdentifier communityResourceId = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             string managedResourceGroupName = default;
@@ -244,6 +275,11 @@ namespace Azure.ResourceManager.Enclave.Models
             IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
             IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
+            IList<AddressSpaceEntry> addressSpaces = default;
+            IReadOnlyList<ComputedAddressSpaceEntry> computedAddressSpaces = default;
+            string networkName = default;
+            IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations = default;
+            bool? allowSubnetCommunication = default;
             EnclaveDefaultSettings enclaveDefaultSettings = default;
             VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
             ResourceIdentifier dedicatedHubResourceId = default;
@@ -259,20 +295,6 @@ namespace Azure.ResourceManager.Enclave.Models
                         continue;
                     }
                     provisioningState = new VirtualEnclaveProvisioningState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("enclaveVirtualNetwork"u8))
-                {
-                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("enclaveAddressSpaces"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enclaveAddressSpaces = EnclaveAddressSpaces.DeserializeEnclaveAddressSpaces(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("communityResourceId"u8))
@@ -384,6 +406,62 @@ namespace Azure.ResourceManager.Enclave.Models
                     governedServiceList = array;
                     continue;
                 }
+                if (prop.NameEquals("addressSpaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AddressSpaceEntry> array = new List<AddressSpaceEntry>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AddressSpaceEntry.DeserializeAddressSpaceEntry(item, options));
+                    }
+                    addressSpaces = array;
+                    continue;
+                }
+                if (prop.NameEquals("computedAddressSpaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputedAddressSpaceEntry> array = new List<ComputedAddressSpaceEntry>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ComputedAddressSpaceEntry.DeserializeComputedAddressSpaceEntry(item, options));
+                    }
+                    computedAddressSpaces = array;
+                    continue;
+                }
+                if (prop.NameEquals("networkName"u8))
+                {
+                    networkName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("subnetConfigurations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VirtualEnclaveSubnetConfiguration> array = new List<VirtualEnclaveSubnetConfiguration>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(VirtualEnclaveSubnetConfiguration.DeserializeVirtualEnclaveSubnetConfiguration(item, options));
+                    }
+                    subnetConfigurations = array;
+                    continue;
+                }
+                if (prop.NameEquals("allowSubnetCommunication"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowSubnetCommunication = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("enclaveDefaultSettings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -436,8 +514,6 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             return new VirtualEnclaveProperties(
                 provisioningState,
-                enclaveVirtualNetwork,
-                enclaveAddressSpaces,
                 communityResourceId,
                 resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(),
                 managedResourceGroupName,
@@ -448,6 +524,11 @@ namespace Azure.ResourceManager.Enclave.Models
                 enclaveRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 workloadRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>(),
+                addressSpaces ?? new ChangeTrackingList<AddressSpaceEntry>(),
+                computedAddressSpaces ?? new ChangeTrackingList<ComputedAddressSpaceEntry>(),
+                networkName,
+                subnetConfigurations ?? new ChangeTrackingList<VirtualEnclaveSubnetConfiguration>(),
+                allowSubnetCommunication,
                 enclaveDefaultSettings,
                 maintenanceModeConfiguration,
                 dedicatedHubResourceId,

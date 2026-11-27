@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="subnetDelegation"> Subnet delegation. </param>
         /// <param name="addressPrefix"> Address prefix. </param>
         /// <param name="networkSecurityGroupResourceId"> Network security group ID. </param>
+        /// <param name="subnetPurpose"> The purpose of the subnet, used to determine automatic configuration behavior. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveSubnetConfiguration(string subnetName, ResourceIdentifier subnetResourceId, int networkPrefixSize, string subnetDelegation, string addressPrefix, ResourceIdentifier networkSecurityGroupResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveSubnetConfiguration(string subnetName, ResourceIdentifier subnetResourceId, int networkPrefixSize, string subnetDelegation, string addressPrefix, ResourceIdentifier networkSecurityGroupResourceId, SubnetPurpose? subnetPurpose, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetName = subnetName;
             SubnetResourceId = subnetResourceId;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Enclave.Models
             SubnetDelegation = subnetDelegation;
             AddressPrefix = addressPrefix;
             NetworkSecurityGroupResourceId = networkSecurityGroupResourceId;
+            SubnetPurpose = subnetPurpose;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,5 +68,8 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Network security group ID. </summary>
         public ResourceIdentifier NetworkSecurityGroupResourceId { get; }
+
+        /// <summary> The purpose of the subnet, used to determine automatic configuration behavior. </summary>
+        public SubnetPurpose? SubnetPurpose { get; set; }
     }
 }
