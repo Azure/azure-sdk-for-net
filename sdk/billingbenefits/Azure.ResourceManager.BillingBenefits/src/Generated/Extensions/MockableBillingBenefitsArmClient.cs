@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="ContributorResource"/> object. </returns>
         public virtual ContributorResource GetContributorResource(ResourceIdentifier id)
         {
-            ContributorResource.ValidateResourceId(id);
             return new ContributorResource(Client, id);
         }
 
@@ -100,7 +99,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="CreditResource"/> object. </returns>
         public virtual CreditResource GetCreditResource(ResourceIdentifier id)
         {
-            CreditResource.ValidateResourceId(id);
             return new CreditResource(Client, id);
         }
 
@@ -109,7 +107,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="ConditionalCreditResource"/> object. </returns>
         public virtual ConditionalCreditResource GetConditionalCreditResource(ResourceIdentifier id)
         {
-            ConditionalCreditResource.ValidateResourceId(id);
             return new ConditionalCreditResource(Client, id);
         }
 
@@ -118,7 +115,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="ConditionalCreditContributorResource"/> object. </returns>
         public virtual ConditionalCreditContributorResource GetConditionalCreditContributorResource(ResourceIdentifier id)
         {
-            ConditionalCreditContributorResource.ValidateResourceId(id);
             return new ConditionalCreditContributorResource(Client, id);
         }
 
@@ -127,7 +123,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="MaccResource"/> object. </returns>
         public virtual MaccResource GetMaccResource(ResourceIdentifier id)
         {
-            MaccResource.ValidateResourceId(id);
             return new MaccResource(Client, id);
         }
 
@@ -136,7 +131,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> object. </returns>
         public virtual BillingBenefitsSavingsPlanOrderAliasResource GetBillingBenefitsSavingsPlanOrderAliasResource(ResourceIdentifier id)
         {
-            BillingBenefitsSavingsPlanOrderAliasResource.ValidateResourceId(id);
             return new BillingBenefitsSavingsPlanOrderAliasResource(Client, id);
         }
 
@@ -145,7 +139,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderResource"/> object. </returns>
         public virtual BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(ResourceIdentifier id)
         {
-            BillingBenefitsSavingsPlanOrderResource.ValidateResourceId(id);
             return new BillingBenefitsSavingsPlanOrderResource(Client, id);
         }
 
@@ -154,7 +147,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanResource"/> object. </returns>
         public virtual BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(ResourceIdentifier id)
         {
-            BillingBenefitsSavingsPlanResource.ValidateResourceId(id);
             return new BillingBenefitsSavingsPlanResource(Client, id);
         }
 
@@ -163,7 +155,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="BillingBenefitsReservationOrderAliasResource"/> object. </returns>
         public virtual BillingBenefitsReservationOrderAliasResource GetBillingBenefitsReservationOrderAliasResource(ResourceIdentifier id)
         {
-            BillingBenefitsReservationOrderAliasResource.ValidateResourceId(id);
             return new BillingBenefitsReservationOrderAliasResource(Client, id);
         }
 
@@ -172,7 +163,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="DiscountResource"/> object. </returns>
         public virtual DiscountResource GetDiscountResource(ResourceIdentifier id)
         {
-            DiscountResource.ValidateResourceId(id);
             return new DiscountResource(Client, id);
         }
 
@@ -181,7 +171,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="CreditSourceResource"/> object. </returns>
         public virtual CreditSourceResource GetCreditSourceResource(ResourceIdentifier id)
         {
-            CreditSourceResource.ValidateResourceId(id);
             return new CreditSourceResource(Client, id);
         }
 
@@ -190,7 +179,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> Returns a <see cref="FreeServicesResource"/> object. </returns>
         public virtual FreeServicesResource GetFreeServicesResource(ResourceIdentifier id)
         {
-            FreeServicesResource.ValidateResourceId(id);
             return new FreeServicesResource(Client, id);
         }
 

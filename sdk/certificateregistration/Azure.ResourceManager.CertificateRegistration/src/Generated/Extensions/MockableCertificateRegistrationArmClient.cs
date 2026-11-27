@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
         /// <returns> Returns a <see cref="AppServiceCertificateOrderResource"/> object. </returns>
         public virtual AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(ResourceIdentifier id)
         {
-            AppServiceCertificateOrderResource.ValidateResourceId(id);
             return new AppServiceCertificateOrderResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
         /// <returns> Returns a <see cref="AppServiceCertificateResource"/> object. </returns>
         public virtual AppServiceCertificateResource GetAppServiceCertificateResource(ResourceIdentifier id)
         {
-            AppServiceCertificateResource.ValidateResourceId(id);
             return new AppServiceCertificateResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
         /// <returns> Returns a <see cref="AppServiceDetectorResource"/> object. </returns>
         public virtual AppServiceDetectorResource GetAppServiceDetectorResource(ResourceIdentifier id)
         {
-            AppServiceDetectorResource.ValidateResourceId(id);
             return new AppServiceDetectorResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> Returns a <see cref="BotResource"/> object. </returns>
         public virtual BotResource GetBotResource(ResourceIdentifier id)
         {
-            BotResource.ValidateResourceId(id);
             return new BotResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> Returns a <see cref="BotChannelResource"/> object. </returns>
         public virtual BotChannelResource GetBotChannelResource(ResourceIdentifier id)
         {
-            BotChannelResource.ValidateResourceId(id);
             return new BotChannelResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
         public virtual BotConnectionSettingResource GetBotConnectionSettingResource(ResourceIdentifier id)
         {
-            BotConnectionSettingResource.ValidateResourceId(id);
             return new BotConnectionSettingResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> Returns a <see cref="BotServicePrivateEndpointConnectionResource"/> object. </returns>
         public virtual BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            BotServicePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new BotServicePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> Returns a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            BotServiceNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchAccountResource"/> object. </returns>
         public virtual BatchAccountResource GetBatchAccountResource(ResourceIdentifier id)
         {
-            BatchAccountResource.ValidateResourceId(id);
             return new BatchAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchAccountDetectorResource"/> object. </returns>
         public virtual BatchAccountDetectorResource GetBatchAccountDetectorResource(ResourceIdentifier id)
         {
-            BatchAccountDetectorResource.ValidateResourceId(id);
             return new BatchAccountDetectorResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchApplicationPackageResource"/> object. </returns>
         public virtual BatchApplicationPackageResource GetBatchApplicationPackageResource(ResourceIdentifier id)
         {
-            BatchApplicationPackageResource.ValidateResourceId(id);
             return new BatchApplicationPackageResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchApplicationResource"/> object. </returns>
         public virtual BatchApplicationResource GetBatchApplicationResource(ResourceIdentifier id)
         {
-            BatchApplicationResource.ValidateResourceId(id);
             return new BatchApplicationResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchPrivateLinkResource"/> object. </returns>
         public virtual BatchPrivateLinkResource GetBatchPrivateLinkResource(ResourceIdentifier id)
         {
-            BatchPrivateLinkResource.ValidateResourceId(id);
             return new BatchPrivateLinkResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchPrivateEndpointConnectionResource"/> object. </returns>
         public virtual BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            BatchPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new BatchPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="BatchAccountPoolResource"/> object. </returns>
         public virtual BatchAccountPoolResource GetBatchAccountPoolResource(ResourceIdentifier id)
         {
-            BatchAccountPoolResource.ValidateResourceId(id);
             return new BatchAccountPoolResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }

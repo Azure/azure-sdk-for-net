@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAgreementResource"/> object. </returns>
         public virtual BillingAgreementResource GetBillingAgreementResource(ResourceIdentifier id)
         {
-            BillingAgreementResource.ValidateResourceId(id);
             return new BillingAgreementResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingRequestResource"/> object. </returns>
         public virtual BillingRequestResource GetBillingRequestResource(ResourceIdentifier id)
         {
-            BillingRequestResource.ValidateResourceId(id);
             return new BillingRequestResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfileRoleAssignmentResource"/> object. </returns>
         public virtual BillingProfileRoleAssignmentResource GetBillingProfileRoleAssignmentResource(ResourceIdentifier id)
         {
-            BillingProfileRoleAssignmentResource.ValidateResourceId(id);
             return new BillingProfileRoleAssignmentResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingCustomerRoleAssignmentResource"/> object. </returns>
         public virtual BillingCustomerRoleAssignmentResource GetBillingCustomerRoleAssignmentResource(ResourceIdentifier id)
         {
-            BillingCustomerRoleAssignmentResource.ValidateResourceId(id);
             return new BillingCustomerRoleAssignmentResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingInvoiceSectionRoleAssignmentResource"/> object. </returns>
         public virtual BillingInvoiceSectionRoleAssignmentResource GetBillingInvoiceSectionRoleAssignmentResource(ResourceIdentifier id)
         {
-            BillingInvoiceSectionRoleAssignmentResource.ValidateResourceId(id);
             return new BillingInvoiceSectionRoleAssignmentResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingRoleAssignmentResource"/> object. </returns>
         public virtual BillingRoleAssignmentResource GetBillingRoleAssignmentResource(ResourceIdentifier id)
         {
-            BillingRoleAssignmentResource.ValidateResourceId(id);
             return new BillingRoleAssignmentResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingDepartmentRoleAssignmentResource"/> object. </returns>
         public virtual BillingDepartmentRoleAssignmentResource GetBillingDepartmentRoleAssignmentResource(ResourceIdentifier id)
         {
-            BillingDepartmentRoleAssignmentResource.ValidateResourceId(id);
             return new BillingDepartmentRoleAssignmentResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingEnrollmentAccountRoleAssignmentResource"/> object. </returns>
         public virtual BillingEnrollmentAccountRoleAssignmentResource GetBillingEnrollmentAccountRoleAssignmentResource(ResourceIdentifier id)
         {
-            BillingEnrollmentAccountRoleAssignmentResource.ValidateResourceId(id);
             return new BillingEnrollmentAccountRoleAssignmentResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingInvoiceResource"/> object. </returns>
         public virtual BillingInvoiceResource GetBillingInvoiceResource(ResourceIdentifier id)
         {
-            BillingInvoiceResource.ValidateResourceId(id);
             return new BillingInvoiceResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="SubscriptionBillingInvoiceResource"/> object. </returns>
         public virtual SubscriptionBillingInvoiceResource GetSubscriptionBillingInvoiceResource(ResourceIdentifier id)
         {
-            SubscriptionBillingInvoiceResource.ValidateResourceId(id);
             return new SubscriptionBillingInvoiceResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="DefaultBillingInvoiceResource"/> object. </returns>
         public virtual DefaultBillingInvoiceResource GetDefaultBillingInvoiceResource(ResourceIdentifier id)
         {
-            DefaultBillingInvoiceResource.ValidateResourceId(id);
             return new DefaultBillingInvoiceResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingReservationResource"/> object. </returns>
         public virtual BillingReservationResource GetBillingReservationResource(ResourceIdentifier id)
         {
-            BillingReservationResource.ValidateResourceId(id);
             return new BillingReservationResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAccountResource"/> object. </returns>
         public virtual BillingAccountResource GetBillingAccountResource(ResourceIdentifier id)
         {
-            BillingAccountResource.ValidateResourceId(id);
             return new BillingAccountResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAssociatedTenantResource"/> object. </returns>
         public virtual BillingAssociatedTenantResource GetBillingAssociatedTenantResource(ResourceIdentifier id)
         {
-            BillingAssociatedTenantResource.ValidateResourceId(id);
             return new BillingAssociatedTenantResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProductResource"/> object. </returns>
         public virtual BillingProductResource GetBillingProductResource(ResourceIdentifier id)
         {
-            BillingProductResource.ValidateResourceId(id);
             return new BillingProductResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfileResource"/> object. </returns>
         public virtual BillingProfileResource GetBillingProfileResource(ResourceIdentifier id)
         {
-            BillingProfileResource.ValidateResourceId(id);
             return new BillingProfileResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfileSubscriptionResource"/> object. </returns>
         public virtual BillingProfileSubscriptionResource GetBillingProfileSubscriptionResource(ResourceIdentifier id)
         {
-            BillingProfileSubscriptionResource.ValidateResourceId(id);
             return new BillingProfileSubscriptionResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingSubscriptionResource"/> object. </returns>
         public virtual BillingSubscriptionResource GetBillingSubscriptionResource(ResourceIdentifier id)
         {
-            BillingSubscriptionResource.ValidateResourceId(id);
             return new BillingSubscriptionResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingCustomerPolicyResource"/> object. </returns>
         public virtual BillingCustomerPolicyResource GetBillingCustomerPolicyResource(ResourceIdentifier id)
         {
-            BillingCustomerPolicyResource.ValidateResourceId(id);
             return new BillingCustomerPolicyResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfileCustomerPolicyResource"/> object. </returns>
         public virtual BillingProfileCustomerPolicyResource GetBillingProfileCustomerPolicyResource(ResourceIdentifier id)
         {
-            BillingProfileCustomerPolicyResource.ValidateResourceId(id);
             return new BillingProfileCustomerPolicyResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfilePolicyResource"/> object. </returns>
         public virtual BillingProfilePolicyResource GetBillingProfilePolicyResource(ResourceIdentifier id)
         {
-            BillingProfilePolicyResource.ValidateResourceId(id);
             return new BillingProfilePolicyResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
-            BillingAccountPolicyResource.ValidateResourceId(id);
             return new BillingAccountPolicyResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
         public virtual SubscriptionPolicyResource GetSubscriptionPolicyResource(ResourceIdentifier id)
         {
-            SubscriptionPolicyResource.ValidateResourceId(id);
             return new SubscriptionPolicyResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfileCustomerResource"/> object. </returns>
         public virtual BillingProfileCustomerResource GetBillingProfileCustomerResource(ResourceIdentifier id)
         {
-            BillingProfileCustomerResource.ValidateResourceId(id);
             return new BillingProfileCustomerResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingCustomerResource"/> object. </returns>
         public virtual BillingCustomerResource GetBillingCustomerResource(ResourceIdentifier id)
         {
-            BillingCustomerResource.ValidateResourceId(id);
             return new BillingCustomerResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingDepartmentResource"/> object. </returns>
         public virtual BillingDepartmentResource GetBillingDepartmentResource(ResourceIdentifier id)
         {
-            BillingDepartmentResource.ValidateResourceId(id);
             return new BillingDepartmentResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingDepartmentEnrollmentAccountResource"/> object. </returns>
         public virtual BillingDepartmentEnrollmentAccountResource GetBillingDepartmentEnrollmentAccountResource(ResourceIdentifier id)
         {
-            BillingDepartmentEnrollmentAccountResource.ValidateResourceId(id);
             return new BillingDepartmentEnrollmentAccountResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingEnrollmentAccountResource"/> object. </returns>
         public virtual BillingEnrollmentAccountResource GetBillingEnrollmentAccountResource(ResourceIdentifier id)
         {
-            BillingEnrollmentAccountResource.ValidateResourceId(id);
             return new BillingEnrollmentAccountResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingInvoiceSectionResource"/> object. </returns>
         public virtual BillingInvoiceSectionResource GetBillingInvoiceSectionResource(ResourceIdentifier id)
         {
-            BillingInvoiceSectionResource.ValidateResourceId(id);
             return new BillingInvoiceSectionResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource"/> object. </returns>
         public virtual BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(ResourceIdentifier id)
         {
-            BillingAccountPaymentMethodResource.ValidateResourceId(id);
             return new BillingAccountPaymentMethodResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource"/> object. </returns>
         public virtual BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(ResourceIdentifier id)
         {
-            BillingPaymentMethodLinkResource.ValidateResourceId(id);
             return new BillingPaymentMethodLinkResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
         public virtual BillingPaymentMethodResource GetBillingPaymentMethodResource(ResourceIdentifier id)
         {
-            BillingPaymentMethodResource.ValidateResourceId(id);
             return new BillingPaymentMethodResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingReservationOrderResource"/> object. </returns>
         public virtual BillingReservationOrderResource GetBillingReservationOrderResource(ResourceIdentifier id)
         {
-            BillingReservationOrderResource.ValidateResourceId(id);
             return new BillingReservationOrderResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingTransferDetailResource"/> object. </returns>
         public virtual BillingTransferDetailResource GetBillingTransferDetailResource(ResourceIdentifier id)
         {
-            BillingTransferDetailResource.ValidateResourceId(id);
             return new BillingTransferDetailResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="PartnerTransferDetailResource"/> object. </returns>
         public virtual PartnerTransferDetailResource GetPartnerTransferDetailResource(ResourceIdentifier id)
         {
-            PartnerTransferDetailResource.ValidateResourceId(id);
             return new PartnerTransferDetailResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="RecipientTransferDetailResource"/> object. </returns>
         public virtual RecipientTransferDetailResource GetRecipientTransferDetailResource(ResourceIdentifier id)
         {
-            RecipientTransferDetailResource.ValidateResourceId(id);
             return new RecipientTransferDetailResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingSavingsPlanModelResource"/> object. </returns>
         public virtual BillingSavingsPlanModelResource GetBillingSavingsPlanModelResource(ResourceIdentifier id)
         {
-            BillingSavingsPlanModelResource.ValidateResourceId(id);
             return new BillingSavingsPlanModelResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
         public virtual BillingPropertyResource GetBillingPropertyResource(ResourceIdentifier id)
         {
-            BillingPropertyResource.ValidateResourceId(id);
             return new BillingPropertyResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfileRoleDefinitionResource"/> object. </returns>
         public virtual BillingProfileRoleDefinitionResource GetBillingProfileRoleDefinitionResource(ResourceIdentifier id)
         {
-            BillingProfileRoleDefinitionResource.ValidateResourceId(id);
             return new BillingProfileRoleDefinitionResource(Client, id);
         }
 
@@ -382,7 +343,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingCustomerRoleDefinitionResource"/> object. </returns>
         public virtual BillingCustomerRoleDefinitionResource GetBillingCustomerRoleDefinitionResource(ResourceIdentifier id)
         {
-            BillingCustomerRoleDefinitionResource.ValidateResourceId(id);
             return new BillingCustomerRoleDefinitionResource(Client, id);
         }
 
@@ -391,7 +351,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingInvoiceSectionRoleDefinitionResource"/> object. </returns>
         public virtual BillingInvoiceSectionRoleDefinitionResource GetBillingInvoiceSectionRoleDefinitionResource(ResourceIdentifier id)
         {
-            BillingInvoiceSectionRoleDefinitionResource.ValidateResourceId(id);
             return new BillingInvoiceSectionRoleDefinitionResource(Client, id);
         }
 
@@ -400,7 +359,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingRoleDefinitionResource"/> object. </returns>
         public virtual BillingRoleDefinitionResource GetBillingRoleDefinitionResource(ResourceIdentifier id)
         {
-            BillingRoleDefinitionResource.ValidateResourceId(id);
             return new BillingRoleDefinitionResource(Client, id);
         }
 
@@ -409,7 +367,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingDepartmentRoleDefinitionResource"/> object. </returns>
         public virtual BillingDepartmentRoleDefinitionResource GetBillingDepartmentRoleDefinitionResource(ResourceIdentifier id)
         {
-            BillingDepartmentRoleDefinitionResource.ValidateResourceId(id);
             return new BillingDepartmentRoleDefinitionResource(Client, id);
         }
 
@@ -418,7 +375,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingEnrollmentAccountRoleDefinitionResource"/> object. </returns>
         public virtual BillingEnrollmentAccountRoleDefinitionResource GetBillingEnrollmentAccountRoleDefinitionResource(ResourceIdentifier id)
         {
-            BillingEnrollmentAccountRoleDefinitionResource.ValidateResourceId(id);
             return new BillingEnrollmentAccountRoleDefinitionResource(Client, id);
         }
 
@@ -427,7 +383,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="SavingsPlanOrderModelResource"/> object. </returns>
         public virtual SavingsPlanOrderModelResource GetSavingsPlanOrderModelResource(ResourceIdentifier id)
         {
-            SavingsPlanOrderModelResource.ValidateResourceId(id);
             return new SavingsPlanOrderModelResource(Client, id);
         }
 
@@ -436,7 +391,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingSubscriptionAliasResource"/> object. </returns>
         public virtual BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(ResourceIdentifier id)
         {
-            BillingSubscriptionAliasResource.ValidateResourceId(id);
             return new BillingSubscriptionAliasResource(Client, id);
         }
     }

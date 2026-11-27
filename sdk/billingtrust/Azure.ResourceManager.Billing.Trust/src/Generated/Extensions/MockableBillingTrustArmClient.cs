@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Billing.Trust.Mocking
         /// <returns> Returns a <see cref="BillingTrustAssessmentResource"/> object. </returns>
         public virtual BillingTrustAssessmentResource GetBillingTrustAssessmentResource(ResourceIdentifier id)
         {
-            BillingTrustAssessmentResource.ValidateResourceId(id);
             return new BillingTrustAssessmentResource(Client, id);
         }
 
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.Billing.Trust.Mocking
         /// <returns> Returns a <see cref="BillingTrustRuleResource"/> object. </returns>
         public virtual BillingTrustRuleResource GetBillingTrustRuleResource(ResourceIdentifier id)
         {
-            BillingTrustRuleResource.ValidateResourceId(id);
             return new BillingTrustRuleResource(Client, id);
         }
 

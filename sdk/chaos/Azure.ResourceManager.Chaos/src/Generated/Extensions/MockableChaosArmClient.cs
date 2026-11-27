@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosCapabilityResource"/> object. </returns>
         public virtual ChaosCapabilityResource GetChaosCapabilityResource(ResourceIdentifier id)
         {
-            ChaosCapabilityResource.ValidateResourceId(id);
             return new ChaosCapabilityResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
         public virtual ChaosTargetResource GetChaosTargetResource(ResourceIdentifier id)
         {
-            ChaosTargetResource.ValidateResourceId(id);
             return new ChaosTargetResource(Client, id);
         }
 
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosCapabilityMetadataResource"/> object. </returns>
         public virtual ChaosCapabilityMetadataResource GetChaosCapabilityMetadataResource(ResourceIdentifier id)
         {
-            ChaosCapabilityMetadataResource.ValidateResourceId(id);
             return new ChaosCapabilityMetadataResource(Client, id);
         }
 
@@ -134,7 +131,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosExperimentResource"/> object. </returns>
         public virtual ChaosExperimentResource GetChaosExperimentResource(ResourceIdentifier id)
         {
-            ChaosExperimentResource.ValidateResourceId(id);
             return new ChaosExperimentResource(Client, id);
         }
 
@@ -143,7 +139,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosExperimentExecutionResource"/> object. </returns>
         public virtual ChaosExperimentExecutionResource GetChaosExperimentExecutionResource(ResourceIdentifier id)
         {
-            ChaosExperimentExecutionResource.ValidateResourceId(id);
             return new ChaosExperimentExecutionResource(Client, id);
         }
 
@@ -152,7 +147,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosActionResource"/> object. </returns>
         public virtual ChaosActionResource GetChaosActionResource(ResourceIdentifier id)
         {
-            ChaosActionResource.ValidateResourceId(id);
             return new ChaosActionResource(Client, id);
         }
 
@@ -161,7 +155,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosActionVersionResource"/> object. </returns>
         public virtual ChaosActionVersionResource GetChaosActionVersionResource(ResourceIdentifier id)
         {
-            ChaosActionVersionResource.ValidateResourceId(id);
             return new ChaosActionVersionResource(Client, id);
         }
 
@@ -170,7 +163,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
         public virtual ChaosTargetMetadataResource GetChaosTargetMetadataResource(ResourceIdentifier id)
         {
-            ChaosTargetMetadataResource.ValidateResourceId(id);
             return new ChaosTargetMetadataResource(Client, id);
         }
 
@@ -179,7 +171,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosWorkspaceResource"/> object. </returns>
         public virtual ChaosWorkspaceResource GetChaosWorkspaceResource(ResourceIdentifier id)
         {
-            ChaosWorkspaceResource.ValidateResourceId(id);
             return new ChaosWorkspaceResource(Client, id);
         }
 
@@ -188,7 +179,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="WorkspaceDiscoveryResource"/> object. </returns>
         public virtual WorkspaceDiscoveryResource GetWorkspaceDiscoveryResource(ResourceIdentifier id)
         {
-            WorkspaceDiscoveryResource.ValidateResourceId(id);
             return new WorkspaceDiscoveryResource(Client, id);
         }
 
@@ -197,7 +187,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosWorkspaceTemplateEvaluationResource"/> object. </returns>
         public virtual ChaosWorkspaceTemplateEvaluationResource GetChaosWorkspaceTemplateEvaluationResource(ResourceIdentifier id)
         {
-            ChaosWorkspaceTemplateEvaluationResource.ValidateResourceId(id);
             return new ChaosWorkspaceTemplateEvaluationResource(Client, id);
         }
 
@@ -206,7 +195,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosDiscoveredResource"/> object. </returns>
         public virtual ChaosDiscoveredResource GetChaosDiscoveredResource(ResourceIdentifier id)
         {
-            ChaosDiscoveredResource.ValidateResourceId(id);
             return new ChaosDiscoveredResource(Client, id);
         }
 
@@ -215,7 +203,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosScenarioResource"/> object. </returns>
         public virtual ChaosScenarioResource GetChaosScenarioResource(ResourceIdentifier id)
         {
-            ChaosScenarioResource.ValidateResourceId(id);
             return new ChaosScenarioResource(Client, id);
         }
 
@@ -224,7 +211,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosScenarioTemplateResource"/> object. </returns>
         public virtual ChaosScenarioTemplateResource GetChaosScenarioTemplateResource(ResourceIdentifier id)
         {
-            ChaosScenarioTemplateResource.ValidateResourceId(id);
             return new ChaosScenarioTemplateResource(Client, id);
         }
 
@@ -233,7 +219,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosScenarioTemplateVersionResource"/> object. </returns>
         public virtual ChaosScenarioTemplateVersionResource GetChaosScenarioTemplateVersionResource(ResourceIdentifier id)
         {
-            ChaosScenarioTemplateVersionResource.ValidateResourceId(id);
             return new ChaosScenarioTemplateVersionResource(Client, id);
         }
 
@@ -242,7 +227,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosScenarioConfigurationResource"/> object. </returns>
         public virtual ChaosScenarioConfigurationResource GetChaosScenarioConfigurationResource(ResourceIdentifier id)
         {
-            ChaosScenarioConfigurationResource.ValidateResourceId(id);
             return new ChaosScenarioConfigurationResource(Client, id);
         }
 
@@ -251,7 +235,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
         public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
         {
-            ChaosScenarioRunResource.ValidateResourceId(id);
             return new ChaosScenarioRunResource(Client, id);
         }
 
@@ -260,7 +243,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> Returns a <see cref="ChaosConnectionResource"/> object. </returns>
         public virtual ChaosConnectionResource GetChaosConnectionResource(ResourceIdentifier id)
         {
-            ChaosConnectionResource.ValidateResourceId(id);
             return new ChaosConnectionResource(Client, id);
         }
     }
