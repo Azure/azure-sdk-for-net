@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafAction?(string value) => value == null ? null : new WafAction(value);
+        public static implicit operator WafAction?(string value) => value == null ? (WafAction?)null : new WafAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

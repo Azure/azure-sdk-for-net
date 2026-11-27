@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesIsolationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesIsolationMode?(string value) => value == null ? null : new CognitiveServicesIsolationMode(value);
+        public static implicit operator CognitiveServicesIsolationMode?(string value) => value == null ? (CognitiveServicesIsolationMode?)null : new CognitiveServicesIsolationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

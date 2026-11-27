@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="DomainNameLabelScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainNameLabelScope?(string value) => value == null ? null : new DomainNameLabelScope(value);
+        public static implicit operator DomainNameLabelScope?(string value) => value == null ? (DomainNameLabelScope?)null : new DomainNameLabelScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

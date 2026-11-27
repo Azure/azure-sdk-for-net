@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="EnrollmentDepartmentAdminViewCharge"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnrollmentDepartmentAdminViewCharge?(string value) => value == null ? null : new EnrollmentDepartmentAdminViewCharge(value);
+        public static implicit operator EnrollmentDepartmentAdminViewCharge?(string value) => value == null ? (EnrollmentDepartmentAdminViewCharge?)null : new EnrollmentDepartmentAdminViewCharge(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="ServiceAccountQuotaUsageStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceAccountQuotaUsageStatus?(string value) => value == null ? null : new ServiceAccountQuotaUsageStatus(value);
+        public static implicit operator ServiceAccountQuotaUsageStatus?(string value) => value == null ? (ServiceAccountQuotaUsageStatus?)null : new ServiceAccountQuotaUsageStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

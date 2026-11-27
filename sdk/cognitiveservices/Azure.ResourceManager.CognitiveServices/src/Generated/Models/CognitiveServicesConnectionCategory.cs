@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesConnectionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesConnectionCategory?(string value) => value == null ? null : new CognitiveServicesConnectionCategory(value);
+        public static implicit operator CognitiveServicesConnectionCategory?(string value) => value == null ? (CognitiveServicesConnectionCategory?)null : new CognitiveServicesConnectionCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

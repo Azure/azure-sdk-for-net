@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryRuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryRuleKind?(string value) => value == null ? null : new DiscoveryRuleKind(value);
+        public static implicit operator DiscoveryRuleKind?(string value) => value == null ? (DiscoveryRuleKind?)null : new DiscoveryRuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

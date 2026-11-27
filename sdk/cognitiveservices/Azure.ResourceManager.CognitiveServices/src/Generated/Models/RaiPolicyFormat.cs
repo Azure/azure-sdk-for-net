@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiPolicyFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiPolicyFormat?(string value) => value == null ? null : new RaiPolicyFormat(value);
+        public static implicit operator RaiPolicyFormat?(string value) => value == null ? (RaiPolicyFormat?)null : new RaiPolicyFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

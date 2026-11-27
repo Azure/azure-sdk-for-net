@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesWorkbenchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesWorkbenchStatus?(string value) => value == null ? null : new CognitiveServicesWorkbenchStatus(value);
+        public static implicit operator CognitiveServicesWorkbenchStatus?(string value) => value == null ? (CognitiveServicesWorkbenchStatus?)null : new CognitiveServicesWorkbenchStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

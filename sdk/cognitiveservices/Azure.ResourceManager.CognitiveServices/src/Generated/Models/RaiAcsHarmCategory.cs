@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiAcsHarmCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiAcsHarmCategory?(string value) => value == null ? null : new RaiAcsHarmCategory(value);
+        public static implicit operator RaiAcsHarmCategory?(string value) => value == null ? (RaiAcsHarmCategory?)null : new RaiAcsHarmCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

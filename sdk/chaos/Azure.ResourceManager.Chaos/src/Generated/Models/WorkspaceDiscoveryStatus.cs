@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceDiscoveryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceDiscoveryStatus?(string value) => value == null ? null : new WorkspaceDiscoveryStatus(value);
+        public static implicit operator WorkspaceDiscoveryStatus?(string value) => value == null ? (WorkspaceDiscoveryStatus?)null : new WorkspaceDiscoveryStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

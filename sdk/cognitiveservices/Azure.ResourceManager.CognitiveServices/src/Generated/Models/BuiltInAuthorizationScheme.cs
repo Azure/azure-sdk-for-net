@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="BuiltInAuthorizationScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BuiltInAuthorizationScheme?(string value) => value == null ? null : new BuiltInAuthorizationScheme(value);
+        public static implicit operator BuiltInAuthorizationScheme?(string value) => value == null ? (BuiltInAuthorizationScheme?)null : new BuiltInAuthorizationScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

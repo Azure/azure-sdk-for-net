@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="IsDeviceOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsDeviceOperator?(string value) => value == null ? null : new IsDeviceOperator(value);
+        public static implicit operator IsDeviceOperator?(string value) => value == null ? (IsDeviceOperator?)null : new IsDeviceOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

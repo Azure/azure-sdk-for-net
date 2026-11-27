@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new CognitiveServicesPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator CognitiveServicesPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (CognitiveServicesPrivateEndpointServiceConnectionStatus?)null : new CognitiveServicesPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

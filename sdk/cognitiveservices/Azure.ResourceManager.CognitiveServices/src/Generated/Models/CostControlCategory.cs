@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CostControlCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostControlCategory?(string value) => value == null ? null : new CostControlCategory(value);
+        public static implicit operator CostControlCategory?(string value) => value == null ? (CostControlCategory?)null : new CostControlCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

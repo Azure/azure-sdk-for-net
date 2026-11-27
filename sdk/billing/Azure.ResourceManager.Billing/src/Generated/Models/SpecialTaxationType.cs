@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="SpecialTaxationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SpecialTaxationType?(string value) => value == null ? null : new SpecialTaxationType(value);
+        public static implicit operator SpecialTaxationType?(string value) => value == null ? (SpecialTaxationType?)null : new SpecialTaxationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

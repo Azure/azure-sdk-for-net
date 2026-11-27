@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="DiscountRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscountRuleType?(string value) => value == null ? null : new DiscountRuleType(value);
+        public static implicit operator DiscountRuleType?(string value) => value == null ? (DiscountRuleType?)null : new DiscountRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

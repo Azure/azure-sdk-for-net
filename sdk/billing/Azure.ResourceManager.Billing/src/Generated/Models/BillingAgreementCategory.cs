@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingAgreementCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingAgreementCategory?(string value) => value == null ? null : new BillingAgreementCategory(value);
+        public static implicit operator BillingAgreementCategory?(string value) => value == null ? (BillingAgreementCategory?)null : new BillingAgreementCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CdnManagedCertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CdnManagedCertificateType?(string value) => value == null ? null : new CdnManagedCertificateType(value);
+        public static implicit operator CdnManagedCertificateType?(string value) => value == null ? (CdnManagedCertificateType?)null : new CdnManagedCertificateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotServiceSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotServiceSeverity?(string value) => value == null ? null : new BotServiceSeverity(value);
+        public static implicit operator BotServiceSeverity?(string value) => value == null ? (BotServiceSeverity?)null : new BotServiceSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

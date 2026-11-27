@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorQueryStringCachingBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorQueryStringCachingBehavior?(string value) => value == null ? null : new FrontDoorQueryStringCachingBehavior(value);
+        public static implicit operator FrontDoorQueryStringCachingBehavior?(string value) => value == null ? (FrontDoorQueryStringCachingBehavior?)null : new FrontDoorQueryStringCachingBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

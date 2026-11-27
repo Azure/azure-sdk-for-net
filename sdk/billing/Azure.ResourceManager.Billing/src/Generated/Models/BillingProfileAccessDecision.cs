@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingProfileAccessDecision"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingProfileAccessDecision?(string value) => value == null ? null : new BillingProfileAccessDecision(value);
+        public static implicit operator BillingProfileAccessDecision?(string value) => value == null ? (BillingProfileAccessDecision?)null : new BillingProfileAccessDecision(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

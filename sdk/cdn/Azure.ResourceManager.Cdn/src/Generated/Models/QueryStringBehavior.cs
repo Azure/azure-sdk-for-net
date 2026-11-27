@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="QueryStringBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryStringBehavior?(string value) => value == null ? null : new QueryStringBehavior(value);
+        public static implicit operator QueryStringBehavior?(string value) => value == null ? (QueryStringBehavior?)null : new QueryStringBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

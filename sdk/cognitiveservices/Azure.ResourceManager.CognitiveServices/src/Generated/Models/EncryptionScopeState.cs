@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="EncryptionScopeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EncryptionScopeState?(string value) => value == null ? null : new EncryptionScopeState(value);
+        public static implicit operator EncryptionScopeState?(string value) => value == null ? (EncryptionScopeState?)null : new EncryptionScopeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

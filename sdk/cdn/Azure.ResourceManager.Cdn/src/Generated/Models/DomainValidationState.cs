@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainValidationState?(string value) => value == null ? null : new DomainValidationState(value);
+        public static implicit operator DomainValidationState?(string value) => value == null ? (DomainValidationState?)null : new DomainValidationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

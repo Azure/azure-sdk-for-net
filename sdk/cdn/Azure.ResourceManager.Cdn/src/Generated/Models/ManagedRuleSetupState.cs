@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ManagedRuleSetupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedRuleSetupState?(string value) => value == null ? null : new ManagedRuleSetupState(value);
+        public static implicit operator ManagedRuleSetupState?(string value) => value == null ? (ManagedRuleSetupState?)null : new ManagedRuleSetupState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

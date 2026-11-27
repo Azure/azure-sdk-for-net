@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="InvoiceSectionLabelManagementPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InvoiceSectionLabelManagementPolicy?(string value) => value == null ? null : new InvoiceSectionLabelManagementPolicy(value);
+        public static implicit operator InvoiceSectionLabelManagementPolicy?(string value) => value == null ? (InvoiceSectionLabelManagementPolicy?)null : new InvoiceSectionLabelManagementPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

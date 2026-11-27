@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="DeleteInvoiceSectionEligibilityCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeleteInvoiceSectionEligibilityCode?(string value) => value == null ? null : new DeleteInvoiceSectionEligibilityCode(value);
+        public static implicit operator DeleteInvoiceSectionEligibilityCode?(string value) => value == null ? (DeleteInvoiceSectionEligibilityCode?)null : new DeleteInvoiceSectionEligibilityCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

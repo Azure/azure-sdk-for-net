@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RequestMethodMatchConditionMatchValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestMethodMatchConditionMatchValue?(string value) => value == null ? null : new RequestMethodMatchConditionMatchValue(value);
+        public static implicit operator RequestMethodMatchConditionMatchValue?(string value) => value == null ? (RequestMethodMatchConditionMatchValue?)null : new RequestMethodMatchConditionMatchValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

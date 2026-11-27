@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="EndpointResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EndpointResourceState?(string value) => value == null ? null : new EndpointResourceState(value);
+        public static implicit operator EndpointResourceState?(string value) => value == null ? (EndpointResourceState?)null : new EndpointResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

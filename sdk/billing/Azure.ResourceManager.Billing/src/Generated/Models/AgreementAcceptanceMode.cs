@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="AgreementAcceptanceMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgreementAcceptanceMode?(string value) => value == null ? null : new AgreementAcceptanceMode(value);
+        public static implicit operator AgreementAcceptanceMode?(string value) => value == null ? (AgreementAcceptanceMode?)null : new AgreementAcceptanceMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

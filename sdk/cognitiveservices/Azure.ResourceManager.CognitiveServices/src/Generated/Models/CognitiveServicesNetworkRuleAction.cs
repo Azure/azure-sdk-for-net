@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesNetworkRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesNetworkRuleAction?(string value) => value == null ? null : new CognitiveServicesNetworkRuleAction(value);
+        public static implicit operator CognitiveServicesNetworkRuleAction?(string value) => value == null ? (CognitiveServicesNetworkRuleAction?)null : new CognitiveServicesNetworkRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

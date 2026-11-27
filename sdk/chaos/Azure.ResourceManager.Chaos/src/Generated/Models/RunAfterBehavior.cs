@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="RunAfterBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunAfterBehavior?(string value) => value == null ? null : new RunAfterBehavior(value);
+        public static implicit operator RunAfterBehavior?(string value) => value == null ? (RunAfterBehavior?)null : new RunAfterBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

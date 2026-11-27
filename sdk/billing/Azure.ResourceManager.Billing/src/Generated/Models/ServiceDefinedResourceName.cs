@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="ServiceDefinedResourceName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceDefinedResourceName?(string value) => value == null ? null : new ServiceDefinedResourceName(value);
+        public static implicit operator ServiceDefinedResourceName?(string value) => value == null ? (ServiceDefinedResourceName?)null : new ServiceDefinedResourceName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

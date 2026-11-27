@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="BillingBenefitsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitsProvisioningState?(string value) => value == null ? null : new BillingBenefitsProvisioningState(value);
+        public static implicit operator BillingBenefitsProvisioningState?(string value) => value == null ? (BillingBenefitsProvisioningState?)null : new BillingBenefitsProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

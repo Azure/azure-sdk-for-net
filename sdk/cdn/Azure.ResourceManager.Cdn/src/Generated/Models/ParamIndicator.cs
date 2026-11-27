@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ParamIndicator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParamIndicator?(string value) => value == null ? null : new ParamIndicator(value);
+        public static implicit operator ParamIndicator?(string value) => value == null ? (ParamIndicator?)null : new ParamIndicator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

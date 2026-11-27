@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="HealthModelEntityImpact"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthModelEntityImpact?(string value) => value == null ? null : new HealthModelEntityImpact(value);
+        public static implicit operator HealthModelEntityImpact?(string value) => value == null ? (HealthModelEntityImpact?)null : new HealthModelEntityImpact(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new BatchPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator BatchPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (BatchPrivateEndpointConnectionProvisioningState?)null : new BatchPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

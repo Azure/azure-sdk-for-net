@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="ComputeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeType?(string value) => value == null ? null : new ComputeType(value);
+        public static implicit operator ComputeType?(string value) => value == null ? (ComputeType?)null : new ComputeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

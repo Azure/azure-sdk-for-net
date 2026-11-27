@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="IsDeviceMatchConditionMatchValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsDeviceMatchConditionMatchValue?(string value) => value == null ? null : new IsDeviceMatchConditionMatchValue(value);
+        public static implicit operator IsDeviceMatchConditionMatchValue?(string value) => value == null ? (IsDeviceMatchConditionMatchValue?)null : new IsDeviceMatchConditionMatchValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

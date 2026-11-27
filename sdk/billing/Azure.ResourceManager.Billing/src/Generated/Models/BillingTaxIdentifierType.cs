@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingTaxIdentifierType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingTaxIdentifierType?(string value) => value == null ? null : new BillingTaxIdentifierType(value);
+        public static implicit operator BillingTaxIdentifierType?(string value) => value == null ? (BillingTaxIdentifierType?)null : new BillingTaxIdentifierType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

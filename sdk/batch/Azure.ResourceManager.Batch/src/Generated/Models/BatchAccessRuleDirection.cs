@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchAccessRuleDirection?(string value) => value == null ? null : new BatchAccessRuleDirection(value);
+        public static implicit operator BatchAccessRuleDirection?(string value) => value == null ? (BatchAccessRuleDirection?)null : new BatchAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

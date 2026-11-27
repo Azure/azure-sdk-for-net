@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="HeaderAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HeaderAction?(string value) => value == null ? null : new HeaderAction(value);
+        public static implicit operator HeaderAction?(string value) => value == null ? (HeaderAction?)null : new HeaderAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

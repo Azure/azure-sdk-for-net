@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="ResourceHealthReasonChronicity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthReasonChronicity?(string value) => value == null ? null : new ResourceHealthReasonChronicity(value);
+        public static implicit operator ResourceHealthReasonChronicity?(string value) => value == null ? (ResourceHealthReasonChronicity?)null : new ResourceHealthReasonChronicity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

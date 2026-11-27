@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CdnEndpointProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CdnEndpointProvisioningState?(string value) => value == null ? null : new CdnEndpointProvisioningState(value);
+        public static implicit operator CdnEndpointProvisioningState?(string value) => value == null ? (CdnEndpointProvisioningState?)null : new CdnEndpointProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

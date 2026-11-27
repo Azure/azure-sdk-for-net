@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostArgsOperator?(string value) => value == null ? null : new PostArgsOperator(value);
+        public static implicit operator PostArgsOperator?(string value) => value == null ? (PostArgsOperator?)null : new PostArgsOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

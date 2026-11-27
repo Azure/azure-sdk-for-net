@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CdnUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CdnUsageUnit?(string value) => value == null ? null : new CdnUsageUnit(value);
+        public static implicit operator CdnUsageUnit?(string value) => value == null ? (CdnUsageUnit?)null : new CdnUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

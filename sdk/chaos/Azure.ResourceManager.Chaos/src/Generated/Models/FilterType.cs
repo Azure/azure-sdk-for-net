@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="FilterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilterType?(string value) => value == null ? null : new FilterType(value);
+        public static implicit operator FilterType?(string value) => value == null ? (FilterType?)null : new FilterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

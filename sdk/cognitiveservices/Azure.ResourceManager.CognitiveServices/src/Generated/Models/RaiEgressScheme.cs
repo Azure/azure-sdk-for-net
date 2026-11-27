@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiEgressScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiEgressScheme?(string value) => value == null ? null : new RaiEgressScheme(value);
+        public static implicit operator RaiEgressScheme?(string value) => value == null ? (RaiEgressScheme?)null : new RaiEgressScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

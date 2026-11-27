@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ForwardingProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForwardingProtocol?(string value) => value == null ? null : new ForwardingProtocol(value);
+        public static implicit operator ForwardingProtocol?(string value) => value == null ? (ForwardingProtocol?)null : new ForwardingProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

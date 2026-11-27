@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ChaosConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChaosConnectionKind?(string value) => value == null ? null : new ChaosConnectionKind(value);
+        public static implicit operator ChaosConnectionKind?(string value) => value == null ? (ChaosConnectionKind?)null : new ChaosConnectionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

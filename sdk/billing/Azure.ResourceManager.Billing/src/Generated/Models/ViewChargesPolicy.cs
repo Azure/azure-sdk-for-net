@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="ViewChargesPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ViewChargesPolicy?(string value) => value == null ? null : new ViewChargesPolicy(value);
+        public static implicit operator ViewChargesPolicy?(string value) => value == null ? (ViewChargesPolicy?)null : new ViewChargesPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

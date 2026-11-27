@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="MoveValidationErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MoveValidationErrorCode?(string value) => value == null ? null : new MoveValidationErrorCode(value);
+        public static implicit operator MoveValidationErrorCode?(string value) => value == null ? (MoveValidationErrorCode?)null : new MoveValidationErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

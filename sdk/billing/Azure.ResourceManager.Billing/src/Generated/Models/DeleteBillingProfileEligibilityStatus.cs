@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="DeleteBillingProfileEligibilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeleteBillingProfileEligibilityStatus?(string value) => value == null ? null : new DeleteBillingProfileEligibilityStatus(value);
+        public static implicit operator DeleteBillingProfileEligibilityStatus?(string value) => value == null ? (DeleteBillingProfileEligibilityStatus?)null : new DeleteBillingProfileEligibilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="PolicyResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyResourceState?(string value) => value == null ? null : new PolicyResourceState(value);
+        public static implicit operator PolicyResourceState?(string value) => value == null ? (PolicyResourceState?)null : new PolicyResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

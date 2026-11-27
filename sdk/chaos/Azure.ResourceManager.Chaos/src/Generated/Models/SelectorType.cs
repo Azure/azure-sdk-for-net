@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="SelectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelectorType?(string value) => value == null ? null : new SelectorType(value);
+        public static implicit operator SelectorType?(string value) => value == null ? (SelectorType?)null : new SelectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

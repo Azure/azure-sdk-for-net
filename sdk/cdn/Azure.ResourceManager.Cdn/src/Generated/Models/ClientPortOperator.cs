@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ClientPortOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientPortOperator?(string value) => value == null ? null : new ClientPortOperator(value);
+        public static implicit operator ClientPortOperator?(string value) => value == null ? (ClientPortOperator?)null : new ClientPortOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

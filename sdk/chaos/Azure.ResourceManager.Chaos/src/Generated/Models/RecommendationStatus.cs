@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationStatus?(string value) => value == null ? null : new RecommendationStatus(value);
+        public static implicit operator RecommendationStatus?(string value) => value == null ? (RecommendationStatus?)null : new RecommendationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

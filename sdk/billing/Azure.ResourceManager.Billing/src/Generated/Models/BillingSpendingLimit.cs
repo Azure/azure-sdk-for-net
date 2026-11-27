@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingSpendingLimit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingSpendingLimit?(string value) => value == null ? null : new BillingSpendingLimit(value);
+        public static implicit operator BillingSpendingLimit?(string value) => value == null ? (BillingSpendingLimit?)null : new BillingSpendingLimit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="BillingBenefitsReservedResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitsReservedResourceType?(string value) => value == null ? null : new BillingBenefitsReservedResourceType(value);
+        public static implicit operator BillingBenefitsReservedResourceType?(string value) => value == null ? (BillingBenefitsReservedResourceType?)null : new BillingBenefitsReservedResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

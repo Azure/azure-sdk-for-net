@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="DiscountCombinationRule"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscountCombinationRule?(string value) => value == null ? null : new DiscountCombinationRule(value);
+        public static implicit operator DiscountCombinationRule?(string value) => value == null ? (DiscountCombinationRule?)null : new DiscountCombinationRule(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

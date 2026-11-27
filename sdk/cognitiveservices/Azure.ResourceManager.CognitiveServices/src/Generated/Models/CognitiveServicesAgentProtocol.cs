@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesAgentProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesAgentProtocol?(string value) => value == null ? null : new CognitiveServicesAgentProtocol(value);
+        public static implicit operator CognitiveServicesAgentProtocol?(string value) => value == null ? (CognitiveServicesAgentProtocol?)null : new CognitiveServicesAgentProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

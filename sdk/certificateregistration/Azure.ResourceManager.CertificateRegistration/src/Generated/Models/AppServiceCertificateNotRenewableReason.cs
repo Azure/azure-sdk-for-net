@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceCertificateNotRenewableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceCertificateNotRenewableReason?(string value) => value == null ? null : new AppServiceCertificateNotRenewableReason(value);
+        public static implicit operator AppServiceCertificateNotRenewableReason?(string value) => value == null ? (AppServiceCertificateNotRenewableReason?)null : new AppServiceCertificateNotRenewableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

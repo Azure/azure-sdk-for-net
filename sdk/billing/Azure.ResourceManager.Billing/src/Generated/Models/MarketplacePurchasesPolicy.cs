@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="MarketplacePurchasesPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplacePurchasesPolicy?(string value) => value == null ? null : new MarketplacePurchasesPolicy(value);
+        public static implicit operator MarketplacePurchasesPolicy?(string value) => value == null ? (MarketplacePurchasesPolicy?)null : new MarketplacePurchasesPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

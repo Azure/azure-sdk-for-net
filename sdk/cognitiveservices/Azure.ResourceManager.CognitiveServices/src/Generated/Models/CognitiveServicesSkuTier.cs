@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesSkuTier?(string value) => value == null ? null : new CognitiveServicesSkuTier(value);
+        public static implicit operator CognitiveServicesSkuTier?(string value) => value == null ? (CognitiveServicesSkuTier?)null : new CognitiveServicesSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

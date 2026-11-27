@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchVmContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchVmContainerType?(string value) => value == null ? null : new BatchVmContainerType(value);
+        public static implicit operator BatchVmContainerType?(string value) => value == null ? (BatchVmContainerType?)null : new BatchVmContainerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

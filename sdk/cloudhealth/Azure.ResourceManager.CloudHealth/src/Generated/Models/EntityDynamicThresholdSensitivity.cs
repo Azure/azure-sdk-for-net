@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="EntityDynamicThresholdSensitivity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityDynamicThresholdSensitivity?(string value) => value == null ? null : new EntityDynamicThresholdSensitivity(value);
+        public static implicit operator EntityDynamicThresholdSensitivity?(string value) => value == null ? (EntityDynamicThresholdSensitivity?)null : new EntityDynamicThresholdSensitivity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

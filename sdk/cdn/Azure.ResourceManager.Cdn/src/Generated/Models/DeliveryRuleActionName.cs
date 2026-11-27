@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="DeliveryRuleActionName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryRuleActionName?(string value) => value == null ? null : new DeliveryRuleActionName(value);
+        public static implicit operator DeliveryRuleActionName?(string value) => value == null ? (DeliveryRuleActionName?)null : new DeliveryRuleActionName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

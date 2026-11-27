@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AIFoundryNetworkInjectionScenarioType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AIFoundryNetworkInjectionScenarioType?(string value) => value == null ? null : new AIFoundryNetworkInjectionScenarioType(value);
+        public static implicit operator AIFoundryNetworkInjectionScenarioType?(string value) => value == null ? (AIFoundryNetworkInjectionScenarioType?)null : new AIFoundryNetworkInjectionScenarioType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

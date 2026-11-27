@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="RefundStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RefundStatus?(string value) => value == null ? null : new RefundStatus(value);
+        public static implicit operator RefundStatus?(string value) => value == null ? (RefundStatus?)null : new RefundStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

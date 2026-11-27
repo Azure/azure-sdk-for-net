@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ProfileProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfileProvisioningState?(string value) => value == null ? null : new ProfileProvisioningState(value);
+        public static implicit operator ProfileProvisioningState?(string value) => value == null ? (ProfileProvisioningState?)null : new ProfileProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

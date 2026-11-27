@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CdnSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CdnSkuName?(string value) => value == null ? null : new CdnSkuName(value);
+        public static implicit operator CdnSkuName?(string value) => value == null ? (CdnSkuName?)null : new CdnSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

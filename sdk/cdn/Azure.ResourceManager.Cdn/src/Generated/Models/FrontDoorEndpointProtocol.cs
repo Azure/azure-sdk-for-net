@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorEndpointProtocol?(string value) => value == null ? null : new FrontDoorEndpointProtocol(value);
+        public static implicit operator FrontDoorEndpointProtocol?(string value) => value == null ? (FrontDoorEndpointProtocol?)null : new FrontDoorEndpointProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

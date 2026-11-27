@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="MetricsResponseGranularity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricsResponseGranularity?(string value) => value == null ? null : new MetricsResponseGranularity(value);
+        public static implicit operator MetricsResponseGranularity?(string value) => value == null ? (MetricsResponseGranularity?)null : new MetricsResponseGranularity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

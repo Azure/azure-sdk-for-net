@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="PaymentMethodStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PaymentMethodStatus?(string value) => value == null ? null : new PaymentMethodStatus(value);
+        public static implicit operator PaymentMethodStatus?(string value) => value == null ? (PaymentMethodStatus?)null : new PaymentMethodStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

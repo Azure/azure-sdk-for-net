@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorCertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorCertificateType?(string value) => value == null ? null : new FrontDoorCertificateType(value);
+        public static implicit operator FrontDoorCertificateType?(string value) => value == null ? (FrontDoorCertificateType?)null : new FrontDoorCertificateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CostControlActionPatchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostControlActionPatchType?(string value) => value == null ? null : new CostControlActionPatchType(value);
+        public static implicit operator CostControlActionPatchType?(string value) => value == null ? (CostControlActionPatchType?)null : new CostControlActionPatchType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotMsaAppType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotMsaAppType?(string value) => value == null ? null : new BotMsaAppType(value);
+        public static implicit operator BotMsaAppType?(string value) => value == null ? (BotMsaAppType?)null : new BotMsaAppType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

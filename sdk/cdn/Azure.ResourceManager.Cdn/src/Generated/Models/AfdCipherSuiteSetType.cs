@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="AfdCipherSuiteSetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AfdCipherSuiteSetType?(string value) => value == null ? null : new AfdCipherSuiteSetType(value);
+        public static implicit operator AfdCipherSuiteSetType?(string value) => value == null ? (AfdCipherSuiteSetType?)null : new AfdCipherSuiteSetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

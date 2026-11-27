@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CostControlPropertiesProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostControlPropertiesProvider?(string value) => value == null ? null : new CostControlPropertiesProvider(value);
+        public static implicit operator CostControlPropertiesProvider?(string value) => value == null ? (CostControlPropertiesProvider?)null : new CostControlPropertiesProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

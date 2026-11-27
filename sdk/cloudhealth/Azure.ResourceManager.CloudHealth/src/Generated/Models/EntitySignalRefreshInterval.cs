@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="EntitySignalRefreshInterval"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntitySignalRefreshInterval?(string value) => value == null ? null : new EntitySignalRefreshInterval(value);
+        public static implicit operator EntitySignalRefreshInterval?(string value) => value == null ? (EntitySignalRefreshInterval?)null : new EntitySignalRefreshInterval(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

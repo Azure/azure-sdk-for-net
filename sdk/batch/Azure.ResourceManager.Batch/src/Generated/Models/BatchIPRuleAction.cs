@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchIPRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchIPRuleAction?(string value) => value == null ? null : new BatchIPRuleAction(value);
+        public static implicit operator BatchIPRuleAction?(string value) => value == null ? (BatchIPRuleAction?)null : new BatchIPRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

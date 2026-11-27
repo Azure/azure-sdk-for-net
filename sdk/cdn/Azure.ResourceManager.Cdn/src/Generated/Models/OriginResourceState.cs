@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="OriginResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OriginResourceState?(string value) => value == null ? null : new OriginResourceState(value);
+        public static implicit operator OriginResourceState?(string value) => value == null ? (OriginResourceState?)null : new OriginResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

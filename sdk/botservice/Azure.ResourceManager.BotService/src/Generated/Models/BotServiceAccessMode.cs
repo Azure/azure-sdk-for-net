@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotServiceAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotServiceAccessMode?(string value) => value == null ? null : new BotServiceAccessMode(value);
+        public static implicit operator BotServiceAccessMode?(string value) => value == null ? (BotServiceAccessMode?)null : new BotServiceAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

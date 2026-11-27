@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="ArcDeploymentComputeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcDeploymentComputeType?(string value) => value == null ? null : new ArcDeploymentComputeType(value);
+        public static implicit operator ArcDeploymentComputeType?(string value) => value == null ? (ArcDeploymentComputeType?)null : new ArcDeploymentComputeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

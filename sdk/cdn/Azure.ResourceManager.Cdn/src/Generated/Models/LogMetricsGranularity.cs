@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="LogMetricsGranularity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogMetricsGranularity?(string value) => value == null ? null : new LogMetricsGranularity(value);
+        public static implicit operator LogMetricsGranularity?(string value) => value == null ? (LogMetricsGranularity?)null : new LogMetricsGranularity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

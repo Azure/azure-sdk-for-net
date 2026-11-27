@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="PermissionsFixState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PermissionsFixState?(string value) => value == null ? null : new PermissionsFixState(value);
+        public static implicit operator PermissionsFixState?(string value) => value == null ? (PermissionsFixState?)null : new PermissionsFixState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

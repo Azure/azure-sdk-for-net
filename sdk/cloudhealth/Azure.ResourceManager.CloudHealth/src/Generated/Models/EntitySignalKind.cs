@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="EntitySignalKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntitySignalKind?(string value) => value == null ? null : new EntitySignalKind(value);
+        public static implicit operator EntitySignalKind?(string value) => value == null ? (EntitySignalKind?)null : new EntitySignalKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

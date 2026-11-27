@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingSavingsPlanTerm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingSavingsPlanTerm?(string value) => value == null ? null : new BillingSavingsPlanTerm(value);
+        public static implicit operator BillingSavingsPlanTerm?(string value) => value == null ? (BillingSavingsPlanTerm?)null : new BillingSavingsPlanTerm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="LogMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogMetric?(string value) => value == null ? null : new LogMetric(value);
+        public static implicit operator LogMetric?(string value) => value == null ? (LogMetric?)null : new LogMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

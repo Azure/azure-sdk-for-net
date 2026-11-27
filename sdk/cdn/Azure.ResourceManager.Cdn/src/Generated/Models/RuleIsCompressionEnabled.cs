@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RuleIsCompressionEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleIsCompressionEnabled?(string value) => value == null ? null : new RuleIsCompressionEnabled(value);
+        public static implicit operator RuleIsCompressionEnabled?(string value) => value == null ? (RuleIsCompressionEnabled?)null : new RuleIsCompressionEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

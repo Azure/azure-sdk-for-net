@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <summary> Converts a string to a <see cref="RuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleKind?(string value) => value == null ? null : new RuleKind(value);
+        public static implicit operator RuleKind?(string value) => value == null ? (RuleKind?)null : new RuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WafMetricsResponseSeriesItemUnit?(string value) => value == null ? null : new WafMetricsResponseSeriesItemUnit(value);
+        public static implicit operator WafMetricsResponseSeriesItemUnit?(string value) => value == null ? (WafMetricsResponseSeriesItemUnit?)null : new WafMetricsResponseSeriesItemUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

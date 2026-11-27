@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchSecurityEncryptionType?(string value) => value == null ? null : new BatchSecurityEncryptionType(value);
+        public static implicit operator BatchSecurityEncryptionType?(string value) => value == null ? (BatchSecurityEncryptionType?)null : new BatchSecurityEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

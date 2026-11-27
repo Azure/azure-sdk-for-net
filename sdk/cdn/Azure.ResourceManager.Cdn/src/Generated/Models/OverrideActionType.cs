@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="OverrideActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OverrideActionType?(string value) => value == null ? null : new OverrideActionType(value);
+        public static implicit operator OverrideActionType?(string value) => value == null ? (OverrideActionType?)null : new OverrideActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

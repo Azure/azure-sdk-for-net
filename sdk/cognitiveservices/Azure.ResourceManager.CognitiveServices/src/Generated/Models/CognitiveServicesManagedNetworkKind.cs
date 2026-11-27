@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesManagedNetworkKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesManagedNetworkKind?(string value) => value == null ? null : new CognitiveServicesManagedNetworkKind(value);
+        public static implicit operator CognitiveServicesManagedNetworkKind?(string value) => value == null ? (CognitiveServicesManagedNetworkKind?)null : new CognitiveServicesManagedNetworkKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

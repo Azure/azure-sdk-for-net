@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingDocumentSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingDocumentSource?(string value) => value == null ? null : new BillingDocumentSource(value);
+        public static implicit operator BillingDocumentSource?(string value) => value == null ? (BillingDocumentSource?)null : new BillingDocumentSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

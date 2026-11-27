@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CacheBehaviorSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CacheBehaviorSetting?(string value) => value == null ? null : new CacheBehaviorSetting(value);
+        public static implicit operator CacheBehaviorSetting?(string value) => value == null ? (CacheBehaviorSetting?)null : new CacheBehaviorSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

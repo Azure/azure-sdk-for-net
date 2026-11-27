@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RequestMethodOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestMethodOperator?(string value) => value == null ? null : new RequestMethodOperator(value);
+        public static implicit operator RequestMethodOperator?(string value) => value == null ? (RequestMethodOperator?)null : new RequestMethodOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

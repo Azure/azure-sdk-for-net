@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionTransferValidationErrorCode?(string value) => value == null ? null : new SubscriptionTransferValidationErrorCode(value);
+        public static implicit operator SubscriptionTransferValidationErrorCode?(string value) => value == null ? (SubscriptionTransferValidationErrorCode?)null : new SubscriptionTransferValidationErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

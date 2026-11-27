@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CapabilityHostProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapabilityHostProvisioningState?(string value) => value == null ? null : new CapabilityHostProvisioningState(value);
+        public static implicit operator CapabilityHostProvisioningState?(string value) => value == null ? (CapabilityHostProvisioningState?)null : new CapabilityHostProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="RaiAcsToolNameSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RaiAcsToolNameSelector?(string value) => value == null ? null : new RaiAcsToolNameSelector(value);
+        public static implicit operator RaiAcsToolNameSelector?(string value) => value == null ? (RaiAcsToolNameSelector?)null : new RaiAcsToolNameSelector(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

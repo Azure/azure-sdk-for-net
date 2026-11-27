@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesTierUpgradePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesTierUpgradePolicy?(string value) => value == null ? null : new CognitiveServicesTierUpgradePolicy(value);
+        public static implicit operator CognitiveServicesTierUpgradePolicy?(string value) => value == null ? (CognitiveServicesTierUpgradePolicy?)null : new CognitiveServicesTierUpgradePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="HostNameOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostNameOperator?(string value) => value == null ? null : new HostNameOperator(value);
+        public static implicit operator HostNameOperator?(string value) => value == null ? (HostNameOperator?)null : new HostNameOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <summary> Converts a string to a <see cref="BillingTrustRegistrationRequirement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingTrustRegistrationRequirement?(string value) => value == null ? null : new BillingTrustRegistrationRequirement(value);
+        public static implicit operator BillingTrustRegistrationRequirement?(string value) => value == null ? (BillingTrustRegistrationRequirement?)null : new BillingTrustRegistrationRequirement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

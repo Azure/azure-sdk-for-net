@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="CertificateNameCheckValidationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateNameCheckValidationMode?(string value) => value == null ? null : new CertificateNameCheckValidationMode(value);
+        public static implicit operator CertificateNameCheckValidationMode?(string value) => value == null ? (CertificateNameCheckValidationMode?)null : new CertificateNameCheckValidationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

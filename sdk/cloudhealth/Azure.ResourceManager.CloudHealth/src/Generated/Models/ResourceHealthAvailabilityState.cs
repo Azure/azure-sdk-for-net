@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="ResourceHealthAvailabilityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthAvailabilityState?(string value) => value == null ? null : new ResourceHealthAvailabilityState(value);
+        public static implicit operator ResourceHealthAvailabilityState?(string value) => value == null ? (ResourceHealthAvailabilityState?)null : new ResourceHealthAvailabilityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

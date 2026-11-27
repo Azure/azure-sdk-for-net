@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="PaymentTermsEligibilityCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PaymentTermsEligibilityCode?(string value) => value == null ? null : new PaymentTermsEligibilityCode(value);
+        public static implicit operator PaymentTermsEligibilityCode?(string value) => value == null ? (PaymentTermsEligibilityCode?)null : new PaymentTermsEligibilityCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

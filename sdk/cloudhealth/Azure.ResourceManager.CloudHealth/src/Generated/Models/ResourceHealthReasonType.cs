@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="ResourceHealthReasonType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthReasonType?(string value) => value == null ? null : new ResourceHealthReasonType(value);
+        public static implicit operator ResourceHealthReasonType?(string value) => value == null ? (ResourceHealthReasonType?)null : new ResourceHealthReasonType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Converts a string to a <see cref="BotChannelName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BotChannelName?(string value) => value == null ? null : new BotChannelName(value);
+        public static implicit operator BotChannelName?(string value) => value == null ? (BotChannelName?)null : new BotChannelName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

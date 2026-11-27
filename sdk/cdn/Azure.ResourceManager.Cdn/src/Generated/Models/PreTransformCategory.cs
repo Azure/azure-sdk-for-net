@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="PreTransformCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PreTransformCategory?(string value) => value == null ? null : new PreTransformCategory(value);
+        public static implicit operator PreTransformCategory?(string value) => value == null ? (PreTransformCategory?)null : new PreTransformCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

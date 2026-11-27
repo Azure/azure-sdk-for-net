@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RuleCacheBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleCacheBehavior?(string value) => value == null ? null : new RuleCacheBehavior(value);
+        public static implicit operator RuleCacheBehavior?(string value) => value == null ? (RuleCacheBehavior?)null : new RuleCacheBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="EligibleProductType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EligibleProductType?(string value) => value == null ? null : new EligibleProductType(value);
+        public static implicit operator EligibleProductType?(string value) => value == null ? (EligibleProductType?)null : new EligibleProductType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

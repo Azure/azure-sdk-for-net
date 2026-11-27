@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchIPFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchIPFamily?(string value) => value == null ? null : new BatchIPFamily(value);
+        public static implicit operator BatchIPFamily?(string value) => value == null ? (BatchIPFamily?)null : new BatchIPFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

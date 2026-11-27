@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AttachedAksClusterProjectBindingStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttachedAksClusterProjectBindingStage?(string value) => value == null ? null : new AttachedAksClusterProjectBindingStage(value);
+        public static implicit operator AttachedAksClusterProjectBindingStage?(string value) => value == null ? (AttachedAksClusterProjectBindingStage?)null : new AttachedAksClusterProjectBindingStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

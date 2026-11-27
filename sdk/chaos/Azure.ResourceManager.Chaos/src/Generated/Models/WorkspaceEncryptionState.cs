@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceEncryptionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceEncryptionState?(string value) => value == null ? null : new WorkspaceEncryptionState(value);
+        public static implicit operator WorkspaceEncryptionState?(string value) => value == null ? (WorkspaceEncryptionState?)null : new WorkspaceEncryptionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
         /// <summary> Converts a string to a <see cref="CarbonEmissionCategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CarbonEmissionCategoryType?(string value) => value == null ? null : new CarbonEmissionCategoryType(value);
+        public static implicit operator CarbonEmissionCategoryType?(string value) => value == null ? (CarbonEmissionCategoryType?)null : new CarbonEmissionCategoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

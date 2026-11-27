@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="DeliveryRuleConditionParametersType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryRuleConditionParametersType?(string value) => value == null ? null : new DeliveryRuleConditionParametersType(value);
+        public static implicit operator DeliveryRuleConditionParametersType?(string value) => value == null ? (DeliveryRuleConditionParametersType?)null : new DeliveryRuleConditionParametersType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

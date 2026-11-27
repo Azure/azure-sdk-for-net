@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="SignalRecommendationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRecommendationKind?(string value) => value == null ? null : new SignalRecommendationKind(value);
+        public static implicit operator SignalRecommendationKind?(string value) => value == null ? (SignalRecommendationKind?)null : new SignalRecommendationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

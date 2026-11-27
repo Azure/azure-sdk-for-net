@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ProfileScrubbingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfileScrubbingState?(string value) => value == null ? null : new ProfileScrubbingState(value);
+        public static implicit operator ProfileScrubbingState?(string value) => value == null ? (ProfileScrubbingState?)null : new ProfileScrubbingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

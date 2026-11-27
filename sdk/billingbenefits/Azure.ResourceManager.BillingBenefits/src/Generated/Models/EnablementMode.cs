@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="EnablementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnablementMode?(string value) => value == null ? null : new EnablementMode(value);
+        public static implicit operator EnablementMode?(string value) => value == null ? (EnablementMode?)null : new EnablementMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CostControlGroupingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostControlGroupingName?(string value) => value == null ? null : new CostControlGroupingName(value);
+        public static implicit operator CostControlGroupingName?(string value) => value == null ? (CostControlGroupingName?)null : new CostControlGroupingName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

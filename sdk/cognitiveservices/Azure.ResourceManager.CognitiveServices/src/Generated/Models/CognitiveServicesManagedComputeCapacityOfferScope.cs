@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesManagedComputeCapacityOfferScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesManagedComputeCapacityOfferScope?(string value) => value == null ? null : new CognitiveServicesManagedComputeCapacityOfferScope(value);
+        public static implicit operator CognitiveServicesManagedComputeCapacityOfferScope?(string value) => value == null ? (CognitiveServicesManagedComputeCapacityOfferScope?)null : new CognitiveServicesManagedComputeCapacityOfferScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Converts a string to a <see cref="HealthModelMetricAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthModelMetricAggregationType?(string value) => value == null ? null : new HealthModelMetricAggregationType(value);
+        public static implicit operator HealthModelMetricAggregationType?(string value) => value == null ? (HealthModelMetricAggregationType?)null : new HealthModelMetricAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="AgentHostingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentHostingType?(string value) => value == null ? null : new AgentHostingType(value);
+        public static implicit operator AgentHostingType?(string value) => value == null ? (AgentHostingType?)null : new AgentHostingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

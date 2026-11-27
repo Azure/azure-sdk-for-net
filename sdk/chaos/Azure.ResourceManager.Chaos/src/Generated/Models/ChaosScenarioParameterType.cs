@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ChaosScenarioParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChaosScenarioParameterType?(string value) => value == null ? null : new ChaosScenarioParameterType(value);
+        public static implicit operator ChaosScenarioParameterType?(string value) => value == null ? (ChaosScenarioParameterType?)null : new ChaosScenarioParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

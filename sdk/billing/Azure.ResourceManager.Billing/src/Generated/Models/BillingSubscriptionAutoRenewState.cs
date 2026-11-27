@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Converts a string to a <see cref="BillingSubscriptionAutoRenewState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingSubscriptionAutoRenewState?(string value) => value == null ? null : new BillingSubscriptionAutoRenewState(value);
+        public static implicit operator BillingSubscriptionAutoRenewState?(string value) => value == null ? (BillingSubscriptionAutoRenewState?)null : new BillingSubscriptionAutoRenewState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

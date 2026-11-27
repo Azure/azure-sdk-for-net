@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="RequestHeaderOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestHeaderOperator?(string value) => value == null ? null : new RequestHeaderOperator(value);
+        public static implicit operator RequestHeaderOperator?(string value) => value == null ? (RequestHeaderOperator?)null : new RequestHeaderOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

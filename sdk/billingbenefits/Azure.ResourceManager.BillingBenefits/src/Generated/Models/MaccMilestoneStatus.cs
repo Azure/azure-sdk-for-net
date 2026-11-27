@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Converts a string to a <see cref="MaccMilestoneStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaccMilestoneStatus?(string value) => value == null ? null : new MaccMilestoneStatus(value);
+        public static implicit operator MaccMilestoneStatus?(string value) => value == null ? (MaccMilestoneStatus?)null : new MaccMilestoneStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

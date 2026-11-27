@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfileResourceState?(string value) => value == null ? null : new ProfileResourceState(value);
+        public static implicit operator ProfileResourceState?(string value) => value == null ? (ProfileResourceState?)null : new ProfileResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Converts a string to a <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesAccountDeploymentScaleType?(string value) => value == null ? null : new CognitiveServicesAccountDeploymentScaleType(value);
+        public static implicit operator CognitiveServicesAccountDeploymentScaleType?(string value) => value == null ? (CognitiveServicesAccountDeploymentScaleType?)null : new CognitiveServicesAccountDeploymentScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

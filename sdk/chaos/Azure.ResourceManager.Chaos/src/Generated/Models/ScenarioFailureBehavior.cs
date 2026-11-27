@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Converts a string to a <see cref="ScenarioFailureBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScenarioFailureBehavior?(string value) => value == null ? null : new ScenarioFailureBehavior(value);
+        public static implicit operator ScenarioFailureBehavior?(string value) => value == null ? (ScenarioFailureBehavior?)null : new ScenarioFailureBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
