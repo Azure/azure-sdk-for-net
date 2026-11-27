@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string DiskControllerType
         {
             get => DiskControllerKind?.ToString();
-            set => DiskControllerKind = value == null ? null : new DiskControllerType(value);
+            set => DiskControllerKind = value == null ? (DiskControllerType?)null : new DiskControllerType(value);
         }
     }
 }
