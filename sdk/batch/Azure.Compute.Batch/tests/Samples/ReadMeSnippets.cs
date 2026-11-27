@@ -35,6 +35,24 @@ namespace Azure.Compute.Batch.Tests.Samples
             #endregion
         }
 
+        public void SovereignCloudCredential()
+        {
+            #region Snippet:Batch_Readme_SovereignCloudCredential
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                AuthorityHost = AzureAuthorityHosts.AzureGovernment
+            });
+            var options = new BatchClientOptions
+            {
+                Audience = BatchAudience.AzureGovernment
+            };
+            var batchClient = new BatchClient(
+                new Uri("https://<your account>.usgovvirginia.batch.usgovcloudapi.net"),
+                credential,
+                options);
+            #endregion
+        }
+
         public void PoolCreate()
         {
             #region Snippet:Batch_Readme_PoolCreation

@@ -20,8 +20,6 @@ namespace Azure.Compute.Batch
         private const string TerminateValue = "terminate";
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Remove Compute Nodes when all Tasks have completed. </summary>
         private const string TaskCompletionValue = "taskcompletion";
-        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Remove Compute Nodes when all Task retention periods have expired. </summary>
-        private const string RetainedDataValue = "retaineddata";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocationOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,9 +39,6 @@ namespace Azure.Compute.Batch
 
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Remove Compute Nodes when all Tasks have completed. </summary>
         public static BatchNodeDeallocationOption TaskCompletion { get; } = new BatchNodeDeallocationOption(TaskCompletionValue);
-
-        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Remove Compute Nodes when all Task retention periods have expired. </summary>
-        public static BatchNodeDeallocationOption RetainedData { get; } = new BatchNodeDeallocationOption(RetainedDataValue);
 
         /// <summary> Determines if two <see cref="BatchNodeDeallocationOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

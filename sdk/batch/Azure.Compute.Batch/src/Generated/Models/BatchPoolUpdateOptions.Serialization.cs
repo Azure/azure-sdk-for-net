@@ -118,6 +118,11 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VirtualMachineConfiguration, options);
             }
+            if (Optional.IsDefined(VmSkuProfile))
+            {
+                writer.WritePropertyName("vmSkuProfile"u8);
+                writer.WriteObjectValue(VmSkuProfile, options);
+            }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
                 writer.WritePropertyName("taskSlotsPerNode"u8);
@@ -207,6 +212,7 @@ namespace Azure.Compute.Batch
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<BatchMetadataItem> metadata = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
+            VirtualMachineSkuProfile vmSkuProfile = default;
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             NetworkConfiguration networkConfiguration = default;
@@ -279,6 +285,15 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("vmSkuProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmSkuProfile = VirtualMachineSkuProfile.DeserializeVirtualMachineSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("taskSlotsPerNode"u8))
@@ -358,6 +373,7 @@ namespace Azure.Compute.Batch
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 virtualMachineConfiguration,
+                vmSkuProfile,
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 networkConfiguration,

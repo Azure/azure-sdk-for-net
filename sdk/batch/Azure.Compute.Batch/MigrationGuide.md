@@ -666,17 +666,9 @@ foreach (PoolUsageMetrics int in batchClient.PoolOperations.ListPoolUsageMetrics
 }
 ```
 
-With `Azure.Compute.Batch` call `GetPoolUsageMetricsAsync`.
-
-```C# Snippet:Batch_Migration_GetPoolUsageMetrics
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchPoolUsageMetrics item in batchClient.GetPoolUsageMetrics())
-{
-    // do something
-}
-```
+Pool usage metrics are no longer supported by service API version `2026-10-01`.
+`Azure.Compute.Batch` version `2.0.0` removes the pool usage-metrics methods and models;
+there is no equivalent method in this version of the SDK.
 
 #### Get Supported Images
 

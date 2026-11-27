@@ -103,6 +103,11 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VirtualMachineConfiguration, options);
             }
+            if (Optional.IsDefined(VmSkuProfile))
+            {
+                writer.WritePropertyName("vmSkuProfile"u8);
+                writer.WriteObjectValue(VmSkuProfile, options);
+            }
             if (Optional.IsDefined(ResizeTimeout))
             {
                 writer.WritePropertyName("resizeTimeout"u8);
@@ -249,6 +254,7 @@ namespace Azure.Compute.Batch
             string displayName = default;
             string vmSize = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
+            VirtualMachineSkuProfile vmSkuProfile = default;
             TimeSpan? resizeTimeout = default;
             int? targetDedicatedNodes = default;
             int? targetLowPriorityNodes = default;
@@ -290,6 +296,15 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("vmSkuProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmSkuProfile = VirtualMachineSkuProfile.DeserializeVirtualMachineSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resizeTimeout"u8))
@@ -462,6 +477,7 @@ namespace Azure.Compute.Batch
                 displayName,
                 vmSize,
                 virtualMachineConfiguration,
+                vmSkuProfile,
                 resizeTimeout,
                 targetDedicatedNodes,
                 targetLowPriorityNodes,

@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             finally
             {
                 await client.DeleteJobAsync(WaitUntil.Started, jobId: jobId);
-                await client.DeletePoolAsync(WaitUntil.Started, poolId);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolId);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             finally
             {
                 await client.DeleteJobAsync(WaitUntil.Started, jobId);
-                await client.DeletePoolAsync(WaitUntil.Started, poolId);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolId);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             finally
             {
                 await client.DeleteJobAsync(WaitUntil.Started, jobId);
-                await client.DeletePoolAsync(WaitUntil.Started, poolId);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolId);
             }
         }
     }

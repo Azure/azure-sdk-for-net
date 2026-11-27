@@ -12,57 +12,52 @@ using System.Text.Json;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Statistics related to Pool usage information. </summary>
-    public partial class BatchPoolUsageStatistics : IJsonModel<BatchPoolUsageStatistics>
+    /// <summary> The policy that controls allocation across availability zones. </summary>
+    public partial class ZoneAllocationPolicy : IJsonModel<ZoneAllocationPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageStatistics"/> for deserialization. </summary>
-        internal BatchPoolUsageStatistics()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchPoolUsageStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ZoneAllocationPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchPoolUsageStatistics(document.RootElement, options);
+                        return DeserializeZoneAllocationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchPoolUsageStatistics)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchPoolUsageStatistics)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchPoolUsageStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ZoneAllocationPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolUsageStatistics IPersistableModel<BatchPoolUsageStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ZoneAllocationPolicy IPersistableModel<ZoneAllocationPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchPoolUsageStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ZoneAllocationPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchPoolUsageStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ZoneAllocationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,17 +68,21 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPoolUsageStatistics)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartTime, "O");
-            writer.WritePropertyName("lastUpdateTime"u8);
-            writer.WriteStringValue(LastUpdateTime, "O");
-            writer.WritePropertyName("dedicatedCoreTime"u8);
-            writer.WriteStringValue(DedicatedCoreTime, "P");
+            if (Optional.IsDefined(MaxZoneCount))
+            {
+                writer.WritePropertyName("maxZoneCount"u8);
+                writer.WriteNumberValue(MaxZoneCount.Value);
+            }
+            if (Optional.IsDefined(MaxInstancePercentPerZonePolicy))
+            {
+                writer.WritePropertyName("maxInstancePercentPerZonePolicy"u8);
+                writer.WriteObjectValue(MaxInstancePercentPerZonePolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,48 +102,50 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolUsageStatistics IJsonModel<BatchPoolUsageStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ZoneAllocationPolicy IJsonModel<ZoneAllocationPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchPoolUsageStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ZoneAllocationPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPoolUsageStatistics)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchPoolUsageStatistics(document.RootElement, options);
+            return DeserializeZoneAllocationPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BatchPoolUsageStatistics DeserializeBatchPoolUsageStatistics(JsonElement element, ModelReaderWriterOptions options)
+        internal static ZoneAllocationPolicy DeserializeZoneAllocationPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset startTime = default;
-            DateTimeOffset lastUpdateTime = default;
-            TimeSpan dedicatedCoreTime = default;
+            int? maxZoneCount = default;
+            MaxInstancePercentPerZonePolicy maxInstancePercentPerZonePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("startTime"u8))
+                if (prop.NameEquals("maxZoneCount"u8))
                 {
-                    startTime = prop.Value.GetDateTimeOffset("O");
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxZoneCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("lastUpdateTime"u8))
+                if (prop.NameEquals("maxInstancePercentPerZonePolicy"u8))
                 {
-                    lastUpdateTime = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("dedicatedCoreTime"u8))
-                {
-                    dedicatedCoreTime = prop.Value.GetTimeSpan("P");
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxInstancePercentPerZonePolicy = MaxInstancePercentPerZonePolicy.DeserializeMaxInstancePercentPerZonePolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +153,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchPoolUsageStatistics(startTime, lastUpdateTime, dedicatedCoreTime, additionalBinaryDataProperties);
+            return new ZoneAllocationPolicy(maxZoneCount, maxInstancePercentPerZonePolicy, additionalBinaryDataProperties);
         }
     }
 }

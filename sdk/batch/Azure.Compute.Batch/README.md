@@ -46,6 +46,31 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), credential);
 ```
 
+#### Authenticate in a sovereign cloud
+
+Set both the Batch audience and the credential's authority host for the cloud containing your Batch account.
+The audience defaults to `BatchAudience.AzurePublicCloud` and is not inferred from the endpoint.
+
+```C# Snippet:Batch_Readme_SovereignCloudCredential
+var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+{
+    AuthorityHost = AzureAuthorityHosts.AzureGovernment
+});
+var options = new BatchClientOptions
+{
+    Audience = BatchAudience.AzureGovernment
+};
+var batchClient = new BatchClient(
+    new Uri("https://<your account>.usgovvirginia.batch.usgovcloudapi.net"),
+    credential,
+    options);
+```
+
+For Azure China, use `BatchAudience.AzureChina`, `AzureAuthorityHosts.AzureChina`, and your account's Azure China endpoint.
+For a custom cloud, construct a `BatchAudience` using the cloud's Microsoft Entra resource URI.
+The URI must preserve any trailing slash required by the service; the client appends `/.default` to form the token scope.
+Changing the audience does not change the credential's authority host. The audience option is ignored when using Shared Key authentication.
+
 #### Authenticate using Shared Key
 
 You can also use Shared Key authentication to sign into your Batch account. This method uses your Batch account access keys to authenticate Azure commands for the Batch service.  You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest) 
@@ -414,17 +439,8 @@ foreach (BatchPoolNodeCounts item in batchClient.GetPoolNodeCounts())
 
 #### List PoolUsageMetrics
 
-`GetPoolUsageMetricsAsync` can be used to list pool usage metrics.
-
-```C# Snippet:Batch_Migration_GetPoolUsageMetrics
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchPoolUsageMetrics item in batchClient.GetPoolUsageMetrics())
-{
-    // do something
-}
-```
+Pool usage metrics are no longer supported by service API version `2026-10-01`.
+`Azure.Compute.Batch` version `2.0.0` removes the pool usage-metrics methods and models.
 
 #### Get Supported Images
 
@@ -1218,3 +1234,38 @@ You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+### Recording integration tests
+
+The `Batch2026FeaturesIntegrationTests` cover Instance Mix, automatic zone placement
+and resiliency, and hardware-profile configuration using zero-node pools. Instance Mix
+and automatic zone placement require those features to be enabled on the test account.
+These scenarios verify accepted configuration and preservation across updates, not
+successful compute-node allocation. Instance Mix, zone/resiliency, and hardware-profile coverage uses
+metadata-only PATCH updates to verify that omitted settings are preserved. The tested
+service rejects PATCH requests that change `vmSkuProfile` or `virtualMachineConfiguration`.
+
+For local recording with an existing Azure CLI login, set `BATCH_USE_AZURE_CLI_CREDENTIAL=true`
+and `BATCH_TENANT_ID` to the tenant containing the test accounts. This explicitly selects
+`AzureCliCredential` for developer authentication; when unset, the normal test-framework
+credential selection is unchanged. Service-principal and pipeline credentials still take precedence.
+
+Configure `batch_account_name` and `batch_account_uri` for the Batch service allocation account.
+For user-subscription tests, also configure `batch_usersub_account_name`,
+`batch_usersub_account_uri`, and `diskencryptionset_id`. Account endpoints must omit `https://`.
+Keep credentials out of source control.
+
+Set `AZURE_TEST_MODE=Record` and use a test-name filter to record only the intended tests.
+Start with `BatchApplicationsIntegrationTests.GetandListApplication`, which only lists and
+reads applications. Other integration tests create and delete billable resources and should
+use dedicated accounts. Run the same tests with `AZURE_TEST_MODE=Playback` afterward.
+Ordinary Windows pool fixtures use `Standard_D2_v2` with the
+`windowsserver2022:2022-datacenter-smalldisk` image. Pool cleanup waits for deletion
+before the next test can reuse the same pool name.
+The security-profile test uses a confidential-capable Ubuntu VM in the Batch service
+allocation account. The disk-encryption test independently uses an ordinary Windows VM
+with the configured Disk Encryption Set in the user-subscription account; it does not
+require confidential-VM capacity. These tests verify pool configuration, not successful
+node allocation.
+Review sanitized recordings before publishing them and updating `assets.json` as described
+in the [recording instructions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md#recording).

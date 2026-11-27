@@ -31,15 +31,13 @@ namespace Azure.Compute.Batch
         /// <param name="uri"> The URL for the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <param name="usageStatistics"> Statistics related to Pool usage, such as the amount of core-time used. </param>
         /// <param name="resourceStatistics"> Statistics related to resource consumption by Compute Nodes in the Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, BatchPoolUsageStatistics usageStatistics, BatchPoolResourceStatistics resourceStatistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, BatchPoolResourceStatistics resourceStatistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
-            UsageStatistics = usageStatistics;
             ResourceStatistics = resourceStatistics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,9 +50,6 @@ namespace Azure.Compute.Batch
 
         /// <summary> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </summary>
         public DateTimeOffset LastUpdateTime { get; }
-
-        /// <summary> Statistics related to Pool usage, such as the amount of core-time used. </summary>
-        public BatchPoolUsageStatistics UsageStatistics { get; }
 
         /// <summary> Statistics related to resource consumption by Compute Nodes in the Pool. </summary>
         public BatchPoolResourceStatistics ResourceStatistics { get; }

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 
 namespace Azure.Compute.Batch
@@ -84,7 +83,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("publicIPAddress"u8);
-            writer.WriteStringValue(PublicIpAddress.ToString());
+            writer.WriteStringValue(PublicIpAddress);
             writer.WritePropertyName("publicFQDN"u8);
             writer.WriteStringValue(PublicFqdn);
             writer.WritePropertyName("frontendPort"u8);
@@ -135,7 +134,7 @@ namespace Azure.Compute.Batch
             }
             string name = default;
             InboundEndpointProtocol protocol = default;
-            IPAddress publicIpAddress = default;
+            string publicIpAddress = default;
             string publicFqdn = default;
             int frontendPort = default;
             int backendPort = default;
@@ -154,7 +153,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("publicIPAddress"u8))
                 {
-                    publicIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    publicIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("publicFQDN"u8))

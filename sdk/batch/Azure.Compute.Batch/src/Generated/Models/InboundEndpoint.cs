@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.Compute.Batch
 {
@@ -24,7 +23,7 @@ namespace Azure.Compute.Batch
         /// <param name="publicFqdn"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFqdn, int frontendPort, int backendPort)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, string publicIpAddress, string publicFqdn, int frontendPort, int backendPort)
         {
             Name = name;
             Protocol = protocol;
@@ -42,7 +41,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFqdn, int frontendPort, int backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, string publicIpAddress, string publicFqdn, int frontendPort, int backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
@@ -58,9 +57,6 @@ namespace Azure.Compute.Batch
 
         /// <summary> The protocol of the endpoint. </summary>
         public InboundEndpointProtocol Protocol { get; }
-
-        /// <summary> The public IP address of the Compute Node. </summary>
-        public IPAddress PublicIpAddress { get; }
 
         /// <summary> The public fully qualified domain name for the Compute Node. </summary>
         public string PublicFqdn { get; }
