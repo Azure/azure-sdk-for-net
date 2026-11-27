@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="UpgradeInsightStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeInsightStrategy?(string value) => value == null ? null : new UpgradeInsightStrategy(value);
+        public static implicit operator UpgradeInsightStrategy?(string value) => value == null ? (UpgradeInsightStrategy?)null : new UpgradeInsightStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

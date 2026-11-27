@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ClusterServiceLoadBalancerHealthProbeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterServiceLoadBalancerHealthProbeMode?(string value) => value == null ? null : new ClusterServiceLoadBalancerHealthProbeMode(value);
+        public static implicit operator ClusterServiceLoadBalancerHealthProbeMode?(string value) => value == null ? (ClusterServiceLoadBalancerHealthProbeMode?)null : new ClusterServiceLoadBalancerHealthProbeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTokenPasswordName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTokenPasswordName?(string value) => value == null ? null : new ContainerRegistryTokenPasswordName(value);
+        public static implicit operator ContainerRegistryTokenPasswordName?(string value) => value == null ? (ContainerRegistryTokenPasswordName?)null : new ContainerRegistryTokenPasswordName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

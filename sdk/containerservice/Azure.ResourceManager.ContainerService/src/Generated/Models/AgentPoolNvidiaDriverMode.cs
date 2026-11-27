@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolNvidiaDriverMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolNvidiaDriverMode?(string value) => value == null ? null : new AgentPoolNvidiaDriverMode(value);
+        public static implicit operator AgentPoolNvidiaDriverMode?(string value) => value == null ? (AgentPoolNvidiaDriverMode?)null : new AgentPoolNvidiaDriverMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

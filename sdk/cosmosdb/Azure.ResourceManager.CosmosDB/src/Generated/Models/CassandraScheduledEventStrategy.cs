@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CassandraScheduledEventStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraScheduledEventStrategy?(string value) => value == null ? null : new CassandraScheduledEventStrategy(value);
+        public static implicit operator CassandraScheduledEventStrategy?(string value) => value == null ? (CassandraScheduledEventStrategy?)null : new CassandraScheduledEventStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

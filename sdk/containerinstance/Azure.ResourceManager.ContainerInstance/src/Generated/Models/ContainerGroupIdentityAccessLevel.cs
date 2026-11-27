@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupIdentityAccessLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupIdentityAccessLevel?(string value) => value == null ? null : new ContainerGroupIdentityAccessLevel(value);
+        public static implicit operator ContainerGroupIdentityAccessLevel?(string value) => value == null ? (ContainerGroupIdentityAccessLevel?)null : new ContainerGroupIdentityAccessLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

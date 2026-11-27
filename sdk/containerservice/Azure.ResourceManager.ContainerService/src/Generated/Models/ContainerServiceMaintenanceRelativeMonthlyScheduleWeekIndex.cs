@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex?(string value) => value == null ? null : new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(value);
+        public static implicit operator ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex?(string value) => value == null ? (ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex?)null : new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

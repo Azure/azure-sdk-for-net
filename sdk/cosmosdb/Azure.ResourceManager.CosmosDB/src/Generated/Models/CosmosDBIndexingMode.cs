@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBIndexingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBIndexingMode?(string value) => value == null ? null : new CosmosDBIndexingMode(value);
+        public static implicit operator CosmosDBIndexingMode?(string value) => value == null ? (CosmosDBIndexingMode?)null : new CosmosDBIndexingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

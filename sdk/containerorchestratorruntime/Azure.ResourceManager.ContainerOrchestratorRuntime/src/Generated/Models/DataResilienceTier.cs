@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="DataResilienceTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataResilienceTier?(string value) => value == null ? null : new DataResilienceTier(value);
+        public static implicit operator DataResilienceTier?(string value) => value == null ? (DataResilienceTier?)null : new DataResilienceTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

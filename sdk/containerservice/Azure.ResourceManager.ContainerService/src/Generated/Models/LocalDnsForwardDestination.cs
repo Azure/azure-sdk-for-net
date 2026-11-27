@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="LocalDnsForwardDestination"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDnsForwardDestination?(string value) => value == null ? null : new LocalDnsForwardDestination(value);
+        public static implicit operator LocalDnsForwardDestination?(string value) => value == null ? (LocalDnsForwardDestination?)null : new LocalDnsForwardDestination(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

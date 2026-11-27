@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostManagementUnavailabilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostManagementUnavailabilityReason?(string value) => value == null ? null : new CostManagementUnavailabilityReason(value);
+        public static implicit operator CostManagementUnavailabilityReason?(string value) => value == null ? (CostManagementUnavailabilityReason?)null : new CostManagementUnavailabilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

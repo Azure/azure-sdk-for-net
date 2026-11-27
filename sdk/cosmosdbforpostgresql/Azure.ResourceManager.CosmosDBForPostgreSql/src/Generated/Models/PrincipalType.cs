@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="PrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrincipalType?(string value) => value == null ? null : new PrincipalType(value);
+        public static implicit operator PrincipalType?(string value) => value == null ? (PrincipalType?)null : new PrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

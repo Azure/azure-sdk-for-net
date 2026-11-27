@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceOSDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceOSDiskType?(string value) => value == null ? null : new ContainerServiceOSDiskType(value);
+        public static implicit operator ContainerServiceOSDiskType?(string value) => value == null ? (ContainerServiceOSDiskType?)null : new ContainerServiceOSDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

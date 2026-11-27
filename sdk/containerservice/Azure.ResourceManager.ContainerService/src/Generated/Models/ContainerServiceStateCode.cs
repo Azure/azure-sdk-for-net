@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceStateCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceStateCode?(string value) => value == null ? null : new ContainerServiceStateCode(value);
+        public static implicit operator ContainerServiceStateCode?(string value) => value == null ? (ContainerServiceStateCode?)null : new ContainerServiceStateCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

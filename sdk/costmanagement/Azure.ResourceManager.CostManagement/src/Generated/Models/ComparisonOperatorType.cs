@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ComparisonOperatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComparisonOperatorType?(string value) => value == null ? null : new ComparisonOperatorType(value);
+        public static implicit operator ComparisonOperatorType?(string value) => value == null ? (ComparisonOperatorType?)null : new ComparisonOperatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

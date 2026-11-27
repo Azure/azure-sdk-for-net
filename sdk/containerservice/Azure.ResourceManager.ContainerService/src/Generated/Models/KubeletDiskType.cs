@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="KubeletDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubeletDiskType?(string value) => value == null ? null : new KubeletDiskType(value);
+        public static implicit operator KubeletDiskType?(string value) => value == null ? (KubeletDiskType?)null : new KubeletDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

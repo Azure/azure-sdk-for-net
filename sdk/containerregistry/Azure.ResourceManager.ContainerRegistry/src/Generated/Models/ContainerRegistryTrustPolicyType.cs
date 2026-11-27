@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTrustPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTrustPolicyType?(string value) => value == null ? null : new ContainerRegistryTrustPolicyType(value);
+        public static implicit operator ContainerRegistryTrustPolicyType?(string value) => value == null ? (ContainerRegistryTrustPolicyType?)null : new ContainerRegistryTrustPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

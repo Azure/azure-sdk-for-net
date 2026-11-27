@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBServerVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBServerVersion?(string value) => value == null ? null : new CosmosDBServerVersion(value);
+        public static implicit operator CosmosDBServerVersion?(string value) => value == null ? (CosmosDBServerVersion?)null : new CosmosDBServerVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

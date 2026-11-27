@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="CloudShellProfileMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudShellProfileMode?(string value) => value == null ? null : new CloudShellProfileMode(value);
+        public static implicit operator CloudShellProfileMode?(string value) => value == null ? (CloudShellProfileMode?)null : new CloudShellProfileMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

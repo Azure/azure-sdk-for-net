@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBServiceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBServiceStatus?(string value) => value == null ? null : new CosmosDBServiceStatus(value);
+        public static implicit operator CosmosDBServiceStatus?(string value) => value == null ? (CosmosDBServiceStatus?)null : new CosmosDBServiceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

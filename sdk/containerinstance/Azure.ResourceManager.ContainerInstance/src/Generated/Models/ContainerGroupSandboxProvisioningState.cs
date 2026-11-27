@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupSandboxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupSandboxProvisioningState?(string value) => value == null ? null : new ContainerGroupSandboxProvisioningState(value);
+        public static implicit operator ContainerGroupSandboxProvisioningState?(string value) => value == null ? (ContainerGroupSandboxProvisioningState?)null : new ContainerGroupSandboxProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

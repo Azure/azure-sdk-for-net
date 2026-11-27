@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceExtendedLocationType?(string value) => value == null ? null : new ContainerServiceExtendedLocationType(value);
+        public static implicit operator ContainerServiceExtendedLocationType?(string value) => value == null ? (ContainerServiceExtendedLocationType?)null : new ContainerServiceExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

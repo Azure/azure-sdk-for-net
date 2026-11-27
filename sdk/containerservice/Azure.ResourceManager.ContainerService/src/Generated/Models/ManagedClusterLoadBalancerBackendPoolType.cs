@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancerBackendPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterLoadBalancerBackendPoolType?(string value) => value == null ? null : new ManagedClusterLoadBalancerBackendPoolType(value);
+        public static implicit operator ManagedClusterLoadBalancerBackendPoolType?(string value) => value == null ? (ManagedClusterLoadBalancerBackendPoolType?)null : new ManagedClusterLoadBalancerBackendPoolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

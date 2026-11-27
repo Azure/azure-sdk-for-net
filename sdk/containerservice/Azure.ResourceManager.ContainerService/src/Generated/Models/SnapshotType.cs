@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="SnapshotType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotType?(string value) => value == null ? null : new SnapshotType(value);
+        public static implicit operator SnapshotType?(string value) => value == null ? (SnapshotType?)null : new SnapshotType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

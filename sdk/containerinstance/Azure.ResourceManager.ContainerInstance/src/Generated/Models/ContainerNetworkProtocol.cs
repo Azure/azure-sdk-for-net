@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerNetworkProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerNetworkProtocol?(string value) => value == null ? null : new ContainerNetworkProtocol(value);
+        public static implicit operator ContainerNetworkProtocol?(string value) => value == null ? (ContainerNetworkProtocol?)null : new ContainerNetworkProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

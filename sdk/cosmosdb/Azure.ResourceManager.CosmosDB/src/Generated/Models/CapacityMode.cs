@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CapacityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityMode?(string value) => value == null ? null : new CapacityMode(value);
+        public static implicit operator CapacityMode?(string value) => value == null ? (CapacityMode?)null : new CapacityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

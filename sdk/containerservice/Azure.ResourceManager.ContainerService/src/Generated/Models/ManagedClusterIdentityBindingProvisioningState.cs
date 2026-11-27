@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterIdentityBindingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterIdentityBindingProvisioningState?(string value) => value == null ? null : new ManagedClusterIdentityBindingProvisioningState(value);
+        public static implicit operator ManagedClusterIdentityBindingProvisioningState?(string value) => value == null ? (ManagedClusterIdentityBindingProvisioningState?)null : new ManagedClusterIdentityBindingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

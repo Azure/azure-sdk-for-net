@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBSqlTriggerOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBSqlTriggerOperation?(string value) => value == null ? null : new CosmosDBSqlTriggerOperation(value);
+        public static implicit operator CosmosDBSqlTriggerOperation?(string value) => value == null ? (CosmosDBSqlTriggerOperation?)null : new CosmosDBSqlTriggerOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ForecastTimeframe"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForecastTimeframe?(string value) => value == null ? null : new ForecastTimeframe(value);
+        public static implicit operator ForecastTimeframe?(string value) => value == null ? (ForecastTimeframe?)null : new ForecastTimeframe(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupSku?(string value) => value == null ? null : new ContainerGroupSku(value);
+        public static implicit operator ContainerGroupSku?(string value) => value == null ? (ContainerGroupSku?)null : new ContainerGroupSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

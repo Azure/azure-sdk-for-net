@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryMetadataSearch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryMetadataSearch?(string value) => value == null ? null : new ContainerRegistryMetadataSearch(value);
+        public static implicit operator ContainerRegistryMetadataSearch?(string value) => value == null ? (ContainerRegistryMetadataSearch?)null : new ContainerRegistryMetadataSearch(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

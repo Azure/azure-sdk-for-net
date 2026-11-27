@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesSupportPlan"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesSupportPlan?(string value) => value == null ? null : new KubernetesSupportPlan(value);
+        public static implicit operator KubernetesSupportPlan?(string value) => value == null ? (KubernetesSupportPlan?)null : new KubernetesSupportPlan(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceProvisioningState?(string value) => value == null ? null : new ContainerServiceProvisioningState(value);
+        public static implicit operator ContainerServiceProvisioningState?(string value) => value == null ? (ContainerServiceProvisioningState?)null : new ContainerServiceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

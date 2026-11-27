@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Converts a string to a <see cref="TargetAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TargetAuthenticationType?(string value) => value == null ? null : new TargetAuthenticationType(value);
+        public static implicit operator TargetAuthenticationType?(string value) => value == null ? (TargetAuthenticationType?)null : new TargetAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

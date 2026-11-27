@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolGpuDriver"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolGpuDriver?(string value) => value == null ? null : new AgentPoolGpuDriver(value);
+        public static implicit operator AgentPoolGpuDriver?(string value) => value == null ? (AgentPoolGpuDriver?)null : new AgentPoolGpuDriver(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

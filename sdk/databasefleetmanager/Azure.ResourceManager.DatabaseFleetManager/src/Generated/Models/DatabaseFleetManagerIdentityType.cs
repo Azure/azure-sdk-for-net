@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseFleetManagerIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseFleetManagerIdentityType?(string value) => value == null ? null : new DatabaseFleetManagerIdentityType(value);
+        public static implicit operator DatabaseFleetManagerIdentityType?(string value) => value == null ? (DatabaseFleetManagerIdentityType?)null : new DatabaseFleetManagerIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

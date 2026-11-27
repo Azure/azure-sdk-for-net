@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBVectorIndexType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBVectorIndexType?(string value) => value == null ? null : new CosmosDBVectorIndexType(value);
+        public static implicit operator CosmosDBVectorIndexType?(string value) => value == null ? (CosmosDBVectorIndexType?)null : new CosmosDBVectorIndexType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

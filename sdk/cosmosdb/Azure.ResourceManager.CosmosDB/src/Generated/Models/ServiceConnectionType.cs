@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="ServiceConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceConnectionType?(string value) => value == null ? null : new ServiceConnectionType(value);
+        public static implicit operator ServiceConnectionType?(string value) => value == null ? (ServiceConnectionType?)null : new ServiceConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

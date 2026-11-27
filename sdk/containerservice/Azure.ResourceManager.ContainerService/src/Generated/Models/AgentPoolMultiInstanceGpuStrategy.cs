@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolMultiInstanceGpuStrategy?(string value) => value == null ? null : new AgentPoolMultiInstanceGpuStrategy(value);
+        public static implicit operator AgentPoolMultiInstanceGpuStrategy?(string value) => value == null ? (AgentPoolMultiInstanceGpuStrategy?)null : new AgentPoolMultiInstanceGpuStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

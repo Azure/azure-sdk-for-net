@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryPackageSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryPackageSourceType?(string value) => value == null ? null : new ContainerRegistryPackageSourceType(value);
+        public static implicit operator ContainerRegistryPackageSourceType?(string value) => value == null ? (ContainerRegistryPackageSourceType?)null : new ContainerRegistryPackageSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesVersionSupportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesVersionSupportStatus?(string value) => value == null ? null : new KubernetesVersionSupportStatus(value);
+        public static implicit operator KubernetesVersionSupportStatus?(string value) => value == null ? (KubernetesVersionSupportStatus?)null : new KubernetesVersionSupportStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

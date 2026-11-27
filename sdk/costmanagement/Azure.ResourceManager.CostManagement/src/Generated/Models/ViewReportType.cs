@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ViewReportType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ViewReportType?(string value) => value == null ? null : new ViewReportType(value);
+        public static implicit operator ViewReportType?(string value) => value == null ? (ViewReportType?)null : new ViewReportType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

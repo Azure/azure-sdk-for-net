@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryExportPolicyStatus?(string value) => value == null ? null : new ContainerRegistryExportPolicyStatus(value);
+        public static implicit operator ContainerRegistryExportPolicyStatus?(string value) => value == null ? (ContainerRegistryExportPolicyStatus?)null : new ContainerRegistryExportPolicyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="BenefitRecommendationUsageGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BenefitRecommendationUsageGrain?(string value) => value == null ? null : new BenefitRecommendationUsageGrain(value);
+        public static implicit operator BenefitRecommendationUsageGrain?(string value) => value == null ? (BenefitRecommendationUsageGrain?)null : new BenefitRecommendationUsageGrain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

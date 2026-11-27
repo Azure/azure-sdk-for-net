@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="RoleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleType?(string value) => value == null ? null : new RoleType(value);
+        public static implicit operator RoleType?(string value) => value == null ? (RoleType?)null : new RoleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

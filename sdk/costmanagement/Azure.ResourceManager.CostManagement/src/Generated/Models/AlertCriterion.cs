@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertCriterion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertCriterion?(string value) => value == null ? null : new AlertCriterion(value);
+        public static implicit operator AlertCriterion?(string value) => value == null ? (AlertCriterion?)null : new AlertCriterion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

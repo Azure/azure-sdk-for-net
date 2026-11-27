@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="StorageClassAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageClassAccessMode?(string value) => value == null ? null : new StorageClassAccessMode(value);
+        public static implicit operator StorageClassAccessMode?(string value) => value == null ? (StorageClassAccessMode?)null : new StorageClassAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

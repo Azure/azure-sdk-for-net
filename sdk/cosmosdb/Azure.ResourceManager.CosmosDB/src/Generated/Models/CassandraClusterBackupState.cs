@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CassandraClusterBackupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CassandraClusterBackupState?(string value) => value == null ? null : new CassandraClusterBackupState(value);
+        public static implicit operator CassandraClusterBackupState?(string value) => value == null ? (CassandraClusterBackupState?)null : new CassandraClusterBackupState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

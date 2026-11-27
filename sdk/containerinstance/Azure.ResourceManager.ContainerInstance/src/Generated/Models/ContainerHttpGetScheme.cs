@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerHttpGetScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerHttpGetScheme?(string value) => value == null ? null : new ContainerHttpGetScheme(value);
+        public static implicit operator ContainerHttpGetScheme?(string value) => value == null ? (ContainerHttpGetScheme?)null : new ContainerHttpGetScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

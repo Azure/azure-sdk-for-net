@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceMachineDriftAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceMachineDriftAction?(string value) => value == null ? null : new ContainerServiceMachineDriftAction(value);
+        public static implicit operator ContainerServiceMachineDriftAction?(string value) => value == null ? (ContainerServiceMachineDriftAction?)null : new ContainerServiceMachineDriftAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

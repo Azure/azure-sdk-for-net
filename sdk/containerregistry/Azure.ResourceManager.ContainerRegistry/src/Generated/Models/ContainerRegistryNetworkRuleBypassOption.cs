@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryNetworkRuleBypassOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryNetworkRuleBypassOption?(string value) => value == null ? null : new ContainerRegistryNetworkRuleBypassOption(value);
+        public static implicit operator ContainerRegistryNetworkRuleBypassOption?(string value) => value == null ? (ContainerRegistryNetworkRuleBypassOption?)null : new ContainerRegistryNetworkRuleBypassOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

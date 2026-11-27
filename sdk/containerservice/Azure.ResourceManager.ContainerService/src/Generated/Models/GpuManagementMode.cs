@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="GpuManagementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GpuManagementMode?(string value) => value == null ? null : new GpuManagementMode(value);
+        public static implicit operator GpuManagementMode?(string value) => value == null ? (GpuManagementMode?)null : new GpuManagementMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

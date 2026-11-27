@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
 
         /// <summary> Converts a string to a <see cref="PodSecurityStandardsLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PodSecurityStandardsLevel?(string value) => value == null ? null : new PodSecurityStandardsLevel(value);
+        public static implicit operator PodSecurityStandardsLevel?(string value) => value == null ? (PodSecurityStandardsLevel?)null : new PodSecurityStandardsLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

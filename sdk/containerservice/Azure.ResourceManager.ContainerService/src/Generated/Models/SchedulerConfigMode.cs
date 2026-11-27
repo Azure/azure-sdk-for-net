@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="SchedulerConfigMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SchedulerConfigMode?(string value) => value == null ? null : new SchedulerConfigMode(value);
+        public static implicit operator SchedulerConfigMode?(string value) => value == null ? (SchedulerConfigMode?)null : new SchedulerConfigMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

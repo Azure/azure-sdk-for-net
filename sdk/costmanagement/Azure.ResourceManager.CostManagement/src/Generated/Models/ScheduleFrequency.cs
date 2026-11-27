@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ScheduleFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleFrequency?(string value) => value == null ? null : new ScheduleFrequency(value);
+        public static implicit operator ScheduleFrequency?(string value) => value == null ? (ScheduleFrequency?)null : new ScheduleFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

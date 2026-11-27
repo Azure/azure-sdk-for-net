@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryEndpointProtocol?(string value) => value == null ? null : new ContainerRegistryEndpointProtocol(value);
+        public static implicit operator ContainerRegistryEndpointProtocol?(string value) => value == null ? (ContainerRegistryEndpointProtocol?)null : new ContainerRegistryEndpointProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

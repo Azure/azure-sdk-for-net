@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesResourceObjectInfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesResourceObjectInfrastructureEncryption?(string value) => value == null ? null : new KubernetesResourceObjectInfrastructureEncryption(value);
+        public static implicit operator KubernetesResourceObjectInfrastructureEncryption?(string value) => value == null ? (KubernetesResourceObjectInfrastructureEncryption?)null : new KubernetesResourceObjectInfrastructureEncryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

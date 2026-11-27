@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="DnsNameLabelReusePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsNameLabelReusePolicy?(string value) => value == null ? null : new DnsNameLabelReusePolicy(value);
+        public static implicit operator DnsNameLabelReusePolicy?(string value) => value == null ? (DnsNameLabelReusePolicy?)null : new DnsNameLabelReusePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

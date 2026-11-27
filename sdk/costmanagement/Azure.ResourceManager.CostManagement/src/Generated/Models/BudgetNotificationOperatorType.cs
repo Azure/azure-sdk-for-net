@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="BudgetNotificationOperatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BudgetNotificationOperatorType?(string value) => value == null ? null : new BudgetNotificationOperatorType(value);
+        public static implicit operator BudgetNotificationOperatorType?(string value) => value == null ? (BudgetNotificationOperatorType?)null : new BudgetNotificationOperatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

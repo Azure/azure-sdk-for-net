@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceUpgradeIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceUpgradeIssueType?(string value) => value == null ? null : new ContainerServiceUpgradeIssueType(value);
+        public static implicit operator ContainerServiceUpgradeIssueType?(string value) => value == null ? (ContainerServiceUpgradeIssueType?)null : new ContainerServiceUpgradeIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

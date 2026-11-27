@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlProvisioningState?(string value) => value == null ? null : new CosmosDBForPostgreSqlProvisioningState(value);
+        public static implicit operator CosmosDBForPostgreSqlProvisioningState?(string value) => value == null ? (CosmosDBForPostgreSqlProvisioningState?)null : new CosmosDBForPostgreSqlProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

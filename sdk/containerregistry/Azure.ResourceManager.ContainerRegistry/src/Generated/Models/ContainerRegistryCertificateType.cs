@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryCertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryCertificateType?(string value) => value == null ? null : new ContainerRegistryCertificateType(value);
+        public static implicit operator ContainerRegistryCertificateType?(string value) => value == null ? (ContainerRegistryCertificateType?)null : new ContainerRegistryCertificateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

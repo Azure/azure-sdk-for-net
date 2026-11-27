@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="NGroupUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NGroupUpdateMode?(string value) => value == null ? null : new NGroupUpdateMode(value);
+        public static implicit operator NGroupUpdateMode?(string value) => value == null ? (NGroupUpdateMode?)null : new NGroupUpdateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

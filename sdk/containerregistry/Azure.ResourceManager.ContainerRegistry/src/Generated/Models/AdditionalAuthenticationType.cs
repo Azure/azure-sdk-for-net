@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="AdditionalAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalAuthenticationType?(string value) => value == null ? null : new AdditionalAuthenticationType(value);
+        public static implicit operator AdditionalAuthenticationType?(string value) => value == null ? (AdditionalAuthenticationType?)null : new AdditionalAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupIPAddressType?(string value) => value == null ? null : new ContainerGroupIPAddressType(value);
+        public static implicit operator ContainerGroupIPAddressType?(string value) => value == null ? (ContainerGroupIPAddressType?)null : new ContainerGroupIPAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

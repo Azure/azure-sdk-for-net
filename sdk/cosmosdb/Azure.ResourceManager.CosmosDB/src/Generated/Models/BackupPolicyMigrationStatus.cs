@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="BackupPolicyMigrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupPolicyMigrationStatus?(string value) => value == null ? null : new BackupPolicyMigrationStatus(value);
+        public static implicit operator BackupPolicyMigrationStatus?(string value) => value == null ? (BackupPolicyMigrationStatus?)null : new BackupPolicyMigrationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

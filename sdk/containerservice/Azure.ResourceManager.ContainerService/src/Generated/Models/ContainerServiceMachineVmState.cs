@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceMachineVmState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceMachineVmState?(string value) => value == null ? null : new ContainerServiceMachineVmState(value);
+        public static implicit operator ContainerServiceMachineVmState?(string value) => value == null ? (ContainerServiceMachineVmState?)null : new ContainerServiceMachineVmState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

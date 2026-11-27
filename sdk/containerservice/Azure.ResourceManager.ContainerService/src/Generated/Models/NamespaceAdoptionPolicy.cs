@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="NamespaceAdoptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NamespaceAdoptionPolicy?(string value) => value == null ? null : new NamespaceAdoptionPolicy(value);
+        public static implicit operator NamespaceAdoptionPolicy?(string value) => value == null ? (NamespaceAdoptionPolicy?)null : new NamespaceAdoptionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

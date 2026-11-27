@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="DefaultPriorityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DefaultPriorityLevel?(string value) => value == null ? null : new DefaultPriorityLevel(value);
+        public static implicit operator DefaultPriorityLevel?(string value) => value == null ? (DefaultPriorityLevel?)null : new DefaultPriorityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

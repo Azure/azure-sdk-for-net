@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="NetworkDataplane"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkDataplane?(string value) => value == null ? null : new NetworkDataplane(value);
+        public static implicit operator NetworkDataplane?(string value) => value == null ? (NetworkDataplane?)null : new NetworkDataplane(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

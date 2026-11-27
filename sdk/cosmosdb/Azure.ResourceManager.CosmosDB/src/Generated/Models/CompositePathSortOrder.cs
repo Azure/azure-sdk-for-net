@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CompositePathSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CompositePathSortOrder?(string value) => value == null ? null : new CompositePathSortOrder(value);
+        public static implicit operator CompositePathSortOrder?(string value) => value == null ? (CompositePathSortOrder?)null : new CompositePathSortOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

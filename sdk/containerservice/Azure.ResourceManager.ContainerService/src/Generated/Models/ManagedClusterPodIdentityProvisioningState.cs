@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterPodIdentityProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterPodIdentityProvisioningState?(string value) => value == null ? null : new ManagedClusterPodIdentityProvisioningState(value);
+        public static implicit operator ManagedClusterPodIdentityProvisioningState?(string value) => value == null ? (ManagedClusterPodIdentityProvisioningState?)null : new ManagedClusterPodIdentityProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

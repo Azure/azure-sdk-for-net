@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterNamespaceProvisioningState?(string value) => value == null ? null : new ManagedClusterNamespaceProvisioningState(value);
+        public static implicit operator ManagedClusterNamespaceProvisioningState?(string value) => value == null ? (ManagedClusterNamespaceProvisioningState?)null : new ManagedClusterNamespaceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

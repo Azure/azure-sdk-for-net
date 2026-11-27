@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ReportGranularityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReportGranularityType?(string value) => value == null ? null : new ReportGranularityType(value);
+        public static implicit operator ReportGranularityType?(string value) => value == null ? (ReportGranularityType?)null : new ReportGranularityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

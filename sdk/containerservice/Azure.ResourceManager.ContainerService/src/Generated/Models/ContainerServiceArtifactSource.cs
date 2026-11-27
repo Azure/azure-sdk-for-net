@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceArtifactSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceArtifactSource?(string value) => value == null ? null : new ContainerServiceArtifactSource(value);
+        public static implicit operator ContainerServiceArtifactSource?(string value) => value == null ? (ContainerServiceArtifactSource?)null : new ContainerServiceArtifactSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

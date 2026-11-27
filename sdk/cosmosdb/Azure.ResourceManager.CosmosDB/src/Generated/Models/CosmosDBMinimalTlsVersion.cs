@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBMinimalTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBMinimalTlsVersion?(string value) => value == null ? null : new CosmosDBMinimalTlsVersion(value);
+        public static implicit operator CosmosDBMinimalTlsVersion?(string value) => value == null ? (CosmosDBMinimalTlsVersion?)null : new CosmosDBMinimalTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

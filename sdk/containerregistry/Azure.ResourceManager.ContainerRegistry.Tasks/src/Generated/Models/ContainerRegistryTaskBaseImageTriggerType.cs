@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskBaseImageTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskBaseImageTriggerType?(string value) => value == null ? null : new ContainerRegistryTaskBaseImageTriggerType(value);
+        public static implicit operator ContainerRegistryTaskBaseImageTriggerType?(string value) => value == null ? (ContainerRegistryTaskBaseImageTriggerType?)null : new ContainerRegistryTaskBaseImageTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

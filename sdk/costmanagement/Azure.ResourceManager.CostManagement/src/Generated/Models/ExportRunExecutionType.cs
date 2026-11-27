@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportRunExecutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportRunExecutionType?(string value) => value == null ? null : new ExportRunExecutionType(value);
+        public static implicit operator ExportRunExecutionType?(string value) => value == null ? (ExportRunExecutionType?)null : new ExportRunExecutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

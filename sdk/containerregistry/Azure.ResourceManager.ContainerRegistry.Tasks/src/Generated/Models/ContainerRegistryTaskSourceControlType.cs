@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryTaskSourceControlType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTaskSourceControlType?(string value) => value == null ? null : new ContainerRegistryTaskSourceControlType(value);
+        public static implicit operator ContainerRegistryTaskSourceControlType?(string value) => value == null ? (ContainerRegistryTaskSourceControlType?)null : new ContainerRegistryTaskSourceControlType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

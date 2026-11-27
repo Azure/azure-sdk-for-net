@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolType?(string value) => value == null ? null : new AgentPoolType(value);
+        public static implicit operator AgentPoolType?(string value) => value == null ? (AgentPoolType?)null : new AgentPoolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

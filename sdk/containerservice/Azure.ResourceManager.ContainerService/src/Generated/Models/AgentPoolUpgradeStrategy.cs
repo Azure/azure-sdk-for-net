@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolUpgradeStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolUpgradeStrategy?(string value) => value == null ? null : new AgentPoolUpgradeStrategy(value);
+        public static implicit operator AgentPoolUpgradeStrategy?(string value) => value == null ? (AgentPoolUpgradeStrategy?)null : new AgentPoolUpgradeStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

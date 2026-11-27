@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActionsRequiredForPrivateLinkServiceConsumer?(string value) => value == null ? null : new ActionsRequiredForPrivateLinkServiceConsumer(value);
+        public static implicit operator ActionsRequiredForPrivateLinkServiceConsumer?(string value) => value == null ? (ActionsRequiredForPrivateLinkServiceConsumer?)null : new ActionsRequiredForPrivateLinkServiceConsumer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

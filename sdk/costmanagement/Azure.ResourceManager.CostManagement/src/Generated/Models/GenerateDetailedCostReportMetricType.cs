@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="GenerateDetailedCostReportMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GenerateDetailedCostReportMetricType?(string value) => value == null ? null : new GenerateDetailedCostReportMetricType(value);
+        public static implicit operator GenerateDetailedCostReportMetricType?(string value) => value == null ? (GenerateDetailedCostReportMetricType?)null : new GenerateDetailedCostReportMetricType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

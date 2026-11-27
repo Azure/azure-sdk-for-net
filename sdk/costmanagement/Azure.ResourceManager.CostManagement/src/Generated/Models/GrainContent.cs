@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="GrainContent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrainContent?(string value) => value == null ? null : new GrainContent(value);
+        public static implicit operator GrainContent?(string value) => value == null ? (GrainContent?)null : new GrainContent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

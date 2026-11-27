@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostManagementAlertStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostManagementAlertStatus?(string value) => value == null ? null : new CostManagementAlertStatus(value);
+        public static implicit operator CostManagementAlertStatus?(string value) => value == null ? (CostManagementAlertStatus?)null : new CostManagementAlertStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

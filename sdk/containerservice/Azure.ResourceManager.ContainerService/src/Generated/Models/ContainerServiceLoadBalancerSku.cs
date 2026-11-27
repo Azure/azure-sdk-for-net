@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceLoadBalancerSku?(string value) => value == null ? null : new ContainerServiceLoadBalancerSku(value);
+        public static implicit operator ContainerServiceLoadBalancerSku?(string value) => value == null ? (ContainerServiceLoadBalancerSku?)null : new ContainerServiceLoadBalancerSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

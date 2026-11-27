@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="UndrainableNodeBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UndrainableNodeBehavior?(string value) => value == null ? null : new UndrainableNodeBehavior(value);
+        public static implicit operator UndrainableNodeBehavior?(string value) => value == null ? (UndrainableNodeBehavior?)null : new UndrainableNodeBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

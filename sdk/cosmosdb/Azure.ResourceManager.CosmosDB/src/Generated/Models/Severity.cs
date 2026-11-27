@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="Severity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Severity?(string value) => value == null ? null : new Severity(value);
+        public static implicit operator Severity?(string value) => value == null ? (Severity?)null : new Severity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

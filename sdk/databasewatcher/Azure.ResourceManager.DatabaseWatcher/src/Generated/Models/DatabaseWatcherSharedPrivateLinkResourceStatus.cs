@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseWatcherSharedPrivateLinkResourceStatus?(string value) => value == null ? null : new DatabaseWatcherSharedPrivateLinkResourceStatus(value);
+        public static implicit operator DatabaseWatcherSharedPrivateLinkResourceStatus?(string value) => value == null ? (DatabaseWatcherSharedPrivateLinkResourceStatus?)null : new DatabaseWatcherSharedPrivateLinkResourceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

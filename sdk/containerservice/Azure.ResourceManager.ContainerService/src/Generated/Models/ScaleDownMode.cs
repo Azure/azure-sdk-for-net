@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ScaleDownMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScaleDownMode?(string value) => value == null ? null : new ScaleDownMode(value);
+        public static implicit operator ScaleDownMode?(string value) => value == null ? (ScaleDownMode?)null : new ScaleDownMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

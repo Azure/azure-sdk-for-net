@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryImportMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryImportMode?(string value) => value == null ? null : new ContainerRegistryImportMode(value);
+        public static implicit operator ContainerRegistryImportMode?(string value) => value == null ? (ContainerRegistryImportMode?)null : new ContainerRegistryImportMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

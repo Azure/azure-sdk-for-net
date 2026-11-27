@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBSpatialType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBSpatialType?(string value) => value == null ? null : new CosmosDBSpatialType(value);
+        public static implicit operator CosmosDBSpatialType?(string value) => value == null ? (CosmosDBSpatialType?)null : new CosmosDBSpatialType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

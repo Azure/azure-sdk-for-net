@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterAdvancedNetworkPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterAdvancedNetworkPolicy?(string value) => value == null ? null : new ManagedClusterAdvancedNetworkPolicy(value);
+        public static implicit operator ManagedClusterAdvancedNetworkPolicy?(string value) => value == null ? (ManagedClusterAdvancedNetworkPolicy?)null : new ManagedClusterAdvancedNetworkPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="ActiveDirectoryAuth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActiveDirectoryAuth?(string value) => value == null ? null : new ActiveDirectoryAuth(value);
+        public static implicit operator ActiveDirectoryAuth?(string value) => value == null ? (ActiveDirectoryAuth?)null : new ActiveDirectoryAuth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

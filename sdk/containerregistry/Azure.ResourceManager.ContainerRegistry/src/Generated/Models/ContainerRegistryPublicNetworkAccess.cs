@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryPublicNetworkAccess?(string value) => value == null ? null : new ContainerRegistryPublicNetworkAccess(value);
+        public static implicit operator ContainerRegistryPublicNetworkAccess?(string value) => value == null ? (ContainerRegistryPublicNetworkAccess?)null : new ContainerRegistryPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

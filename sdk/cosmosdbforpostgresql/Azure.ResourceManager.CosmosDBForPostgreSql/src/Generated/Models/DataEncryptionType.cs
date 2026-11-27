@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="DataEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataEncryptionType?(string value) => value == null ? null : new DataEncryptionType(value);
+        public static implicit operator DataEncryptionType?(string value) => value == null ? (DataEncryptionType?)null : new DataEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

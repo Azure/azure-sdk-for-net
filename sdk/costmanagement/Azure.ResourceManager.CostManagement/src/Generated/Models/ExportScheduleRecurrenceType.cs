@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportScheduleRecurrenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportScheduleRecurrenceType?(string value) => value == null ? null : new ExportScheduleRecurrenceType(value);
+        public static implicit operator ExportScheduleRecurrenceType?(string value) => value == null ? (ExportScheduleRecurrenceType?)null : new ExportScheduleRecurrenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

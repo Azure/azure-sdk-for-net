@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportRunExecutionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportRunExecutionStatus?(string value) => value == null ? null : new ExportRunExecutionStatus(value);
+        public static implicit operator ExportRunExecutionStatus?(string value) => value == null ? (ExportRunExecutionStatus?)null : new ExportRunExecutionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

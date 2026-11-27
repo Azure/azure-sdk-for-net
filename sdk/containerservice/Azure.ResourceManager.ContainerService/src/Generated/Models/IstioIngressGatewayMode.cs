@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="IstioIngressGatewayMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IstioIngressGatewayMode?(string value) => value == null ? null : new IstioIngressGatewayMode(value);
+        public static implicit operator IstioIngressGatewayMode?(string value) => value == null ? (IstioIngressGatewayMode?)null : new IstioIngressGatewayMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="LocalDnsForwardPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDnsForwardPolicy?(string value) => value == null ? null : new LocalDnsForwardPolicy(value);
+        public static implicit operator LocalDnsForwardPolicy?(string value) => value == null ? (LocalDnsForwardPolicy?)null : new LocalDnsForwardPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostDetailsDataFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostDetailsDataFormat?(string value) => value == null ? null : new CostDetailsDataFormat(value);
+        public static implicit operator CostDetailsDataFormat?(string value) => value == null ? (CostDetailsDataFormat?)null : new CostDetailsDataFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
 
         /// <summary> Converts a string to a <see cref="PostScriptAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostScriptAction?(string value) => value == null ? null : new PostScriptAction(value);
+        public static implicit operator PostScriptAction?(string value) => value == null ? (PostScriptAction?)null : new PostScriptAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

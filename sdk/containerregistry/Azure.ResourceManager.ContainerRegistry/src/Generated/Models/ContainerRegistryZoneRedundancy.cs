@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryZoneRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryZoneRedundancy?(string value) => value == null ? null : new ContainerRegistryZoneRedundancy(value);
+        public static implicit operator ContainerRegistryZoneRedundancy?(string value) => value == null ? (ContainerRegistryZoneRedundancy?)null : new ContainerRegistryZoneRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

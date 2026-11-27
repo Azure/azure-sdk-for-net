@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="DestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DestinationType?(string value) => value == null ? null : new DestinationType(value);
+        public static implicit operator DestinationType?(string value) => value == null ? (DestinationType?)null : new DestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

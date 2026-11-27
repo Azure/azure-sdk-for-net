@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryPipelineSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryPipelineSourceType?(string value) => value == null ? null : new ContainerRegistryPipelineSourceType(value);
+        public static implicit operator ContainerRegistryPipelineSourceType?(string value) => value == null ? (ContainerRegistryPipelineSourceType?)null : new ContainerRegistryPipelineSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

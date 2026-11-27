@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExternalCloudProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalCloudProviderType?(string value) => value == null ? null : new ExternalCloudProviderType(value);
+        public static implicit operator ExternalCloudProviderType?(string value) => value == null ? (ExternalCloudProviderType?)null : new ExternalCloudProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

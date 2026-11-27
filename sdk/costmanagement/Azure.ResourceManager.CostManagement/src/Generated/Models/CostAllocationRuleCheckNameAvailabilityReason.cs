@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostAllocationRuleCheckNameAvailabilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostAllocationRuleCheckNameAvailabilityReason?(string value) => value == null ? null : new CostAllocationRuleCheckNameAvailabilityReason(value);
+        public static implicit operator CostAllocationRuleCheckNameAvailabilityReason?(string value) => value == null ? (CostAllocationRuleCheckNameAvailabilityReason?)null : new CostAllocationRuleCheckNameAvailabilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

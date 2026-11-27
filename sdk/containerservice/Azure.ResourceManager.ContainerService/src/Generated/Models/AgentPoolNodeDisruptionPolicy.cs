@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolNodeDisruptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolNodeDisruptionPolicy?(string value) => value == null ? null : new AgentPoolNodeDisruptionPolicy(value);
+        public static implicit operator AgentPoolNodeDisruptionPolicy?(string value) => value == null ? (AgentPoolNodeDisruptionPolicy?)null : new AgentPoolNodeDisruptionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

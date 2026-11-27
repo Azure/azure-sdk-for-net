@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceNetworkKubeProxyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceNetworkKubeProxyMode?(string value) => value == null ? null : new ContainerServiceNetworkKubeProxyMode(value);
+        public static implicit operator ContainerServiceNetworkKubeProxyMode?(string value) => value == null ? (ContainerServiceNetworkKubeProxyMode?)null : new ContainerServiceNetworkKubeProxyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

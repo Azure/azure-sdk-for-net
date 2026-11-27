@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistrySyncState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistrySyncState?(string value) => value == null ? null : new ContainerRegistrySyncState(value);
+        public static implicit operator ContainerRegistrySyncState?(string value) => value == null ? (ContainerRegistrySyncState?)null : new ContainerRegistrySyncState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

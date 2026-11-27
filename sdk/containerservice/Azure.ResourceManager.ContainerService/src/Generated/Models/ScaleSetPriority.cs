@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ScaleSetPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScaleSetPriority?(string value) => value == null ? null : new ScaleSetPriority(value);
+        public static implicit operator ScaleSetPriority?(string value) => value == null ? (ScaleSetPriority?)null : new ScaleSetPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBAccountCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBAccountCreateMode?(string value) => value == null ? null : new CosmosDBAccountCreateMode(value);
+        public static implicit operator CosmosDBAccountCreateMode?(string value) => value == null ? (CosmosDBAccountCreateMode?)null : new CosmosDBAccountCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

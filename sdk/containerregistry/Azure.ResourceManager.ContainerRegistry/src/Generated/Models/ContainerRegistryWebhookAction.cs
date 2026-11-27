@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistryWebhookAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryWebhookAction?(string value) => value == null ? null : new ContainerRegistryWebhookAction(value);
+        public static implicit operator ContainerRegistryWebhookAction?(string value) => value == null ? (ContainerRegistryWebhookAction?)null : new ContainerRegistryWebhookAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterKeyVaultNetworkAccessType?(string value) => value == null ? null : new ManagedClusterKeyVaultNetworkAccessType(value);
+        public static implicit operator ManagedClusterKeyVaultNetworkAccessType?(string value) => value == null ? (ManagedClusterKeyVaultNetworkAccessType?)null : new ManagedClusterKeyVaultNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

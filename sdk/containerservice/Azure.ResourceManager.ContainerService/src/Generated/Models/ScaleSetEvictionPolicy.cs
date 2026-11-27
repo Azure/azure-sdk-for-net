@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ScaleSetEvictionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScaleSetEvictionPolicy?(string value) => value == null ? null : new ScaleSetEvictionPolicy(value);
+        public static implicit operator ScaleSetEvictionPolicy?(string value) => value == null ? (ScaleSetEvictionPolicy?)null : new ScaleSetEvictionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

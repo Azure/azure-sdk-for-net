@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="RuleStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleStatus?(string value) => value == null ? null : new RuleStatus(value);
+        public static implicit operator RuleStatus?(string value) => value == null ? (RuleStatus?)null : new RuleStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

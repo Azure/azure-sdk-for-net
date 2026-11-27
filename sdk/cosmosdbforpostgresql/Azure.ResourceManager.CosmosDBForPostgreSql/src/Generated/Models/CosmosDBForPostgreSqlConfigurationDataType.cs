@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlConfigurationDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlConfigurationDataType?(string value) => value == null ? null : new CosmosDBForPostgreSqlConfigurationDataType(value);
+        public static implicit operator CosmosDBForPostgreSqlConfigurationDataType?(string value) => value == null ? (CosmosDBForPostgreSqlConfigurationDataType?)null : new CosmosDBForPostgreSqlConfigurationDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

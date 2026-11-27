@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="ContinuousTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContinuousTier?(string value) => value == null ? null : new ContinuousTier(value);
+        public static implicit operator ContinuousTier?(string value) => value == null ? (ContinuousTier?)null : new ContinuousTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

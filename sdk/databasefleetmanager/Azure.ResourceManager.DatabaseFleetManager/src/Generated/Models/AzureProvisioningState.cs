@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Converts a string to a <see cref="AzureProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureProvisioningState?(string value) => value == null ? null : new AzureProvisioningState(value);
+        public static implicit operator AzureProvisioningState?(string value) => value == null ? (AzureProvisioningState?)null : new AzureProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

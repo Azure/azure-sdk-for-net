@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportFormatType?(string value) => value == null ? null : new ExportFormatType(value);
+        public static implicit operator ExportFormatType?(string value) => value == null ? (ExportFormatType?)null : new ExportFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

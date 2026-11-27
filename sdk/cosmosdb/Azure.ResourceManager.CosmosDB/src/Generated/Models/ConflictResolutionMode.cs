@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="ConflictResolutionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConflictResolutionMode?(string value) => value == null ? null : new ConflictResolutionMode(value);
+        public static implicit operator ConflictResolutionMode?(string value) => value == null ? (ConflictResolutionMode?)null : new ConflictResolutionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

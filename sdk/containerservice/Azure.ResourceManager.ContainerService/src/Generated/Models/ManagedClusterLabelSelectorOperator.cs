@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterLabelSelectorOperator?(string value) => value == null ? null : new ManagedClusterLabelSelectorOperator(value);
+        public static implicit operator ManagedClusterLabelSelectorOperator?(string value) => value == null ? (ManagedClusterLabelSelectorOperator?)null : new ManagedClusterLabelSelectorOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

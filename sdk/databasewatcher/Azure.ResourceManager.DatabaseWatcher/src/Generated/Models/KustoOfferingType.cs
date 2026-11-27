@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Converts a string to a <see cref="KustoOfferingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoOfferingType?(string value) => value == null ? null : new KustoOfferingType(value);
+        public static implicit operator KustoOfferingType?(string value) => value == null ? (KustoOfferingType?)null : new KustoOfferingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

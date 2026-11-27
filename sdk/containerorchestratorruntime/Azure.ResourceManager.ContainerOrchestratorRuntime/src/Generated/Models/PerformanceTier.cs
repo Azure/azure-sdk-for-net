@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="PerformanceTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PerformanceTier?(string value) => value == null ? null : new PerformanceTier(value);
+        public static implicit operator PerformanceTier?(string value) => value == null ? (PerformanceTier?)null : new PerformanceTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

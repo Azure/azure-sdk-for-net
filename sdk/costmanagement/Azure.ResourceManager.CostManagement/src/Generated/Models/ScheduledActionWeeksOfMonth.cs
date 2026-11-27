@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionWeeksOfMonth?(string value) => value == null ? null : new ScheduledActionWeeksOfMonth(value);
+        public static implicit operator ScheduledActionWeeksOfMonth?(string value) => value == null ? (ScheduledActionWeeksOfMonth?)null : new ScheduledActionWeeksOfMonth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

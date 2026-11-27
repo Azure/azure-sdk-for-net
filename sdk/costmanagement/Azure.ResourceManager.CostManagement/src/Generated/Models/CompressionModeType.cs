@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CompressionModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CompressionModeType?(string value) => value == null ? null : new CompressionModeType(value);
+        public static implicit operator CompressionModeType?(string value) => value == null ? (CompressionModeType?)null : new CompressionModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

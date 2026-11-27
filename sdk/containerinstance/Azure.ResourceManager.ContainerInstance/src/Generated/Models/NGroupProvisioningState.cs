@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Converts a string to a <see cref="NGroupProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NGroupProvisioningState?(string value) => value == null ? null : new NGroupProvisioningState(value);
+        public static implicit operator NGroupProvisioningState?(string value) => value == null ? (NGroupProvisioningState?)null : new NGroupProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

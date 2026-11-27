@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
 
         /// <summary> Converts a string to a <see cref="PreparedImageSpecificationScriptType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PreparedImageSpecificationScriptType?(string value) => value == null ? null : new PreparedImageSpecificationScriptType(value);
+        public static implicit operator PreparedImageSpecificationScriptType?(string value) => value == null ? (PreparedImageSpecificationScriptType?)null : new PreparedImageSpecificationScriptType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

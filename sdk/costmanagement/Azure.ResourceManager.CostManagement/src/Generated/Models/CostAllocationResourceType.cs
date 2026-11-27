@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="CostAllocationResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostAllocationResourceType?(string value) => value == null ? null : new CostAllocationResourceType(value);
+        public static implicit operator CostAllocationResourceType?(string value) => value == null ? (CostAllocationResourceType?)null : new CostAllocationResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

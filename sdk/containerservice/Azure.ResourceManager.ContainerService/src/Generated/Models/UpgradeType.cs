@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="UpgradeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeType?(string value) => value == null ? null : new UpgradeType(value);
+        public static implicit operator UpgradeType?(string value) => value == null ? (UpgradeType?)null : new UpgradeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

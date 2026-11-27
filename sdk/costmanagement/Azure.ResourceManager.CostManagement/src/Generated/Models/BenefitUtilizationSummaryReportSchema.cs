@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="BenefitUtilizationSummaryReportSchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BenefitUtilizationSummaryReportSchema?(string value) => value == null ? null : new BenefitUtilizationSummaryReportSchema(value);
+        public static implicit operator BenefitUtilizationSummaryReportSchema?(string value) => value == null ? (BenefitUtilizationSummaryReportSchema?)null : new BenefitUtilizationSummaryReportSchema(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

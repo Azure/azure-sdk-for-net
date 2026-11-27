@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="PodIPAllocationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PodIPAllocationMode?(string value) => value == null ? null : new PodIPAllocationMode(value);
+        public static implicit operator PodIPAllocationMode?(string value) => value == null ? (PodIPAllocationMode?)null : new PodIPAllocationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

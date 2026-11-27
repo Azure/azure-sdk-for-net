@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ContainerRegistrySkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistrySkuTier?(string value) => value == null ? null : new ContainerRegistrySkuTier(value);
+        public static implicit operator ContainerRegistrySkuTier?(string value) => value == null ? (ContainerRegistrySkuTier?)null : new ContainerRegistrySkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

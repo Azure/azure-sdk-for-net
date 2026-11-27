@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="TimeframeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeframeType?(string value) => value == null ? null : new TimeframeType(value);
+        public static implicit operator TimeframeType?(string value) => value == null ? (TimeframeType?)null : new TimeframeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ManagedGatewayType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedGatewayType?(string value) => value == null ? null : new ManagedGatewayType(value);
+        public static implicit operator ManagedGatewayType?(string value) => value == null ? (ManagedGatewayType?)null : new ManagedGatewayType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

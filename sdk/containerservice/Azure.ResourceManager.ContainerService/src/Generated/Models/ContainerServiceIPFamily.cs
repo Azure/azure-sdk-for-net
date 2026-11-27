@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceIPFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceIPFamily?(string value) => value == null ? null : new ContainerServiceIPFamily(value);
+        public static implicit operator ContainerServiceIPFamily?(string value) => value == null ? (ContainerServiceIPFamily?)null : new ContainerServiceIPFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

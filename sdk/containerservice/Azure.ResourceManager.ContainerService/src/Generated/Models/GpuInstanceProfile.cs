@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="GpuInstanceProfile"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GpuInstanceProfile?(string value) => value == null ? null : new GpuInstanceProfile(value);
+        public static implicit operator GpuInstanceProfile?(string value) => value == null ? (GpuInstanceProfile?)null : new GpuInstanceProfile(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

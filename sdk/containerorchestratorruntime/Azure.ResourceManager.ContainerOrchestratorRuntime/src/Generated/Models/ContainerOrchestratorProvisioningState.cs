@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary> Converts a string to a <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerOrchestratorProvisioningState?(string value) => value == null ? null : new ContainerOrchestratorProvisioningState(value);
+        public static implicit operator ContainerOrchestratorProvisioningState?(string value) => value == null ? (ContainerOrchestratorProvisioningState?)null : new ContainerOrchestratorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

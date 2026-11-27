@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="BillingAccountBenefitKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingAccountBenefitKind?(string value) => value == null ? null : new BillingAccountBenefitKind(value);
+        public static implicit operator BillingAccountBenefitKind?(string value) => value == null ? (BillingAccountBenefitKind?)null : new BillingAccountBenefitKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

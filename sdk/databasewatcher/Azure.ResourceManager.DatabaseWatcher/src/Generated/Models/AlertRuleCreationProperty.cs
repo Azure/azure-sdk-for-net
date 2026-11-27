@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Converts a string to a <see cref="AlertRuleCreationProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertRuleCreationProperty?(string value) => value == null ? null : new AlertRuleCreationProperty(value);
+        public static implicit operator AlertRuleCreationProperty?(string value) => value == null ? (AlertRuleCreationProperty?)null : new AlertRuleCreationProperty(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

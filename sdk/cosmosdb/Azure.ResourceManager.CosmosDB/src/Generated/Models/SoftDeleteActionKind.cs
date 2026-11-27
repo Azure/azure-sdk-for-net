@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Converts a string to a <see cref="SoftDeleteActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SoftDeleteActionKind?(string value) => value == null ? null : new SoftDeleteActionKind(value);
+        public static implicit operator SoftDeleteActionKind?(string value) => value == null ? (SoftDeleteActionKind?)null : new SoftDeleteActionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

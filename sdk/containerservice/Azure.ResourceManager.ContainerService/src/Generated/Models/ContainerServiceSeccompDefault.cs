@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceSeccompDefault"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceSeccompDefault?(string value) => value == null ? null : new ContainerServiceSeccompDefault(value);
+        public static implicit operator ContainerServiceSeccompDefault?(string value) => value == null ? (ContainerServiceSeccompDefault?)null : new ContainerServiceSeccompDefault(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="AccumulatedType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccumulatedType?(string value) => value == null ? null : new AccumulatedType(value);
+        public static implicit operator AccumulatedType?(string value) => value == null ? (AccumulatedType?)null : new AccumulatedType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

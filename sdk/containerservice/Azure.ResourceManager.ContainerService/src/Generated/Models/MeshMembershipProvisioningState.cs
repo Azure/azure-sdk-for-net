@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="MeshMembershipProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MeshMembershipProvisioningState?(string value) => value == null ? null : new MeshMembershipProvisioningState(value);
+        public static implicit operator MeshMembershipProvisioningState?(string value) => value == null ? (MeshMembershipProvisioningState?)null : new MeshMembershipProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

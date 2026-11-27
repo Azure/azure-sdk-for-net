@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Converts a string to a <see cref="FilterItemNames"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilterItemNames?(string value) => value == null ? null : new FilterItemNames(value);
+        public static implicit operator FilterItemNames?(string value) => value == null ? (FilterItemNames?)null : new FilterItemNames(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

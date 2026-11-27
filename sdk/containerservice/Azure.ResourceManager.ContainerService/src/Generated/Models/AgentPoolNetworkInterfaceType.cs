@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolNetworkInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolNetworkInterfaceType?(string value) => value == null ? null : new AgentPoolNetworkInterfaceType(value);
+        public static implicit operator AgentPoolNetworkInterfaceType?(string value) => value == null ? (AgentPoolNetworkInterfaceType?)null : new AgentPoolNetworkInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
