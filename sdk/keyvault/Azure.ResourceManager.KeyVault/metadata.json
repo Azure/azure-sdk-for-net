@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "Microsoft.KeyVault": "2026-10-01-preview"
+    "Microsoft.KeyVault": "2026-12-01"
   }
 }

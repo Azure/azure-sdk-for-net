@@ -96,11 +96,8 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(SecretPatchProperties))]
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TokenBindingConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultListResult))]
-    [ModelReaderWriterBuildable(typeof(WrappingKeyConfiguration))]
-    [ModelReaderWriterBuildable(typeof(WrappingKeyValue))]
     public partial class AzureResourceManagerKeyVaultContext : ModelReaderWriterContext
     {
     }

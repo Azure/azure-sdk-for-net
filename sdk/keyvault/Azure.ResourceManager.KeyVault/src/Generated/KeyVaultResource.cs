@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(ResourceType, out string keyVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KeyVault/vaults", out string vaultsApiVersionOverride) ? vaultsApiVersionOverride : "2026-10-01-preview");
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KeyVault/vaults", out string vaultsApiVersionOverride) ? vaultsApiVersionOverride : "2026-12-01");
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultApiVersion ?? "2026-10-01-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultApiVersion ?? "2026-12-01");
             ValidateResourceId(id);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

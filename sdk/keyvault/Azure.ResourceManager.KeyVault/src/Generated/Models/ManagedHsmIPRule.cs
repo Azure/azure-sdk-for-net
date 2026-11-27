@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmIPRule"/>. </summary>
-        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
+        /// <param name="addressRange"> An IP address or address range in CIDR notation. IPv4 examples include '192.0.2.10' and '192.0.2.0/24'. Starting with API version 2026-12-01, IPv6 addresses and ranges, such as '2001:db8::1' and '2001:db8:1234::/64', are also accepted when networkAcls.publicNetworkIpAddressType is DualStack. Earlier API versions and the IPv4 public network IP address type accept only IPv4 rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressRange"/> is null. </exception>
         public ManagedHsmIPRule(string addressRange)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmIPRule"/>. </summary>
-        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
+        /// <param name="addressRange"> An IP address or address range in CIDR notation. IPv4 examples include '192.0.2.10' and '192.0.2.0/24'. Starting with API version 2026-12-01, IPv6 addresses and ranges, such as '2001:db8::1' and '2001:db8:1234::/64', are also accepted when networkAcls.publicNetworkIpAddressType is DualStack. Earlier API versions and the IPv4 public network IP address type accept only IPv4 rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedHsmIPRule(string addressRange, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </summary>
+        /// <summary> An IP address or address range in CIDR notation. IPv4 examples include '192.0.2.10' and '192.0.2.0/24'. Starting with API version 2026-12-01, IPv6 addresses and ranges, such as '2001:db8::1' and '2001:db8:1234::/64', are also accepted when networkAcls.publicNetworkIpAddressType is DualStack. Earlier API versions and the IPv4 public network IP address type accept only IPv4 rules. </summary>
         [WirePath("value")]
         public string AddressRange { get; set; }
     }

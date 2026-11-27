@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -33,23 +32,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/>. </summary>
-        /// <param name="identity"> Managed service identity assigned to the vault. </param>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultCreateOrUpdateContent(ManagedServiceIdentity identity, AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Identity = identity;
             Location = location;
             Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Managed service identity assigned to the vault. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The supported Azure location where the key vault should be created. </summary>
         [WirePath("location")]
