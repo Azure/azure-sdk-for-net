@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Inbound nat rule properties. </summary>
-    public partial class HciVmInboundNatRuleProperties
+    /// <summary> Inbound rule properties - extends InboundNATRuleProperties with additional status tracking. </summary>
+    public partial class InboundRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HciVmInboundNatRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundRuleProperties"/>. </summary>
         /// <param name="protocol"> Protocol for the NAT rule. </param>
         /// <param name="frontendPort"> Frontend Port for the inbound rule. </param>
         /// <param name="backendPort"> backend Port for the inbound rule. </param>
-        public HciVmInboundNatRuleProperties(HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort)
+        public InboundRuleProperties(HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort)
         {
 
             Protocol = protocol;
@@ -29,20 +29,24 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             BackendPort = backendPort;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciVmInboundNatRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundRuleProperties"/>. </summary>
         /// <param name="protocol"> Protocol for the NAT rule. </param>
         /// <param name="frontendPort"> Frontend Port for the inbound rule. </param>
         /// <param name="backendPort"> backend Port for the inbound rule. </param>
         /// <param name="backendIPConfiguration"> IP configuration for the target backend. </param>
         /// <param name="publicIPAddress"> Public IP Address for this NAT rule. </param>
+        /// <param name="provisioningState"> Provisioning state of the inbound rule. </param>
+        /// <param name="status"> The observed state of Inbound Rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInboundNatRuleProperties(HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort, HciVmIPConfigurationArmReference backendIPConfiguration, HciVmPublicIPAddressArmReference publicIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundRuleProperties(HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort, HciVmIPConfigurationArmReference backendIPConfiguration, HciVmPublicIPAddressArmReference publicIPAddress, HciVmProvisioningState? provisioningState, InboundRuleStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             FrontendPort = frontendPort;
             BackendPort = backendPort;
             BackendIPConfiguration = backendIPConfiguration;
             PublicIPAddress = publicIPAddress;
+            ProvisioningState = provisioningState;
+            Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,6 +64,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Public IP Address for this NAT rule. </summary>
         internal HciVmPublicIPAddressArmReference PublicIPAddress { get; set; }
+
+        /// <summary> Provisioning state of the inbound rule. </summary>
+        public HciVmProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The observed state of Inbound Rule. </summary>
+        public InboundRuleStatus Status { get; }
 
         /// <summary> The Azure Resource ID of an IPConfiguration resource. </summary>
         public ResourceIdentifier BackendIPResourceId

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="instanceView"> The virtual machine instance view. </param>
         /// <param name="status"> The observed state of virtual machine instances. </param>
         /// <param name="guestAgentInstallStatus"> Guest agent install status. </param>
-        /// <param name="vmId"> Unique identifier for the vm resource. </param>
+        /// <param name="vmId"> The SMBIOS GUID of the VM (hybrid compute identity). This is null for non-secure VMs and is populated for TrustedLaunch and ConfidentialVM VMs. </param>
         /// <param name="resourceUid"> Unique identifier defined by ARC to identify the guest of the VM. </param>
         /// <param name="hyperVVmId"> Unique identifier for the Hyper-V VM resource. </param>
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Guest agent install status. </summary>
         public GuestAgentInstallStatus GuestAgentInstallStatus { get; set; }
 
-        /// <summary> Unique identifier for the vm resource. </summary>
+        /// <summary> The SMBIOS GUID of the VM (hybrid compute identity). This is null for non-secure VMs and is populated for TrustedLaunch and ConfidentialVM VMs. </summary>
         public string VmId { get; }
 
         /// <summary> Unique identifier defined by ARC to identify the guest of the VM. </summary>

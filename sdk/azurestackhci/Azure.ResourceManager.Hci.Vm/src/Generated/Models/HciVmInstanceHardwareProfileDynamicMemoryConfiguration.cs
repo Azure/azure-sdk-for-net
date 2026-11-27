@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="maximumMemoryInMB"> Maximum memory in MB. </param>
         /// <param name="minimumMemoryInMB"> Minimum memory in MB. </param>
         /// <param name="targetMemoryBuffer"> Defines the amount of extra memory that should be reserved for a virtual machine instance at runtime, as a percentage of the total memory that the virtual machine instance is thought to need. This only applies to virtual systems with dynamic memory enabled. This property can be in the range of 5 to 2000. </param>
+        /// <param name="enabled"> Specifies whether dynamic memory is enabled for the virtual machine instance. When omitted, dynamic memory remains enabled; setting this to false converts the virtual machine instance to static memory. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceHardwareProfileDynamicMemoryConfiguration(long? maximumMemoryInMB, long? minimumMemoryInMB, int? targetMemoryBuffer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceHardwareProfileDynamicMemoryConfiguration(long? maximumMemoryInMB, long? minimumMemoryInMB, int? targetMemoryBuffer, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaximumMemoryInMB = maximumMemoryInMB;
             MinimumMemoryInMB = minimumMemoryInMB;
             TargetMemoryBuffer = targetMemoryBuffer;
+            Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Defines the amount of extra memory that should be reserved for a virtual machine instance at runtime, as a percentage of the total memory that the virtual machine instance is thought to need. This only applies to virtual systems with dynamic memory enabled. This property can be in the range of 5 to 2000. </summary>
         public int? TargetMemoryBuffer { get; set; }
+
+        /// <summary> Specifies whether dynamic memory is enabled for the virtual machine instance. When omitted, dynamic memory remains enabled; setting this to false converts the virtual machine instance to static memory. </summary>
+        public bool? Enabled { get; set; }
     }
 }
