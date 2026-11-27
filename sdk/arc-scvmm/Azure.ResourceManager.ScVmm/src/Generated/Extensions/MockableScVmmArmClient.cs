@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmServerResource"/> object. </returns>
         public virtual ScVmmServerResource GetScVmmServerResource(ResourceIdentifier id)
         {
-            ScVmmServerResource.ValidateResourceId(id);
             return new ScVmmServerResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmCloudResource"/> object. </returns>
         public virtual ScVmmCloudResource GetScVmmCloudResource(ResourceIdentifier id)
         {
-            ScVmmCloudResource.ValidateResourceId(id);
             return new ScVmmCloudResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource"/> object. </returns>
         public virtual ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(ResourceIdentifier id)
         {
-            ScVmmVirtualNetworkResource.ValidateResourceId(id);
             return new ScVmmVirtualNetworkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource"/> object. </returns>
         public virtual ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(ResourceIdentifier id)
         {
-            ScVmmVirtualMachineTemplateResource.ValidateResourceId(id);
             return new ScVmmVirtualMachineTemplateResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource"/> object. </returns>
         public virtual ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(ResourceIdentifier id)
         {
-            ScVmmAvailabilitySetResource.ValidateResourceId(id);
             return new ScVmmAvailabilitySetResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmInventoryItemResource"/> object. </returns>
         public virtual ScVmmInventoryItemResource GetScVmmInventoryItemResource(ResourceIdentifier id)
         {
-            ScVmmInventoryItemResource.ValidateResourceId(id);
             return new ScVmmInventoryItemResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmVirtualMachineInstanceResource"/> object. </returns>
         public virtual ScVmmVirtualMachineInstanceResource GetScVmmVirtualMachineInstanceResource(ResourceIdentifier id)
         {
-            ScVmmVirtualMachineInstanceResource.ValidateResourceId(id);
             return new ScVmmVirtualMachineInstanceResource(Client, id);
         }
 
@@ -102,7 +95,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmHybridIdentityMetadataResource"/> object. </returns>
         public virtual ScVmmHybridIdentityMetadataResource GetScVmmHybridIdentityMetadataResource(ResourceIdentifier id)
         {
-            ScVmmHybridIdentityMetadataResource.ValidateResourceId(id);
             return new ScVmmHybridIdentityMetadataResource(Client, id);
         }
 
@@ -119,7 +111,6 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmGuestAgentResource"/> object. </returns>
         public virtual ScVmmGuestAgentResource GetScVmmGuestAgentResource(ResourceIdentifier id)
         {
-            ScVmmGuestAgentResource.ValidateResourceId(id);
             return new ScVmmGuestAgentResource(Client, id);
         }
 

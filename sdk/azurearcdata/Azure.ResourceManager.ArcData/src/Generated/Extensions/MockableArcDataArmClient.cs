@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="SqlManagedInstanceResource"/> object. </returns>
         public virtual SqlManagedInstanceResource GetSqlManagedInstanceResource(ResourceIdentifier id)
         {
-            SqlManagedInstanceResource.ValidateResourceId(id);
             return new SqlManagedInstanceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="SqlServerInstanceResource"/> object. </returns>
         public virtual SqlServerInstanceResource GetSqlServerInstanceResource(ResourceIdentifier id)
         {
-            SqlServerInstanceResource.ValidateResourceId(id);
             return new SqlServerInstanceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="SqlServerLicenseResource"/> object. </returns>
         public virtual SqlServerLicenseResource GetSqlServerLicenseResource(ResourceIdentifier id)
         {
-            SqlServerLicenseResource.ValidateResourceId(id);
             return new SqlServerLicenseResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="PostgresInstanceResource"/> object. </returns>
         public virtual PostgresInstanceResource GetPostgresInstanceResource(ResourceIdentifier id)
         {
-            PostgresInstanceResource.ValidateResourceId(id);
             return new PostgresInstanceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="SqlServerEsuLicenseResource"/> object. </returns>
         public virtual SqlServerEsuLicenseResource GetSqlServerEsuLicenseResource(ResourceIdentifier id)
         {
-            SqlServerEsuLicenseResource.ValidateResourceId(id);
             return new SqlServerEsuLicenseResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="FailoverGroupResource"/> object. </returns>
         public virtual FailoverGroupResource GetFailoverGroupResource(ResourceIdentifier id)
         {
-            FailoverGroupResource.ValidateResourceId(id);
             return new FailoverGroupResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="SqlServerAvailabilityGroupResource"/> object. </returns>
         public virtual SqlServerAvailabilityGroupResource GetSqlServerAvailabilityGroupResource(ResourceIdentifier id)
         {
-            SqlServerAvailabilityGroupResource.ValidateResourceId(id);
             return new SqlServerAvailabilityGroupResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="DataControllerResource"/> object. </returns>
         public virtual DataControllerResource GetDataControllerResource(ResourceIdentifier id)
         {
-            DataControllerResource.ValidateResourceId(id);
             return new DataControllerResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="ArcDataActiveDirectoryConnectorResource"/> object. </returns>
         public virtual ArcDataActiveDirectoryConnectorResource GetArcDataActiveDirectoryConnectorResource(ResourceIdentifier id)
         {
-            ArcDataActiveDirectoryConnectorResource.ValidateResourceId(id);
             return new ArcDataActiveDirectoryConnectorResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <returns> Returns a <see cref="SqlServerDatabaseResource"/> object. </returns>
         public virtual SqlServerDatabaseResource GetSqlServerDatabaseResource(ResourceIdentifier id)
         {
-            SqlServerDatabaseResource.ValidateResourceId(id);
             return new SqlServerDatabaseResource(Client, id);
         }
     }

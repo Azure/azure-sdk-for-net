@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource"/> object. </returns>
         public virtual AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(ResourceIdentifier id)
         {
-            AvsPrivateCloudAddonResource.ValidateResourceId(id);
             return new AvsPrivateCloudAddonResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="ExpressRouteAuthorizationResource"/> object. </returns>
         public virtual ExpressRouteAuthorizationResource GetExpressRouteAuthorizationResource(ResourceIdentifier id)
         {
-            ExpressRouteAuthorizationResource.ValidateResourceId(id);
             return new ExpressRouteAuthorizationResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsCloudLinkResource"/> object. </returns>
         public virtual AvsCloudLinkResource GetAvsCloudLinkResource(ResourceIdentifier id)
         {
-            AvsCloudLinkResource.ValidateResourceId(id);
             return new AvsCloudLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource"/> object. </returns>
         public virtual AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(ResourceIdentifier id)
         {
-            AvsPrivateCloudClusterResource.ValidateResourceId(id);
             return new AvsPrivateCloudClusterResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource"/> object. </returns>
         public virtual AvsPrivateCloudDatastoreResource GetAvsPrivateCloudDatastoreResource(ResourceIdentifier id)
         {
-            AvsPrivateCloudDatastoreResource.ValidateResourceId(id);
             return new AvsPrivateCloudDatastoreResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="GlobalReachConnectionResource"/> object. </returns>
         public virtual GlobalReachConnectionResource GetGlobalReachConnectionResource(ResourceIdentifier id)
         {
-            GlobalReachConnectionResource.ValidateResourceId(id);
             return new GlobalReachConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="HcxEnterpriseSiteResource"/> object. </returns>
         public virtual HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(ResourceIdentifier id)
         {
-            HcxEnterpriseSiteResource.ValidateResourceId(id);
             return new HcxEnterpriseSiteResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsHostResource"/> object. </returns>
         public virtual AvsHostResource GetAvsHostResource(ResourceIdentifier id)
         {
-            AvsHostResource.ValidateResourceId(id);
             return new AvsHostResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
         public virtual IscsiPathResource GetIscsiPathResource(ResourceIdentifier id)
         {
-            IscsiPathResource.ValidateResourceId(id);
             return new IscsiPathResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsLicenseResource"/> object. </returns>
         public virtual AvsLicenseResource GetAvsLicenseResource(ResourceIdentifier id)
         {
-            AvsLicenseResource.ValidateResourceId(id);
             return new AvsLicenseResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsMaintenanceResource"/> object. </returns>
         public virtual AvsMaintenanceResource GetAvsMaintenanceResource(ResourceIdentifier id)
         {
-            AvsMaintenanceResource.ValidateResourceId(id);
             return new AvsMaintenanceResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="PlacementPolicyResource"/> object. </returns>
         public virtual PlacementPolicyResource GetPlacementPolicyResource(ResourceIdentifier id)
         {
-            PlacementPolicyResource.ValidateResourceId(id);
             return new PlacementPolicyResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsPrivateCloudResource"/> object. </returns>
         public virtual AvsPrivateCloudResource GetAvsPrivateCloudResource(ResourceIdentifier id)
         {
-            AvsPrivateCloudResource.ValidateResourceId(id);
             return new AvsPrivateCloudResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsProvisionedNetworkResource"/> object. </returns>
         public virtual AvsProvisionedNetworkResource GetAvsProvisionedNetworkResource(ResourceIdentifier id)
         {
-            AvsProvisionedNetworkResource.ValidateResourceId(id);
             return new AvsProvisionedNetworkResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsPureStoragePolicyResource"/> object. </returns>
         public virtual AvsPureStoragePolicyResource GetAvsPureStoragePolicyResource(ResourceIdentifier id)
         {
-            AvsPureStoragePolicyResource.ValidateResourceId(id);
             return new AvsPureStoragePolicyResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="ScriptCmdletResource"/> object. </returns>
         public virtual ScriptCmdletResource GetScriptCmdletResource(ResourceIdentifier id)
         {
-            ScriptCmdletResource.ValidateResourceId(id);
             return new ScriptCmdletResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="ScriptExecutionResource"/> object. </returns>
         public virtual ScriptExecutionResource GetScriptExecutionResource(ResourceIdentifier id)
         {
-            ScriptExecutionResource.ValidateResourceId(id);
             return new ScriptExecutionResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="ScriptPackageResource"/> object. </returns>
         public virtual ScriptPackageResource GetScriptPackageResource(ResourceIdentifier id)
         {
-            ScriptPackageResource.ValidateResourceId(id);
             return new ScriptPackageResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> object. </returns>
         public virtual AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(ResourceIdentifier id)
         {
-            AvsPrivateCloudClusterVirtualMachineResource.ValidateResourceId(id);
             return new AvsPrivateCloudClusterVirtualMachineResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
         public virtual WorkloadNetworkResource GetWorkloadNetworkResource(ResourceIdentifier id)
         {
-            WorkloadNetworkResource.ValidateResourceId(id);
             return new WorkloadNetworkResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkDhcpResource"/> object. </returns>
         public virtual WorkloadNetworkDhcpResource GetWorkloadNetworkDhcpResource(ResourceIdentifier id)
         {
-            WorkloadNetworkDhcpResource.ValidateResourceId(id);
             return new WorkloadNetworkDhcpResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkDnsServiceResource"/> object. </returns>
         public virtual WorkloadNetworkDnsServiceResource GetWorkloadNetworkDnsServiceResource(ResourceIdentifier id)
         {
-            WorkloadNetworkDnsServiceResource.ValidateResourceId(id);
             return new WorkloadNetworkDnsServiceResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkDnsZoneResource"/> object. </returns>
         public virtual WorkloadNetworkDnsZoneResource GetWorkloadNetworkDnsZoneResource(ResourceIdentifier id)
         {
-            WorkloadNetworkDnsZoneResource.ValidateResourceId(id);
             return new WorkloadNetworkDnsZoneResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkGatewayResource"/> object. </returns>
         public virtual WorkloadNetworkGatewayResource GetWorkloadNetworkGatewayResource(ResourceIdentifier id)
         {
-            WorkloadNetworkGatewayResource.ValidateResourceId(id);
             return new WorkloadNetworkGatewayResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource"/> object. </returns>
         public virtual WorkloadNetworkPortMirroringProfileResource GetWorkloadNetworkPortMirroringProfileResource(ResourceIdentifier id)
         {
-            WorkloadNetworkPortMirroringProfileResource.ValidateResourceId(id);
             return new WorkloadNetworkPortMirroringProfileResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkPublicIPResource"/> object. </returns>
         public virtual WorkloadNetworkPublicIPResource GetWorkloadNetworkPublicIPResource(ResourceIdentifier id)
         {
-            WorkloadNetworkPublicIPResource.ValidateResourceId(id);
             return new WorkloadNetworkPublicIPResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
         public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
         {
-            WorkloadNetworkSegmentResource.ValidateResourceId(id);
             return new WorkloadNetworkSegmentResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachineResource"/> object. </returns>
         public virtual WorkloadNetworkVirtualMachineResource GetWorkloadNetworkVirtualMachineResource(ResourceIdentifier id)
         {
-            WorkloadNetworkVirtualMachineResource.ValidateResourceId(id);
             return new WorkloadNetworkVirtualMachineResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
         public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
         {
-            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
             return new WorkloadNetworkVmGroupResource(Client, id);
         }
     }

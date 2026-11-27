@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementAttributeNamespaceResource"/> object. </returns>
         public virtual RoleManagementAttributeNamespaceResource GetRoleManagementAttributeNamespaceResource(ResourceIdentifier id)
         {
-            RoleManagementAttributeNamespaceResource.ValidateResourceId(id);
             return new RoleManagementAttributeNamespaceResource(Client, id);
         }
 
@@ -95,7 +94,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewHistoryDefinitionResource"/> object. </returns>
         public virtual AccessReviewHistoryDefinitionResource GetAccessReviewHistoryDefinitionResource(ResourceIdentifier id)
         {
-            AccessReviewHistoryDefinitionResource.ValidateResourceId(id);
             return new AccessReviewHistoryDefinitionResource(Client, id);
         }
 
@@ -104,7 +102,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="ScopeAccessReviewHistoryDefinitionResource"/> object. </returns>
         public virtual ScopeAccessReviewHistoryDefinitionResource GetScopeAccessReviewHistoryDefinitionResource(ResourceIdentifier id)
         {
-            ScopeAccessReviewHistoryDefinitionResource.ValidateResourceId(id);
             return new ScopeAccessReviewHistoryDefinitionResource(Client, id);
         }
 
@@ -149,7 +146,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewScheduleDefinitionResource"/> object. </returns>
         public virtual AccessReviewScheduleDefinitionResource GetAccessReviewScheduleDefinitionResource(ResourceIdentifier id)
         {
-            AccessReviewScheduleDefinitionResource.ValidateResourceId(id);
             return new AccessReviewScheduleDefinitionResource(Client, id);
         }
 
@@ -158,7 +154,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="ScopeAccessReviewScheduleDefinitionResource"/> object. </returns>
         public virtual ScopeAccessReviewScheduleDefinitionResource GetScopeAccessReviewScheduleDefinitionResource(ResourceIdentifier id)
         {
-            ScopeAccessReviewScheduleDefinitionResource.ValidateResourceId(id);
             return new ScopeAccessReviewScheduleDefinitionResource(Client, id);
         }
 
@@ -203,7 +198,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewInstanceResource"/> object. </returns>
         public virtual AccessReviewInstanceResource GetAccessReviewInstanceResource(ResourceIdentifier id)
         {
-            AccessReviewInstanceResource.ValidateResourceId(id);
             return new AccessReviewInstanceResource(Client, id);
         }
 
@@ -212,7 +206,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="ScopeAccessReviewInstanceResource"/> object. </returns>
         public virtual ScopeAccessReviewInstanceResource GetScopeAccessReviewInstanceResource(ResourceIdentifier id)
         {
-            ScopeAccessReviewInstanceResource.ValidateResourceId(id);
             return new ScopeAccessReviewInstanceResource(Client, id);
         }
 
@@ -257,7 +250,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewInstancesAssignedForMyApprovalResource"/> object. </returns>
         public virtual AccessReviewInstancesAssignedForMyApprovalResource GetAccessReviewInstancesAssignedForMyApprovalResource(ResourceIdentifier id)
         {
-            AccessReviewInstancesAssignedForMyApprovalResource.ValidateResourceId(id);
             return new AccessReviewInstancesAssignedForMyApprovalResource(Client, id);
         }
 
@@ -266,7 +258,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="ScopeAccessReviewDefaultSettingResource"/> object. </returns>
         public virtual ScopeAccessReviewDefaultSettingResource GetScopeAccessReviewDefaultSettingResource(ResourceIdentifier id)
         {
-            ScopeAccessReviewDefaultSettingResource.ValidateResourceId(id);
             return new ScopeAccessReviewDefaultSettingResource(Client, id);
         }
 
@@ -283,7 +274,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleAssignmentScheduleResource"/> object. </returns>
         public virtual RoleAssignmentScheduleResource GetRoleAssignmentScheduleResource(ResourceIdentifier id)
         {
-            RoleAssignmentScheduleResource.ValidateResourceId(id);
             return new RoleAssignmentScheduleResource(Client, id);
         }
 
@@ -328,7 +318,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleAssignmentScheduleInstanceResource"/> object. </returns>
         public virtual RoleAssignmentScheduleInstanceResource GetRoleAssignmentScheduleInstanceResource(ResourceIdentifier id)
         {
-            RoleAssignmentScheduleInstanceResource.ValidateResourceId(id);
             return new RoleAssignmentScheduleInstanceResource(Client, id);
         }
 
@@ -373,7 +362,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleAssignmentScheduleRequestResource"/> object. </returns>
         public virtual RoleAssignmentScheduleRequestResource GetRoleAssignmentScheduleRequestResource(ResourceIdentifier id)
         {
-            RoleAssignmentScheduleRequestResource.ValidateResourceId(id);
             return new RoleAssignmentScheduleRequestResource(Client, id);
         }
 
@@ -418,7 +406,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleEligibilityScheduleResource"/> object. </returns>
         public virtual RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(ResourceIdentifier id)
         {
-            RoleEligibilityScheduleResource.ValidateResourceId(id);
             return new RoleEligibilityScheduleResource(Client, id);
         }
 
@@ -463,7 +450,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleEligibilityScheduleInstanceResource"/> object. </returns>
         public virtual RoleEligibilityScheduleInstanceResource GetRoleEligibilityScheduleInstanceResource(ResourceIdentifier id)
         {
-            RoleEligibilityScheduleInstanceResource.ValidateResourceId(id);
             return new RoleEligibilityScheduleInstanceResource(Client, id);
         }
 
@@ -508,7 +494,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleEligibilityScheduleRequestResource"/> object. </returns>
         public virtual RoleEligibilityScheduleRequestResource GetRoleEligibilityScheduleRequestResource(ResourceIdentifier id)
         {
-            RoleEligibilityScheduleRequestResource.ValidateResourceId(id);
             return new RoleEligibilityScheduleRequestResource(Client, id);
         }
 
@@ -553,7 +538,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementPolicyResource"/> object. </returns>
         public virtual RoleManagementPolicyResource GetRoleManagementPolicyResource(ResourceIdentifier id)
         {
-            RoleManagementPolicyResource.ValidateResourceId(id);
             return new RoleManagementPolicyResource(Client, id);
         }
 
@@ -598,7 +582,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementPolicyAssignmentResource"/> object. </returns>
         public virtual RoleManagementPolicyAssignmentResource GetRoleManagementPolicyAssignmentResource(ResourceIdentifier id)
         {
-            RoleManagementPolicyAssignmentResource.ValidateResourceId(id);
             return new RoleManagementPolicyAssignmentResource(Client, id);
         }
 
@@ -643,7 +626,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="DenyAssignmentResource"/> object. </returns>
         public virtual DenyAssignmentResource GetDenyAssignmentResource(ResourceIdentifier id)
         {
-            DenyAssignmentResource.ValidateResourceId(id);
             return new DenyAssignmentResource(Client, id);
         }
 
@@ -688,7 +670,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="PrivilegedResourceFavoriteResource"/> object. </returns>
         public virtual PrivilegedResourceFavoriteResource GetPrivilegedResourceFavoriteResource(ResourceIdentifier id)
         {
-            PrivilegedResourceFavoriteResource.ValidateResourceId(id);
             return new PrivilegedResourceFavoriteResource(Client, id);
         }
 
@@ -697,7 +678,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
         public virtual RoleAssignmentResource GetRoleAssignmentResource(ResourceIdentifier id)
         {
-            RoleAssignmentResource.ValidateResourceId(id);
             return new RoleAssignmentResource(Client, id);
         }
 
@@ -744,7 +724,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource"/> object. </returns>
         public virtual AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(ResourceIdentifier id)
         {
-            AuthorizationRoleDefinitionResource.ValidateResourceId(id);
             return new AuthorizationRoleDefinitionResource(Client, id);
         }
 
@@ -789,7 +768,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementAlertResource"/> object. </returns>
         public virtual RoleManagementAlertResource GetRoleManagementAlertResource(ResourceIdentifier id)
         {
-            RoleManagementAlertResource.ValidateResourceId(id);
             return new RoleManagementAlertResource(Client, id);
         }
 
@@ -834,7 +812,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementAlertConfigurationResource"/> object. </returns>
         public virtual RoleManagementAlertConfigurationResource GetRoleManagementAlertConfigurationResource(ResourceIdentifier id)
         {
-            RoleManagementAlertConfigurationResource.ValidateResourceId(id);
             return new RoleManagementAlertConfigurationResource(Client, id);
         }
 
@@ -879,7 +856,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementAlertDefinitionResource"/> object. </returns>
         public virtual RoleManagementAlertDefinitionResource GetRoleManagementAlertDefinitionResource(ResourceIdentifier id)
         {
-            RoleManagementAlertDefinitionResource.ValidateResourceId(id);
             return new RoleManagementAlertDefinitionResource(Client, id);
         }
 
@@ -924,7 +900,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="RoleManagementAlertIncidentResource"/> object. </returns>
         public virtual RoleManagementAlertIncidentResource GetRoleManagementAlertIncidentResource(ResourceIdentifier id)
         {
-            RoleManagementAlertIncidentResource.ValidateResourceId(id);
             return new RoleManagementAlertIncidentResource(Client, id);
         }
 
@@ -969,7 +944,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewDefaultSettingResource"/> object. </returns>
         public virtual AccessReviewDefaultSettingResource GetAccessReviewDefaultSettingResource(ResourceIdentifier id)
         {
-            AccessReviewDefaultSettingResource.ValidateResourceId(id);
             return new AccessReviewDefaultSettingResource(Client, id);
         }
 
@@ -978,7 +952,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewDecisionResource"/> object. </returns>
         public virtual AccessReviewDecisionResource GetAccessReviewDecisionResource(ResourceIdentifier id)
         {
-            AccessReviewDecisionResource.ValidateResourceId(id);
             return new AccessReviewDecisionResource(Client, id);
         }
 
@@ -987,7 +960,6 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource"/> object. </returns>
         public virtual AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(ResourceIdentifier id)
         {
-            AuthorizationProviderOperationsMetadataResource.ValidateResourceId(id);
             return new AuthorizationProviderOperationsMetadataResource(Client, id);
         }
 

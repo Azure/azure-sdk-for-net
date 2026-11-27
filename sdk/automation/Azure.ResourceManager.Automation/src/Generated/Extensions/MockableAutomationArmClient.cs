@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource"/> object. </returns>
         public virtual SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(ResourceIdentifier id)
         {
-            SoftwareUpdateConfigurationResource.ValidateResourceId(id);
             return new SoftwareUpdateConfigurationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="HybridRunbookWorkerResource"/> object. </returns>
         public virtual HybridRunbookWorkerResource GetHybridRunbookWorkerResource(ResourceIdentifier id)
         {
-            HybridRunbookWorkerResource.ValidateResourceId(id);
             return new HybridRunbookWorkerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource"/> object. </returns>
         public virtual AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(ResourceIdentifier id)
         {
-            AutomationAccountPython2PackageResource.ValidateResourceId(id);
             return new AutomationAccountPython2PackageResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationPython3PackageResource"/> object. </returns>
         public virtual AutomationPython3PackageResource GetAutomationPython3PackageResource(ResourceIdentifier id)
         {
-            AutomationPython3PackageResource.ValidateResourceId(id);
             return new AutomationPython3PackageResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationRuntimeEnvironmentResource"/> object. </returns>
         public virtual AutomationRuntimeEnvironmentResource GetAutomationRuntimeEnvironmentResource(ResourceIdentifier id)
         {
-            AutomationRuntimeEnvironmentResource.ValidateResourceId(id);
             return new AutomationRuntimeEnvironmentResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            AutomationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new AutomationPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationAccountResource"/> object. </returns>
         public virtual AutomationAccountResource GetAutomationAccountResource(ResourceIdentifier id)
         {
-            AutomationAccountResource.ValidateResourceId(id);
             return new AutomationAccountResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationJobResource"/> object. </returns>
         public virtual AutomationJobResource GetAutomationJobResource(ResourceIdentifier id)
         {
-            AutomationJobResource.ValidateResourceId(id);
             return new AutomationJobResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationWebhookResource"/> object. </returns>
         public virtual AutomationWebhookResource GetAutomationWebhookResource(ResourceIdentifier id)
         {
-            AutomationWebhookResource.ValidateResourceId(id);
             return new AutomationWebhookResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="DscNodeResource"/> object. </returns>
         public virtual DscNodeResource GetDscNodeResource(ResourceIdentifier id)
         {
-            DscNodeResource.ValidateResourceId(id);
             return new DscNodeResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationCertificateResource"/> object. </returns>
         public virtual AutomationCertificateResource GetAutomationCertificateResource(ResourceIdentifier id)
         {
-            AutomationCertificateResource.ValidateResourceId(id);
             return new AutomationCertificateResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationConnectionResource"/> object. </returns>
         public virtual AutomationConnectionResource GetAutomationConnectionResource(ResourceIdentifier id)
         {
-            AutomationConnectionResource.ValidateResourceId(id);
             return new AutomationConnectionResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationConnectionTypeResource"/> object. </returns>
         public virtual AutomationConnectionTypeResource GetAutomationConnectionTypeResource(ResourceIdentifier id)
         {
-            AutomationConnectionTypeResource.ValidateResourceId(id);
             return new AutomationConnectionTypeResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationCredentialResource"/> object. </returns>
         public virtual AutomationCredentialResource GetAutomationCredentialResource(ResourceIdentifier id)
         {
-            AutomationCredentialResource.ValidateResourceId(id);
             return new AutomationCredentialResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="DscConfigurationResource"/> object. </returns>
         public virtual DscConfigurationResource GetDscConfigurationResource(ResourceIdentifier id)
         {
-            DscConfigurationResource.ValidateResourceId(id);
             return new DscConfigurationResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="DscNodeConfigurationResource"/> object. </returns>
         public virtual DscNodeConfigurationResource GetDscNodeConfigurationResource(ResourceIdentifier id)
         {
-            DscNodeConfigurationResource.ValidateResourceId(id);
             return new DscNodeConfigurationResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource"/> object. </returns>
         public virtual HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(ResourceIdentifier id)
         {
-            HybridRunbookWorkerGroupResource.ValidateResourceId(id);
             return new HybridRunbookWorkerGroupResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationJobScheduleResource"/> object. </returns>
         public virtual AutomationJobScheduleResource GetAutomationJobScheduleResource(ResourceIdentifier id)
         {
-            AutomationJobScheduleResource.ValidateResourceId(id);
             return new AutomationJobScheduleResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationAccountModuleResource"/> object. </returns>
         public virtual AutomationAccountModuleResource GetAutomationAccountModuleResource(ResourceIdentifier id)
         {
-            AutomationAccountModuleResource.ValidateResourceId(id);
             return new AutomationAccountModuleResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationPackageResource"/> object. </returns>
         public virtual AutomationPackageResource GetAutomationPackageResource(ResourceIdentifier id)
         {
-            AutomationPackageResource.ValidateResourceId(id);
             return new AutomationPackageResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationRunbookResource"/> object. </returns>
         public virtual AutomationRunbookResource GetAutomationRunbookResource(ResourceIdentifier id)
         {
-            AutomationRunbookResource.ValidateResourceId(id);
             return new AutomationRunbookResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationScheduleResource"/> object. </returns>
         public virtual AutomationScheduleResource GetAutomationScheduleResource(ResourceIdentifier id)
         {
-            AutomationScheduleResource.ValidateResourceId(id);
             return new AutomationScheduleResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationSourceControlResource"/> object. </returns>
         public virtual AutomationSourceControlResource GetAutomationSourceControlResource(ResourceIdentifier id)
         {
-            AutomationSourceControlResource.ValidateResourceId(id);
             return new AutomationSourceControlResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationVariableResource"/> object. </returns>
         public virtual AutomationVariableResource GetAutomationVariableResource(ResourceIdentifier id)
         {
-            AutomationVariableResource.ValidateResourceId(id);
             return new AutomationVariableResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> Returns a <see cref="AutomationWatcherResource"/> object. </returns>
         public virtual AutomationWatcherResource GetAutomationWatcherResource(ResourceIdentifier id)
         {
-            AutomationWatcherResource.ValidateResourceId(id);
             return new AutomationWatcherResource(Client, id);
         }
     }

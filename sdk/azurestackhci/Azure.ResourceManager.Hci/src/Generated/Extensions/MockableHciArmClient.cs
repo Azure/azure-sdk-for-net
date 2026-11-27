@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="OsImageResource"/> object. </returns>
         public virtual OsImageResource GetOsImageResource(ResourceIdentifier id)
         {
-            OsImageResource.ValidateResourceId(id);
             return new OsImageResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
         public virtual ArcSettingResource GetArcSettingResource(ResourceIdentifier id)
         {
-            ArcSettingResource.ValidateResourceId(id);
             return new ArcSettingResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterOfferResource"/> object. </returns>
         public virtual HciClusterOfferResource GetHciClusterOfferResource(ResourceIdentifier id)
         {
-            HciClusterOfferResource.ValidateResourceId(id);
             return new HciClusterOfferResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterResource"/> object. </returns>
         public virtual HciClusterResource GetHciClusterResource(ResourceIdentifier id)
         {
-            HciClusterResource.ValidateResourceId(id);
             return new HciClusterResource(Client, id);
         }
 
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterDeploymentSettingResource"/> object. </returns>
         public virtual HciClusterDeploymentSettingResource GetHciClusterDeploymentSettingResource(ResourceIdentifier id)
         {
-            HciClusterDeploymentSettingResource.ValidateResourceId(id);
             return new HciClusterDeploymentSettingResource(Client, id);
         }
 
@@ -80,7 +75,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeDeviceJobResource"/> object. </returns>
         public virtual EdgeDeviceJobResource GetEdgeDeviceJobResource(ResourceIdentifier id)
         {
-            EdgeDeviceJobResource.ValidateResourceId(id);
             return new EdgeDeviceJobResource(Client, id);
         }
 
@@ -125,7 +119,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciEdgeDeviceResource"/> object. </returns>
         public virtual HciEdgeDeviceResource GetHciEdgeDeviceResource(ResourceIdentifier id)
         {
-            HciEdgeDeviceResource.ValidateResourceId(id);
             return new HciEdgeDeviceResource(Client, id);
         }
 
@@ -170,7 +163,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="ArcExtensionResource"/> object. </returns>
         public virtual ArcExtensionResource GetArcExtensionResource(ResourceIdentifier id)
         {
-            ArcExtensionResource.ValidateResourceId(id);
             return new ArcExtensionResource(Client, id);
         }
 
@@ -179,7 +171,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
         public virtual HciClusterSecuritySettingResource GetHciClusterSecuritySettingResource(ResourceIdentifier id)
         {
-            HciClusterSecuritySettingResource.ValidateResourceId(id);
             return new HciClusterSecuritySettingResource(Client, id);
         }
 
@@ -188,7 +179,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciSkuResource"/> object. </returns>
         public virtual HciSkuResource GetHciSkuResource(ResourceIdentifier id)
         {
-            HciSkuResource.ValidateResourceId(id);
             return new HciSkuResource(Client, id);
         }
 
@@ -197,7 +187,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterUpdateRunResource"/> object. </returns>
         public virtual HciClusterUpdateRunResource GetHciClusterUpdateRunResource(ResourceIdentifier id)
         {
-            HciClusterUpdateRunResource.ValidateResourceId(id);
             return new HciClusterUpdateRunResource(Client, id);
         }
 
@@ -206,7 +195,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterUpdateResource"/> object. </returns>
         public virtual HciClusterUpdateResource GetHciClusterUpdateResource(ResourceIdentifier id)
         {
-            HciClusterUpdateResource.ValidateResourceId(id);
             return new HciClusterUpdateResource(Client, id);
         }
 
@@ -215,7 +203,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="ValidatedSolutionRecipeResource"/> object. </returns>
         public virtual ValidatedSolutionRecipeResource GetValidatedSolutionRecipeResource(ResourceIdentifier id)
         {
-            ValidatedSolutionRecipeResource.ValidateResourceId(id);
             return new ValidatedSolutionRecipeResource(Client, id);
         }
 
@@ -224,7 +211,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineResource"/> object. </returns>
         public virtual EdgeMachineResource GetEdgeMachineResource(ResourceIdentifier id)
         {
-            EdgeMachineResource.ValidateResourceId(id);
             return new EdgeMachineResource(Client, id);
         }
 
@@ -233,7 +219,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineJobResource"/> object. </returns>
         public virtual EdgeMachineJobResource GetEdgeMachineJobResource(ResourceIdentifier id)
         {
-            EdgeMachineJobResource.ValidateResourceId(id);
             return new EdgeMachineJobResource(Client, id);
         }
 
@@ -242,7 +227,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="ClusterJobResource"/> object. </returns>
         public virtual ClusterJobResource GetClusterJobResource(ResourceIdentifier id)
         {
-            ClusterJobResource.ValidateResourceId(id);
             return new ClusterJobResource(Client, id);
         }
 
@@ -251,7 +235,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineNetworkAdapterResource"/> object. </returns>
         public virtual EdgeMachineNetworkAdapterResource GetEdgeMachineNetworkAdapterResource(ResourceIdentifier id)
         {
-            EdgeMachineNetworkAdapterResource.ValidateResourceId(id);
             return new EdgeMachineNetworkAdapterResource(Client, id);
         }
 
@@ -260,7 +243,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineNetworkAdapterJobResource"/> object. </returns>
         public virtual EdgeMachineNetworkAdapterJobResource GetEdgeMachineNetworkAdapterJobResource(ResourceIdentifier id)
         {
-            EdgeMachineNetworkAdapterJobResource.ValidateResourceId(id);
             return new EdgeMachineNetworkAdapterJobResource(Client, id);
         }
 
@@ -269,7 +251,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineDiskResource"/> object. </returns>
         public virtual EdgeMachineDiskResource GetEdgeMachineDiskResource(ResourceIdentifier id)
         {
-            EdgeMachineDiskResource.ValidateResourceId(id);
             return new EdgeMachineDiskResource(Client, id);
         }
 
@@ -278,7 +259,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineVolumeResource"/> object. </returns>
         public virtual EdgeMachineVolumeResource GetEdgeMachineVolumeResource(ResourceIdentifier id)
         {
-            EdgeMachineVolumeResource.ValidateResourceId(id);
             return new EdgeMachineVolumeResource(Client, id);
         }
 
@@ -287,7 +267,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineDiskJobResource"/> object. </returns>
         public virtual EdgeMachineDiskJobResource GetEdgeMachineDiskJobResource(ResourceIdentifier id)
         {
-            EdgeMachineDiskJobResource.ValidateResourceId(id);
             return new EdgeMachineDiskJobResource(Client, id);
         }
 
@@ -296,7 +275,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineDiskPrivilegedJobResource"/> object. </returns>
         public virtual EdgeMachineDiskPrivilegedJobResource GetEdgeMachineDiskPrivilegedJobResource(ResourceIdentifier id)
         {
-            EdgeMachineDiskPrivilegedJobResource.ValidateResourceId(id);
             return new EdgeMachineDiskPrivilegedJobResource(Client, id);
         }
 
@@ -305,7 +283,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineSecuritySettingsResource"/> object. </returns>
         public virtual EdgeMachineSecuritySettingsResource GetEdgeMachineSecuritySettingsResource(ResourceIdentifier id)
         {
-            EdgeMachineSecuritySettingsResource.ValidateResourceId(id);
             return new EdgeMachineSecuritySettingsResource(Client, id);
         }
 
@@ -314,7 +291,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="EdgeMachineDeploymentSettingResource"/> object. </returns>
         public virtual EdgeMachineDeploymentSettingResource GetEdgeMachineDeploymentSettingResource(ResourceIdentifier id)
         {
-            EdgeMachineDeploymentSettingResource.ValidateResourceId(id);
             return new EdgeMachineDeploymentSettingResource(Client, id);
         }
 
@@ -323,7 +299,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterUpdateSummaryResource"/> object. </returns>
         public virtual HciClusterUpdateSummaryResource GetHciClusterUpdateSummaryResource(ResourceIdentifier id)
         {
-            HciClusterUpdateSummaryResource.ValidateResourceId(id);
             return new HciClusterUpdateSummaryResource(Client, id);
         }
     }

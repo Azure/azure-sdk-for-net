@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// <returns> Returns a <see cref="ArtifactSigningAccountResource"/> object. </returns>
         public virtual ArtifactSigningAccountResource GetArtifactSigningAccountResource(ResourceIdentifier id)
         {
-            ArtifactSigningAccountResource.ValidateResourceId(id);
             return new ArtifactSigningAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// <returns> Returns a <see cref="ArtifactSigningCertificateProfileResource"/> object. </returns>
         public virtual ArtifactSigningCertificateProfileResource GetArtifactSigningCertificateProfileResource(ResourceIdentifier id)
         {
-            ArtifactSigningCertificateProfileResource.ValidateResourceId(id);
             return new ArtifactSigningCertificateProfileResource(Client, id);
         }
     }

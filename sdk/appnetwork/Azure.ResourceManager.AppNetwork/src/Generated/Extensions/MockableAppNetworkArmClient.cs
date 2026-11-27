@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// <returns> Returns a <see cref="AppLinkResource"/> object. </returns>
         public virtual AppLinkResource GetAppLinkResource(ResourceIdentifier id)
         {
-            AppLinkResource.ValidateResourceId(id);
             return new AppLinkResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// <returns> Returns a <see cref="AppLinkMemberResource"/> object. </returns>
         public virtual AppLinkMemberResource GetAppLinkMemberResource(ResourceIdentifier id)
         {
-            AppLinkMemberResource.ValidateResourceId(id);
             return new AppLinkMemberResource(Client, id);
         }
     }

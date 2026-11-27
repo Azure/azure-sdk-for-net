@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <returns> Returns a <see cref="LargeInstanceResource"/> object. </returns>
         public virtual LargeInstanceResource GetLargeInstanceResource(ResourceIdentifier id)
         {
-            LargeInstanceResource.ValidateResourceId(id);
             return new LargeInstanceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <returns> Returns a <see cref="LargeStorageInstanceResource"/> object. </returns>
         public virtual LargeStorageInstanceResource GetLargeStorageInstanceResource(ResourceIdentifier id)
         {
-            LargeStorageInstanceResource.ValidateResourceId(id);
             return new LargeStorageInstanceResource(Client, id);
         }
     }
