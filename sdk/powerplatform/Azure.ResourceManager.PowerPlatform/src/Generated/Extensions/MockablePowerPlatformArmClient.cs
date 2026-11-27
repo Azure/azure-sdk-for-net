@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
         /// <returns> Returns a <see cref="PowerPlatformAccountResource"/> object. </returns>
         public virtual PowerPlatformAccountResource GetPowerPlatformAccountResource(ResourceIdentifier id)
         {
-            PowerPlatformAccountResource.ValidateResourceId(id);
             return new PowerPlatformAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
         /// <returns> Returns a <see cref="EnterprisePolicyResource"/> object. </returns>
         public virtual EnterprisePolicyResource GetEnterprisePolicyResource(ResourceIdentifier id)
         {
-            EnterprisePolicyResource.ValidateResourceId(id);
             return new EnterprisePolicyResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
         /// <returns> Returns a <see cref="PowerPlatformPrivateEndpointConnectionResource"/> object. </returns>
         public virtual PowerPlatformPrivateEndpointConnectionResource GetPowerPlatformPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PowerPlatformPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PowerPlatformPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
         /// <returns> Returns a <see cref="PowerPlatformPrivateLinkResource"/> object. </returns>
         public virtual PowerPlatformPrivateLinkResource GetPowerPlatformPrivateLinkResource(ResourceIdentifier id)
         {
-            PowerPlatformPrivateLinkResource.ValidateResourceId(id);
             return new PowerPlatformPrivateLinkResource(Client, id);
         }
     }

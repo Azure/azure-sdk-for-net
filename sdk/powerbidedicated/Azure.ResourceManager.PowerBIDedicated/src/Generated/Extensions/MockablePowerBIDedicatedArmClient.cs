@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <returns> Returns a <see cref="DedicatedCapacityResource"/> object. </returns>
         public virtual DedicatedCapacityResource GetDedicatedCapacityResource(ResourceIdentifier id)
         {
-            DedicatedCapacityResource.ValidateResourceId(id);
             return new DedicatedCapacityResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <returns> Returns a <see cref="AutoScaleVCoreResource"/> object. </returns>
         public virtual AutoScaleVCoreResource GetAutoScaleVCoreResource(ResourceIdentifier id)
         {
-            AutoScaleVCoreResource.ValidateResourceId(id);
             return new AutoScaleVCoreResource(Client, id);
         }
     }

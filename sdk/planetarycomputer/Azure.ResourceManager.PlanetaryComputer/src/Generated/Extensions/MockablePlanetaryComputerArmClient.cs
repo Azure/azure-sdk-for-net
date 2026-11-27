@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// <returns> Returns a <see cref="PlanetaryComputerGeoCatalogResource"/> object. </returns>
         public virtual PlanetaryComputerGeoCatalogResource GetPlanetaryComputerGeoCatalogResource(ResourceIdentifier id)
         {
-            PlanetaryComputerGeoCatalogResource.ValidateResourceId(id);
             return new PlanetaryComputerGeoCatalogResource(Client, id);
         }
     }

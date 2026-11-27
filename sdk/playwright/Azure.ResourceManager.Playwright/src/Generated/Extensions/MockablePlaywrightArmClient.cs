@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <returns> Returns a <see cref="PlaywrightWorkspaceResource"/> object. </returns>
         public virtual PlaywrightWorkspaceResource GetPlaywrightWorkspaceResource(ResourceIdentifier id)
         {
-            PlaywrightWorkspaceResource.ValidateResourceId(id);
             return new PlaywrightWorkspaceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
         public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
         {
-            PlaywrightQuotaResource.ValidateResourceId(id);
             return new PlaywrightQuotaResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <returns> Returns a <see cref="PlaywrightWorkspaceQuotaResource"/> object. </returns>
         public virtual PlaywrightWorkspaceQuotaResource GetPlaywrightWorkspaceQuotaResource(ResourceIdentifier id)
         {
-            PlaywrightWorkspaceQuotaResource.ValidateResourceId(id);
             return new PlaywrightWorkspaceQuotaResource(Client, id);
         }
     }

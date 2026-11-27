@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> Returns a <see cref="PureStorageReservationResource"/> object. </returns>
         public virtual PureStorageReservationResource GetPureStorageReservationResource(ResourceIdentifier id)
         {
-            PureStorageReservationResource.ValidateResourceId(id);
             return new PureStorageReservationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> Returns a <see cref="PureStoragePoolResource"/> object. </returns>
         public virtual PureStoragePoolResource GetPureStoragePoolResource(ResourceIdentifier id)
         {
-            PureStoragePoolResource.ValidateResourceId(id);
             return new PureStoragePoolResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> Returns a <see cref="PureStorageAvsStorageContainerResource"/> object. </returns>
         public virtual PureStorageAvsStorageContainerResource GetPureStorageAvsStorageContainerResource(ResourceIdentifier id)
         {
-            PureStorageAvsStorageContainerResource.ValidateResourceId(id);
             return new PureStorageAvsStorageContainerResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> Returns a <see cref="PureStorageAvsStorageContainerVolumeResource"/> object. </returns>
         public virtual PureStorageAvsStorageContainerVolumeResource GetPureStorageAvsStorageContainerVolumeResource(ResourceIdentifier id)
         {
-            PureStorageAvsStorageContainerVolumeResource.ValidateResourceId(id);
             return new PureStorageAvsStorageContainerVolumeResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> Returns a <see cref="PureStorageAvsVmResource"/> object. </returns>
         public virtual PureStorageAvsVmResource GetPureStorageAvsVmResource(ResourceIdentifier id)
         {
-            PureStorageAvsVmResource.ValidateResourceId(id);
             return new PureStorageAvsVmResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> Returns a <see cref="PureStorageAvsVmVolumeResource"/> object. </returns>
         public virtual PureStorageAvsVmVolumeResource GetPureStorageAvsVmVolumeResource(ResourceIdentifier id)
         {
-            PureStorageAvsVmVolumeResource.ValidateResourceId(id);
             return new PureStorageAvsVmVolumeResource(Client, id);
         }
     }
