@@ -131,6 +131,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentData))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyVmAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(PollingDetails))]
     [ModelReaderWriterBuildable(typeof(PolyDeviceData))]
     [ModelReaderWriterBuildable(typeof(PolyDeviceResource))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]

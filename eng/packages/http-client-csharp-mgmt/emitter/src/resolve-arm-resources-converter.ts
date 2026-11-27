@@ -70,6 +70,7 @@ import {
   getLibraryName
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
+import { isProviderPollingOperation } from "./polling-operations.js";
 import {
   isResourceCollectionAction,
   getExplicitResourceName
@@ -173,6 +174,11 @@ export function resolveArmResources(
         ).length > 1
       );
 
+      // The ARM resolver may itself classify a polling endpoint as a resource
+      // method. Remove it before further resource post-processing.
+      metadata.methods = metadata.methods.filter(
+        (method) => !isProviderPollingOperation(methodMap.get(method.methodId))
+      );
       const resource = {
         resourceModelId: modelId,
         metadata
@@ -298,10 +304,17 @@ export function resolveArmResources(
     }
   }
 
-  // Assign non-resource methods to resources based on operationPath prefix matching.
+  // Filter before resource-prefix assignment, which would otherwise move a
+  // location-scoped polling endpoint into the location resource as an action.
+  const publicNonResourceMethods = nonResourceMethods.filter(
+    (method) => !isProviderPollingOperation(methodMap.get(method.methodId))
+  );
   // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
   // move it into that resource as an Action (longest prefix wins).
-  assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
+  assignNonResourceMethodsToResources(
+    filteredResources,
+    publicNonResourceMethods
+  );
 
   // Compute per-resource API versions after all post-processing is complete,
   // so that merged/moved methods are reflected in the final version set.
@@ -314,7 +327,9 @@ export function resolveArmResources(
 
   return {
     resources: filteredResources,
-    nonResourceMethods
+    nonResourceMethods: publicNonResourceMethods.filter(
+      (method) => !isProviderPollingOperation(methodMap.get(method.methodId))
+    )
   };
 }
 

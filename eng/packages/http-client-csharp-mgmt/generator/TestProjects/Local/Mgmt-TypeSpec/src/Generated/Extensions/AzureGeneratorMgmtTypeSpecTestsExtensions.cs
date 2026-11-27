@@ -3554,6 +3554,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Get a normal provider operation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPollingDetailsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<PollingDetails>> GetPollingDetailsAsync(this TenantResource tenantResource, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetPollingDetailsAsync(operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a normal provider operation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPollingDetails(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<PollingDetails> GetPollingDetails(this TenantResource tenantResource, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetPollingDetails(operationId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="ManagementGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>

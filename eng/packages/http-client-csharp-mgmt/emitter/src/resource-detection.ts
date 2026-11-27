@@ -58,6 +58,7 @@ import {
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
+import { isProviderPollingOperation } from "./polling-operations.js";
 import { $lib } from "./lib/lib.js";
 
 export function updateClients(
@@ -113,7 +114,15 @@ export function buildArmProviderSchema(
   const allEntries: Array<{ client: InputClient; method: any }> = [];
   for (const client of clients) {
     for (const method of client.methods) {
-      allEntries.push({ client, method });
+      // A polling result may return a resource model. Exclude it before GET
+      // response matching can classify the polling URL as a resource read.
+      if (
+        !isProviderPollingOperation(
+          serviceMethods.get(method.crossLanguageDefinitionId)
+        )
+      ) {
+        allEntries.push({ client, method });
+      }
     }
   }
 
@@ -457,7 +466,10 @@ export function buildArmProviderSchema(
 
   return {
     resources: detectedResources,
-    nonResourceMethods: nonResourceMethodsArray
+    nonResourceMethods: nonResourceMethodsArray.filter(
+      (method) =>
+        !isProviderPollingOperation(serviceMethods.get(method.methodId))
+    )
   };
 }
 

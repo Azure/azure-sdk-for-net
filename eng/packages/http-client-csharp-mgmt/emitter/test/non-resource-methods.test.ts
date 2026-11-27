@@ -10,6 +10,7 @@ import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
+import { getAllSdkClients } from "../src/sdk-client-utils.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ResourceScopeKind,
@@ -21,6 +22,373 @@ describe("Non-Resource Methods Detection", () => {
   beforeEach(async () => {
     runner = await createEmitterTestHost();
   });
+
+  for (const detection of ["path-driven", "resolve-arm-resources"] as const) {
+    it(`excludes custom LRO polling endpoints (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+interface CustomOperations {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/operationStatuses/{operationId}")
+  getSubscriptionStatus(...ApiVersionParameter, ...SubscriptionIdParameter, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<Azure.ResourceManager.CommonTypes.OperationStatusResult> | ErrorResponse;
+
+  @get
+  @route("/providers/Microsoft.ContosoProviderHub/operationStatuses/{operationId}")
+  getTenantStatus(...ApiVersionParameter, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<Azure.ResourceManager.CommonTypes.OperationStatusResult> | ErrorResponse;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/operationResults/{operationId}")
+  getOperationResult(...ApiVersionParameter, ...SubscriptionIdParameter, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+
+  @get
+  @route("/providers/Microsoft.ContosoProviderHub/operationStatuses/{operationId}/details")
+  getStatusDetails(...ApiVersionParameter, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+
+  @post
+  @route("/providers/Microsoft.ContosoProviderHub/operationStatuses/{operationId}")
+  updateStatus(...ApiVersionParameter, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const inputIds = getAllSdkClients(sdkContext).flatMap((client) =>
+        client.methods.map((method) => method.crossLanguageDefinitionId)
+      );
+      for (const name of [
+        "getSubscriptionStatus",
+        "getTenantStatus",
+        "getOperationResult",
+        "getStatusDetails",
+        "updateStatus"
+      ]) {
+        ok(
+          inputIds.some((id) => id.endsWith(`.${name}`)),
+          `${name} must exist in the input`
+        );
+      }
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      ok(schema);
+      const methodIds = [
+        ...schema.nonResourceMethods.map((method) => method.methodId),
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        )
+      ];
+      ok(!methodIds.some((id) => id.endsWith(".getSubscriptionStatus")));
+      ok(!methodIds.some((id) => id.endsWith(".getTenantStatus")));
+      ok(!methodIds.some((id) => id.endsWith(".getOperationResult")));
+      ok(methodIds.some((id) => id.endsWith(".getStatusDetails")));
+      ok(methodIds.some((id) => id.endsWith(".updateStatus")));
+    });
+  }
+
+  for (const detection of ["path-driven", "resolve-arm-resources"] as const) {
+    it(`excludes regional polling with a differently named ID (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+interface PollingStatuses {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/operationStatuses/{asyncOperationId}")
+  getStatus(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, @path asyncOperationId: string): ArmResponse<Azure.ResourceManager.CommonTypes.OperationStatusResult> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      ok(
+        getAllSdkClients(sdkContext)
+          .flatMap((client) => client.methods)
+          .some((method) =>
+            method.crossLanguageDefinitionId.endsWith(".getStatus")
+          )
+      );
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      const allMethodIds = [
+        ...schema.nonResourceMethods.map((method) => method.methodId),
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        )
+      ];
+      ok(!allMethodIds.some((id) => id.endsWith(".getStatus")));
+    });
+
+    it(`excludes polling results returning resource models (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+model WidgetProperties { value?: string; }
+@armResourceOperations
+interface Widgets { get is ArmResourceRead<Widget>; }
+interface PollingResults {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/operationResults/{operationId}")
+  getPollingResult(...ApiVersionParameter, ...SubscriptionIdParameter, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<Widget> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const inputIds = getAllSdkClients(sdkContext).flatMap((client) =>
+        client.methods.map((method) => method.crossLanguageDefinitionId)
+      );
+      ok(inputIds.some((id) => id.endsWith(".getPollingResult")));
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      const allMethodIds = [
+        ...schema.nonResourceMethods.map((method) => method.methodId),
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        )
+      ];
+      ok(allMethodIds.some((id) => id.endsWith(".Widgets.get")));
+      ok(!allMethodIds.some((id) => id.endsWith(".getPollingResult")));
+    });
+  }
+
+  for (const detection of ["path-driven", "resolve-arm-resources"] as const) {
+    it(`excludes polling under an existing location resource (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+@subscriptionResource
+model Location is ProxyResource<LocationProperties> {
+  ...ResourceNameParameter<Location>;
+}
+model LocationProperties { description?: string; }
+@armResourceOperations
+interface Locations { get is ArmResourceRead<Location>; }
+interface PollingResults {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/operationResults/{operationId}")
+  getPollingResult(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      const location = schema.resources.find(
+        (resource) =>
+          resource.metadata.resourceType ===
+          "Microsoft.ContosoProviderHub/locations"
+      );
+      ok(location, "location resource must exist");
+      ok(
+        location.metadata.methods.some((method) =>
+          method.methodId.endsWith(".Locations.get")
+        )
+      );
+      ok(
+        !location.metadata.methods.some((method) =>
+          method.methodId.endsWith(".getPollingResult")
+        )
+      );
+      ok(
+        !schema.nonResourceMethods.some((method) =>
+          method.methodId.endsWith(".getPollingResult")
+        )
+      );
+    });
+
+    it(`excludes polling variants and fixed-query routes (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+interface PollingRoutes {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/operationResults/{operationId}?operationResultResponseType=Location")
+  getResult(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/neuroShieldOperationStatuses/{operationId}")
+  getNeuroShieldStatus(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/scheduledActionsOperationStatuses/{operationId}")
+  getScheduledActionsStatus(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const inputs = getAllSdkClients(sdkContext).flatMap(
+        (client) => client.methods
+      );
+      const queryMethod = inputs.find((method) =>
+        method.crossLanguageDefinitionId.endsWith(".getResult")
+      );
+      ok(
+        queryMethod?.operation?.path.includes(
+          "?operationResultResponseType=Location"
+        )
+      );
+      for (const name of [
+        "getResult",
+        "getNeuroShieldStatus",
+        "getScheduledActionsStatus"
+      ]) {
+        ok(
+          inputs.some((method) =>
+            method.crossLanguageDefinitionId.endsWith(`.${name}`)
+          )
+        );
+      }
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      const ids = [
+        ...schema.nonResourceMethods.map((method) => method.methodId),
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        )
+      ];
+      for (const name of [
+        "getResult",
+        "getNeuroShieldStatus",
+        "getScheduledActionsStatus"
+      ]) {
+        ok(
+          !ids.some((id) => id.endsWith(`.${name}`)),
+          `${name} must not be public`
+        );
+      }
+    });
+  }
+
+  for (const detection of ["path-driven", "resolve-arm-resources"] as const) {
+    it(`excludes operationsStatus polling (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+interface PollingStatus {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/operationsStatus/{operationId}")
+  getStatus(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      ok(
+        getAllSdkClients(sdkContext)
+          .flatMap((client) => client.methods)
+          .some((method) =>
+            method.crossLanguageDefinitionId.endsWith(".getStatus")
+          )
+      );
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      const ids = [
+        ...schema.nonResourceMethods.map((method) => method.methodId),
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        )
+      ];
+      ok(!ids.some((id) => id.endsWith(".getStatus")));
+    });
+  }
+
+  for (const detection of ["path-driven", "resolve-arm-resources"] as const) {
+    it(`excludes service-prefixed operation results (${detection})`, async () => {
+      const program = await typeSpecCompile(
+        `
+interface PollingResults {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/staticSitesOperationResults/{operationId}")
+  getResult(...ApiVersionParameter, ...SubscriptionIdParameter, @path location: string, ...Azure.ResourceManager.CommonTypes.OperationIdParameter): ArmResponse<string> | ErrorResponse;
+}
+`,
+        runner
+      );
+      ok(
+        !program.diagnostics.some(
+          (diagnostic) => diagnostic.severity === "error"
+        )
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      ok(
+        getAllSdkClients(sdkContext)
+          .flatMap((client) => client.methods)
+          .some((method) =>
+            method.crossLanguageDefinitionId.endsWith(".getResult")
+          )
+      );
+      const [root] = createModel(sdkContext);
+      const schema =
+        detection === "path-driven"
+          ? buildArmProviderSchema(sdkContext, root)
+          : resolveArmResources(program, sdkContext);
+      const ids = [
+        ...schema.nonResourceMethods.map((method) => method.methodId),
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        )
+      ];
+      ok(!ids.some((id) => id.endsWith(".getResult")));
+    });
+  }
 
   it("should detect non-resource methods on subscription scope", async () => {
     const program = await typeSpecCompile(

@@ -38,6 +38,7 @@ import "./discriminatedextensionresource.tsp";
 import "./inherited-flatten-grandparent.tsp";
 import "./basetype-cycle-proxy-resource.tsp";
 import "./routedoperations.tsp";
+import "./polling-operations.tsp";
 import "./solutions.tsp";
 import "./acronym-resource.tsp";
 import "./acronymparameters.tsp";

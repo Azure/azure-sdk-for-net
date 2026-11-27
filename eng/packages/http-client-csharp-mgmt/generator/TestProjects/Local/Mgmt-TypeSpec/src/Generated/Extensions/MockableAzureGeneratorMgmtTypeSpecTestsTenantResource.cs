@@ -23,6 +23,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
         private NetworkProviderActions _networkProviderActionsRestClient;
+        private ClientDiagnostics _pollingOperationsClientDiagnostics;
+        private PollingOperations _pollingOperationsRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsTenantResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsTenantResource()
@@ -39,6 +41,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics PollingOperationsClientDiagnostics => _pollingOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PollingOperations PollingOperationsRestClient => _pollingOperationsRestClient ??= new PollingOperations(PollingOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of BestPractices in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of BestPractices and their operations over a BestPracticeResource. </returns>
@@ -211,6 +217,104 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a normal provider operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/operationStatuses/{operationId}/details. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PollingOperations_GetPollingDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PollingDetails>> GetPollingDetailsAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = PollingOperationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPollingDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PollingOperationsRestClient.CreateGetPollingDetailsRequest(operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PollingDetails> response = Response.FromValue(PollingDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a normal provider operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/operationStatuses/{operationId}/details. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PollingOperations_GetPollingDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PollingDetails> GetPollingDetails(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = PollingOperationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPollingDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PollingOperationsRestClient.CreateGetPollingDetailsRequest(operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PollingDetails> response = Response.FromValue(PollingDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

@@ -2082,6 +2082,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new EventGridPrivateEndpointConnectionProperties(status, description, default);
         }
 
+        /// <summary> A normal provider operation response. </summary>
+        /// <param name="detail"> Detail value. </param>
+        /// <returns> A new <see cref="Models.PollingDetails"/> instance for mocking. </returns>
+        public static PollingDetails PollingDetails(string detail = default)
+        {
+            return new PollingDetails(detail, default);
+        }
+
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
