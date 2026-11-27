@@ -106,7 +106,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildGetResourceIdMethodForResource(ResourceClientProvider resource)
         {
-            var idParameter = new ParameterProvider("id", $"The resource ID of the resource to get.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
+            var idParameter = new ParameterProvider("id", $"The resource ID of the resource to get.", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
                 $"Get{resource.Name}",
                 $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it but with no data.",
@@ -119,7 +119,6 @@ namespace Azure.Generator.Management.Providers
 
             var body = new MethodBodyStatement[]
             {
-                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate(),
                 Return(New.Instance(resource.Type,
                     [
                         This.As<ArmResource>().Client(),

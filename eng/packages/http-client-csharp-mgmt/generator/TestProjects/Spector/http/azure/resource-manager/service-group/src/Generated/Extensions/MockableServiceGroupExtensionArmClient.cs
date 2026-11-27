@@ -32,13 +32,9 @@ namespace Azure.ResourceManager.ServiceGroupExtension.Mocking
 
         /// <summary> Gets an object representing a <see cref="ServiceGroupExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ServiceGroupExtensionResource"/> object. </returns>
         public virtual ServiceGroupExtensionResource GetServiceGroupExtensionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ServiceGroupExtensionResource.ValidateResourceId(id);
             return new ServiceGroupExtensionResource(Client, id);
         }
 

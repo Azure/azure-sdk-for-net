@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MultiService.Combined;
@@ -29,25 +28,17 @@ namespace Azure.ResourceManager.MultiService.Combined.Mocking
 
         /// <summary> Gets an object representing a <see cref="VirtualMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualMachineResource"/> object. </returns>
         public virtual VirtualMachineResource GetVirtualMachineResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            VirtualMachineResource.ValidateResourceId(id);
             return new VirtualMachineResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DiskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="DiskResource"/> object. </returns>
         public virtual DiskResource GetDiskResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            DiskResource.ValidateResourceId(id);
             return new DiskResource(Client, id);
         }
     }

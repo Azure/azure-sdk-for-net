@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroup;
@@ -29,13 +28,9 @@ namespace Azure.ResourceManager.ManagementGroup.Mocking
 
         /// <summary> Gets an object representing a <see cref="ManagementGroupChildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ManagementGroupChildResource"/> object. </returns>
         public virtual ManagementGroupChildResource GetManagementGroupChildResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ManagementGroupChildResource.ValidateResourceId(id);
             return new ManagementGroupChildResource(Client, id);
         }
     }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MethodSubscriptionId;
@@ -29,49 +28,33 @@ namespace Azure.ResourceManager.MethodSubscriptionId.Mocking
 
         /// <summary> Gets an object representing a <see cref="SubscriptionResource1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SubscriptionResource1Resource"/> object. </returns>
         public virtual SubscriptionResource1Resource GetSubscriptionResource1Resource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SubscriptionResource1Resource.ValidateResourceId(id);
             return new SubscriptionResource1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SubscriptionResource2Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SubscriptionResource2Resource"/> object. </returns>
         public virtual SubscriptionResource2Resource GetSubscriptionResource2Resource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SubscriptionResource2Resource.ValidateResourceId(id);
             return new SubscriptionResource2Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SubscriptionResource"/> object. </returns>
         public virtual SubscriptionResource GetSubscriptionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SubscriptionResource.ValidateResourceId(id);
             return new SubscriptionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ResourceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ResourceGroupResource"/> object. </returns>
         public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ResourceGroupResource.ValidateResourceId(id);
             return new ResourceGroupResource(Client, id);
         }
     }

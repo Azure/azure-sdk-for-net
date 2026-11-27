@@ -5,9 +5,11 @@ using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.Generator.MgmtTypeSpec.Tests.Mocking;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Moq;
 using NUnit.Framework;
 using System.Reflection;
 
@@ -16,7 +18,7 @@ namespace Azure.Generator.Management.Tests.Providers
     internal class MockableResourceProviderTests
     {
         [Test]
-        public void ResourceFactoryValidatesIdBeforeResourceType()
+        public void ResourceFactoryDelegatesValidationToConstructor()
         {
             var (client, models) = InputResourceData.ClientWithResource();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
@@ -29,10 +31,9 @@ namespace Azure.Generator.Management.Tests.Providers
                 methods: [factory]);
             var rendered = new TypeProviderWriter(factoryProvider).Write().Content;
 
-            var nullCheck = rendered.IndexOf("Argument.AssertNotNull(id, nameof(id));", StringComparison.Ordinal);
-            var typeCheck = rendered.IndexOf("ResponseTypeResource.ValidateResourceId(id);", StringComparison.Ordinal);
-            Assert.That(nullCheck, Is.GreaterThanOrEqualTo(0));
-            Assert.That(typeCheck, Is.GreaterThan(nullCheck));
+            Assert.That(rendered, Does.Contain("new global::Samples.ResponseTypeResource("));
+            Assert.That(rendered, Does.Not.Contain("Argument.AssertNotNull"));
+            Assert.That(rendered, Does.Not.Contain("ValidateResourceId"));
         }
 
         private static IEnumerable<MethodInfo> ResourceFactories =>
@@ -49,6 +50,30 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(exception!.InnerException, Is.TypeOf<ArgumentNullException>());
             Assert.That(((ArgumentNullException)exception.InnerException!).ParamName, Is.EqualTo("id"));
         }
+
+        [Test]
+        public void ResourceFactoryAcceptsValidId()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>());
+            var id = FooResource.CreateResourceIdentifier("00000000-0000-0000-0000-000000000000", "rg", "foo");
+
+            var resource = client.GetFooResource(id);
+
+            Assert.That(resource.Id, Is.EqualTo(id));
+        }
+
+#if DEBUG
+        [Test]
+        public void ResourceFactoryStillRejectsIncorrectResourceType()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>());
+            var id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg");
+
+            var exception = Assert.Throws<ArgumentException>(() => client.GetFooResource(id));
+
+            Assert.That(exception!.ParamName, Is.EqualTo("id"));
+        }
+#endif
 
         private sealed class MockableArmClient : MockableAzureGeneratorMgmtTypeSpecTestsArmClient
         {

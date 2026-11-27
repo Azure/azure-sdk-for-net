@@ -32,49 +32,33 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         /// <summary> Gets an object representing a <see cref="TopLevelTrackedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="TopLevelTrackedResource"/> object. </returns>
         public virtual TopLevelTrackedResource GetTopLevelTrackedResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            TopLevelTrackedResource.ValidateResourceId(id);
             return new TopLevelTrackedResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NestedProxyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="NestedProxyResource"/> object. </returns>
         public virtual NestedProxyResource GetNestedProxyResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            NestedProxyResource.ValidateResourceId(id);
             return new NestedProxyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SingletonTrackedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SingletonTrackedResource"/> object. </returns>
         public virtual SingletonTrackedResource GetSingletonTrackedResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SingletonTrackedResource.ValidateResourceId(id);
             return new SingletonTrackedResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ExtensionsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ExtensionsResource"/> object. </returns>
         public virtual ExtensionsResource GetExtensionsResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ExtensionsResource.ValidateResourceId(id);
             return new ExtensionsResource(Client, id);
         }
 
@@ -116,13 +100,9 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         /// <summary> Gets an object representing a <see cref="LocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="LocationResource"/> object. </returns>
         public virtual LocationResource GetLocationResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            LocationResource.ValidateResourceId(id);
             return new LocationResource(Client, id);
         }
     }

@@ -53,121 +53,81 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
         public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="StorageSyncServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="StorageSyncServiceResource"/> object. </returns>
         public virtual StorageSyncServiceResource GetStorageSyncServiceResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            StorageSyncServiceResource.ValidateResourceId(id);
             return new StorageSyncServiceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="FooResource"/> object. </returns>
         public virtual FooResource GetFooResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            FooResource.ValidateResourceId(id);
             return new FooResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
         public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            FooConfigurationResource.ValidateResourceId(id);
             return new FooConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
         public virtual BarSettingsResource GetBarSettingsResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            BarSettingsResource.ValidateResourceId(id);
             return new BarSettingsResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
         public virtual BarQuotaResource GetBarQuotaResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            BarQuotaResource.ValidateResourceId(id);
             return new BarQuotaResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BazResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BazResource"/> object. </returns>
         public virtual BazResource GetBazResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            BazResource.ValidateResourceId(id);
             return new BazResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
         public virtual ZooResource GetZooResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ZooResource.ValidateResourceId(id);
             return new ZooResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="IssueTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="IssueTestResource"/> object. </returns>
         public virtual IssueTestResource GetIssueTestResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            IssueTestResource.ValidateResourceId(id);
             return new IssueTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
         public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            EndpointResource.ValidateResourceId(id);
             return new EndpointResource(Client, id);
         }
 
@@ -209,13 +169,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="SelfHelpResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SelfHelpResource"/> object. </returns>
         public virtual SelfHelpResource GetSelfHelpResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SelfHelpResource.ValidateResourceId(id);
             return new SelfHelpResource(Client, id);
         }
 
@@ -257,37 +213,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
         public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            PlaywrightQuotaResource.ValidateResourceId(id);
             return new PlaywrightQuotaResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="JobResource"/> object. </returns>
         public virtual JobResource GetJobResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            JobResource.ValidateResourceId(id);
             return new JobResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            HciVmInstanceResource.ValidateResourceId(id);
             return new HciVmInstanceResource(Client, id);
         }
 
@@ -301,25 +245,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> object. </returns>
         public virtual GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            GroupQuotaSubscriptionRequestStatusResource.ValidateResourceId(id);
             return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SubscriptionQuotaAllocationsListResource"/> object. </returns>
         public virtual SubscriptionQuotaAllocationsListResource GetSubscriptionQuotaAllocationsListResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SubscriptionQuotaAllocationsListResource.ValidateResourceId(id);
             return new SubscriptionQuotaAllocationsListResource(Client, id);
         }
 
@@ -367,97 +303,65 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="JooResource"/> object. </returns>
         public virtual JooResource GetJooResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            JooResource.ValidateResourceId(id);
             return new JooResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SAPVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SAPVirtualInstanceResource"/> object. </returns>
         public virtual SAPVirtualInstanceResource GetSAPVirtualInstanceResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SAPVirtualInstanceResource.ValidateResourceId(id);
             return new SAPVirtualInstanceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BestPracticeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BestPracticeResource"/> object. </returns>
         public virtual BestPracticeResource GetBestPracticeResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            BestPracticeResource.ValidateResourceId(id);
             return new BestPracticeResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BestPracticeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BestPracticeVersionResource"/> object. </returns>
         public virtual BestPracticeVersionResource GetBestPracticeVersionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            BestPracticeVersionResource.ValidateResourceId(id);
             return new BestPracticeVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ResourceTypeTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ResourceTypeTestResource"/> object. </returns>
         public virtual ResourceTypeTestResource GetResourceTypeTestResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ResourceTypeTestResource.ValidateResourceId(id);
             return new ResourceTypeTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SampleDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SampleDataResource"/> object. </returns>
         public virtual SampleDataResource GetSampleDataResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SampleDataResource.ValidateResourceId(id);
             return new SampleDataResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WorkloadNetworksResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="WorkloadNetworksResource"/> object. </returns>
         public virtual WorkloadNetworksResource GetWorkloadNetworksResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            WorkloadNetworksResource.ValidateResourceId(id);
             return new WorkloadNetworksResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="TargetResource"/> object. </returns>
         public virtual TargetResource GetTargetResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            TargetResource.ValidateResourceId(id);
             return new TargetResource(Client, id);
         }
 
@@ -499,37 +403,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
         public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ClusterResource.ValidateResourceId(id);
             return new ClusterResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DuplicatePropertyTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="DuplicatePropertyTestResource"/> object. </returns>
         public virtual DuplicatePropertyTestResource GetDuplicatePropertyTestResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            DuplicatePropertyTestResource.ValidateResourceId(id);
             return new DuplicatePropertyTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceGroupSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ServiceGroupSiteResource"/> object. </returns>
         public virtual ServiceGroupSiteResource GetServiceGroupSiteResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ServiceGroupSiteResource.ValidateResourceId(id);
             return new ServiceGroupSiteResource(Client, id);
         }
 
@@ -571,37 +463,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="TrafficProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="TrafficProfileResource"/> object. </returns>
         public virtual TrafficProfileResource GetTrafficProfileResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            TrafficProfileResource.ValidateResourceId(id);
             return new TrafficProfileResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TrafficEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="TrafficEndpointResource"/> object. </returns>
         public virtual TrafficEndpointResource GetTrafficEndpointResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            TrafficEndpointResource.ValidateResourceId(id);
             return new TrafficEndpointResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VmConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="VmConfigurationAssignmentResource"/> object. </returns>
         public virtual VmConfigurationAssignmentResource GetVmConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            VmConfigurationAssignmentResource.ValidateResourceId(id);
             return new VmConfigurationAssignmentResource(Client, id);
         }
 
@@ -643,13 +523,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="HcrpConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="HcrpConfigurationAssignmentResource"/> object. </returns>
         public virtual HcrpConfigurationAssignmentResource GetHcrpConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            HcrpConfigurationAssignmentResource.ValidateResourceId(id);
             return new HcrpConfigurationAssignmentResource(Client, id);
         }
 
@@ -691,25 +567,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="MultiFlattenTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="MultiFlattenTestResource"/> object. </returns>
         public virtual MultiFlattenTestResource GetMultiFlattenTestResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            MultiFlattenTestResource.ValidateResourceId(id);
             return new MultiFlattenTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PolicyVmAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="PolicyVmAssignmentResource"/> object. </returns>
         public virtual PolicyVmAssignmentResource GetPolicyVmAssignmentResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            PolicyVmAssignmentResource.ValidateResourceId(id);
             return new PolicyVmAssignmentResource(Client, id);
         }
 
@@ -751,13 +619,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="PolicyArcAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="PolicyArcAssignmentResource"/> object. </returns>
         public virtual PolicyArcAssignmentResource GetPolicyArcAssignmentResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            PolicyArcAssignmentResource.ValidateResourceId(id);
             return new PolicyArcAssignmentResource(Client, id);
         }
 
@@ -799,73 +663,49 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="DeleteFinalResultTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="DeleteFinalResultTestResource"/> object. </returns>
         public virtual DeleteFinalResultTestResource GetDeleteFinalResultTestResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            DeleteFinalResultTestResource.ValidateResourceId(id);
             return new DeleteFinalResultTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CustomBaseTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="CustomBaseTypeResource"/> object. </returns>
         public virtual CustomBaseTypeResource GetCustomBaseTypeResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            CustomBaseTypeResource.ValidateResourceId(id);
             return new CustomBaseTypeResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="TestCertificateResource"/> object. </returns>
         public virtual TestCertificateResource GetTestCertificateResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            TestCertificateResource.ValidateResourceId(id);
             return new TestCertificateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PublicSharedConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="PublicSharedConfigResource"/> object. </returns>
         public virtual PublicSharedConfigResource GetPublicSharedConfigResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            PublicSharedConfigResource.ValidateResourceId(id);
             return new PublicSharedConfigResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SharedConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SharedConfigResource"/> object. </returns>
         public virtual SharedConfigResource GetSharedConfigResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SharedConfigResource.ValidateResourceId(id);
             return new SharedConfigResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PolyDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="PolyDeviceResource"/> object. </returns>
         public virtual PolyDeviceResource GetPolyDeviceResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            PolyDeviceResource.ValidateResourceId(id);
             return new PolyDeviceResource(Client, id);
         }
 
@@ -907,133 +747,89 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="CycleTestStoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="CycleTestStoreResource"/> object. </returns>
         public virtual CycleTestStoreResource GetCycleTestStoreResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            CycleTestStoreResource.ValidateResourceId(id);
             return new CycleTestStoreResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EventGridTopicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
         public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            EventGridTopicResource.ValidateResourceId(id);
             return new EventGridTopicResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EventGridDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="EventGridDomainResource"/> object. </returns>
         public virtual EventGridDomainResource GetEventGridDomainResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            EventGridDomainResource.ValidateResourceId(id);
             return new EventGridDomainResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SolutionsApplicationDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="SolutionsApplicationDefinitionResource"/> object. </returns>
         public virtual SolutionsApplicationDefinitionResource GetSolutionsApplicationDefinitionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            SolutionsApplicationDefinitionResource.ValidateResourceId(id);
             return new SolutionsApplicationDefinitionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="IPAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="IPAddressResource"/> object. </returns>
         public virtual IPAddressResource GetIPAddressResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            IPAddressResource.ValidateResourceId(id);
             return new IPAddressResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AcronymWidgetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="AcronymWidgetResource"/> object. </returns>
         public virtual AcronymWidgetResource GetAcronymWidgetResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            AcronymWidgetResource.ValidateResourceId(id);
             return new AcronymWidgetResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>
         public virtual BarResource GetBarResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            BarResource.ValidateResourceId(id);
             return new BarResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
         public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
             return new WorkloadNetworkVmGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
         public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            WorkloadNetworkSegmentResource.ValidateResourceId(id);
             return new WorkloadNetworkSegmentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
         public virtual EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            EventGridTopicPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new EventGridTopicPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
         public virtual EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            EventGridDomainPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new EventGridDomainPrivateEndpointConnectionResource(Client, id);
         }
 

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CommonProperties;
@@ -29,37 +28,25 @@ namespace Azure.ResourceManager.CommonProperties.Mocking
 
         /// <summary> Gets an object representing a <see cref="ManagedIdentityTrackedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ManagedIdentityTrackedResource"/> object. </returns>
         public virtual ManagedIdentityTrackedResource GetManagedIdentityTrackedResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ManagedIdentityTrackedResource.ValidateResourceId(id);
             return new ManagedIdentityTrackedResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ConfidentialResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ConfidentialResource"/> object. </returns>
         public virtual ConfidentialResource GetConfidentialResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ConfidentialResource.ValidateResourceId(id);
             return new ConfidentialResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ArmResourceIdentifierResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="ArmResourceIdentifierResource"/> object. </returns>
         public virtual ArmResourceIdentifierResource GetArmResourceIdentifierResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            ArmResourceIdentifierResource.ValidateResourceId(id);
             return new ArmResourceIdentifierResource(Client, id);
         }
     }
