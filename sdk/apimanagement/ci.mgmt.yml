@@ -16,6 +16,8 @@ extends:
     ServiceDirectory: apimanagement
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.AIGateway
+      safeName: AzureResourceManagerAIGateway
     - name: Azure.ResourceManager.ApiManagement
       safeName: AzureResourceManagerApiManagement
     - name: Azure.Provisioning.ApiManagement
