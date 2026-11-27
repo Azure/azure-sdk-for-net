@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string SucceededValue = "Succeeded";
         private const string CanceledValue = "Canceled";
         private const string ResolvingDnsValue = "ResolvingDNS";
+        private const string ExtensionUnreachableValue = "ExtensionUnreachable";
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -57,6 +58,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the ResolvingDns. </summary>
         public static ServiceAccountProvisioningState ResolvingDns { get; } = new ServiceAccountProvisioningState(ResolvingDnsValue);
+
+        /// <summary> Gets the ExtensionUnreachable. </summary>
+        public static ServiceAccountProvisioningState ExtensionUnreachable { get; } = new ServiceAccountProvisioningState(ExtensionUnreachableValue);
 
         /// <summary> Determines if two <see cref="ServiceAccountProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
