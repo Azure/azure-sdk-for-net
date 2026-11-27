@@ -87,6 +87,7 @@ Please follow the [Azure SignalR trigger](https://learn.microsoft.com/azure/azur
 
 ## Supported scenarios
 - Negotiate for a SignalR client.
+- Refresh authentication for a live SignalR client connection.
 - Manage group like add/remove a single user/connection in a group.
 - Send messages to a single user/connection, to a group, to all users/connections.
 - Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple Azure SignalR Service Instances Support in Azure Functions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/docs/sharding.md).
@@ -102,6 +103,22 @@ In order for a client to connect to SignalR, it needs to obtain the SignalR clie
 public static SignalRConnectionInfo Negotiate(
     [HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest req,
     [SignalRConnectionInfo(HubName = "<hub_name>", UserId = "<user_id>")] SignalRConnectionInfo connectionInfo)
+{
+    return connectionInfo;
+}
+```
+
+### Authentication refresh
+
+Set `EnableAuthenticationRefresh = true` on the negotiate binding for the same hub. The refresh binding reads the client's connection token from the `X-SignalR-Connection-Token` header. If your app requires additional authorization, enforce it before the input binding runs.
+
+Set `AuthenticationExpiresOn` on negotiate or refresh to supply an application-controlled deadline, for example `2030-01-02T03:04:05Z`. Timestamps are parsed using the invariant culture and are interpreted as UTC if no offset is supplied. A binding expression must resolve to a trusted timestamp; do not bind it directly to an untrusted client value. If neither the refresh binding nor the application configurer supplies a deadline, the existing deadline is preserved.
+
+```csharp
+[FunctionName("Refresh")]
+public static SignalRConnectionInfo Refresh(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/refresh")] HttpRequest request,
+    [SignalRRefresh(HubName = "chat")] SignalRConnectionInfo connectionInfo)
 {
     return connectionInfo;
 }

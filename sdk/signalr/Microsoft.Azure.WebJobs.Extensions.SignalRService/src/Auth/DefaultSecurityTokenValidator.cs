@@ -37,7 +37,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     {
                         var token = authHeaderValue.Substring(BearerPrefix.Length);
                         var principal = _handler.ValidateToken(token, _tokenValidationParameters, out _);
-
                         return SecurityTokenResult.Success(principal);
                     }
                 }

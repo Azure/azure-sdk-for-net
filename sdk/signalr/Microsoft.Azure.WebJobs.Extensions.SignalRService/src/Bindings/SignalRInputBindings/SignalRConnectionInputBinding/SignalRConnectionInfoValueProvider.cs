@@ -11,6 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     internal class SignalRConnectionInfoValueProvider : IValueProvider
     {
         private readonly SignalRConnectionInfo _info;
+        private readonly SignalRRefreshResult _refreshResult;
         private readonly string _invokeString;
 
         public Type Type { get; }
@@ -21,6 +22,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             _info = info;
             _invokeString = invokeString;
             Type = type;
+        }
+
+        internal SignalRConnectionInfoValueProvider(SignalRRefreshResult result, string invokeString)
+        {
+            _refreshResult = result;
+            _invokeString = invokeString;
+            Type = typeof(SignalRRefreshResult);
         }
 
         public Task<object> GetValueAsync()
@@ -35,6 +43,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private object GetUserTypeInfo()
         {
+            if (_refreshResult != null)
+            {
+                return _refreshResult;
+            }
+
+            if (_info == null)
+            {
+                return null;
+            }
+
             if (Type == typeof(JObject))
             {
                 return JObject.FromObject(_info);

@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
-                expires: DateTime.Now.AddMinutes(expireMinutes),
+                expires: DateTime.UtcNow.AddMinutes(expireMinutes),
                 signingCredentials: credentials
             );
 

@@ -4,11 +4,18 @@
 
 ### Features Added
 
+- Added serverless authentication refresh support through the `[SignalRRefresh]` input binding so a Function App can extend a live SignalR client connection's authentication and application claims without reconnecting.
+- `[SignalRRefresh]` can bind to `SignalRRefreshResult` so a function can distinguish a missing resolved connection token, authentication rejection, a user mismatch, and an unavailable connection.
+- Added authentication-refresh options to negotiation bindings, including refresh opt-in, close-on-expiration, and the maximum service access-token lifetime.
+- Added `AuthenticationExpiresOn` to negotiate and refresh bindings so apps can explicitly set the authentication deadline instead of deriving it from the bearer token.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+- Updated `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, and `Microsoft.Azure.SignalR.Protocols` dependencies to 1.34.0.
 
 ## 2.4.0 (2026-11-20)
 

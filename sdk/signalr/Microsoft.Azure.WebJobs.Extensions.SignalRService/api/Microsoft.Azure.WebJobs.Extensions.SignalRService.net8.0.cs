@@ -59,6 +59,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public abstract partial class NegotiationBaseAttribute : System.Attribute
     {
         protected NegotiationBaseAttribute() { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string AuthenticationExpiresOn { get { throw null; } set { } }
         public string[] ClaimTypeList { get { throw null; } set { } }
         public string ConnectionStringSetting { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
@@ -148,6 +150,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRConnectionDetail
     {
         public SignalRConnectionDetail() { }
+        public System.DateTimeOffset? AuthenticationExpiresOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Security.Claims.Claim> Claims { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
@@ -156,6 +159,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public SignalRConnectionInfo() { }
         [Newtonsoft.Json.JsonPropertyAttribute("accessToken")]
         public string AccessToken { get { throw null; } set { } }
+        [Newtonsoft.Json.JsonPropertyAttribute("tokenLifetimeSeconds", NullValueHandling=Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? TokenLifetimeSeconds { get { throw null; } set { } }
         [Newtonsoft.Json.JsonPropertyAttribute("url")]
         public string Url { get { throw null; } set { } }
     }
@@ -164,6 +169,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRConnectionInfoAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
     {
         public SignalRConnectionInfoAttribute() { }
+        public bool CloseOnAuthenticationExpiration { get { throw null; } set { } }
+        public bool EnableAuthenticationRefresh { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
@@ -230,6 +238,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRNegotiationAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
     {
         public SignalRNegotiationAttribute() { }
+        public bool CloseOnAuthenticationExpiration { get { throw null; } set { } }
+        public bool EnableAuthenticationRefresh { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     public partial class SignalROptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
@@ -251,6 +262,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRParameterAttribute : System.Attribute
     {
         public SignalRParameterAttribute() { }
+    }
+    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
+    public partial class SignalRRefreshAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
+    {
+        public SignalRRefreshAttribute() { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string ConnectionToken { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
+    }
+    public sealed partial class SignalRRefreshResult
+    {
+        internal SignalRRefreshResult() { }
+        public Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionInfo ConnectionInfo { get { throw null; } }
+        public Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRRefreshStatus Status { get { throw null; } }
+    }
+    public enum SignalRRefreshStatus
+    {
+        Succeeded = 0,
+        MissingConnectionToken = 1,
+        Unauthorized = 2,
+        Forbidden = 3,
+        ConnectionNotFound = 4,
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
