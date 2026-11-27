@@ -31,7 +31,6 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         /// <returns> Returns a <see cref="FilteredExistenceTestResource"/> object. </returns>
         public virtual FilteredExistenceTestResource GetFilteredExistenceTestResource(ResourceIdentifier id)
         {
-            FilteredExistenceTestResource.ValidateResourceId(id);
             return new FilteredExistenceTestResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         /// <returns> Returns a <see cref="EscapedWireVersionTestResource"/> object. </returns>
         public virtual EscapedWireVersionTestResource GetEscapedWireVersionTestResource(ResourceIdentifier id)
         {
-            EscapedWireVersionTestResource.ValidateResourceId(id);
             return new EscapedWireVersionTestResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         /// <returns> Returns a <see cref="WireVersionTestResource"/> object. </returns>
         public virtual WireVersionTestResource GetWireVersionTestResource(ResourceIdentifier id)
         {
-            WireVersionTestResource.ValidateResourceId(id);
             return new WireVersionTestResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         /// <returns> Returns a <see cref="OrdinaryWireVersionTestResource"/> object. </returns>
         public virtual OrdinaryWireVersionTestResource GetOrdinaryWireVersionTestResource(ResourceIdentifier id)
         {
-            OrdinaryWireVersionTestResource.ValidateResourceId(id);
             return new OrdinaryWireVersionTestResource(Client, id);
         }
     }

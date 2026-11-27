@@ -119,7 +119,6 @@ namespace Azure.Generator.Management.Providers
 
             var body = new MethodBodyStatement[]
             {
-                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate(),
                 Return(New.Instance(resource.Type,
                     [
                         This.As<ArmResource>().Client(),

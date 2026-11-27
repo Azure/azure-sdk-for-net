@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined.Mocking
         /// <returns> Returns a <see cref="VirtualMachineResource"/> object. </returns>
         public virtual VirtualMachineResource GetVirtualMachineResource(ResourceIdentifier id)
         {
-            VirtualMachineResource.ValidateResourceId(id);
             return new VirtualMachineResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined.Mocking
         /// <returns> Returns a <see cref="StorageAccountResource"/> object. </returns>
         public virtual StorageAccountResource GetStorageAccountResource(ResourceIdentifier id)
         {
-            StorageAccountResource.ValidateResourceId(id);
             return new StorageAccountResource(Client, id);
         }
     }

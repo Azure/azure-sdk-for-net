@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ManagementGroup.Mocking
         /// <returns> Returns a <see cref="ManagementGroupChildResource"/> object. </returns>
         public virtual ManagementGroupChildResource GetManagementGroupChildResource(ResourceIdentifier id)
         {
-            ManagementGroupChildResource.ValidateResourceId(id);
             return new ManagementGroupChildResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CommonProperties.Mocking
         /// <returns> Returns a <see cref="ManagedIdentityTrackedResource"/> object. </returns>
         public virtual ManagedIdentityTrackedResource GetManagedIdentityTrackedResource(ResourceIdentifier id)
         {
-            ManagedIdentityTrackedResource.ValidateResourceId(id);
             return new ManagedIdentityTrackedResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CommonProperties.Mocking
         /// <returns> Returns a <see cref="ConfidentialResource"/> object. </returns>
         public virtual ConfidentialResource GetConfidentialResource(ResourceIdentifier id)
         {
-            ConfidentialResource.ValidateResourceId(id);
             return new ConfidentialResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CommonProperties.Mocking
         /// <returns> Returns a <see cref="ArmResourceIdentifierResource"/> object. </returns>
         public virtual ArmResourceIdentifierResource GetArmResourceIdentifierResource(ResourceIdentifier id)
         {
-            ArmResourceIdentifierResource.ValidateResourceId(id);
             return new ArmResourceIdentifierResource(Client, id);
         }
     }

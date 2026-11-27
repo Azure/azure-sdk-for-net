@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.ServiceGroupExtension.Mocking
         /// <returns> Returns a <see cref="ServiceGroupExtensionResource"/> object. </returns>
         public virtual ServiceGroupExtensionResource GetServiceGroupExtensionResource(ResourceIdentifier id)
         {
-            ServiceGroupExtensionResource.ValidateResourceId(id);
             return new ServiceGroupExtensionResource(Client, id);
         }
 

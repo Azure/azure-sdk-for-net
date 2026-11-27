@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MultiService.Combined.Mocking
         /// <returns> Returns a <see cref="VirtualMachineResource"/> object. </returns>
         public virtual VirtualMachineResource GetVirtualMachineResource(ResourceIdentifier id)
         {
-            VirtualMachineResource.ValidateResourceId(id);
             return new VirtualMachineResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MultiService.Combined.Mocking
         /// <returns> Returns a <see cref="DiskResource"/> object. </returns>
         public virtual DiskResource GetDiskResource(ResourceIdentifier id)
         {
-            DiskResource.ValidateResourceId(id);
             return new DiskResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
         /// <returns> Returns a <see cref="FooResource"/> object. </returns>
         public virtual FooResource GetFooResource(ResourceIdentifier id)
         {
-            FooResource.ValidateResourceId(id);
             return new FooResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>
         public virtual BarResource GetBarResource(ResourceIdentifier id)
         {
-            BarResource.ValidateResourceId(id);
             return new BarResource(Client, id);
         }
     }

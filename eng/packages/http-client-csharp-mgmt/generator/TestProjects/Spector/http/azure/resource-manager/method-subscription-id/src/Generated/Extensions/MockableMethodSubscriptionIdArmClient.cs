@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MethodSubscriptionId.Mocking
         /// <returns> Returns a <see cref="SubscriptionResource1Resource"/> object. </returns>
         public virtual SubscriptionResource1Resource GetSubscriptionResource1Resource(ResourceIdentifier id)
         {
-            SubscriptionResource1Resource.ValidateResourceId(id);
             return new SubscriptionResource1Resource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MethodSubscriptionId.Mocking
         /// <returns> Returns a <see cref="SubscriptionResource2Resource"/> object. </returns>
         public virtual SubscriptionResource2Resource GetSubscriptionResource2Resource(ResourceIdentifier id)
         {
-            SubscriptionResource2Resource.ValidateResourceId(id);
             return new SubscriptionResource2Resource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.MethodSubscriptionId.Mocking
         /// <returns> Returns a <see cref="SubscriptionResource"/> object. </returns>
         public virtual SubscriptionResource GetSubscriptionResource(ResourceIdentifier id)
         {
-            SubscriptionResource.ValidateResourceId(id);
             return new SubscriptionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.MethodSubscriptionId.Mocking
         /// <returns> Returns a <see cref="ResourceGroupResource"/> object. </returns>
         public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
         {
-            ResourceGroupResource.ValidateResourceId(id);
             return new ResourceGroupResource(Client, id);
         }
     }

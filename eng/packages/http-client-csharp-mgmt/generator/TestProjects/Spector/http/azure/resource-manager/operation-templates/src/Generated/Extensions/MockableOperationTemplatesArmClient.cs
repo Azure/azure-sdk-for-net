@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <returns> Returns a <see cref="CostReportResource"/> object. </returns>
         public virtual CostReportResource GetCostReportResource(ResourceIdentifier id)
         {
-            CostReportResource.ValidateResourceId(id);
             return new CostReportResource(Client, id);
         }
 
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <returns> Returns a <see cref="WidgetResource"/> object. </returns>
         public virtual WidgetResource GetWidgetResource(ResourceIdentifier id)
         {
-            WidgetResource.ValidateResourceId(id);
             return new WidgetResource(Client, id);
         }
 
@@ -91,7 +89,6 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <returns> Returns a <see cref="MonitorResource"/> object. </returns>
         public virtual MonitorResource GetMonitorResource(ResourceIdentifier id)
         {
-            MonitorResource.ValidateResourceId(id);
             return new MonitorResource(Client, id);
         }
     }
