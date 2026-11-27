@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 Pipeline,
                 Diagnostics.ApplicationId,
                 Endpoint,
-                locationBasedBulkCreateCustomApiVersion ?? "2026-10-06-preview",
+                locationBasedBulkCreateCustomApiVersion ?? "2026-10-16",
                 resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Creates or updates BulkCreateCustoms.
+        /// Creates virtual machines in bulk with custom settings.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BulkCreateCustom_CreateOrUpdate. </description>
+        /// <description> BulkCreateCustom_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateCustomRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateCustomData.ToRequestContent(data), context);
+                HttpMessage message = _bulkCreateCustomRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateCustomData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BulkActionsArmOperation<LocationBasedBulkCreateCustomResource> operation = new BulkActionsArmOperation<LocationBasedBulkCreateCustomResource>(
                     new LocationBasedBulkCreateCustomResourceOperationSource(Client),
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Creates or updates BulkCreateCustoms.
+        /// Creates virtual machines in bulk with custom settings.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BulkCreateCustom_CreateOrUpdate. </description>
+        /// <description> BulkCreateCustom_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateCustomRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateCustomData.ToRequestContent(data), context);
+                HttpMessage message = _bulkCreateCustomRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateCustomData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BulkActionsArmOperation<LocationBasedBulkCreateCustomResource> operation = new BulkActionsArmOperation<LocationBasedBulkCreateCustomResource>(
                     new LocationBasedBulkCreateCustomResourceOperationSource(Client),
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
