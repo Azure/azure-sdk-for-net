@@ -3,12 +3,14 @@
 
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    // Preserve the beta.5 extension signatures reported missing by ApiCompat after the operation renames.
+    // Preserve previous extension signatures while exposing resource-specific operation names.
     public static partial class BillingBenefitsExtensions
     {
         /// <inheritdoc cref="GetApplicableMaccsAsync(ArmClient, ResourceIdentifier, CancellationToken)"/>
@@ -41,6 +43,38 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(client, nameof(client));
             return GetMockableBillingBenefitsArmClient(client).GetApplicable(scope, cancellationToken);
+        }
+
+        /// <inheritdoc cref="GetMaccsAsync(TenantResource, SellerResourceListContent, CancellationToken)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<MaccResource> GetAllAsync(this TenantResource tenantResource, SellerResourceListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetAllAsync(content, cancellationToken);
+        }
+
+        /// <inheritdoc cref="GetMaccs(TenantResource, SellerResourceListContent, CancellationToken)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<MaccResource> GetAll(this TenantResource tenantResource, SellerResourceListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetAll(content, cancellationToken);
+        }
+
+        /// <inheritdoc cref="ValidateBillingBenefitsSavingsPlanPurchaseAsync(TenantResource, BenefitValidateContent, CancellationToken)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<BenefitValidateResult>> ValidateAsync(this TenantResource tenantResource, BenefitValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableBillingBenefitsTenantResource(tenantResource).ValidateAsync(content, cancellationToken);
+        }
+
+        /// <inheritdoc cref="ValidateBillingBenefitsSavingsPlanPurchase(TenantResource, BenefitValidateContent, CancellationToken)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<BenefitValidateResult> Validate(this TenantResource tenantResource, BenefitValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableBillingBenefitsTenantResource(tenantResource).Validate(content, cancellationToken);
         }
     }
 }

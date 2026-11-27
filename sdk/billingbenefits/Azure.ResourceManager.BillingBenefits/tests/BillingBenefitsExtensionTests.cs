@@ -63,9 +63,11 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             AssertRequest(transport, 1, RequestMethod.Get, "/providers%2FMicrosoft.Billing%2FbillingAccounts%2Faccount/providers/Microsoft.BillingBenefits/applicableCredits");
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task GetMaccsPreservesPostRequest(bool async)
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task GetMaccsPreservesPostRequest(bool async, bool legacy)
         {
             var transport = new MockTransport(
                 new MockResponse(200).SetContent(TenantResponse),
@@ -74,16 +76,18 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var content = new SellerResourceListContent { IncludeContributors = true };
 
             int count = async
-                ? await CountAsync(tenant.GetMaccsAsync(content))
-                : tenant.GetMaccs(content).Count();
+                ? await CountAsync(legacy ? tenant.GetAllAsync(content) : tenant.GetMaccsAsync(content))
+                : (legacy ? tenant.GetAll(content) : tenant.GetMaccs(content)).Count();
 
             Assert.That(count, Is.Zero);
             AssertRequest(transport, 2, RequestMethod.Post, "/providers/Microsoft.BillingBenefits/listSellerResources");
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task ValidateBillingBenefitsSavingsPlanPurchasePreservesRequest(bool async)
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task ValidateBillingBenefitsSavingsPlanPurchasePreservesRequest(bool async, bool legacy)
         {
             var rawResponse = new MockResponse(200).SetContent("{\"benefits\":[]}");
             var transport = new MockTransport(new MockResponse(200).SetContent(TenantResponse), rawResponse);
@@ -91,8 +95,8 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var content = new BenefitValidateContent();
 
             var response = async
-                ? await tenant.ValidateBillingBenefitsSavingsPlanPurchaseAsync(content)
-                : tenant.ValidateBillingBenefitsSavingsPlanPurchase(content);
+                ? await (legacy ? tenant.ValidateAsync(content) : tenant.ValidateBillingBenefitsSavingsPlanPurchaseAsync(content))
+                : (legacy ? tenant.Validate(content) : tenant.ValidateBillingBenefitsSavingsPlanPurchase(content));
 
             Assert.That(response.Value.Benefits, Is.Empty);
             Assert.That(response.GetRawResponse(), Is.SameAs(rawResponse));
