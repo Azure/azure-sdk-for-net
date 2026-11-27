@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for API version `2026-09-01-preview`, including quota transfers and incoming quota transfers.
+
 ### Breaking Changes
 
 ### Bugs Fixed
