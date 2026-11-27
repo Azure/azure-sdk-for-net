@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="operationId"> Current or latest asynchronous operation identifier on the node type. </param>
         /// <param name="operationStatus"> Current or latest asynchronous operation status on the node type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeFaultSimulation(string nodeTypeName, FaultSimulationStatus? status, string operationId, SfmcOperationStatus? operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeTypeFaultSimulation(string nodeTypeName, FaultSimulationStatus? status, string operationId, ServiceFabricManagedClusterOperationStatus? operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeTypeName = nodeTypeName;
             Status = status;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string OperationId { get; }
 
         /// <summary> Current or latest asynchronous operation status on the node type. </summary>
-        public SfmcOperationStatus? OperationStatus { get; }
+        public ServiceFabricManagedClusterOperationStatus? OperationStatus { get; }
     }
 }
