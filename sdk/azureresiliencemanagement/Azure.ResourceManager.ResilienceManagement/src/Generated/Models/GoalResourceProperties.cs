@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="GoalResourceProperties"/>. </summary>
         /// <param name="resourceArmId"> The fully qualified ARM resource ID represented by this goal resource. </param>
         /// <param name="zonalResiliency"> The zonal resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </param>
+        /// <param name="regionalResiliency"> The regional resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </param>
         /// <param name="provisioningState"> The provisioning state of the goal resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalResourceProperties(ResourceIdentifier resourceArmId, GoalResourceResiliencyProperties zonalResiliency, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalResourceProperties(ResourceIdentifier resourceArmId, GoalResourceResiliencyProperties zonalResiliency, GoalResourceResiliencyProperties regionalResiliency, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceArmId = resourceArmId;
             ZonalResiliency = zonalResiliency;
+            RegionalResiliency = regionalResiliency;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> The zonal resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </summary>
         public GoalResourceResiliencyProperties ZonalResiliency { get; set; }
+
+        /// <summary> The regional resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </summary>
+        public GoalResourceResiliencyProperties RegionalResiliency { get; set; }
 
         /// <summary> The provisioning state of the goal resource. </summary>
         public ResilienceManagementProvisioningState? ProvisioningState { get; }

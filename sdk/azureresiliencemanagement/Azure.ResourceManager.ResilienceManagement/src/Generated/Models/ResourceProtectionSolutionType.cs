@@ -25,6 +25,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private const string CrossZoneVMRecoveryValue = "CrossZoneVMRecovery";
         /// <summary> Resource is not protected with native solution and using custom runbook automation scripts for recovery verbs. </summary>
         private const string CustomRunbookValue = "CustomRunbook";
+        /// <summary> Resource recovery is orchestrated by deploying an Azure Resource Manager template. </summary>
+        private const string AzureTemplateValue = "AzureTemplate";
+        /// <summary> Resource is protected with Azure Storage account customer-managed failover. </summary>
+        private const string AzureStorageAccountValue = "AzureStorageAccount";
+        /// <summary> Resource is protected with Azure Service Bus geo-replication, where a premium namespace replicates data to a secondary region and recovery promotes that secondary in place. </summary>
+        private const string AzureServiceBusValue = "AzureServiceBus";
+        /// <summary> Resource is protected with Azure NetApp Files cross-region replication, where recovery fails over to the destination volume. </summary>
+        private const string AzureNetAppFilesValue = "AzureNetAppFiles";
+        /// <summary> Resource is protected with Azure Cosmos DB multiregion replication using customer-managed failover, where recovery promotes a secondary region to the write region. </summary>
+        private const string AzureCosmosDBValue = "AzureCosmosDB";
 
         /// <summary> Initializes a new instance of <see cref="ResourceProtectionSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,6 +60,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Resource is not protected with native solution and using custom runbook automation scripts for recovery verbs. </summary>
         public static ResourceProtectionSolutionType CustomRunbook { get; } = new ResourceProtectionSolutionType(CustomRunbookValue);
+
+        /// <summary> Resource recovery is orchestrated by deploying an Azure Resource Manager template. </summary>
+        public static ResourceProtectionSolutionType AzureTemplate { get; } = new ResourceProtectionSolutionType(AzureTemplateValue);
+
+        /// <summary> Resource is protected with Azure Storage account customer-managed failover. </summary>
+        public static ResourceProtectionSolutionType AzureStorageAccount { get; } = new ResourceProtectionSolutionType(AzureStorageAccountValue);
+
+        /// <summary> Resource is protected with Azure Service Bus geo-replication, where a premium namespace replicates data to a secondary region and recovery promotes that secondary in place. </summary>
+        public static ResourceProtectionSolutionType AzureServiceBus { get; } = new ResourceProtectionSolutionType(AzureServiceBusValue);
+
+        /// <summary> Resource is protected with Azure NetApp Files cross-region replication, where recovery fails over to the destination volume. </summary>
+        public static ResourceProtectionSolutionType AzureNetAppFiles { get; } = new ResourceProtectionSolutionType(AzureNetAppFilesValue);
+
+        /// <summary> Resource is protected with Azure Cosmos DB multiregion replication using customer-managed failover, where recovery promotes a secondary region to the write region. </summary>
+        public static ResourceProtectionSolutionType AzureCosmosDB { get; } = new ResourceProtectionSolutionType(AzureCosmosDBValue);
 
         /// <summary> Determines if two <see cref="ResourceProtectionSolutionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

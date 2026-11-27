@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string recoveryMembersApiVersion);
             _recoveryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryMembersApiVersion ?? "2026-10-01");
+            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryMembersApiVersion ?? "2026-11-30-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01. </description>
+        /// <description> 2026-11-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01. </description>
+        /// <description> 2026-11-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

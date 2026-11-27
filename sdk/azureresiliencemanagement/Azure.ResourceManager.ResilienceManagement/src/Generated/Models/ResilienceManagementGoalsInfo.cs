@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ResilienceManagementGoalsInfo"/>. </summary>
         /// <param name="assignmentId"> Arm id of the goal assignment. </param>
         /// <param name="zonalResiliency"> Zonal resiliency goal copied from the goal assignment. </param>
+        /// <param name="regionalResiliency"> Regional resiliency goal copied from the goal assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId, UnifiedResilienceItemGoalRequirement zonalResiliency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId, UnifiedResilienceItemGoalRequirement zonalResiliency, UnifiedResilienceItemGoalRequirement regionalResiliency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssignmentId = assignmentId;
             ZonalResiliency = zonalResiliency;
+            RegionalResiliency = regionalResiliency;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,12 +43,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Zonal resiliency goal copied from the goal assignment. </summary>
         internal UnifiedResilienceItemGoalRequirement ZonalResiliency { get; }
 
+        /// <summary> Regional resiliency goal copied from the goal assignment. </summary>
+        internal UnifiedResilienceItemGoalRequirement RegionalResiliency { get; }
+
         /// <summary> Whether the goal is required for the service group. </summary>
         public bool? IsZonalResiliencyRequired
         {
             get
             {
                 return ZonalResiliency is null ? (bool?)default : ZonalResiliency.IsZonalResiliencyRequired;
+            }
+        }
+
+        /// <summary> Whether the goal is required for the service group. </summary>
+        public bool? IsZonalResiliencyRequired
+        {
+            get
+            {
+                return RegionalResiliency is null ? (bool?)default : RegionalResiliency.IsZonalResiliencyRequired;
             }
         }
     }

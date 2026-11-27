@@ -273,6 +273,82 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RecoveryConfigProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryConfigProfileResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryConfigProfileResource"/> object. </returns>
+        public static RecoveryConfigProfileResource GetRecoveryConfigProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResilienceManagementArmClient(client).GetRecoveryConfigProfileResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="RecoveryConfigProfileCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryConfigProfiles(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="RecoveryConfigProfileResource"/> objects. </returns>
+        public static RecoveryConfigProfileCollection GetRecoveryConfigProfiles(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResilienceManagementArmClient(client).GetRecoveryConfigProfiles(scope);
+        }
+
+        /// <summary>
+        /// Gets a recovery configuration profile.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryConfigProfile(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryConfigProfileName"> The name of the recovery configuration profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RecoveryConfigProfileResource> GetRecoveryConfigProfile(this ArmClient client, ResourceIdentifier scope, string recoveryConfigProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResilienceManagementArmClient(client).GetRecoveryConfigProfile(scope, recoveryConfigProfileName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a recovery configuration profile.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryConfigProfileAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryConfigProfileName"> The name of the recovery configuration profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RecoveryConfigProfileResource>> GetRecoveryConfigProfileAsync(this ArmClient client, ResourceIdentifier scope, string recoveryConfigProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableResilienceManagementArmClient(client).GetRecoveryConfigProfileAsync(scope, recoveryConfigProfileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RecoveryMembersResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>

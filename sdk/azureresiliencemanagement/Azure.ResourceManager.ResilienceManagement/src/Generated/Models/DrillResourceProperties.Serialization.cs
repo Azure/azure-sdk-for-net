@@ -186,6 +186,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("drillType"u8);
                 writer.WriteStringValue(DrillType.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(FaultEligibility))
+            {
+                writer.WritePropertyName("faultEligibility"u8);
+                writer.WriteStringValue(FaultEligibility.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FaultIneligibleReason))
+            {
+                writer.WritePropertyName("faultIneligibleReason"u8);
+                writer.WriteStringValue(FaultIneligibleReason.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
