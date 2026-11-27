@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="tenantId"> The Microsoft Entra tenant ID that the connection identity belongs to. </param>
         /// <param name="certificateSubjectName"> The subject name of the certificate used to authenticate the connection. </param>
         /// <param name="certificateIssuer"> The issuer of the certificate used to authenticate the connection. </param>
-        /// <param name="dstsPrincipal"> The dSTS principal name used to authenticate the connection. </param>
         /// <param name="dataPlaneEndpoint">
         /// The regional Chaos Studio data-plane endpoint assigned to this connection.
         /// Clients and agents use this endpoint to reach the Chaos Studio data plane
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The current status of the connection. </param>
         /// <param name="provisioningState"> The most recent provisioning state for the connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosConnectionProperties(ChaosConnectionKind kind, ResourceIdentifier targetResourceId, Guid? principalId, Guid? tenantId, string certificateSubjectName, string certificateIssuer, string dstsPrincipal, Uri dataPlaneEndpoint, ChaosConnectionStatus? status, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosConnectionProperties(ChaosConnectionKind kind, ResourceIdentifier targetResourceId, Guid? principalId, Guid? tenantId, string certificateSubjectName, string certificateIssuer, Uri dataPlaneEndpoint, ChaosConnectionStatus? status, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             TargetResourceId = targetResourceId;
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.Chaos.Models
             TenantId = tenantId;
             CertificateSubjectName = certificateSubjectName;
             CertificateIssuer = certificateIssuer;
-            DstsPrincipal = dstsPrincipal;
             DataPlaneEndpoint = dataPlaneEndpoint;
             Status = status;
             ProvisioningState = provisioningState;
@@ -83,9 +81,6 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> The issuer of the certificate used to authenticate the connection. </summary>
         public string CertificateIssuer { get; set; }
-
-        /// <summary> The dSTS principal name used to authenticate the connection. </summary>
-        public string DstsPrincipal { get; set; }
 
         /// <summary>
         /// The regional Chaos Studio data-plane endpoint assigned to this connection.

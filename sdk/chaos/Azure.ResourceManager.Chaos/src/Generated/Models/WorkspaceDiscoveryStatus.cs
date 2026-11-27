@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string InProgressValue = "InProgress";
         /// <summary> The discovery completed successfully. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> Discovery produced an admissible result with an observed coverage shortfall. This status does not itself block scenario runs or evaluations; consumers requiring established coverage must also check completeness. </summary>
+        private const string PartiallySucceededValue = "PartiallySucceeded";
         /// <summary> The discovery failed. </summary>
         private const string FailedValue = "Failed";
         /// <summary> The discovery was canceled. </summary>
@@ -49,6 +51,9 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> The discovery completed successfully. </summary>
         public static WorkspaceDiscoveryStatus Succeeded { get; } = new WorkspaceDiscoveryStatus(SucceededValue);
+
+        /// <summary> Discovery produced an admissible result with an observed coverage shortfall. This status does not itself block scenario runs or evaluations; consumers requiring established coverage must also check completeness. </summary>
+        public static WorkspaceDiscoveryStatus PartiallySucceeded { get; } = new WorkspaceDiscoveryStatus(PartiallySucceededValue);
 
         /// <summary> The discovery failed. </summary>
         public static WorkspaceDiscoveryStatus Failed { get; } = new WorkspaceDiscoveryStatus(FailedValue);
