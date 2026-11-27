@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataPlaneProxyAuthenticationMode?(string value) => value == null ? null : new DataPlaneProxyAuthenticationMode(value);
+        public static implicit operator DataPlaneProxyAuthenticationMode?(string value) => value == null ? (DataPlaneProxyAuthenticationMode?)null : new DataPlaneProxyAuthenticationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

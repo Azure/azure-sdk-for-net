@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ClientAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientAuthenticationMethod?(string value) => value == null ? null : new ClientAuthenticationMethod(value);
+        public static implicit operator ClientAuthenticationMethod?(string value) => value == null ? (ClientAuthenticationMethod?)null : new ClientAuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

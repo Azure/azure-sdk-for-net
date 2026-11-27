@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ReleaseChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReleaseChannel?(string value) => value == null ? null : new ReleaseChannel(value);
+        public static implicit operator ReleaseChannel?(string value) => value == null ? (ReleaseChannel?)null : new ReleaseChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="WebhookNotificationEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebhookNotificationEvent?(string value) => value == null ? null : new WebhookNotificationEvent(value);
+        public static implicit operator WebhookNotificationEvent?(string value) => value == null ? (WebhookNotificationEvent?)null : new WebhookNotificationEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

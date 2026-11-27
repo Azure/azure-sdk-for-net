@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="PlatformVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlatformVersion?(string value) => value == null ? null : new PlatformVersion(value);
+        public static implicit operator PlatformVersion?(string value) => value == null ? (PlatformVersion?)null : new PlatformVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

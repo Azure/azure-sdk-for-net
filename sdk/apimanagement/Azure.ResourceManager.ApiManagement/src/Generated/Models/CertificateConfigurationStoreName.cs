@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="CertificateConfigurationStoreName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateConfigurationStoreName?(string value) => value == null ? null : new CertificateConfigurationStoreName(value);
+        public static implicit operator CertificateConfigurationStoreName?(string value) => value == null ? (CertificateConfigurationStoreName?)null : new CertificateConfigurationStoreName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

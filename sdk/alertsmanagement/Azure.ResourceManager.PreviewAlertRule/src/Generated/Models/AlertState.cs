@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="AlertState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertState?(string value) => value == null ? null : new AlertState(value);
+        public static implicit operator AlertState?(string value) => value == null ? (AlertState?)null : new AlertState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

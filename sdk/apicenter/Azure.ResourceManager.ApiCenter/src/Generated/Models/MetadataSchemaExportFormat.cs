@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="MetadataSchemaExportFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetadataSchemaExportFormat?(string value) => value == null ? null : new MetadataSchemaExportFormat(value);
+        public static implicit operator MetadataSchemaExportFormat?(string value) => value == null ? (MetadataSchemaExportFormat?)null : new MetadataSchemaExportFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

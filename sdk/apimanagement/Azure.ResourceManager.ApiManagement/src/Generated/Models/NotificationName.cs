@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="NotificationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationName?(string value) => value == null ? null : new NotificationName(value);
+        public static implicit operator NotificationName?(string value) => value == null ? (NotificationName?)null : new NotificationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

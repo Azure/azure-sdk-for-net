@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertsManagementRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertsManagementRuleType?(string value) => value == null ? null : new AlertsManagementRuleType(value);
+        public static implicit operator AlertsManagementRuleType?(string value) => value == null ? (AlertsManagementRuleType?)null : new AlertsManagementRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

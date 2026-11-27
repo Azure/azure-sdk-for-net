@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="ContextLengthSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextLengthSource?(string value) => value == null ? null : new ContextLengthSource(value);
+        public static implicit operator ContextLengthSource?(string value) => value == null ? (ContextLengthSource?)null : new ContextLengthSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

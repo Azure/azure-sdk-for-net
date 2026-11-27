@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiManagementPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiManagementPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new ApiManagementPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator ApiManagementPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (ApiManagementPrivateEndpointServiceConnectionStatus?)null : new ApiManagementPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

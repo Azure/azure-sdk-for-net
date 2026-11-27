@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
 
         /// <summary> Converts a string to a <see cref="AgriculturePlatformProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgriculturePlatformProvisioningState?(string value) => value == null ? null : new AgriculturePlatformProvisioningState(value);
+        public static implicit operator AgriculturePlatformProvisioningState?(string value) => value == null ? (AgriculturePlatformProvisioningState?)null : new AgriculturePlatformProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

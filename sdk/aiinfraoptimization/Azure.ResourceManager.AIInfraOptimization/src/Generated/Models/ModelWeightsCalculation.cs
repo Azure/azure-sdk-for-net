@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="ModelWeightsCalculation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelWeightsCalculation?(string value) => value == null ? null : new ModelWeightsCalculation(value);
+        public static implicit operator ModelWeightsCalculation?(string value) => value == null ? (ModelWeightsCalculation?)null : new ModelWeightsCalculation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

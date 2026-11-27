@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="ModelDeploymentPerformanceMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelDeploymentPerformanceMode?(string value) => value == null ? null : new ModelDeploymentPerformanceMode(value);
+        public static implicit operator ModelDeploymentPerformanceMode?(string value) => value == null ? (ModelDeploymentPerformanceMode?)null : new ModelDeploymentPerformanceMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

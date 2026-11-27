@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="VersioningScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VersioningScheme?(string value) => value == null ? null : new VersioningScheme(value);
+        public static implicit operator VersioningScheme?(string value) => value == null ? (VersioningScheme?)null : new VersioningScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="CertificateSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateSource?(string value) => value == null ? null : new CertificateSource(value);
+        public static implicit operator CertificateSource?(string value) => value == null ? (CertificateSource?)null : new CertificateSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

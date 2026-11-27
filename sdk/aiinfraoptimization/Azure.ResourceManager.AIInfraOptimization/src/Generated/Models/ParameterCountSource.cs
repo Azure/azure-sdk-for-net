@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="ParameterCountSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParameterCountSource?(string value) => value == null ? null : new ParameterCountSource(value);
+        public static implicit operator ParameterCountSource?(string value) => value == null ? (ParameterCountSource?)null : new ParameterCountSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

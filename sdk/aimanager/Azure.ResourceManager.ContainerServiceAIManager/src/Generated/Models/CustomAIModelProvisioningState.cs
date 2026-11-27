@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="CustomAIModelProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomAIModelProvisioningState?(string value) => value == null ? null : new CustomAIModelProvisioningState(value);
+        public static implicit operator CustomAIModelProvisioningState?(string value) => value == null ? (CustomAIModelProvisioningState?)null : new CustomAIModelProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

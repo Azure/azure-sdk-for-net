@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="MigrateToStv2Mode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrateToStv2Mode?(string value) => value == null ? null : new MigrateToStv2Mode(value);
+        public static implicit operator MigrateToStv2Mode?(string value) => value == null ? (MigrateToStv2Mode?)null : new MigrateToStv2Mode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

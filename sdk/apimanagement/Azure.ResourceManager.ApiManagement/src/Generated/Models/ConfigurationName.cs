@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ConfigurationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfigurationName?(string value) => value == null ? null : new ConfigurationName(value);
+        public static implicit operator ConfigurationName?(string value) => value == null ? (ConfigurationName?)null : new ConfigurationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

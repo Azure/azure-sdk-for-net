@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Converts a string to a <see cref="ModelDeploymentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelDeploymentProvisioningState?(string value) => value == null ? null : new ModelDeploymentProvisioningState(value);
+        public static implicit operator ModelDeploymentProvisioningState?(string value) => value == null ? (ModelDeploymentProvisioningState?)null : new ModelDeploymentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

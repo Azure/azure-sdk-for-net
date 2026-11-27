@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ExportFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportFormat?(string value) => value == null ? null : new ExportFormat(value);
+        public static implicit operator ExportFormat?(string value) => value == null ? (ExportFormat?)null : new ExportFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

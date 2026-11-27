@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="WebhookStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebhookStatus?(string value) => value == null ? null : new WebhookStatus(value);
+        public static implicit operator WebhookStatus?(string value) => value == null ? (WebhookStatus?)null : new WebhookStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

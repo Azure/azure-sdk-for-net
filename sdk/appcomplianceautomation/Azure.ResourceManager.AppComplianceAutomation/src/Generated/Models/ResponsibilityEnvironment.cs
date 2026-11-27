@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ResponsibilityEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponsibilityEnvironment?(string value) => value == null ? null : new ResponsibilityEnvironment(value);
+        public static implicit operator ResponsibilityEnvironment?(string value) => value == null ? (ResponsibilityEnvironment?)null : new ResponsibilityEnvironment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

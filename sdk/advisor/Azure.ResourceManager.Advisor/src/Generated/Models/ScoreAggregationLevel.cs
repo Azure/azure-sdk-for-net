@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="ScoreAggregationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScoreAggregationLevel?(string value) => value == null ? null : new ScoreAggregationLevel(value);
+        public static implicit operator ScoreAggregationLevel?(string value) => value == null ? (ScoreAggregationLevel?)null : new ScoreAggregationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="AdvisorDigestConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvisorDigestConfigurationState?(string value) => value == null ? null : new AdvisorDigestConfigurationState(value);
+        public static implicit operator AdvisorDigestConfigurationState?(string value) => value == null ? (AdvisorDigestConfigurationState?)null : new AdvisorDigestConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

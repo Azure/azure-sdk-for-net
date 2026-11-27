@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessRuleDirection?(string value) => value == null ? null : new AccessRuleDirection(value);
+        public static implicit operator AccessRuleDirection?(string value) => value == null ? (AccessRuleDirection?)null : new AccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

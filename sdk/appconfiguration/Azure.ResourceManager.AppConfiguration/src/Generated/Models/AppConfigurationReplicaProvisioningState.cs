@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationReplicaProvisioningState?(string value) => value == null ? null : new AppConfigurationReplicaProvisioningState(value);
+        public static implicit operator AppConfigurationReplicaProvisioningState?(string value) => value == null ? (AppConfigurationReplicaProvisioningState?)null : new AppConfigurationReplicaProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

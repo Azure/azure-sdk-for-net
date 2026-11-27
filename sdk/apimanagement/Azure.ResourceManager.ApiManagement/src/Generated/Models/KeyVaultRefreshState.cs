@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultRefreshState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultRefreshState?(string value) => value == null ? null : new KeyVaultRefreshState(value);
+        public static implicit operator KeyVaultRefreshState?(string value) => value == null ? (KeyVaultRefreshState?)null : new KeyVaultRefreshState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

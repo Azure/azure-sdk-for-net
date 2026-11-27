@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="AppComplianceReportNameUnavailabilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppComplianceReportNameUnavailabilityReason?(string value) => value == null ? null : new AppComplianceReportNameUnavailabilityReason(value);
+        public static implicit operator AppComplianceReportNameUnavailabilityReason?(string value) => value == null ? (AppComplianceReportNameUnavailabilityReason?)null : new AppComplianceReportNameUnavailabilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

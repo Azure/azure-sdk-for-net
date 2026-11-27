@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="DataPlaneProxyPrivateLinkDelegation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataPlaneProxyPrivateLinkDelegation?(string value) => value == null ? null : new DataPlaneProxyPrivateLinkDelegation(value);
+        public static implicit operator DataPlaneProxyPrivateLinkDelegation?(string value) => value == null ? (DataPlaneProxyPrivateLinkDelegation?)null : new DataPlaneProxyPrivateLinkDelegation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationBusinessImpact"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationBusinessImpact?(string value) => value == null ? null : new RecommendationBusinessImpact(value);
+        public static implicit operator RecommendationBusinessImpact?(string value) => value == null ? (RecommendationBusinessImpact?)null : new RecommendationBusinessImpact(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationCategory?(string value) => value == null ? null : new RecommendationCategory(value);
+        public static implicit operator RecommendationCategory?(string value) => value == null ? (RecommendationCategory?)null : new RecommendationCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

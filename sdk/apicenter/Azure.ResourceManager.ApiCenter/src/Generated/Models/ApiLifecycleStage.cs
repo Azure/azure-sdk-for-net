@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiLifecycleStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiLifecycleStage?(string value) => value == null ? null : new ApiLifecycleStage(value);
+        public static implicit operator ApiLifecycleStage?(string value) => value == null ? (ApiLifecycleStage?)null : new ApiLifecycleStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

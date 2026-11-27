@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="RecommendVmSkuQuotaStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendVmSkuQuotaStatus?(string value) => value == null ? null : new RecommendVmSkuQuotaStatus(value);
+        public static implicit operator RecommendVmSkuQuotaStatus?(string value) => value == null ? (RecommendVmSkuQuotaStatus?)null : new RecommendVmSkuQuotaStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

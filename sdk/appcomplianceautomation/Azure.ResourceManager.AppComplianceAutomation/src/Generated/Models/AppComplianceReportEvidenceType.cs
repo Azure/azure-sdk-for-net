@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="AppComplianceReportEvidenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppComplianceReportEvidenceType?(string value) => value == null ? null : new AppComplianceReportEvidenceType(value);
+        public static implicit operator AppComplianceReportEvidenceType?(string value) => value == null ? (AppComplianceReportEvidenceType?)null : new AppComplianceReportEvidenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

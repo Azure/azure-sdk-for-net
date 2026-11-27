@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="ResponsibilityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponsibilityType?(string value) => value == null ? null : new ResponsibilityType(value);
+        public static implicit operator ResponsibilityType?(string value) => value == null ? (ResponsibilityType?)null : new ResponsibilityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

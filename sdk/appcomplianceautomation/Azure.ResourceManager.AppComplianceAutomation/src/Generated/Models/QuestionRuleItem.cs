@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Converts a string to a <see cref="QuestionRuleItem"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuestionRuleItem?(string value) => value == null ? null : new QuestionRuleItem(value);
+        public static implicit operator QuestionRuleItem?(string value) => value == null ? (QuestionRuleItem?)null : new QuestionRuleItem(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

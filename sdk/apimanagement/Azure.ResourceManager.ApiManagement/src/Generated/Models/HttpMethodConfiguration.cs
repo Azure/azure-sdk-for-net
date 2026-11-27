@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="HttpMethodConfiguration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HttpMethodConfiguration?(string value) => value == null ? null : new HttpMethodConfiguration(value);
+        public static implicit operator HttpMethodConfiguration?(string value) => value == null ? (HttpMethodConfiguration?)null : new HttpMethodConfiguration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

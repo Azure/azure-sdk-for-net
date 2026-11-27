@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="IssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IssueSeverity?(string value) => value == null ? null : new IssueSeverity(value);
+        public static implicit operator IssueSeverity?(string value) => value == null ? (IssueSeverity?)null : new IssueSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

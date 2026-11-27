@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationPriority?(string value) => value == null ? null : new RecommendationPriority(value);
+        public static implicit operator RecommendationPriority?(string value) => value == null ? (RecommendationPriority?)null : new RecommendationPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

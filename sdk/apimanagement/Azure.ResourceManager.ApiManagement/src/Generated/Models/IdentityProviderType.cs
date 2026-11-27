@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="IdentityProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IdentityProviderType?(string value) => value == null ? null : new IdentityProviderType(value);
+        public static implicit operator IdentityProviderType?(string value) => value == null ? (IdentityProviderType?)null : new IdentityProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

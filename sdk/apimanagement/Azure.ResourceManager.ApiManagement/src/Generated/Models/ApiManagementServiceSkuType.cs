@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiManagementServiceSkuType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiManagementServiceSkuType?(string value) => value == null ? null : new ApiManagementServiceSkuType(value);
+        public static implicit operator ApiManagementServiceSkuType?(string value) => value == null ? (ApiManagementServiceSkuType?)null : new ApiManagementServiceSkuType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

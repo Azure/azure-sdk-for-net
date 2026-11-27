@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountAccessType?(string value) => value == null ? null : new StorageAccountAccessType(value);
+        public static implicit operator StorageAccountAccessType?(string value) => value == null ? (StorageAccountAccessType?)null : new StorageAccountAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

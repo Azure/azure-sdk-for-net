@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="TimeAggregation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeAggregation?(string value) => value == null ? null : new TimeAggregation(value);
+        public static implicit operator TimeAggregation?(string value) => value == null ? (TimeAggregation?)null : new TimeAggregation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

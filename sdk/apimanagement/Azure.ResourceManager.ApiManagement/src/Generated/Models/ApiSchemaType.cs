@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="ApiSchemaType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiSchemaType?(string value) => value == null ? null : new ApiSchemaType(value);
+        public static implicit operator ApiSchemaType?(string value) => value == null ? (ApiSchemaType?)null : new ApiSchemaType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

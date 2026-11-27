@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="LlmDiagnosticLogState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LlmDiagnosticLogState?(string value) => value == null ? null : new LlmDiagnosticLogState(value);
+        public static implicit operator LlmDiagnosticLogState?(string value) => value == null ? (LlmDiagnosticLogState?)null : new LlmDiagnosticLogState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

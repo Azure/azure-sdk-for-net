@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <summary> Converts a string to a <see cref="ActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActionType?(string value) => value == null ? null : new ActionType(value);
+        public static implicit operator ActionType?(string value) => value == null ? (ActionType?)null : new ActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="WeightPrecision"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WeightPrecision?(string value) => value == null ? null : new WeightPrecision(value);
+        public static implicit operator WeightPrecision?(string value) => value == null ? (WeightPrecision?)null : new WeightPrecision(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

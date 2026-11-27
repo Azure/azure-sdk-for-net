@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="MetadataAssignmentEntity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetadataAssignmentEntity?(string value) => value == null ? null : new MetadataAssignmentEntity(value);
+        public static implicit operator MetadataAssignmentEntity?(string value) => value == null ? (MetadataAssignmentEntity?)null : new MetadataAssignmentEntity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

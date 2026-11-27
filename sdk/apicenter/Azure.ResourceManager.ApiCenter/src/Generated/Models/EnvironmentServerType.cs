@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="EnvironmentServerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentServerType?(string value) => value == null ? null : new EnvironmentServerType(value);
+        public static implicit operator EnvironmentServerType?(string value) => value == null ? (EnvironmentServerType?)null : new EnvironmentServerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

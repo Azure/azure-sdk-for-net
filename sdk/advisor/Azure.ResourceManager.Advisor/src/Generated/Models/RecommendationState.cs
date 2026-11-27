@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationState?(string value) => value == null ? null : new RecommendationState(value);
+        public static implicit operator RecommendationState?(string value) => value == null ? (RecommendationState?)null : new RecommendationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

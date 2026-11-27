@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiCenterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiCenterProvisioningState?(string value) => value == null ? null : new ApiCenterProvisioningState(value);
+        public static implicit operator ApiCenterProvisioningState?(string value) => value == null ? (ApiCenterProvisioningState?)null : new ApiCenterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

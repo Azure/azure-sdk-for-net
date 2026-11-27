@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiKind?(string value) => value == null ? null : new ApiKind(value);
+        public static implicit operator ApiKind?(string value) => value == null ? (ApiKind?)null : new ApiKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

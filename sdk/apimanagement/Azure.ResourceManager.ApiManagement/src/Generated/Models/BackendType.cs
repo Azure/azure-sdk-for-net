@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="BackendType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackendType?(string value) => value == null ? null : new BackendType(value);
+        public static implicit operator BackendType?(string value) => value == null ? (BackendType?)null : new BackendType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

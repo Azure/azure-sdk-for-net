@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="AlertsManagementQuerySortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertsManagementQuerySortOrder?(string value) => value == null ? null : new AlertsManagementQuerySortOrder(value);
+        public static implicit operator AlertsManagementQuerySortOrder?(string value) => value == null ? (AlertsManagementQuerySortOrder?)null : new AlertsManagementQuerySortOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

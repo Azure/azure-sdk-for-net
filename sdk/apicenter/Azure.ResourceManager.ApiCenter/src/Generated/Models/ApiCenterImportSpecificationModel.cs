@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Converts a string to a <see cref="ApiCenterImportSpecificationModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiCenterImportSpecificationModel?(string value) => value == null ? null : new ApiCenterImportSpecificationModel(value);
+        public static implicit operator ApiCenterImportSpecificationModel?(string value) => value == null ? (ApiCenterImportSpecificationModel?)null : new ApiCenterImportSpecificationModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

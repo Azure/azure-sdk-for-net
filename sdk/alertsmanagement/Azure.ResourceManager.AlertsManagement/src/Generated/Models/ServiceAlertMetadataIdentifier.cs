@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceAlertMetadataIdentifier?(string value) => value == null ? null : new ServiceAlertMetadataIdentifier(value);
+        public static implicit operator ServiceAlertMetadataIdentifier?(string value) => value == null ? (ServiceAlertMetadataIdentifier?)null : new ServiceAlertMetadataIdentifier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="AdvisorPredictionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvisorPredictionType?(string value) => value == null ? null : new AdvisorPredictionType(value);
+        public static implicit operator AdvisorPredictionType?(string value) => value == null ? (AdvisorPredictionType?)null : new AdvisorPredictionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

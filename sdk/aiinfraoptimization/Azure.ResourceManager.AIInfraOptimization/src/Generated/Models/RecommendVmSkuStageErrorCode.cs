@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Converts a string to a <see cref="RecommendVmSkuStageErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendVmSkuStageErrorCode?(string value) => value == null ? null : new RecommendVmSkuStageErrorCode(value);
+        public static implicit operator RecommendVmSkuStageErrorCode?(string value) => value == null ? (RecommendVmSkuStageErrorCode?)null : new RecommendVmSkuStageErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

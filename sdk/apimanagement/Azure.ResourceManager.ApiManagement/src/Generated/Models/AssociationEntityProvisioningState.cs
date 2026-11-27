@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="AssociationEntityProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssociationEntityProvisioningState?(string value) => value == null ? null : new AssociationEntityProvisioningState(value);
+        public static implicit operator AssociationEntityProvisioningState?(string value) => value == null ? (AssociationEntityProvisioningState?)null : new AssociationEntityProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

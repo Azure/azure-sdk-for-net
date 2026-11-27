@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Converts a string to a <see cref="RejectingRecommendationReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RejectingRecommendationReason?(string value) => value == null ? null : new RejectingRecommendationReason(value);
+        public static implicit operator RejectingRecommendationReason?(string value) => value == null ? (RejectingRecommendationReason?)null : new RejectingRecommendationReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

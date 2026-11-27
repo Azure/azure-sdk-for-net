@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Converts a string to a <see cref="ListServiceAlertsSortByField"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListServiceAlertsSortByField?(string value) => value == null ? null : new ListServiceAlertsSortByField(value);
+        public static implicit operator ListServiceAlertsSortByField?(string value) => value == null ? (ListServiceAlertsSortByField?)null : new ListServiceAlertsSortByField(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

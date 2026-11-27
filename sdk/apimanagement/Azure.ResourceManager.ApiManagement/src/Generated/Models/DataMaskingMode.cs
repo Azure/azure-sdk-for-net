@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="DataMaskingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMaskingMode?(string value) => value == null ? null : new DataMaskingMode(value);
+        public static implicit operator DataMaskingMode?(string value) => value == null ? (DataMaskingMode?)null : new DataMaskingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

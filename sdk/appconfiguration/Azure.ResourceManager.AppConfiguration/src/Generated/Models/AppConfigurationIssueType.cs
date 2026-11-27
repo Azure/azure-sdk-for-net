@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="AppConfigurationIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationIssueType?(string value) => value == null ? null : new AppConfigurationIssueType(value);
+        public static implicit operator AppConfigurationIssueType?(string value) => value == null ? (AppConfigurationIssueType?)null : new AppConfigurationIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

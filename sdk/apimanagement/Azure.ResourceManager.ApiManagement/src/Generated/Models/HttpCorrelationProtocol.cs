@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="HttpCorrelationProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HttpCorrelationProtocol?(string value) => value == null ? null : new HttpCorrelationProtocol(value);
+        public static implicit operator HttpCorrelationProtocol?(string value) => value == null ? (HttpCorrelationProtocol?)null : new HttpCorrelationProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

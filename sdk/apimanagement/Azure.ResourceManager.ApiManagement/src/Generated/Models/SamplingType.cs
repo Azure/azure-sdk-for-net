@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Converts a string to a <see cref="SamplingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SamplingType?(string value) => value == null ? null : new SamplingType(value);
+        public static implicit operator SamplingType?(string value) => value == null ? (SamplingType?)null : new SamplingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
