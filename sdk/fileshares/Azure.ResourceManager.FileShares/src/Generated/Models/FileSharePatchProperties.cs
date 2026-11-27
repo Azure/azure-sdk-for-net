@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="nfsProtocolProperties"> Protocol settings specific NFS. </param>
         /// <param name="publicAccessProperties"> The set of properties for control public access. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
+        /// <param name="encryption"> Encryption settings for the file share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSharePatchProperties(int? provisionedStorageInGiB, int? provisionedIOPerSec, int? provisionedThroughputMiBPerSec, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileSharePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSharePatchProperties(int? provisionedStorageInGiB, int? provisionedIOPerSec, int? provisionedThroughputMiBPerSec, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileSharePublicNetworkAccess? publicNetworkAccess, FileShareEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisionedStorageInGiB = provisionedStorageInGiB;
             ProvisionedIOPerSec = provisionedIOPerSec;
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.FileShares.Models
             NfsProtocolProperties = nfsProtocolProperties;
             PublicAccessProperties = publicAccessProperties;
             PublicNetworkAccess = publicNetworkAccess;
+            Encryption = encryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +59,9 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Gets or sets allow or disallow public network access to azure managed file share. </summary>
         public FileSharePublicNetworkAccess? PublicNetworkAccess { get; set; }
+
+        /// <summary> Encryption settings for the file share. </summary>
+        public FileShareEncryption Encryption { get; set; }
 
         /// <summary> The allowed set of subnets when access is restricted. </summary>
         public IList<string> PublicAccessAllowedSubnets

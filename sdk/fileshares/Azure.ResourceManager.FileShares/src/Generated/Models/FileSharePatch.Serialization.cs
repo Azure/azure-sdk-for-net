@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FileShares;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FileShares.Models
 {
@@ -85,6 +87,11 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 throw new FormatException($"The model {nameof(FileSharePatch)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -148,11 +155,21 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             FileSharePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerFileSharesContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -188,7 +205,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FileSharePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new FileSharePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FileShares
             return message;
         }
 
-        internal HttpMessage CreateGetLimitsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetLimitsRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -84,7 +84,12 @@ namespace Azure.ResourceManager.FileShares
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
