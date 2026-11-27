@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Saas.Mocking;
 using Azure.ResourceManager.Saas.Models;
@@ -82,27 +81,27 @@ namespace Azure.ResourceManager.Saas
         }
 
         /// <summary>
-        /// Gets a collection of SaasResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of Saas in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasResourceGroupResource.GetSaasResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasResourceGroupResource.GetAllSaas()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SaasResources and their operations over a SaasResource. </returns>
-        public static SaasResourceCollection GetSaasResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Saas and their operations over a SaasResource. </returns>
+        public static SaasCollection GetAllSaas(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSaasResourceGroupResource(resourceGroupResource).GetSaasResources();
+            return GetMockableSaasResourceGroupResource(resourceGroupResource).GetAllSaas();
         }
 
         /// <summary>
         /// Gets a SaaS resource by its name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasResourceGroupResource.GetSaasResourceAsync(string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasResourceGroupResource.GetSaasAsync(string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -111,18 +110,18 @@ namespace Azure.ResourceManager.Saas
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SaasResource>> GetSaasResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<SaasResource>> GetSaasAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSaasResourceGroupResource(resourceGroupResource).GetSaasResourceAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSaasResourceGroupResource(resourceGroupResource).GetSaasAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a SaaS resource by its name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasResourceGroupResource.GetSaasResource(string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasResourceGroupResource.GetSaas(string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -131,11 +130,11 @@ namespace Azure.ResourceManager.Saas
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SaasResource> GetSaasResource(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public static Response<SaasResource> GetSaas(this ResourceGroupResource resourceGroupResource, string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSaasResourceGroupResource(resourceGroupResource).GetSaasResource(resourceName, expandCustomerData, cancellationToken);
+            return GetMockableSaasResourceGroupResource(resourceGroupResource).GetSaas(resourceName, expandCustomerData, cancellationToken);
         }
 
         /// <summary>
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceValidationResult>> ValidatePurchaseAsync(this ResourceGroupResource resourceGroupResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<SaasResourceValidationResult>> ValidatePurchaseAsync(this ResourceGroupResource resourceGroupResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceValidationResult> ValidatePurchase(this ResourceGroupResource resourceGroupResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<SaasResourceValidationResult> ValidatePurchase(this ResourceGroupResource resourceGroupResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -178,72 +177,72 @@ namespace Azure.ResourceManager.Saas
         /// Lists all SaaS resources within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.GetSaasResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.GetSaasAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SaasResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SaasResource> GetSaasResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SaasResource> GetSaasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSaasSubscriptionResource(subscriptionResource).GetSaasResourcesAsync(cancellationToken);
+            return GetMockableSaasSubscriptionResource(subscriptionResource).GetSaasAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all SaaS resources within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.GetSaasResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.GetSaas(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SaasResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SaasResource> GetSaasResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<SaasResource> GetSaas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSaasSubscriptionResource(subscriptionResource).GetSaasResources(cancellationToken);
+            return GetMockableSaasSubscriptionResource(subscriptionResource).GetSaas(cancellationToken);
         }
 
         /// <summary>
         /// Checks whether a proposed SaaS resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.CheckNameAvailabilityAsync(CheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.CheckSaasNameAvailabilityAsync(SaasNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<SaasNameAvailabilityResult>> CheckSaasNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SaasNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSaasSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSaasSubscriptionResource(subscriptionResource).CheckSaasNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether a proposed SaaS resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.CheckNameAvailability(CheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.CheckSaasNameAvailability(SaasNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<SaasNameAvailabilityResult> CheckSaasNameAvailability(this SubscriptionResource subscriptionResource, SaasNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSaasSubscriptionResource(subscriptionResource).CheckNameAvailability(content, cancellationToken);
+            return GetMockableSaasSubscriptionResource(subscriptionResource).CheckSaasNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ResourceValidationResult>> ValidatePurchaseBySubscriptionAsync(this SubscriptionResource subscriptionResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<SaasResourceValidationResult>> ValidatePurchaseBySubscriptionAsync(this SubscriptionResource subscriptionResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.Saas
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ResourceValidationResult> ValidatePurchaseBySubscription(this SubscriptionResource subscriptionResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<SaasResourceValidationResult> ValidatePurchaseBySubscription(this SubscriptionResource subscriptionResource, SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -283,63 +282,27 @@ namespace Azure.ResourceManager.Saas
         }
 
         /// <summary>
-        /// Gets the status of a long-running SaaS operation at the subscription scope.
+        /// Gets a collection of SaasTenants in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.GetSubscriptionOperationStatusAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<OperationStatusResult>> GetSubscriptionOperationStatusAsync(this SubscriptionResource subscriptionResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSaasSubscriptionResource(subscriptionResource).GetSubscriptionOperationStatusAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running SaaS operation at the subscription scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasSubscriptionResource.GetSubscriptionOperationStatus(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<OperationStatusResult> GetSubscriptionOperationStatus(this SubscriptionResource subscriptionResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSaasSubscriptionResource(subscriptionResource).GetSubscriptionOperationStatus(operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of SaasTenantResources in the <see cref="TenantResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetSaasTenantResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetSaasTenants()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of SaasTenantResources and their operations over a SaasTenantResource. </returns>
-        public static SaasTenantResourceCollection GetSaasTenantResources(this TenantResource tenantResource)
+        /// <returns> An object representing collection of SaasTenants and their operations over a SaasTenantResource. </returns>
+        public static SaasTenantCollection GetSaasTenants(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSaasTenantResource(tenantResource).GetSaasTenantResources();
+            return GetMockableSaasTenantResource(tenantResource).GetSaasTenants();
         }
 
         /// <summary>
         /// Gets a tenant-level SaaS resource by its identifier.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetSaasTenantResourceAsync(string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetSaasTenantAsync(string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -348,18 +311,18 @@ namespace Azure.ResourceManager.Saas
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SaasTenantResource>> GetSaasTenantResourceAsync(this TenantResource tenantResource, string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<SaasTenantResource>> GetSaasTenantAsync(this TenantResource tenantResource, string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableSaasTenantResource(tenantResource).GetSaasTenantResourceAsync(resourceId, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSaasTenantResource(tenantResource).GetSaasTenantAsync(resourceId, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a tenant-level SaaS resource by its identifier.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetSaasTenantResource(string, bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetSaasTenant(string, bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -368,47 +331,11 @@ namespace Azure.ResourceManager.Saas
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SaasTenantResource> GetSaasTenantResource(this TenantResource tenantResource, string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public static Response<SaasTenantResource> GetSaasTenant(this TenantResource tenantResource, string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSaasTenantResource(tenantResource).GetSaasTenantResource(resourceId, expandCustomerData, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running SaaS operation at the tenant scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetTenantOperationStatusAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<OperationStatusResult>> GetTenantOperationStatusAsync(this TenantResource tenantResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableSaasTenantResource(tenantResource).GetTenantOperationStatusAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running SaaS operation at the tenant scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSaasTenantResource.GetTenantOperationStatus(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<OperationStatusResult> GetTenantOperationStatus(this TenantResource tenantResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSaasTenantResource(tenantResource).GetTenantOperationStatus(operationId, cancellationToken);
+            return GetMockableSaasTenantResource(tenantResource).GetSaasTenant(resourceId, expandCustomerData, cancellationToken);
         }
     }
 }

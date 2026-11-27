@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Saas.Models;
 
@@ -16,26 +15,24 @@ namespace Azure.ResourceManager.Saas
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AccessTokenResult))]
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityContent))]
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResult))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(ResourceValidationError))]
-    [ModelReaderWriterBuildable(typeof(ResourceValidationResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SaasAccessTokenResult))]
+    [ModelReaderWriterBuildable(typeof(SaasData))]
+    [ModelReaderWriterBuildable(typeof(SaasNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(SaasNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(SaasPatch))]
     [ModelReaderWriterBuildable(typeof(SaasPurchaseValidationContent))]
     [ModelReaderWriterBuildable(typeof(SaasPurchaseValidationProperties))]
     [ModelReaderWriterBuildable(typeof(SaasResource))]
-    [ModelReaderWriterBuildable(typeof(SaasResourceData))]
-    [ModelReaderWriterBuildable(typeof(SaasResourcePatch))]
     [ModelReaderWriterBuildable(typeof(SaasResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SaasResourceUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(SaasResourceValidationError))]
+    [ModelReaderWriterBuildable(typeof(SaasResourceValidationResult))]
+    [ModelReaderWriterBuildable(typeof(SaasTenantData))]
+    [ModelReaderWriterBuildable(typeof(SaasTenantPatch))]
     [ModelReaderWriterBuildable(typeof(SaasTenantResource))]
-    [ModelReaderWriterBuildable(typeof(SaasTenantResourceData))]
-    [ModelReaderWriterBuildable(typeof(SaasTenantResourcePatch))]
     [ModelReaderWriterBuildable(typeof(SaasTenantResourceUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(SaasUnsubscribeConfig))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnsubscribeConfig))]
     public partial class AzureResourceManagerSaasContext : ModelReaderWriterContext
     {
     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="termStartsOn"> The start date of the current term. Server-calculated. </param>
         /// <param name="termEndsOn"> The end date of the current term. Server-calculated. </param>
         /// <param name="futureStartsOn"> The future start date of the subscription commitment, when available. Server-calculated. </param>
-        /// <param name="autoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
         /// <param name="isFreeTrial"> Whether the current term is a free trial term. Server-determined. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="purchaserEmail">
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="intent"> Optional update intent specifying how term dates are handled during plan or term updates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaasResourceProperties(SaasProvisioningState? provisioningState, string assetId, string description, SaasResourceStatus? status, SubscriptionStatusReason? statusReason, long? quantity, string publisherName, string planName, string offerName, string termUnit, string billingPeriod, string riskPropertyBagHeader, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, DateTimeOffset? futureStartsOn, bool? autoRenew, bool? isFreeTrial, string storefront, string purchaserEmail, string quoteId, string privateOfferId, string productCode, PatchIntent? intent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SaasResourceProperties(SaasProvisioningState? provisioningState, string assetId, string description, SaasResourceStatus? status, SaasSubscriptionStatusReason? statusReason, long? quantity, string publisherName, string planName, string offerName, string termUnit, string billingPeriod, string riskPropertyBagHeader, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, DateTimeOffset? futureStartsOn, bool? isAutoRenew, bool? isFreeTrial, string storefront, string purchaserEmail, string quoteId, string privateOfferId, string productCode, SaasPatchIntent? intent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AssetId = assetId;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Saas.Models
             TermStartsOn = termStartsOn;
             TermEndsOn = termEndsOn;
             FutureStartsOn = futureStartsOn;
-            AutoRenew = autoRenew;
+            IsAutoRenew = isAutoRenew;
             IsFreeTrial = isFreeTrial;
             Storefront = storefront;
             PurchaserEmail = purchaserEmail;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Saas.Models
         public SaasResourceStatus? Status { get; }
 
         /// <summary> The reason for the current status. Server-assigned. </summary>
-        public SubscriptionStatusReason? StatusReason { get; }
+        public SaasSubscriptionStatusReason? StatusReason { get; }
 
         /// <summary> The seat count. </summary>
         public long? Quantity { get; set; }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Saas.Models
         public DateTimeOffset? FutureStartsOn { get; }
 
         /// <summary> Whether the SaaS subscription will auto-renew upon term end. </summary>
-        public bool? AutoRenew { get; set; }
+        public bool? IsAutoRenew { get; set; }
 
         /// <summary> Whether the current term is a free trial term. Server-determined. </summary>
         public bool? IsFreeTrial { get; }
@@ -165,6 +165,6 @@ namespace Azure.ResourceManager.Saas.Models
         public string ProductCode { get; set; }
 
         /// <summary> Optional update intent specifying how term dates are handled during plan or term updates. </summary>
-        public PatchIntent? Intent { get; set; }
+        public SaasPatchIntent? Intent { get; set; }
     }
 }

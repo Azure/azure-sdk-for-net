@@ -6,14 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Saas;
 
@@ -22,9 +19,6 @@ namespace Azure.ResourceManager.Saas.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableSaasTenantResource : ArmResource
     {
-        private ClientDiagnostics _saasOperationStatusesClientDiagnostics;
-        private SaasOperationStatuses _saasOperationStatusesRestClient;
-
         /// <summary> Initializes a new instance of MockableSaasTenantResource for mocking. </summary>
         protected MockableSaasTenantResource()
         {
@@ -37,15 +31,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         {
         }
 
-        private ClientDiagnostics SaasOperationStatusesClientDiagnostics => _saasOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Saas.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SaasOperationStatuses SaasOperationStatusesRestClient => _saasOperationStatusesRestClient ??= new SaasOperationStatuses(SaasOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
-
-        /// <summary> Gets a collection of SaasTenantResources in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of SaasTenantResources and their operations over a SaasTenantResource. </returns>
-        public virtual SaasTenantResourceCollection GetSaasTenantResources()
+        /// <summary> Gets a collection of SaasTenants in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of SaasTenants and their operations over a SaasTenantResource. </returns>
+        public virtual SaasTenantCollection GetSaasTenants()
         {
-            return GetCachedClient(client => new SaasTenantResourceCollection(client, Id));
+            return GetCachedClient(client => new SaasTenantCollection(client, Id));
         }
 
         /// <summary>
@@ -71,11 +61,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SaasTenantResource>> GetSaasTenantResourceAsync(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SaasTenantResource>> GetSaasTenantAsync(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return await GetSaasTenantResources().GetAsync(resourceId, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetSaasTenants().GetAsync(resourceId, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -101,109 +91,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SaasTenantResource> GetSaasTenantResource(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual Response<SaasTenantResource> GetSaasTenant(string resourceId, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetSaasTenantResources().Get(resourceId, expandCustomerData, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running SaaS operation at the tenant scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.SaaS/operationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SaasOperationStatuses_GetTenantOperationStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetTenantOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = SaasOperationStatusesClientDiagnostics.CreateScope("MockableSaasTenantResource.GetTenantOperationStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SaasOperationStatusesRestClient.CreateGetTenantOperationStatusRequest(operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerSaasContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running SaaS operation at the tenant scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.SaaS/operationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SaasOperationStatuses_GetTenantOperationStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> GetTenantOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = SaasOperationStatusesClientDiagnostics.CreateScope("MockableSaasTenantResource.GetTenantOperationStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SaasOperationStatusesRestClient.CreateGetTenantOperationStatusRequest(operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerSaasContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetSaasTenants().Get(resourceId, expandCustomerData, cancellationToken);
         }
     }
 }

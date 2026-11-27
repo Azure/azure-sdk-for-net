@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Saas
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckSaasNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

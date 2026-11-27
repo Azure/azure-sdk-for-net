@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Saas.SaasResourceData"/> instance for mocking. </returns>
-        public static SaasResourceData SaasResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SaasResourceProperties properties = default)
+        /// <returns> A new <see cref="Saas.SaasData"/> instance for mocking. </returns>
+        public static SaasData SaasData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SaasResourceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SaasResourceData(
+            return new SaasData(
                 id,
                 name,
                 resourceType,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="termStartsOn"> The start date of the current term. Server-calculated. </param>
         /// <param name="termEndsOn"> The end date of the current term. Server-calculated. </param>
         /// <param name="futureStartsOn"> The future start date of the subscription commitment, when available. Server-calculated. </param>
-        /// <param name="autoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
         /// <param name="isFreeTrial"> Whether the current term is a free trial term. Server-determined. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="purchaserEmail">
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="intent"> Optional update intent specifying how term dates are handled during plan or term updates. </param>
         /// <returns> A new <see cref="Models.SaasResourceProperties"/> instance for mocking. </returns>
-        public static SaasResourceProperties SaasResourceProperties(SaasProvisioningState? provisioningState = default, string assetId = default, string description = default, SaasResourceStatus? status = default, SubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? autoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default, PatchIntent? intent = default)
+        public static SaasResourceProperties SaasResourceProperties(SaasProvisioningState? provisioningState = default, string assetId = default, string description = default, SaasResourceStatus? status = default, SaasSubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? isAutoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default, SaasPatchIntent? intent = default)
         {
             return new SaasResourceProperties(
                 provisioningState,
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Saas.Models
                 termStartsOn,
                 termEndsOn,
                 futureStartsOn,
-                autoRenew,
+                isAutoRenew,
                 isFreeTrial,
                 storefront,
                 purchaserEmail,
@@ -111,32 +111,32 @@ namespace Azure.ResourceManager.Saas.Models
         /// <summary> The type used for update operations of the SaasResource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.SaasResourcePatch"/> instance for mocking. </returns>
-        public static SaasResourcePatch SaasResourcePatch(IDictionary<string, string> tags = default, SaasResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.SaasPatch"/> instance for mocking. </returns>
+        public static SaasPatch SaasPatch(IDictionary<string, string> tags = default, SaasResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SaasResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new SaasPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> The updatable properties of the SaasResource. </summary>
         /// <param name="description"> Optional description. Used as subscription display name by Teams, Admin Center, and other consumers. </param>
         /// <param name="quantity"> The seat count. </param>
         /// <param name="riskPropertyBagHeader"> The risk property bag header (JSON format). Write-only — not returned in GET responses. </param>
-        /// <param name="autoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="quoteId"> The quote identifier associated with the purchase. </param>
         /// <param name="privateOfferId"> The private offer identifier. </param>
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="intent"> Optional update intent specifying how term dates are handled during plan or term updates. </param>
         /// <returns> A new <see cref="Models.SaasResourceUpdateProperties"/> instance for mocking. </returns>
-        public static SaasResourceUpdateProperties SaasResourceUpdateProperties(string description = default, long? quantity = default, string riskPropertyBagHeader = default, bool? autoRenew = default, string storefront = default, string quoteId = default, string privateOfferId = default, string productCode = default, PatchIntent? intent = default)
+        public static SaasResourceUpdateProperties SaasResourceUpdateProperties(string description = default, long? quantity = default, string riskPropertyBagHeader = default, bool? isAutoRenew = default, string storefront = default, string quoteId = default, string privateOfferId = default, string productCode = default, SaasPatchIntent? intent = default)
         {
             return new SaasResourceUpdateProperties(
                 description,
                 quantity,
                 riskPropertyBagHeader,
-                autoRenew,
+                isAutoRenew,
                 storefront,
                 quoteId,
                 privateOfferId,
@@ -150,60 +150,60 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="token"> The generated token. </param>
         /// <param name="offerUriWithToken"> The offer URI with the embedded token. </param>
         /// <param name="expiryOn"> The token expiry time. </param>
-        /// <returns> A new <see cref="Models.AccessTokenResult"/> instance for mocking. </returns>
-        public static AccessTokenResult AccessTokenResult(string publisherOfferBaseUri = default, string token = default, string offerUriWithToken = default, DateTimeOffset? expiryOn = default)
+        /// <returns> A new <see cref="Models.SaasAccessTokenResult"/> instance for mocking. </returns>
+        public static SaasAccessTokenResult SaasAccessTokenResult(Uri publisherOfferBaseUri = default, string token = default, Uri offerUriWithToken = default, DateTimeOffset? expiryOn = default)
         {
-            return new AccessTokenResult(publisherOfferBaseUri, token, offerUriWithToken, expiryOn, default);
+            return new SaasAccessTokenResult(publisherOfferBaseUri, token, offerUriWithToken, expiryOn, default);
         }
 
         /// <summary> Unsubscribe options for a SaaS resource. </summary>
-        /// <param name="unsubscribeOnly"> Whether it is unsubscribe only. </param>
+        /// <param name="isUnsubscribeOnly"> Whether it is unsubscribe only. </param>
         /// <param name="reasonCode"> The reason code. </param>
         /// <param name="feedback"> The feedback. </param>
         /// <param name="deletionSource"> The deletion source. Defaults to CustomerCancellation if not specified. </param>
-        /// <returns> A new <see cref="Models.UnsubscribeConfig"/> instance for mocking. </returns>
-        public static UnsubscribeConfig UnsubscribeConfig(bool? unsubscribeOnly = default, int? reasonCode = default, string feedback = default, DeletionSource? deletionSource = default)
+        /// <returns> A new <see cref="Models.SaasUnsubscribeConfig"/> instance for mocking. </returns>
+        public static SaasUnsubscribeConfig SaasUnsubscribeConfig(bool? isUnsubscribeOnly = default, int? reasonCode = default, string feedback = default, SaasDeletionSource? deletionSource = default)
         {
-            return new UnsubscribeConfig(unsubscribeOnly, reasonCode, feedback, deletionSource, default);
+            return new SaasUnsubscribeConfig(isUnsubscribeOnly, reasonCode, feedback, deletionSource, default);
         }
 
         /// <summary> The result of validating a proposed purchase or resource update without modifying state. </summary>
         /// <param name="isValid"> Indicates whether the proposed purchase or update passed validation. </param>
         /// <param name="details"> The list of validation failures. Empty when `isValid` is `true`. </param>
-        /// <returns> A new <see cref="Models.ResourceValidationResult"/> instance for mocking. </returns>
-        public static ResourceValidationResult ResourceValidationResult(bool isValid = default, IEnumerable<ResourceValidationError> details = default)
+        /// <returns> A new <see cref="Models.SaasResourceValidationResult"/> instance for mocking. </returns>
+        public static SaasResourceValidationResult SaasResourceValidationResult(bool isValid = default, IEnumerable<SaasResourceValidationError> details = default)
         {
-            details ??= new ChangeTrackingList<ResourceValidationError>();
+            details ??= new ChangeTrackingList<SaasResourceValidationError>();
 
-            return new ResourceValidationResult(isValid, (details ?? new ChangeTrackingList<ResourceValidationError>()).ToList(), default);
+            return new SaasResourceValidationResult(isValid, (details ?? new ChangeTrackingList<SaasResourceValidationError>()).ToList(), default);
         }
 
         /// <summary> A machine-readable error code and human-readable message describing a validation failure. </summary>
         /// <param name="code"> Machine-readable validation error code. </param>
         /// <param name="message"> Human-readable description of the validation failure. </param>
-        /// <returns> A new <see cref="Models.ResourceValidationError"/> instance for mocking. </returns>
-        public static ResourceValidationError ResourceValidationError(string code = default, string message = default)
+        /// <returns> A new <see cref="Models.SaasResourceValidationError"/> instance for mocking. </returns>
+        public static SaasResourceValidationError SaasResourceValidationError(string code = default, string message = default)
         {
-            return new ResourceValidationError(code, message, default);
+            return new SaasResourceValidationError(code, message, default);
         }
 
         /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityContent"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityContent CheckNameAvailabilityContent(string name = default, string @type = default)
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.SaasNameAvailabilityContent"/> instance for mocking. </returns>
+        public static SaasNameAvailabilityContent SaasNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
         {
-            return new CheckNameAvailabilityContent(name, @type, default);
+            return new SaasNameAvailabilityContent(name, resourceType, default);
         }
 
         /// <summary> The check availability result. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.SaasNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SaasNameAvailabilityResult SaasNameAvailabilityResult(bool? isNameAvailable = default, SaasNameUnavailableReason? reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
+            return new SaasNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> Request payload for validating a proposed SaaS purchase without creating the resource. </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="termStartsOn"> The start date of the current term. Server-calculated. </param>
         /// <param name="termEndsOn"> The end date of the current term. Server-calculated. </param>
         /// <param name="futureStartsOn"> The future start date of the subscription commitment, when available. Server-calculated. </param>
-        /// <param name="autoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
         /// <param name="isFreeTrial"> Whether the current term is a free trial term. Server-determined. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="purchaserEmail">
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="intent"> Optional update intent specifying how term dates are handled during plan or term updates. </param>
         /// <param name="name"> The proposed SaaS resource name to validate. </param>
         /// <returns> A new <see cref="Models.SaasPurchaseValidationProperties"/> instance for mocking. </returns>
-        public static SaasPurchaseValidationProperties SaasPurchaseValidationProperties(SaasProvisioningState? provisioningState = default, string assetId = default, string description = default, SaasResourceStatus? status = default, SubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? autoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default, PatchIntent? intent = default, string name = default)
+        public static SaasPurchaseValidationProperties SaasPurchaseValidationProperties(SaasProvisioningState? provisioningState = default, string assetId = default, string description = default, SaasResourceStatus? status = default, SaasSubscriptionStatusReason? statusReason = default, long? quantity = default, string publisherName = default, string planName = default, string offerName = default, string termUnit = default, string billingPeriod = default, string riskPropertyBagHeader = default, DateTimeOffset? termStartsOn = default, DateTimeOffset? termEndsOn = default, DateTimeOffset? futureStartsOn = default, bool? isAutoRenew = default, bool? isFreeTrial = default, string storefront = default, string purchaserEmail = default, string quoteId = default, string privateOfferId = default, string productCode = default, SaasPatchIntent? intent = default, string name = default)
         {
             return new SaasPurchaseValidationProperties(
                 provisioningState,
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Saas.Models
                 termStartsOn,
                 termEndsOn,
                 futureStartsOn,
-                autoRenew,
+                isAutoRenew,
                 isFreeTrial,
                 storefront,
                 purchaserEmail,
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.Saas.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Saas.SaasTenantResourceData"/> instance for mocking. </returns>
-        public static SaasTenantResourceData SaasTenantResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SaasResourceProperties properties = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Saas.SaasTenantData"/> instance for mocking. </returns>
+        public static SaasTenantData SaasTenantData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SaasResourceProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SaasTenantResourceData(
+            return new SaasTenantData(
                 id,
                 name,
                 resourceType,
@@ -311,32 +311,32 @@ namespace Azure.ResourceManager.Saas.Models
         /// <summary> The type used for update operations of the SaasTenantResource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.SaasTenantResourcePatch"/> instance for mocking. </returns>
-        public static SaasTenantResourcePatch SaasTenantResourcePatch(IDictionary<string, string> tags = default, SaasTenantResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.SaasTenantPatch"/> instance for mocking. </returns>
+        public static SaasTenantPatch SaasTenantPatch(IDictionary<string, string> tags = default, SaasTenantResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SaasTenantResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new SaasTenantPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> The updatable properties of the SaasTenantResource. </summary>
         /// <param name="description"> Optional description. Used as subscription display name by Teams, Admin Center, and other consumers. </param>
         /// <param name="quantity"> The seat count. </param>
         /// <param name="riskPropertyBagHeader"> The risk property bag header (JSON format). Write-only — not returned in GET responses. </param>
-        /// <param name="autoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
+        /// <param name="isAutoRenew"> Whether the SaaS subscription will auto-renew upon term end. </param>
         /// <param name="storefront"> The storefront. </param>
         /// <param name="quoteId"> The quote identifier associated with the purchase. </param>
         /// <param name="privateOfferId"> The private offer identifier. </param>
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="intent"> Optional update intent specifying how term dates are handled during plan or term updates. </param>
         /// <returns> A new <see cref="Models.SaasTenantResourceUpdateProperties"/> instance for mocking. </returns>
-        public static SaasTenantResourceUpdateProperties SaasTenantResourceUpdateProperties(string description = default, long? quantity = default, string riskPropertyBagHeader = default, bool? autoRenew = default, string storefront = default, string quoteId = default, string privateOfferId = default, string productCode = default, PatchIntent? intent = default)
+        public static SaasTenantResourceUpdateProperties SaasTenantResourceUpdateProperties(string description = default, long? quantity = default, string riskPropertyBagHeader = default, bool? isAutoRenew = default, string storefront = default, string quoteId = default, string privateOfferId = default, string productCode = default, SaasPatchIntent? intent = default)
         {
             return new SaasTenantResourceUpdateProperties(
                 description,
                 quantity,
                 riskPropertyBagHeader,
-                autoRenew,
+                isAutoRenew,
                 storefront,
                 quoteId,
                 privateOfferId,
