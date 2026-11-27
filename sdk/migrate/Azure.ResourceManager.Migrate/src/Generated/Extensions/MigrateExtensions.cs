@@ -33,21 +33,21 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WaveResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MigrateWaveResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateArmClient.GetWaveResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateArmClient.GetMigrateWaveResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WaveResource"/> object. </returns>
-        public static WaveResource GetWaveResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateWaveResource"/> object. </returns>
+        public static MigrateWaveResource GetMigrateWaveResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrateArmClient(client).GetWaveResource(id);
+            return GetMockableMigrateArmClient(client).GetMigrateWaveResource(id);
         }
 
         /// <summary>
@@ -87,46 +87,46 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MigrateTaskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateArmClient.GetTaskResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateArmClient.GetMigrateTaskResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TaskResource"/> object. </returns>
-        public static TaskResource GetTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateTaskResource"/> object. </returns>
+        public static MigrateTaskResource GetMigrateTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrateArmClient(client).GetTaskResource(id);
+            return GetMockableMigrateArmClient(client).GetMigrateTaskResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of Waves in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of MigrateWaves in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWaves(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateWaves(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="projectName"> The projectName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Waves and their operations over a WaveResource. </returns>
-        public static WaveCollection GetWaves(this ResourceGroupResource resourceGroupResource, string projectName)
+        /// <returns> An object representing collection of MigrateWaves and their operations over a MigrateWaveResource. </returns>
+        public static MigrateWaveCollection GetMigrateWaves(this ResourceGroupResource resourceGroupResource, string projectName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetWaves(projectName);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateWaves(projectName);
         }
 
         /// <summary>
         /// Get a Wave
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWaveAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateWaveAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WaveResource>> GetWaveAsync(this ResourceGroupResource resourceGroupResource, string projectName, string waveName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MigrateWaveResource>> GetMigrateWaveAsync(this ResourceGroupResource resourceGroupResource, string projectName, string waveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetWaveAsync(projectName, waveName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateWaveAsync(projectName, waveName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Wave
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWave(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateWave(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WaveResource> GetWave(this ResourceGroupResource resourceGroupResource, string projectName, string waveName, CancellationToken cancellationToken = default)
+        public static Response<MigrateWaveResource> GetMigrateWave(this ResourceGroupResource resourceGroupResource, string projectName, string waveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetWave(projectName, waveName, cancellationToken);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateWave(projectName, waveName, cancellationToken);
         }
 
         /// <summary>
@@ -279,28 +279,28 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <summary>
-        /// Gets a collection of Tasks in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of MigrateTasks in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetTasks(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateTasks(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="projectName"> The projectName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
-        public static TaskCollection GetTasks(this ResourceGroupResource resourceGroupResource, string projectName)
+        /// <returns> An object representing collection of MigrateTasks and their operations over a MigrateTaskResource. </returns>
+        public static MigrateTaskCollection GetMigrateTasks(this ResourceGroupResource resourceGroupResource, string projectName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetTasks(projectName);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateTasks(projectName);
         }
 
         /// <summary>
         /// Get a Task
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetTaskAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateTaskAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TaskResource>> GetTaskAsync(this ResourceGroupResource resourceGroupResource, string projectName, string taskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MigrateTaskResource>> GetMigrateTaskAsync(this ResourceGroupResource resourceGroupResource, string projectName, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetTaskAsync(projectName, taskName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateTaskAsync(projectName, taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Task
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetTask(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateTask(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -329,18 +329,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TaskResource> GetTask(this ResourceGroupResource resourceGroupResource, string projectName, string taskName, CancellationToken cancellationToken = default)
+        public static Response<MigrateTaskResource> GetMigrateTask(this ResourceGroupResource resourceGroupResource, string projectName, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetTask(projectName, taskName, cancellationToken);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateTask(projectName, taskName, cancellationToken);
         }
 
         /// <summary>
         /// A long-running resource action.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GenerateWavePlanAsync(WaitUntil, string, GenerateWavePlanRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GenerateWavePlanAsync(WaitUntil, string, GenerateWavePlanContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<GenerateWavePlanResponse>> GenerateWavePlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, GenerateWavePlanRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<GenerateWavePlanResult>> GenerateWavePlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, GenerateWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Migrate
         /// A long-running resource action.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GenerateWavePlan(WaitUntil, string, GenerateWavePlanRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GenerateWavePlan(WaitUntil, string, GenerateWavePlanContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<GenerateWavePlanResponse> GenerateWavePlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, GenerateWavePlanRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<GenerateWavePlanResult> GenerateWavePlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, GenerateWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Migrate
         /// Refresh execution status for migration entities and groups within a migrate project. This operation triggers status updates from partner migration services.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.RefreshEntitiesAsync(WaitUntil, string, RefreshEntitiesRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.RefreshMigrationEntitiesAsync(WaitUntil, string, RefreshMigrationEntitiesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -389,18 +389,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<RefreshEntitiesResponse>> RefreshEntitiesAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, RefreshEntitiesRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<RefreshMigrationEntitiesResult>> RefreshMigrationEntitiesAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, RefreshMigrationEntitiesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).RefreshEntitiesAsync(waitUntil, projectName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).RefreshMigrationEntitiesAsync(waitUntil, projectName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Refresh execution status for migration entities and groups within a migrate project. This operation triggers status updates from partner migration services.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.RefreshEntities(WaitUntil, string, RefreshEntitiesRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.RefreshMigrationEntities(WaitUntil, string, RefreshMigrationEntitiesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -409,18 +409,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<RefreshEntitiesResponse> RefreshEntities(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, RefreshEntitiesRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<RefreshMigrationEntitiesResult> RefreshMigrationEntities(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, RefreshMigrationEntitiesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).RefreshEntities(waitUntil, projectName, content, cancellationToken);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).RefreshMigrationEntities(waitUntil, projectName, content, cancellationToken);
         }
 
         /// <summary>
         /// Create waves from a previously generated wave plan based on assessment data and selected wave names.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.CreateWavesFromPlanAsync(WaitUntil, string, CreateWavesFromPlanRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.CreateWavesFromPlanAsync(WaitUntil, string, CreateWavesFromPlanContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<CreateWavesFromPlanResponse>> CreateWavesFromPlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, CreateWavesFromPlanRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<CreateWavesFromPlanResult>> CreateWavesFromPlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, CreateWavesFromPlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Migrate
         /// Create waves from a previously generated wave plan based on assessment data and selected wave names.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.CreateWavesFromPlan(WaitUntil, string, CreateWavesFromPlanRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.CreateWavesFromPlan(WaitUntil, string, CreateWavesFromPlanContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<CreateWavesFromPlanResponse> CreateWavesFromPlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, CreateWavesFromPlanRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<CreateWavesFromPlanResult> CreateWavesFromPlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, CreateWavesFromPlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Migrate
         /// List wave plans previously generated for a given assessment, optionally scoped to a migration path.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWavePlansAsync(string, GetWavePlansRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWavePlansAsync(string, GetWavePlansContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<GetWavePlansResponse>> GetWavePlansAsync(this ResourceGroupResource resourceGroupResource, string projectName, GetWavePlansRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<GetWavePlansResult>> GetWavePlansAsync(this ResourceGroupResource resourceGroupResource, string projectName, GetWavePlansContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Migrate
         /// List wave plans previously generated for a given assessment, optionally scoped to a migration path.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWavePlans(string, GetWavePlansRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetWavePlans(string, GetWavePlansContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<GetWavePlansResponse> GetWavePlans(this ResourceGroupResource resourceGroupResource, string projectName, GetWavePlansRequest content, CancellationToken cancellationToken = default)
+        public static Response<GetWavePlansResult> GetWavePlans(this ResourceGroupResource resourceGroupResource, string projectName, GetWavePlansContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Migrate
         /// Mint a write-only SAS URI for customer CSV uploads, later consumed by importWavePlan.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.FetchSasUriAsync(string, FetchSasUriRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateWavePlanSasUriAsync(string, MigrateWavePlanSasUriContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -506,18 +506,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<FetchSasUriResponse>> FetchSasUriAsync(this ResourceGroupResource resourceGroupResource, string projectName, FetchSasUriRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MigrateWavePlanSasUriResult>> GetMigrateWavePlanSasUriAsync(this ResourceGroupResource resourceGroupResource, string projectName, MigrateWavePlanSasUriContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).FetchSasUriAsync(projectName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateWavePlanSasUriAsync(projectName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Mint a write-only SAS URI for customer CSV uploads, later consumed by importWavePlan.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.FetchSasUri(string, FetchSasUriRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateWavePlanSasUri(string, MigrateWavePlanSasUriContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -525,18 +525,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<FetchSasUriResponse> FetchSasUri(this ResourceGroupResource resourceGroupResource, string projectName, FetchSasUriRequest content, CancellationToken cancellationToken = default)
+        public static Response<MigrateWavePlanSasUriResult> GetMigrateWavePlanSasUri(this ResourceGroupResource resourceGroupResource, string projectName, MigrateWavePlanSasUriContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).FetchSasUri(projectName, content, cancellationToken);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateWavePlanSasUri(projectName, content, cancellationToken);
         }
 
         /// <summary>
         /// Ingest a customer-uploaded wave-plan CSV and produce the updated wave-plan artifacts. Long-running operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.ImportWavePlanAsync(WaitUntil, string, ImportWavePlanRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.ImportWavePlanAsync(WaitUntil, string, ImportWavePlanContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<ImportWavePlanResponse>> ImportWavePlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, ImportWavePlanRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<ImportWavePlanResult>> ImportWavePlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, ImportWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Migrate
         /// Ingest a customer-uploaded wave-plan CSV and produce the updated wave-plan artifacts. Long-running operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.ImportWavePlan(WaitUntil, string, ImportWavePlanRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.ImportWavePlan(WaitUntil, string, ImportWavePlanContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<ImportWavePlanResponse> ImportWavePlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, ImportWavePlanRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<ImportWavePlanResult> ImportWavePlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string projectName, ImportWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Migrate
         /// Retrieves task summary across all tasks in the project.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetSummaryAsync(string, TaskSummaryRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateTaskSummaryAsync(string, MigrateTaskSummaryContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -584,18 +584,18 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<TaskSummaryResponse>> GetSummaryAsync(this ResourceGroupResource resourceGroupResource, string projectName, TaskSummaryRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MigrateTaskSummaryResult>> GetMigrateTaskSummaryAsync(this ResourceGroupResource resourceGroupResource, string projectName, MigrateTaskSummaryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetSummaryAsync(projectName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateTaskSummaryAsync(projectName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves task summary across all tasks in the project.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetSummary(string, TaskSummaryRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrateResourceGroupResource.GetMigrateTaskSummary(string, MigrateTaskSummaryContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -603,11 +603,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<TaskSummaryResponse> GetSummary(this ResourceGroupResource resourceGroupResource, string projectName, TaskSummaryRequest content, CancellationToken cancellationToken = default)
+        public static Response<MigrateTaskSummaryResult> GetMigrateTaskSummary(this ResourceGroupResource resourceGroupResource, string projectName, MigrateTaskSummaryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetSummary(projectName, content, cancellationToken);
+            return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateTaskSummary(projectName, content, cancellationToken);
         }
     }
 }

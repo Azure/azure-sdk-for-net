@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (WaveData item in Value)
+            foreach (MigrateWaveData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            IList<WaveData> value = default;
+            IList<MigrateWaveData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<WaveData> array = new List<WaveData>();
+                    List<MigrateWaveData> array = new List<MigrateWaveData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WaveData.DeserializeWaveData(item, options));
+                        array.Add(MigrateWaveData.DeserializeMigrateWaveData(item, options));
                     }
                     value = array;
                     continue;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WaveListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WaveListResult(value ?? new ChangeTrackingList<MigrateWaveData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

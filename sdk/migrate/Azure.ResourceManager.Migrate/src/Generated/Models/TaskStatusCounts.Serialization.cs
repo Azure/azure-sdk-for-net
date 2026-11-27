@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             writer.WritePropertyName("statusCounts"u8);
             writer.WriteStartArray();
-            foreach (TaskStatusCountMap item in StatusCounts)
+            foreach (MigrateTaskStatusCount item in StatusCounts)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,26 +128,26 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            IList<TaskStatusCountMap> statusCounts = default;
+            IList<MigrateTaskStatusCount> statusCounts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("statusCounts"u8))
                 {
-                    List<TaskStatusCountMap> array = new List<TaskStatusCountMap>();
+                    List<MigrateTaskStatusCount> array = new List<MigrateTaskStatusCount>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TaskStatusCountMap.DeserializeTaskStatusCountMap(item, options));
+                        array.Add(MigrateTaskStatusCount.DeserializeMigrateTaskStatusCount(item, options));
                     }
                     statusCounts = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TaskStatusCounts(statusCounts, additionalBinaryDataProperties);
+            return new TaskStatusCounts(statusCounts ?? new ChangeTrackingList<MigrateTaskStatusCount>(), additionalBinaryDataProperties);
         }
     }
 }

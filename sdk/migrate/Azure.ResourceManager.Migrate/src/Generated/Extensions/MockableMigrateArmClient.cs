@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Migrate.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="WaveResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MigrateWaveResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WaveResource"/> object. </returns>
-        public virtual WaveResource GetWaveResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateWaveResource"/> object. </returns>
+        public virtual MigrateWaveResource GetMigrateWaveResource(ResourceIdentifier id)
         {
-            WaveResource.ValidateResourceId(id);
-            return new WaveResource(Client, id);
+            MigrateWaveResource.ValidateResourceId(id);
+            return new MigrateWaveResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MigrationEntityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Migrate.Mocking
             return new MigrationEntityGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MigrateTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TaskResource"/> object. </returns>
-        public virtual TaskResource GetTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateTaskResource"/> object. </returns>
+        public virtual MigrateTaskResource GetMigrateTaskResource(ResourceIdentifier id)
         {
-            TaskResource.ValidateResourceId(id);
-            return new TaskResource(Client, id);
+            MigrateTaskResource.ValidateResourceId(id);
+            return new MigrateTaskResource(Client, id);
         }
     }
 }

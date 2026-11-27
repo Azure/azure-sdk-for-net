@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrationEntityGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MigrationEntityGroupListResult(value ?? new ChangeTrackingList<MigrationEntityGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

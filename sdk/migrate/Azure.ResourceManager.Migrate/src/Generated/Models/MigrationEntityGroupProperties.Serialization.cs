@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 writer.WritePropertyName("executionStatus"u8);
                 writer.WriteStringValue(ExecutionStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartsOn))
             {
                 writer.WritePropertyName("executionStartDate"u8);
-                writer.WriteStringValue(ExecutionStartOn.Value, "O");
+                writer.WriteStringValue(ExecutionStartsOn.Value, "O");
             }
             if (Optional.IsDefined(MigrationPath))
             {
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            MigrateProvisioningState? provisioningState = default;
             string applicationId = default;
             string applicationDisplayName = default;
             ResourceIdentifier associatedAssessmentId = default;
             IList<ResourceIdentifier> associatedWaveIds = default;
             string executionStatus = default;
-            DateTimeOffset? executionStartOn = default;
+            DateTimeOffset? executionStartsOn = default;
             string migrationPath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new MigrateProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationId"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    executionStartOn = prop.Value.GetDateTimeOffset("O");
+                    executionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("migrationPath"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MigrationEntityGroupProperties(
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 associatedAssessmentId,
                 associatedWaveIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 executionStatus,
-                executionStartOn,
+                executionStartsOn,
                 migrationPath,
                 additionalBinaryDataProperties);
         }

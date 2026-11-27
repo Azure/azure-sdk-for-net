@@ -1,4 +1,4 @@
-# Azure.ResourceManager.Migrate management client library for .NET
+# Azure Migrate management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 

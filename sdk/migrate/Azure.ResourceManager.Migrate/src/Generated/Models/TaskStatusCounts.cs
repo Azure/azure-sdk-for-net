@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Migrate.Models
 
         /// <summary> Initializes a new instance of <see cref="TaskStatusCounts"/>. </summary>
         /// <param name="statusCounts"> Status counts dictionary mapping TaskStatus to the count of tasks with that status. </param>
-        internal TaskStatusCounts(IEnumerable<TaskStatusCountMap> statusCounts)
+        internal TaskStatusCounts(IEnumerable<MigrateTaskStatusCount> statusCounts)
         {
             StatusCounts = statusCounts.ToList();
         }
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Initializes a new instance of <see cref="TaskStatusCounts"/>. </summary>
         /// <param name="statusCounts"> Status counts dictionary mapping TaskStatus to the count of tasks with that status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskStatusCounts(IList<TaskStatusCountMap> statusCounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskStatusCounts(IList<MigrateTaskStatusCount> statusCounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StatusCounts = statusCounts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status counts dictionary mapping TaskStatus to the count of tasks with that status. </summary>
-        public IList<TaskStatusCountMap> StatusCounts { get; } = new ChangeTrackingList<TaskStatusCountMap>();
+        public IList<MigrateTaskStatusCount> StatusCounts { get; } = new ChangeTrackingList<MigrateTaskStatusCount>();
     }
 }

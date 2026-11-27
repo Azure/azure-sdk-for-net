@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Migrate;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,16 @@ namespace Azure.ResourceManager.Migrate.Models
     public static partial class ArmMigrateModelFactory
     {
 
+        /// <summary> Data model of Download URL for wave recommendation report. </summary>
         /// <param name="assessmentArmId"> ARM Id of the assessment for which the wave plan report is to be generated. </param>
         /// <param name="migrationPath"> Optional. Specify the migration path for which the wave plan report is to be generated. If not specified, the default will be used. </param>
-        /// <returns> A new <see cref="Models.GenerateWavePlanRequest"/> instance for mocking. </returns>
-        public static GenerateWavePlanRequest GenerateWavePlanRequest(string assessmentArmId = default, string migrationPath = default)
+        /// <returns> A new <see cref="Models.GenerateWavePlanContent"/> instance for mocking. </returns>
+        public static GenerateWavePlanContent GenerateWavePlanContent(ResourceIdentifier assessmentArmId = default, string migrationPath = default)
         {
-            return new GenerateWavePlanRequest(assessmentArmId, migrationPath, default);
+            return new GenerateWavePlanContent(assessmentArmId, migrationPath, default);
         }
 
+        /// <summary> Data model of Download URL for wave recommendation report. </summary>
         /// <param name="wavePlanName"> The deterministic wave-plan resource name matching the persisted row's wavePlanName. </param>
         /// <param name="provisioningState"> The provisioning state of the persisted wave-plan row. </param>
         /// <param name="planSource"> The plan source (SystemGenerated for all generated runs). </param>
@@ -33,10 +36,10 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="migrationPath"> The canonical migration-path string this plan was generated for. </param>
         /// <param name="artifactProperties"> The Artifact Store identity (artifactId, versionId) this run's files are committed under, used to resolve time-bound download access. </param>
         /// <param name="summary"> The plan-level summary (number of waves, risk, confidence). </param>
-        /// <returns> A new <see cref="Models.GenerateWavePlanResponse"/> instance for mocking. </returns>
-        public static GenerateWavePlanResponse GenerateWavePlanResponse(string wavePlanName = default, ProvisioningState provisioningState = default, PlanSource planSource = default, string assessmentArmId = default, string migrationPath = default, ArtifactProperties artifactProperties = default, WavePlanSummary summary = default)
+        /// <returns> A new <see cref="Models.GenerateWavePlanResult"/> instance for mocking. </returns>
+        public static GenerateWavePlanResult GenerateWavePlanResult(string wavePlanName = default, MigrateProvisioningState provisioningState = default, MigrateWavePlanSource planSource = default, ResourceIdentifier assessmentArmId = default, string migrationPath = default, MigrateWavePlanArtifactProperties artifactProperties = default, MigrateWavePlanSummary summary = default)
         {
-            return new GenerateWavePlanResponse(
+            return new GenerateWavePlanResult(
                 wavePlanName,
                 provisioningState,
                 planSource,
@@ -47,100 +50,110 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Artifact Store identity for a wave plan run. Consumers use the artifact ARM id and version id to reference or share the committed artifact and resolve time-bound download access. </summary>
         /// <param name="artifactId"> The ARM id of the Artifact Store artifact the run's files are committed under. </param>
         /// <param name="versionId"> The Artifact Store version id for the run's committed files. </param>
-        /// <returns> A new <see cref="Models.ArtifactProperties"/> instance for mocking. </returns>
-        public static ArtifactProperties ArtifactProperties(string artifactId = default, string versionId = default)
+        /// <returns> A new <see cref="Models.MigrateWavePlanArtifactProperties"/> instance for mocking. </returns>
+        public static MigrateWavePlanArtifactProperties MigrateWavePlanArtifactProperties(ResourceIdentifier artifactId = default, string versionId = default)
         {
-            return new ArtifactProperties(artifactId, versionId, default);
+            return new MigrateWavePlanArtifactProperties(artifactId, versionId, default);
         }
 
+        /// <summary> Plan-level summary surfaced on the generateWavePlan and getWavePlans responses. </summary>
         /// <param name="numberOfWaves"> The total number of waves in the plan. </param>
         /// <param name="risk"> The plan-level overall risk bucket (Low/Medium/High). </param>
         /// <param name="confidence"> The plan-level overall confidence label (Low/Medium/High). </param>
-        /// <returns> A new <see cref="Models.WavePlanSummary"/> instance for mocking. </returns>
-        public static WavePlanSummary WavePlanSummary(int numberOfWaves = default, string risk = default, string confidence = default)
+        /// <returns> A new <see cref="Models.MigrateWavePlanSummary"/> instance for mocking. </returns>
+        public static MigrateWavePlanSummary MigrateWavePlanSummary(int numberOfWaves = default, string risk = default, string confidence = default)
         {
-            return new WavePlanSummary(numberOfWaves, risk, confidence, default);
+            return new MigrateWavePlanSummary(numberOfWaves, risk, confidence, default);
         }
 
+        /// <summary> Request body for refreshing migration entities and groups. </summary>
         /// <param name="migrationEntityIds"> List of migration entity ARM IDs to refresh. Each ID must be a fully qualified ARM resource ID belonging to the same subscription and resource group as the migrate project. </param>
         /// <param name="migrationEntityGroupIds"> List of migration entity group ARM IDs. All entities within these groups will be refreshed. Each ID must be a fully qualified ARM resource ID belonging to the same subscription and resource group as the migrate project. </param>
-        /// <returns> A new <see cref="Models.RefreshEntitiesRequest"/> instance for mocking. </returns>
-        public static RefreshEntitiesRequest RefreshEntitiesRequest(IEnumerable<ResourceIdentifier> migrationEntityIds = default, IEnumerable<ResourceIdentifier> migrationEntityGroupIds = default)
+        /// <returns> A new <see cref="Models.RefreshMigrationEntitiesContent"/> instance for mocking. </returns>
+        public static RefreshMigrationEntitiesContent RefreshMigrationEntitiesContent(IEnumerable<ResourceIdentifier> migrationEntityIds = default, IEnumerable<ResourceIdentifier> migrationEntityGroupIds = default)
         {
             migrationEntityIds ??= new ChangeTrackingList<ResourceIdentifier>();
             migrationEntityGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new RefreshEntitiesRequest((migrationEntityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (migrationEntityGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new RefreshMigrationEntitiesContent((migrationEntityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (migrationEntityGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Response body for refresh migration entities operation. </summary>
         /// <param name="migrationEntityIds"> List of migration entity ARM IDs being refreshed. </param>
         /// <param name="migrationEntityGroupIds"> List of migration entity group ARM IDs being refreshed. </param>
-        /// <returns> A new <see cref="Models.RefreshEntitiesResponse"/> instance for mocking. </returns>
-        public static RefreshEntitiesResponse RefreshEntitiesResponse(IEnumerable<ResourceIdentifier> migrationEntityIds = default, IEnumerable<ResourceIdentifier> migrationEntityGroupIds = default)
+        /// <returns> A new <see cref="Models.RefreshMigrationEntitiesResult"/> instance for mocking. </returns>
+        public static RefreshMigrationEntitiesResult RefreshMigrationEntitiesResult(IEnumerable<ResourceIdentifier> migrationEntityIds = default, IEnumerable<ResourceIdentifier> migrationEntityGroupIds = default)
         {
             migrationEntityIds ??= new ChangeTrackingList<ResourceIdentifier>();
             migrationEntityGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new RefreshEntitiesResponse((migrationEntityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (migrationEntityGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new RefreshMigrationEntitiesResult((migrationEntityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (migrationEntityGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Request body for creating waves from a wave plan. </summary>
         /// <param name="assessmentArmId"> The assessment ARM ID to capture migration preference, saving and scope. </param>
         /// <param name="migrationPath"> The migration path preference. </param>
         /// <param name="waveSelection"> The wave selection list. If null or empty, all waves from the wave plan will be included. </param>
-        /// <returns> A new <see cref="Models.CreateWavesFromPlanRequest"/> instance for mocking. </returns>
-        public static CreateWavesFromPlanRequest CreateWavesFromPlanRequest(string assessmentArmId = default, string migrationPath = default, IEnumerable<WaveSelectionItem> waveSelection = default)
+        /// <returns> A new <see cref="Models.CreateWavesFromPlanContent"/> instance for mocking. </returns>
+        public static CreateWavesFromPlanContent CreateWavesFromPlanContent(ResourceIdentifier assessmentArmId = default, string migrationPath = default, IEnumerable<MigrateWaveSelectionItem> waveSelection = default)
         {
-            waveSelection ??= new ChangeTrackingList<WaveSelectionItem>();
+            waveSelection ??= new ChangeTrackingList<MigrateWaveSelectionItem>();
 
-            return new CreateWavesFromPlanRequest(assessmentArmId, migrationPath, (waveSelection ?? new ChangeTrackingList<WaveSelectionItem>()).ToList(), default);
+            return new CreateWavesFromPlanContent(assessmentArmId, migrationPath, (waveSelection ?? new ChangeTrackingList<MigrateWaveSelectionItem>()).ToList(), default);
         }
 
+        /// <summary> A wave selection item with name and optional display name. </summary>
         /// <param name="waveName"> The ARM-compliant wave resource name used to create the wave. </param>
         /// <param name="waveDisplayName"> Optional friendly name used during wave creation. </param>
-        /// <returns> A new <see cref="Models.WaveSelectionItem"/> instance for mocking. </returns>
-        public static WaveSelectionItem WaveSelectionItem(string waveName = default, string waveDisplayName = default)
+        /// <returns> A new <see cref="Models.MigrateWaveSelectionItem"/> instance for mocking. </returns>
+        public static MigrateWaveSelectionItem MigrateWaveSelectionItem(string waveName = default, string waveDisplayName = default)
         {
-            return new WaveSelectionItem(waveName, waveDisplayName, default);
+            return new MigrateWaveSelectionItem(waveName, waveDisplayName, default);
         }
 
+        /// <summary> Response for the create waves from plan operation. </summary>
         /// <param name="totalWaves"> The total number of waves in the wave plan. </param>
         /// <param name="succeededWaves"> The count of successfully created waves. </param>
         /// <param name="failedWaves"> The count of failed wave creations. </param>
         /// <param name="skippedWaves"> The count of skipped waves. </param>
         /// <param name="sasUri"> The read-only SAS URI for the exported error CSV. </param>
-        /// <param name="expireOn"> The expiry timestamp (UTC) for the error CSV SAS URI. </param>
-        /// <returns> A new <see cref="Models.CreateWavesFromPlanResponse"/> instance for mocking. </returns>
-        public static CreateWavesFromPlanResponse CreateWavesFromPlanResponse(int totalWaves = default, int succeededWaves = default, int failedWaves = default, int skippedWaves = default, string sasUri = default, DateTimeOffset? expireOn = default)
+        /// <param name="expiresOn"> The expiry timestamp (UTC) for the error CSV SAS URI. </param>
+        /// <returns> A new <see cref="Models.CreateWavesFromPlanResult"/> instance for mocking. </returns>
+        public static CreateWavesFromPlanResult CreateWavesFromPlanResult(int totalWaves = default, int succeededWaves = default, int failedWaves = default, int skippedWaves = default, Uri sasUri = default, DateTimeOffset? expiresOn = default)
         {
-            return new CreateWavesFromPlanResponse(
+            return new CreateWavesFromPlanResult(
                 totalWaves,
                 succeededWaves,
                 failedWaves,
                 skippedWaves,
                 sasUri,
-                expireOn,
+                expiresOn,
                 default);
         }
 
+        /// <summary> Request body for the getWavePlans listing action. </summary>
         /// <param name="assessmentArmId"> The assessment ARM ID to scope the listing to. </param>
         /// <param name="migrationPath"> The optional migration path filter. When omitted, plans across all migration paths are returned. </param>
-        /// <returns> A new <see cref="Models.GetWavePlansRequest"/> instance for mocking. </returns>
-        public static GetWavePlansRequest GetWavePlansRequest(string assessmentArmId = default, string migrationPath = default)
+        /// <returns> A new <see cref="Models.GetWavePlansContent"/> instance for mocking. </returns>
+        public static GetWavePlansContent GetWavePlansContent(ResourceIdentifier assessmentArmId = default, string migrationPath = default)
         {
-            return new GetWavePlansRequest(assessmentArmId, migrationPath, default);
+            return new GetWavePlansContent(assessmentArmId, migrationPath, default);
         }
 
+        /// <summary> Response payload for the getWavePlans listing action. </summary>
         /// <param name="value"> The wave plan list items. Always present; empty when no plans match the filter. </param>
-        /// <returns> A new <see cref="Models.GetWavePlansResponse"/> instance for mocking. </returns>
-        public static GetWavePlansResponse GetWavePlansResponse(IEnumerable<WavePlanListItem> value = default)
+        /// <returns> A new <see cref="Models.GetWavePlansResult"/> instance for mocking. </returns>
+        public static GetWavePlansResult GetWavePlansResult(IEnumerable<MigrateWavePlanListItem> value = default)
         {
-            value ??= new ChangeTrackingList<WavePlanListItem>();
+            value ??= new ChangeTrackingList<MigrateWavePlanListItem>();
 
-            return new GetWavePlansResponse((value ?? new ChangeTrackingList<WavePlanListItem>()).ToList(), default);
+            return new GetWavePlansResult((value ?? new ChangeTrackingList<MigrateWavePlanListItem>()).ToList(), default);
         }
 
+        /// <summary> A single wave-plan entry in the getWavePlans response. </summary>
         /// <param name="wavePlanName"> The wave-plan name. </param>
         /// <param name="assessmentArmId"> The assessment ARM identifier the plan belongs to. </param>
         /// <param name="migrationPath"> The migration path the plan was generated for. </param>
@@ -148,10 +161,10 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="planSource"> The source of the plan. </param>
         /// <param name="artifactProperties"> The Artifact Store identity (artifactId, versionId) this plan's files are committed under, used to resolve time-bound download access. </param>
         /// <param name="summary"> The plan-level summary (number of waves, risk, confidence). </param>
-        /// <returns> A new <see cref="Models.WavePlanListItem"/> instance for mocking. </returns>
-        public static WavePlanListItem WavePlanListItem(string wavePlanName = default, string assessmentArmId = default, string migrationPath = default, ProvisioningState provisioningState = default, PlanSource planSource = default, ArtifactProperties artifactProperties = default, WavePlanSummary summary = default)
+        /// <returns> A new <see cref="Models.MigrateWavePlanListItem"/> instance for mocking. </returns>
+        public static MigrateWavePlanListItem MigrateWavePlanListItem(string wavePlanName = default, ResourceIdentifier assessmentArmId = default, string migrationPath = default, MigrateProvisioningState provisioningState = default, MigrateWavePlanSource planSource = default, MigrateWavePlanArtifactProperties artifactProperties = default, MigrateWavePlanSummary summary = default)
         {
-            return new WavePlanListItem(
+            return new MigrateWavePlanListItem(
                 wavePlanName,
                 assessmentArmId,
                 migrationPath,
@@ -162,42 +175,46 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Request body for the fetchSASUri action. </summary>
         /// <param name="assessmentArmId"> The assessment ARM ID identifying the wave plan to amend. </param>
         /// <param name="migrationPath"> The migration path identifying the wave plan to amend. </param>
         /// <param name="sasVersionId"> An optional caller-supplied SAS version ID folded into the deterministic staging blob name so concurrent upload sessions stage to distinct blobs. </param>
-        /// <returns> A new <see cref="Models.FetchSasUriRequest"/> instance for mocking. </returns>
-        public static FetchSasUriRequest FetchSasUriRequest(string assessmentArmId = default, string migrationPath = default, string sasVersionId = default)
+        /// <returns> A new <see cref="Models.MigrateWavePlanSasUriContent"/> instance for mocking. </returns>
+        public static MigrateWavePlanSasUriContent MigrateWavePlanSasUriContent(ResourceIdentifier assessmentArmId = default, string migrationPath = default, string sasVersionId = default)
         {
-            return new FetchSasUriRequest(assessmentArmId, migrationPath, sasVersionId, default);
+            return new MigrateWavePlanSasUriContent(assessmentArmId, migrationPath, sasVersionId, default);
         }
 
+        /// <summary> Response payload for the fetchSASUri action. </summary>
         /// <param name="sasUri"> The write-targeted SAS URI to which the caller should PUT the CSV payload. </param>
-        /// <param name="expireOn"> The UTC expiration timestamp of the returned SAS URI. </param>
-        /// <returns> A new <see cref="Models.FetchSasUriResponse"/> instance for mocking. </returns>
-        public static FetchSasUriResponse FetchSasUriResponse(string sasUri = default, DateTimeOffset expireOn = default)
+        /// <param name="expiresOn"> The UTC expiration timestamp of the returned SAS URI. </param>
+        /// <returns> A new <see cref="Models.MigrateWavePlanSasUriResult"/> instance for mocking. </returns>
+        public static MigrateWavePlanSasUriResult MigrateWavePlanSasUriResult(Uri sasUri = default, DateTimeOffset expiresOn = default)
         {
-            return new FetchSasUriResponse(sasUri, expireOn, default);
+            return new MigrateWavePlanSasUriResult(sasUri, expiresOn, default);
         }
 
+        /// <summary> Request body for the importWavePlan action. </summary>
         /// <param name="assessmentArmId"> The assessment ARM ID to scope the import to. </param>
         /// <param name="migrationPath"> The migration path identifying the existing wave plan being amended. </param>
         /// <param name="sasVersionId"> An optional caller-supplied SAS version ID. Must match the value passed to fetchSASUri when the CSV was staged. </param>
-        /// <returns> A new <see cref="Models.ImportWavePlanRequest"/> instance for mocking. </returns>
-        public static ImportWavePlanRequest ImportWavePlanRequest(string assessmentArmId = default, string migrationPath = default, string sasVersionId = default)
+        /// <returns> A new <see cref="Models.ImportWavePlanContent"/> instance for mocking. </returns>
+        public static ImportWavePlanContent ImportWavePlanContent(ResourceIdentifier assessmentArmId = default, string migrationPath = default, string sasVersionId = default)
         {
-            return new ImportWavePlanRequest(assessmentArmId, migrationPath, sasVersionId, default);
+            return new ImportWavePlanContent(assessmentArmId, migrationPath, sasVersionId, default);
         }
 
+        /// <summary> Response payload for the importWavePlan action. </summary>
         /// <param name="wavePlanName"> The wave-plan name. </param>
         /// <param name="assessmentArmId"> The assessment ARM identifier the plan belongs to. </param>
         /// <param name="migrationPath"> The migration path the plan was generated for. </param>
         /// <param name="provisioningState"> The provisioning state of the plan. </param>
         /// <param name="planSource"> The source of the plan. </param>
         /// <param name="artifactProperties"> The Artifact Store identity (artifactId, versionId) this plan's files are committed under, used to resolve time-bound download access. </param>
-        /// <returns> A new <see cref="Models.ImportWavePlanResponse"/> instance for mocking. </returns>
-        public static ImportWavePlanResponse ImportWavePlanResponse(string wavePlanName = default, string assessmentArmId = default, string migrationPath = default, ProvisioningState provisioningState = default, PlanSource planSource = default, ArtifactProperties artifactProperties = default)
+        /// <returns> A new <see cref="Models.ImportWavePlanResult"/> instance for mocking. </returns>
+        public static ImportWavePlanResult ImportWavePlanResult(string wavePlanName = default, ResourceIdentifier assessmentArmId = default, string migrationPath = default, MigrateProvisioningState provisioningState = default, MigrateWavePlanSource planSource = default, MigrateWavePlanArtifactProperties artifactProperties = default)
         {
-            return new ImportWavePlanResponse(
+            return new ImportWavePlanResult(
                 wavePlanName,
                 assessmentArmId,
                 migrationPath,
@@ -207,16 +224,17 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Migration Wave resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="Migrate.WaveData"/> instance for mocking. </returns>
-        public static WaveData WaveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WaveProperties properties = default, string eTag = default)
+        /// <returns> A new <see cref="Migrate.MigrateWaveData"/> instance for mocking. </returns>
+        public static MigrateWaveData MigrateWaveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrateWaveProperties properties = default, ETag? eTag = default)
         {
-            return new WaveData(
+            return new MigrateWaveData(
                 id,
                 name,
                 resourceType,
@@ -231,27 +249,27 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="displayName"> Display Name of the wave. </param>
         /// <param name="argQuery"> The query to create workloads within the wave. </param>
         /// <param name="status"> The status of the wave. </param>
-        /// <param name="plannedStartOn"> Planned start date of the wave. </param>
+        /// <param name="plannedStartsOn"> Planned start date of the wave. </param>
         /// <param name="plannedCompletionOn"> Planned completion date of the wave. </param>
-        /// <param name="actualStartOn"> Actual start date of the wave. </param>
+        /// <param name="actualStartsOn"> Actual start date of the wave. </param>
         /// <param name="stage"> The current stage of the wave. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="argQuery"/> is null. </exception>
-        /// <returns> A new <see cref="Models.WaveProperties"/> instance for mocking. </returns>
-        public static WaveProperties WaveProperties(ProvisioningState? provisioningState = default, string description = default, string displayName = default, string argQuery = default, string status = default, DateTimeOffset plannedStartOn = default, DateTimeOffset? plannedCompletionOn = default, DateTimeOffset? actualStartOn = default, string stage = default)
+        /// <returns> A new <see cref="Models.MigrateWaveProperties"/> instance for mocking. </returns>
+        public static MigrateWaveProperties MigrateWaveProperties(MigrateProvisioningState? provisioningState = default, string description = default, string displayName = default, string argQuery = default, string status = default, DateTimeOffset plannedStartsOn = default, DateTimeOffset? plannedCompletionOn = default, DateTimeOffset? actualStartsOn = default, string stage = default)
         {
-            return new WaveProperties(
+            return new MigrateWaveProperties(
                 provisioningState,
                 description,
                 displayName,
                 argQuery is null ? default : new Arg(argQuery, default),
                 status,
-                plannedStartOn,
+                plannedStartsOn,
                 plannedCompletionOn,
-                actualStartOn,
+                actualStartsOn,
                 stage,
                 default);
         }
 
+        /// <summary> Migration Entity resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -259,7 +277,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="Migrate.MigrationEntityData"/> instance for mocking. </returns>
-        public static MigrationEntityData MigrationEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrationEntityProperties properties = default, string eTag = default)
+        public static MigrationEntityData MigrationEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrationEntityProperties properties = default, ETag? eTag = default)
         {
             return new MigrationEntityData(
                 id,
@@ -271,6 +289,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Migration Entity Properties class. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="partnerResourceArmId"> ARM Resource Identifier for the partner resource. </param>
         /// <param name="targetAzureResourceArmId"> target Azure Resource ARM Id. </param>
@@ -279,7 +298,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="associatedAssessmentId"> Associated Assessment Id. </param>
         /// <param name="associatedWaveId"> associated Wave Id. </param>
         /// <param name="associatedMigrationEntityGroupIds"> associated Migration Entity Group Id. </param>
-        /// <param name="executionStartOn"> Execution start date for Migration Entity. </param>
+        /// <param name="executionStartsOn"> Execution start date for Migration Entity. </param>
         /// <param name="target"> Target of the Migration Entity. </param>
         /// <param name="migrationStrategy"> Strategy of Migration Entity. </param>
         /// <param name="executionStage"> Execution Stage of Migration Entity. </param>
@@ -290,7 +309,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="migrationPath"> Migration path. </param>
         /// <param name="assessedEntityArmId"> Assessed Entity ARM Id. </param>
         /// <returns> A new <see cref="Models.MigrationEntityProperties"/> instance for mocking. </returns>
-        public static MigrationEntityProperties MigrationEntityProperties(ProvisioningState? provisioningState = default, string partnerResourceArmId = default, string targetAzureResourceArmId = default, string associatedInventoryResourceId = default, string inventoryDisplayName = default, ResourceIdentifier associatedAssessmentId = default, ResourceIdentifier associatedWaveId = default, IEnumerable<ResourceIdentifier> associatedMigrationEntityGroupIds = default, DateTimeOffset? executionStartOn = default, string target = default, Strategy? migrationStrategy = default, string executionStage = default, string executionStatus = default, string executionReadiness = default, MigrationSpecificPropertiesBase migrationSpecificProperties = default, string migrationTool = default, string migrationPath = default, string assessedEntityArmId = default)
+        public static MigrationEntityProperties MigrationEntityProperties(MigrateProvisioningState? provisioningState = default, ResourceIdentifier partnerResourceArmId = default, ResourceIdentifier targetAzureResourceArmId = default, ResourceIdentifier associatedInventoryResourceId = default, string inventoryDisplayName = default, ResourceIdentifier associatedAssessmentId = default, ResourceIdentifier associatedWaveId = default, IEnumerable<ResourceIdentifier> associatedMigrationEntityGroupIds = default, DateTimeOffset? executionStartsOn = default, string target = default, MigrationStrategy? migrationStrategy = default, string executionStage = default, string executionStatus = default, string executionReadiness = default, MigrationSpecificProperties migrationSpecificProperties = default, string migrationTool = default, string migrationPath = default, ResourceIdentifier assessedEntityArmId = default)
         {
             associatedMigrationEntityGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -303,7 +322,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 associatedAssessmentId,
                 associatedWaveId,
                 (associatedMigrationEntityGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                executionStartOn,
+                executionStartsOn,
                 target,
                 migrationStrategy,
                 executionStage,
@@ -316,21 +335,27 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary>
+        /// The base Migration Specific Properties model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServerMigrationSpecificProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator for migration specific properties. </param>
-        /// <returns> A new <see cref="Models.MigrationSpecificPropertiesBase"/> instance for mocking. </returns>
-        public static MigrationSpecificPropertiesBase MigrationSpecificPropertiesBase(string instanceType = default)
+        /// <returns> A new <see cref="Models.MigrationSpecificProperties"/> instance for mocking. </returns>
+        public static MigrationSpecificProperties MigrationSpecificProperties(string instanceType = default)
         {
-            return new UnknownMigrationSpecificPropertiesBase(default, default);
+            return new UnknownMigrationSpecificProperties(instanceType is null ? default : new MigrationSpecificPropertiesInstanceType(instanceType), default);
         }
 
+        /// <summary> Represents a Server Migration Specific properties base model. </summary>
         /// <param name="drApplianceInventoryId"></param>
         /// <param name="currentJobId"></param>
         /// <returns> A new <see cref="Models.ServerMigrationSpecificProperties"/> instance for mocking. </returns>
         public static ServerMigrationSpecificProperties ServerMigrationSpecificProperties(ResourceIdentifier drApplianceInventoryId = default, ResourceIdentifier currentJobId = default)
         {
-            return new ServerMigrationSpecificProperties(default, default, drApplianceInventoryId, currentJobId);
+            return new ServerMigrationSpecificProperties(MigrationSpecificPropertiesInstanceType.ServerMigration, default, drApplianceInventoryId, currentJobId);
         }
 
+        /// <summary> Migration Entity Group resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -338,7 +363,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="Migrate.MigrationEntityGroupData"/> instance for mocking. </returns>
-        public static MigrationEntityGroupData MigrationEntityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrationEntityGroupProperties properties = default, string eTag = default)
+        public static MigrationEntityGroupData MigrationEntityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrationEntityGroupProperties properties = default, ETag? eTag = default)
         {
             return new MigrationEntityGroupData(
                 id,
@@ -350,16 +375,17 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Migration Entity Group Properties class. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="applicationId"> Application id . </param>
         /// <param name="applicationDisplayName"> Display Name of the Workload. </param>
         /// <param name="associatedAssessmentId"> Associated Assessment Id. </param>
         /// <param name="associatedWaveIds"> associated Wave Id. </param>
         /// <param name="executionStatus"> Migration Entity Group Status. </param>
-        /// <param name="executionStartOn"> Execution Start Date. </param>
+        /// <param name="executionStartsOn"> Execution Start Date. </param>
         /// <param name="migrationPath"> Migration path. </param>
         /// <returns> A new <see cref="Models.MigrationEntityGroupProperties"/> instance for mocking. </returns>
-        public static MigrationEntityGroupProperties MigrationEntityGroupProperties(ProvisioningState? provisioningState = default, string applicationId = default, string applicationDisplayName = default, ResourceIdentifier associatedAssessmentId = default, IEnumerable<ResourceIdentifier> associatedWaveIds = default, string executionStatus = default, DateTimeOffset? executionStartOn = default, string migrationPath = default)
+        public static MigrationEntityGroupProperties MigrationEntityGroupProperties(MigrateProvisioningState? provisioningState = default, string applicationId = default, string applicationDisplayName = default, ResourceIdentifier associatedAssessmentId = default, IEnumerable<ResourceIdentifier> associatedWaveIds = default, string executionStatus = default, DateTimeOffset? executionStartsOn = default, string migrationPath = default)
         {
             associatedWaveIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -370,21 +396,22 @@ namespace Azure.ResourceManager.Migrate.Models
                 associatedAssessmentId,
                 (associatedWaveIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 executionStatus,
-                executionStartOn,
+                executionStartsOn,
                 migrationPath,
                 default);
         }
 
+        /// <summary> Tasks resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="Migrate.TaskData"/> instance for mocking. </returns>
-        public static TaskData TaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TaskProperties properties = default, string eTag = default)
+        /// <returns> A new <see cref="Migrate.MigrateTaskData"/> instance for mocking. </returns>
+        public static MigrateTaskData MigrateTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrateTaskProperties properties = default, ETag? eTag = default)
         {
-            return new TaskData(
+            return new MigrateTaskData(
                 id,
                 name,
                 resourceType,
@@ -394,20 +421,21 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Task Properties class. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="scopeId"> associated Wave Id. </param>
         /// <param name="stage"> Task Stage. </param>
         /// <param name="taskType"> Task Type. </param>
-        /// <param name="displayName"> Task Dislay Name . </param>
+        /// <param name="displayName"> Task Display Name. </param>
         /// <param name="isEditable"> Indicates whether the task is editable. </param>
         /// <param name="status"> Task Status. </param>
         /// <param name="scope"> Task Scope. </param>
         /// <param name="description"> Task Description. </param>
         /// <param name="completionOn"> Task completion Date. </param>
-        /// <returns> A new <see cref="Models.TaskProperties"/> instance for mocking. </returns>
-        public static TaskProperties TaskProperties(ProvisioningState? provisioningState = default, ResourceIdentifier scopeId = default, string stage = default, TaskType taskType = default, string displayName = default, bool isEditable = default, string status = default, TaskScope scope = default, string description = default, DateTimeOffset? completionOn = default)
+        /// <returns> A new <see cref="Models.MigrateTaskProperties"/> instance for mocking. </returns>
+        public static MigrateTaskProperties MigrateTaskProperties(MigrateProvisioningState? provisioningState = default, ResourceIdentifier scopeId = default, string stage = default, MigrateTaskType taskType = default, string displayName = default, bool isEditable = default, string status = default, MigrateTaskScope scope = default, string description = default, DateTimeOffset? completionOn = default)
         {
-            return new TaskProperties(
+            return new MigrateTaskProperties(
                 provisioningState,
                 scopeId,
                 stage,
@@ -421,41 +449,43 @@ namespace Azure.ResourceManager.Migrate.Models
                 default);
         }
 
+        /// <summary> Task Summary Request model. </summary>
         /// <param name="scopeId"> Task Scope ARM Id. </param>
-        /// <returns> A new <see cref="Models.TaskSummaryRequest"/> instance for mocking. </returns>
-        public static TaskSummaryRequest TaskSummaryRequest(ResourceIdentifier scopeId = default)
+        /// <returns> A new <see cref="Models.MigrateTaskSummaryContent"/> instance for mocking. </returns>
+        public static MigrateTaskSummaryContent MigrateTaskSummaryContent(ResourceIdentifier scopeId = default)
         {
-            return new TaskSummaryRequest(scopeId, default);
+            return new MigrateTaskSummaryContent(scopeId, default);
         }
 
+        /// <summary> Task Summary Response model. </summary>
         /// <param name="items"> List of Task Summary Items. </param>
-        /// <returns> A new <see cref="Models.TaskSummaryResponse"/> instance for mocking. </returns>
-        public static TaskSummaryResponse TaskSummaryResponse(IEnumerable<TaskSummaryItem> items = default)
+        /// <returns> A new <see cref="Models.MigrateTaskSummaryResult"/> instance for mocking. </returns>
+        public static MigrateTaskSummaryResult MigrateTaskSummaryResult(IEnumerable<MigrateTaskSummaryItem> items = default)
         {
-            items ??= new ChangeTrackingList<TaskSummaryItem>();
+            items ??= new ChangeTrackingList<MigrateTaskSummaryItem>();
 
-            return new TaskSummaryResponse((items ?? new ChangeTrackingList<TaskSummaryItem>()).ToList(), default);
+            return new MigrateTaskSummaryResult((items ?? new ChangeTrackingList<MigrateTaskSummaryItem>()).ToList(), default);
         }
 
         /// <param name="stage"> Task Stage. </param>
         /// <param name="aggregatedStatus"> Aggregated status of tasks in this stage. </param>
         /// <param name="statusCounts"> Status counts dictionary mapping TaskStatus to the count of tasks with that status. </param>
         /// <param name="tasks"> List of tasks in this stage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statusCounts"/> is null. </exception>
-        /// <returns> A new <see cref="Models.TaskSummaryItem"/> instance for mocking. </returns>
-        public static TaskSummaryItem TaskSummaryItem(string stage = default, string aggregatedStatus = default, IEnumerable<TaskStatusCountMap> statusCounts = default, IEnumerable<TaskData> tasks = default)
+        /// <returns> A new <see cref="Models.MigrateTaskSummaryItem"/> instance for mocking. </returns>
+        public static MigrateTaskSummaryItem MigrateTaskSummaryItem(string stage = default, string aggregatedStatus = default, IEnumerable<MigrateTaskStatusCount> statusCounts = default, IEnumerable<MigrateTaskData> tasks = default)
         {
-            tasks ??= new ChangeTrackingList<TaskData>();
+            tasks ??= new ChangeTrackingList<MigrateTaskData>();
 
-            return new TaskSummaryItem(stage, aggregatedStatus, statusCounts is null ? default : new TaskStatusCounts((statusCounts ?? new ChangeTrackingList<TaskStatusCountMap>()).ToList(), default), (tasks ?? new ChangeTrackingList<TaskData>()).ToList(), default);
+            return new MigrateTaskSummaryItem(stage, aggregatedStatus, statusCounts is null ? default : new TaskStatusCounts((statusCounts ?? new ChangeTrackingList<MigrateTaskStatusCount>()).ToList(), default), (tasks ?? new ChangeTrackingList<MigrateTaskData>()).ToList(), default);
         }
 
+        /// <summary> Task status count mapping. </summary>
         /// <param name="status"> The task status. </param>
         /// <param name="count"> The count of tasks with this status. </param>
-        /// <returns> A new <see cref="Models.TaskStatusCountMap"/> instance for mocking. </returns>
-        public static TaskStatusCountMap TaskStatusCountMap(string status = default, int count = default)
+        /// <returns> A new <see cref="Models.MigrateTaskStatusCount"/> instance for mocking. </returns>
+        public static MigrateTaskStatusCount MigrateTaskStatusCount(string status = default, int count = default)
         {
-            return new TaskStatusCountMap(status, count, default);
+            return new MigrateTaskStatusCount(status, count, default);
         }
     }
 }

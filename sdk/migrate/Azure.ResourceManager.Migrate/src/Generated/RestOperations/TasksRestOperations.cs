@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Migrate
             return message;
         }
 
-        internal HttpMessage CreateGetSummaryRequest(Guid subscriptionId, string resourceGroupName, string projectName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetMigrateTaskSummaryRequest(Guid subscriptionId, string resourceGroupName, string projectName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

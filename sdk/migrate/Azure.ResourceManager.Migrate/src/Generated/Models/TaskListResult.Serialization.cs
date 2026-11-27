@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (TaskData item in Value)
+            foreach (MigrateTaskData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            IList<TaskData> value = default;
+            IList<MigrateTaskData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<TaskData> array = new List<TaskData>();
+                    List<MigrateTaskData> array = new List<MigrateTaskData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TaskData.DeserializeTaskData(item, options));
+                        array.Add(MigrateTaskData.DeserializeMigrateTaskData(item, options));
                     }
                     value = array;
                     continue;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TaskListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TaskListResult(value ?? new ChangeTrackingList<MigrateTaskData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

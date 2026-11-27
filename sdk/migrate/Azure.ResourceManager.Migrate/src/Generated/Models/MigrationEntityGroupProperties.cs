@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="associatedAssessmentId"> Associated Assessment Id. </param>
         /// <param name="associatedWaveIds"> associated Wave Id. </param>
         /// <param name="executionStatus"> Migration Entity Group Status. </param>
-        /// <param name="executionStartOn"> Execution Start Date. </param>
+        /// <param name="executionStartsOn"> Execution Start Date. </param>
         /// <param name="migrationPath"> Migration path. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationEntityGroupProperties(ProvisioningState? provisioningState, string applicationId, string applicationDisplayName, ResourceIdentifier associatedAssessmentId, IList<ResourceIdentifier> associatedWaveIds, string executionStatus, DateTimeOffset? executionStartOn, string migrationPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationEntityGroupProperties(MigrateProvisioningState? provisioningState, string applicationId, string applicationDisplayName, ResourceIdentifier associatedAssessmentId, IList<ResourceIdentifier> associatedWaveIds, string executionStatus, DateTimeOffset? executionStartsOn, string migrationPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ApplicationId = applicationId;
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.Migrate.Models
             AssociatedAssessmentId = associatedAssessmentId;
             AssociatedWaveIds = associatedWaveIds;
             ExecutionStatus = executionStatus;
-            ExecutionStartOn = executionStartOn;
+            ExecutionStartsOn = executionStartsOn;
             MigrationPath = migrationPath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MigrateProvisioningState? ProvisioningState { get; }
 
         /// <summary> Application id . </summary>
         public string ApplicationId { get; set; }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Migrate.Models
         public string ExecutionStatus { get; }
 
         /// <summary> Execution Start Date. </summary>
-        public DateTimeOffset? ExecutionStartOn { get; }
+        public DateTimeOffset? ExecutionStartsOn { get; }
 
         /// <summary> Migration path. </summary>
         public string MigrationPath { get; set; }

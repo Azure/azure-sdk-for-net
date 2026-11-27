@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="associatedInventoryResourceId"> inventory resource id . </param>
         /// <param name="inventoryDisplayName"> Display Name of the Workload. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedInventoryResourceId"/> or <paramref name="inventoryDisplayName"/> is null. </exception>
-        public MigrationEntityProperties(string associatedInventoryResourceId, string inventoryDisplayName)
+        public MigrationEntityProperties(ResourceIdentifier associatedInventoryResourceId, string inventoryDisplayName)
         {
             Argument.AssertNotNull(associatedInventoryResourceId, nameof(associatedInventoryResourceId));
             Argument.AssertNotNull(inventoryDisplayName, nameof(inventoryDisplayName));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="associatedAssessmentId"> Associated Assessment Id. </param>
         /// <param name="associatedWaveId"> associated Wave Id. </param>
         /// <param name="associatedMigrationEntityGroupIds"> associated Migration Entity Group Id. </param>
-        /// <param name="executionStartOn"> Execution start date for Migration Entity. </param>
+        /// <param name="executionStartsOn"> Execution start date for Migration Entity. </param>
         /// <param name="target"> Target of the Migration Entity. </param>
         /// <param name="migrationStrategy"> Strategy of Migration Entity. </param>
         /// <param name="executionStage"> Execution Stage of Migration Entity. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="migrationPath"> Migration path. </param>
         /// <param name="assessedEntityArmId"> Assessed Entity ARM Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationEntityProperties(ProvisioningState? provisioningState, string partnerResourceArmId, string targetAzureResourceArmId, string associatedInventoryResourceId, string inventoryDisplayName, ResourceIdentifier associatedAssessmentId, ResourceIdentifier associatedWaveId, IList<ResourceIdentifier> associatedMigrationEntityGroupIds, DateTimeOffset? executionStartOn, string target, Strategy? migrationStrategy, string executionStage, string executionStatus, string executionReadiness, MigrationSpecificPropertiesBase migrationSpecificProperties, string migrationTool, string migrationPath, string assessedEntityArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationEntityProperties(MigrateProvisioningState? provisioningState, ResourceIdentifier partnerResourceArmId, ResourceIdentifier targetAzureResourceArmId, ResourceIdentifier associatedInventoryResourceId, string inventoryDisplayName, ResourceIdentifier associatedAssessmentId, ResourceIdentifier associatedWaveId, IList<ResourceIdentifier> associatedMigrationEntityGroupIds, DateTimeOffset? executionStartsOn, string target, MigrationStrategy? migrationStrategy, string executionStage, string executionStatus, string executionReadiness, MigrationSpecificProperties migrationSpecificProperties, string migrationTool, string migrationPath, ResourceIdentifier assessedEntityArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PartnerResourceArmId = partnerResourceArmId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Migrate.Models
             AssociatedAssessmentId = associatedAssessmentId;
             AssociatedWaveId = associatedWaveId;
             AssociatedMigrationEntityGroupIds = associatedMigrationEntityGroupIds;
-            ExecutionStartOn = executionStartOn;
+            ExecutionStartsOn = executionStartsOn;
             Target = target;
             MigrationStrategy = migrationStrategy;
             ExecutionStage = executionStage;
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MigrateProvisioningState? ProvisioningState { get; }
 
         /// <summary> ARM Resource Identifier for the partner resource. </summary>
-        public string PartnerResourceArmId { get; set; }
+        public ResourceIdentifier PartnerResourceArmId { get; set; }
 
         /// <summary> target Azure Resource ARM Id. </summary>
-        public string TargetAzureResourceArmId { get; set; }
+        public ResourceIdentifier TargetAzureResourceArmId { get; set; }
 
         /// <summary> inventory resource id . </summary>
-        public string AssociatedInventoryResourceId { get; set; }
+        public ResourceIdentifier AssociatedInventoryResourceId { get; set; }
 
         /// <summary> Display Name of the Workload. </summary>
         public string InventoryDisplayName { get; set; }
@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.Migrate.Models
         public IList<ResourceIdentifier> AssociatedMigrationEntityGroupIds { get; }
 
         /// <summary> Execution start date for Migration Entity. </summary>
-        public DateTimeOffset? ExecutionStartOn { get; }
+        public DateTimeOffset? ExecutionStartsOn { get; }
 
         /// <summary> Target of the Migration Entity. </summary>
         public string Target { get; set; }
 
         /// <summary> Strategy of Migration Entity. </summary>
-        public Strategy? MigrationStrategy { get; }
+        public MigrationStrategy? MigrationStrategy { get; }
 
         /// <summary> Execution Stage of Migration Entity. </summary>
         public string ExecutionStage { get; }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Migrate.Models
         public string ExecutionReadiness { get; }
 
         /// <summary> Migration specific properties for the entity. </summary>
-        public MigrationSpecificPropertiesBase MigrationSpecificProperties { get; set; }
+        public MigrationSpecificProperties MigrationSpecificProperties { get; set; }
 
         /// <summary> Migration Tool of the Migration Entity. </summary>
         public string MigrationTool { get; set; }
@@ -127,6 +127,6 @@ namespace Azure.ResourceManager.Migrate.Models
         public string MigrationPath { get; set; }
 
         /// <summary> Assessed Entity ARM Id. </summary>
-        public string AssessedEntityArmId { get; set; }
+        public ResourceIdentifier AssessedEntityArmId { get; set; }
     }
 }

@@ -15,11 +15,11 @@ using Azure.ResourceManager.Migrate;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Represents a Server Migration Specific properties base model. </summary>
-    public partial class ServerMigrationSpecificProperties : MigrationSpecificPropertiesBase, IJsonModel<ServerMigrationSpecificProperties>
+    public partial class ServerMigrationSpecificProperties : MigrationSpecificProperties, IJsonModel<ServerMigrationSpecificProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MigrationSpecificPropertiesBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MigrationSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerMigrationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Migrate.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MigrationSpecificPropertiesBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MigrationSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerMigrationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServerMigrationSpecificProperties(instanceType, additionalBinaryDataProperties, drApplianceInventoryId, currentJobId);

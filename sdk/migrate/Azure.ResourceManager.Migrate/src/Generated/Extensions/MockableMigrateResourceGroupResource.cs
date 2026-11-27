@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
 
         private Tasks TasksRestClient => _tasksRestClient ??= new Tasks(TasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01-preview");
 
-        /// <summary> Gets a collection of Waves in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of MigrateWaves in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="projectName"> The projectName for the resource. </param>
-        /// <returns> An object representing collection of Waves and their operations over a WaveResource. </returns>
-        public virtual WaveCollection GetWaves(string projectName)
+        /// <returns> An object representing collection of MigrateWaves and their operations over a MigrateWaveResource. </returns>
+        public virtual MigrateWaveCollection GetMigrateWaves(string projectName)
         {
-            return GetCachedClient(client => new WaveCollection(client, Id, projectName));
+            return new MigrateWaveCollection(Client, Id, projectName);
         }
 
         /// <summary>
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="waveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="waveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WaveResource>> GetWaveAsync(string projectName, string waveName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateWaveResource>> GetMigrateWaveAsync(string projectName, string waveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(waveName, nameof(waveName));
 
-            return await GetWaves(projectName).GetAsync(waveName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrateWaves(projectName).GetAsync(waveName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="waveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="waveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WaveResource> GetWave(string projectName, string waveName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrateWaveResource> GetMigrateWave(string projectName, string waveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(waveName, nameof(waveName));
 
-            return GetWaves(projectName).Get(waveName, cancellationToken);
+            return GetMigrateWaves(projectName).Get(waveName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MigrationEntities in the <see cref="ResourceGroupResource"/>. </summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <returns> An object representing collection of MigrationEntities and their operations over a MigrationEntityResource. </returns>
         public virtual MigrationEntityCollection GetMigrationEntities(string projectName)
         {
-            return GetCachedClient(client => new MigrationEntityCollection(client, Id, projectName));
+            return new MigrationEntityCollection(Client, Id, projectName);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <returns> An object representing collection of MigrationEntityGroups and their operations over a MigrationEntityGroupResource. </returns>
         public virtual MigrationEntityGroupCollection GetMigrationEntityGroups(string projectName)
         {
-            return GetCachedClient(client => new MigrationEntityGroupCollection(client, Id, projectName));
+            return new MigrationEntityGroupCollection(Client, Id, projectName);
         }
 
         /// <summary>
@@ -250,12 +250,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
             return GetMigrationEntityGroups(projectName).Get(migrationEntityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Tasks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of MigrateTasks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="projectName"> The projectName for the resource. </param>
-        /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
-        public virtual TaskCollection GetTasks(string projectName)
+        /// <returns> An object representing collection of MigrateTasks and their operations over a MigrateTaskResource. </returns>
+        public virtual MigrateTaskCollection GetMigrateTasks(string projectName)
         {
-            return GetCachedClient(client => new TaskCollection(client, Id, projectName));
+            return new MigrateTaskCollection(Client, Id, projectName);
         }
 
         /// <summary>
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TaskResource>> GetTaskAsync(string projectName, string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateTaskResource>> GetMigrateTaskAsync(string projectName, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return await GetTasks(projectName).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrateTasks(projectName).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TaskResource> GetTask(string projectName, string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrateTaskResource> GetMigrateTask(string projectName, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return GetTasks(projectName).Get(taskName, cancellationToken);
+            return GetMigrateTasks(projectName).Get(taskName, cancellationToken);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GenerateWavePlanResponse>> GenerateWavePlanAsync(WaitUntil waitUntil, string projectName, GenerateWavePlanRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GenerateWavePlanResult>> GenerateWavePlanAsync(WaitUntil waitUntil, string projectName, GenerateWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -354,10 +354,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateGenerateWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GenerateWavePlanRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateGenerateWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GenerateWavePlanContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MigrateArmOperation<GenerateWavePlanResponse> operation = new MigrateArmOperation<GenerateWavePlanResponse>(
-                    new GenerateWavePlanResponseOperationSource(),
+                MigrateArmOperation<GenerateWavePlanResult> operation = new MigrateArmOperation<GenerateWavePlanResult>(
+                    new GenerateWavePlanResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GenerateWavePlanResponse> GenerateWavePlan(WaitUntil waitUntil, string projectName, GenerateWavePlanRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GenerateWavePlanResult> GenerateWavePlan(WaitUntil waitUntil, string projectName, GenerateWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -412,10 +412,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateGenerateWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GenerateWavePlanRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateGenerateWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GenerateWavePlanContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MigrateArmOperation<GenerateWavePlanResponse> operation = new MigrateArmOperation<GenerateWavePlanResponse>(
-                    new GenerateWavePlanResponseOperationSource(),
+                MigrateArmOperation<GenerateWavePlanResult> operation = new MigrateArmOperation<GenerateWavePlanResult>(
+                    new GenerateWavePlanResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -457,12 +457,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RefreshEntitiesResponse>> RefreshEntitiesAsync(WaitUntil waitUntil, string projectName, RefreshEntitiesRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RefreshMigrationEntitiesResult>> RefreshMigrationEntitiesAsync(WaitUntil waitUntil, string projectName, RefreshMigrationEntitiesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.RefreshEntities");
+            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.RefreshMigrationEntities");
             scope.Start();
             try
             {
@@ -470,10 +470,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateRefreshEntitiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, RefreshEntitiesRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateRefreshMigrationEntitiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, RefreshMigrationEntitiesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MigrateArmOperation<RefreshEntitiesResponse> operation = new MigrateArmOperation<RefreshEntitiesResponse>(
-                    new RefreshEntitiesResponseOperationSource(),
+                MigrateArmOperation<RefreshMigrationEntitiesResult> operation = new MigrateArmOperation<RefreshMigrationEntitiesResult>(
+                    new RefreshMigrationEntitiesResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -515,12 +515,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RefreshEntitiesResponse> RefreshEntities(WaitUntil waitUntil, string projectName, RefreshEntitiesRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RefreshMigrationEntitiesResult> RefreshMigrationEntities(WaitUntil waitUntil, string projectName, RefreshMigrationEntitiesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.RefreshEntities");
+            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.RefreshMigrationEntities");
             scope.Start();
             try
             {
@@ -528,10 +528,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateRefreshEntitiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, RefreshEntitiesRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateRefreshMigrationEntitiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, RefreshMigrationEntitiesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MigrateArmOperation<RefreshEntitiesResponse> operation = new MigrateArmOperation<RefreshEntitiesResponse>(
-                    new RefreshEntitiesResponseOperationSource(),
+                MigrateArmOperation<RefreshMigrationEntitiesResult> operation = new MigrateArmOperation<RefreshMigrationEntitiesResult>(
+                    new RefreshMigrationEntitiesResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CreateWavesFromPlanResponse>> CreateWavesFromPlanAsync(WaitUntil waitUntil, string projectName, CreateWavesFromPlanRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CreateWavesFromPlanResult>> CreateWavesFromPlanAsync(WaitUntil waitUntil, string projectName, CreateWavesFromPlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -586,10 +586,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateCreateWavesFromPlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, CreateWavesFromPlanRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateCreateWavesFromPlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, CreateWavesFromPlanContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MigrateArmOperation<CreateWavesFromPlanResponse> operation = new MigrateArmOperation<CreateWavesFromPlanResponse>(
-                    new CreateWavesFromPlanResponseOperationSource(),
+                MigrateArmOperation<CreateWavesFromPlanResult> operation = new MigrateArmOperation<CreateWavesFromPlanResult>(
+                    new CreateWavesFromPlanResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CreateWavesFromPlanResponse> CreateWavesFromPlan(WaitUntil waitUntil, string projectName, CreateWavesFromPlanRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CreateWavesFromPlanResult> CreateWavesFromPlan(WaitUntil waitUntil, string projectName, CreateWavesFromPlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -644,10 +644,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateCreateWavesFromPlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, CreateWavesFromPlanRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateCreateWavesFromPlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, CreateWavesFromPlanContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MigrateArmOperation<CreateWavesFromPlanResponse> operation = new MigrateArmOperation<CreateWavesFromPlanResponse>(
-                    new CreateWavesFromPlanResponseOperationSource(),
+                MigrateArmOperation<CreateWavesFromPlanResult> operation = new MigrateArmOperation<CreateWavesFromPlanResult>(
+                    new CreateWavesFromPlanResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GetWavePlansResponse>> GetWavePlansAsync(string projectName, GetWavePlansRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetWavePlansResult>> GetWavePlansAsync(string projectName, GetWavePlansContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -701,9 +701,9 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateGetWavePlansRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GetWavePlansRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateGetWavePlansRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GetWavePlansContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GetWavePlansResponse> response = Response.FromValue(GetWavePlansResponse.FromResponse(result), result);
+                Response<GetWavePlansResult> response = Response.FromValue(GetWavePlansResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GetWavePlansResponse> GetWavePlans(string projectName, GetWavePlansRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<GetWavePlansResult> GetWavePlans(string projectName, GetWavePlansContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -752,9 +752,9 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateGetWavePlansRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GetWavePlansRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateGetWavePlansRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, GetWavePlansContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GetWavePlansResponse> response = Response.FromValue(GetWavePlansResponse.FromResponse(result), result);
+                Response<GetWavePlansResult> response = Response.FromValue(GetWavePlansResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -790,12 +790,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<FetchSasUriResponse>> FetchSasUriAsync(string projectName, FetchSasUriRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateWavePlanSasUriResult>> GetMigrateWavePlanSasUriAsync(string projectName, MigrateWavePlanSasUriContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.FetchSasUri");
+            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.GetMigrateWavePlanSasUri");
             scope.Start();
             try
             {
@@ -803,9 +803,9 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateFetchSasUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, FetchSasUriRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateGetMigrateWavePlanSasUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, MigrateWavePlanSasUriContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FetchSasUriResponse> response = Response.FromValue(FetchSasUriResponse.FromResponse(result), result);
+                Response<MigrateWavePlanSasUriResult> response = Response.FromValue(MigrateWavePlanSasUriResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -841,12 +841,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<FetchSasUriResponse> FetchSasUri(string projectName, FetchSasUriRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<MigrateWavePlanSasUriResult> GetMigrateWavePlanSasUri(string projectName, MigrateWavePlanSasUriContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.FetchSasUri");
+            using DiagnosticScope scope = MigrateProjectsClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.GetMigrateWavePlanSasUri");
             scope.Start();
             try
             {
@@ -854,9 +854,9 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateFetchSasUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, FetchSasUriRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateGetMigrateWavePlanSasUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, MigrateWavePlanSasUriContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FetchSasUriResponse> response = Response.FromValue(FetchSasUriResponse.FromResponse(result), result);
+                Response<MigrateWavePlanSasUriResult> response = Response.FromValue(MigrateWavePlanSasUriResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ImportWavePlanResponse>> ImportWavePlanAsync(WaitUntil waitUntil, string projectName, ImportWavePlanRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ImportWavePlanResult>> ImportWavePlanAsync(WaitUntil waitUntil, string projectName, ImportWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -906,10 +906,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateImportWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, ImportWavePlanRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateImportWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, ImportWavePlanContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MigrateArmOperation<ImportWavePlanResponse> operation = new MigrateArmOperation<ImportWavePlanResponse>(
-                    new ImportWavePlanResponseOperationSource(),
+                MigrateArmOperation<ImportWavePlanResult> operation = new MigrateArmOperation<ImportWavePlanResult>(
+                    new ImportWavePlanResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ImportWavePlanResponse> ImportWavePlan(WaitUntil waitUntil, string projectName, ImportWavePlanRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImportWavePlanResult> ImportWavePlan(WaitUntil waitUntil, string projectName, ImportWavePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -964,10 +964,10 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MigrateProjectsRestClient.CreateImportWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, ImportWavePlanRequest.ToRequestContent(content), context);
+                HttpMessage message = MigrateProjectsRestClient.CreateImportWavePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, ImportWavePlanContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MigrateArmOperation<ImportWavePlanResponse> operation = new MigrateArmOperation<ImportWavePlanResponse>(
-                    new ImportWavePlanResponseOperationSource(),
+                MigrateArmOperation<ImportWavePlanResult> operation = new MigrateArmOperation<ImportWavePlanResult>(
+                    new ImportWavePlanResultOperationSource(),
                     MigrateProjectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1008,12 +1008,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TaskSummaryResponse>> GetSummaryAsync(string projectName, TaskSummaryRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateTaskSummaryResult>> GetMigrateTaskSummaryAsync(string projectName, MigrateTaskSummaryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = TasksClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.GetSummary");
+            using DiagnosticScope scope = TasksClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.GetMigrateTaskSummary");
             scope.Start();
             try
             {
@@ -1021,9 +1021,9 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TasksRestClient.CreateGetSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, TaskSummaryRequest.ToRequestContent(content), context);
+                HttpMessage message = TasksRestClient.CreateGetMigrateTaskSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, MigrateTaskSummaryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TaskSummaryResponse> response = Response.FromValue(TaskSummaryResponse.FromResponse(result), result);
+                Response<MigrateTaskSummaryResult> response = Response.FromValue(MigrateTaskSummaryResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1059,12 +1059,12 @@ namespace Azure.ResourceManager.Migrate.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TaskSummaryResponse> GetSummary(string projectName, TaskSummaryRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<MigrateTaskSummaryResult> GetMigrateTaskSummary(string projectName, MigrateTaskSummaryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = TasksClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.GetSummary");
+            using DiagnosticScope scope = TasksClientDiagnostics.CreateScope("MockableMigrateResourceGroupResource.GetMigrateTaskSummary");
             scope.Start();
             try
             {
@@ -1072,9 +1072,9 @@ namespace Azure.ResourceManager.Migrate.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TasksRestClient.CreateGetSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, TaskSummaryRequest.ToRequestContent(content), context);
+                HttpMessage message = TasksRestClient.CreateGetMigrateTaskSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, MigrateTaskSummaryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TaskSummaryResponse> response = Response.FromValue(TaskSummaryResponse.FromResponse(result), result);
+                Response<MigrateTaskSummaryResult> response = Response.FromValue(MigrateTaskSummaryResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

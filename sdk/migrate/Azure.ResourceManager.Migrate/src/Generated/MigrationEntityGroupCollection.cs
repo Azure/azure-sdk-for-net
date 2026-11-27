@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Migrate
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationEntityGroupData, MigrationEntityGroupResource>(new MigrationEntityGroupsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MigrationEntityGroupData, MigrationEntityGroupResource>(new MigrationEntityGroupDataAsyncCollectionResultOfT(
                 _migrationEntityGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Migrate
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationEntityGroupData, MigrationEntityGroupResource>(new MigrationEntityGroupsGetByParentCollectionResultOfT(
+            return new PageableWrapper<MigrationEntityGroupData, MigrationEntityGroupResource>(new MigrationEntityGroupDataCollectionResultOfT(
                 _migrationEntityGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

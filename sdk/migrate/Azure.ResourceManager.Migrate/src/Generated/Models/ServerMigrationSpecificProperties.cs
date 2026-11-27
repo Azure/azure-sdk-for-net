@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Represents a Server Migration Specific properties base model. </summary>
-    public partial class ServerMigrationSpecificProperties : MigrationSpecificPropertiesBase
+    public partial class ServerMigrationSpecificProperties : MigrationSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="ServerMigrationSpecificProperties"/>. </summary>
         public ServerMigrationSpecificProperties() : base(MigrationSpecificPropertiesInstanceType.ServerMigration)

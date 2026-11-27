@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartsOn))
             {
                 writer.WritePropertyName("executionStartDate"u8);
-                writer.WriteStringValue(ExecutionStartOn.Value, "O");
+                writer.WriteStringValue(ExecutionStartsOn.Value, "O");
             }
             if (Optional.IsDefined(Target))
             {
@@ -216,24 +216,24 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            string partnerResourceArmId = default;
-            string targetAzureResourceArmId = default;
-            string associatedInventoryResourceId = default;
+            MigrateProvisioningState? provisioningState = default;
+            ResourceIdentifier partnerResourceArmId = default;
+            ResourceIdentifier targetAzureResourceArmId = default;
+            ResourceIdentifier associatedInventoryResourceId = default;
             string inventoryDisplayName = default;
             ResourceIdentifier associatedAssessmentId = default;
             ResourceIdentifier associatedWaveId = default;
             IList<ResourceIdentifier> associatedMigrationEntityGroupIds = default;
-            DateTimeOffset? executionStartOn = default;
+            DateTimeOffset? executionStartsOn = default;
             string target = default;
-            Strategy? migrationStrategy = default;
+            MigrationStrategy? migrationStrategy = default;
             string executionStage = default;
             string executionStatus = default;
             string executionReadiness = default;
-            MigrationSpecificPropertiesBase migrationSpecificProperties = default;
+            MigrationSpecificProperties migrationSpecificProperties = default;
             string migrationTool = default;
             string migrationPath = default;
-            string assessedEntityArmId = default;
+            ResourceIdentifier assessedEntityArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,22 +243,30 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new MigrateProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("partnerResourceArmId"u8))
                 {
-                    partnerResourceArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerResourceArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetAzureResourceArmId"u8))
                 {
-                    targetAzureResourceArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAzureResourceArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("associatedInventoryResourceId"u8))
                 {
-                    associatedInventoryResourceId = prop.Value.GetString();
+                    associatedInventoryResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inventoryDisplayName"u8))
@@ -311,7 +319,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    executionStartOn = prop.Value.GetDateTimeOffset("O");
+                    executionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("target"u8))
@@ -325,7 +333,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    migrationStrategy = new Strategy(prop.Value.GetString());
+                    migrationStrategy = new MigrationStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("executionStage"u8))
@@ -349,7 +357,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    migrationSpecificProperties = MigrationSpecificPropertiesBase.DeserializeMigrationSpecificPropertiesBase(prop.Value, options);
+                    migrationSpecificProperties = MigrationSpecificProperties.DeserializeMigrationSpecificProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("migrationTool"u8))
@@ -364,12 +372,16 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (prop.NameEquals("assessedEntityArmId"u8))
                 {
-                    assessedEntityArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assessedEntityArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MigrationEntityProperties(
@@ -381,7 +393,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 associatedAssessmentId,
                 associatedWaveId,
                 associatedMigrationEntityGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                executionStartOn,
+                executionStartsOn,
                 target,
                 migrationStrategy,
                 executionStage,
