@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
         /// <returns> Returns a <see cref="VerifiedIdAuthorityResource"/> object. </returns>
         public virtual VerifiedIdAuthorityResource GetVerifiedIdAuthorityResource(ResourceIdentifier id)
         {
-            VerifiedIdAuthorityResource.ValidateResourceId(id);
             return new VerifiedIdAuthorityResource(Client, id);
         }
     }

@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeDynamicSchemaResource"/> object. </returns>
         public virtual EdgeDynamicSchemaResource GetEdgeDynamicSchemaResource(ResourceIdentifier id)
         {
-            EdgeDynamicSchemaResource.ValidateResourceId(id);
             return new EdgeDynamicSchemaResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSchemaResource"/> object. </returns>
         public virtual EdgeSchemaResource GetEdgeSchemaResource(ResourceIdentifier id)
         {
-            EdgeSchemaResource.ValidateResourceId(id);
             return new EdgeSchemaResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSchemaVersionResource"/> object. </returns>
         public virtual EdgeSchemaVersionResource GetEdgeSchemaVersionResource(ResourceIdentifier id)
         {
-            EdgeSchemaVersionResource.ValidateResourceId(id);
             return new EdgeSchemaVersionResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSolutionVersionResource"/> object. </returns>
         public virtual EdgeSolutionVersionResource GetEdgeSolutionVersionResource(ResourceIdentifier id)
         {
-            EdgeSolutionVersionResource.ValidateResourceId(id);
             return new EdgeSolutionVersionResource(Client, id);
         }
 
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeJobResource"/> object. </returns>
         public virtual EdgeJobResource GetEdgeJobResource(ResourceIdentifier id)
         {
-            EdgeJobResource.ValidateResourceId(id);
             return new EdgeJobResource(Client, id);
         }
 
@@ -116,7 +111,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeTargetResource"/> object. </returns>
         public virtual EdgeTargetResource GetEdgeTargetResource(ResourceIdentifier id)
         {
-            EdgeTargetResource.ValidateResourceId(id);
             return new EdgeTargetResource(Client, id);
         }
 
@@ -125,7 +119,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeDynamicSchemaVersionResource"/> object. </returns>
         public virtual EdgeDynamicSchemaVersionResource GetEdgeDynamicSchemaVersionResource(ResourceIdentifier id)
         {
-            EdgeDynamicSchemaVersionResource.ValidateResourceId(id);
             return new EdgeDynamicSchemaVersionResource(Client, id);
         }
 
@@ -134,7 +127,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSchemaReferenceResource"/> object. </returns>
         public virtual EdgeSchemaReferenceResource GetEdgeSchemaReferenceResource(ResourceIdentifier id)
         {
-            EdgeSchemaReferenceResource.ValidateResourceId(id);
             return new EdgeSchemaReferenceResource(Client, id);
         }
 
@@ -179,7 +171,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSolutionResource"/> object. </returns>
         public virtual EdgeSolutionResource GetEdgeSolutionResource(ResourceIdentifier id)
         {
-            EdgeSolutionResource.ValidateResourceId(id);
             return new EdgeSolutionResource(Client, id);
         }
 
@@ -188,7 +179,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSolutionTemplateVersionResource"/> object. </returns>
         public virtual EdgeSolutionTemplateVersionResource GetEdgeSolutionTemplateVersionResource(ResourceIdentifier id)
         {
-            EdgeSolutionTemplateVersionResource.ValidateResourceId(id);
             return new EdgeSolutionTemplateVersionResource(Client, id);
         }
 
@@ -197,7 +187,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSolutionTemplateResource"/> object. </returns>
         public virtual EdgeSolutionTemplateResource GetEdgeSolutionTemplateResource(ResourceIdentifier id)
         {
-            EdgeSolutionTemplateResource.ValidateResourceId(id);
             return new EdgeSolutionTemplateResource(Client, id);
         }
 
@@ -206,7 +195,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeDeploymentInstanceResource"/> object. </returns>
         public virtual EdgeDeploymentInstanceResource GetEdgeDeploymentInstanceResource(ResourceIdentifier id)
         {
-            EdgeDeploymentInstanceResource.ValidateResourceId(id);
             return new EdgeDeploymentInstanceResource(Client, id);
         }
 
@@ -215,7 +203,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeDeploymentInstanceHistoryResource"/> object. </returns>
         public virtual EdgeDeploymentInstanceHistoryResource GetEdgeDeploymentInstanceHistoryResource(ResourceIdentifier id)
         {
-            EdgeDeploymentInstanceHistoryResource.ValidateResourceId(id);
             return new EdgeDeploymentInstanceHistoryResource(Client, id);
         }
 
@@ -224,7 +211,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeConfigTemplateResource"/> object. </returns>
         public virtual EdgeConfigTemplateResource GetEdgeConfigTemplateResource(ResourceIdentifier id)
         {
-            EdgeConfigTemplateResource.ValidateResourceId(id);
             return new EdgeConfigTemplateResource(Client, id);
         }
 
@@ -233,7 +219,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeConfigTemplateVersionResource"/> object. </returns>
         public virtual EdgeConfigTemplateVersionResource GetEdgeConfigTemplateVersionResource(ResourceIdentifier id)
         {
-            EdgeConfigTemplateVersionResource.ValidateResourceId(id);
             return new EdgeConfigTemplateVersionResource(Client, id);
         }
 
@@ -242,7 +227,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeWorkflowResource"/> object. </returns>
         public virtual EdgeWorkflowResource GetEdgeWorkflowResource(ResourceIdentifier id)
         {
-            EdgeWorkflowResource.ValidateResourceId(id);
             return new EdgeWorkflowResource(Client, id);
         }
 
@@ -251,7 +235,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeWorkflowVersionResource"/> object. </returns>
         public virtual EdgeWorkflowVersionResource GetEdgeWorkflowVersionResource(ResourceIdentifier id)
         {
-            EdgeWorkflowVersionResource.ValidateResourceId(id);
             return new EdgeWorkflowVersionResource(Client, id);
         }
 
@@ -260,7 +243,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeExecutionResource"/> object. </returns>
         public virtual EdgeExecutionResource GetEdgeExecutionResource(ResourceIdentifier id)
         {
-            EdgeExecutionResource.ValidateResourceId(id);
             return new EdgeExecutionResource(Client, id);
         }
 
@@ -269,7 +251,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeDiagnosticResource"/> object. </returns>
         public virtual EdgeDiagnosticResource GetEdgeDiagnosticResource(ResourceIdentifier id)
         {
-            EdgeDiagnosticResource.ValidateResourceId(id);
             return new EdgeDiagnosticResource(Client, id);
         }
 
@@ -278,7 +259,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeContextResource"/> object. </returns>
         public virtual EdgeContextResource GetEdgeContextResource(ResourceIdentifier id)
         {
-            EdgeContextResource.ValidateResourceId(id);
             return new EdgeContextResource(Client, id);
         }
 
@@ -287,7 +267,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <returns> Returns a <see cref="EdgeSiteReferenceResource"/> object. </returns>
         public virtual EdgeSiteReferenceResource GetEdgeSiteReferenceResource(ResourceIdentifier id)
         {
-            EdgeSiteReferenceResource.ValidateResourceId(id);
             return new EdgeSiteReferenceResource(Client, id);
         }
     }

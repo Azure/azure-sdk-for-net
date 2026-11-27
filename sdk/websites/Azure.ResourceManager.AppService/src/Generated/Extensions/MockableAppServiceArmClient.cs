@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentWorkerPoolResource"/> object. </returns>
         public virtual HostingEnvironmentWorkerPoolResource GetHostingEnvironmentWorkerPoolResource(ResourceIdentifier id)
         {
-            HostingEnvironmentWorkerPoolResource.ValidateResourceId(id);
             return new HostingEnvironmentWorkerPoolResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServiceEnvironmentResource"/> object. </returns>
         public virtual AppServiceEnvironmentResource GetAppServiceEnvironmentResource(ResourceIdentifier id)
         {
-            AppServiceEnvironmentResource.ValidateResourceId(id);
             return new AppServiceEnvironmentResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
         public virtual SiteRecommendationResource GetSiteRecommendationResource(ResourceIdentifier id)
         {
-            SiteRecommendationResource.ValidateResourceId(id);
             return new SiteRecommendationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServiceEnvironmentAddressResource"/> object. </returns>
         public virtual AppServiceEnvironmentAddressResource GetAppServiceEnvironmentAddressResource(ResourceIdentifier id)
         {
-            AppServiceEnvironmentAddressResource.ValidateResourceId(id);
             return new AppServiceEnvironmentAddressResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="CustomDnsSuffixConfigurationResource"/> object. </returns>
         public virtual CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfigurationResource(ResourceIdentifier id)
         {
-            CustomDnsSuffixConfigurationResource.ValidateResourceId(id);
             return new CustomDnsSuffixConfigurationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource"/> object. </returns>
         public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(ResourceIdentifier id)
         {
-            AseV3NetworkingConfigurationResource.ValidateResourceId(id);
             return new AseV3NetworkingConfigurationResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource"/> object. </returns>
         public virtual HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier id)
         {
-            HostingEnvironmentMultiRolePoolResource.ValidateResourceId(id);
             return new HostingEnvironmentMultiRolePoolResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HostingEnvironmentPrivateEndpointConnectionResource GetHostingEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HostingEnvironmentPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HostingEnvironmentPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSitePrivateEndpointConnectionResource"/> object. </returns>
         public virtual StaticSitePrivateEndpointConnectionResource GetStaticSitePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            StaticSitePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new StaticSitePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotResource"/> object. </returns>
         public virtual WebSiteSlotResource GetWebSiteSlotResource(ResourceIdentifier id)
         {
-            WebSiteSlotResource.ValidateResourceId(id);
             return new WebSiteSlotResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SitePrivateEndpointConnectionResource"/> object. </returns>
         public virtual SitePrivateEndpointConnectionResource GetSitePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            SitePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new SitePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotPrivateEndpointConnectionResource"/> object. </returns>
         public virtual SiteSlotPrivateEndpointConnectionResource GetSiteSlotPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            SiteSlotPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new SiteSlotPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServicePlanResource"/> object. </returns>
         public virtual AppServicePlanResource GetAppServicePlanResource(ResourceIdentifier id)
         {
-            AppServicePlanResource.ValidateResourceId(id);
             return new AppServicePlanResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> object. </returns>
         public virtual AppServicePlanHybridConnectionNamespaceRelayResource GetAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
-            AppServicePlanHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
             return new AppServicePlanHybridConnectionNamespaceRelayResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelayResource"/> object. </returns>
         public virtual SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
-            SiteHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
             return new SiteHybridConnectionNamespaceRelayResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> object. </returns>
         public virtual SiteSlotHybridConnectionNamespaceRelayResource GetSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
-            SiteSlotHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
             return new SiteSlotHybridConnectionNamespaceRelayResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HybridConnectionLimitResource"/> object. </returns>
         public virtual HybridConnectionLimitResource GetHybridConnectionLimitResource(ResourceIdentifier id)
         {
-            HybridConnectionLimitResource.ValidateResourceId(id);
             return new HybridConnectionLimitResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionResource"/> object. </returns>
         public virtual AppServicePlanVirtualNetworkConnectionResource GetAppServicePlanVirtualNetworkConnectionResource(ResourceIdentifier id)
         {
-            AppServicePlanVirtualNetworkConnectionResource.ValidateResourceId(id);
             return new AppServicePlanVirtualNetworkConnectionResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionResource"/> object. </returns>
         public virtual SiteSlotVirtualNetworkConnectionResource GetSiteSlotVirtualNetworkConnectionResource(ResourceIdentifier id)
         {
-            SiteSlotVirtualNetworkConnectionResource.ValidateResourceId(id);
             return new SiteSlotVirtualNetworkConnectionResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionResource"/> object. </returns>
         public virtual SiteVirtualNetworkConnectionResource GetSiteVirtualNetworkConnectionResource(ResourceIdentifier id)
         {
-            SiteVirtualNetworkConnectionResource.ValidateResourceId(id);
             return new SiteVirtualNetworkConnectionResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> object. </returns>
         public virtual AppServicePlanVirtualNetworkConnectionGatewayResource GetAppServicePlanVirtualNetworkConnectionGatewayResource(ResourceIdentifier id)
         {
-            AppServicePlanVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
             return new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> object. </returns>
         public virtual SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(ResourceIdentifier id)
         {
-            SiteSlotVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
             return new SiteSlotVirtualNetworkConnectionGatewayResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> object. </returns>
         public virtual SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(ResourceIdentifier id)
         {
-            SiteVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
             return new SiteVirtualNetworkConnectionGatewayResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
         public virtual AppCertificateResource GetAppCertificateResource(ResourceIdentifier id)
         {
-            AppCertificateResource.ValidateResourceId(id);
             return new AppCertificateResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
         public virtual SiteCertificateResource GetSiteCertificateResource(ResourceIdentifier id)
         {
-            SiteCertificateResource.ValidateResourceId(id);
             return new SiteCertificateResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
         public virtual SiteSlotCertificateResource GetSiteSlotCertificateResource(ResourceIdentifier id)
         {
-            SiteSlotCertificateResource.ValidateResourceId(id);
             return new SiteSlotCertificateResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="DeletedSiteAtLocationResource"/> object. </returns>
         public virtual DeletedSiteAtLocationResource GetDeletedSiteAtLocationResource(ResourceIdentifier id)
         {
-            DeletedSiteAtLocationResource.ValidateResourceId(id);
             return new DeletedSiteAtLocationResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="DeletedSiteResource"/> object. </returns>
         public virtual DeletedSiteResource GetDeletedSiteResource(ResourceIdentifier id)
         {
-            DeletedSiteResource.ValidateResourceId(id);
             return new DeletedSiteResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
         public virtual SiteDetectorResource GetSiteDetectorResource(ResourceIdentifier id)
         {
-            SiteDetectorResource.ValidateResourceId(id);
             return new SiteDetectorResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
         public virtual HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(ResourceIdentifier id)
         {
-            HostingEnvironmentDetectorResource.ValidateResourceId(id);
             return new HostingEnvironmentDetectorResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
         public virtual SiteSlotDetectorResource GetSiteSlotDetectorResource(ResourceIdentifier id)
         {
-            SiteSlotDetectorResource.ValidateResourceId(id);
             return new SiteSlotDetectorResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
         public virtual SiteDiagnosticResource GetSiteDiagnosticResource(ResourceIdentifier id)
         {
-            SiteDiagnosticResource.ValidateResourceId(id);
             return new SiteDiagnosticResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
         public virtual SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(ResourceIdentifier id)
         {
-            SiteSlotDiagnosticResource.ValidateResourceId(id);
             return new SiteSlotDiagnosticResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
         public virtual SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(ResourceIdentifier id)
         {
-            SiteDiagnosticAnalysisResource.ValidateResourceId(id);
             return new SiteDiagnosticAnalysisResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
         public virtual SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier id)
         {
-            SiteSlotDiagnosticAnalysisResource.ValidateResourceId(id);
             return new SiteSlotDiagnosticAnalysisResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
         public virtual SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(ResourceIdentifier id)
         {
-            SiteDiagnosticDetectorResource.ValidateResourceId(id);
             return new SiteDiagnosticDetectorResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
         public virtual SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier id)
         {
-            SiteSlotDiagnosticDetectorResource.ValidateResourceId(id);
             return new SiteSlotDiagnosticDetectorResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
         public virtual KubeEnvironmentResource GetKubeEnvironmentResource(ResourceIdentifier id)
         {
-            KubeEnvironmentResource.ValidateResourceId(id);
             return new KubeEnvironmentResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
         public virtual HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(ResourceIdentifier id)
         {
-            HostingEnvironmentRecommendationResource.ValidateResourceId(id);
             return new HostingEnvironmentRecommendationResource(Client, id);
         }
 
@@ -382,7 +343,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
         {
-            WebSiteResourceHealthMetadataResource.ValidateResourceId(id);
             return new WebSiteResourceHealthMetadataResource(Client, id);
         }
 
@@ -391,7 +351,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
         {
-            WebSiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
             return new WebSiteSlotResourceHealthMetadataResource(Client, id);
         }
 
@@ -400,7 +359,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteResource"/> object. </returns>
         public virtual WebSiteResource GetWebSiteResource(ResourceIdentifier id)
         {
-            WebSiteResource.ValidateResourceId(id);
             return new WebSiteResource(Client, id);
         }
 
@@ -409,7 +367,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
         public virtual PublishingUserResource GetPublishingUserResource(ResourceIdentifier id)
         {
-            PublishingUserResource.ValidateResourceId(id);
             return new PublishingUserResource(Client, id);
         }
 
@@ -418,7 +375,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServiceSourceControlResource"/> object. </returns>
         public virtual AppServiceSourceControlResource GetAppServiceSourceControlResource(ResourceIdentifier id)
         {
-            AppServiceSourceControlResource.ValidateResourceId(id);
             return new AppServiceSourceControlResource(Client, id);
         }
 
@@ -427,7 +383,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteResource"/> object. </returns>
         public virtual StaticSiteResource GetStaticSiteResource(ResourceIdentifier id)
         {
-            StaticSiteResource.ValidateResourceId(id);
             return new StaticSiteResource(Client, id);
         }
 
@@ -436,7 +391,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteBuildResource"/> object. </returns>
         public virtual StaticSiteBuildResource GetStaticSiteBuildResource(ResourceIdentifier id)
         {
-            StaticSiteBuildResource.ValidateResourceId(id);
             return new StaticSiteBuildResource(Client, id);
         }
 
@@ -445,7 +399,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteBuildDatabaseConnectionResource"/> object. </returns>
         public virtual StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(ResourceIdentifier id)
         {
-            StaticSiteBuildDatabaseConnectionResource.ValidateResourceId(id);
             return new StaticSiteBuildDatabaseConnectionResource(Client, id);
         }
 
@@ -454,7 +407,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteDatabaseConnectionResource"/> object. </returns>
         public virtual StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(ResourceIdentifier id)
         {
-            StaticSiteDatabaseConnectionResource.ValidateResourceId(id);
             return new StaticSiteDatabaseConnectionResource(Client, id);
         }
 
@@ -463,7 +415,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> object. </returns>
         public virtual StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier id)
         {
-            StaticSiteBuildUserProvidedFunctionAppResource.ValidateResourceId(id);
             return new StaticSiteBuildUserProvidedFunctionAppResource(Client, id);
         }
 
@@ -472,7 +423,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource"/> object. </returns>
         public virtual StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier id)
         {
-            StaticSiteUserProvidedFunctionAppResource.ValidateResourceId(id);
             return new StaticSiteUserProvidedFunctionAppResource(Client, id);
         }
 
@@ -481,7 +431,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertyResource"/> object. </returns>
         public virtual StaticSiteBasicAuthPropertyResource GetStaticSiteBasicAuthPropertyResource(ResourceIdentifier id)
         {
-            StaticSiteBasicAuthPropertyResource.ValidateResourceId(id);
             return new StaticSiteBasicAuthPropertyResource(Client, id);
         }
 
@@ -490,7 +439,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource"/> object. </returns>
         public virtual StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier id)
         {
-            StaticSiteCustomDomainOverviewResource.ValidateResourceId(id);
             return new StaticSiteCustomDomainOverviewResource(Client, id);
         }
 
@@ -499,7 +447,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteLinkedBackendResource"/> object. </returns>
         public virtual StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(ResourceIdentifier id)
         {
-            StaticSiteLinkedBackendResource.ValidateResourceId(id);
             return new StaticSiteLinkedBackendResource(Client, id);
         }
 
@@ -508,7 +455,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="StaticSiteBuildLinkedBackendResource"/> object. </returns>
         public virtual StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(ResourceIdentifier id)
         {
-            StaticSiteBuildLinkedBackendResource.ValidateResourceId(id);
             return new StaticSiteBuildLinkedBackendResource(Client, id);
         }
 
@@ -517,7 +463,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AiGatewayResource"/> object. </returns>
         public virtual AiGatewayResource GetAiGatewayResource(ResourceIdentifier id)
         {
-            AiGatewayResource.ValidateResourceId(id);
             return new AiGatewayResource(Client, id);
         }
 
@@ -526,7 +471,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteBackupResource"/> object. </returns>
         public virtual SiteBackupResource GetSiteBackupResource(ResourceIdentifier id)
         {
-            SiteBackupResource.ValidateResourceId(id);
             return new SiteBackupResource(Client, id);
         }
 
@@ -535,7 +479,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotBackupResource"/> object. </returns>
         public virtual SiteSlotBackupResource GetSiteSlotBackupResource(ResourceIdentifier id)
         {
-            SiteSlotBackupResource.ValidateResourceId(id);
             return new SiteSlotBackupResource(Client, id);
         }
 
@@ -544,7 +487,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
-            WebSiteFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new WebSiteFtpPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -553,7 +495,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
-            ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -562,7 +503,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
-            WebSiteSlotFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -571,7 +511,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
-            ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, id);
         }
 
@@ -580,7 +519,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteAuthSettingsV2Resource"/> object. </returns>
         public virtual WebSiteAuthSettingsV2Resource GetWebSiteAuthSettingsV2Resource(ResourceIdentifier id)
         {
-            WebSiteAuthSettingsV2Resource.ValidateResourceId(id);
             return new WebSiteAuthSettingsV2Resource(Client, id);
         }
 
@@ -589,7 +527,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotAuthSettingsV2Resource"/> object. </returns>
         public virtual WebSiteSlotAuthSettingsV2Resource GetWebSiteSlotAuthSettingsV2Resource(ResourceIdentifier id)
         {
-            WebSiteSlotAuthSettingsV2Resource.ValidateResourceId(id);
             return new WebSiteSlotAuthSettingsV2Resource(Client, id);
         }
 
@@ -598,7 +535,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteConfigAppsettingResource"/> object. </returns>
         public virtual SiteConfigAppsettingResource GetSiteConfigAppsettingResource(ResourceIdentifier id)
         {
-            SiteConfigAppsettingResource.ValidateResourceId(id);
             return new SiteConfigAppsettingResource(Client, id);
         }
 
@@ -607,7 +543,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteConfigConnectionStringResource"/> object. </returns>
         public virtual WebSiteConfigConnectionStringResource GetWebSiteConfigConnectionStringResource(ResourceIdentifier id)
         {
-            WebSiteConfigConnectionStringResource.ValidateResourceId(id);
             return new WebSiteConfigConnectionStringResource(Client, id);
         }
 
@@ -616,7 +551,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotConfigAppSettingResource"/> object. </returns>
         public virtual WebSiteSlotConfigAppSettingResource GetWebSiteSlotConfigAppSettingResource(ResourceIdentifier id)
         {
-            WebSiteSlotConfigAppSettingResource.ValidateResourceId(id);
             return new WebSiteSlotConfigAppSettingResource(Client, id);
         }
 
@@ -625,7 +559,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotConfigConnectionStringResource"/> object. </returns>
         public virtual WebSiteSlotConfigConnectionStringResource GetWebSiteSlotConfigConnectionStringResource(ResourceIdentifier id)
         {
-            WebSiteSlotConfigConnectionStringResource.ValidateResourceId(id);
             return new WebSiteSlotConfigConnectionStringResource(Client, id);
         }
 
@@ -634,7 +567,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="LogsSiteConfigResource"/> object. </returns>
         public virtual LogsSiteConfigResource GetLogsSiteConfigResource(ResourceIdentifier id)
         {
-            LogsSiteConfigResource.ValidateResourceId(id);
             return new LogsSiteConfigResource(Client, id);
         }
 
@@ -643,7 +575,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource"/> object. </returns>
         public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(ResourceIdentifier id)
         {
-            LogsSiteSlotConfigResource.ValidateResourceId(id);
             return new LogsSiteSlotConfigResource(Client, id);
         }
 
@@ -652,7 +583,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SlotConfigNamesResource"/> object. </returns>
         public virtual SlotConfigNamesResource GetSlotConfigNamesResource(ResourceIdentifier id)
         {
-            SlotConfigNamesResource.ValidateResourceId(id);
             return new SlotConfigNamesResource(Client, id);
         }
 
@@ -661,7 +591,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteConfigResource"/> object. </returns>
         public virtual WebSiteConfigResource GetWebSiteConfigResource(ResourceIdentifier id)
         {
-            WebSiteConfigResource.ValidateResourceId(id);
             return new WebSiteConfigResource(Client, id);
         }
 
@@ -670,7 +599,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteConfigSnapshotResource"/> object. </returns>
         public virtual SiteConfigSnapshotResource GetSiteConfigSnapshotResource(ResourceIdentifier id)
         {
-            SiteConfigSnapshotResource.ValidateResourceId(id);
             return new SiteConfigSnapshotResource(Client, id);
         }
 
@@ -679,7 +607,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource"/> object. </returns>
         public virtual WebSiteSlotConfigResource GetWebSiteSlotConfigResource(ResourceIdentifier id)
         {
-            WebSiteSlotConfigResource.ValidateResourceId(id);
             return new WebSiteSlotConfigResource(Client, id);
         }
 
@@ -688,7 +615,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotConfigSnapshotResource"/> object. </returns>
         public virtual SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(ResourceIdentifier id)
         {
-            SiteSlotConfigSnapshotResource.ValidateResourceId(id);
             return new SiteSlotConfigSnapshotResource(Client, id);
         }
 
@@ -697,7 +623,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteContinuousWebJobResource"/> object. </returns>
         public virtual WebSiteContinuousWebJobResource GetWebSiteContinuousWebJobResource(ResourceIdentifier id)
         {
-            WebSiteContinuousWebJobResource.ValidateResourceId(id);
             return new WebSiteContinuousWebJobResource(Client, id);
         }
 
@@ -706,7 +631,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotContinuousWebJobResource"/> object. </returns>
         public virtual WebSiteSlotContinuousWebJobResource GetWebSiteSlotContinuousWebJobResource(ResourceIdentifier id)
         {
-            WebSiteSlotContinuousWebJobResource.ValidateResourceId(id);
             return new WebSiteSlotContinuousWebJobResource(Client, id);
         }
 
@@ -715,7 +639,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="CsmSiteDeploymentStatusResource"/> object. </returns>
         public virtual CsmSiteDeploymentStatusResource GetCsmSiteDeploymentStatusResource(ResourceIdentifier id)
         {
-            CsmSiteDeploymentStatusResource.ValidateResourceId(id);
             return new CsmSiteDeploymentStatusResource(Client, id);
         }
 
@@ -724,7 +647,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="CsmSiteSlotDeploymentStatusResource"/> object. </returns>
         public virtual CsmSiteSlotDeploymentStatusResource GetCsmSiteSlotDeploymentStatusResource(ResourceIdentifier id)
         {
-            CsmSiteSlotDeploymentStatusResource.ValidateResourceId(id);
             return new CsmSiteSlotDeploymentStatusResource(Client, id);
         }
 
@@ -733,7 +655,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteDeploymentResource"/> object. </returns>
         public virtual SiteDeploymentResource GetSiteDeploymentResource(ResourceIdentifier id)
         {
-            SiteDeploymentResource.ValidateResourceId(id);
             return new SiteDeploymentResource(Client, id);
         }
 
@@ -742,7 +663,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotDeploymentResource"/> object. </returns>
         public virtual SiteSlotDeploymentResource GetSiteSlotDeploymentResource(ResourceIdentifier id)
         {
-            SiteSlotDeploymentResource.ValidateResourceId(id);
             return new SiteSlotDeploymentResource(Client, id);
         }
 
@@ -751,7 +671,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifierResource"/> object. </returns>
         public virtual SiteDomainOwnershipIdentifierResource GetSiteDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
-            SiteDomainOwnershipIdentifierResource.ValidateResourceId(id);
             return new SiteDomainOwnershipIdentifierResource(Client, id);
         }
 
@@ -760,7 +679,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> object. </returns>
         public virtual SiteSlotDomainOwnershipIdentifierResource GetSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
-            SiteSlotDomainOwnershipIdentifierResource.ValidateResourceId(id);
             return new SiteSlotDomainOwnershipIdentifierResource(Client, id);
         }
 
@@ -769,7 +687,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteExtensionResource"/> object. </returns>
         public virtual SiteExtensionResource GetSiteExtensionResource(ResourceIdentifier id)
         {
-            SiteExtensionResource.ValidateResourceId(id);
             return new SiteExtensionResource(Client, id);
         }
 
@@ -778,7 +695,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteInstanceExtensionResource"/> object. </returns>
         public virtual SiteInstanceExtensionResource GetSiteInstanceExtensionResource(ResourceIdentifier id)
         {
-            SiteInstanceExtensionResource.ValidateResourceId(id);
             return new SiteInstanceExtensionResource(Client, id);
         }
 
@@ -787,7 +703,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotExtensionResource"/> object. </returns>
         public virtual SiteSlotExtensionResource GetSiteSlotExtensionResource(ResourceIdentifier id)
         {
-            SiteSlotExtensionResource.ValidateResourceId(id);
             return new SiteSlotExtensionResource(Client, id);
         }
 
@@ -796,7 +711,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource"/> object. </returns>
         public virtual SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(ResourceIdentifier id)
         {
-            SiteSlotInstanceExtensionResource.ValidateResourceId(id);
             return new SiteSlotInstanceExtensionResource(Client, id);
         }
 
@@ -805,7 +719,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteFunctionResource"/> object. </returns>
         public virtual SiteFunctionResource GetSiteFunctionResource(ResourceIdentifier id)
         {
-            SiteFunctionResource.ValidateResourceId(id);
             return new SiteFunctionResource(Client, id);
         }
 
@@ -814,7 +727,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotFunctionResource"/> object. </returns>
         public virtual SiteSlotFunctionResource GetSiteSlotFunctionResource(ResourceIdentifier id)
         {
-            SiteSlotFunctionResource.ValidateResourceId(id);
             return new SiteSlotFunctionResource(Client, id);
         }
 
@@ -823,7 +735,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteHostNameBindingResource"/> object. </returns>
         public virtual SiteHostNameBindingResource GetSiteHostNameBindingResource(ResourceIdentifier id)
         {
-            SiteHostNameBindingResource.ValidateResourceId(id);
             return new SiteHostNameBindingResource(Client, id);
         }
 
@@ -832,7 +743,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotHostNameBindingResource"/> object. </returns>
         public virtual SiteSlotHostNameBindingResource GetSiteSlotHostNameBindingResource(ResourceIdentifier id)
         {
-            SiteSlotHostNameBindingResource.ValidateResourceId(id);
             return new SiteSlotHostNameBindingResource(Client, id);
         }
 
@@ -841,7 +751,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteHybridConnectionResource"/> object. </returns>
         public virtual WebSiteHybridConnectionResource GetWebSiteHybridConnectionResource(ResourceIdentifier id)
         {
-            WebSiteHybridConnectionResource.ValidateResourceId(id);
             return new WebSiteHybridConnectionResource(Client, id);
         }
 
@@ -850,7 +759,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotHybridConnectionResource"/> object. </returns>
         public virtual WebSiteSlotHybridConnectionResource GetWebSiteSlotHybridConnectionResource(ResourceIdentifier id)
         {
-            WebSiteSlotHybridConnectionResource.ValidateResourceId(id);
             return new WebSiteSlotHybridConnectionResource(Client, id);
         }
 
@@ -859,7 +767,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteInstanceResource"/> object. </returns>
         public virtual SiteInstanceResource GetSiteInstanceResource(ResourceIdentifier id)
         {
-            SiteInstanceResource.ValidateResourceId(id);
             return new SiteInstanceResource(Client, id);
         }
 
@@ -868,7 +775,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotInstanceResource"/> object. </returns>
         public virtual SiteSlotInstanceResource GetSiteSlotInstanceResource(ResourceIdentifier id)
         {
-            SiteSlotInstanceResource.ValidateResourceId(id);
             return new SiteSlotInstanceResource(Client, id);
         }
 
@@ -877,7 +783,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteInstanceProcessResource"/> object. </returns>
         public virtual SiteInstanceProcessResource GetSiteInstanceProcessResource(ResourceIdentifier id)
         {
-            SiteInstanceProcessResource.ValidateResourceId(id);
             return new SiteInstanceProcessResource(Client, id);
         }
 
@@ -886,7 +791,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteProcessResource"/> object. </returns>
         public virtual SiteProcessResource GetSiteProcessResource(ResourceIdentifier id)
         {
-            SiteProcessResource.ValidateResourceId(id);
             return new SiteProcessResource(Client, id);
         }
 
@@ -895,7 +799,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessResource"/> object. </returns>
         public virtual SiteSlotInstanceProcessResource GetSiteSlotInstanceProcessResource(ResourceIdentifier id)
         {
-            SiteSlotInstanceProcessResource.ValidateResourceId(id);
             return new SiteSlotInstanceProcessResource(Client, id);
         }
 
@@ -904,7 +807,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotProcessResource"/> object. </returns>
         public virtual SiteSlotProcessResource GetSiteSlotProcessResource(ResourceIdentifier id)
         {
-            SiteSlotProcessResource.ValidateResourceId(id);
             return new SiteSlotProcessResource(Client, id);
         }
 
@@ -913,7 +815,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteInstanceProcessModuleResource"/> object. </returns>
         public virtual SiteInstanceProcessModuleResource GetSiteInstanceProcessModuleResource(ResourceIdentifier id)
         {
-            SiteInstanceProcessModuleResource.ValidateResourceId(id);
             return new SiteInstanceProcessModuleResource(Client, id);
         }
 
@@ -922,7 +823,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteProcessModuleResource"/> object. </returns>
         public virtual SiteProcessModuleResource GetSiteProcessModuleResource(ResourceIdentifier id)
         {
-            SiteProcessModuleResource.ValidateResourceId(id);
             return new SiteProcessModuleResource(Client, id);
         }
 
@@ -931,7 +831,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessModuleResource"/> object. </returns>
         public virtual SiteSlotInstanceProcessModuleResource GetSiteSlotInstanceProcessModuleResource(ResourceIdentifier id)
         {
-            SiteSlotInstanceProcessModuleResource.ValidateResourceId(id);
             return new SiteSlotInstanceProcessModuleResource(Client, id);
         }
 
@@ -940,7 +839,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotProcessModuleResource"/> object. </returns>
         public virtual SiteSlotProcessModuleResource GetSiteSlotProcessModuleResource(ResourceIdentifier id)
         {
-            SiteSlotProcessModuleResource.ValidateResourceId(id);
             return new SiteSlotProcessModuleResource(Client, id);
         }
 
@@ -949,7 +847,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteMigrateMySqlStatusResource"/> object. </returns>
         public virtual SiteMigrateMySqlStatusResource GetSiteMigrateMySqlStatusResource(ResourceIdentifier id)
         {
-            SiteMigrateMySqlStatusResource.ValidateResourceId(id);
             return new SiteMigrateMySqlStatusResource(Client, id);
         }
 
@@ -958,7 +855,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource"/> object. </returns>
         public virtual MigrateMySqlStatusResource GetMigrateMySqlStatusResource(ResourceIdentifier id)
         {
-            MigrateMySqlStatusResource.ValidateResourceId(id);
             return new MigrateMySqlStatusResource(Client, id);
         }
 
@@ -967,7 +863,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteNetworkConfigResource"/> object. </returns>
         public virtual SiteNetworkConfigResource GetSiteNetworkConfigResource(ResourceIdentifier id)
         {
-            SiteNetworkConfigResource.ValidateResourceId(id);
             return new SiteNetworkConfigResource(Client, id);
         }
 
@@ -976,7 +871,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource"/> object. </returns>
         public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(ResourceIdentifier id)
         {
-            SiteSlotNetworkConfigResource.ValidateResourceId(id);
             return new SiteSlotNetworkConfigResource(Client, id);
         }
 
@@ -985,7 +879,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteNetworkFeatureResource"/> object. </returns>
         public virtual SiteNetworkFeatureResource GetSiteNetworkFeatureResource(ResourceIdentifier id)
         {
-            SiteNetworkFeatureResource.ValidateResourceId(id);
             return new SiteNetworkFeatureResource(Client, id);
         }
 
@@ -994,7 +887,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="NetworkFeatureResource"/> object. </returns>
         public virtual NetworkFeatureResource GetNetworkFeatureResource(ResourceIdentifier id)
         {
-            NetworkFeatureResource.ValidateResourceId(id);
             return new NetworkFeatureResource(Client, id);
         }
 
@@ -1003,7 +895,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSitePremierAddonResource"/> object. </returns>
         public virtual WebSitePremierAddonResource GetWebSitePremierAddonResource(ResourceIdentifier id)
         {
-            WebSitePremierAddonResource.ValidateResourceId(id);
             return new WebSitePremierAddonResource(Client, id);
         }
 
@@ -1012,7 +903,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotPremierAddOnResource"/> object. </returns>
         public virtual WebSiteSlotPremierAddOnResource GetWebSiteSlotPremierAddOnResource(ResourceIdentifier id)
         {
-            WebSiteSlotPremierAddOnResource.ValidateResourceId(id);
             return new WebSiteSlotPremierAddOnResource(Client, id);
         }
 
@@ -1021,7 +911,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSitePrivateAccessResource"/> object. </returns>
         public virtual WebSitePrivateAccessResource GetWebSitePrivateAccessResource(ResourceIdentifier id)
         {
-            WebSitePrivateAccessResource.ValidateResourceId(id);
             return new WebSitePrivateAccessResource(Client, id);
         }
 
@@ -1030,7 +919,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource"/> object. </returns>
         public virtual WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccessResource(ResourceIdentifier id)
         {
-            WebSiteSlotPrivateAccessResource.ValidateResourceId(id);
             return new WebSiteSlotPrivateAccessResource(Client, id);
         }
 
@@ -1039,7 +927,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SitePublicCertificateResource"/> object. </returns>
         public virtual SitePublicCertificateResource GetSitePublicCertificateResource(ResourceIdentifier id)
         {
-            SitePublicCertificateResource.ValidateResourceId(id);
             return new SitePublicCertificateResource(Client, id);
         }
 
@@ -1048,7 +935,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotPublicCertificateResource"/> object. </returns>
         public virtual WebSiteSlotPublicCertificateResource GetWebSiteSlotPublicCertificateResource(ResourceIdentifier id)
         {
-            WebSiteSlotPublicCertificateResource.ValidateResourceId(id);
             return new WebSiteSlotPublicCertificateResource(Client, id);
         }
 
@@ -1057,7 +943,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteContainerResource"/> object. </returns>
         public virtual SiteContainerResource GetSiteContainerResource(ResourceIdentifier id)
         {
-            SiteContainerResource.ValidateResourceId(id);
             return new SiteContainerResource(Client, id);
         }
 
@@ -1066,7 +951,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotSiteContainerResource"/> object. </returns>
         public virtual SiteSlotSiteContainerResource GetSiteSlotSiteContainerResource(ResourceIdentifier id)
         {
-            SiteSlotSiteContainerResource.ValidateResourceId(id);
             return new SiteSlotSiteContainerResource(Client, id);
         }
 
@@ -1075,7 +959,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteExtensionResource"/> object. </returns>
         public virtual WebSiteExtensionResource GetWebSiteExtensionResource(ResourceIdentifier id)
         {
-            WebSiteExtensionResource.ValidateResourceId(id);
             return new WebSiteExtensionResource(Client, id);
         }
 
@@ -1084,7 +967,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotExtensionResource"/> object. </returns>
         public virtual WebSiteSlotExtensionResource GetWebSiteSlotExtensionResource(ResourceIdentifier id)
         {
-            WebSiteSlotExtensionResource.ValidateResourceId(id);
             return new WebSiteSlotExtensionResource(Client, id);
         }
 
@@ -1093,7 +975,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource"/> object. </returns>
         public virtual WebSiteSlotSourceControlResource GetWebSiteSlotSourceControlResource(ResourceIdentifier id)
         {
-            WebSiteSlotSourceControlResource.ValidateResourceId(id);
             return new WebSiteSlotSourceControlResource(Client, id);
         }
 
@@ -1102,7 +983,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSourceControlResource"/> object. </returns>
         public virtual WebSiteSourceControlResource GetWebSiteSourceControlResource(ResourceIdentifier id)
         {
-            WebSiteSourceControlResource.ValidateResourceId(id);
             return new WebSiteSourceControlResource(Client, id);
         }
 
@@ -1111,7 +991,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotWebJobResource"/> object. </returns>
         public virtual WebSiteSlotWebJobResource GetWebSiteSlotWebJobResource(ResourceIdentifier id)
         {
-            WebSiteSlotWebJobResource.ValidateResourceId(id);
             return new WebSiteSlotWebJobResource(Client, id);
         }
 
@@ -1120,7 +999,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteWebJobResource"/> object. </returns>
         public virtual WebSiteWebJobResource GetWebSiteWebJobResource(ResourceIdentifier id)
         {
-            WebSiteWebJobResource.ValidateResourceId(id);
             return new WebSiteWebJobResource(Client, id);
         }
 
@@ -1129,7 +1007,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotWorkflowResource"/> object. </returns>
         public virtual SiteSlotWorkflowResource GetSiteSlotWorkflowResource(ResourceIdentifier id)
         {
-            SiteSlotWorkflowResource.ValidateResourceId(id);
             return new SiteSlotWorkflowResource(Client, id);
         }
 
@@ -1138,7 +1015,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteWorkflowResource"/> object. </returns>
         public virtual SiteWorkflowResource GetSiteWorkflowResource(ResourceIdentifier id)
         {
-            SiteWorkflowResource.ValidateResourceId(id);
             return new SiteWorkflowResource(Client, id);
         }
 
@@ -1147,7 +1023,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowRunResource"/> object. </returns>
         public virtual WorkflowRunResource GetWorkflowRunResource(ResourceIdentifier id)
         {
-            WorkflowRunResource.ValidateResourceId(id);
             return new WorkflowRunResource(Client, id);
         }
 
@@ -1156,7 +1031,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowRunActionResource"/> object. </returns>
         public virtual WorkflowRunActionResource GetWorkflowRunActionResource(ResourceIdentifier id)
         {
-            WorkflowRunActionResource.ValidateResourceId(id);
             return new WorkflowRunActionResource(Client, id);
         }
 
@@ -1165,7 +1039,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowRunActionRepetitionResource"/> object. </returns>
         public virtual WorkflowRunActionRepetitionResource GetWorkflowRunActionRepetitionResource(ResourceIdentifier id)
         {
-            WorkflowRunActionRepetitionResource.ValidateResourceId(id);
             return new WorkflowRunActionRepetitionResource(Client, id);
         }
 
@@ -1174,7 +1047,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowRunActionScopeRepetitionResource"/> object. </returns>
         public virtual WorkflowRunActionScopeRepetitionResource GetWorkflowRunActionScopeRepetitionResource(ResourceIdentifier id)
         {
-            WorkflowRunActionScopeRepetitionResource.ValidateResourceId(id);
             return new WorkflowRunActionScopeRepetitionResource(Client, id);
         }
 
@@ -1183,7 +1055,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebAppRequestHistoryResource"/> object. </returns>
         public virtual WebAppRequestHistoryResource GetWebAppRequestHistoryResource(ResourceIdentifier id)
         {
-            WebAppRequestHistoryResource.ValidateResourceId(id);
             return new WebAppRequestHistoryResource(Client, id);
         }
 
@@ -1192,7 +1063,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowTriggerResource"/> object. </returns>
         public virtual WorkflowTriggerResource GetWorkflowTriggerResource(ResourceIdentifier id)
         {
-            WorkflowTriggerResource.ValidateResourceId(id);
             return new WorkflowTriggerResource(Client, id);
         }
 
@@ -1201,7 +1071,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowTriggerHistoryResource"/> object. </returns>
         public virtual WorkflowTriggerHistoryResource GetWorkflowTriggerHistoryResource(ResourceIdentifier id)
         {
-            WorkflowTriggerHistoryResource.ValidateResourceId(id);
             return new WorkflowTriggerHistoryResource(Client, id);
         }
 
@@ -1210,7 +1079,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WorkflowVersionResource"/> object. </returns>
         public virtual WorkflowVersionResource GetWorkflowVersionResource(ResourceIdentifier id)
         {
-            WorkflowVersionResource.ValidateResourceId(id);
             return new WorkflowVersionResource(Client, id);
         }
     }

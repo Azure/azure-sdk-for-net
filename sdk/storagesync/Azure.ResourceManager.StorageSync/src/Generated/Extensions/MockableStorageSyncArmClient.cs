@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="StorageSyncServiceResource"/> object. </returns>
         public virtual StorageSyncServiceResource GetStorageSyncServiceResource(ResourceIdentifier id)
         {
-            StorageSyncServiceResource.ValidateResourceId(id);
             return new StorageSyncServiceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="StorageSyncPrivateEndpointConnectionResource"/> object. </returns>
         public virtual StorageSyncPrivateEndpointConnectionResource GetStorageSyncPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            StorageSyncPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new StorageSyncPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="StorageSyncGroupResource"/> object. </returns>
         public virtual StorageSyncGroupResource GetStorageSyncGroupResource(ResourceIdentifier id)
         {
-            StorageSyncGroupResource.ValidateResourceId(id);
             return new StorageSyncGroupResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="CloudEndpointResource"/> object. </returns>
         public virtual CloudEndpointResource GetCloudEndpointResource(ResourceIdentifier id)
         {
-            CloudEndpointResource.ValidateResourceId(id);
             return new CloudEndpointResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="StorageSyncServerEndpointResource"/> object. </returns>
         public virtual StorageSyncServerEndpointResource GetStorageSyncServerEndpointResource(ResourceIdentifier id)
         {
-            StorageSyncServerEndpointResource.ValidateResourceId(id);
             return new StorageSyncServerEndpointResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource"/> object. </returns>
         public virtual StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(ResourceIdentifier id)
         {
-            StorageSyncRegisteredServerResource.ValidateResourceId(id);
             return new StorageSyncRegisteredServerResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <returns> Returns a <see cref="StorageSyncWorkflowResource"/> object. </returns>
         public virtual StorageSyncWorkflowResource GetStorageSyncWorkflowResource(ResourceIdentifier id)
         {
-            StorageSyncWorkflowResource.ValidateResourceId(id);
             return new StorageSyncWorkflowResource(Client, id);
         }
     }

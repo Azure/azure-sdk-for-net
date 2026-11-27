@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="TrafficManagerProfileResource"/> object. </returns>
         public virtual TrafficManagerProfileResource GetTrafficManagerProfileResource(ResourceIdentifier id)
         {
-            TrafficManagerProfileResource.ValidateResourceId(id);
             return new TrafficManagerProfileResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(ResourceIdentifier id)
         {
-            TrafficManagerGeographicHierarchyResource.ValidateResourceId(id);
             return new TrafficManagerGeographicHierarchyResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="TrafficManagerHeatMapResource"/> object. </returns>
         public virtual TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(ResourceIdentifier id)
         {
-            TrafficManagerHeatMapResource.ValidateResourceId(id);
             return new TrafficManagerHeatMapResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
         public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(ResourceIdentifier id)
         {
-            TrafficManagerUserMetricsResource.ValidateResourceId(id);
             return new TrafficManagerUserMetricsResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpointResource"/> object. </returns>
         public virtual AzureEndpointTrafficManagerEndpointResource GetAzureEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
         {
-            AzureEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
             return new AzureEndpointTrafficManagerEndpointResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> object. </returns>
         public virtual ExternalEndpointTrafficManagerEndpointResource GetExternalEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
         {
-            ExternalEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
             return new ExternalEndpointTrafficManagerEndpointResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpointResource"/> object. </returns>
         public virtual NestedEndpointTrafficManagerEndpointResource GetNestedEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
         {
-            NestedEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
             return new NestedEndpointTrafficManagerEndpointResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportAzureServiceResource"/> object. </returns>
         public virtual SupportAzureServiceResource GetSupportAzureServiceResource(ResourceIdentifier id)
         {
-            SupportAzureServiceResource.ValidateResourceId(id);
             return new SupportAzureServiceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="ProblemClassificationResource"/> object. </returns>
         public virtual ProblemClassificationResource GetProblemClassificationResource(ResourceIdentifier id)
         {
-            ProblemClassificationResource.ValidateResourceId(id);
             return new ProblemClassificationResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportTicketCommunicationResource"/> object. </returns>
         public virtual SupportTicketCommunicationResource GetSupportTicketCommunicationResource(ResourceIdentifier id)
         {
-            SupportTicketCommunicationResource.ValidateResourceId(id);
             return new SupportTicketCommunicationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SubscriptionSupportTicketResource"/> object. </returns>
         public virtual SubscriptionSupportTicketResource GetSubscriptionSupportTicketResource(ResourceIdentifier id)
         {
-            SubscriptionSupportTicketResource.ValidateResourceId(id);
             return new SubscriptionSupportTicketResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportTicketNoSubCommunicationResource"/> object. </returns>
         public virtual SupportTicketNoSubCommunicationResource GetSupportTicketNoSubCommunicationResource(ResourceIdentifier id)
         {
-            SupportTicketNoSubCommunicationResource.ValidateResourceId(id);
             return new SupportTicketNoSubCommunicationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="TenantSupportTicketResource"/> object. </returns>
         public virtual TenantSupportTicketResource GetTenantSupportTicketResource(ResourceIdentifier id)
         {
-            TenantSupportTicketResource.ValidateResourceId(id);
             return new TenantSupportTicketResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportTicketChatTranscriptResource"/> object. </returns>
         public virtual SupportTicketChatTranscriptResource GetSupportTicketChatTranscriptResource(ResourceIdentifier id)
         {
-            SupportTicketChatTranscriptResource.ValidateResourceId(id);
             return new SupportTicketChatTranscriptResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportTicketNoSubChatTranscriptResource"/> object. </returns>
         public virtual SupportTicketNoSubChatTranscriptResource GetSupportTicketNoSubChatTranscriptResource(ResourceIdentifier id)
         {
-            SupportTicketNoSubChatTranscriptResource.ValidateResourceId(id);
             return new SupportTicketNoSubChatTranscriptResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SubscriptionFileWorkspaceResource"/> object. </returns>
         public virtual SubscriptionFileWorkspaceResource GetSubscriptionFileWorkspaceResource(ResourceIdentifier id)
         {
-            SubscriptionFileWorkspaceResource.ValidateResourceId(id);
             return new SubscriptionFileWorkspaceResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="TenantFileWorkspaceResource"/> object. </returns>
         public virtual TenantFileWorkspaceResource GetTenantFileWorkspaceResource(ResourceIdentifier id)
         {
-            TenantFileWorkspaceResource.ValidateResourceId(id);
             return new TenantFileWorkspaceResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportTicketFileResource"/> object. </returns>
         public virtual SupportTicketFileResource GetSupportTicketFileResource(ResourceIdentifier id)
         {
-            SupportTicketFileResource.ValidateResourceId(id);
             return new SupportTicketFileResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> Returns a <see cref="SupportTicketNoSubFileResource"/> object. </returns>
         public virtual SupportTicketNoSubFileResource GetSupportTicketNoSubFileResource(ResourceIdentifier id)
         {
-            SupportTicketNoSubFileResource.ValidateResourceId(id);
             return new SupportTicketNoSubFileResource(Client, id);
         }
     }
