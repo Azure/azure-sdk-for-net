@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(TenantResourceHealthEventImpactedResource.ResourceType, out string tenantResourceHealthEventImpactedResourceApiVersion);
             _impactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventImpactedResource.ResourceType.Namespace, Diagnostics);
-            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
+            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventImpactedResourceApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
