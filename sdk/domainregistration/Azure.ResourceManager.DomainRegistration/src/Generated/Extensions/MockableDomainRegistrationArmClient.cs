@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
         /// <returns> Returns a <see cref="AppServiceDomainResource"/> object. </returns>
         public virtual AppServiceDomainResource GetAppServiceDomainResource(ResourceIdentifier id)
         {
-            AppServiceDomainResource.ValidateResourceId(id);
             return new AppServiceDomainResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
         /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource"/> object. </returns>
         public virtual DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
-            DomainOwnershipIdentifierResource.ValidateResourceId(id);
             return new DomainOwnershipIdentifierResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
         /// <returns> Returns a <see cref="TopLevelDomainResource"/> object. </returns>
         public virtual TopLevelDomainResource GetTopLevelDomainResource(ResourceIdentifier id)
         {
-            TopLevelDomainResource.ValidateResourceId(id);
             return new TopLevelDomainResource(Client, id);
         }
     }

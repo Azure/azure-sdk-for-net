@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DomainServices.Mocking
         /// <returns> Returns a <see cref="DomainServiceResource"/> object. </returns>
         public virtual DomainServiceResource GetDomainServiceResource(ResourceIdentifier id)
         {
-            DomainServiceResource.ValidateResourceId(id);
             return new DomainServiceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DomainServices.Mocking
         /// <returns> Returns a <see cref="OuContainerResource"/> object. </returns>
         public virtual OuContainerResource GetOuContainerResource(ResourceIdentifier id)
         {
-            OuContainerResource.ValidateResourceId(id);
             return new OuContainerResource(Client, id);
         }
     }

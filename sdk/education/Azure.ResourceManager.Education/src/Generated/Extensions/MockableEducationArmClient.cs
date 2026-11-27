@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="GrantDetailsResource"/> object. </returns>
         public virtual GrantDetailsResource GetGrantDetailsResource(ResourceIdentifier id)
         {
-            GrantDetailsResource.ValidateResourceId(id);
             return new GrantDetailsResource(Client, id);
         }
 
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="EducationLabResource"/> object. </returns>
         public virtual EducationLabResource GetEducationLabResource(ResourceIdentifier id)
         {
-            EducationLabResource.ValidateResourceId(id);
             return new EducationLabResource(Client, id);
         }
 
@@ -69,7 +67,6 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="EducationJoinRequestResource"/> object. </returns>
         public virtual EducationJoinRequestResource GetEducationJoinRequestResource(ResourceIdentifier id)
         {
-            EducationJoinRequestResource.ValidateResourceId(id);
             return new EducationJoinRequestResource(Client, id);
         }
 
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="EducationStudentResource"/> object. </returns>
         public virtual EducationStudentResource GetEducationStudentResource(ResourceIdentifier id)
         {
-            EducationStudentResource.ValidateResourceId(id);
             return new EducationStudentResource(Client, id);
         }
 
@@ -159,7 +155,6 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="StudentLabDetailsResource"/> object. </returns>
         public virtual StudentLabDetailsResource GetStudentLabDetailsResource(ResourceIdentifier id)
         {
-            StudentLabDetailsResource.ValidateResourceId(id);
             return new StudentLabDetailsResource(Client, id);
         }
     }

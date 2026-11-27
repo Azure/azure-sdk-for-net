@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.EdgeOperator.Mocking
         /// <returns> Returns a <see cref="SystemReadinessResource"/> object. </returns>
         public virtual SystemReadinessResource GetSystemReadinessResource(ResourceIdentifier id)
         {
-            SystemReadinessResource.ValidateResourceId(id);
             return new SystemReadinessResource(Client, id);
         }
     }

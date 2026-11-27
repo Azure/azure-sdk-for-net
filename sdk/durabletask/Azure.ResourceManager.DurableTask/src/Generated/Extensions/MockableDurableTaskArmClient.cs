@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskDetectorResource"/> object. </returns>
         public virtual DurableTaskDetectorResource GetDurableTaskDetectorResource(ResourceIdentifier id)
         {
-            DurableTaskDetectorResource.ValidateResourceId(id);
             return new DurableTaskDetectorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskSchedulerResource"/> object. </returns>
         public virtual DurableTaskSchedulerResource GetDurableTaskSchedulerResource(ResourceIdentifier id)
         {
-            DurableTaskSchedulerResource.ValidateResourceId(id);
             return new DurableTaskSchedulerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskSchedulerPrivateLinkResource"/> object. </returns>
         public virtual DurableTaskSchedulerPrivateLinkResource GetDurableTaskSchedulerPrivateLinkResource(ResourceIdentifier id)
         {
-            DurableTaskSchedulerPrivateLinkResource.ValidateResourceId(id);
             return new DurableTaskSchedulerPrivateLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DurableTaskPrivateEndpointConnectionResource GetDurableTaskPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            DurableTaskPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new DurableTaskPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskHubResource"/> object. </returns>
         public virtual DurableTaskHubResource GetDurableTaskHubResource(ResourceIdentifier id)
         {
-            DurableTaskHubResource.ValidateResourceId(id);
             return new DurableTaskHubResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="TaskQueueResource"/> object. </returns>
         public virtual TaskQueueResource GetTaskQueueResource(ResourceIdentifier id)
         {
-            TaskQueueResource.ValidateResourceId(id);
             return new TaskQueueResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
         public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(ResourceIdentifier id)
         {
-            DurableTaskRetentionPolicyResource.ValidateResourceId(id);
             return new DurableTaskRetentionPolicyResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="TransparentDataEncryptionResource"/> object. </returns>
         public virtual TransparentDataEncryptionResource GetTransparentDataEncryptionResource(ResourceIdentifier id)
         {
-            TransparentDataEncryptionResource.ValidateResourceId(id);
             return new TransparentDataEncryptionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="FailoverInstanceResource"/> object. </returns>
         public virtual FailoverInstanceResource GetFailoverInstanceResource(ResourceIdentifier id)
         {
-            FailoverInstanceResource.ValidateResourceId(id);
             return new FailoverInstanceResource(Client, id);
         }
     }

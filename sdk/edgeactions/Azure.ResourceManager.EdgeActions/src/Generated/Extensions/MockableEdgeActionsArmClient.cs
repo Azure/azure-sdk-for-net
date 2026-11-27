@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// <returns> Returns a <see cref="EdgeActionResource"/> object. </returns>
         public virtual EdgeActionResource GetEdgeActionResource(ResourceIdentifier id)
         {
-            EdgeActionResource.ValidateResourceId(id);
             return new EdgeActionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// <returns> Returns a <see cref="EdgeActionVersionResource"/> object. </returns>
         public virtual EdgeActionVersionResource GetEdgeActionVersionResource(ResourceIdentifier id)
         {
-            EdgeActionVersionResource.ValidateResourceId(id);
             return new EdgeActionVersionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// <returns> Returns a <see cref="EdgeActionExecutionFilterResource"/> object. </returns>
         public virtual EdgeActionExecutionFilterResource GetEdgeActionExecutionFilterResource(ResourceIdentifier id)
         {
-            EdgeActionExecutionFilterResource.ValidateResourceId(id);
             return new EdgeActionExecutionFilterResource(Client, id);
         }
     }
