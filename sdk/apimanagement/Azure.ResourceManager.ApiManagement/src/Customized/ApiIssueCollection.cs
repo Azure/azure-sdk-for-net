@@ -4,16 +4,15 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApiManagement.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    [CodeGenSuppress("Exists", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("ExistsAsync", typeof(string), typeof(CancellationToken))]
     public partial class ApiIssueCollection
     {
         /// <summary> Checks whether the resource exists. </summary>
@@ -22,16 +21,40 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="issueId"/> is empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string issueId, bool? expandCommentsAttachments = default, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Exists without a selector or GetIfExists to retrieve the resource with a selector.", false)]
+        public virtual async Task<Response<bool>> ExistsAsync(string issueId, bool? expandCommentsAttachments, CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
-            return await CollectionExistsCompatibility.SendAsync(
-                _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.Exists",
-                context => expandCommentsAttachments.HasValue
-                    ? _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context)
-                    : _apiIssueRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, context),
-                !expandCommentsAttachments.HasValue, IssueContractData.FromResponse, cancellationToken).ConfigureAwait(false);
+            if (!expandCommentsAttachments.HasValue)
+            {
+                return await ExistsAsync(issueId, cancellationToken).ConfigureAwait(false);
+            }
+
+            using DiagnosticScope scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response response = message.Response;
+                if (response.Status == 404)
+                {
+                    return Response.FromValue(false, response);
+                }
+                if (response.Status == 200)
+                {
+                    return Response.FromValue(IssueContractData.FromResponse(response) != null, response);
+                }
+                throw new RequestFailedException(response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Checks whether the resource exists. </summary>
@@ -40,16 +63,40 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="issueId"/> is empty. </exception>
-        public virtual Response<bool> Exists(string issueId, bool? expandCommentsAttachments = default, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Exists without a selector or GetIfExists to retrieve the resource with a selector.", false)]
+        public virtual Response<bool> Exists(string issueId, bool? expandCommentsAttachments, CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
-            return CollectionExistsCompatibility.Send(
-                _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.Exists",
-                context => expandCommentsAttachments.HasValue
-                    ? _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context)
-                    : _apiIssueRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, context),
-                !expandCommentsAttachments.HasValue, IssueContractData.FromResponse, cancellationToken);
+            if (!expandCommentsAttachments.HasValue)
+            {
+                return Exists(issueId, cancellationToken);
+            }
+
+            using DiagnosticScope scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response response = message.Response;
+                if (response.Status == 404)
+                {
+                    return Response.FromValue(false, response);
+                }
+                if (response.Status == 200)
+                {
+                    return Response.FromValue(IssueContractData.FromResponse(response) != null, response);
+                }
+                throw new RequestFailedException(response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

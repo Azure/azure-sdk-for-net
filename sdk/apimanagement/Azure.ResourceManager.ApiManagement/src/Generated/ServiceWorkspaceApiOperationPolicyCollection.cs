@@ -330,6 +330,96 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> ExistsAsync(PolicyName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
+                {
+                    throw new RequestFailedException(response);
+                }
+                return Response.FromValue(response.Status != 404, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> Exists(PolicyName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
+                {
+                    throw new RequestFailedException(response);
+                }
+                return Response.FromValue(response.Status != 404, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>

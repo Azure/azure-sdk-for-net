@@ -46,6 +46,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Unit
         }
 
         [TestCaseSource(nameof(Collections))]
+        public void GeneratedAndLegacySignatures(Type collectionType, string parent, object name, object selector, string suffix, string expectedQuery, bool isAsync)
+        {
+            var selectorType = selector is bool ? typeof(bool?) : selector is PolicyExportFormat ? typeof(PolicyExportFormat?) : typeof(PolicyFragmentContentFormat?);
+            var nameType = name is string ? typeof(string) : typeof(PolicyName);
+            var methodName = isAsync ? "ExistsAsync" : "Exists";
+            var legacy = collectionType.GetMethod(methodName, [nameType, selectorType, typeof(CancellationToken)]);
+            var generated = collectionType.GetMethod(methodName, [nameType, typeof(CancellationToken)]);
+
+            Assert.That(legacy, Is.Not.Null);
+            Assert.That(legacy.IsVirtual, Is.True);
+            Assert.That(legacy.GetParameters()[1].IsOptional, Is.False);
+            Assert.That(legacy.GetParameters()[2].IsOptional, Is.False);
+            Assert.That(legacy.GetCustomAttribute<ObsoleteAttribute>(), Is.Not.Null);
+            Assert.That(generated, Is.Not.Null);
+            Assert.That(generated.IsVirtual, Is.True);
+            Assert.That(generated.GetParameters()[1].IsOptional, Is.True);
+        }
+
+        [TestCaseSource(nameof(Collections))]
         public async Task LegacySignatureUsesHeadOrGet(Type collectionType, string parent, object name, object selector, string suffix, string expectedQuery, bool isAsync)
         {
             var selectorType = selector is bool ? typeof(bool?) : selector is PolicyExportFormat ? typeof(PolicyExportFormat?) : typeof(PolicyFragmentContentFormat?);
@@ -53,9 +72,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Unit
             var method = collectionType.GetMethod(isAsync ? "ExistsAsync" : "Exists", [nameType, selectorType, typeof(CancellationToken)]);
             Assert.That(method, Is.Not.Null);
             Assert.That(method.IsVirtual, Is.True);
-            Assert.That(method.GetParameters()[1].IsOptional, Is.True);
-            Assert.That(method.GetParameters()[2].IsOptional, Is.True);
-            Assert.That(collectionType.GetMethod(isAsync ? "ExistsAsync" : "Exists", [nameType, typeof(CancellationToken)]), Is.Null);
 
             using var cancellation = new CancellationTokenSource();
             MockResponse[] responses = [
@@ -239,8 +255,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Unit
             var client = new ArmClient(new MockCredential(), SubscriptionId, options);
             var collection = new OverridingPolicyCollection(client, new ResourceIdentifier(ServiceId));
 
-            Assert.That(collection.Exists(PolicyName.Policy, PolicyExportFormat.RawXml).Value, Is.True);
-            Assert.That((await collection.ExistsAsync(PolicyName.Policy, PolicyExportFormat.RawXml)).Value, Is.True);
+#pragma warning disable CS0618
+            Assert.That(collection.Exists(PolicyName.Policy, PolicyExportFormat.RawXml, default).Value, Is.True);
+            Assert.That((await collection.ExistsAsync(PolicyName.Policy, PolicyExportFormat.RawXml, default)).Value, Is.True);
+#pragma warning restore CS0618
             Assert.That(transport.Requests, Has.Count.EqualTo(2));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.Requests[1].Method, Is.EqualTo(RequestMethod.Get));
@@ -248,19 +266,44 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Unit
 
         private sealed class OverridingExistsCollection : ApiManagementPolicyCollection
         {
-            public override Response<bool> Exists(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+            [Obsolete]
+            public override Response<bool> Exists(PolicyName policyId, PolicyExportFormat? format, CancellationToken cancellationToken)
                 => Response.FromValue(false, new MockResponse(200));
 
-            public override Task<Response<bool>> ExistsAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+            [Obsolete]
+            public override Task<Response<bool>> ExistsAsync(PolicyName policyId, PolicyExportFormat? format, CancellationToken cancellationToken)
                 => Task.FromResult(Response.FromValue(false, new MockResponse(200)));
         }
 
         [Test]
-        public async Task OptionalCallsDispatchToPublishedVirtualMethods()
+        public async Task LegacyCallsDispatchToPublishedVirtualMethods()
         {
             ApiManagementPolicyCollection collection = new OverridingExistsCollection();
-            Assert.That(collection.Exists(PolicyName.Policy).Value, Is.False);
-            Assert.That((await collection.ExistsAsync(PolicyName.Policy, cancellationToken: default)).Value, Is.False);
+#pragma warning disable CS0618
+            Assert.That(collection.Exists(PolicyName.Policy, null, default).Value, Is.False);
+            Assert.That((await collection.ExistsAsync(PolicyName.Policy, null, default)).Value, Is.False);
+#pragma warning restore CS0618
+        }
+
+        private sealed class OverridingGeneratedExistsCollection : ApiManagementPolicyCollection
+        {
+            public override Response<bool> Exists(PolicyName policyId, CancellationToken cancellationToken = default)
+                => Response.FromValue(false, new MockResponse(200));
+
+            public override Task<Response<bool>> ExistsAsync(PolicyName policyId, CancellationToken cancellationToken = default)
+                => Task.FromResult(Response.FromValue(false, new MockResponse(200)));
+        }
+
+        [Test]
+        public async Task LegacyNullSelectorDelegatesToGeneratedVirtualMethods()
+        {
+            ApiManagementPolicyCollection collection = new OverridingGeneratedExistsCollection();
+#pragma warning disable CS0618
+            Assert.That(collection.Exists(PolicyName.Policy, null, default).Value, Is.False);
+            Assert.That((await collection.ExistsAsync(PolicyName.Policy, null, default)).Value, Is.False);
+#pragma warning restore CS0618
+            Assert.That(collection.Exists(PolicyName.Policy, default).Value, Is.False);
+            Assert.That((await collection.ExistsAsync(PolicyName.Policy, default)).Value, Is.False);
         }
 
         [Test]
@@ -305,12 +348,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Unit
 
             Assert.That(policies.Exists(PolicyName.Policy).Value, Is.True);
             Assert.That((await policies.ExistsAsync(PolicyName.Policy, cancellationToken: default)).Value, Is.True);
-            Assert.That(policies.Exists(PolicyName.Policy, PolicyExportFormat.RawXml).Value, Is.True);
-            Assert.That((await policies.ExistsAsync(PolicyName.Policy, format: PolicyExportFormat.RawXml)).Value, Is.True);
+#pragma warning disable CS0618
+            Assert.That(policies.Exists(PolicyName.Policy, PolicyExportFormat.RawXml, default).Value, Is.True);
+            Assert.That((await policies.ExistsAsync(PolicyName.Policy, format: PolicyExportFormat.RawXml, cancellationToken: default)).Value, Is.True);
             Assert.That(issues.Exists("issue", default).Value, Is.True);
-            Assert.That((await issues.ExistsAsync("issue", expandCommentsAttachments: false)).Value, Is.True);
-            Assert.That(fragments.Exists("fragment", format: null).Value, Is.True);
-            Assert.That((await fragments.ExistsAsync("fragment", format: PolicyFragmentContentFormat.Rawxml)).Value, Is.True);
+            Assert.That((await issues.ExistsAsync("issue", expandCommentsAttachments: false, cancellationToken: default)).Value, Is.True);
+            Assert.That(fragments.Exists("fragment", format: null, cancellationToken: default).Value, Is.True);
+            Assert.That((await fragments.ExistsAsync("fragment", format: PolicyFragmentContentFormat.Rawxml, cancellationToken: default)).Value, Is.True);
+#pragma warning restore CS0618
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Head));
             Assert.That(transport.Requests[2].Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.Requests[5].Uri.ToUri().Query, Does.Contain("expandCommentsAttachments=false"));

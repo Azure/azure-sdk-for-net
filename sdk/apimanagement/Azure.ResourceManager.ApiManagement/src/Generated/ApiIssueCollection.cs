@@ -353,6 +353,104 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IssueContracts_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string issueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
+
+            using DiagnosticScope scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiIssueRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
+                {
+                    throw new RequestFailedException(response);
+                }
+                return Response.FromValue(response.Status != 404, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IssueContracts_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string issueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
+
+            using DiagnosticScope scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiIssueRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
+                {
+                    throw new RequestFailedException(response);
+                }
+                return Response.FromValue(response.Status != 404, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
