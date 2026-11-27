@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <returns> Returns a <see cref="DatadogMonitorResource"/> object. </returns>
         public virtual DatadogMonitorResource GetDatadogMonitorResource(ResourceIdentifier id)
         {
-            DatadogMonitorResource.ValidateResourceId(id);
             return new DatadogMonitorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <returns> Returns a <see cref="DataMonitoringTagRuleResource"/> object. </returns>
         public virtual DataMonitoringTagRuleResource GetDataMonitoringTagRuleResource(ResourceIdentifier id)
         {
-            DataMonitoringTagRuleResource.ValidateResourceId(id);
             return new DataMonitoringTagRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <returns> Returns a <see cref="DatadogMonitoredSubscriptionResource"/> object. </returns>
         public virtual DatadogMonitoredSubscriptionResource GetDatadogMonitoredSubscriptionResource(ResourceIdentifier id)
         {
-            DatadogMonitoredSubscriptionResource.ValidateResourceId(id);
             return new DatadogMonitoredSubscriptionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <returns> Returns a <see cref="DatadogSingleSignOnResource"/> object. </returns>
         public virtual DatadogSingleSignOnResource GetDatadogSingleSignOnResource(ResourceIdentifier id)
         {
-            DatadogSingleSignOnResource.ValidateResourceId(id);
             return new DatadogSingleSignOnResource(Client, id);
         }
     }

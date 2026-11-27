@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettingsResource(ResourceIdentifier id)
         {
-            DataBoxEdgeDeviceNetworkSettingsResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceNetworkSettingsResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(ResourceIdentifier id)
         {
-            DataBoxEdgeDeviceResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceUpdateSummaryResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(ResourceIdentifier id)
         {
-            DataBoxEdgeDeviceUpdateSummaryResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceUpdateSummaryResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeAlertResource"/> object. </returns>
         public virtual DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(ResourceIdentifier id)
         {
-            DataBoxEdgeAlertResource.ValidateResourceId(id);
             return new DataBoxEdgeAlertResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="BandwidthScheduleResource"/> object. </returns>
         public virtual BandwidthScheduleResource GetBandwidthScheduleResource(ResourceIdentifier id)
         {
-            BandwidthScheduleResource.ValidateResourceId(id);
             return new BandwidthScheduleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(ResourceIdentifier id)
         {
-            DiagnosticProactiveLogCollectionSettingResource.ValidateResourceId(id);
             return new DiagnosticProactiveLogCollectionSettingResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(ResourceIdentifier id)
         {
-            DiagnosticRemoteSupportSettingResource.ValidateResourceId(id);
             return new DiagnosticRemoteSupportSettingResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeJobResource"/> object. </returns>
         public virtual DataBoxEdgeJobResource GetDataBoxEdgeJobResource(ResourceIdentifier id)
         {
-            DataBoxEdgeJobResource.ValidateResourceId(id);
             return new DataBoxEdgeJobResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(ResourceIdentifier id)
         {
-            DataBoxEdgeOrderResource.ValidateResourceId(id);
             return new DataBoxEdgeOrderResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeRoleResource"/> object. </returns>
         public virtual DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(ResourceIdentifier id)
         {
-            DataBoxEdgeRoleResource.ValidateResourceId(id);
             return new DataBoxEdgeRoleResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource"/> object. </returns>
         public virtual DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(ResourceIdentifier id)
         {
-            DataBoxEdgeRoleAddonResource.ValidateResourceId(id);
             return new DataBoxEdgeRoleAddonResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeShareResource"/> object. </returns>
         public virtual DataBoxEdgeShareResource GetDataBoxEdgeShareResource(ResourceIdentifier id)
         {
-            DataBoxEdgeShareResource.ValidateResourceId(id);
             return new DataBoxEdgeShareResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountCredentialResource"/> object. </returns>
         public virtual DataBoxEdgeStorageAccountCredentialResource GetDataBoxEdgeStorageAccountCredentialResource(ResourceIdentifier id)
         {
-            DataBoxEdgeStorageAccountCredentialResource.ValidateResourceId(id);
             return new DataBoxEdgeStorageAccountCredentialResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountResource"/> object. </returns>
         public virtual DataBoxEdgeStorageAccountResource GetDataBoxEdgeStorageAccountResource(ResourceIdentifier id)
         {
-            DataBoxEdgeStorageAccountResource.ValidateResourceId(id);
             return new DataBoxEdgeStorageAccountResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource"/> object. </returns>
         public virtual DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(ResourceIdentifier id)
         {
-            DataBoxEdgeStorageContainerResource.ValidateResourceId(id);
             return new DataBoxEdgeStorageContainerResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeTriggerResource"/> object. </returns>
         public virtual DataBoxEdgeTriggerResource GetDataBoxEdgeTriggerResource(ResourceIdentifier id)
         {
-            DataBoxEdgeTriggerResource.ValidateResourceId(id);
             return new DataBoxEdgeTriggerResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeUserResource"/> object. </returns>
         public virtual DataBoxEdgeUserResource GetDataBoxEdgeUserResource(ResourceIdentifier id)
         {
-            DataBoxEdgeUserResource.ValidateResourceId(id);
             return new DataBoxEdgeUserResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceCapacityInfoResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfoResource(ResourceIdentifier id)
         {
-            DataBoxEdgeDeviceCapacityInfoResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceCapacityInfoResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(ResourceIdentifier id)
         {
-            MonitoringMetricConfigurationResource.ValidateResourceId(id);
             return new MonitoringMetricConfigurationResource(Client, id);
         }
     }

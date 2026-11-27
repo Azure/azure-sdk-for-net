@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabResource"/> object. </returns>
         public virtual DevTestLabResource GetDevTestLabResource(ResourceIdentifier id)
         {
-            DevTestLabResource.ValidateResourceId(id);
             return new DevTestLabResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource"/> object. </returns>
         public virtual DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabGlobalScheduleResource.ValidateResourceId(id);
             return new DevTestLabGlobalScheduleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabScheduleResource"/> object. </returns>
         public virtual DevTestLabScheduleResource GetDevTestLabScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabScheduleResource.ValidateResourceId(id);
             return new DevTestLabScheduleResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource"/> object. </returns>
         public virtual DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabServiceFabricScheduleResource.ValidateResourceId(id);
             return new DevTestLabServiceFabricScheduleResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabVmScheduleResource"/> object. </returns>
         public virtual DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabVmScheduleResource.ValidateResourceId(id);
             return new DevTestLabVmScheduleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabArtifactSourceResource"/> object. </returns>
         public virtual DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(ResourceIdentifier id)
         {
-            DevTestLabArtifactSourceResource.ValidateResourceId(id);
             return new DevTestLabArtifactSourceResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabArmTemplateResource"/> object. </returns>
         public virtual DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(ResourceIdentifier id)
         {
-            DevTestLabArmTemplateResource.ValidateResourceId(id);
             return new DevTestLabArmTemplateResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabArtifactResource"/> object. </returns>
         public virtual DevTestLabArtifactResource GetDevTestLabArtifactResource(ResourceIdentifier id)
         {
-            DevTestLabArtifactResource.ValidateResourceId(id);
             return new DevTestLabArtifactResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabCostResource"/> object. </returns>
         public virtual DevTestLabCostResource GetDevTestLabCostResource(ResourceIdentifier id)
         {
-            DevTestLabCostResource.ValidateResourceId(id);
             return new DevTestLabCostResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabCustomImageResource"/> object. </returns>
         public virtual DevTestLabCustomImageResource GetDevTestLabCustomImageResource(ResourceIdentifier id)
         {
-            DevTestLabCustomImageResource.ValidateResourceId(id);
             return new DevTestLabCustomImageResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabFormulaResource"/> object. </returns>
         public virtual DevTestLabFormulaResource GetDevTestLabFormulaResource(ResourceIdentifier id)
         {
-            DevTestLabFormulaResource.ValidateResourceId(id);
             return new DevTestLabFormulaResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabNotificationChannelResource"/> object. </returns>
         public virtual DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(ResourceIdentifier id)
         {
-            DevTestLabNotificationChannelResource.ValidateResourceId(id);
             return new DevTestLabNotificationChannelResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabPolicyResource"/> object. </returns>
         public virtual DevTestLabPolicyResource GetDevTestLabPolicyResource(ResourceIdentifier id)
         {
-            DevTestLabPolicyResource.ValidateResourceId(id);
             return new DevTestLabPolicyResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabServiceRunnerResource"/> object. </returns>
         public virtual DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(ResourceIdentifier id)
         {
-            DevTestLabServiceRunnerResource.ValidateResourceId(id);
             return new DevTestLabServiceRunnerResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabUserResource"/> object. </returns>
         public virtual DevTestLabUserResource GetDevTestLabUserResource(ResourceIdentifier id)
         {
-            DevTestLabUserResource.ValidateResourceId(id);
             return new DevTestLabUserResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabDiskResource"/> object. </returns>
         public virtual DevTestLabDiskResource GetDevTestLabDiskResource(ResourceIdentifier id)
         {
-            DevTestLabDiskResource.ValidateResourceId(id);
             return new DevTestLabDiskResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabEnvironmentResource"/> object. </returns>
         public virtual DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(ResourceIdentifier id)
         {
-            DevTestLabEnvironmentResource.ValidateResourceId(id);
             return new DevTestLabEnvironmentResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabSecretResource"/> object. </returns>
         public virtual DevTestLabSecretResource GetDevTestLabSecretResource(ResourceIdentifier id)
         {
-            DevTestLabSecretResource.ValidateResourceId(id);
             return new DevTestLabSecretResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabServiceFabricResource"/> object. </returns>
         public virtual DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(ResourceIdentifier id)
         {
-            DevTestLabServiceFabricResource.ValidateResourceId(id);
             return new DevTestLabServiceFabricResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabVmResource"/> object. </returns>
         public virtual DevTestLabVmResource GetDevTestLabVmResource(ResourceIdentifier id)
         {
-            DevTestLabVmResource.ValidateResourceId(id);
             return new DevTestLabVmResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <returns> Returns a <see cref="DevTestLabVirtualNetworkResource"/> object. </returns>
         public virtual DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(ResourceIdentifier id)
         {
-            DevTestLabVirtualNetworkResource.ValidateResourceId(id);
             return new DevTestLabVirtualNetworkResource(Client, id);
         }
     }

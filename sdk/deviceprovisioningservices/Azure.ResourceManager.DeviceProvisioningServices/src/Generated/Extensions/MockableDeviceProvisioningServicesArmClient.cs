@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource"/> object. </returns>
         public virtual DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(ResourceIdentifier id)
         {
-            DeviceProvisioningServicesCertificateResource.ValidateResourceId(id);
             return new DeviceProvisioningServicesCertificateResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> Returns a <see cref="DeviceProvisioningServiceResource"/> object. </returns>
         public virtual DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(ResourceIdentifier id)
         {
-            DeviceProvisioningServiceResource.ValidateResourceId(id);
             return new DeviceProvisioningServiceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> object. </returns>
         public virtual DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(ResourceIdentifier id)
         {
-            DeviceProvisioningServicesPrivateLinkResource.ValidateResourceId(id);
             return new DeviceProvisioningServicesPrivateLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            DeviceProvisioningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, id);
         }
     }

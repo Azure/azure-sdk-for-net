@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <returns> Returns a <see cref="DatabricksWorkspaceResource"/> object. </returns>
         public virtual DatabricksWorkspaceResource GetDatabricksWorkspaceResource(ResourceIdentifier id)
         {
-            DatabricksWorkspaceResource.ValidateResourceId(id);
             return new DatabricksWorkspaceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <returns> Returns a <see cref="DatabricksPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DatabricksPrivateEndpointConnectionResource GetDatabricksPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            DatabricksPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new DatabricksPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <returns> Returns a <see cref="DatabricksAccessConnectorResource"/> object. </returns>
         public virtual DatabricksAccessConnectorResource GetDatabricksAccessConnectorResource(ResourceIdentifier id)
         {
-            DatabricksAccessConnectorResource.ValidateResourceId(id);
             return new DatabricksAccessConnectorResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <returns> Returns a <see cref="DatabricksPrivateLinkResource"/> object. </returns>
         public virtual DatabricksPrivateLinkResource GetDatabricksPrivateLinkResource(ResourceIdentifier id)
         {
-            DatabricksPrivateLinkResource.ValidateResourceId(id);
             return new DatabricksPrivateLinkResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <returns> Returns a <see cref="DatabricksVirtualNetworkPeeringResource"/> object. </returns>
         public virtual DatabricksVirtualNetworkPeeringResource GetDatabricksVirtualNetworkPeeringResource(ResourceIdentifier id)
         {
-            DatabricksVirtualNetworkPeeringResource.ValidateResourceId(id);
             return new DatabricksVirtualNetworkPeeringResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="GitHubOAuthResponseResource"/> object. </returns>
         public virtual GitHubOAuthResponseResource GetGitHubOAuthResponseResource(ResourceIdentifier id)
         {
-            GitHubOAuthResponseResource.ValidateResourceId(id);
             return new GitHubOAuthResponseResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="IacProfileResource"/> object. </returns>
         public virtual IacProfileResource GetIacProfileResource(ResourceIdentifier id)
         {
-            IacProfileResource.ValidateResourceId(id);
             return new IacProfileResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="DevHubWorkflowResource"/> object. </returns>
         public virtual DevHubWorkflowResource GetDevHubWorkflowResource(ResourceIdentifier id)
         {
-            DevHubWorkflowResource.ValidateResourceId(id);
             return new DevHubWorkflowResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="AdoOAuthResponseResource"/> object. </returns>
         public virtual AdoOAuthResponseResource GetAdoOAuthResponseResource(ResourceIdentifier id)
         {
-            AdoOAuthResponseResource.ValidateResourceId(id);
             return new AdoOAuthResponseResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="DevHubTemplateResource"/> object. </returns>
         public virtual DevHubTemplateResource GetDevHubTemplateResource(ResourceIdentifier id)
         {
-            DevHubTemplateResource.ValidateResourceId(id);
             return new DevHubTemplateResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="DevHubVersionedTemplateResource"/> object. </returns>
         public virtual DevHubVersionedTemplateResource GetDevHubVersionedTemplateResource(ResourceIdentifier id)
         {
-            DevHubVersionedTemplateResource.ValidateResourceId(id);
             return new DevHubVersionedTemplateResource(Client, id);
         }
     }

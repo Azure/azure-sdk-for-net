@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryResource"/> object. </returns>
         public virtual DataFactoryResource GetDataFactoryResource(ResourceIdentifier id)
         {
-            DataFactoryResource.ValidateResourceId(id);
             return new DataFactoryResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryIntegrationRuntimeResource"/> object. </returns>
         public virtual DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(ResourceIdentifier id)
         {
-            DataFactoryIntegrationRuntimeResource.ValidateResourceId(id);
             return new DataFactoryIntegrationRuntimeResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryLinkedServiceResource"/> object. </returns>
         public virtual DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(ResourceIdentifier id)
         {
-            DataFactoryLinkedServiceResource.ValidateResourceId(id);
             return new DataFactoryLinkedServiceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryDatasetResource"/> object. </returns>
         public virtual DataFactoryDatasetResource GetDataFactoryDatasetResource(ResourceIdentifier id)
         {
-            DataFactoryDatasetResource.ValidateResourceId(id);
             return new DataFactoryDatasetResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryPipelineResource"/> object. </returns>
         public virtual DataFactoryPipelineResource GetDataFactoryPipelineResource(ResourceIdentifier id)
         {
-            DataFactoryPipelineResource.ValidateResourceId(id);
             return new DataFactoryPipelineResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryTriggerResource"/> object. </returns>
         public virtual DataFactoryTriggerResource GetDataFactoryTriggerResource(ResourceIdentifier id)
         {
-            DataFactoryTriggerResource.ValidateResourceId(id);
             return new DataFactoryTriggerResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryDataFlowResource"/> object. </returns>
         public virtual DataFactoryDataFlowResource GetDataFactoryDataFlowResource(ResourceIdentifier id)
         {
-            DataFactoryDataFlowResource.ValidateResourceId(id);
             return new DataFactoryDataFlowResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryManagedVirtualNetworkResource"/> object. </returns>
         public virtual DataFactoryManagedVirtualNetworkResource GetDataFactoryManagedVirtualNetworkResource(ResourceIdentifier id)
         {
-            DataFactoryManagedVirtualNetworkResource.ValidateResourceId(id);
             return new DataFactoryManagedVirtualNetworkResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryPrivateEndpointResource"/> object. </returns>
         public virtual DataFactoryPrivateEndpointResource GetDataFactoryPrivateEndpointResource(ResourceIdentifier id)
         {
-            DataFactoryPrivateEndpointResource.ValidateResourceId(id);
             return new DataFactoryPrivateEndpointResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryServiceCredentialResource"/> object. </returns>
         public virtual DataFactoryServiceCredentialResource GetDataFactoryServiceCredentialResource(ResourceIdentifier id)
         {
-            DataFactoryServiceCredentialResource.ValidateResourceId(id);
             return new DataFactoryServiceCredentialResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            DataFactoryPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new DataFactoryPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource"/> object. </returns>
         public virtual DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(ResourceIdentifier id)
         {
-            DataFactoryGlobalParameterResource.ValidateResourceId(id);
             return new DataFactoryGlobalParameterResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> Returns a <see cref="DataFactoryChangeDataCaptureResource"/> object. </returns>
         public virtual DataFactoryChangeDataCaptureResource GetDataFactoryChangeDataCaptureResource(ResourceIdentifier id)
         {
-            DataFactoryChangeDataCaptureResource.ValidateResourceId(id);
             return new DataFactoryChangeDataCaptureResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="AppAttachPackageResource"/> object. </returns>
         public virtual AppAttachPackageResource GetAppAttachPackageResource(ResourceIdentifier id)
         {
-            AppAttachPackageResource.ValidateResourceId(id);
             return new AppAttachPackageResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="VirtualApplicationGroupResource"/> object. </returns>
         public virtual VirtualApplicationGroupResource GetVirtualApplicationGroupResource(ResourceIdentifier id)
         {
-            VirtualApplicationGroupResource.ValidateResourceId(id);
             return new VirtualApplicationGroupResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="HostPoolResource"/> object. </returns>
         public virtual HostPoolResource GetHostPoolResource(ResourceIdentifier id)
         {
-            HostPoolResource.ValidateResourceId(id);
             return new HostPoolResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="ScalingPlanResource"/> object. </returns>
         public virtual ScalingPlanResource GetScalingPlanResource(ResourceIdentifier id)
         {
-            ScalingPlanResource.ValidateResourceId(id);
             return new ScalingPlanResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="VirtualWorkspaceResource"/> object. </returns>
         public virtual VirtualWorkspaceResource GetVirtualWorkspaceResource(ResourceIdentifier id)
         {
-            VirtualWorkspaceResource.ValidateResourceId(id);
             return new VirtualWorkspaceResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="VirtualApplicationResource"/> object. </returns>
         public virtual VirtualApplicationResource GetVirtualApplicationResource(ResourceIdentifier id)
         {
-            VirtualApplicationResource.ValidateResourceId(id);
             return new VirtualApplicationResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="VirtualDesktopResource"/> object. </returns>
         public virtual VirtualDesktopResource GetVirtualDesktopResource(ResourceIdentifier id)
         {
-            VirtualDesktopResource.ValidateResourceId(id);
             return new VirtualDesktopResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HostPoolPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HostPoolPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource"/> object. </returns>
         public virtual WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new WorkspacePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostResource"/> object. </returns>
         public virtual SessionHostResource GetSessionHostResource(ResourceIdentifier id)
         {
-            SessionHostResource.ValidateResourceId(id);
             return new SessionHostResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="UserSessionResource"/> object. </returns>
         public virtual UserSessionResource GetUserSessionResource(ResourceIdentifier id)
         {
-            UserSessionResource.ValidateResourceId(id);
             return new UserSessionResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="ScalingPlanPersonalScheduleResource"/> object. </returns>
         public virtual ScalingPlanPersonalScheduleResource GetScalingPlanPersonalScheduleResource(ResourceIdentifier id)
         {
-            ScalingPlanPersonalScheduleResource.ValidateResourceId(id);
             return new ScalingPlanPersonalScheduleResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="ScalingPlanPooledScheduleResource"/> object. </returns>
         public virtual ScalingPlanPooledScheduleResource GetScalingPlanPooledScheduleResource(ResourceIdentifier id)
         {
-            ScalingPlanPooledScheduleResource.ValidateResourceId(id);
             return new ScalingPlanPooledScheduleResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="MsixPackageResource"/> object. </returns>
         public virtual MsixPackageResource GetMsixPackageResource(ResourceIdentifier id)
         {
-            MsixPackageResource.ValidateResourceId(id);
             return new MsixPackageResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="ActiveSessionHostConfigurationResource"/> object. </returns>
         public virtual ActiveSessionHostConfigurationResource GetActiveSessionHostConfigurationResource(ResourceIdentifier id)
         {
-            ActiveSessionHostConfigurationResource.ValidateResourceId(id);
             return new ActiveSessionHostConfigurationResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostManagementResource"/> object. </returns>
         public virtual SessionHostManagementResource GetSessionHostManagementResource(ResourceIdentifier id)
         {
-            SessionHostManagementResource.ValidateResourceId(id);
             return new SessionHostManagementResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostConfigurationResource"/> object. </returns>
         public virtual SessionHostConfigurationResource GetSessionHostConfigurationResource(ResourceIdentifier id)
         {
-            SessionHostConfigurationResource.ValidateResourceId(id);
             return new SessionHostConfigurationResource(Client, id);
         }
     }
