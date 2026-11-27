@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Changed `Exists` and `ExistsAsync` to use HEAD instead of GET for API, API definition, API version, deployment, environment, metadata schema, workspace, and API source collections.
+
 ## 1.1.0-beta.1 (2026-04-17)
 
 ### Features Added

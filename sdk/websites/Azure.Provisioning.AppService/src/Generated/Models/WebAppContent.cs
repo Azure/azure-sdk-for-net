@@ -12,14 +12,14 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> A request. </summary>
-    public partial class WebAppRequest : ProvisionableConstruct
+    public partial class WebAppContent : ProvisionableConstruct
     {
         private BicepValue<BinaryData> _headers;
         private BicepValue<string> _uri;
         private BicepValue<string> _method;
 
-        /// <summary> Creates a new WebAppRequest. </summary>
-        public WebAppRequest()
+        /// <summary> Creates a new WebAppContent. </summary>
+        public WebAppContent()
         {
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Define all the provisionable properties for WebAppRequest. </summary>
+        /// <summary> Define all the provisionable properties for WebAppContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -63,7 +63,7 @@ namespace Azure.Provisioning.AppService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for WebAppRequest that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for WebAppContent that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

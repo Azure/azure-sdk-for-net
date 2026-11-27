@@ -5941,6 +5941,14 @@ namespace Azure.Provisioning.AppService
         DeleteFailed = 8,
         Deleted = 9,
     }
+    public partial class WebAppContent : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public WebAppContent() { }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Headers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Method { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class WebAppContentHash : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public WebAppContentHash() { }
@@ -6054,14 +6062,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebAppRequest : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public WebAppRequest() { }
-        public Azure.Provisioning.BicepValue<System.BinaryData> Headers { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Method { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class WebAppRequestHistory : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal WebAppRequestHistory() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -6083,7 +6083,7 @@ namespace Azure.Provisioning.AppService
     {
         public WebAppRequestHistoryProperties() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
-        public Azure.Provisioning.AppService.WebAppRequest Request { get { throw null; } }
+        public Azure.Provisioning.AppService.WebAppContent Request { get { throw null; } }
         public Azure.Provisioning.AppService.WebAppResult Response { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
