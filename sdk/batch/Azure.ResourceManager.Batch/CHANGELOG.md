@@ -1,14 +1,15 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2026-12-01)
 
 ### Features Added
 
+- Updated the default Batch management API version to `2026-10-01`, which adds Instance Mix, hardware settings, and zone placement and resiliency policies for pools.
+- Added `BatchAccountPoolPatch` overloads for updating pools. The existing `BatchAccountPoolData` overloads remain supported.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- The default service API version `2026-10-01` no longer supports `TaskAuthenticationToken` authentication. `BatchAuthenticationMode.TaskAuthenticationToken` remains available for compatibility with older API versions. Use `BatchAuthenticationMode.Aad` or `BatchAuthenticationMode.SharedKey` when configuring authentication with the default API version.
 
 ## 1.7.0 (2026-06-02)
 

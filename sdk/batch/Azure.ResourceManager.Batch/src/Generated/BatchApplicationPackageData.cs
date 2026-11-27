@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> The URL for the application package in Azure Storage. </summary>
+        /// <summary> The URL for the application package in Azure Storage. This property is only returned for the PUT application package (create or update) operation. For the GET application package and POST activate application package operations, this property is not populated. </summary>
         public Uri StorageUri
         {
             get
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> The UTC time at which the Azure Storage URL will expire. </summary>
+        /// <summary> The UTC time at which the Azure Storage URL will expire. This property is only returned for the PUT application package (create or update) operation. For the GET application package and POST activate application package operations, this property is not populated. </summary>
         public DateTimeOffset? StorageUriExpireOn
         {
             get

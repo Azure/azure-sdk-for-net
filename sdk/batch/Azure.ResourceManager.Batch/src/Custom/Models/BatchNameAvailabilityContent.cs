@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BatchNameAvailabilityContent(string name) : this(name, "Microsoft.Batch/batchAccounts")
-        {}
+        { }
     }
 }

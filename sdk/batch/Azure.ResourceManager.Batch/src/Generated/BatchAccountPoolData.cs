@@ -145,6 +145,23 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
+        /// <summary> Specifies the profile of VM sizes and the allocation strategy used to allocate compute nodes for an Instance Mix pool. When specified, vmSize must be "Mix". This property can only be changed while the pool has no compute nodes. </summary>
+        public VirtualMachineSkuProfile VmSkuProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmSkuProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.VmSkuProfile = value;
+            }
+        }
+
         /// <summary> The number of dedicated compute nodes currently in the pool. </summary>
         public int? CurrentDedicatedNodes
         {
