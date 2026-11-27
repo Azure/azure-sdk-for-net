@@ -169,10 +169,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("aiServices"u8);
                 }
             }
+            if (Optional.IsDefined(AssetStore))
+            {
+                writer.WritePropertyName("assetStore"u8);
+                writer.WriteObjectValue(AssetStore, options);
+            }
+            if (Optional.IsDefined(FreshnessPolicy))
+            {
+                writer.WritePropertyName("freshnessPolicy"u8);
+                writer.WriteObjectValue(FreshnessPolicy, options);
+            }
             if (Optional.IsDefined(NetworkAccessMode))
             {
                 writer.WritePropertyName("networkAccessMode"u8);
                 writer.WriteStringValue(NetworkAccessMode.Value.ToString());
+            }
+            if (Optional.IsDefined(Cache))
+            {
+                writer.WritePropertyName("cache"u8);
+                writer.WriteObjectValue(Cache, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -230,7 +245,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             bool aiServicesIsDefined = false;
             AIServices aiServices = default;
+            KnowledgeSourceAssetStore assetStore = default;
+            KnowledgeSourceFreshnessPolicy freshnessPolicy = default;
             KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
+            KnowledgeSourceCache cache = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -324,6 +342,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     aiServices = AIServices.DeserializeAIServices(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("assetStore"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assetStore = KnowledgeSourceAssetStore.DeserializeKnowledgeSourceAssetStore(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("freshnessPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    freshnessPolicy = KnowledgeSourceFreshnessPolicy.DeserializeKnowledgeSourceFreshnessPolicy(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("networkAccessMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -331,6 +367,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     networkAccessMode = new KnowledgeSourceNetworkAccessMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("cache"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cache = KnowledgeSourceCache.DeserializeKnowledgeSourceCache(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -347,7 +392,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 ingestionPermissionOptions,
                 contentExtractionMode,
                 aiServices,
+                assetStore,
+                freshnessPolicy,
                 networkAccessMode,
+                cache,
                 additionalBinaryDataProperties)
             {
                 _identityIsDefined = identityIsDefined,

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -18,12 +18,18 @@ namespace Azure.Search.Documents
     [CodeGenType("SearchRequest")]
     public partial class SearchOptions
     {
+        /// <summary> Gets or sets the document key to use for finding similar documents. Cannot be combined with search text. </summary>
+        public string MoreLikeThis { get; set; }
+
+        /// <summary> Gets or sets runtime options for an agentic query. </summary>
+        public AgenticSearchOptions AgenticOptions { get; set; } // search-preview:2026-11-01-preview
+
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         public SearchOptions()
         {
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
-
+            SemanticFields = new ChangeTrackingList<string>(); // search-preview:2026-05-01-preview
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
@@ -79,9 +85,6 @@ namespace Azure.Search.Documents
 
         /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </summary>
         public double? MinimumCoverage { get; set; }
-
-        /// <summary> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </summary>
-        public string MoreLikeThis { get; set; }
 
         /// <summary> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </summary>
         public SearchQueryType? QueryType { get; set; }
@@ -345,6 +348,96 @@ namespace Azure.Search.Documents
             }
         }
 
+        // search-preview:2026-05-01-preview {
+        /// <summary> The query parameters to configure hybrid search behaviors. </summary>
+        [CodeGenMember("HybridSearch")]
+        private HybridSearch HybridSearch
+        {
+            get { return VectorSearch?.HybridSearch; }
+            set
+            {
+                if (value != null)
+                {
+                    VectorSearch ??= new VectorSearchOptions();
+                }
+                if (VectorSearch != null)
+                {
+                    VectorSearch.HybridSearch = value;
+                }
+            }
+        }
+
+        /// <summary> A value that specifies the language of the search query. </summary>
+        [CodeGenMember("QueryLanguage")]
+        private QueryLanguage? QueryLanguage
+        {
+            get { return SemanticSearch?.QueryLanguage; }
+            set
+            {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.QueryLanguage = value;
+                }
+            }
+        }
+
+        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
+        [CodeGenMember("QuerySpeller")]
+        private QuerySpellerType? QuerySpeller
+        {
+            get { return SemanticSearch?.QuerySpeller; }
+            set
+            {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.QuerySpeller = value;
+                }
+            }
+        }
+
+        /// <summary> Constructed from <see cref="QueryRewrites.RewritesType"/> and <see cref="QueryRewrites.Count"/>. For example: "generative|count-3". </summary>
+        [CodeGenMember("QueryRewrites")]
+        private string QueryRewritesRaw
+        {
+            get { return SemanticSearch?.QueryRewrites?.QueryRewritesRaw; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                { return; }
+                SemanticSearch ??= new SemanticSearchOptions();
+                SemanticSearch.QueryRewrites ??= new QueryRewrites();
+                SemanticSearch.QueryRewrites.QueryRewritesRaw = value;
+            }
+        }
+
+        // Preserve collection definition state when restoring continuation tokens, including explicit empty lists.
+        /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
+        [CodeGenMember("SemanticFields")]
+        private IList<string> SemanticFields
+        {
+            get { return SemanticSearch?.SemanticFields ?? new ChangeTrackingList<string>(); }
+            set
+            {
+                if (value != null && Optional.IsCollectionDefined(value))
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.SemanticFields = value ?? new ChangeTrackingList<string>();
+                }
+            }
+        }
+        // search-preview:2026-05-01-preview }
+
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
         /// </summary>
@@ -362,9 +455,10 @@ namespace Azure.Search.Documents
             destination.HighlightPreTag = source.HighlightPreTag;
             destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
-            destination.MoreLikeThis = source.MoreLikeThis;
             destination.OrderBy = source.OrderBy;
             destination.QueryType = source.QueryType;
+            destination.MoreLikeThis = source.MoreLikeThis;
+            destination.AgenticOptions = source.AgenticOptions;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
             destination.ScoringStatistics = source.ScoringStatistics;

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -56,6 +57,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResetSkillsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="resetSkillsOptions"> The <see cref="ResetSkillsOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ResetSkillsOptions resetSkillsOptions)
+        {
+            if (resetSkillsOptions == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(resetSkillsOptions, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResetSkillsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -76,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(SkillNameList))
             {
-                writer.WritePropertyName("skillNameList"u8);
+                writer.WritePropertyName("skillNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in SkillNameList)
                 {
@@ -135,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("skillNameList"u8))
+                if (prop.NameEquals("skillNames"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

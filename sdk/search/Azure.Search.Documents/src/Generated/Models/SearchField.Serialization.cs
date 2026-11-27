@@ -135,6 +135,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("organizationAccessExpiration"u8);
                 writer.WriteBooleanValue(OrganizationAccessExpiration.Value);
             }
+            if (Optional.IsDefined(IsSensitivityLabelId))
+            {
+                writer.WritePropertyName("sensitivityLabelId"u8);
+                writer.WriteBooleanValue(IsSensitivityLabelId.Value);
+            }
+            if (Optional.IsDefined(IsSensitivityLabelName))
+            {
+                writer.WritePropertyName("sensitivityLabelName"u8);
+                writer.WriteBooleanValue(IsSensitivityLabelName.Value);
+            }
+            if (Optional.IsDefined(IsSourceDocumentId))
+            {
+                writer.WritePropertyName("sourceDocumentId"u8);
+                writer.WriteBooleanValue(IsSourceDocumentId.Value);
+            }
             if (Optional.IsDefined(SharepointSiteUrl))
             {
                 writer.WritePropertyName("sharepointSiteUrl"u8);
@@ -176,6 +191,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     writer.WriteNull("vectorSearchProfile"u8);
                 }
+            }
+            if (Optional.IsDefined(TopicGraphProfile))
+            {
+                writer.WritePropertyName("topicGraphProfile"u8);
+                writer.WriteStringValue(TopicGraphProfile);
             }
             if (Optional.IsDefined(VectorEncodingFormat, _vectorEncodingFormatIsDefined))
             {
@@ -268,6 +288,9 @@ namespace Azure.Search.Documents.Indexes.Models
             bool permissionFilterIsDefined = false;
             PermissionFilter? permissionFilter = default;
             bool? organizationAccessExpiration = default;
+            bool? isSensitivityLabelId = default;
+            bool? isSensitivityLabelName = default;
+            bool? isSourceDocumentId = default;
             bool? sharepointSiteUrl = default;
             LexicalAnalyzerName? analyzerName = default;
             LexicalAnalyzerName? searchAnalyzerName = default;
@@ -276,6 +299,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? vectorSearchDimensions = default;
             bool vectorSearchProfileNameIsDefined = false;
             string vectorSearchProfileName = default;
+            string topicGraphProfile = default;
             bool vectorEncodingFormatIsDefined = false;
             VectorEncodingFormat? vectorEncodingFormat = default;
             IList<string> synonymMapNames = default;
@@ -376,6 +400,33 @@ namespace Azure.Search.Documents.Indexes.Models
                     organizationAccessExpiration = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("sensitivityLabelId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSensitivityLabelId = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sensitivityLabelName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSensitivityLabelName = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sourceDocumentId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSourceDocumentId = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("sharepointSiteUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -445,6 +496,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearchProfileName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("topicGraphProfile"u8))
+                {
+                    topicGraphProfile = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("vectorEncoding"u8))
                 {
                     vectorEncodingFormatIsDefined = true;
@@ -508,6 +564,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 isFacetable,
                 permissionFilter,
                 organizationAccessExpiration,
+                isSensitivityLabelId,
+                isSensitivityLabelName,
+                isSourceDocumentId,
                 sharepointSiteUrl,
                 analyzerName,
                 searchAnalyzerName,
@@ -515,6 +574,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 normalizerName,
                 vectorSearchDimensions,
                 vectorSearchProfileName,
+                topicGraphProfile,
                 vectorEncodingFormat,
                 synonymMapNames ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>(),

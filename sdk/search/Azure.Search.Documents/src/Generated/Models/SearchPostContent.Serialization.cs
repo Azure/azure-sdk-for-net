@@ -145,6 +145,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToSerialString());
             }
+            if (Optional.IsDefined(AgenticOptions))
+            {
+                writer.WritePropertyName("agenticOptions"u8);
+                writer.WriteObjectValue(AgenticOptions, options);
+            }
             if (Optional.IsDefined(ScoringStatistics))
             {
                 writer.WritePropertyName("scoringStatistics"u8);
@@ -195,6 +200,16 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("searchMode"u8);
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
+            if (Optional.IsDefined(QueryLanguage))
+            {
+                writer.WritePropertyName("queryLanguage"u8);
+                writer.WriteStringValue(QueryLanguage.Value.ToString());
+            }
+            if (Optional.IsDefined(QuerySpeller))
+            {
+                writer.WritePropertyName("speller"u8);
+                writer.WriteStringValue(QuerySpeller.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Select))
             {
                 writer.WritePropertyName("select"u8);
@@ -240,6 +255,16 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(Captions.Value.ToString());
             }
+            if (Optional.IsDefined(QueryRewrites))
+            {
+                writer.WritePropertyName("queryRewrites"u8);
+                writer.WriteStringValue(QueryRewrites.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SemanticFields))
+            {
+                writer.WritePropertyName("semanticFields"u8);
+                writer.WriteStringValue(string.Join(",", SemanticFields));
+            }
             if (Optional.IsCollectionDefined(VectorQueries))
             {
                 writer.WritePropertyName("vectorQueries"u8);
@@ -254,6 +279,11 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("vectorFilterMode"u8);
                 writer.WriteStringValue(VectorFilterMode.Value.ToString());
+            }
+            if (Optional.IsDefined(HybridSearch))
+            {
+                writer.WritePropertyName("hybridSearch"u8);
+                writer.WriteObjectValue(HybridSearch, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -307,6 +337,7 @@ namespace Azure.Search.Documents.Models
             string moreLikeThis = default;
             IList<string> orderBy = default;
             SearchQueryType? queryType = default;
+            AgenticSearchOptions agenticOptions = default;
             ScoringStatistics? scoringStatistics = default;
             string sessionId = default;
             IList<string> scoringParameters = default;
@@ -315,6 +346,8 @@ namespace Azure.Search.Documents.Models
             string searchText = default;
             IList<string> searchFields = default;
             SearchMode? searchMode = default;
+            QueryLanguage? queryLanguage = default;
+            QuerySpellerType? querySpeller = default;
             IList<string> @select = default;
             int? skip = default;
             int? top = default;
@@ -324,8 +357,11 @@ namespace Azure.Search.Documents.Models
             string semanticQuery = default;
             QueryAnswerType? answers = default;
             QueryCaptionType? captions = default;
+            QueryRewritesType? queryRewrites = default;
+            IList<string> semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? vectorFilterMode = default;
+            HybridSearch hybridSearch = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -417,6 +453,15 @@ namespace Azure.Search.Documents.Models
                     queryType = prop.Value.GetString().ToSearchQueryType();
                     continue;
                 }
+                if (prop.NameEquals("agenticOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agenticOptions = AgenticSearchOptions.DeserializeAgenticSearchOptions(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("scoringStatistics"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -488,6 +533,24 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     searchMode = prop.Value.GetString().ToSearchMode();
+                    continue;
+                }
+                if (prop.NameEquals("queryLanguage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryLanguage = new QueryLanguage(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("speller"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    querySpeller = new QuerySpellerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("select"u8))
@@ -564,6 +627,25 @@ namespace Azure.Search.Documents.Models
                     captions = new QueryCaptionType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("queryRewrites"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryRewrites = new QueryRewritesType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("semanticFields"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    string stringValue = prop.Value.GetString();
+                    semanticFields = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
+                    continue;
+                }
                 if (prop.NameEquals("vectorQueries"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -587,6 +669,15 @@ namespace Azure.Search.Documents.Models
                     vectorFilterMode = new VectorFilterMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("hybridSearch"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hybridSearch = HybridSearch.DeserializeHybridSearch(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -603,6 +694,7 @@ namespace Azure.Search.Documents.Models
                 moreLikeThis,
                 orderBy ?? new ChangeTrackingList<string>(),
                 queryType,
+                agenticOptions,
                 scoringStatistics,
                 sessionId,
                 scoringParameters ?? new ChangeTrackingList<string>(),
@@ -611,6 +703,8 @@ namespace Azure.Search.Documents.Models
                 searchText,
                 searchFields ?? new ChangeTrackingList<string>(),
                 searchMode,
+                queryLanguage,
+                querySpeller,
                 @select ?? new ChangeTrackingList<string>(),
                 skip,
                 top,
@@ -620,8 +714,11 @@ namespace Azure.Search.Documents.Models
                 semanticQuery,
                 answers,
                 captions,
+                queryRewrites,
+                semanticFields ?? new ChangeTrackingList<string>(),
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
                 vectorFilterMode,
+                hybridSearch,
                 additionalBinaryDataProperties);
         }
     }

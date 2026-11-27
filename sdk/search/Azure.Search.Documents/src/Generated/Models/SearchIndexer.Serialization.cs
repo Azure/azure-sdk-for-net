@@ -187,6 +187,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey"u8);
                 }
             }
+            if (Optional.IsDefined(Cache, _cacheIsDefined))
+            {
+                if (Cache != null)
+                {
+                    writer.WritePropertyName("cache"u8);
+                    writer.WriteObjectValue(Cache, options);
+                }
+                else
+                {
+                    writer.WriteNull("cache"u8);
+                }
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -245,6 +257,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ETag? eTag = default;
             bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
+            bool cacheIsDefined = false;
+            SearchIndexerCache cache = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -354,6 +368,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("cache"u8))
+                {
+                    cacheIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cache = null;
+                        continue;
+                    }
+                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -372,12 +397,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 isDisabled,
                 eTag,
                 encryptionKey,
+                cache,
                 additionalBinaryDataProperties)
             {
                 _scheduleIsDefined = scheduleIsDefined,
                 _parametersIsDefined = parametersIsDefined,
                 _isDisabledIsDefined = isDisabledIsDefined,
-                _encryptionKeyIsDefined = encryptionKeyIsDefined
+                _encryptionKeyIsDefined = encryptionKeyIsDefined,
+                _cacheIsDefined = cacheIsDefined
             };
         }
     }

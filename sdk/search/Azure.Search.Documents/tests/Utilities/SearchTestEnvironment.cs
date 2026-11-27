@@ -81,13 +81,6 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
-        public override TokenCredential Credential => Mode != RecordedTestMode.Playback && !GlobalIsRunningInCI
-            ? CreateDeveloperCredential()
-            : base.Credential;
-
-        protected override TokenCredential CreateDeveloperCredential() =>
-            new AzureCliCredential(new AzureCliCredentialOptions { TenantId = GetOptionalVariable("TENANT_ID") });
-
         /// <summary>
         /// The name of the variable for <see cref="RecordedClientSecret"/>.
         /// </summary>
@@ -154,6 +147,11 @@ namespace Azure.Search.Documents.Tests
         public string SearchStorageKey => GetRecordedVariable(StorageAccountKeyVariableName, options => options.IsSecret());
 
         /// <summary>
+        /// Gets an optional storage connection string, including a ResourceId connection for managed identity.
+        /// </summary>
+        public string SearchStorageConnectionString => GetRecordedOptionalVariable("SEARCH_STORAGE_CONNECTION_STRING", options => options.IsSecret());
+
+        /// <summary>
         /// Gets the Cognitive Services key for skillsets.
         /// </summary>
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName, options => options.IsSecret());
@@ -177,6 +175,11 @@ namespace Azure.Search.Documents.Tests
         /// Gets the recorded value for the CLIENT_ID, which gets sanitized as part of the payload.
         /// </summary>
         public string RecordedClientSecret => GetRecordedVariable(ClientSecretVariableName, options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional OpenAI key
+        /// </summary>
+        public string OpenAIKey => GetRecordedOptionalVariable(OpenAIKeyVariableName, options => options.IsSecret());
 
         /// <summary>
         /// Gets the optional OpenAI URL used used for Vector Search.
@@ -209,5 +212,24 @@ namespace Azure.Search.Documents.Tests
         /// Returns "AzureCloud" as default if the ENVIRONMENT variable is not set.
         /// </summary>
         public new string AzureEnvironment => GetRecordedOptionalVariable("ENVIRONMENT") ?? "AzureCloud";
+
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            string tenantId = GetOptionalVariable("TENANT_ID");
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                return base.CreateDeveloperCredential();
+            }
+
+            // Existing resources can belong to a different tenant than the framework's default test tenant.
+            return new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                TenantId = tenantId,
+                ExcludeEnvironmentCredential = true,
+                ExcludeManagedIdentityCredential = true,
+                ExcludeWorkloadIdentityCredential = true,
+                ExcludeBrokerCredential = true
+            });
+        }
     }
 }

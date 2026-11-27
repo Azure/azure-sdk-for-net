@@ -97,6 +97,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(GraphProfile))
+            {
+                writer.WritePropertyName("graphProfile"u8);
+                writer.WriteObjectValue(GraphProfile, options);
+            }
             if (Optional.IsCollectionDefined(ScoringProfiles))
             {
                 writer.WritePropertyName("scoringProfiles"u8);
@@ -237,10 +242,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilterOption"u8);
                 }
             }
+            if (Optional.IsDefined(PurviewEnabled, _purviewEnabledIsDefined))
+            {
+                if (PurviewEnabled != null)
+                {
+                    writer.WritePropertyName("purviewEnabled"u8);
+                    writer.WriteBooleanValue(PurviewEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("purviewEnabled"u8);
+                }
+            }
             if (Optional.IsDefined(SharePointConnectorAppRegistration))
             {
                 writer.WritePropertyName("sharePointConnectorAppRegistration"u8);
                 writer.WriteObjectValue(SharePointConnectorAppRegistration, options);
+            }
+            if (Optional.IsDefined(OneLakeSecuritySource))
+            {
+                writer.WritePropertyName("oneLakeSecuritySource"u8);
+                writer.WriteObjectValue(OneLakeSecuritySource, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -292,6 +314,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             IList<SearchField> fields = default;
+            GraphProfile graphProfile = default;
             IList<ScoringProfile> scoringProfiles = default;
             string defaultScoringProfile = default;
             bool corsOptionsIsDefined = false;
@@ -311,7 +334,10 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearch vectorSearch = default;
             bool permissionFilterOptionIsDefined = false;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
+            bool purviewEnabledIsDefined = false;
+            bool? purviewEnabled = default;
             SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default;
+            OneLakeSecuritySource oneLakeSecuritySource = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -338,6 +364,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         array.Add(SearchField.DeserializeSearchField(item, options));
                     }
                     fields = array;
+                    continue;
+                }
+                if (prop.NameEquals("graphProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    graphProfile = GraphProfile.DeserializeGraphProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scoringProfiles"u8))
@@ -507,6 +542,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("purviewEnabled"u8))
+                {
+                    purviewEnabledIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        purviewEnabled = null;
+                        continue;
+                    }
+                    purviewEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("sharePointConnectorAppRegistration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -514,6 +560,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     sharePointConnectorAppRegistration = SharePointConnectorAppRegistration.DeserializeSharePointConnectorAppRegistration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("oneLakeSecuritySource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oneLakeSecuritySource = OneLakeSecuritySource.DeserializeOneLakeSecuritySource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -534,6 +589,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 fields ?? new ChangeTrackingList<SearchField>(),
+                graphProfile,
                 scoringProfiles ?? new ChangeTrackingList<ScoringProfile>(),
                 defaultScoringProfile,
                 corsOptions,
@@ -548,7 +604,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 semanticSearch,
                 vectorSearch,
                 permissionFilterOption,
+                purviewEnabled,
                 sharePointConnectorAppRegistration,
+                oneLakeSecuritySource,
                 eTag,
                 additionalBinaryDataProperties)
             {
@@ -556,7 +614,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 _encryptionKeyIsDefined = encryptionKeyIsDefined,
                 _semanticSearchIsDefined = semanticSearchIsDefined,
                 _vectorSearchIsDefined = vectorSearchIsDefined,
-                _permissionFilterOptionIsDefined = permissionFilterOptionIsDefined
+                _permissionFilterOptionIsDefined = permissionFilterOptionIsDefined,
+                _purviewEnabledIsDefined = purviewEnabledIsDefined
             };
         }
     }

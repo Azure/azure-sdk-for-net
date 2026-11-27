@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Tests
         /// The current API version under test. Change this single constant
         /// when a new version ships — all tests update automatically.
         /// </summary>
-        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_10_01;
+        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_11_01_Preview;
 
         /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's
@@ -70,6 +70,12 @@ namespace Azure.Search.Documents.Tests
             JsonPathSanitizers.Remove("$..token");
             SanitizedHeaders.Add("api-key");
             SanitizedHeaders.Add("x-ms-query-source-authorization");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Older snapshots used API keys; shared fixtures now authenticate with Entra ID.
+                LegacyExcludedHeaders.Add("api-key");
+                LegacyExcludedHeaders.Add("Authorization");
+            }
             CompareBodies = false;
         }
 

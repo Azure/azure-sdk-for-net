@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the connection parameters for the model to use for query planning.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>, <see cref="KnowledgeBaseMicrosoftRetriever1Model"/>, and <see cref="KnowledgeBaseOpenAICompatibleModel"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseModel
     {

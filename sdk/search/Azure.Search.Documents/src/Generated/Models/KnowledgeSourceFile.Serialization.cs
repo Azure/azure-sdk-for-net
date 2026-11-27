@@ -319,5 +319,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 _errorMessageIsDefined = errorMessageIsDefined
             };
         }
+
+        /// <summary> Converts a response to a KnowledgeSourceFile using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static KnowledgeSourceFile FromLroResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeSourceFile(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+        }
     }
 }

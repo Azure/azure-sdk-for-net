@@ -107,6 +107,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
+            if (options.Format != "W" && Optional.IsDefined(SubType))
+            {
+                writer.WritePropertyName("subType"u8);
+                writer.WriteStringValue(SubType);
+            }
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(CredentialsInternal, options);
             writer.WritePropertyName("container"u8);
@@ -226,6 +231,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             SearchIndexerDataSourceType @type = default;
+            string subType = default;
             DataSourceCredentials credentialsInternal = default;
             SearchIndexerDataContainer container = default;
             bool identityIsDefined = false;
@@ -254,6 +260,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new SearchIndexerDataSourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("subType"u8))
+                {
+                    subType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("credentials"u8))
@@ -339,6 +350,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 @type,
+                subType,
                 credentialsInternal,
                 container,
                 identity,

@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the GA typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -63,6 +64,50 @@ namespace Azure.Search.Documents.KnowledgeBases
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
+        // Preserve GA virtual dispatch; Work IQ overloads require explicit authorization arguments.
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="context"> The request context. </param>
+        public virtual Response Retrieve(RequestContent content, string querySourceAuthorization = default, RequestContext context = null) =>
+            RetrieveCoreAsync(content, querySourceAuthorization, null, context, false).EnsureCompleted();
+
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="context"> The request context. </param>
+        public virtual Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, RequestContext context = null) =>
+            RetrieveCoreAsync(content, querySourceAuthorization, null, context, true).AsTask();
+
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
+            Response result = Retrieve((RequestContent)retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
+        }
+
+        /// <summary> Retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
+            Response result = await RetrieveAsync((RequestContent)retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
+        }
+
+        /// <summary> Retrieves relevant data as server-sent events. </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token. </param>
+        /// <param name="context"> The request context. </param>
+        public virtual Task<AsyncStreamingResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, RequestContext context = null) =>
+            RetrieveStreamCoreAsync(content, querySourceAuthorization, null, context);
+
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
         /// server-sent events on the same connection as they become available, instead of waiting for the
@@ -87,12 +132,40 @@ namespace Azure.Search.Documents.KnowledgeBases
                 string querySourceAuthorization = default,
                 [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            await foreach (var item in RetrieveTypedStreamAsync(retrievalRequest, querySourceAuthorization, null, cancellationToken).ConfigureAwait(false))
+            {
+                yield return item;
+            }
+        }
+
+        /// <summary> Retrieves typed server-sent events with Work IQ authorization. </summary>
+        /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="querySourceAuthorization"> The user authorization token, or null when not needed. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> The user assertion token for the Work IQ knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token for the request and enumeration. </param>
+        [ForwardsClientCalls(true)]
+#pragma warning disable AZC0002 // Required token keeps GA calls with a trailing default literal unambiguous.
+        public virtual IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
+            KnowledgeBaseRetrievalRequest retrievalRequest,
+            string querySourceAuthorization,
+            string queryWorkIQSourceAuthorization,
+            CancellationToken cancellationToken) =>
+            queryWorkIQSourceAuthorization == null
+                ? RetrieveStreamAsync(retrievalRequest, querySourceAuthorization, cancellationToken)
+                : RetrieveTypedStreamAsync(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken);
+#pragma warning restore AZC0002
+
+        private async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveTypedStreamAsync(
+            KnowledgeBaseRetrievalRequest retrievalRequest,
+            string querySourceAuthorization,
+            string queryWorkIQSourceAuthorization,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            AsyncStreamingResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
-                RequestContent.Create(retrievalRequest),
-                querySourceAuthorization,
-                cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            AsyncStreamingResult<SseItem<BinaryData>> result = queryWorkIQSourceAuthorization == null
+                ? await RetrieveStreamAsync(RequestContent.Create(retrievalRequest), querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false)
+                : await RetrieveStreamAsync(RequestContent.Create(retrievalRequest), querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
 
             await using (((IAsyncDisposable)result).ConfigureAwait(false))
             {

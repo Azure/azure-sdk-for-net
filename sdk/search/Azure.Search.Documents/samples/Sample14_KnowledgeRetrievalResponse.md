@@ -1,37 +1,34 @@
-# Knowledge Retrieval Response
+# Knowledge Retrieval Preview Response
 
-This sample demonstrates how to limit returned documents with `MaxOutputDocuments`, inspect activity records with model names and token usage, switch between `AnswerSynthesis` and `ExtractiveData` output modes, and read citation URLs.
+This sample demonstrates preview retrieval features including `maxOutputDocuments` to limit returned documents, `includeActivity` for detailed activity records with model names and token usage, Purview sensitivity labels on references, and switching between `AnswerSynthesis` and `ExtractiveData` output modes.
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
-Set `SEARCH_ENDPOINT` and `KNOWLEDGE_BASE_NAME` to an existing knowledge base backed by a populated hotel search index with semantic search configured. For answer synthesis, configure a model deployment on the knowledge base and grant the Search service's managed identity access to that model, as shown in "**Knowledge Base Configuration**" Sample. The caller needs **Search Index Data Reader** on the Search service.
-
 ## Required Namespaces
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_Namespaces
-using Azure.Identity;
-using Azure.Core;
+```C# Snippet:Azure_Search_Tests_Samples_Sample14_RetrievePreview_Namespaces
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
 ```
 
-## Retrieve with Activity Records
+## Retrieve with Activity Records and Purview Labels
 
-Enable `IncludeActivity` to inspect search-index retrieval and answer-synthesis activity records alongside references to the source documents. This example supplies an explicit semantic intent, which bypasses model query planning. It reports the knowledge source and relevant document count, plus the synthesis model and token usage.
+Perform a retrieval with `includeActivity` enabled to get detailed activity records (query planning, answer synthesis) that include model names and token counts. Also inspect Purview sensitivity labels on references and the overall response.
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_WithActivity
-// Get the service endpoint and authenticate with Microsoft Entra ID
+```C# Snippet:Azure_Search_Tests_Samples_Sample14_RetrievePreview_WithActivity
+// Get the service endpoint and API key from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 // Create a KnowledgeBaseRetrievalClient
 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
     endpoint, knowledgeBaseName, credential);
 
-// Build a retrieval request:
+// Build a retrieval request with preview features:
 // - maxOutputDocuments to limit the number of documents returned
 // - includeActivity to get detailed activity records with model names
 // - outputMode to control the response format
@@ -64,10 +61,10 @@ foreach (KnowledgeBaseActivityRecord activity in retrievalResponse.Activity)
 {
     Console.WriteLine($"Activity ID: {activity.Id}, Elapsed: {activity.ElapsedMs}ms");
 
-    if (activity is KnowledgeBaseSearchIndexActivityRecord searchIndex)
+    if (activity is KnowledgeBaseModelQueryPlanningActivityRecord queryPlanning)
     {
-        Console.WriteLine($"  Knowledge source: {searchIndex.KnowledgeSourceName}");
-        Console.WriteLine($"  Relevant documents: {searchIndex.Count}");
+        Console.WriteLine($"  Query Planning - Model: {queryPlanning.Model?.ModelName}");
+        Console.WriteLine($"  Input tokens: {queryPlanning.InputTokens}, Output tokens: {queryPlanning.OutputTokens}");
     }
     else if (activity is KnowledgeBaseModelAnswerSynthesisActivityRecord answerSynthesis)
     {
@@ -76,7 +73,7 @@ foreach (KnowledgeBaseActivityRecord activity in retrievalResponse.Activity)
     }
 }
 
-// Display references to the source documents
+// Display references with Purview sensitivity label metadata when available
 foreach (KnowledgeBaseReference reference in retrievalResponse.References)
 {
     Console.WriteLine($"Reference ID: {reference.Id}, Score: {reference.RerankerScore}");
@@ -84,19 +81,124 @@ foreach (KnowledgeBaseReference reference in retrievalResponse.References)
     if (reference is KnowledgeBaseSearchIndexReference searchIndexRef)
     {
         Console.WriteLine($"  Document key: {searchIndexRef.DocKey}");
+
+        // Purview sensitivity label metadata is available on search index references
+        if (searchIndexRef.SearchSensitivityLabelInfo != null)
+        {
+            PurviewSensitivityLabelInfo label = searchIndexRef.SearchSensitivityLabelInfo;
+            Console.WriteLine($"  Sensitivity label: {label.DisplayName} (ID: {label.SensitivityLabelId})");
+            Console.WriteLine($"  Priority: {label.Priority}, Encrypted: {label.IsEncrypted}");
+        }
     }
 }
+
+// Check for overall response sensitivity label info
+if (retrievalResponse.ResponseSensitivityLabelInfo != null)
+{
+    PurviewSensitivityLabelInfo responseLabel = retrievalResponse.ResponseSensitivityLabelInfo;
+    Console.WriteLine($"Response sensitivity label: {responseLabel.DisplayName}");
+}
+```
+
+## Override Per-Source Retrieval Behavior
+
+A knowledge source can persist `ResultsProcessing`, while a retrieve request can override that setting for one call. `AlwaysQuerySource` and `NeverQuerySource` are request-local controls on `KnowledgeSourceParams`; they do not modify source configuration or knowledge-base membership. Do not combine both controls on the same source.
+
+```C# Snippet:Azure_Search_Tests_Samples_Sample14_RetrievePreview_SourceOverrides
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
+string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
+string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
+
+SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
+KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
+    endpoint, knowledgeBaseName, credential);
+
+// Add a second source so each request can exclude one source while
+// leaving another source queryable.
+string secondarySourceName = "my-secondary-hotels-source";
+SearchIndexKnowledgeSource secondarySource = new SearchIndexKnowledgeSource(
+    secondarySourceName,
+    new SearchIndexKnowledgeSourceParameters(indexName))
+{
+    ResultsProcessing = KnowledgeSourceResultsProcessing.Rerank
+};
+KnowledgeSource createdSecondarySource = await indexClient.CreateKnowledgeSourceAsync(secondarySource);
+secondarySourceName = createdSecondarySource.Name;
+
+KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
+knowledgeBase.KnowledgeSources.Add(new KnowledgeSourceReference(secondarySourceName));
+await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
+
+// Store reranking as the primary source default.
+KnowledgeSource primarySource = await indexClient.GetKnowledgeSourceAsync(knowledgeSourceName);
+primarySource.ResultsProcessing = KnowledgeSourceResultsProcessing.Rerank;
+await indexClient.CreateOrUpdateKnowledgeSourceAsync(primarySource);
+
+// Query only the primary source and override its stored reranking
+// setting for this request.
+KnowledgeBaseRetrievalRequest primaryRequest = new KnowledgeBaseRetrievalRequest
+{
+    IncludeActivity = true,
+    RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort()
+};
+primaryRequest.Intents.Add(new KnowledgeRetrievalSemanticIntent("Find luxury hotels"));
+primaryRequest.KnowledgeSourceParams.Add(
+    new SearchIndexKnowledgeSourceParams(knowledgeSourceName)
+    {
+        AlwaysQuerySource = true,
+        IncludeReferences = true,
+        ResultsProcessing = KnowledgeSourceResultsProcessing.None
+    });
+primaryRequest.KnowledgeSourceParams.Add(
+    new SearchIndexKnowledgeSourceParams(secondarySourceName)
+    {
+        NeverQuerySource = true
+    });
+
+KnowledgeBaseRetrievalResponse primaryResponse =
+    await retrievalClient.RetrieveAsync(primaryRequest);
+
+// Reverse the per-source controls for another request. The primary
+// source is excluded while the secondary source remains queryable.
+KnowledgeBaseRetrievalRequest secondaryRequest = new KnowledgeBaseRetrievalRequest
+{
+    IncludeActivity = true,
+    RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort()
+};
+secondaryRequest.Intents.Add(new KnowledgeRetrievalSemanticIntent("Find luxury hotels"));
+secondaryRequest.KnowledgeSourceParams.Add(
+    new SearchIndexKnowledgeSourceParams(knowledgeSourceName)
+    {
+        NeverQuerySource = true
+    });
+secondaryRequest.KnowledgeSourceParams.Add(
+    new SearchIndexKnowledgeSourceParams(secondarySourceName)
+    {
+        AlwaysQuerySource = true,
+        IncludeReferences = true
+    });
+
+KnowledgeBaseRetrievalResponse secondaryResponse =
+    await retrievalClient.RetrieveAsync(secondaryRequest);
+
+KnowledgeSource persistedSource = await indexClient.GetKnowledgeSourceAsync(knowledgeSourceName);
+KnowledgeBase persistedBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
+Console.WriteLine($"Stored processing remains: {persistedSource.ResultsProcessing}");
+Console.WriteLine($"Knowledge-base source count remains: {persistedBase.KnowledgeSources.Count}");
 ```
 
 ## Retrieve with Extractive Data Mode
 
-Use `ExtractiveData` output mode to return raw extracted content without LLM synthesis for further processing. Set `KNOWLEDGE_SOURCE_NAME` to the search-index knowledge source attached to the knowledge base. Request both references and their structured source data explicitly so the example can inspect the returned document fields.
+Use `ExtractiveData` output mode to return raw extracted content without LLM synthesis. This is useful when you want to process the raw data yourself.
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_ExtractiveData
+```C# Snippet:Azure_Search_Tests_Samples_Sample14_RetrievePreview_ExtractiveData
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
-string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
     endpoint, knowledgeBaseName, credential);
@@ -109,11 +211,6 @@ KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
     OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData
 };
 request.Intents.Add(new KnowledgeRetrievalSemanticIntent("Find budget hotels"));
-request.KnowledgeSourceParams.Add(new SearchIndexKnowledgeSourceParams(knowledgeSourceName)
-{
-    IncludeReferences = true,
-    IncludeReferenceSourceData = true
-});
 
 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
@@ -143,11 +240,14 @@ foreach (KnowledgeBaseReference reference in retrievalResponse.References)
 
 ## Read Search-Owned Citation URLs
 
-Search Index, Azure Blob, File, indexed SharePoint, indexed OneLake, and indexed SQL references can expose an absolute `CitationUrl`. This URL points to the Search-owned backing document, not directly to the original source URL. Callers must use the required Search authorization when following it.
+Search Index, Azure Blob, indexed SharePoint, indexed OneLake, File, and indexed SQL references can expose an absolute `CitationUrl`. This URL points to the Search-owned backing document, not directly to the original source URL, and callers must use the required Search authorization when following it. Work IQ, Fabric, web, remote SharePoint, and MCP references are not positive citation-URL cases for this release.
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_CitationUrls
+The File citation case requires a package generated from a release input containing hotfix `ce948aaf`; do not claim or test File citation URLs against an unpatched release tip.
+
+```C# Snippet:Azure_Search_Tests_Samples_Sample14_RetrievePreview_CitationUrls
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
@@ -172,7 +272,8 @@ foreach (KnowledgeBaseReference reference in response.References)
 
     if (citationUrl is null)
     {
-        // Some reference kinds do not provide citation URLs.
+        // Work IQ, Fabric, web, remote SharePoint, and MCP references
+        // are not positive citation-URL cases for this release.
         continue;
     }
 

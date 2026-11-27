@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for functions that can modify document scores during ranking.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, and <see cref="TagScoringFunction"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, <see cref="RandomScoringFunction"/>, and <see cref="TagScoringFunction"/>.
     /// </summary>
     public partial class ScoringFunction : IJsonModel<ScoringFunction>
     {
@@ -72,43 +72,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ScoringFunction)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("fieldName"u8);
-            writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("boost"u8);
-            writer.WriteNumberValue(Boost);
-            if (Optional.IsDefined(Interpolation))
-            {
-                writer.WritePropertyName("interpolation"u8);
-                writer.WriteStringValue(Interpolation.Value.ToSerialString());
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ScoringFunction IJsonModel<ScoringFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -144,6 +107,8 @@ namespace Azure.Search.Documents.Indexes.Models
                         return FreshnessScoringFunction.DeserializeFreshnessScoringFunction(element, options);
                     case "magnitude":
                         return MagnitudeScoringFunction.DeserializeMagnitudeScoringFunction(element, options);
+                    case "random":
+                        return RandomScoringFunction.DeserializeRandomScoringFunction(element, options);
                     case "tag":
                         return TagScoringFunction.DeserializeTagScoringFunction(element, options);
                 }

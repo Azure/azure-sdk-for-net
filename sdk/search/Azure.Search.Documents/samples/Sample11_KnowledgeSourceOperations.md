@@ -6,9 +6,7 @@ For more information, see the [agentic retrieval documentation](https://learn.mi
 
 ## Required Namespaces
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Namespaces
-using Azure.Identity;
-using Azure.Core;
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_Namespaces
 using System.IO;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -19,9 +17,10 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 Create a knowledge source backed by a search index, with specific fields included in citation references.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_CreateSearchIndex
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_CreateSearchIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -39,6 +38,26 @@ SearchIndexKnowledgeSource searchIndexSource = new SearchIndexKnowledgeSource(
             new SearchIndexFieldReference("hotelName"),
         },
 
+        // Guide query planning toward useful filters and boosts.
+        QueryHints = new SearchIndexKnowledgeSourceQueryHints
+        {
+            Filters =
+            {
+                new SearchIndexKnowledgeSourceFilterHint("category")
+                {
+                    FieldValues = { "Luxury", "Budget" },
+                    FilterInstructions = "Use this field when the user specifies a hotel category."
+                }
+            },
+            Boosts =
+            {
+                new SearchIndexKnowledgeSourceFieldValueBoost("category", 2.0)
+                {
+                    FieldValues = { "Luxury" },
+                    BoostInstructions = "Boost luxury hotels when premium amenities are requested."
+                }
+            }
+        }
     })
 {
     Description = "Hotels search index knowledge source"
@@ -52,16 +71,19 @@ Console.WriteLine($"Created knowledge source '{createdSource.Name}'");
 
 This live-only scenario requires a supported indexed Blob source, private connectivity from the Search service to its dependencies, an attached AI Services resource, and an embedding deployment. `NetworkAccessMode.Private` is a create-time ingestion setting. With minimal extraction and AI Services attached, the service detects language and selects an analyzer on the generated index; analyzer selection is not a query-time option. Services must define and test their unsupported-language fallback behavior separately.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_PrivateBlob
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_PrivateBlob
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 string knowledgeSourceName = "my-private-blob-source";
 string storageConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING");
 string containerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
 string aiServicesEndpoint = Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
+string aiServicesKey = Environment.GetEnvironmentVariable("AI_SERVICES_KEY");
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
+string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
 KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParameters
 {
@@ -70,12 +92,14 @@ KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParam
     ContentExtractionMode = KnowledgeSourceContentExtractionMode.Minimal,
     AiServices = new AIServices(new Uri(aiServicesEndpoint))
     {
+        ApiKey = aiServicesKey
     },
     EmbeddingModel = new KnowledgeSourceAzureOpenAIVectorizer
     {
         AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
         {
             ResourceUri = new Uri(openAIEndpoint),
+            ApiKey = openAIKey,
             DeploymentName = "text-embedding-3-large",
             ModelName = "text-embedding-3-large"
         }
@@ -132,9 +156,10 @@ Console.WriteLine($"Service-selected analyzer: {microsoftAnalyzerField?.Analyzer
 
 Create a web knowledge source with allowed and blocked domain lists.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_CreateWeb
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_CreateWeb
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
@@ -161,9 +186,10 @@ Console.WriteLine($"Created web knowledge source '{createdSource.Name}'");
 
 Retrieve a specific knowledge source by name.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Get
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_Get
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -182,9 +208,10 @@ if (knowledgeSource is SearchIndexKnowledgeSource searchIndexSource)
 
 Enumerate all knowledge sources in a search service.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_List
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_List
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
@@ -206,9 +233,10 @@ Console.WriteLine($"Listed {sourceNames.Count} unique knowledge sources.");
 
 Get an existing knowledge source, modify it, and save the changes back.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Update
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_Update
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -227,9 +255,10 @@ Console.WriteLine($"Updated knowledge source '{updatedSource.Name}': {updatedSou
 
 Delete a knowledge source by name.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Delete
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_Delete
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -243,9 +272,10 @@ Console.WriteLine($"Deleted knowledge source '{knowledgeSourceName}'");
 
 Retrieve the synchronization status and history of a knowledge source.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_GetStatus
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_GetStatus
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);

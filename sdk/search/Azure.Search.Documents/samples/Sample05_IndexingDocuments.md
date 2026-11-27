@@ -8,7 +8,7 @@ how to move it into a search index.
 
 Let's start with a simple model type:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_LegacyProduct
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_LegacyProduct
 public class Product
 {
     [SimpleField(IsKey = true)]
@@ -28,7 +28,7 @@ public class Product
 Let's generate a sample catalog of products using Microsoft's naming conventions
 from the mid-2000s because that's old enough to be vintage now:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_GenerateCatalog
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_GenerateCatalog
 public IEnumerable<Product> GenerateCatalog(int count = 1000)
 {
     // Adapted from https://weblogs.asp.net/dfindley/Microsoft-Product-Name-Generator
@@ -60,17 +60,18 @@ Enterprise" for the artisinal price of only $149.99.
 
 We need to get that data into the service so let's create a `SearchIndexClient`:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_CreateIndex_Connect
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Connect
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client for manipulating search indexes
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 ```
 
 We'll use `FieldBuilder` to do the heavy lifting and create our search index:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_CreateIndex_Create
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
 // Create the search index
 string indexName = "products";
 await indexClient.CreateIndexAsync(
@@ -82,7 +83,7 @@ await indexClient.CreateIndexAsync(
 
 And finally we can get a `SearchClient` to the index we just created:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_CreateIndex_Client
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Client
 SearchClient searchClient = indexClient.GetSearchClient(indexName);
 ```
 
@@ -92,21 +93,21 @@ The lowest level way to manage documents in your index is by using the
 `IndexDocuments` method or its conveniences like `UploadDocuments`,
 `DeleteDocuments`, etc.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_SimpleIndexing1
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing1
 IEnumerable<Product> products = GenerateCatalog(count: 1000);
 await searchClient.UploadDocumentsAsync(products);
 ```
 
 We can quickly check that the document count matches our expections:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_SimpleIndexing2
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing2
 Assert.AreEqual(1000, (int)await searchClient.GetDocumentCountAsync());
 ```
 
 We do need to be careful to understand the limits of this API though.  For
 example, trying to upload all of our products in one shot via
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_SimpleIndexing3
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing3
 IEnumerable<Product> all = GenerateCatalog(count: 100000);
 await searchClient.UploadDocumentsAsync(all);
 ```
@@ -123,7 +124,7 @@ The easiest way to get data into a search index is using
 `SearchIndexingBufferedSender`.  Let's try sending a massive amount of data
 again.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_BufferedSender1
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
 await using SearchIndexingBufferedSender<Product> indexer =
     new SearchIndexingBufferedSender<Product>(searchClient);
 await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
@@ -134,7 +135,7 @@ number.  The buffered sender will split the indexing actions into batches,
 submit them sequentially, retry failures, etc.  You can call `FlushAsync` to
 wait for everything to be sent to the service.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_BufferedSender2
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
 await indexer.FlushAsync();
 Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
 ```

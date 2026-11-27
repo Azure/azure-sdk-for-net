@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -113,6 +114,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("ingestionParameters"u8);
                 }
             }
+            if (Optional.IsDefined(GraphExtraction))
+            {
+                writer.WritePropertyName("graphExtraction"u8);
+                writer.WriteObjectValue(GraphExtraction, options);
+            }
+            if (Optional.IsDefined(TopicGraph))
+            {
+                writer.WritePropertyName("topicGraph"u8);
+                writer.WriteObjectValue(TopicGraph, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedResources))
             {
                 writer.WritePropertyName("createdResources"u8);
@@ -167,6 +178,8 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isADLSGen2 = default;
             bool ingestionParametersIsDefined = false;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
+            KnowledgeSourceGraphExtractionParameters graphExtraction = default;
+            VectorQueryTopicGraph topicGraph = default;
             CreatedResources createdResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -212,6 +225,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("graphExtraction"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    graphExtraction = KnowledgeSourceGraphExtractionParameters.DeserializeKnowledgeSourceGraphExtractionParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("topicGraph"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    topicGraph = VectorQueryTopicGraph.DeserializeVectorQueryTopicGraph(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("createdResources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -232,6 +263,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 folderPath,
                 isADLSGen2,
                 ingestionParameters,
+                graphExtraction,
+                topicGraph,
                 createdResources,
                 additionalBinaryDataProperties)
             {

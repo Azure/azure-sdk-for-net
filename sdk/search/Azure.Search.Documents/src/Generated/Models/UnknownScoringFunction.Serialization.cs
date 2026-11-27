@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
@@ -96,53 +95,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScoringFunction(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownScoringFunction DeserializeUnknownScoringFunction(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string fieldName = default;
-            double boost = default;
-            ScoringFunctionInterpolation? interpolation = default;
-            string @type = "unknown";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("fieldName"u8))
-                {
-                    fieldName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("boost"u8))
-                {
-                    boost = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("interpolation"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interpolation = prop.Value.GetString().ToScoringFunctionInterpolation();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new UnknownScoringFunction(fieldName, boost, interpolation, @type, additionalBinaryDataProperties);
         }
     }
 }

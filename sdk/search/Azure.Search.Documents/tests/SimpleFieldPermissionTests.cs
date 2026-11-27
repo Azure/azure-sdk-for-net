@@ -15,12 +15,11 @@ namespace Azure.Search.Documents.Tests
         [TestCase("rbacScope")]
         public void SimpleFieldSetsPermissionFilter(string permissionFilter)
         {
-            var simpleField = new SimpleField("myField", SearchFieldDataType.String)
+            SearchField field = new SimpleField("myField", SearchFieldDataType.String)
             {
-                PermissionFilter = permissionFilter,
+                PermissionFilter = permissionFilter
             };
 
-            SearchField field = simpleField;
             Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
         }
 
@@ -29,11 +28,7 @@ namespace Azure.Search.Documents.Tests
         [TestCase("rbacScope")]
         public void SimpleFieldAttributeSetsPermissionFilter(string permissionFilter)
         {
-            var attribute = new SimpleFieldAttribute
-            {
-                PermissionFilter = permissionFilter,
-            };
-
+            var attribute = new SimpleFieldAttribute { PermissionFilter = permissionFilter };
             SearchField field = new SearchField("myField", SearchFieldDataType.String);
             ((ISearchFieldAttribute)attribute).SetField(field);
 
@@ -45,7 +40,7 @@ namespace Azure.Search.Documents.Tests
         {
             SearchField field = new SearchField("myField", SearchFieldDataType.String)
             {
-                PermissionFilter = PermissionFilter.RbacScope,
+                PermissionFilter = PermissionFilter.RbacScope
             };
 
             ((ISearchFieldAttribute)new SimpleFieldAttribute()).SetField(field);
@@ -66,10 +61,7 @@ namespace Azure.Search.Documents.Tests
         [TestCase("rbacScope")]
         public void SearchableFieldSetsPermissionFilter(string permissionFilter)
         {
-            SearchField field = new SearchableField("myField")
-            {
-                PermissionFilter = permissionFilter,
-            };
+            SearchField field = new SearchableField("myField") { PermissionFilter = permissionFilter };
 
             Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
             Assert.IsTrue(field.IsSearchable);
@@ -80,13 +72,8 @@ namespace Azure.Search.Documents.Tests
         [TestCase("rbacScope")]
         public void SearchableFieldAttributeInheritsPermissionFilter(string permissionFilter)
         {
-            var attribute = new SearchableFieldAttribute
-            {
-                PermissionFilter = permissionFilter,
-            };
-
             SearchField field = new SearchField("myField", SearchFieldDataType.String);
-            ((ISearchFieldAttribute)attribute).SetField(field);
+            ((ISearchFieldAttribute)new SearchableFieldAttribute { PermissionFilter = permissionFilter }).SetField(field);
 
             Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
             Assert.IsTrue(field.IsSearchable);

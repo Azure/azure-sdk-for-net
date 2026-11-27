@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -59,359 +60,6 @@ namespace Azure.Search.Documents.Tests.Models
     [Category("ModelSerialization")]
     public class ModelSerializationMockTests
     {
-#pragma warning disable CS0618 // Exercise obsolete compatibility models and factory methods.
-        [TestCase("J", false)]
-        [TestCase("W", false)]
-        [TestCase("J", true)]
-        [TestCase("W", true)]
-        public void ImageQueryCompatibilityRoundtrips(string format, bool useFactory)
-        {
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
-            VectorizableImageBinaryQuery binary = useFactory
-                ? SearchModelFactory.VectorizableImageBinaryQuery(3, "imageVector", true, 2, 0.5f, "aW1hZ2U=")
-                : new VectorizableImageBinaryQuery
-                {
-                    KNearestNeighborsCount = 3,
-                    Exhaustive = true,
-                    Oversampling = 2,
-                    Weight = 0.5f,
-                    Base64Image = "aW1hZ2U="
-                };
-            VectorizableImageUrlQuery url = useFactory
-                ? SearchModelFactory.VectorizableImageUrlQuery(3, "imageVector", true, 2, 0.5f, new Uri("https://example.com/image.png"))
-                : new VectorizableImageUrlQuery
-                {
-                    KNearestNeighborsCount = 3,
-                    Exhaustive = true,
-                    Oversampling = 2,
-                    Weight = 0.5f,
-                    Url = new Uri("https://example.com/image.png")
-                };
-            if (!useFactory)
-            {
-                binary.Fields.Add("imageVector");
-                url.Fields.Add("imageVector");
-            }
-
-            foreach (VectorQuery query in new VectorQuery[] { binary, url })
-            {
-                BinaryData data = ModelReaderWriter.Write(query, options);
-                using JsonDocument document = JsonDocument.Parse(data);
-                JsonElement json = document.RootElement;
-                bool isBinary = query is VectorizableImageBinaryQuery;
-                Assert.AreEqual(isBinary ? "imageBinary" : "imageUrl", json.GetProperty("kind").GetString());
-                Assert.AreEqual(isBinary ? "aW1hZ2U=" : "https://example.com/image.png",
-                    json.GetProperty(isBinary ? "base64Image" : "url").GetString());
-                Assert.AreEqual(3, json.GetProperty("k").GetInt32());
-                Assert.AreEqual("imageVector", json.GetProperty("fields").GetString());
-                Assert.IsTrue(json.GetProperty("exhaustive").GetBoolean());
-                Assert.AreEqual(2, json.GetProperty("oversampling").GetDouble());
-                Assert.AreEqual(0.5f, json.GetProperty("weight").GetSingle());
-
-                VectorQuery restored = ModelReaderWriter.Read<VectorQuery>(data, options);
-                Assert.AreEqual("UnknownVectorQuery", restored.GetType().Name);
-                Assert.AreEqual(query.KNearestNeighborsCount, restored.KNearestNeighborsCount);
-                CollectionAssert.AreEqual(query.Fields, restored.Fields);
-                Assert.AreEqual(query.Exhaustive, restored.Exhaustive);
-                Assert.AreEqual(query.Oversampling, restored.Oversampling);
-                Assert.AreEqual(query.Weight, restored.Weight);
-                if (isBinary)
-                {
-                    Assert.AreEqual(binary.Base64Image, ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data, options).Base64Image);
-                    Assert.AreEqual(binary.Base64Image, ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data, options, AzureSearchDocumentsContext.Default).Base64Image);
-                }
-                else
-                {
-                    Assert.AreEqual(url.Url, ModelReaderWriter.Read<VectorizableImageUrlQuery>(data, options).Url);
-                    Assert.AreEqual(url.Url, ModelReaderWriter.Read<VectorizableImageUrlQuery>(data, options, AzureSearchDocumentsContext.Default).Url);
-                }
-            }
-
-            SearchOptions searchOptions = new SearchOptions
-            {
-                VectorSearch = new VectorSearchOptions { Queries = { binary, url } }
-            };
-            using JsonDocument request = JsonDocument.Parse(ModelReaderWriter.Write(searchOptions, SearchTestHelpers.WireOptions));
-            Assert.AreEqual("imageBinary", request.RootElement.GetProperty("vectorQueries")[0].GetProperty("kind").GetString());
-            Assert.AreEqual("imageUrl", request.RootElement.GetProperty("vectorQueries")[1].GetProperty("kind").GetString());
-        }
-
-        [TestCase("J", "minimal")]
-        [TestCase("W", "minimal")]
-        [TestCase("J", "low")]
-        [TestCase("W", "low")]
-        [TestCase("J", "medium")]
-        [TestCase("W", "medium")]
-        [TestCase("J", "future")]
-        [TestCase("W", "future")]
-        public void AgenticReasoningEffortIsNotBoundToWire(string format, string kind)
-        {
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
-            BinaryData data = BinaryData.FromString($$$"""
-                {"id":1,"type":"agenticReasoning","reasoningTokens":12,"retrievalReasoningEffort":{"kind":"{{{kind}}}"}}
-                """);
-            KnowledgeBaseAgenticReasoningActivityRecord record =
-                (KnowledgeBaseAgenticReasoningActivityRecord)ModelReaderWriter.Read<KnowledgeBaseActivityRecord>(data, options);
-            Assert.IsNull(record.RetrievalReasoningEffort);
-            Assert.AreEqual(12, record.ReasoningTokens);
-
-            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
-            Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
-            Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
-            KnowledgeBaseAgenticReasoningActivityRecord restored =
-                ModelReaderWriter.Read<KnowledgeBaseAgenticReasoningActivityRecord>(ModelReaderWriter.Write(record, options), options);
-            Assert.IsNull(restored.RetrievalReasoningEffort);
-        }
-
-        [TestCase("J", "")]
-        [TestCase("W", "")]
-        [TestCase("J", ",\"retrievalReasoningEffort\":null")]
-        [TestCase("W", ",\"retrievalReasoningEffort\":null")]
-        public void MissingAgenticReasoningEffortRemainsNull(string format, string effortJson)
-        {
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
-            BinaryData data = BinaryData.FromString("{\"id\":1,\"type\":\"agenticReasoning\"" + effortJson + "}");
-            KnowledgeBaseAgenticReasoningActivityRecord record = ModelReaderWriter.Read<KnowledgeBaseAgenticReasoningActivityRecord>(data, options);
-            Assert.IsNull(record.RetrievalReasoningEffort);
-            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
-            Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
-        }
-
-        [Test]
-        public void AgenticReasoningFactoryPreservesEffort()
-        {
-            KnowledgeRetrievalMinimalReasoningEffort effort = new KnowledgeRetrievalMinimalReasoningEffort();
-            KnowledgeBaseAgenticReasoningActivityRecord record =
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, 12, effort);
-            Assert.AreSame(effort, record.RetrievalReasoningEffort);
-            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
-            Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
-            Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
-        }
-
-        [Test]
-        public void AgenticReasoningFactorySupportsOmittedAndNamedArguments()
-        {
-            KnowledgeBaseAgenticReasoningActivityRecord record =
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord();
-            Assert.AreEqual(0, record.Id);
-            Assert.IsNull(record.ElapsedMs);
-            Assert.IsNull(record.Error);
-            Assert.IsNull(record.ReasoningTokens);
-            Assert.IsNull(record.RetrievalReasoningEffort);
-
-            Assert.AreEqual(1, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1).Id);
-            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100).ElapsedMs);
-            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(elapsedMs: 100).ElapsedMs);
-            Assert.AreEqual(12, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(reasoningTokens: 12).ReasoningTokens);
-
-            KnowledgeBaseErrorDetail error = SearchModelFactory.KnowledgeBaseErrorDetail("test", "message");
-            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100, error, 12);
-            Assert.AreEqual(100, record.ElapsedMs);
-            Assert.AreSame(error, record.Error);
-            Assert.AreEqual(12, record.ReasoningTokens);
-
-            KnowledgeRetrievalMinimalReasoningEffort effort = new KnowledgeRetrievalMinimalReasoningEffort();
-            Assert.AreSame(effort, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(retrievalReasoningEffort: effort).RetrievalReasoningEffort);
-        }
-
-        [Test]
-        public void AgenticReasoningFactorySupportsNullArguments()
-        {
-            KnowledgeBaseAgenticReasoningActivityRecord[] records =
-            {
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null),
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null),
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null),
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null, null)
-            };
-
-            foreach (KnowledgeBaseAgenticReasoningActivityRecord record in records)
-            {
-                Assert.AreEqual(1, record.Id);
-                Assert.IsNull(record.ElapsedMs);
-                Assert.IsNull(record.Error);
-                Assert.IsNull(record.ReasoningTokens);
-                Assert.IsNull(record.RetrievalReasoningEffort);
-            }
-        }
-
-        [Test]
-        public void AgenticReasoningFactoryPreservesTimestampAndWarningArguments()
-        {
-            DateTimeOffset startedOn = new DateTimeOffset(2026, 10, 1, 1, 0, 0, TimeSpan.Zero);
-            DateTimeOffset completedOn = startedOn.AddMilliseconds(100);
-            KnowledgeBaseErrorDetail error = SearchModelFactory.KnowledgeBaseErrorDetail("test", "message");
-            KnowledgeBaseAgenticReasoningActivityRecord record =
-                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, startedOn, completedOn, 100, error, "warning", 12);
-
-            Assert.AreEqual(1, record.Id);
-            Assert.AreEqual(startedOn, record.StartedOn);
-            Assert.AreEqual(completedOn, record.CompletedOn);
-            Assert.AreEqual(100, record.ElapsedMs);
-            Assert.AreSame(error, record.Error);
-            Assert.AreEqual("warning", record.Warning);
-            Assert.AreEqual(12, record.ReasoningTokens);
-            Assert.IsNull(record.RetrievalReasoningEffort);
-        }
-
-        [TestCase("imageBinary", "base64Image", "aW1hZ2U=")]
-        [TestCase("imageUrl", "url", "https://example.com/image.png")]
-        public void ImageQueryPersistencePreservesUnknownProperties(string kind, string property, string value)
-        {
-            BinaryData data = BinaryData.FromString($$$"""
-                {"kind":"{{{kind}}}","{{{property}}}":"{{{value}}}","futureProperty":{"value":42}}
-                """);
-            VectorQuery query = kind == "imageBinary"
-                ? ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data)
-                : ModelReaderWriter.Read<VectorizableImageUrlQuery>(data);
-            using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(query));
-            Assert.AreEqual(42, persisted.RootElement.GetProperty("futureProperty").GetProperty("value").GetInt32());
-            using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(query, SearchTestHelpers.WireOptions));
-            Assert.IsFalse(wire.RootElement.TryGetProperty("futureProperty", out _));
-            Assert.AreEqual(value, wire.RootElement.GetProperty(property).GetString());
-        }
-
-        [TestCase("J", false)]
-        [TestCase("W", false)]
-        [TestCase("J", true)]
-        [TestCase("W", true)]
-        public void AmlCompatibilityRoundtrips(string format, bool useFactory)
-        {
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
-            Uri scoringUri = new Uri("https://example.com/score");
-            AzureMachineLearningParameters parameters = useFactory
-                ? SearchModelFactory.AzureMachineLearningParameters(scoringUri, "test-key", "resource", TimeSpan.FromMinutes(1), "westus", AIFoundryModelCatalogName.CohereEmbedV4)
-                : new AzureMachineLearningParameters(scoringUri)
-                {
-                    AuthenticationKey = "test-key",
-                    ResourceId = "resource",
-                    Timeout = TimeSpan.FromMinutes(1),
-                    Region = "westus",
-                    ModelName = AIFoundryModelCatalogName.CohereEmbedV4
-                };
-            AzureMachineLearningVectorizer vectorizer = useFactory
-                ? SearchModelFactory.AzureMachineLearningVectorizer("aml", parameters)
-                : new AzureMachineLearningVectorizer("aml") { AMLParameters = parameters };
-
-            BinaryData data = ModelReaderWriter.Write(vectorizer, options, AzureSearchDocumentsContext.Default);
-            using JsonDocument document = JsonDocument.Parse(data);
-            JsonElement json = document.RootElement;
-            Assert.AreEqual("aml", json.GetProperty("name").GetString());
-            Assert.AreEqual("aml", json.GetProperty("kind").GetString());
-            JsonElement aml = json.GetProperty("amlParameters");
-            Assert.AreEqual(scoringUri.AbsoluteUri, aml.GetProperty("uri").GetString());
-            Assert.AreEqual("test-key", aml.GetProperty("key").GetString());
-            Assert.AreEqual("resource", aml.GetProperty("resourceId").GetString());
-            Assert.AreEqual("PT1M", aml.GetProperty("timeout").GetString());
-            Assert.AreEqual("westus", aml.GetProperty("region").GetString());
-            Assert.AreEqual("Cohere-embed-v4", aml.GetProperty("modelName").GetString());
-
-            foreach (bool useContext in new[] { false, true })
-            {
-                AzureMachineLearningVectorizer restored = useContext
-                    ? ModelReaderWriter.Read<AzureMachineLearningVectorizer>(data, options, AzureSearchDocumentsContext.Default)
-                    : ModelReaderWriter.Read<AzureMachineLearningVectorizer>(data, options);
-                Assert.AreEqual(vectorizer.VectorizerName, restored.VectorizerName);
-                BinaryData parameterData = ModelReaderWriter.Write(parameters, options);
-                AzureMachineLearningParameters restoredParameters = useContext
-                    ? ModelReaderWriter.Read<AzureMachineLearningParameters>(parameterData, options, AzureSearchDocumentsContext.Default)
-                    : ModelReaderWriter.Read<AzureMachineLearningParameters>(parameterData, options);
-                foreach (AzureMachineLearningParameters actual in new[] { restored.AMLParameters, restoredParameters })
-                {
-                    Assert.AreEqual(parameters.ScoringUri, actual.ScoringUri);
-                    Assert.AreEqual(parameters.AuthenticationKey, actual.AuthenticationKey);
-                    Assert.AreEqual(parameters.ResourceId, actual.ResourceId);
-                    Assert.AreEqual(parameters.Timeout, actual.Timeout);
-                    Assert.AreEqual(parameters.Region, actual.Region);
-                    Assert.AreEqual(parameters.ModelName, actual.ModelName);
-                }
-            }
-
-            VectorSearchVectorizer baseModel = ModelReaderWriter.Read<VectorSearchVectorizer>(data, options);
-            Assert.AreEqual("UnknownVectorSearchVectorizer", baseModel.GetType().Name);
-            Assert.AreEqual(vectorizer.VectorizerName, baseModel.VectorizerName);
-        }
-#pragma warning restore CS0618
-
-        [Test]
-        public void VectorQueryFactorySupportsOmittedAndNamedArguments()
-        {
-            VectorQuery query = SearchModelFactory.VectorQuery(kNearestNeighborsCount: 3, fieldsRaw: "vector", kind: "vector");
-
-            Assert.AreEqual(3, query.KNearestNeighborsCount);
-            CollectionAssert.AreEqual(new[] { "vector" }, query.Fields);
-            Assert.IsNull(query.Exhaustive);
-            Assert.IsNull(query.Weight);
-        }
-
-        [Test]
-        public void KnowledgeSourceFactorySupportsOmittedAndNamedArguments()
-        {
-            KnowledgeSource source = SearchModelFactory.KnowledgeSource(name: "hotels-ks", kind: "searchIndex");
-
-            Assert.AreEqual("hotels-ks", source.Name);
-            Assert.IsNull(source.Description);
-            Assert.IsNull(source.EncryptionKey);
-        }
-
-        [Test]
-        public void FacetResultFactoriesSupportOmittedCount()
-        {
-            FacetResult objectFacet = SearchModelFactory.FacetResult(
-                additionalProperties: new Dictionary<string, object> { ["value"] = "Luxury" });
-            FacetResult binaryFacet = SearchModelFactory.FacetResult(
-                additionalProperties: new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson("Luxury") });
-
-            foreach (FacetResult facet in new[] { objectFacet, binaryFacet })
-            {
-                Assert.IsNull(facet.Count);
-                Assert.AreEqual("Luxury", facet.Value);
-            }
-        }
-
-        [Test]
-        public void SearchIndexFactorySupportsEnumerableFieldsWithOmittedArguments()
-        {
-            SearchField field = new SearchField("id", SearchFieldDataType.String) { IsKey = true };
-            IEnumerable<SearchField> fields = new[] { field, null }.Where(f => f != null);
-
-            SearchIndex index = SearchModelFactory.SearchIndex(name: "hotels", fields: fields);
-
-            Assert.AreEqual("hotels", index.Name);
-            CollectionAssert.AreEqual(new[] { field }, index.Fields);
-            Assert.IsNull(index.Description);
-            Assert.IsEmpty(index.ScoringProfiles);
-        }
-
-        [Test]
-        public void FileCapacityDeserializesAndPersists()
-        {
-            BinaryData data = BinaryData.FromString("""
-                {
-                  "kind": "file",
-                  "synchronizationStatus": "active",
-                  "fileCapacity": {
-                    "maxFileCount": 100,
-                    "remainingFileCount": 75,
-                    "maxFileSizeBytes": 5000000000
-                  }
-                }
-                """);
-
-            KnowledgeSourceStatus status = ModelReaderWriter.Read<KnowledgeSourceStatus>(data, SearchTestHelpers.WireOptions);
-            Assert.IsNotNull(status.FileCapacity);
-            Assert.AreEqual(100, status.FileCapacity.MaxFileCount);
-            Assert.AreEqual(75, status.FileCapacity.RemainingFileCount);
-            Assert.AreEqual(5000000000L, status.FileCapacity.MaxFileSizeBytes);
-
-            BinaryData persisted = ModelReaderWriter.Write(status, ModelReaderWriterOptions.Json);
-            KnowledgeSourceStatus restored = ModelReaderWriter.Read<KnowledgeSourceStatus>(persisted, ModelReaderWriterOptions.Json);
-            Assert.AreEqual(status.FileCapacity.MaxFileCount, restored.FileCapacity.MaxFileCount);
-            Assert.AreEqual(status.FileCapacity.RemainingFileCount, restored.FileCapacity.RemainingFileCount);
-            Assert.AreEqual(status.FileCapacity.MaxFileSizeBytes, restored.FileCapacity.MaxFileSizeBytes);
-        }
-
         /// <summary>
         /// Data source for model serialization roundtrip tests.
         /// Each entry: (modelType, jsonPayload).
@@ -463,7 +111,186 @@ namespace Azure.Search.Documents.Tests.Models
                 .SetName("Roundtrip_CorsOptions");
 
 #if AZURE_SEARCH_PREVIEW
-            // --- 2026-08-01-preview: new knowledge source polymorphic subtypes ---
+            // search-preview:2026-11-01-preview {
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"topics",
+                  "fields":[
+                    {"name":"id","type":"Edm.String","key":true},
+                    {"name":"embedding","type":"Collection(Edm.Single)","searchable":true,"dimensions":2,"vectorSearchProfile":"vector-profile","topicGraphProfile":"topic-profile"}
+                  ],
+                  "vectorSearch":{
+                    "profiles":[{"name":"vector-profile","algorithm":"hnsw"}],
+                    "algorithms":[{"name":"hnsw","kind":"hnsw"}],
+                    "topicGraphProfiles":[{"name":"topic-profile","indexName":"topic-index","defaultKind":"diverse","defaultDiversityFactor":0.5,"defaultMinDiversityPoolSize":1000}]
+                  }
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_TopicGraphProfile");
+
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"graph",
+                  "fields":[{"name":"id","type":"Edm.String","key":true}],
+                  "graphProfile":{
+                    "kind":"edgeList","provenanceIndexName":"chunks",
+                    "fields":{
+                      "assertionIdField":"id","factIdField":"fact","subjectField":"subject","predicateField":"predicate",
+                      "objectField":"object","objectStringField":"objectString","objectDoubleField":"objectDouble",
+                      "objectBoolField":"objectBool","objectDateTimeField":"objectDateTime","subjectTypeField":"subjectType",
+                      "subjectIdField":"subjectId","objectTypeField":"objectType","objectIdField":"objectId",
+                      "confidenceField":"confidence","subjectConfidenceField":"subjectConfidence",
+                      "predicateConfidenceField":"predicateConfidence","objectConfidenceField":"objectConfidence",
+                      "sourceChunkIdField":"chunkId","sourceParentIdField":"parentId","graphNameField":"graphName",
+                      "subjectIdDisplayNameField":"subjectName","objectIdDisplayNameField":"objectName"
+                    }
+                  }
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_GraphRoleMappings");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"index-source","kind":"searchIndex",
+                  "searchIndexParameters":{"searchIndexName":"chunks","topicGraph":{"kind":"balanced","minDiversityPoolSize":1000}}
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_IndexTopicGraph");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"blob-source","kind":"azureBlob",
+                  "azureBlobParameters":{
+                    "connectionString":"ResourceId=/subscriptions/fake/storageAccounts/source;","containerName":"documents",
+                    "topicGraph":{"kind":"diverse","diversityFactor":0.5,"minDiversityPoolSize":1000},
+                    "graphExtraction":{
+                      "graphName":"entities",
+                      "ontology":{"kind":"inline","name":"customer-ontology","value":"{\"@context\":{},\"@graph\":[]}"},
+                      "grounding":{"kind":"searchIndex","index":{"indexName":"grounding","vectorFieldName":"embedding"}},
+                      "pageDegreeOfParallelism":8
+                    },
+                    "ingestionParameters":{
+                      "cache":{"storageConnectionString":"ResourceId=/subscriptions/fake/storageAccounts/cache;","enableReprocessing":true,"identity":null},
+                      "chatCompletionModel":{"kind":"azureOpenAI","azureOpenAIParameters":{"resourceUri":"https://model.example.com/","deploymentId":"chat","modelName":"gpt-5-mini"}}
+                    }
+                  }
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_GraphExtractionAndCache");
+
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"secured",
+                  "fields":[
+                    {"name":"id","type":"Edm.String","key":true},
+                    {"name":"folders","type":"Collection(Edm.String)","filterable":true,"permissionFilter":"oneLakeParentFolders"},
+                    {"name":"lakehouse","type":"Edm.String","filterable":true,"permissionFilter":"oneLakeLakehouseId"}
+                  ],
+                  "oneLakeSecuritySource":{"fabricWorkspaceId":"11111111-1111-1111-1111-111111111111","lakehouseId":"22222222-2222-2222-2222-222222222222"}
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_OneLakePermissions");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"onelake-source","kind":"indexedOneLake",
+                  "indexedOneLakeParameters":{
+                    "fabricWorkspaceId":"11111111-1111-1111-1111-111111111111","lakehouseId":"22222222-2222-2222-2222-222222222222",
+                    "targetPath":"Files/documents",
+                    "ingestionParameters":{"ingestionPermissionOptions":["oneLakeParentFolders","oneLakeLakehouseId"]}
+                  }
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_OneLakePermissionIngestion");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeBase),
+                """
+                {
+                  "name":"kb","knowledgeSources":[{"name":"source"}],
+                  "models":[{"kind":"microsoftRetriever1"}],
+                  "tools":[{
+                    "name":"company-docs","description":"Search company documents",
+                    "knowledgeSources":[{"name":"source","alwaysQuerySource":true,"filterAddOn":"category eq 'company'","rerankerThreshold":2.5,"maxOutputDocuments":50,"failOnError":true}],
+                    "retrievalReasoningEffort":{"kind":"minimal"},
+                    "retrieveDefaults":{"maxRuntimeInSeconds":30,"maxOutputDocuments":50,"maxOutputSizeInTokens":2000}
+                  }]
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeBase_RetrieverAndTools");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeBase),
+                """
+                {
+                  "name":"kb","knowledgeSources":[{"name":"source"}],
+                  "models":[{"kind":"openAICompatible","openAICompatibleParameters":{
+                    "uri":"https://gateway.example.com/responses?route=chat","modelName":"gpt-6-sol",
+                    "headers":{"Authorization":"Bearer fake-test-token","X-Route":"chat"}
+                  }}]
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeBase_OpenAICompatibleHeaders");
+
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"apim","fields":[{"name":"id","type":"Edm.String","key":true}],
+                  "vectorSearch":{"vectorizers":[{
+                    "name":"embeddings","kind":"openAICompatible",
+                    "openAICompatibleParameters":{"uri":"https://gateway.example.com/embeddings?route=small","modelName":"text-embedding-3-small","dimensions":256,"headers":{"api-key":"fake-test-key"}}
+                  }]}
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_OpenAICompatibleVectorizer");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"file-source","kind":"file","fileParameters":{"ingestionParameters":{
+                    "embeddingModel":{"kind":"openAICompatible","openAICompatibleParameters":{
+                      "uri":"https://gateway.example.com/embeddings?route=large","modelName":"text-embedding-3-large","dimensions":1024,
+                      "managedIdentityAudience":"11111111-1111-1111-1111-111111111111",
+                      "authIdentity":{"@odata.type":"#Microsoft.Azure.Search.DataUserAssignedIdentity","userAssignedIdentity":"/subscriptions/fake/resourceGroups/fake/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ingestion"}
+                    }},
+                    "chatCompletionModel":{"kind":"openAICompatible","openAICompatibleParameters":{
+                      "uri":"https://gateway.example.com/chat/completions?route=images","modelName":"gpt-5-mini",
+                      "managedIdentityAudience":"11111111-1111-1111-1111-111111111111"
+                    }}
+                  }}
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_OpenAICompatibleManagedIdentity");
+
+            yield return new TestCaseData(
+                typeof(SearchIndexerSkill),
+                """
+                {
+                  "@odata.type":"#Microsoft.Skills.Custom.ChatCompletionSkill","name":"gateway-chat",
+                  "inputs":[{"name":"text","source":"/document/content"}],"outputs":[{"name":"response","targetName":"summary"}],
+                  "uri":"https://gateway.example.com/chat/completions?api-version=2026-11-01",
+                  "apiKey":"fake-test-key","commonModelParameters":{"model":"gpt-5-mini"},
+                  "extraParameters":{"max_completion_tokens":256}
+                }
+                """)
+                .SetName("Roundtrip_Skill_GatewayChatCompletion");
+            // search-preview:2026-11-01-preview }
+
+            // --- Preview knowledge source polymorphic subtypes ---
             // Each carries the discriminator ("kind") and a nested parameters object; roundtrip exercises
             // the polymorphic dispatch in the KnowledgeSource base type plus the subtype's own serializer.
 
@@ -505,7 +332,7 @@ namespace Azure.Search.Documents.Tests.Models
 
             // FreshnessPolicy — new knowledge-base-level retrieval policy.
             yield return new TestCaseData(
-                typeof(FreshnessPolicy),
+                typeof(KnowledgeSourceFreshnessPolicy),
                 @"{""boostingDuration"":""P90D""}")
                 .SetName("Roundtrip_FreshnessPolicy");
 
@@ -523,6 +350,337 @@ namespace Azure.Search.Documents.Tests.Models
                 @"{""knowledgeSourceName"":""idx-ks"",""kind"":""searchIndex"",""failOnError"":true,""maxOutputDocuments"":25,""enableImageServing"":true}")
                 .SetName("Roundtrip_KnowledgeSourceParams_NewProperties");
 #endif
+        }
+
+        [Test]
+        public void AgenticReasoningFactorySupportsGaOptionalArguments()
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord();
+            Assert.AreEqual(0, record.Id);
+            Assert.IsNull(record.ElapsedMs);
+            Assert.IsNull(record.Error);
+            Assert.IsNull(record.ReasoningTokens);
+            Assert.IsNull(record.RetrievalReasoningEffort);
+
+            Assert.AreEqual(1, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1).Id);
+            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100).ElapsedMs);
+            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(elapsedMs: 100).ElapsedMs);
+            Assert.AreEqual(12, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(reasoningTokens: 12).ReasoningTokens);
+
+            KnowledgeBaseErrorDetail error = SearchModelFactory.KnowledgeBaseErrorDetail("test", "message");
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100, error, 12);
+            Assert.AreEqual(100, record.ElapsedMs);
+            Assert.AreSame(error, record.Error);
+            Assert.AreEqual(12, record.ReasoningTokens);
+        }
+
+        [Test]
+        public void AgenticReasoningFactorySupportsGaNullArguments()
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord[] records =
+            {
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null, null)
+            };
+
+            foreach (KnowledgeBaseAgenticReasoningActivityRecord record in records)
+            {
+                Assert.AreEqual(1, record.Id);
+                Assert.IsNull(record.ElapsedMs);
+                Assert.IsNull(record.Error);
+                Assert.IsNull(record.ReasoningTokens);
+                Assert.IsNull(record.RetrievalReasoningEffort);
+            }
+        }
+
+        [Test]
+        public void AgenticReasoningFactoryPreservesGaAndPreviewFields()
+        {
+            var effort = new KnowledgeRetrievalMinimalReasoningEffort();
+            var record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, 12, effort);
+            Assert.AreSame(effort, record.RetrievalReasoningEffort);
+            Assert.AreSame(effort, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(retrievalReasoningEffort: effort).RetrievalReasoningEffort);
+            using (JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions)))
+            {
+                Assert.AreEqual("minimal", serialized.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+                Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
+            }
+
+            DateTimeOffset startedOn = new DateTimeOffset(2026, 10, 1, 1, 0, 0, TimeSpan.Zero);
+            DateTimeOffset completedOn = startedOn.AddMilliseconds(100);
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, startedOn, completedOn, 100, null, "warning", 12);
+            Assert.AreEqual(startedOn, record.StartedOn);
+            Assert.AreEqual(completedOn, record.CompletedOn);
+            Assert.AreEqual(100, record.ElapsedMs);
+            Assert.AreEqual("warning", record.Warning);
+            Assert.AreEqual(12, record.ReasoningTokens);
+
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, startedOn, completedOn, 100, null, "warning", 12, effort, effort);
+            Assert.AreSame(effort, record.RetrievalReasoningEffort);
+            Assert.AreSame(effort, record.LogicalReasoningEffort);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("future-value")]
+        public void NullableEnumConversionsPreserveNullAndUnknownValues(string value)
+        {
+            AzureOpenAIModelName? modelName = value;
+            KnowledgeSourceResultsProcessing? resultsProcessing = value;
+
+            Assert.AreEqual(value, modelName?.ToString());
+            Assert.AreEqual(value, resultsProcessing?.ToString());
+        }
+
+        [Test]
+        public void VectorQueryFactorySupportsOmittedAndNamedArguments()
+        {
+            VectorQuery query = SearchModelFactory.VectorQuery(kNearestNeighborsCount: 3, fieldsRaw: "vector", kind: "vector");
+
+            Assert.AreEqual(3, query.KNearestNeighborsCount);
+            CollectionAssert.AreEqual(new[] { "vector" }, query.Fields);
+            Assert.IsNull(query.Exhaustive);
+            Assert.IsNull(query.Weight);
+        }
+
+        [Test]
+        public void KnowledgeSourceFactorySupportsOmittedAndNamedArguments()
+        {
+            KnowledgeSource source = SearchModelFactory.KnowledgeSource(name: "hotels-ks", kind: "searchIndex");
+
+            Assert.AreEqual("hotels-ks", source.Name);
+            Assert.IsNull(source.Description);
+            Assert.IsNull(source.EncryptionKey);
+        }
+
+        [Test]
+        public void FacetResultFactoriesSupportOmittedCount()
+        {
+            FacetResult objectFacet = SearchModelFactory.FacetResult(
+                additionalProperties: new Dictionary<string, object> { ["value"] = "Luxury" });
+            FacetResult binaryFacet = SearchModelFactory.FacetResult(
+                additionalProperties: new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson("Luxury") });
+
+            foreach (FacetResult facet in new[] { objectFacet, binaryFacet })
+            {
+                Assert.IsNull(facet.Count);
+                Assert.AreEqual("Luxury", facet.Value);
+            }
+        }
+
+        [Test]
+        public void FacetResultFactoryPreservesPreviewShortCallsAndMetrics()
+        {
+            Assert.IsNull(SearchModelFactory.FacetResult().Count);
+            Assert.AreEqual(2, SearchModelFactory.FacetResult(count: 2).Count);
+            FacetResult metrics = SearchModelFactory.FacetResult(avg: 3, min: 1, max: 5);
+            Assert.AreEqual(3, metrics.Avg);
+            Assert.AreEqual(1, metrics.Min);
+            Assert.AreEqual(5, metrics.Max);
+        }
+
+        [Test]
+        public void SearchIndexFactorySupportsEnumerableFieldsWithOmittedArguments()
+        {
+            SearchField field = new SearchField("id", SearchFieldDataType.String) { IsKey = true };
+            IEnumerable<SearchField> fields = new[] { field, null }.Where(f => f != null);
+            ScoringProfile profile = new ScoringProfile("default");
+            IEnumerable<ScoringProfile> profiles = new[] { profile }.Where(p => p != null);
+
+            SearchIndex index = SearchModelFactory.SearchIndex(name: "hotels", fields: fields, scoringProfiles: profiles);
+
+            Assert.AreEqual("hotels", index.Name);
+            CollectionAssert.AreEqual(new[] { field }, index.Fields);
+            Assert.IsNull(index.Description);
+            CollectionAssert.AreEqual(new[] { profile }, index.ScoringProfiles);
+        }
+
+        [Test]
+        public void KnowledgeSourceFactoriesSupportGaPartialPositionalArguments()
+        {
+            ETag eTag = new ETag("etag");
+            KnowledgeSource[] sources =
+            {
+                SearchModelFactory.AzureBlobKnowledgeSource("source", "description", eTag),
+                SearchModelFactory.IndexedOneLakeKnowledgeSource("source", "description", eTag),
+                SearchModelFactory.SearchIndexKnowledgeSource("source", "description", eTag),
+                SearchModelFactory.WebKnowledgeSource("source", "description", eTag)
+            };
+
+            foreach (KnowledgeSource source in sources)
+            {
+                Assert.AreEqual("source", source.Name);
+                Assert.AreEqual("description", source.Description);
+                Assert.AreEqual(eTag, source.ETag);
+                Assert.IsNull(source.ResultsProcessing);
+                Assert.IsNull(source.EncryptionKey);
+            }
+        }
+
+        [Test]
+        public void SynchronizationFactoriesSupportGaPartialPositionalArguments()
+        {
+            DateTimeOffset started = DateTimeOffset.Parse("2026-11-01T00:00:00Z");
+            DateTimeOffset completed = started.AddMinutes(1);
+            SynchronizationState state = SearchModelFactory.SynchronizationState(started, 3);
+            CompletedSynchronizationState completedState = SearchModelFactory.CompletedSynchronizationState(started, completed, 3);
+
+            Assert.AreEqual(started, state.StartTime);
+            Assert.AreEqual(3, state.ItemsUpdatesProcessed);
+            Assert.AreEqual(0, state.ItemsUpdatesFailed);
+            Assert.IsNull(state.GraphStatistics);
+            Assert.AreEqual(started, completedState.StartTime);
+            Assert.AreEqual(completed, completedState.EndTime);
+            Assert.AreEqual(3, completedState.ItemsUpdatesProcessed);
+            Assert.IsNull(completedState.GraphStatistics);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void ScoringFunctionsSupportGaNamedConstructors(string format)
+        {
+            ScoringFunction[] functions =
+            {
+                new DistanceScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new DistanceScoringParameters("referencePoint", 10)),
+                new FreshnessScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new FreshnessScoringParameters(TimeSpan.FromDays(7))),
+                new MagnitudeScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new MagnitudeScoringParameters(0, 5)),
+                new TagScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new TagScoringParameters("preferredTags"))
+            };
+
+            foreach (ScoringFunction function in functions)
+            {
+                function.Interpolation = ScoringFunctionInterpolation.Linear;
+                var options = new ModelReaderWriterOptions(format);
+                BinaryData json = ModelReaderWriter.Write(function, options);
+                using JsonDocument document = JsonDocument.Parse(json);
+                Assert.AreEqual("field", document.RootElement.GetProperty("fieldName").GetString());
+                Assert.AreEqual(2.0, document.RootElement.GetProperty("boost").GetDouble());
+                Assert.AreEqual(1, document.RootElement.EnumerateObject().Count(property => property.Name == "fieldName"));
+                Assert.AreEqual(1, document.RootElement.EnumerateObject().Count(property => property.Name == "boost"));
+                Assert.AreEqual("linear", document.RootElement.GetProperty("interpolation").GetString());
+                ScoringFunction roundtrip = ModelReaderWriter.Read<ScoringFunction>(json, options);
+                Assert.AreEqual(function.GetType(), roundtrip.GetType());
+                Assert.AreEqual(function.FieldName, roundtrip.FieldName);
+                Assert.AreEqual(function.Boost, roundtrip.Boost);
+                Assert.AreEqual(function.Interpolation, roundtrip.Interpolation);
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void CustomerScoringFunctionPreservesCommonFields(string format)
+        {
+            ScoringFunction function = new CustomerScoringFunction();
+            using var stream = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(stream))
+            {
+                ((IJsonModel<ScoringFunction>)function).Write(writer, new ModelReaderWriterOptions(format));
+            }
+            using JsonDocument document = JsonDocument.Parse(stream.ToArray());
+            JsonElement root = document.RootElement;
+            Assert.AreEqual("rating", root.GetProperty("fieldName").GetString());
+            Assert.AreEqual(2.0, root.GetProperty("boost").GetDouble());
+            Assert.AreEqual("magnitude", root.GetProperty("type").GetString());
+            Assert.AreEqual(5, root.GetProperty("magnitude").GetProperty("boostingRangeEnd").GetInt32());
+            Assert.AreEqual(1, root.EnumerateObject().Count(property => property.Name == "fieldName"));
+            Assert.AreEqual(1, root.EnumerateObject().Count(property => property.Name == "boost"));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RandomScoringFunctionPersistsLegacyFieldsButOmitsThemOnWire(string format)
+        {
+            ScoringFunction function = new RandomScoringFunction { FieldName = "rating", Boost = 2.0 };
+            using JsonDocument document = JsonDocument.Parse(
+                ModelReaderWriter.Write(function, new ModelReaderWriterOptions(format)));
+            Assert.AreEqual("random", document.RootElement.GetProperty("type").GetString());
+            if (format == "W")
+            {
+                Assert.IsFalse(document.RootElement.TryGetProperty("fieldName", out _));
+                Assert.IsFalse(document.RootElement.TryGetProperty("boost", out _));
+            }
+            else
+            {
+                Assert.AreEqual("rating", document.RootElement.GetProperty("fieldName").GetString());
+                Assert.AreEqual(2.0, document.RootElement.GetProperty("boost").GetDouble());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void PersistedRandomScoringRetainsLegacyValuesWithoutStaleJson(string format)
+        {
+            BinaryData data = BinaryData.FromString(
+                """{"type":"random","fieldName":"rating","boost":2,"interpolation":"linear","random":{"seedParameter":"seed"},"future":{"enabled":true}}""");
+            var options = new ModelReaderWriterOptions(format);
+            foreach (ScoringFunction function in new ScoringFunction[]
+            {
+                ModelReaderWriter.Read<ScoringFunction>(data, options),
+                ModelReaderWriter.Read<RandomScoringFunction>(data, options)
+            })
+            {
+                Assert.IsInstanceOf<RandomScoringFunction>(function);
+                Assert.AreEqual("rating", function.FieldName);
+                Assert.AreEqual(2, function.Boost);
+                Assert.AreEqual(ScoringFunctionInterpolation.Linear, function.Interpolation);
+                Assert.AreEqual("seed", ((RandomScoringFunction)function).Parameters.SeedParameter);
+                function.FieldName = "updated";
+                function.Boost = 3;
+
+                BinaryData persisted = ModelReaderWriter.Write(function);
+                using JsonDocument json = JsonDocument.Parse(persisted);
+                Assert.AreEqual("updated", json.RootElement.GetProperty("fieldName").GetString());
+                Assert.AreEqual(3, json.RootElement.GetProperty("boost").GetDouble());
+                Assert.AreEqual(1, json.RootElement.EnumerateObject().Count(property => property.Name == "fieldName"));
+                Assert.AreEqual(1, json.RootElement.EnumerateObject().Count(property => property.Name == "boost"));
+                Assert.AreEqual(format == "J", json.RootElement.TryGetProperty("future", out _));
+                ScoringFunction roundtrip = ModelReaderWriter.Read<ScoringFunction>(persisted);
+                Assert.AreEqual("updated", roundtrip.FieldName);
+                Assert.AreEqual(3, roundtrip.Boost);
+
+                using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(function, SearchTestHelpers.WireOptions));
+                Assert.IsFalse(wire.RootElement.TryGetProperty("fieldName", out _));
+                Assert.IsFalse(wire.RootElement.TryGetProperty("boost", out _));
+                Assert.IsFalse(wire.RootElement.TryGetProperty("future", out _));
+                Assert.AreEqual("seed", wire.RootElement.GetProperty("random").GetProperty("seedParameter").GetString());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void McpServerUriPreservesWireProperty(string format)
+        {
+            Uri uri = new Uri("https://example.com/mcp?api-version=preview");
+            var parameters = new McpServerKnowledgeSourceParameters(uri, new[] { new McpServerTool { Name = "search" } });
+            var options = new ModelReaderWriterOptions(format);
+            BinaryData data = ModelReaderWriter.Write(parameters, options);
+            using JsonDocument json = JsonDocument.Parse(data);
+            Assert.AreEqual(uri.AbsoluteUri, json.RootElement.GetProperty("serverURL").GetString());
+            Assert.IsFalse(json.RootElement.TryGetProperty("serverUri", out _));
+            Assert.AreEqual(uri, ModelReaderWriter.Read<McpServerKnowledgeSourceParameters>(data, options).ServerUri);
+        }
+
+        private sealed class CustomerScoringFunction : ScoringFunction
+        {
+            public CustomerScoringFunction() : base("rating", 2.0, "magnitude")
+            {
+            }
+
+            protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                base.JsonModelWriteCore(writer, options);
+                writer.WritePropertyName("magnitude");
+                writer.WriteStartObject();
+                writer.WriteNumber("boostingRangeStart", 0);
+                writer.WriteNumber("boostingRangeEnd", 5);
+                writer.WriteEndObject();
+            }
         }
 
         /// <summary>

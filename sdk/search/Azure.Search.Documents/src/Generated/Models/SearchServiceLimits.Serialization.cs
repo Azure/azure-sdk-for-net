@@ -146,6 +146,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxCumulativeIndexerRuntimeSeconds"u8);
                 }
             }
+            if (Optional.IsDefined(MaxVectorIndexSizePerIndexInBytes, _maxVectorIndexSizePerIndexInBytesIsDefined))
+            {
+                if (MaxVectorIndexSizePerIndexInBytes != null)
+                {
+                    writer.WritePropertyName("maxVectorIndexSizePerIndexInBytes"u8);
+                    writer.WriteNumberValue(MaxVectorIndexSizePerIndexInBytes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxVectorIndexSizePerIndexInBytes"u8);
+                }
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -200,6 +212,8 @@ namespace Azure.Search.Documents.Indexes.Models
             long? maxStoragePerIndexInBytes = default;
             bool maxCumulativeIndexerRuntimeSecondsIsDefined = false;
             long? maxCumulativeIndexerRuntimeSeconds = default;
+            bool maxVectorIndexSizePerIndexInBytesIsDefined = false;
+            long? maxVectorIndexSizePerIndexInBytes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -269,6 +283,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxCumulativeIndexerRuntimeSeconds = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("maxVectorIndexSizePerIndexInBytes"u8))
+                {
+                    maxVectorIndexSizePerIndexInBytesIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxVectorIndexSizePerIndexInBytes = null;
+                        continue;
+                    }
+                    maxVectorIndexSizePerIndexInBytes = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -281,6 +306,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 maxComplexObjectsInCollectionsPerDocument,
                 maxStoragePerIndexInBytes,
                 maxCumulativeIndexerRuntimeSeconds,
+                maxVectorIndexSizePerIndexInBytes,
                 additionalBinaryDataProperties)
             {
                 _maxFieldsPerIndexIsDefined = maxFieldsPerIndexIsDefined,
@@ -288,7 +314,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 _maxComplexCollectionFieldsPerIndexIsDefined = maxComplexCollectionFieldsPerIndexIsDefined,
                 _maxComplexObjectsInCollectionsPerDocumentIsDefined = maxComplexObjectsInCollectionsPerDocumentIsDefined,
                 _maxStoragePerIndexInBytesIsDefined = maxStoragePerIndexInBytesIsDefined,
-                _maxCumulativeIndexerRuntimeSecondsIsDefined = maxCumulativeIndexerRuntimeSecondsIsDefined
+                _maxCumulativeIndexerRuntimeSecondsIsDefined = maxCumulativeIndexerRuntimeSecondsIsDefined,
+                _maxVectorIndexSizePerIndexInBytesIsDefined = maxVectorIndexSizePerIndexInBytesIsDefined
             };
         }
     }

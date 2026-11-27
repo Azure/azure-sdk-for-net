@@ -17,6 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly string _value;
         /// <summary> Generate embeddings using an Azure OpenAI resource at query time. </summary>
         private const string AzureOpenAIValue = "azureOpenAI";
+        /// <summary> Generate embeddings using a customer-controlled OpenAI-compatible embeddings endpoint. </summary>
+        private const string OpenAICompatibleValue = "openAICompatible";
         /// <summary> Generate embeddings using a custom web endpoint at query time. </summary>
         private const string CustomWebApiValue = "customWebApi";
         /// <summary> Generate embeddings for an image or text input at query time using the Azure AI Services Vision Vectorize API. </summary>
@@ -36,6 +38,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Generate embeddings using an Azure OpenAI resource at query time. </summary>
         public static VectorSearchVectorizerKind AzureOpenAI { get; } = new VectorSearchVectorizerKind(AzureOpenAIValue);
+
+        /// <summary> Generate embeddings using a customer-controlled OpenAI-compatible embeddings endpoint. </summary>
+        public static VectorSearchVectorizerKind OpenAICompatible { get; } = new VectorSearchVectorizerKind(OpenAICompatibleValue);
 
         /// <summary> Generate embeddings using a custom web endpoint at query time. </summary>
         public static VectorSearchVectorizerKind CustomWebApi { get; } = new VectorSearchVectorizerKind(CustomWebApiValue);

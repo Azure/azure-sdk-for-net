@@ -6,7 +6,7 @@ The `FieldBuilder` class allows you to define a Search index from a model type. 
 
 Consider the following model, which includes a property named `DescriptionVector` that represents a vector field. To configure a vector field, you must provide the model dimensions, indicating the size of the embeddings generated for this field, as well as the name of the vector search profile that specifies the algorithm configuration in the `VectorSearchField` attribute.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingFieldBuilder_Model
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_FieldBuilder_Model
 public class MyDocument
 {
     [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
@@ -27,7 +27,7 @@ public class MyDocument
 
 We will create an instace of `SearchIndex` and use `FieldBuilder` to define fields based on the `MyDocument` model class.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingFieldBuilder_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingFieldBuilder
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
@@ -52,9 +52,10 @@ SearchIndex searchIndex = new SearchIndex(indexName)
 
 After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingFieldBuilder_Create_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_FieldBuilder
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+AzureKeyCredential credential = new(key);
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);

@@ -26,3 +26,4 @@ description: Samples for the Azure.Search.Documents client library
 - Learn how to [inspect retrieval responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample14_KnowledgeRetrievalResponse.md).
 - Learn how to [upload and manage files in a knowledge source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample15_FileKnowledgeSource.md).
 - Learn how to [stream typed knowledge base retrieval events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample16_KnowledgeBaseRetrievalStreaming.md).
+- Explore the [November preview end-to-end samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md), including Topic Graph, graph extraction and retrieval, agentic search, file ingestion operations, compatible providers, and chat completion skills.

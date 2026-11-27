@@ -20,6 +20,41 @@ namespace Azure.Search.Documents.Tests
 {
     public class KnowledgeBaseRetrievalClientStreamingTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task WorkIqStreamingSendsBothHeadersAndDisposesContent(bool typed)
+        {
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(
+                "event: response.completed\ndata: {\"statusCode\":200,\"response\":{}}\n\n"));
+            var response = new MockResponse(200) { ContentStream = stream };
+            response.AddHeader("Content-Type", "text/event-stream");
+            var transport = new MockTransport(response);
+            KnowledgeBaseRetrievalClient client = CreateClient(transport);
+            if (typed)
+            {
+                await foreach (var item in client.RetrieveStreamAsync(new KnowledgeBaseRetrievalRequest(),
+                    "query-auth", "work-iq-auth", default))
+                {
+                    Assert.IsInstanceOf<KnowledgeBaseResponseCompletedStreamEvent>(item.Data);
+                }
+            }
+            else
+            {
+                using RequestContent content = RequestContent.Create(new { });
+                await using var result = await client.RetrieveStreamAsync(content, "query-auth", "work-iq-auth", null);
+                await foreach (var item in result)
+                {
+                    Assert.AreEqual("response.completed", item.EventType);
+                }
+            }
+            Request request = transport.Requests.Single();
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-source-authorization", out string queryAuth));
+            Assert.AreEqual("query-auth", queryAuth);
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqAuth));
+            Assert.AreEqual("work-iq-auth", workIqAuth);
+            Assert.IsFalse(stream.CanRead);
+        }
+
         [Test]
         public async Task RetrieveStreamProtocolReturnsStreamingResultAndPreservesRequest()
         {

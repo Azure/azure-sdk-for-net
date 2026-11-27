@@ -29,14 +29,24 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceReference"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source. When true, images extracted during ingestion are delivered to downstream models at query time. </param>
+        /// <param name="enableFreshness"> Indicates whether freshness-aware retrieval should be enabled for this knowledge source. When true, a freshness scoring profile is applied during retrieval to bias results toward newer documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceReference(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceReference(string name, bool? enableImageServing, bool? enableFreshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            EnableImageServing = enableImageServing;
+            EnableFreshness = enableFreshness;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the knowledge source. </summary>
         public string Name { get; set; }
+
+        /// <summary> Indicates whether image serving should be enabled for this knowledge source. When true, images extracted during ingestion are delivered to downstream models at query time. </summary>
+        public bool? EnableImageServing { get; set; }
+
+        /// <summary> Indicates whether freshness-aware retrieval should be enabled for this knowledge source. When true, a freshness scoring profile is applied during retrieval to bias results toward newer documents. </summary>
+        public bool? EnableFreshness { get; set; }
     }
 }

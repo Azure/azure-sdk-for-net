@@ -95,6 +95,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
+            if (Optional.IsDefined(ImageServing))
+            {
+                writer.WritePropertyName("imageServing"u8);
+                writer.WriteObjectValue(ImageServing, options);
+            }
             if (Optional.IsDefined(IndexedOneLakeArguments))
             {
                 writer.WritePropertyName("indexedOneLakeArguments"u8);
@@ -138,6 +143,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string knowledgeSourceName = default;
             DateTimeOffset? queryOn = default;
             int? count = default;
+            ImageServingStatistics imageServing = default;
             KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,6 +221,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     count = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("imageServing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageServing = ImageServingStatistics.DeserializeImageServingStatistics(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("indexedOneLakeArguments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -241,6 +256,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 knowledgeSourceName,
                 queryOn,
                 count,
+                imageServing,
                 indexedOneLakeArguments);
         }
     }

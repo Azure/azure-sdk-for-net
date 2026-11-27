@@ -1,30 +1,26 @@
-# Knowledge Base Configuration
+# Knowledge Base Preview Configuration
 
-This sample demonstrates how to configure a knowledge base with an Azure OpenAI model, retrieval and answer instructions, output mode, and reasoning effort using the `2026-10-01` API version.
-
-Set `SEARCH_ENDPOINT`, `SEARCH_INDEX`, and `OPENAI_ENDPOINT` before running the create example. The search index must already exist, contain hotel documents, and have a default semantic configuration. Deploy `gpt-5.4-mini` in the configured Azure OpenAI resource and grant the Search service's managed identity the **Cognitive Services OpenAI User** role on that resource. The caller needs **Search Service Contributor** on the Search service.
-
-These settings define the defaults for subsequent retrievals. `AnswerSynthesis` uses the configured model to generate an answer; `ExtractiveData` returns retrieved content without answer synthesis. Retrieval instructions guide model-based query planning, while answer instructions guide synthesis. Requests with explicit intents bypass model query planning.
+This sample demonstrates how to configure preview features on a knowledge base, including CORS options for cross-origin access, Azure OpenAI GPT-5.4 model configuration, retrieval instructions, answer instructions, output mode, and reasoning effort.
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
 ## Required Namespaces
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Namespaces
-using Azure.Identity;
-using Azure.Core;
+```C# Snippet:Azure_Search_Tests_Samples_Sample13_KBPreviewConfig_Namespaces
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
 ```
 
-## Create a Knowledge Base
+## Create a Knowledge Base with Preview Configuration
 
-Create a knowledge base that synthesizes concise hotel answers with low reasoning effort and custom retrieval and answer instructions.
+Create a knowledge base with CORS options, an Azure OpenAI GPT-5.4 model, retrieval and answer instructions, output mode, and reasoning effort.
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Create
+```C# Snippet:Azure_Search_Tests_Samples_Sample13_KBPreviewConfig_Create
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -36,8 +32,8 @@ SearchIndexKnowledgeSource knowledgeSource = new SearchIndexKnowledgeSource(
     new SearchIndexKnowledgeSourceParameters(indexName));
 await indexClient.CreateKnowledgeSourceAsync(knowledgeSource);
 
-// Create a knowledge base with retrieval configuration options
-string knowledgeBaseName = "my-knowledge-base";
+// Create a knowledge base with preview configuration options
+string knowledgeBaseName = "my-preview-knowledge-base";
 KnowledgeBase knowledgeBase = new KnowledgeBase(
     knowledgeBaseName,
     knowledgeSources: new[]
@@ -45,7 +41,7 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
         new KnowledgeSourceReference(knowledgeSourceName)
     })
 {
-    Description = "Knowledge base with retrieval configuration",
+    Description = "Knowledge base with preview configuration",
 
     // Configure CORS options for cross-origin access
     CorsOptions = new CorsOptions(new[] { "https://myapp.example.com", "https://dashboard.example.com" })
@@ -60,35 +56,51 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
     // Set default output mode for all retrievals from this KB
     OutputMode = KnowledgeRetrievalOutputMode.AnswerSynthesis,
 
-    RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort()
+    // Use automatic reasoning when a request does not override it.
+    RetrievalReasoningEffort = new KnowledgeRetrievalAutoReasoningEffort(),
+
+    // Persist request-wide defaults on the knowledge base.
+    RetrieveDefaults = new KnowledgeBaseRetrieveDefaults
+    {
+        MaxRuntimeInSeconds = 60,
+        MaxOutputDocuments = 5,
+        // Stored defaults use a token limit. The request-level MaxOutputSize
+        // property uses a different name and unit.
+        MaxOutputSizeInTokens = 5000
+    }
 };
 
-// The deployment must exist and allow the Search service's managed identity.
+// Add an Azure OpenAI model using a GPT-5.4 deployment
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-knowledgeBase.Models.Add(
-    new KnowledgeBaseAzureOpenAIModel(
-        new AzureOpenAIVectorizerParameters
-        {
-            ResourceUri = new Uri(openAIEndpoint),
-            DeploymentName = "gpt-5.4-mini",
-            ModelName = AzureOpenAIModelName.Gpt54Mini
-        }));
+string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
+    knowledgeBase.Models.Add(
+        new KnowledgeBaseAzureOpenAIModel(
+            new AzureOpenAIVectorizerParameters
+            {
+                ResourceUri = new Uri(openAIEndpoint),
+                ApiKey = openAIKey,
+                DeploymentName = "gpt-5.4-mini",
+                ModelName = AzureOpenAIModelName.Gpt54Mini
+            }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Created knowledge base '{createdBase.Name}'");
 Console.WriteLine($"  CORS allowed origins: {string.Join(", ", createdBase.CorsOptions?.AllowedOrigins ?? Array.Empty<string>())}");
 Console.WriteLine($"  Output mode: {createdBase.OutputMode}");
 Console.WriteLine($"  Reasoning effort: {createdBase.RetrievalReasoningEffort.GetType().Name}");
+Console.WriteLine($"  Default maximum documents: {createdBase.RetrieveDefaults?.MaxOutputDocuments}");
+Console.WriteLine($"  Default maximum output tokens: {createdBase.RetrieveDefaults?.MaxOutputSizeInTokens}");
 Console.WriteLine($"  Retrieval instructions: {createdBase.RetrievalInstructions}");
 ```
 
-## Update a Knowledge Base
+## Update Preview Configuration
 
-Set `KNOWLEDGE_BASE_NAME` to an existing knowledge base. Change its default output mode to extracted content and update its query-planning instructions without replacing its knowledge sources or model configuration.
+Get an existing knowledge base and update its preview configuration settings, such as CORS origins, output mode, and retrieval instructions.
 
-```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Update
+```C# Snippet:Azure_Search_Tests_Samples_Sample13_KBPreviewConfig_Update
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -96,15 +108,65 @@ SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 // Get the existing knowledge base
 KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
 
-knowledgeBase.CorsOptions = new CorsOptions(new[] { "https://myapp.example.com" })
+// Update preview configuration: add CORS options and change output mode
+knowledgeBase.CorsOptions = new CorsOptions(new[] { "*" })
 {
     MaxAgeInSeconds = 600
 };
-// Update the default retrieval mode and query-planning instructions.
 knowledgeBase.OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData;
-knowledgeBase.RetrievalInstructions = "Prioritize hotels with lower nightly rates.";
+knowledgeBase.RetrievalInstructions = "Return raw data without summarization.";
 
 KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Updated knowledge base '{updatedBase.Name}'");
 Console.WriteLine($"  Output mode: {updatedBase.OutputMode}");
+```
+
+## Override Stored Defaults for One Request
+
+Persisted retrieve defaults apply when a request omits those settings. Request-level values take precedence for that call and do not mutate the knowledge base. Stored output defaults use `MaxOutputSizeInTokens`, while the request also exposes `MaxOutputSize` for its request-specific limit.
+
+```C# Snippet:Azure_Search_Tests_Samples_Sample13_KBPreviewConfig_RequestOverride
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
+
+SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
+KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
+    endpoint, knowledgeBaseName, credential);
+
+// Persist defaults on the knowledge base. These apply only when a
+// retrieve request omits the corresponding settings.
+KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
+knowledgeBase.RetrievalReasoningEffort = new KnowledgeRetrievalAutoReasoningEffort();
+knowledgeBase.RetrieveDefaults = new KnowledgeBaseRetrieveDefaults
+{
+    MaxOutputDocuments = 5,
+    MaxOutputSizeInTokens = 5000
+};
+await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
+
+// Request-level values take precedence without changing the stored defaults.
+KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
+{
+    IncludeActivity = true,
+    RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort(),
+    MaxOutputDocuments = 2,
+    // MaxOutputSize is a request property; the persisted default uses
+    // RetrieveDefaults.MaxOutputSizeInTokens.
+    MaxOutputSize = 5000
+};
+request.Intents.Add(new KnowledgeRetrievalSemanticIntent("Which hotels offer luxury amenities?"));
+
+KnowledgeBaseRetrievalResponse response = await retrievalClient.RetrieveAsync(request);
+KnowledgeBaseAgenticReasoningActivityRecord reasoning = response.Activity
+    .OfType<KnowledgeBaseAgenticReasoningActivityRecord>()
+    .FirstOrDefault();
+
+Console.WriteLine($"Effective request reasoning: {reasoning?.RetrievalReasoningEffort?.GetType().Name}");
+Console.WriteLine($"References returned: {response.References.Count}");
+
+KnowledgeBase persisted = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
+Console.WriteLine($"Stored reasoning remains: {persisted.RetrievalReasoningEffort.GetType().Name}");
+Console.WriteLine($"Stored maximum documents remains: {persisted.RetrieveDefaults.MaxOutputDocuments}");
 ```

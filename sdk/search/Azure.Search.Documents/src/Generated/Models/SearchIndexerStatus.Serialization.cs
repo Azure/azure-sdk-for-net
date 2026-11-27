@@ -117,6 +117,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteObjectValue(CurrentState, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -165,6 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
+            IndexerState currentState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,6 +217,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("currentState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentState = IndexerState.DeserializeIndexerState(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -223,6 +238,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 lastResult,
                 executionHistory ?? new ChangeTrackingList<IndexerExecutionResult>(),
                 limits,
+                currentState,
                 additionalBinaryDataProperties);
         }
     }

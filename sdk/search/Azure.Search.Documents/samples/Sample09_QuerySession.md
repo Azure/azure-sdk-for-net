@@ -4,7 +4,7 @@ To ensure more consistent and unique search results within a user's session, you
 
 ```C# Snippet:Azure_Search_Tests_Samples_QuerySession
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchClient searchClient = new SearchClient(endpoint, indexName, credential);

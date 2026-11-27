@@ -29,24 +29,28 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="messages"> A list of chat message style input. </param>
         /// <param name="intents"> A list of intended queries to execute without model query planning. </param>
         /// <param name="maxRuntimeInSeconds"> The maximum runtime in seconds. </param>
+        /// <param name="maxOutputSize"> Limits the maximum size of the content in the output. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents in the output. </param>
         /// <param name="maxOutputSizeInTokens"> Limits the maximum size of the content in the output. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <param name="includeActivity"> Indicates retrieval results should include activity information. </param>
         /// <param name="outputMode"> The output configuration for this retrieval. </param>
         /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
+        /// <param name="toolName"> The tool to select. Omit for KB-wide retrieval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeBaseMessage> messages, IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputDocuments, int? maxOutputSizeInTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeBaseMessage> messages, IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, int? maxOutputDocuments, int? maxOutputSizeInTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<KnowledgeSourceParams> knowledgeSourceParams, string toolName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Messages = messages;
             Intents = intents;
             MaxRuntimeInSeconds = maxRuntimeInSeconds;
+            MaxOutputSize = maxOutputSize;
             MaxOutputDocuments = maxOutputDocuments;
             MaxOutputSizeInTokens = maxOutputSizeInTokens;
             RetrievalReasoningEffort = retrievalReasoningEffort;
             IncludeActivity = includeActivity;
             OutputMode = outputMode;
             KnowledgeSourceParams = knowledgeSourceParams;
+            ToolName = toolName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +62,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The maximum runtime in seconds. </summary>
         public int? MaxRuntimeInSeconds { get; set; }
+
+        /// <summary> Limits the maximum size of the content in the output. </summary>
+        public int? MaxOutputSize { get; set; }
 
         /// <summary> Limits the maximum number of documents in the output. </summary>
         public int? MaxOutputDocuments { get; set; }
@@ -76,5 +83,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> A list of runtime parameters for the knowledge sources. </summary>
         public IList<KnowledgeSourceParams> KnowledgeSourceParams { get; }
+
+        /// <summary> The tool to select. Omit for KB-wide retrieval. </summary>
+        public string ToolName { get; set; }
     }
 }

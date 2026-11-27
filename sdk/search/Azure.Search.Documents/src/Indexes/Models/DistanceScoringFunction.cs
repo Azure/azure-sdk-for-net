@@ -2,11 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    // Keep named arguments unambiguous with the GA constructor's parameter order.
+    [CodeGenSuppress(nameof(DistanceScoringFunction), typeof(double), typeof(string), typeof(DistanceScoringParameters))]
     public partial class DistanceScoringFunction
     {
+        /// <summary> Gets or sets the input field name. </summary>
+        public override string FieldName { get => base.FieldName; set => base.FieldName = value; }
+
+        /// <summary> Gets or sets the score multiplier. </summary>
+        public override double Boost { get => base.Boost; set => base.Boost = value; }
+
         /// <summary> Initializes a new instance of DistanceScoringFunction. </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>

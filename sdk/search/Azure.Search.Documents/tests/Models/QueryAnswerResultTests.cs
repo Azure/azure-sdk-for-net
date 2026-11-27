@@ -13,6 +13,42 @@ namespace Azure.Search.Documents.Tests.Models
 {
     public class QueryAnswerResultTests
     {
+        [Test]
+        public void FactoryAcceptsReadOnlyOnlyDictionary()
+        {
+            IReadOnlyDictionary<string, object> properties = new ReadOnlyOnlyDictionary(
+                new Dictionary<string, object>
+                {
+                    ["extra"] = "custom",
+                    ["nullable"] = null,
+                });
+
+            Assert.IsFalse(properties is IDictionary<string, object>);
+            QueryAnswerResult answer = SearchModelFactory.QueryAnswerResult(
+                score: 0.75, key: "document", text: "answer", additionalProperties: properties);
+
+            CollectionAssert.AreEquivalent(properties, answer.AdditionalProperties);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(answer));
+            Assert.AreEqual("custom", document.RootElement.GetProperty("extra").GetString());
+            Assert.AreEqual(JsonValueKind.Null, document.RootElement.GetProperty("nullable").ValueKind);
+        }
+
+        private sealed class ReadOnlyOnlyDictionary : IReadOnlyDictionary<string, object>
+        {
+            private readonly IReadOnlyDictionary<string, object> _properties;
+
+            public ReadOnlyOnlyDictionary(IReadOnlyDictionary<string, object> properties) => _properties = properties;
+
+            public object this[string key] => _properties[key];
+            public IEnumerable<string> Keys => _properties.Keys;
+            public IEnumerable<object> Values => _properties.Values;
+            public int Count => _properties.Count;
+            public bool ContainsKey(string key) => _properties.ContainsKey(key);
+            public bool TryGetValue(string key, out object value) => _properties.TryGetValue(key, out value);
+            public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _properties.GetEnumerator();
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
         [TestCase("{}", null, false)]
         [TestCase(@"{""highlights"":null}", null, true)]
         [TestCase(@"{""highlights"":""""}", "", true)]
@@ -89,45 +125,6 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.AreEqual("answer", root.GetProperty("text").GetString());
             Assert.AreEqual(JsonValueKind.Null, root.GetProperty("highlights").ValueKind);
             Assert.AreEqual("custom", root.GetProperty("extra").GetString());
-        }
-
-        [Test]
-        public void FactoryAcceptsReadOnlyOnlyDictionary()
-        {
-            IReadOnlyDictionary<string, object> properties = new ReadOnlyOnlyDictionary(
-                new Dictionary<string, object>
-                {
-                    ["extra"] = "custom",
-                    ["nullable"] = null,
-                });
-
-            Assert.IsFalse(properties is IDictionary<string, object>);
-            QueryAnswerResult answer = SearchModelFactory.QueryAnswerResult(
-                score: 0.75, key: "document", text: "answer", additionalProperties: properties);
-
-            Assert.AreEqual(0.75, answer.Score);
-            Assert.AreEqual("document", answer.Key);
-            Assert.AreEqual("answer", answer.Text);
-            CollectionAssert.AreEquivalent(properties, answer.AdditionalProperties);
-            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(answer));
-            Assert.AreEqual("custom", document.RootElement.GetProperty("extra").GetString());
-            Assert.AreEqual(JsonValueKind.Null, document.RootElement.GetProperty("nullable").ValueKind);
-        }
-
-        private sealed class ReadOnlyOnlyDictionary : IReadOnlyDictionary<string, object>
-        {
-            private readonly IReadOnlyDictionary<string, object> _properties;
-
-            public ReadOnlyOnlyDictionary(IReadOnlyDictionary<string, object> properties) => _properties = properties;
-
-            public object this[string key] => _properties[key];
-            public IEnumerable<string> Keys => _properties.Keys;
-            public IEnumerable<object> Values => _properties.Values;
-            public int Count => _properties.Count;
-            public bool ContainsKey(string key) => _properties.ContainsKey(key);
-            public bool TryGetValue(string key, out object value) => _properties.TryGetValue(key, out value);
-            public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _properties.GetEnumerator();
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }

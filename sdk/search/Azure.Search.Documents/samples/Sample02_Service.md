@@ -16,7 +16,8 @@ reflect changes caused by recent indexing operations.
 ```C# Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
 // Create a new SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 // Get and report the Search Service statistics
@@ -80,7 +81,8 @@ a file you may have downloaded or have stored elsewhere.
 ```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateSynonymMap
 // Create a new SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-TokenCredential credential = new DefaultAzureCredential();
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 // Create a synonym map from a file containing country names and abbreviations
@@ -230,8 +232,9 @@ SearchIndexerSkillset skillset = new SearchIndexerSkillset(
     skillsetName,
     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
 {
-    CognitiveServicesAccount = new AIServicesAccountIdentity(
-        new Uri(Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_ENDPOINT"))),
+    CognitiveServicesAccount =
+        new CognitiveServicesAccountKey(
+        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
     KnowledgeStore = new KnowledgeStore(
         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
         new List<KnowledgeStoreProjection>()),

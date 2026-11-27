@@ -1,0 +1,140 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Search.Documents.KnowledgeBases;
+using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
+using NUnit.Framework;
+
+namespace Azure.Search.Documents.Tests
+{
+    [TestFixture(false)]
+    [TestFixture(true)]
+    public class KnowledgeBaseGaCompatibilityTests : ClientTestBase
+    {
+        public KnowledgeBaseGaCompatibilityTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task GaRetrieveSignaturesSendAuthorization(bool protocol)
+        {
+            var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200,
+                "{\"response\":[],\"references\":[],\"activity\":[]}"));
+            var client = InstrumentClient(new KnowledgeBaseRetrievalClient(
+                new Uri("https://fake-search.search.windows.net"), "knowledge-base",
+                new AzureKeyCredential("fake-key"), new SearchClientOptions { Transport = transport }));
+            using var cancellation = new CancellationTokenSource();
+
+            if (protocol)
+            {
+                using RequestContent content = RequestContent.Create(new { });
+                await client.RetrieveAsync(content, "user-token", new RequestContext
+                {
+                    CancellationToken = cancellation.Token
+                });
+            }
+            else
+            {
+                await client.RetrieveAsync(new KnowledgeBaseRetrievalRequest(), "user-token", cancellation.Token);
+            }
+
+            Assert.IsTrue(transport.Requests.Single().Headers.TryGetValue(
+                "x-ms-query-source-authorization", out string authorization));
+            Assert.AreEqual("user-token", authorization);
+            Assert.IsFalse(transport.Requests.Single().Headers.TryGetValue(
+                "x-ms-query-work-iq-source-authorization", out _));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task GeneratedRetrieveSendsBothAuthorizationHeaders(bool protocol, bool omitQuerySourceAuthorization)
+        {
+            var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200,
+                "{\"response\":[],\"references\":[],\"activity\":[]}"));
+            var client = InstrumentClient(new KnowledgeBaseRetrievalClient(
+                new Uri("https://fake-search.search.windows.net"), "knowledge-base",
+                new AzureKeyCredential("fake-key"), new SearchClientOptions { Transport = transport }));
+
+            if (protocol)
+            {
+                using RequestContent content = RequestContent.Create(new { });
+                await client.RetrieveAsync(content, querySourceAuthorization: omitQuerySourceAuthorization ? null : "user-token",
+                    queryWorkIQSourceAuthorization: "work-iq-token", context: null);
+            }
+            else
+            {
+                await client.RetrieveAsync(new KnowledgeBaseRetrievalRequest(),
+                    querySourceAuthorization: omitQuerySourceAuthorization ? null : "user-token", queryWorkIQSourceAuthorization: "work-iq-token", cancellationToken: default);
+            }
+
+            MockRequest request = transport.Requests.Single();
+            Assert.AreEqual(!omitQuerySourceAuthorization, request.Headers.TryGetValue("x-ms-query-source-authorization", out string userToken));
+            Assert.AreEqual(omitQuerySourceAuthorization ? null : "user-token", userToken);
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqToken));
+            Assert.AreEqual("work-iq-token", workIqToken);
+        }
+
+        [TestCase("user-assertion")]
+        [TestCase(null)]
+        [TestCase("")]
+        public async Task WorkIqSamplePolicyUsesContractAuthorizationHeader(string userAssertion)
+        {
+            var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200,
+                "{\"response\":[],\"references\":[],\"activity\":[]}"));
+            var options = new SearchClientOptions { Transport = transport };
+            options.AddPolicy(new Samples.KnowledgeSourceWorkIqPreview.WorkIQAuthorizationPolicy(userAssertion),
+                HttpPipelinePosition.PerCall);
+            var client = InstrumentClient(new KnowledgeBaseRetrievalClient(
+                new Uri("https://fake-search.search.windows.net"), "knowledge-base",
+                new AzureKeyCredential("fake-key"), options));
+
+            await client.RetrieveAsync(new KnowledgeBaseRetrievalRequest());
+
+            MockRequest request = transport.Requests.Single();
+            bool hasAuthorization = request.Headers.TryGetValue(
+                "x-ms-query-work-iq-source-authorization", out string authorization);
+            Assert.AreEqual(!string.IsNullOrEmpty(userAssertion), hasAuthorization);
+            if (hasAuthorization)
+            {
+                Assert.AreEqual(userAssertion, authorization);
+            }
+            Assert.IsFalse(request.Headers.TryGetValue("x-ms-query-workiq-source-authorization", out _));
+        }
+
+        [Test]
+        public void BaseStreamEventRetainsModelReaderWriterBehavior()
+        {
+            KnowledgeBaseRetrievalStreamEvent streamEvent = ModelReaderWriter.Read<KnowledgeBaseRetrievalStreamEvent>(
+                BinaryData.FromString("{\"futureProperty\":42}"));
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(streamEvent));
+            Assert.AreEqual(42, document.RootElement.GetProperty("futureProperty").GetInt32());
+
+            KnowledgeBaseRetrievalStreamEvent factoryEvent = SearchModelFactory.KnowledgeBaseRetrievalStreamEvent();
+            Assert.IsNotNull(ModelReaderWriter.Write(factoryEvent));
+        }
+
+        [Test]
+        public void ReferenceStreamEventRetainsMutableGaCollection()
+        {
+            var reference = SearchModelFactory.KnowledgeBaseSearchIndexReference("reference-1", 0, null, null, null, null);
+            KnowledgeBaseReferencesCompletedStreamEvent streamEvent =
+                SearchModelFactory.KnowledgeBaseReferencesCompletedStreamEvent();
+            streamEvent.Value.Add(reference);
+
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(streamEvent));
+            Assert.AreEqual("reference-1", document.RootElement.GetProperty("value")[0].GetProperty("id").GetString());
+        }
+    }
+}

@@ -21,10 +21,26 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string TextEmbedding3LargeValue = "text-embedding-3-large";
         /// <summary> TextEmbedding3Small model. </summary>
         private const string TextEmbedding3SmallValue = "text-embedding-3-small";
+        /// <summary> Gpt4o model. </summary>
+        private const string Gpt4oValue = "gpt-4o";
+        /// <summary> Gpt4oMini model. </summary>
+        private const string Gpt4oMiniValue = "gpt-4o-mini";
+        /// <summary> Gpt41 model. </summary>
+        private const string Gpt41Value = "gpt-4.1";
+        /// <summary> Gpt41Mini model. </summary>
+        private const string Gpt41MiniValue = "gpt-4.1-mini";
+        /// <summary> Gpt41Nano model. </summary>
+        private const string Gpt41NanoValue = "gpt-4.1-nano";
+        /// <summary> Gpt5 model. </summary>
+        private const string Gpt5Value = "gpt-5";
         /// <summary> Gpt5Mini model. </summary>
         private const string Gpt5MiniValue = "gpt-5-mini";
         /// <summary> Gpt5Nano model. </summary>
         private const string Gpt5NanoValue = "gpt-5-nano";
+        /// <summary> Gpt51 model. </summary>
+        private const string Gpt51Value = "gpt-5.1";
+        /// <summary> Gpt52 model. </summary>
+        private const string Gpt52Value = "gpt-5.2";
         /// <summary> Gpt54 model. </summary>
         private const string Gpt54Value = "gpt-5.4";
         /// <summary> Gpt54Mini model. </summary>
@@ -39,6 +55,14 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string Gpt56TerraValue = "gpt-5.6-terra";
         /// <summary> Gpt56Luna model. </summary>
         private const string Gpt56LunaValue = "gpt-5.6-luna";
+        /// <summary> Gpt6Astra model. </summary>
+        private const string Gpt6AstraValue = "gpt-6-astra";
+        /// <summary> Gpt6Sol model. </summary>
+        private const string Gpt6SolValue = "gpt-6-sol";
+        /// <summary> Gpt6Luna model. </summary>
+        private const string Gpt6LunaValue = "gpt-6-luna";
+        /// <summary> Gpt61Sol model. </summary>
+        private const string Gpt61SolValue = "gpt-6.1-sol";
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -59,11 +83,35 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> TextEmbedding3Small model. </summary>
         public static AzureOpenAIModelName TextEmbedding3Small { get; } = new AzureOpenAIModelName(TextEmbedding3SmallValue);
 
+        /// <summary> Gpt4o model. </summary>
+        public static AzureOpenAIModelName Gpt4o { get; } = new AzureOpenAIModelName(Gpt4oValue);
+
+        /// <summary> Gpt4oMini model. </summary>
+        public static AzureOpenAIModelName Gpt4oMini { get; } = new AzureOpenAIModelName(Gpt4oMiniValue);
+
+        /// <summary> Gpt41 model. </summary>
+        public static AzureOpenAIModelName Gpt41 { get; } = new AzureOpenAIModelName(Gpt41Value);
+
+        /// <summary> Gpt41Mini model. </summary>
+        public static AzureOpenAIModelName Gpt41Mini { get; } = new AzureOpenAIModelName(Gpt41MiniValue);
+
+        /// <summary> Gpt41Nano model. </summary>
+        public static AzureOpenAIModelName Gpt41Nano { get; } = new AzureOpenAIModelName(Gpt41NanoValue);
+
+        /// <summary> Gpt5 model. </summary>
+        public static AzureOpenAIModelName Gpt5 { get; } = new AzureOpenAIModelName(Gpt5Value);
+
         /// <summary> Gpt5Mini model. </summary>
         public static AzureOpenAIModelName Gpt5Mini { get; } = new AzureOpenAIModelName(Gpt5MiniValue);
 
         /// <summary> Gpt5Nano model. </summary>
         public static AzureOpenAIModelName Gpt5Nano { get; } = new AzureOpenAIModelName(Gpt5NanoValue);
+
+        /// <summary> Gpt51 model. </summary>
+        public static AzureOpenAIModelName Gpt51 { get; } = new AzureOpenAIModelName(Gpt51Value);
+
+        /// <summary> Gpt52 model. </summary>
+        public static AzureOpenAIModelName Gpt52 { get; } = new AzureOpenAIModelName(Gpt52Value);
 
         /// <summary> Gpt54 model. </summary>
         public static AzureOpenAIModelName Gpt54 { get; } = new AzureOpenAIModelName(Gpt54Value);
@@ -85,6 +133,18 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Gpt56Luna model. </summary>
         public static AzureOpenAIModelName Gpt56Luna { get; } = new AzureOpenAIModelName(Gpt56LunaValue);
+
+        /// <summary> Gpt6Astra model. </summary>
+        public static AzureOpenAIModelName Gpt6Astra { get; } = new AzureOpenAIModelName(Gpt6AstraValue);
+
+        /// <summary> Gpt6Sol model. </summary>
+        public static AzureOpenAIModelName Gpt6Sol { get; } = new AzureOpenAIModelName(Gpt6SolValue);
+
+        /// <summary> Gpt6Luna model. </summary>
+        public static AzureOpenAIModelName Gpt6Luna { get; } = new AzureOpenAIModelName(Gpt6LunaValue);
+
+        /// <summary> Gpt61Sol model. </summary>
+        public static AzureOpenAIModelName Gpt61Sol { get; } = new AzureOpenAIModelName(Gpt61SolValue);
 
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

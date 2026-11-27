@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Models
             SearchQueryType.Simple => "simple",
             SearchQueryType.Full => "full",
             SearchQueryType.Semantic => "semantic",
+            SearchQueryType.Agentic => "agentic",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
         };
 
@@ -34,6 +35,10 @@ namespace Azure.Search.Documents.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "semantic"))
             {
                 return SearchQueryType.Semantic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "agentic"))
+            {
+                return SearchQueryType.Agentic;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
         }

@@ -95,6 +95,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("rankingOrder"u8);
                 }
             }
+            if (Optional.IsDefined(FlightingOptIn))
+            {
+                writer.WritePropertyName("flightingOptIn"u8);
+                writer.WriteBooleanValue(FlightingOptIn.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,6 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticPrioritizedFields prioritizedFields = default;
             bool rankingOrderIsDefined = false;
             RankingOrder? rankingOrder = default;
+            bool? flightingOptIn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,12 +171,21 @@ namespace Azure.Search.Documents.Indexes.Models
                     rankingOrder = new RankingOrder(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("flightingOptIn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    flightingOptIn = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, additionalBinaryDataProperties)
+            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, flightingOptIn, additionalBinaryDataProperties)
             {
                 _rankingOrderIsDefined = rankingOrderIsDefined
             };

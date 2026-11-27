@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes
 
         private static ResponseClassifier PipelineMessageClassifier204404 => _pipelineMessageClassifier204404 ??= new StatusCodeClassifier(stackalloc ushort[] { 204, 404 });
 
-        internal HttpMessage CreateCreateOrUpdateDataSourceConnectionRequest(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateDataSourceConnectionRequest(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions, bool? skipIndexerResetRequirementForCache, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -45,6 +45,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -246,6 +250,37 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
+        internal HttpMessage CreateResetDocumentsRequest(string indexerName, RequestContent content, bool? overwrite, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/indexers('", false);
+            uri.AppendPath(indexerName, true);
+            uri.AppendPath("')/search.resetdocs", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (overwrite != null)
+            {
+                uri.AppendQuery("overwrite", TypeFormatters.ConvertToString(overwrite), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateRunIndexerRequest(string indexerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -268,7 +303,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateIndexerRequest(string indexerName, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateIndexerRequest(string indexerName, RequestContent content, MatchConditions matchConditions, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -278,6 +313,14 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
+            }
+            if (disableCacheReprocessingChangeDetection != null)
+            {
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -455,7 +498,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateSkillsetRequest(string skillsetName, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateSkillsetRequest(string skillsetName, RequestContent content, MatchConditions matchConditions, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -465,6 +508,14 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
+            }
+            if (disableCacheReprocessingChangeDetection != null)
+            {
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -608,6 +659,30 @@ namespace Azure.Search.Documents.Indexes
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateResetSkillsRequest(string skillsetName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skillsets('", false);
+            uri.AppendPath(skillsetName, true);
+            uri.AppendPath("')/search.resetskills", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;

@@ -110,6 +110,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("maxRuntimeInSeconds"u8);
                 writer.WriteNumberValue(MaxRuntimeInSeconds.Value);
             }
+            if (Optional.IsDefined(MaxOutputSize))
+            {
+                writer.WritePropertyName("maxOutputSize"u8);
+                writer.WriteNumberValue(MaxOutputSize.Value);
+            }
             if (Optional.IsDefined(MaxOutputDocuments))
             {
                 writer.WritePropertyName("maxOutputDocuments"u8);
@@ -144,6 +149,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ToolName))
+            {
+                writer.WritePropertyName("toolName"u8);
+                writer.WriteStringValue(ToolName);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -190,12 +200,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IList<KnowledgeBaseMessage> messages = default;
             IList<KnowledgeRetrievalIntent> intents = default;
             int? maxRuntimeInSeconds = default;
+            int? maxOutputSize = default;
             int? maxOutputDocuments = default;
             int? maxOutputSizeInTokens = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             bool? includeActivity = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
             IList<KnowledgeSourceParams> knowledgeSourceParams = default;
+            string toolName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,6 +246,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     maxRuntimeInSeconds = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxOutputSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputSize = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxOutputDocuments"u8))
@@ -295,6 +316,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     knowledgeSourceParams = array;
                     continue;
                 }
+                if (prop.NameEquals("toolName"u8))
+                {
+                    toolName = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -304,12 +330,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 messages ?? new ChangeTrackingList<KnowledgeBaseMessage>(),
                 intents ?? new ChangeTrackingList<KnowledgeRetrievalIntent>(),
                 maxRuntimeInSeconds,
+                maxOutputSize,
                 maxOutputDocuments,
                 maxOutputSizeInTokens,
                 retrievalReasoningEffort,
                 includeActivity,
                 outputMode,
                 knowledgeSourceParams ?? new ChangeTrackingList<KnowledgeSourceParams>(),
+                toolName,
                 additionalBinaryDataProperties);
         }
     }

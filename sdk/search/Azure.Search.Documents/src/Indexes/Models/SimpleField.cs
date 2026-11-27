@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -69,6 +69,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         public PermissionFilter? PermissionFilter { get; set; }
 
+        // search-preview:2026-05-01-preview {
+        /// <summary>
+        /// A value indicating whether the field should be used for sensitivity label ID filtering.
+        /// This enables document-level filtering based on Microsoft Purview sensitivity label IDs.
+        /// </summary>
+        public bool? IsSensitivityLabelId { get; set; }
+
+        /// <summary>
+        /// A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document.
+        /// </summary>
+        public bool? IsSensitivityLabelName { get; set; }
+        // search-preview:2026-05-01-preview }
+
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
         {
@@ -80,6 +93,10 @@ namespace Azure.Search.Documents.Indexes.Models
             field.NormalizerName = NormalizerName;
 
             field.PermissionFilter = PermissionFilter;
+            // search-preview:2026-05-01-preview {
+            field.IsSensitivityLabelId = IsSensitivityLabelId;
+            field.IsSensitivityLabelName = IsSensitivityLabelName;
+            // search-preview:2026-05-01-preview }
 
             // Use a SearchableField instead, which will override this property.
             // The service will return Searchable == false for all non-searchable simple types.

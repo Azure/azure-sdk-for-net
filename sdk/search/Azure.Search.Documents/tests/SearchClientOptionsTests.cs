@@ -3,6 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Search.Documents.Models;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using static Azure.Search.Documents.SearchClientOptions.ServiceVersion;
@@ -11,19 +15,13 @@ namespace Azure.Search.Documents.Tests
 {
     public class SearchClientOptionsTests
     {
-        [Test]
-        public void DefaultsToLatestGaVersion()
-        {
-            Assert.AreEqual(V2026_10_01, new SearchClientOptions().Version);
-            Assert.AreEqual(V2026_10_01, SearchClientOptions.LatestVersion);
-        }
-
         [TestCase(V2020_06_30, "2020-06-30")]
         [TestCase(V2023_11_01, "2023-11-01")]
         [TestCase(V2024_07_01, "2024-07-01")]
         [TestCase(V2025_09_01, "2025-09-01")]
         [TestCase(V2026_04_01, "2026-04-01")]
         [TestCase(V2026_10_01, "2026-10-01")]
+        [TestCase(V2026_11_01_Preview, "2026-11-01-preview")]
         public void SupportedVersionsRoundtrip(SearchClientOptions.ServiceVersion version, string versionString)
         {
             Assert.AreEqual(version, new SearchClientOptions(version).Version);
@@ -50,8 +48,34 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(V2026_10_01, options.Version);
         }
 
+        [TestCase(8, "2026-10-01")]
+        [TestCase(9, "2026-11-01-preview")]
+        [TestCase(null, "2026-11-01-preview")]
+        public async Task ServiceVersionSelectsRequestApiVersion(int? version, string expected)
+        {
+            var transport = new MockTransport(SearchTestHelpers.CreateMockJsonResponse(200, "{\"value\":[]}"));
+            SearchClientOptions options = version.HasValue
+                ? new SearchClientOptions((SearchClientOptions.ServiceVersion)version.Value)
+                : new SearchClientOptions();
+            options.Transport = transport;
+            var client = new SearchClient(new Uri("https://fake-search.search.windows.net"),
+                "test-index", new AzureKeyCredential("fake-key"), options);
+
+            await client.SearchAsync<SearchDocument>("*");
+
+            Assert.That(transport.Requests.Single().Uri.ToUri().Query, Does.Contain("api-version=" + expected));
+        }
+
         [Test]
-        public void RejectsUnsupportedPreviewVersion()
+        public void RejectsUnsupportedVersion()
+        {
+            Assert.IsFalse(SearchClientOptions.TryGetServiceVersion("2026-09-01", out _));
+            Assert.Throws<ArgumentOutOfRangeException>(() => "2026-09-01".ToServiceVersion());
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SearchClientOptions((SearchClientOptions.ServiceVersion)6));
+        }
+
+        [Test]
+        public void RejectsRetiredPreviewVersion()
         {
             Assert.IsFalse(SearchClientOptions.TryGetServiceVersion("2026-08-01-preview", out _));
             Assert.Throws<ArgumentOutOfRangeException>(() => "2026-08-01-preview".ToServiceVersion());

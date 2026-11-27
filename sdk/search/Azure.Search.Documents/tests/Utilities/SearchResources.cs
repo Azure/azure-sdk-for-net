@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -64,12 +65,31 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account connection string.
         /// </summary>
-        public string StorageAccountConnectionString => $"ResourceId={TestFixture.TestEnvironment.StorageResourceId};";
+        public string StorageAccountConnectionString => TestFixture.TestEnvironment.SearchStorageConnectionString ??
+            (TestFixture.Mode == RecordedTestMode.Playback &&
+                !TestFixture.Recording.Variables.ContainsKey("SEARCH_STORAGE_RESOURCE_ID") &&
+                TestFixture.Recording.Variables.ContainsKey(SearchTestEnvironment.StorageAccountKeyVariableName)
+                ? $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}"
+                : $"ResourceId={TestFixture.TestEnvironment.StorageResourceId};");
 
-        private BlobContainerClient GetBlobContainerClient() =>
-            new BlobContainerClient(
-                new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}/{BlobContainerName}"),
-                TestFixture.TestEnvironment.Credential);
+        private BlobContainerClient GetBlobContainerClient() => CreateBlobContainerClient(
+            TestFixture.TestEnvironment.SearchStorageConnectionString,
+            BlobContainerName,
+            new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}/{BlobContainerName}"),
+            () => TestFixture.TestEnvironment.Credential);
+
+        internal static BlobContainerClient CreateBlobContainerClient(
+            string connectionString,
+            string containerName,
+            Uri containerUri,
+            Func<TokenCredential> getCredential,
+            BlobClientOptions options = null)
+        {
+            // ResourceId authenticates Search's managed identity, not the local process creating test blobs.
+            return connectionString == null || connectionString.StartsWith("ResourceId=", StringComparison.OrdinalIgnoreCase)
+                ? new BlobContainerClient(containerUri, getCredential(), options)
+                : new BlobContainerClient(connectionString, containerName, options);
+        }
 
         /// <summary>
         /// The Cognitive Services key.
@@ -198,6 +218,8 @@ namespace Azure.Search.Documents.Tests
         /// </param>
         private SearchResources(SearchTestBase fixture) => TestFixture = fixture;
 
+        private bool _isShared;
+
         /// <summary>
         /// Create a new Search Service resource with no indexes.
         /// </summary>
@@ -324,9 +346,17 @@ namespace Azure.Search.Documents.Tests
             // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
 
-            // Keep them ordered or records may not match seeded random names.
-            await resources.CreateSearchServiceAndIndexAsync(isSample);
-            await resources.CreateHotelsBlobContainerAsync(populate, isSample);
+            try
+            {
+                // Keep them ordered or records may not match seeded random names.
+                await resources.CreateSearchServiceAndIndexAsync(isSample);
+                await resources.CreateHotelsBlobContainerAsync(populate, isSample);
+            }
+            catch
+            {
+                await resources.DisposeAsync();
+                throw;
+            }
 
             return resources;
         }
@@ -346,7 +376,12 @@ namespace Azure.Search.Documents.Tests
         {
             // TODO: consider whether we should delete the index at the end of the test run here.
             //       SharedSearchResources seems to purposely cache the index.
-            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample), isSample);
+            await SharedSearchResources.EnsureInitialized(async () =>
+            {
+                SearchResources resources = await CreateWithHotelsIndexAsync(fixture, isSample);
+                resources._isShared = true;
+                return resources;
+            }, isSample);
 
             // Clone it for the current fixture (note that setting these values
             // will create the recording ServiceName/IndexName/etc. variables)
@@ -408,22 +443,24 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchIndexClient"/> instance.</returns>
-        public SearchIndexClient GetIndexClient(SearchClientOptions options = null)
-        {
-            options = TestFixture.GetSearchClientOptions(options);
-            return TestFixture.InstrumentClient(new SearchIndexClient(Endpoint, TestFixture.TestEnvironment.Credential, options));
-        }
+        public SearchIndexClient GetIndexClient(SearchClientOptions options = null) =>
+            TestFixture.InstrumentClient(
+                new SearchIndexClient(
+                    Endpoint,
+                    TestFixture.TestEnvironment.Credential,
+                    TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
         /// Get a <see cref="SearchIndexerClient"/> to use for testing.
         /// </summary>
         /// <param name="options">Optional client options.</param>
         /// <returns>A <see cref="SearchIndexerClient"/> instance.</returns>
-        public SearchIndexerClient GetIndexerClient(SearchClientOptions options = null)
-        {
-            options = TestFixture.GetSearchClientOptions(options);
-            return TestFixture.InstrumentClient(new SearchIndexerClient(Endpoint, TestFixture.TestEnvironment.Credential, options));
-        }
+        public SearchIndexerClient GetIndexerClient(SearchClientOptions options = null) =>
+            TestFixture.InstrumentClient(
+                new SearchIndexerClient(
+                    Endpoint,
+                    TestFixture.TestEnvironment.Credential,
+                    TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
         /// Get a <see cref="SearchClient"/> to use for testing with a token credential.
@@ -445,7 +482,12 @@ namespace Azure.Search.Documents.Tests
         public SearchClient GetQueryClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
-            return GetSearchClient(options);
+            return TestFixture.InstrumentClient(
+                new SearchClient(
+                    Endpoint,
+                    IndexName,
+                    TestFixture.TestEnvironment.Credential,
+                    TestFixture.GetSearchClientOptions(options)));
         }
         #endregion Get Clients
 
@@ -474,7 +516,10 @@ namespace Azure.Search.Documents.Tests
         {
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
-                SearchIndexClient client = GetIndexClient();
+                // Shared resources are disposed after their creating test's recording has closed.
+                SearchIndexClient client = _isShared
+                    ? new SearchIndexClient(Endpoint, TestFixture.TestEnvironment.Credential)
+                    : GetIndexClient();
                 try
                 {
                     await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
@@ -649,6 +694,7 @@ namespace Azure.Search.Documents.Tests
                         new AzureOpenAIVectorizerParameters
                         {
                             ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
+                            ApiKey = TestFixture.TestEnvironment.OpenAIKey,
                             DeploymentName = deploymentName,
                             ModelName = AzureOpenAIModelName.Gpt54Mini
                         }));

@@ -108,6 +108,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Tools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (KnowledgeBaseTool item in Tools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Models))
             {
                 writer.WritePropertyName("models"u8);
@@ -150,6 +160,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(RetrievalInstructions))
             {
                 writer.WritePropertyName("retrievalInstructions"u8);
@@ -164,6 +190,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("corsOptions"u8);
                 writer.WriteObjectValue(CorsOptions, options);
+            }
+            if (Optional.IsDefined(RetrieveDefaults))
+            {
+                writer.WritePropertyName("retrieveDefaults"u8);
+                writer.WriteObjectValue(RetrieveDefaults, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -209,6 +240,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             IList<KnowledgeSourceReference> knowledgeSources = default;
+            IList<KnowledgeBaseTool> tools = default;
             IList<KnowledgeBaseModel> models = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
@@ -216,9 +248,11 @@ namespace Azure.Search.Documents.Indexes.Models
             bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
+            IDictionary<string, string> tags = default;
             string retrievalInstructions = default;
             string answerInstructions = default;
             CorsOptions corsOptions = default;
+            KnowledgeBaseRetrieveDefaults retrieveDefaults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,6 +269,20 @@ namespace Azure.Search.Documents.Indexes.Models
                         array.Add(KnowledgeSourceReference.DeserializeKnowledgeSourceReference(item, options));
                     }
                     knowledgeSources = array;
+                    continue;
+                }
+                if (prop.NameEquals("tools"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KnowledgeBaseTool> array = new List<KnowledgeBaseTool>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(KnowledgeBaseTool.DeserializeKnowledgeBaseTool(item, options));
+                    }
+                    tools = array;
                     continue;
                 }
                 if (prop.NameEquals("models"u8))
@@ -294,6 +342,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("retrievalInstructions"u8))
                 {
                     retrievalInstructions = prop.Value.GetString();
@@ -313,6 +382,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     corsOptions = CorsOptions.DeserializeCorsOptions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("retrieveDefaults"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrieveDefaults = KnowledgeBaseRetrieveDefaults.DeserializeKnowledgeBaseRetrieveDefaults(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -321,15 +399,18 @@ namespace Azure.Search.Documents.Indexes.Models
             return new KnowledgeBase(
                 name,
                 knowledgeSources ?? new ChangeTrackingList<KnowledgeSourceReference>(),
+                tools ?? new ChangeTrackingList<KnowledgeBaseTool>(),
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
                 retrievalReasoningEffort,
                 outputMode,
                 eTag,
                 encryptionKey,
                 description,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 retrievalInstructions,
                 answerInstructions,
                 corsOptions,
+                retrieveDefaults,
                 additionalBinaryDataProperties)
             {
                 _encryptionKeyIsDefined = encryptionKeyIsDefined

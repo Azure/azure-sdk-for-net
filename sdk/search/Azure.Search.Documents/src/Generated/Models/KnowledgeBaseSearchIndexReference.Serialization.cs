@@ -85,6 +85,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("docKey"u8);
                 writer.WriteStringValue(DocKey);
             }
+            if (Optional.IsDefined(SearchSensitivityLabelInfo))
+            {
+                writer.WritePropertyName("searchSensitivityLabelInfo"u8);
+                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
+            }
             if (Optional.IsDefined(CitationUrl))
             {
                 writer.WritePropertyName("citationUrl"u8);
@@ -124,6 +129,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string docKey = default;
+            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             Uri citationUrl = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,6 +183,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     docKey = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("searchSensitivityLabelInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("citationUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -199,6 +214,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 rerankerScore,
                 additionalBinaryDataProperties,
                 docKey,
+                searchSensitivityLabelInfo,
                 citationUrl);
         }
     }

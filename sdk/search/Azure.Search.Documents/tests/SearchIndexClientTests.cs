@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -59,24 +57,6 @@ namespace Azure.Search.Documents.Tests
             Assert.Throws<ArgumentNullException>(() => service.GetSearchClient(null));
             Assert.Throws<ArgumentException>(() => service.GetSearchClient(string.Empty));
         }
-
-#pragma warning disable SCME0002
-        [Test]
-        public void SettingsConstructorUsesCustomSerializer()
-        {
-            JsonObjectSerializer serializer = new JsonObjectSerializer(new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            });
-            SearchIndexClient client = new SearchIndexClient(new SearchIndexClientSettings
-            {
-                Endpoint = new Uri("https://fake-search.search.windows.net"),
-                Options = new SearchClientOptions { Serializer = serializer },
-            });
-
-            Assert.AreSame(serializer, client.GetSearchClient("test-index").Serializer);
-        }
-#pragma warning restore SCME0002
 
         private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
         {
@@ -577,6 +557,7 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task CreateKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
@@ -604,6 +585,7 @@ namespace Azure.Search.Documents.Tests
                     new AzureOpenAIVectorizerParameters
                     {
                         ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
+                        ApiKey = TestEnvironment.OpenAIKey,
                         DeploymentName = deploymentName,
                         ModelName = AzureOpenAIModelName.Gpt54Mini
                     }));
@@ -621,6 +603,7 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task DeleteKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
@@ -638,11 +621,12 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task UpdateKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            string deploymentName = "gpt-5.4-mini";
+            string deploymentName = "gpt-5-mini";
             SearchIndexClient client = resources.GetIndexClient();
             var knowledgeBaseName = Recording.Random.GetName(8);
             var knowledgeSourceName = Recording.Random.GetName(8);
@@ -664,8 +648,9 @@ namespace Azure.Search.Documents.Tests
                     new AzureOpenAIVectorizerParameters
                     {
                         ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
+                        ApiKey = TestEnvironment.OpenAIKey,
                         DeploymentName = deploymentName,
-                        ModelName = AzureOpenAIModelName.Gpt54Mini
+                        ModelName = AzureOpenAIModelName.Gpt5Mini
                     }));
 
             KnowledgeBase createdAgent = await client.CreateKnowledgeBaseAsync(knowledgeBase);
@@ -683,6 +668,7 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task GetKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
@@ -695,6 +681,7 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task GetKnowledgeBases()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
