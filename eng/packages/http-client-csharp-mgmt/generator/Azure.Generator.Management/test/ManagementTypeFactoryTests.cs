@@ -29,6 +29,26 @@ namespace Azure.Generator.Mgmt.Tests
         private static readonly InputPrimitiveType _armResourceType = new(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
         private static readonly InputPrimitiveType _azureLocation = new(InputPrimitiveTypeKind.String, "azureLocation", "Azure.Core.azureLocation");
 
+        [TestCase(typeof(Azure.ResourceManager.Models.ResourceData), true)]
+        [TestCase(typeof(Azure.ResourceManager.Models.TrackedResourceData), true)]
+        [TestCase(typeof(InheritedWriter), true)]
+        [TestCase(typeof(object), false)]
+        [TestCase(typeof(OverloadOnlyWriter), false)]
+        [TestCase(typeof(NonVirtualWriter), false)]
+        [TestCase(typeof(SealedWriter), false)]
+        [TestCase(typeof(PublicWriter), false)]
+        [TestCase(typeof(WrongReturnWriter), false)]
+        [TestCase(typeof(StaticWriter), false)]
+        [TestCase(typeof(GenericWriter), false)]
+        public void MappedFrameworkWriterRequiresCompatibleClrMethod(Type frameworkType, bool hasWriter)
+        {
+            var input = InputFactory.Model("Widget");
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
+            var provider = new MgmtObjectModelProvider(frameworkType, input);
+
+            Assert.That(provider.Methods.Any(method => method.Signature.Name == "JsonModelWriteCore"), Is.EqualTo(hasWriter));
+        }
+
         [TestCase("Resource", false)]
         [TestCase("Resource", true)]
         [TestCase("TrackedResource", false)]
@@ -738,6 +758,48 @@ namespace Azure.Generator.Mgmt.Tests
             // No ManagedServiceIdentityType enum at all
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => []);
             Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
+        }
+
+        private class OverridableWriter
+        {
+            protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class InheritedWriter : OverridableWriter { }
+
+        private class OverloadOnlyWriter
+        {
+            protected virtual void JsonModelWriteCore(object writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class NonVirtualWriter
+        {
+            protected void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class SealedWriter : OverridableWriter
+        {
+            protected sealed override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class PublicWriter
+        {
+            public virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class WrongReturnWriter
+        {
+            protected virtual int JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => 0;
+        }
+
+        private class StaticWriter
+        {
+            protected static void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        }
+
+        private class GenericWriter
+        {
+            protected virtual void JsonModelWriteCore<T>(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         }
     }
 }
