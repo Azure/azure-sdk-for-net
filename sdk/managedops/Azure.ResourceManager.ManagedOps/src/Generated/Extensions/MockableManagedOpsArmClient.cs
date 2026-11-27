@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ManagedOps.Mocking
         /// <returns> Returns a <see cref="ManagedOpResource"/> object. </returns>
         public virtual ManagedOpResource GetManagedOpResource(ResourceIdentifier id)
         {
-            ManagedOpResource.ValidateResourceId(id);
             return new ManagedOpResource(Client, id);
         }
     }

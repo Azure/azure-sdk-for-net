@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="MonitorPrivateLinkResource"/> object. </returns>
         public virtual MonitorPrivateLinkResource GetMonitorPrivateLinkResource(ResourceIdentifier id)
         {
-            MonitorPrivateLinkResource.ValidateResourceId(id);
             return new MonitorPrivateLinkResource(Client, id);
         }
 
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            MonitorPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MonitorPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="DataCollectionEndpointResource"/> object. </returns>
         public virtual DataCollectionEndpointResource GetDataCollectionEndpointResource(ResourceIdentifier id)
         {
-            DataCollectionEndpointResource.ValidateResourceId(id);
             return new DataCollectionEndpointResource(Client, id);
         }
 
@@ -89,7 +86,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource"/> object. </returns>
         public virtual DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(ResourceIdentifier id)
         {
-            DataCollectionRuleAssociationResource.ValidateResourceId(id);
             return new DataCollectionRuleAssociationResource(Client, id);
         }
 
@@ -134,7 +130,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="DataCollectionRuleResource"/> object. </returns>
         public virtual DataCollectionRuleResource GetDataCollectionRuleResource(ResourceIdentifier id)
         {
-            DataCollectionRuleResource.ValidateResourceId(id);
             return new DataCollectionRuleResource(Client, id);
         }
 
@@ -143,7 +138,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource"/> object. </returns>
         public virtual MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(ResourceIdentifier id)
         {
-            MonitorPrivateLinkScopeResource.ValidateResourceId(id);
             return new MonitorPrivateLinkScopeResource(Client, id);
         }
 
@@ -152,7 +146,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource"/> object. </returns>
         public virtual MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(ResourceIdentifier id)
         {
-            MonitorPrivateLinkScopedResource.ValidateResourceId(id);
             return new MonitorPrivateLinkScopedResource(Client, id);
         }
 
@@ -161,7 +154,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="AutoscaleSettingResource"/> object. </returns>
         public virtual AutoscaleSettingResource GetAutoscaleSettingResource(ResourceIdentifier id)
         {
-            AutoscaleSettingResource.ValidateResourceId(id);
             return new AutoscaleSettingResource(Client, id);
         }
 
@@ -170,7 +162,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="ServiceDiagnosticSettingResource"/> object. </returns>
         public virtual ServiceDiagnosticSettingResource GetServiceDiagnosticSettingResource(ResourceIdentifier id)
         {
-            ServiceDiagnosticSettingResource.ValidateResourceId(id);
             return new ServiceDiagnosticSettingResource(Client, id);
         }
 
@@ -187,7 +178,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="LogProfileResource"/> object. </returns>
         public virtual LogProfileResource GetLogProfileResource(ResourceIdentifier id)
         {
-            LogProfileResource.ValidateResourceId(id);
             return new LogProfileResource(Client, id);
         }
 
@@ -196,7 +186,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="ActivityLogAlertResource"/> object. </returns>
         public virtual ActivityLogAlertResource GetActivityLogAlertResource(ResourceIdentifier id)
         {
-            ActivityLogAlertResource.ValidateResourceId(id);
             return new ActivityLogAlertResource(Client, id);
         }
 
@@ -205,7 +194,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="MetricAlertResource"/> object. </returns>
         public virtual MetricAlertResource GetMetricAlertResource(ResourceIdentifier id)
         {
-            MetricAlertResource.ValidateResourceId(id);
             return new MetricAlertResource(Client, id);
         }
 
@@ -214,7 +202,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="ScheduledQueryRuleResource"/> object. </returns>
         public virtual ScheduledQueryRuleResource GetScheduledQueryRuleResource(ResourceIdentifier id)
         {
-            ScheduledQueryRuleResource.ValidateResourceId(id);
             return new ScheduledQueryRuleResource(Client, id);
         }
 
@@ -223,7 +210,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="ActionGroupResource"/> object. </returns>
         public virtual ActionGroupResource GetActionGroupResource(ResourceIdentifier id)
         {
-            ActionGroupResource.ValidateResourceId(id);
             return new ActionGroupResource(Client, id);
         }
 
@@ -232,7 +218,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="TenantActionGroupResource"/> object. </returns>
         public virtual TenantActionGroupResource GetTenantActionGroupResource(ResourceIdentifier id)
         {
-            TenantActionGroupResource.ValidateResourceId(id);
             return new TenantActionGroupResource(Client, id);
         }
 
@@ -241,7 +226,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id)
         {
-            VmInsightsOnboardingStatusResource.ValidateResourceId(id);
             return new VmInsightsOnboardingStatusResource(Client, id);
         }
 
@@ -258,7 +242,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
         public virtual DiagnosticSettingResource GetDiagnosticSettingResource(ResourceIdentifier id)
         {
-            DiagnosticSettingResource.ValidateResourceId(id);
             return new DiagnosticSettingResource(Client, id);
         }
 
@@ -303,7 +286,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
         public virtual DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(ResourceIdentifier id)
         {
-            DiagnosticSettingsCategoryResource.ValidateResourceId(id);
             return new DiagnosticSettingsCategoryResource(Client, id);
         }
 

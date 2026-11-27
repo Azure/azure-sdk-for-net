@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricAccessControlListResource"/> object. </returns>
         public virtual NetworkFabricAccessControlListResource GetNetworkFabricAccessControlListResource(ResourceIdentifier id)
         {
-            NetworkFabricAccessControlListResource.ValidateResourceId(id);
             return new NetworkFabricAccessControlListResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricInternetGatewayRuleResource"/> object. </returns>
         public virtual NetworkFabricInternetGatewayRuleResource GetNetworkFabricInternetGatewayRuleResource(ResourceIdentifier id)
         {
-            NetworkFabricInternetGatewayRuleResource.ValidateResourceId(id);
             return new NetworkFabricInternetGatewayRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricInternetGatewayResource"/> object. </returns>
         public virtual NetworkFabricInternetGatewayResource GetNetworkFabricInternetGatewayResource(ResourceIdentifier id)
         {
-            NetworkFabricInternetGatewayResource.ValidateResourceId(id);
             return new NetworkFabricInternetGatewayResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricIPCommunityResource"/> object. </returns>
         public virtual NetworkFabricIPCommunityResource GetNetworkFabricIPCommunityResource(ResourceIdentifier id)
         {
-            NetworkFabricIPCommunityResource.ValidateResourceId(id);
             return new NetworkFabricIPCommunityResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricIPExtendedCommunityResource"/> object. </returns>
         public virtual NetworkFabricIPExtendedCommunityResource GetNetworkFabricIPExtendedCommunityResource(ResourceIdentifier id)
         {
-            NetworkFabricIPExtendedCommunityResource.ValidateResourceId(id);
             return new NetworkFabricIPExtendedCommunityResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricIPPrefixResource"/> object. </returns>
         public virtual NetworkFabricIPPrefixResource GetNetworkFabricIPPrefixResource(ResourceIdentifier id)
         {
-            NetworkFabricIPPrefixResource.ValidateResourceId(id);
             return new NetworkFabricIPPrefixResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricL2IsolationDomainResource"/> object. </returns>
         public virtual NetworkFabricL2IsolationDomainResource GetNetworkFabricL2IsolationDomainResource(ResourceIdentifier id)
         {
-            NetworkFabricL2IsolationDomainResource.ValidateResourceId(id);
             return new NetworkFabricL2IsolationDomainResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricL3IsolationDomainResource"/> object. </returns>
         public virtual NetworkFabricL3IsolationDomainResource GetNetworkFabricL3IsolationDomainResource(ResourceIdentifier id)
         {
-            NetworkFabricL3IsolationDomainResource.ValidateResourceId(id);
             return new NetworkFabricL3IsolationDomainResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricInternalNetworkResource"/> object. </returns>
         public virtual NetworkFabricInternalNetworkResource GetNetworkFabricInternalNetworkResource(ResourceIdentifier id)
         {
-            NetworkFabricInternalNetworkResource.ValidateResourceId(id);
             return new NetworkFabricInternalNetworkResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricExternalNetworkResource"/> object. </returns>
         public virtual NetworkFabricExternalNetworkResource GetNetworkFabricExternalNetworkResource(ResourceIdentifier id)
         {
-            NetworkFabricExternalNetworkResource.ValidateResourceId(id);
             return new NetworkFabricExternalNetworkResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricNeighborGroupResource"/> object. </returns>
         public virtual NetworkFabricNeighborGroupResource GetNetworkFabricNeighborGroupResource(ResourceIdentifier id)
         {
-            NetworkFabricNeighborGroupResource.ValidateResourceId(id);
             return new NetworkFabricNeighborGroupResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkDeviceSkuResource"/> object. </returns>
         public virtual NetworkDeviceSkuResource GetNetworkDeviceSkuResource(ResourceIdentifier id)
         {
-            NetworkDeviceSkuResource.ValidateResourceId(id);
             return new NetworkDeviceSkuResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkDeviceResource"/> object. </returns>
         public virtual NetworkDeviceResource GetNetworkDeviceResource(ResourceIdentifier id)
         {
-            NetworkDeviceResource.ValidateResourceId(id);
             return new NetworkDeviceResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkDeviceInterfaceResource"/> object. </returns>
         public virtual NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(ResourceIdentifier id)
         {
-            NetworkDeviceInterfaceResource.ValidateResourceId(id);
             return new NetworkDeviceInterfaceResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricControllerResource"/> object. </returns>
         public virtual NetworkFabricControllerResource GetNetworkFabricControllerResource(ResourceIdentifier id)
         {
-            NetworkFabricControllerResource.ValidateResourceId(id);
             return new NetworkFabricControllerResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricSkuResource"/> object. </returns>
         public virtual NetworkFabricSkuResource GetNetworkFabricSkuResource(ResourceIdentifier id)
         {
-            NetworkFabricSkuResource.ValidateResourceId(id);
             return new NetworkFabricSkuResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricResource"/> object. </returns>
         public virtual NetworkFabricResource GetNetworkFabricResource(ResourceIdentifier id)
         {
-            NetworkFabricResource.ValidateResourceId(id);
             return new NetworkFabricResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkToNetworkInterconnectResource"/> object. </returns>
         public virtual NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(ResourceIdentifier id)
         {
-            NetworkToNetworkInterconnectResource.ValidateResourceId(id);
             return new NetworkToNetworkInterconnectResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkPacketBrokerResource"/> object. </returns>
         public virtual NetworkPacketBrokerResource GetNetworkPacketBrokerResource(ResourceIdentifier id)
         {
-            NetworkPacketBrokerResource.ValidateResourceId(id);
             return new NetworkPacketBrokerResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkRackResource"/> object. </returns>
         public virtual NetworkRackResource GetNetworkRackResource(ResourceIdentifier id)
         {
-            NetworkRackResource.ValidateResourceId(id);
             return new NetworkRackResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkTapRuleResource"/> object. </returns>
         public virtual NetworkTapRuleResource GetNetworkTapRuleResource(ResourceIdentifier id)
         {
-            NetworkTapRuleResource.ValidateResourceId(id);
             return new NetworkTapRuleResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkTapResource"/> object. </returns>
         public virtual NetworkTapResource GetNetworkTapResource(ResourceIdentifier id)
         {
-            NetworkTapResource.ValidateResourceId(id);
             return new NetworkTapResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkFabricRoutePolicyResource"/> object. </returns>
         public virtual NetworkFabricRoutePolicyResource GetNetworkFabricRoutePolicyResource(ResourceIdentifier id)
         {
-            NetworkFabricRoutePolicyResource.ValidateResourceId(id);
             return new NetworkFabricRoutePolicyResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkMonitorResource"/> object. </returns>
         public virtual NetworkMonitorResource GetNetworkMonitorResource(ResourceIdentifier id)
         {
-            NetworkMonitorResource.ValidateResourceId(id);
             return new NetworkMonitorResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkBootstrapDeviceResource"/> object. </returns>
         public virtual NetworkBootstrapDeviceResource GetNetworkBootstrapDeviceResource(ResourceIdentifier id)
         {
-            NetworkBootstrapDeviceResource.ValidateResourceId(id);
             return new NetworkBootstrapDeviceResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> Returns a <see cref="NetworkBootstrapInterfaceResource"/> object. </returns>
         public virtual NetworkBootstrapInterfaceResource GetNetworkBootstrapInterfaceResource(ResourceIdentifier id)
         {
-            NetworkBootstrapInterfaceResource.ValidateResourceId(id);
             return new NetworkBootstrapInterfaceResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
         /// <returns> Returns a <see cref="ObservabilityAgentResource"/> object. </returns>
         public virtual ObservabilityAgentResource GetObservabilityAgentResource(ResourceIdentifier id)
         {
-            ObservabilityAgentResource.ValidateResourceId(id);
             return new ObservabilityAgentResource(Client, id);
         }
     }

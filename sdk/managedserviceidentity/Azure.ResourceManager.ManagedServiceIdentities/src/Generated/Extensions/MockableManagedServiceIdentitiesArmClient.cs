@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentityResource(ResourceIdentifier id)
         {
-            SystemAssignedIdentityResource.ValidateResourceId(id);
             return new SystemAssignedIdentityResource(Client, id);
         }
 
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <returns> Returns a <see cref="FederatedIdentityCredentialResource"/> object. </returns>
         public virtual FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(ResourceIdentifier id)
         {
-            FederatedIdentityCredentialResource.ValidateResourceId(id);
             return new FederatedIdentityCredentialResource(Client, id);
         }
 
@@ -57,7 +55,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <returns> Returns a <see cref="UserAssignedIdentityResource"/> object. </returns>
         public virtual UserAssignedIdentityResource GetUserAssignedIdentityResource(ResourceIdentifier id)
         {
-            UserAssignedIdentityResource.ValidateResourceId(id);
             return new UserAssignedIdentityResource(Client, id);
         }
     }

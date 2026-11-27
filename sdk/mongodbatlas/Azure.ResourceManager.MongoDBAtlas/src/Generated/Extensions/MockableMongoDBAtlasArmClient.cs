@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// <returns> Returns a <see cref="MongoDBAtlasOrganizationResource"/> object. </returns>
         public virtual MongoDBAtlasOrganizationResource GetMongoDBAtlasOrganizationResource(ResourceIdentifier id)
         {
-            MongoDBAtlasOrganizationResource.ValidateResourceId(id);
             return new MongoDBAtlasOrganizationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// <returns> Returns a <see cref="MongoDBAtlasProjectResource"/> object. </returns>
         public virtual MongoDBAtlasProjectResource GetMongoDBAtlasProjectResource(ResourceIdentifier id)
         {
-            MongoDBAtlasProjectResource.ValidateResourceId(id);
             return new MongoDBAtlasProjectResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// <returns> Returns a <see cref="MongoDBAtlasClusterResource"/> object. </returns>
         public virtual MongoDBAtlasClusterResource GetMongoDBAtlasClusterResource(ResourceIdentifier id)
         {
-            MongoDBAtlasClusterResource.ValidateResourceId(id);
             return new MongoDBAtlasClusterResource(Client, id);
         }
     }

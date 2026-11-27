@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <returns> Returns a <see cref="PrivateStoreResource"/> object. </returns>
         public virtual PrivateStoreResource GetPrivateStoreResource(ResourceIdentifier id)
         {
-            PrivateStoreResource.ValidateResourceId(id);
             return new PrivateStoreResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <returns> Returns a <see cref="MarketplaceRequestApprovalResource"/> object. </returns>
         public virtual MarketplaceRequestApprovalResource GetMarketplaceRequestApprovalResource(ResourceIdentifier id)
         {
-            MarketplaceRequestApprovalResource.ValidateResourceId(id);
             return new MarketplaceRequestApprovalResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <returns> Returns a <see cref="MarketplaceAdminRequestApprovalResource"/> object. </returns>
         public virtual MarketplaceAdminRequestApprovalResource GetMarketplaceAdminRequestApprovalResource(ResourceIdentifier id)
         {
-            MarketplaceAdminRequestApprovalResource.ValidateResourceId(id);
             return new MarketplaceAdminRequestApprovalResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource"/> object. </returns>
         public virtual PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(ResourceIdentifier id)
         {
-            PrivateStoreCollectionInfoResource.ValidateResourceId(id);
             return new PrivateStoreCollectionInfoResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <returns> Returns a <see cref="PrivateStoreOfferResource"/> object. </returns>
         public virtual PrivateStoreOfferResource GetPrivateStoreOfferResource(ResourceIdentifier id)
         {
-            PrivateStoreOfferResource.ValidateResourceId(id);
             return new PrivateStoreOfferResource(Client, id);
         }
     }
