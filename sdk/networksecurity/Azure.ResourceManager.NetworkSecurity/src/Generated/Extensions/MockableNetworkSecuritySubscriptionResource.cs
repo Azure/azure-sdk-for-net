@@ -24,8 +24,14 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
     {
         private ClientDiagnostics _neuroShieldsClientDiagnostics;
         private NeuroShields _neuroShieldsRestClient;
+        private ClientDiagnostics _agentFabricsClientDiagnostics;
+        private AgentFabrics _agentFabricsRestClient;
+        private ClientDiagnostics _policyGroupsClientDiagnostics;
+        private PolicyGroups _policyGroupsRestClient;
         private ClientDiagnostics _neuroShieldOperationStatusesClientDiagnostics;
         private NeuroShieldOperationStatuses _neuroShieldOperationStatusesRestClient;
+        private ClientDiagnostics _operationStatusClientDiagnostics;
+        private OperationStatus _operationStatusRestClient;
 
         /// <summary> Initializes a new instance of MockableNetworkSecuritySubscriptionResource for mocking. </summary>
         protected MockableNetworkSecuritySubscriptionResource()
@@ -41,11 +47,23 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
 
         private ClientDiagnostics NeuroShieldsClientDiagnostics => _neuroShieldsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NeuroShields NeuroShieldsRestClient => _neuroShieldsRestClient ??= new NeuroShields(NeuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkSecurity/neuroShields", out string apiVersion) ? apiVersion : "2026-10-01-preview");
+        private NeuroShields NeuroShieldsRestClient => _neuroShieldsRestClient ??= new NeuroShields(NeuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        private ClientDiagnostics AgentFabricsClientDiagnostics => _agentFabricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AgentFabrics AgentFabricsRestClient => _agentFabricsRestClient ??= new AgentFabrics(AgentFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        private ClientDiagnostics PolicyGroupsClientDiagnostics => _policyGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PolicyGroups PolicyGroupsRestClient => _policyGroupsRestClient ??= new PolicyGroups(PolicyGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics NeuroShieldOperationStatusesClientDiagnostics => _neuroShieldOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NeuroShieldOperationStatuses NeuroShieldOperationStatusesRestClient => _neuroShieldOperationStatusesRestClient ??= new NeuroShieldOperationStatuses(NeuroShieldOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01-preview");
+
+        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-03-preview");
 
         /// <summary>
         /// Gets all NeuroShield resources in a subscription.
@@ -117,6 +135,118 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
                 skipToken,
                 context,
                 "MockableNetworkSecuritySubscriptionResource.GetNeuroShields"), data => new NeuroShieldResource(Client, data));
+        }
+
+        /// <summary>
+        /// List AgentFabric resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkSecurity/agentFabrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgentFabrics_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AgentFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AgentFabricResource> GetAgentFabricsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AgentFabricData, AgentFabricResource>(new AgentFabricDataAsync0CollectionResultOfT(AgentFabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetAgentFabrics"), data => new AgentFabricResource(Client, data));
+        }
+
+        /// <summary>
+        /// List AgentFabric resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkSecurity/agentFabrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgentFabrics_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AgentFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AgentFabricResource> GetAgentFabrics(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AgentFabricData, AgentFabricResource>(new AgentFabricData0CollectionResultOfT(AgentFabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetAgentFabrics"), data => new AgentFabricResource(Client, data));
+        }
+
+        /// <summary>
+        /// List PolicyGroup resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkSecurity/policyGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPolicyGroupResource> GetNetworkSecurityPolicyGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkSecurityPolicyGroupData, NetworkSecurityPolicyGroupResource>(new NetworkSecurityPolicyGroupDataAsync0CollectionResultOfT(PolicyGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetNetworkSecurityPolicyGroups"), data => new NetworkSecurityPolicyGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// List PolicyGroup resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkSecurity/policyGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPolicyGroupResource> GetNetworkSecurityPolicyGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkSecurityPolicyGroupData, NetworkSecurityPolicyGroupResource>(new NetworkSecurityPolicyGroupData0CollectionResultOfT(PolicyGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetNetworkSecurityPolicyGroups"), data => new NetworkSecurityPolicyGroupResource(Client, data));
         }
 
         /// <summary>
@@ -204,6 +334,108 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = NeuroShieldOperationStatusesRestClient.CreateGetNeuroShieldOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkSecurityContext.Default), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkSecurity/locations/{location}/operationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatus_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationStatusResult>> GetAsync(string location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = OperationStatusClientDiagnostics.CreateScope("MockableNetworkSecuritySubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkSecurityContext.Default), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkSecurity/locations/{location}/operationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatus_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationStatusResult> Get(string location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = OperationStatusClientDiagnostics.CreateScope("MockableNetworkSecuritySubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkSecurityContext.Default), result);
                 if (response.Value == null)

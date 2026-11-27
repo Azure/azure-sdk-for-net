@@ -1,5 +1,6 @@
 {
   "apiVersions": {
-    "NeuroShield.Management": "2026-10-01-preview"
+    "NeuroShield.Management": "2026-10-01-preview",
+    "Microsoft.NetworkSecurity": "2026-11-03-preview"
   }
 }
