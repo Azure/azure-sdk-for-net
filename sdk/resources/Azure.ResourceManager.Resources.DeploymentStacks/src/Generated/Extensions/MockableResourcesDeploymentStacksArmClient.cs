@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Mocking
         /// <returns> Returns a <see cref="DeploymentStackResource"/> object. </returns>
         public virtual DeploymentStackResource GetDeploymentStackResource(ResourceIdentifier id)
         {
-            DeploymentStackResource.ValidateResourceId(id);
             return new DeploymentStackResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Mocking
         /// <returns> Returns a <see cref="DeploymentStackWhatIfResultResource"/> object. </returns>
         public virtual DeploymentStackWhatIfResultResource GetDeploymentStackWhatIfResultResource(ResourceIdentifier id)
         {
-            DeploymentStackWhatIfResultResource.ValidateResourceId(id);
             return new DeploymentStackWhatIfResultResource(Client, id);
         }
 

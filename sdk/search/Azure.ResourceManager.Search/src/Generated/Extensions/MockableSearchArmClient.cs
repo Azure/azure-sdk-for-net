@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource"/> object. </returns>
         public virtual SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            SearchPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new SearchPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource"/> object. </returns>
         public virtual SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(ResourceIdentifier id)
         {
-            SharedSearchServicePrivateLinkResource.ValidateResourceId(id);
             return new SharedSearchServicePrivateLinkResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <returns> Returns a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual SearchServiceNetworkSecurityPerimeterConfigurationResource GetSearchServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            SearchServiceNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <returns> Returns a <see cref="SearchServiceResource"/> object. </returns>
         public virtual SearchServiceResource GetSearchServiceResource(ResourceIdentifier id)
         {
-            SearchServiceResource.ValidateResourceId(id);
             return new SearchServiceResource(Client, id);
         }
     }

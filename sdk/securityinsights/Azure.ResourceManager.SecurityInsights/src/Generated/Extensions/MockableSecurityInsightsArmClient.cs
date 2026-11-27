@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource"/> object. </returns>
         public virtual SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(ResourceIdentifier id)
         {
-            SecurityInsightsAlertRuleResource.ValidateResourceId(id);
             return new SecurityInsightsAlertRuleResource(Client, id);
         }
 
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsAlertRuleTemplateResource"/> object. </returns>
         public virtual SecurityInsightsAlertRuleTemplateResource GetSecurityInsightsAlertRuleTemplateResource(ResourceIdentifier id)
         {
-            SecurityInsightsAlertRuleTemplateResource.ValidateResourceId(id);
             return new SecurityInsightsAlertRuleTemplateResource(Client, id);
         }
 
@@ -164,7 +162,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsAutomationRuleResource"/> object. </returns>
         public virtual SecurityInsightsAutomationRuleResource GetSecurityInsightsAutomationRuleResource(ResourceIdentifier id)
         {
-            SecurityInsightsAutomationRuleResource.ValidateResourceId(id);
             return new SecurityInsightsAutomationRuleResource(Client, id);
         }
 
@@ -209,7 +206,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsIncidentResource"/> object. </returns>
         public virtual SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(ResourceIdentifier id)
         {
-            SecurityInsightsIncidentResource.ValidateResourceId(id);
             return new SecurityInsightsIncidentResource(Client, id);
         }
 
@@ -254,7 +250,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource"/> object. </returns>
         public virtual SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(ResourceIdentifier id)
         {
-            SecurityInsightsBookmarkResource.ValidateResourceId(id);
             return new SecurityInsightsBookmarkResource(Client, id);
         }
 
@@ -299,7 +294,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> object. </returns>
         public virtual SecurityInsightsDataConnectorDefinitionResource GetSecurityInsightsDataConnectorDefinitionResource(ResourceIdentifier id)
         {
-            SecurityInsightsDataConnectorDefinitionResource.ValidateResourceId(id);
             return new SecurityInsightsDataConnectorDefinitionResource(Client, id);
         }
 
@@ -344,7 +338,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource"/> object. </returns>
         public virtual SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(ResourceIdentifier id)
         {
-            SecurityInsightsDataConnectorResource.ValidateResourceId(id);
             return new SecurityInsightsDataConnectorResource(Client, id);
         }
 
@@ -389,7 +382,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsIncidentCommentResource"/> object. </returns>
         public virtual SecurityInsightsIncidentCommentResource GetSecurityInsightsIncidentCommentResource(ResourceIdentifier id)
         {
-            SecurityInsightsIncidentCommentResource.ValidateResourceId(id);
             return new SecurityInsightsIncidentCommentResource(Client, id);
         }
 
@@ -434,7 +426,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsBookmarkRelationResource"/> object. </returns>
         public virtual SecurityInsightsBookmarkRelationResource GetSecurityInsightsBookmarkRelationResource(ResourceIdentifier id)
         {
-            SecurityInsightsBookmarkRelationResource.ValidateResourceId(id);
             return new SecurityInsightsBookmarkRelationResource(Client, id);
         }
 
@@ -479,7 +470,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsEntityRelationResource"/> object. </returns>
         public virtual SecurityInsightsEntityRelationResource GetSecurityInsightsEntityRelationResource(ResourceIdentifier id)
         {
-            SecurityInsightsEntityRelationResource.ValidateResourceId(id);
             return new SecurityInsightsEntityRelationResource(Client, id);
         }
 
@@ -524,7 +514,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsIncidentTaskResource"/> object. </returns>
         public virtual SecurityInsightsIncidentTaskResource GetSecurityInsightsIncidentTaskResource(ResourceIdentifier id)
         {
-            SecurityInsightsIncidentTaskResource.ValidateResourceId(id);
             return new SecurityInsightsIncidentTaskResource(Client, id);
         }
 
@@ -569,7 +558,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsSentinelOnboardingStateResource"/> object. </returns>
         public virtual SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(ResourceIdentifier id)
         {
-            SecurityInsightsSentinelOnboardingStateResource.ValidateResourceId(id);
             return new SecurityInsightsSentinelOnboardingStateResource(Client, id);
         }
 
@@ -614,7 +602,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource"/> object. </returns>
         public virtual SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(ResourceIdentifier id)
         {
-            SecurityMLAnalyticsSettingResource.ValidateResourceId(id);
             return new SecurityMLAnalyticsSettingResource(Client, id);
         }
 
@@ -659,7 +646,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsSourceControlResource"/> object. </returns>
         public virtual SecurityInsightsSourceControlResource GetSecurityInsightsSourceControlResource(ResourceIdentifier id)
         {
-            SecurityInsightsSourceControlResource.ValidateResourceId(id);
             return new SecurityInsightsSourceControlResource(Client, id);
         }
 
@@ -704,7 +690,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsWatchlistResource"/> object. </returns>
         public virtual SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(ResourceIdentifier id)
         {
-            SecurityInsightsWatchlistResource.ValidateResourceId(id);
             return new SecurityInsightsWatchlistResource(Client, id);
         }
 
@@ -749,7 +734,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsWatchlistItemResource"/> object. </returns>
         public virtual SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(ResourceIdentifier id)
         {
-            SecurityInsightsWatchlistItemResource.ValidateResourceId(id);
             return new SecurityInsightsWatchlistItemResource(Client, id);
         }
 
@@ -794,7 +778,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsBillingStatisticResource"/> object. </returns>
         public virtual SecurityInsightsBillingStatisticResource GetSecurityInsightsBillingStatisticResource(ResourceIdentifier id)
         {
-            SecurityInsightsBillingStatisticResource.ValidateResourceId(id);
             return new SecurityInsightsBillingStatisticResource(Client, id);
         }
 
@@ -839,7 +822,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsEntityResource"/> object. </returns>
         public virtual SecurityInsightsEntityResource GetSecurityInsightsEntityResource(ResourceIdentifier id)
         {
-            SecurityInsightsEntityResource.ValidateResourceId(id);
             return new SecurityInsightsEntityResource(Client, id);
         }
 
@@ -884,7 +866,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsEntityQueryResource"/> object. </returns>
         public virtual SecurityInsightsEntityQueryResource GetSecurityInsightsEntityQueryResource(ResourceIdentifier id)
         {
-            SecurityInsightsEntityQueryResource.ValidateResourceId(id);
             return new SecurityInsightsEntityQueryResource(Client, id);
         }
 
@@ -929,7 +910,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsEntityQueryTemplateResource"/> object. </returns>
         public virtual SecurityInsightsEntityQueryTemplateResource GetSecurityInsightsEntityQueryTemplateResource(ResourceIdentifier id)
         {
-            SecurityInsightsEntityQueryTemplateResource.ValidateResourceId(id);
             return new SecurityInsightsEntityQueryTemplateResource(Client, id);
         }
 
@@ -974,7 +954,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsFileImportResource"/> object. </returns>
         public virtual SecurityInsightsFileImportResource GetSecurityInsightsFileImportResource(ResourceIdentifier id)
         {
-            SecurityInsightsFileImportResource.ValidateResourceId(id);
             return new SecurityInsightsFileImportResource(Client, id);
         }
 
@@ -1019,7 +998,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsHuntResource"/> object. </returns>
         public virtual SecurityInsightsHuntResource GetSecurityInsightsHuntResource(ResourceIdentifier id)
         {
-            SecurityInsightsHuntResource.ValidateResourceId(id);
             return new SecurityInsightsHuntResource(Client, id);
         }
 
@@ -1064,7 +1042,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsHuntCommentResource"/> object. </returns>
         public virtual SecurityInsightsHuntCommentResource GetSecurityInsightsHuntCommentResource(ResourceIdentifier id)
         {
-            SecurityInsightsHuntCommentResource.ValidateResourceId(id);
             return new SecurityInsightsHuntCommentResource(Client, id);
         }
 
@@ -1109,7 +1086,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsHuntRelationResource"/> object. </returns>
         public virtual SecurityInsightsHuntRelationResource GetSecurityInsightsHuntRelationResource(ResourceIdentifier id)
         {
-            SecurityInsightsHuntRelationResource.ValidateResourceId(id);
             return new SecurityInsightsHuntRelationResource(Client, id);
         }
 
@@ -1154,7 +1130,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsOfficeConsentResource"/> object. </returns>
         public virtual SecurityInsightsOfficeConsentResource GetSecurityInsightsOfficeConsentResource(ResourceIdentifier id)
         {
-            SecurityInsightsOfficeConsentResource.ValidateResourceId(id);
             return new SecurityInsightsOfficeConsentResource(Client, id);
         }
 
@@ -1199,7 +1174,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsSettingResource"/> object. </returns>
         public virtual SecurityInsightsSettingResource GetSecurityInsightsSettingResource(ResourceIdentifier id)
         {
-            SecurityInsightsSettingResource.ValidateResourceId(id);
             return new SecurityInsightsSettingResource(Client, id);
         }
 
@@ -1244,7 +1218,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="TriggeredAnalyticsRuleRunResource"/> object. </returns>
         public virtual TriggeredAnalyticsRuleRunResource GetTriggeredAnalyticsRuleRunResource(ResourceIdentifier id)
         {
-            TriggeredAnalyticsRuleRunResource.ValidateResourceId(id);
             return new TriggeredAnalyticsRuleRunResource(Client, id);
         }
 
@@ -1289,7 +1262,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="WorkspaceManagerAssignmentResource"/> object. </returns>
         public virtual WorkspaceManagerAssignmentResource GetWorkspaceManagerAssignmentResource(ResourceIdentifier id)
         {
-            WorkspaceManagerAssignmentResource.ValidateResourceId(id);
             return new WorkspaceManagerAssignmentResource(Client, id);
         }
 
@@ -1334,7 +1306,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="WorkspaceManagerConfigurationResource"/> object. </returns>
         public virtual WorkspaceManagerConfigurationResource GetWorkspaceManagerConfigurationResource(ResourceIdentifier id)
         {
-            WorkspaceManagerConfigurationResource.ValidateResourceId(id);
             return new WorkspaceManagerConfigurationResource(Client, id);
         }
 
@@ -1379,7 +1350,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="WorkspaceManagerGroupResource"/> object. </returns>
         public virtual WorkspaceManagerGroupResource GetWorkspaceManagerGroupResource(ResourceIdentifier id)
         {
-            WorkspaceManagerGroupResource.ValidateResourceId(id);
             return new WorkspaceManagerGroupResource(Client, id);
         }
 
@@ -1424,7 +1394,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="WorkspaceManagerMemberResource"/> object. </returns>
         public virtual WorkspaceManagerMemberResource GetWorkspaceManagerMemberResource(ResourceIdentifier id)
         {
-            WorkspaceManagerMemberResource.ValidateResourceId(id);
             return new WorkspaceManagerMemberResource(Client, id);
         }
 
@@ -1469,7 +1438,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsAlertRuleActionResource"/> object. </returns>
         public virtual SecurityInsightsAlertRuleActionResource GetSecurityInsightsAlertRuleActionResource(ResourceIdentifier id)
         {
-            SecurityInsightsAlertRuleActionResource.ValidateResourceId(id);
             return new SecurityInsightsAlertRuleActionResource(Client, id);
         }
 
@@ -1514,7 +1482,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsPackageResource"/> object. </returns>
         public virtual SecurityInsightsPackageResource GetSecurityInsightsPackageResource(ResourceIdentifier id)
         {
-            SecurityInsightsPackageResource.ValidateResourceId(id);
             return new SecurityInsightsPackageResource(Client, id);
         }
 
@@ -1559,7 +1526,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsProductPackageResource"/> object. </returns>
         public virtual SecurityInsightsProductPackageResource GetSecurityInsightsProductPackageResource(ResourceIdentifier id)
         {
-            SecurityInsightsProductPackageResource.ValidateResourceId(id);
             return new SecurityInsightsProductPackageResource(Client, id);
         }
 
@@ -1604,7 +1570,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsProductTemplateResource"/> object. </returns>
         public virtual SecurityInsightsProductTemplateResource GetSecurityInsightsProductTemplateResource(ResourceIdentifier id)
         {
-            SecurityInsightsProductTemplateResource.ValidateResourceId(id);
             return new SecurityInsightsProductTemplateResource(Client, id);
         }
 
@@ -1649,7 +1614,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsTemplateResource"/> object. </returns>
         public virtual SecurityInsightsTemplateResource GetSecurityInsightsTemplateResource(ResourceIdentifier id)
         {
-            SecurityInsightsTemplateResource.ValidateResourceId(id);
             return new SecurityInsightsTemplateResource(Client, id);
         }
 
@@ -1702,7 +1666,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource"/> object. </returns>
         public virtual SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(ResourceIdentifier id)
         {
-            SecurityInsightsIncidentRelationResource.ValidateResourceId(id);
             return new SecurityInsightsIncidentRelationResource(Client, id);
         }
 
@@ -1747,7 +1710,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsMetadataResource"/> object. </returns>
         public virtual SecurityInsightsMetadataResource GetSecurityInsightsMetadataResource(ResourceIdentifier id)
         {
-            SecurityInsightsMetadataResource.ValidateResourceId(id);
             return new SecurityInsightsMetadataResource(Client, id);
         }
 
@@ -1792,7 +1754,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> object. </returns>
         public virtual SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(ResourceIdentifier id)
         {
-            SecurityInsightsThreatIntelligenceIndicatorResource.ValidateResourceId(id);
             return new SecurityInsightsThreatIntelligenceIndicatorResource(Client, id);
         }
 
@@ -1837,7 +1798,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="SecurityInsightsRecommendationResource"/> object. </returns>
         public virtual SecurityInsightsRecommendationResource GetSecurityInsightsRecommendationResource(ResourceIdentifier id)
         {
-            SecurityInsightsRecommendationResource.ValidateResourceId(id);
             return new SecurityInsightsRecommendationResource(Client, id);
         }
 
@@ -1882,7 +1842,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <returns> Returns a <see cref="WorkspaceManagerAssignmentJobResource"/> object. </returns>
         public virtual WorkspaceManagerAssignmentJobResource GetWorkspaceManagerAssignmentJobResource(ResourceIdentifier id)
         {
-            WorkspaceManagerAssignmentJobResource.ValidateResourceId(id);
             return new WorkspaceManagerAssignmentJobResource(Client, id);
         }
 
