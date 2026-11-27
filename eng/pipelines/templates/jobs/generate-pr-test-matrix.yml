@@ -1,0 +1,91 @@
+# The SDK PR test matrix uses separate PackageInfo inputs for macOS. Keep the
+# other pools and matrix generation semantics aligned with the common template.
+parameters:
+  - name: MatrixConfigs
+    type: object
+  - name: MatrixFilters
+    type: object
+    default: []
+  - name: MatrixReplace
+    type: object
+    default: []
+  - name: AdditionalParameters
+    type: object
+  - name: PreGenerationSteps
+    type: stepList
+    default: []
+  - name: Pools
+    type: object
+    default:
+      - name: Linux
+        filter: .*Linux.*Pool$
+        os: linux
+        batchSize: $(TestMatrixEntriesPerJobLinux)
+        folder: $(Build.ArtifactStagingDirectory)/PackageInfo
+      - name: Windows
+        filter: .*Windows.*Pool$
+        os: windows
+        batchSize: $(TestMatrixEntriesPerJobWindows)
+        folder: $(Build.ArtifactStagingDirectory)/PackageInfo
+      - name: Mac
+        filter: .*MacPool$
+        os: macOS
+        batchSize: $(TestMatrixEntriesPerJobMac)
+        folder: $(Build.ArtifactStagingDirectory)/MacTestPackageInfo
+
+jobs:
+  - job: generate_target_service_test_matrix
+    variables:
+      - template: /eng/pipelines/templates/variables/image.yml
+      - name: skipComponentGovernanceDetection
+        value: true
+      - name: displayNameFilter
+        value: $[ coalesce(variables.jobMatrixFilter, '.*') ]
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            Paths:
+              - '/*'
+              - '!SessionRecords'
+      - ${{ parameters.PreGenerationSteps }}
+      - ${{ each pool in parameters.Pools }}:
+        - pwsh: |
+            '${{ convertToJson(parameters.MatrixConfigs) }}' | Set-Content matrix.json
+            $batchSize = 10
+            $overrideValue = '${{ pool.batchSize }}'
+            if (-not [string]::IsNullOrWhiteSpace($overrideValue) -and $overrideValue -notmatch '^\$\(.+\)$') {
+              try { $batchSize = [int]$overrideValue }
+              catch { throw "PR job batch size override for ${{ pool.name }} must be an integer, got '$overrideValue'." }
+              Write-Host "Using batch size override for ${{ pool.name }}: $batchSize"
+            }
+            if ($batchSize -le 0) { throw "PR job batch size for ${{ pool.name }} must be greater than zero." }
+            ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
+              -PackagePropertiesFolder '${{ pool.folder }}' `
+              -PRMatrixFile matrix.json `
+              -PRMatrixSetting ProjectNames `
+              -PRMatrixKey ArtifactName `
+              -DisplayNameFilter '$(displayNameFilter)' `
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|public', 'Pool=${{ pool.filter }}' `
+              -IndirectFilters 'AdditionalTestArguments=.*true', 'Pool=.*LinuxPool$' `
+              -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
+              -PackagesPerPRJob $batchSize `
+              -SparseIndirect $true
+          displayName: Create ${{ pool.name }} PR Matrix
+          name: vm_job_matrix_pr_${{ pool.name }}
+
+  - ${{ each pool in parameters.Pools }}:
+    - template: /eng/pipelines/templates/jobs/ci.tests.yml
+      parameters:
+        UsePlatformContainer: false
+        OSName: ${{ pool.os }}
+        Matrix: dependencies.generate_target_service_test_matrix.outputs['vm_job_matrix_pr_${{ pool.name }}.matrix']
+        DependsOn: generate_target_service_test_matrix
+        CloudConfig:
+          Cloud: public
+        ${{ each param in parameters.AdditionalParameters }}:
+          ${{ param.key }}: ${{ param.value }}
