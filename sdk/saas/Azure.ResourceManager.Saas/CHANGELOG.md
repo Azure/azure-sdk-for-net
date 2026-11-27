@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-11-30)
 
 ### Features Added
 
@@ -11,9 +11,3 @@ Initial beta release of the `Azure.ResourceManager.Saas` management client libra
 - Pre-purchase and update validation (`ValidatePurchase`, `ValidatePurchaseBySubscription`, `ValidateUpdate`).
 - Global SaaS resource name-availability checks (`CheckSaasNameAvailability`).
 - Publisher access-token retrieval (`GetAccessToken`) and subscription unsubscribe (`Unsubscribe`).
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
