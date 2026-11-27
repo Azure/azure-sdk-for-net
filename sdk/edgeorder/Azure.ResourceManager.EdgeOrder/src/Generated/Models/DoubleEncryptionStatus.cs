@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="DoubleEncryptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DoubleEncryptionStatus?(string value) => value == null ? null : new DoubleEncryptionStatus(value);
+        public static implicit operator DoubleEncryptionStatus?(string value) => value == null ? (DoubleEncryptionStatus?)null : new DoubleEncryptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

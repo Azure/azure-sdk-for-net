@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Converts a string to a <see cref="DnsResolverDomainListBulkAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsResolverDomainListBulkAction?(string value) => value == null ? null : new DnsResolverDomainListBulkAction(value);
+        public static implicit operator DnsResolverDomainListBulkAction?(string value) => value == null ? (DnsResolverDomainListBulkAction?)null : new DnsResolverDomainListBulkAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanSkuName?(string value) => value == null ? null : new ElasticSanSkuName(value);
+        public static implicit operator ElasticSanSkuName?(string value) => value == null ? (ElasticSanSkuName?)null : new ElasticSanSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

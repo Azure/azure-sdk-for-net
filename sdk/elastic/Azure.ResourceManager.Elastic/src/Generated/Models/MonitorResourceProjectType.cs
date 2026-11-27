@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="MonitorResourceProjectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorResourceProjectType?(string value) => value == null ? null : new MonitorResourceProjectType(value);
+        public static implicit operator MonitorResourceProjectType?(string value) => value == null ? (MonitorResourceProjectType?)null : new MonitorResourceProjectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

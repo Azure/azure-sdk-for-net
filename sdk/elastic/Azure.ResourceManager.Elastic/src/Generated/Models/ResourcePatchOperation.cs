@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="ResourcePatchOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcePatchOperation?(string value) => value == null ? null : new ResourcePatchOperation(value);
+        public static implicit operator ResourcePatchOperation?(string value) => value == null ? (ResourcePatchOperation?)null : new ResourcePatchOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

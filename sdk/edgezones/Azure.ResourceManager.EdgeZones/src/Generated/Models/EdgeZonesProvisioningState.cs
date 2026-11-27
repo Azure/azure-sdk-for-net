@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
 
         /// <summary> Converts a string to a <see cref="EdgeZonesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeZonesProvisioningState?(string value) => value == null ? null : new EdgeZonesProvisioningState(value);
+        public static implicit operator EdgeZonesProvisioningState?(string value) => value == null ? (EdgeZonesProvisioningState?)null : new EdgeZonesProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

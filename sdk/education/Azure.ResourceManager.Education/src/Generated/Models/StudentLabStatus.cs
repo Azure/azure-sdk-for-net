@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <summary> Converts a string to a <see cref="StudentLabStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StudentLabStatus?(string value) => value == null ? null : new StudentLabStatus(value);
+        public static implicit operator StudentLabStatus?(string value) => value == null ? (StudentLabStatus?)null : new StudentLabStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

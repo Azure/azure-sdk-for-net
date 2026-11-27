@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskPublicNetworkAccess?(string value) => value == null ? null : new DurableTaskPublicNetworkAccess(value);
+        public static implicit operator DurableTaskPublicNetworkAccess?(string value) => value == null ? (DurableTaskPublicNetworkAccess?)null : new DurableTaskPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

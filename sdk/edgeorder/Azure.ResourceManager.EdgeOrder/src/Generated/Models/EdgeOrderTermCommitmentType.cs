@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderTermCommitmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderTermCommitmentType?(string value) => value == null ? null : new EdgeOrderTermCommitmentType(value);
+        public static implicit operator EdgeOrderTermCommitmentType?(string value) => value == null ? (EdgeOrderTermCommitmentType?)null : new EdgeOrderTermCommitmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

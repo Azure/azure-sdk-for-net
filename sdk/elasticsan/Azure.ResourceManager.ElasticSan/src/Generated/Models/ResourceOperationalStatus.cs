@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ResourceOperationalStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceOperationalStatus?(string value) => value == null ? null : new ResourceOperationalStatus(value);
+        public static implicit operator ResourceOperationalStatus?(string value) => value == null ? (ResourceOperationalStatus?)null : new ResourceOperationalStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

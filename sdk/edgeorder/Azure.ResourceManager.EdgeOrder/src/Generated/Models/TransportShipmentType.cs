@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="TransportShipmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransportShipmentType?(string value) => value == null ? null : new TransportShipmentType(value);
+        public static implicit operator TransportShipmentType?(string value) => value == null ? (TransportShipmentType?)null : new TransportShipmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskSchedulerFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskSchedulerFailoverState?(string value) => value == null ? null : new DurableTaskSchedulerFailoverState(value);
+        public static implicit operator DurableTaskSchedulerFailoverState?(string value) => value == null ? (DurableTaskSchedulerFailoverState?)null : new DurableTaskSchedulerFailoverState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

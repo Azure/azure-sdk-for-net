@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderStageStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderStageStatus?(string value) => value == null ? null : new EdgeOrderStageStatus(value);
+        public static implicit operator EdgeOrderStageStatus?(string value) => value == null ? (EdgeOrderStageStatus?)null : new EdgeOrderStageStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

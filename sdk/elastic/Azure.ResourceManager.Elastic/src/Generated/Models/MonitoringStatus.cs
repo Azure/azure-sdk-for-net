@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="MonitoringStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitoringStatus?(string value) => value == null ? null : new MonitoringStatus(value);
+        public static implicit operator MonitoringStatus?(string value) => value == null ? (MonitoringStatus?)null : new MonitoringStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryCustomerManagedKeys"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryCustomerManagedKeys?(string value) => value == null ? null : new DiscoveryCustomerManagedKeys(value);
+        public static implicit operator DiscoveryCustomerManagedKeys?(string value) => value == null ? (DiscoveryCustomerManagedKeys?)null : new DiscoveryCustomerManagedKeys(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="AutoScalePolicyEnforcement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoScalePolicyEnforcement?(string value) => value == null ? null : new AutoScalePolicyEnforcement(value);
+        public static implicit operator AutoScalePolicyEnforcement?(string value) => value == null ? (AutoScalePolicyEnforcement?)null : new AutoScalePolicyEnforcement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

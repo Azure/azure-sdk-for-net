@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="LdapSigning"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LdapSigning?(string value) => value == null ? null : new LdapSigning(value);
+        public static implicit operator LdapSigning?(string value) => value == null ? (LdapSigning?)null : new LdapSigning(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

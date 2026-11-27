@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         /// <summary> Converts a string to a <see cref="ElasticSanAccessSoftDeletedVolume"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanAccessSoftDeletedVolume?(string value) => value == null ? null : new ElasticSanAccessSoftDeletedVolume(value);
+        public static implicit operator ElasticSanAccessSoftDeletedVolume?(string value) => value == null ? (ElasticSanAccessSoftDeletedVolume?)null : new ElasticSanAccessSoftDeletedVolume(value);
     }
 }

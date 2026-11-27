@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskResourceRedundancyState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskResourceRedundancyState?(string value) => value == null ? null : new DurableTaskResourceRedundancyState(value);
+        public static implicit operator DurableTaskResourceRedundancyState?(string value) => value == null ? (DurableTaskResourceRedundancyState?)null : new DurableTaskResourceRedundancyState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

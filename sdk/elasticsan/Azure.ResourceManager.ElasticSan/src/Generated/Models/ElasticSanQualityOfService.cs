@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanQualityOfService"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanQualityOfService?(string value) => value == null ? null : new ElasticSanQualityOfService(value);
+        public static implicit operator ElasticSanQualityOfService?(string value) => value == null ? (ElasticSanQualityOfService?)null : new ElasticSanQualityOfService(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

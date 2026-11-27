@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="ProductLengthHeightWidthUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProductLengthHeightWidthUnit?(string value) => value == null ? null : new ProductLengthHeightWidthUnit(value);
+        public static implicit operator ProductLengthHeightWidthUnit?(string value) => value == null ? (ProductLengthHeightWidthUnit?)null : new ProductLengthHeightWidthUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

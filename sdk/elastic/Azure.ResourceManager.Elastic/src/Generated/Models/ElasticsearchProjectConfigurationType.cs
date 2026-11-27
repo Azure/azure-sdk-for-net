@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="ElasticsearchProjectConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticsearchProjectConfigurationType?(string value) => value == null ? null : new ElasticsearchProjectConfigurationType(value);
+        public static implicit operator ElasticsearchProjectConfigurationType?(string value) => value == null ? (ElasticsearchProjectConfigurationType?)null : new ElasticsearchProjectConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

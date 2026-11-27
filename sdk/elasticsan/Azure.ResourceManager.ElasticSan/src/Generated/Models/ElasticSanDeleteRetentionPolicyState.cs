@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         /// <summary> Converts a string to a <see cref="ElasticSanDeleteRetentionPolicyState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanDeleteRetentionPolicyState?(string value) => value == null ? null : new ElasticSanDeleteRetentionPolicyState(value);
+        public static implicit operator ElasticSanDeleteRetentionPolicyState?(string value) => value == null ? (ElasticSanDeleteRetentionPolicyState?)null : new ElasticSanDeleteRetentionPolicyState(value);
     }
 }

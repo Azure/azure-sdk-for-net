@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="DurableTaskPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DurableTaskPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new DurableTaskPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator DurableTaskPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (DurableTaskPrivateEndpointConnectionProvisioningState?)null : new DurableTaskPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderProductChargingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderProductChargingType?(string value) => value == null ? null : new EdgeOrderProductChargingType(value);
+        public static implicit operator EdgeOrderProductChargingType?(string value) => value == null ? (EdgeOrderProductChargingType?)null : new EdgeOrderProductChargingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

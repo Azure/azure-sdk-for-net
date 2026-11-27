@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanVirtualNetworkRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanVirtualNetworkRuleAction?(string value) => value == null ? null : new ElasticSanVirtualNetworkRuleAction(value);
+        public static implicit operator ElasticSanVirtualNetworkRuleAction?(string value) => value == null ? (ElasticSanVirtualNetworkRuleAction?)null : new ElasticSanVirtualNetworkRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

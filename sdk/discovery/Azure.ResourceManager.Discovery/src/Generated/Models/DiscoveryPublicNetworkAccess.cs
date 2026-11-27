@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryPublicNetworkAccess?(string value) => value == null ? null : new DiscoveryPublicNetworkAccess(value);
+        public static implicit operator DiscoveryPublicNetworkAccess?(string value) => value == null ? (DiscoveryPublicNetworkAccess?)null : new DiscoveryPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

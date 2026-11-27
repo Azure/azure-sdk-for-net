@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="NtlmV1"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NtlmV1?(string value) => value == null ? null : new NtlmV1(value);
+        public static implicit operator NtlmV1?(string value) => value == null ? (NtlmV1?)null : new NtlmV1(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

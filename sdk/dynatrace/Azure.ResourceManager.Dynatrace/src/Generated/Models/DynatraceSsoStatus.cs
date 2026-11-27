@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceSsoStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceSsoStatus?(string value) => value == null ? null : new DynatraceSsoStatus(value);
+        public static implicit operator DynatraceSsoStatus?(string value) => value == null ? (DynatraceSsoStatus?)null : new DynatraceSsoStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

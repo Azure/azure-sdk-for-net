@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> Converts a string to a <see cref="DisconnectedOperationsSystemReboot"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsSystemReboot?(string value) => value == null ? null : new DisconnectedOperationsSystemReboot(value);
+        public static implicit operator DisconnectedOperationsSystemReboot?(string value) => value == null ? (DisconnectedOperationsSystemReboot?)null : new DisconnectedOperationsSystemReboot(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

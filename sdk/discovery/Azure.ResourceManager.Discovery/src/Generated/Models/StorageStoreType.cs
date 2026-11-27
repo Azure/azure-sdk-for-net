@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="StorageStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageStoreType?(string value) => value == null ? null : new StorageStoreType(value);
+        public static implicit operator StorageStoreType?(string value) => value == null ? (StorageStoreType?)null : new StorageStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

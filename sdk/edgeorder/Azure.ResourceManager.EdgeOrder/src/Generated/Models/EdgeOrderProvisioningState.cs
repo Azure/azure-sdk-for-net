@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderProvisioningState?(string value) => value == null ? null : new EdgeOrderProvisioningState(value);
+        public static implicit operator EdgeOrderProvisioningState?(string value) => value == null ? (EdgeOrderProvisioningState?)null : new EdgeOrderProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

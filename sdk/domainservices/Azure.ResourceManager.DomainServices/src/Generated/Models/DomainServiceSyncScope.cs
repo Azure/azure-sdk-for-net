@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="DomainServiceSyncScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainServiceSyncScope?(string value) => value == null ? null : new DomainServiceSyncScope(value);
+        public static implicit operator DomainServiceSyncScope?(string value) => value == null ? (DomainServiceSyncScope?)null : new DomainServiceSyncScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <summary> Converts a string to a <see cref="EdgeActionIsDefaultVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeActionIsDefaultVersion?(string value) => value == null ? null : new EdgeActionIsDefaultVersion(value);
+        public static implicit operator EdgeActionIsDefaultVersion?(string value) => value == null ? (EdgeActionIsDefaultVersion?)null : new EdgeActionIsDefaultVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

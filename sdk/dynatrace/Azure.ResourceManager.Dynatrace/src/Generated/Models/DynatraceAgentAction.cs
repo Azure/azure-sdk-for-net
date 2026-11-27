@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceAgentAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceAgentAction?(string value) => value == null ? null : new DynatraceAgentAction(value);
+        public static implicit operator DynatraceAgentAction?(string value) => value == null ? (DynatraceAgentAction?)null : new DynatraceAgentAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <summary> Converts a string to a <see cref="EdgeActionVersionDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeActionVersionDeploymentType?(string value) => value == null ? null : new EdgeActionVersionDeploymentType(value);
+        public static implicit operator EdgeActionVersionDeploymentType?(string value) => value == null ? (EdgeActionVersionDeploymentType?)null : new EdgeActionVersionDeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

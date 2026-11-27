@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         /// <summary> Converts a string to a <see cref="ElasticSanDeleteType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanDeleteType?(string value) => value == null ? null : new ElasticSanDeleteType(value);
+        public static implicit operator ElasticSanDeleteType?(string value) => value == null ? (ElasticSanDeleteType?)null : new ElasticSanDeleteType(value);
     }
 }

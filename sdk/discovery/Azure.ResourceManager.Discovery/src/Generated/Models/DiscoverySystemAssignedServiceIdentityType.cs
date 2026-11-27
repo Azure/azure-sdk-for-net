@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoverySystemAssignedServiceIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoverySystemAssignedServiceIdentityType?(string value) => value == null ? null : new DiscoverySystemAssignedServiceIdentityType(value);
+        public static implicit operator DiscoverySystemAssignedServiceIdentityType?(string value) => value == null ? (DiscoverySystemAssignedServiceIdentityType?)null : new DiscoverySystemAssignedServiceIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

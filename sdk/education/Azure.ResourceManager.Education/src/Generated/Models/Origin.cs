@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <summary> Converts a string to a <see cref="Origin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Origin?(string value) => value == null ? null : new Origin(value);
+        public static implicit operator Origin?(string value) => value == null ? (Origin?)null : new Origin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="LogsSendingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogsSendingStatus?(string value) => value == null ? null : new LogsSendingStatus(value);
+        public static implicit operator LogsSendingStatus?(string value) => value == null ? (LogsSendingStatus?)null : new LogsSendingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

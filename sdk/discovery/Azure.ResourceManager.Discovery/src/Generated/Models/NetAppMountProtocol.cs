@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="NetAppMountProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppMountProtocol?(string value) => value == null ? null : new NetAppMountProtocol(value);
+        public static implicit operator NetAppMountProtocol?(string value) => value == null ? (NetAppMountProtocol?)null : new NetAppMountProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

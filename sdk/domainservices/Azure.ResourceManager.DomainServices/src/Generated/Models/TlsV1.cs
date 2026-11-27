@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="TlsV1"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TlsV1?(string value) => value == null ? null : new TlsV1(value);
+        public static implicit operator TlsV1?(string value) => value == null ? (TlsV1?)null : new TlsV1(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

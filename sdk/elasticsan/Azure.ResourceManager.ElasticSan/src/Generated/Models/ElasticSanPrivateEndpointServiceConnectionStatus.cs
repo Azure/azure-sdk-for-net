@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new ElasticSanPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator ElasticSanPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (ElasticSanPrivateEndpointServiceConnectionStatus?)null : new ElasticSanPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="OrderItemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrderItemType?(string value) => value == null ? null : new OrderItemType(value);
+        public static implicit operator OrderItemType?(string value) => value == null ? (OrderItemType?)null : new OrderItemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

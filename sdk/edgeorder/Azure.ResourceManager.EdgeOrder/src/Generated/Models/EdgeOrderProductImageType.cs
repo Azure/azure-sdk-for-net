@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="EdgeOrderProductImageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeOrderProductImageType?(string value) => value == null ? null : new EdgeOrderProductImageType(value);
+        public static implicit operator EdgeOrderProductImageType?(string value) => value == null ? (EdgeOrderProductImageType?)null : new EdgeOrderProductImageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

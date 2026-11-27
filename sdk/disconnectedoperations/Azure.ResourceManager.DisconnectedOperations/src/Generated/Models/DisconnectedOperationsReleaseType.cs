@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> Converts a string to a <see cref="DisconnectedOperationsReleaseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsReleaseType?(string value) => value == null ? null : new DisconnectedOperationsReleaseType(value);
+        public static implicit operator DisconnectedOperationsReleaseType?(string value) => value == null ? (DisconnectedOperationsReleaseType?)null : new DisconnectedOperationsReleaseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

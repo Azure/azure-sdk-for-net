@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryProvisioningState?(string value) => value == null ? null : new DiscoveryProvisioningState(value);
+        public static implicit operator DiscoveryProvisioningState?(string value) => value == null ? (DiscoveryProvisioningState?)null : new DiscoveryProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

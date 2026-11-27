@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanPublicNetworkAccess?(string value) => value == null ? null : new ElasticSanPublicNetworkAccess(value);
+        public static implicit operator ElasticSanPublicNetworkAccess?(string value) => value == null ? (ElasticSanPublicNetworkAccess?)null : new ElasticSanPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

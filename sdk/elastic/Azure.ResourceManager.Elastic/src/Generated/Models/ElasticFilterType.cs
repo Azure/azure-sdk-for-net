@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Converts a string to a <see cref="ElasticFilterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticFilterType?(string value) => value == null ? null : new ElasticFilterType(value);
+        public static implicit operator ElasticFilterType?(string value) => value == null ? (ElasticFilterType?)null : new ElasticFilterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Converts a string to a <see cref="OrderItemReturnStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrderItemReturnStatus?(string value) => value == null ? null : new OrderItemReturnStatus(value);
+        public static implicit operator OrderItemReturnStatus?(string value) => value == null ? (OrderItemReturnStatus?)null : new OrderItemReturnStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

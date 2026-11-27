@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <summary> Converts a string to a <see cref="KerberosArmoring"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KerberosArmoring?(string value) => value == null ? null : new KerberosArmoring(value);
+        public static implicit operator KerberosArmoring?(string value) => value == null ? (KerberosArmoring?)null : new KerberosArmoring(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

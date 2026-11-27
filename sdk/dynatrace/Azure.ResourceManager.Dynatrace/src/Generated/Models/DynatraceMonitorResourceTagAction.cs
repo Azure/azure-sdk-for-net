@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceMonitorResourceTagAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceMonitorResourceTagAction?(string value) => value == null ? null : new DynatraceMonitorResourceTagAction(value);
+        public static implicit operator DynatraceMonitorResourceTagAction?(string value) => value == null ? (DynatraceMonitorResourceTagAction?)null : new DynatraceMonitorResourceTagAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

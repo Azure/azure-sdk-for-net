@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="DynatraceMonitoredSubscriptionOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceMonitoredSubscriptionOperation?(string value) => value == null ? null : new DynatraceMonitoredSubscriptionOperation(value);
+        public static implicit operator DynatraceMonitoredSubscriptionOperation?(string value) => value == null ? (DynatraceMonitoredSubscriptionOperation?)null : new DynatraceMonitoredSubscriptionOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

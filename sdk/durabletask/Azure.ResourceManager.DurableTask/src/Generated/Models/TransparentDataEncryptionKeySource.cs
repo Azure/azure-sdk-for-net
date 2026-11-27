@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Converts a string to a <see cref="TransparentDataEncryptionKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransparentDataEncryptionKeySource?(string value) => value == null ? null : new TransparentDataEncryptionKeySource(value);
+        public static implicit operator TransparentDataEncryptionKeySource?(string value) => value == null ? (TransparentDataEncryptionKeySource?)null : new TransparentDataEncryptionKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

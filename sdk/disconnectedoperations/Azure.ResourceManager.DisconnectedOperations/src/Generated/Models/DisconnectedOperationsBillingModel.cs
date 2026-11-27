@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> Converts a string to a <see cref="DisconnectedOperationsBillingModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsBillingModel?(string value) => value == null ? null : new DisconnectedOperationsBillingModel(value);
+        public static implicit operator DisconnectedOperationsBillingModel?(string value) => value == null ? (DisconnectedOperationsBillingModel?)null : new DisconnectedOperationsBillingModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

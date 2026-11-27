@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryVmSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryVmSize?(string value) => value == null ? null : new DiscoveryVmSize(value);
+        public static implicit operator DiscoveryVmSize?(string value) => value == null ? (DiscoveryVmSize?)null : new DiscoveryVmSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

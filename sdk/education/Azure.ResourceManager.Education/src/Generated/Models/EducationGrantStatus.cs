@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <summary> Converts a string to a <see cref="EducationGrantStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EducationGrantStatus?(string value) => value == null ? null : new EducationGrantStatus(value);
+        public static implicit operator EducationGrantStatus?(string value) => value == null ? (EducationGrantStatus?)null : new EducationGrantStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

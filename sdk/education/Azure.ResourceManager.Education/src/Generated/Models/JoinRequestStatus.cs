@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <summary> Converts a string to a <see cref="JoinRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JoinRequestStatus?(string value) => value == null ? null : new JoinRequestStatus(value);
+        public static implicit operator JoinRequestStatus?(string value) => value == null ? (JoinRequestStatus?)null : new JoinRequestStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

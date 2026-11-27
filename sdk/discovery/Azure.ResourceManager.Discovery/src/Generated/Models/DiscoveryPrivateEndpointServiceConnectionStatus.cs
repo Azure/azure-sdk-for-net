@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new DiscoveryPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator DiscoveryPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (DiscoveryPrivateEndpointServiceConnectionStatus?)null : new DiscoveryPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

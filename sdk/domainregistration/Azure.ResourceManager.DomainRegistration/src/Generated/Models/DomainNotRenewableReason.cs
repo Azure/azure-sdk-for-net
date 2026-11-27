@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
 
         /// <summary> Converts a string to a <see cref="DomainNotRenewableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainNotRenewableReason?(string value) => value == null ? null : new DomainNotRenewableReason(value);
+        public static implicit operator DomainNotRenewableReason?(string value) => value == null ? (DomainNotRenewableReason?)null : new DomainNotRenewableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

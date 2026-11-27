@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Converts a string to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanDeleteSnapshotsUnderVolume?(string value) => value == null ? null : new ElasticSanDeleteSnapshotsUnderVolume(value);
+        public static implicit operator ElasticSanDeleteSnapshotsUnderVolume?(string value) => value == null ? (ElasticSanDeleteSnapshotsUnderVolume?)null : new ElasticSanDeleteSnapshotsUnderVolume(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

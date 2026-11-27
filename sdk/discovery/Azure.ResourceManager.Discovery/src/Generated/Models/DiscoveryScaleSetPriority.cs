@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Converts a string to a <see cref="DiscoveryScaleSetPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryScaleSetPriority?(string value) => value == null ? null : new DiscoveryScaleSetPriority(value);
+        public static implicit operator DiscoveryScaleSetPriority?(string value) => value == null ? (DiscoveryScaleSetPriority?)null : new DiscoveryScaleSetPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

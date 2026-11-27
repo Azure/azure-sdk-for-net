@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Converts a string to a <see cref="LiftrResourceCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LiftrResourceCategory?(string value) => value == null ? null : new LiftrResourceCategory(value);
+        public static implicit operator LiftrResourceCategory?(string value) => value == null ? (LiftrResourceCategory?)null : new LiftrResourceCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
