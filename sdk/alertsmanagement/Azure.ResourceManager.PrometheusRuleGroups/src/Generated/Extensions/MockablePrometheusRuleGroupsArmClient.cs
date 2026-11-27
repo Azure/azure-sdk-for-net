@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Mocking
         /// <returns> Returns a <see cref="PrometheusRuleGroupResource"/> object. </returns>
         public virtual PrometheusRuleGroupResource GetPrometheusRuleGroupResource(ResourceIdentifier id)
         {
-            PrometheusRuleGroupResource.ValidateResourceId(id);
             return new PrometheusRuleGroupResource(Client, id);
         }
     }

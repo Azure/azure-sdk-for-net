@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="AppConfigurationStoreResource"/> object. </returns>
         public virtual AppConfigurationStoreResource GetAppConfigurationStoreResource(ResourceIdentifier id)
         {
-            AppConfigurationStoreResource.ValidateResourceId(id);
             return new AppConfigurationStoreResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
         public virtual DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(ResourceIdentifier id)
         {
-            DeletedAppConfigurationStoreResource.ValidateResourceId(id);
             return new DeletedAppConfigurationStoreResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            AppConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new AppConfigurationPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource"/> object. </returns>
         public virtual AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(ResourceIdentifier id)
         {
-            AppConfigurationPrivateLinkResource.ValidateResourceId(id);
             return new AppConfigurationPrivateLinkResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
         public virtual AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(ResourceIdentifier id)
         {
-            AppConfigurationKeyValueResource.ValidateResourceId(id);
             return new AppConfigurationKeyValueResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="AppConfigurationReplicaResource"/> object. </returns>
         public virtual AppConfigurationReplicaResource GetAppConfigurationReplicaResource(ResourceIdentifier id)
         {
-            AppConfigurationReplicaResource.ValidateResourceId(id);
             return new AppConfigurationReplicaResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <returns> Returns a <see cref="AppConfigurationSnapshotResource"/> object. </returns>
         public virtual AppConfigurationSnapshotResource GetAppConfigurationSnapshotResource(ResourceIdentifier id)
         {
-            AppConfigurationSnapshotResource.ValidateResourceId(id);
             return new AppConfigurationSnapshotResource(Client, id);
         }
     }

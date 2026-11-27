@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> IssueContracts_Get. </description>
+        /// <description> IssueContracts_GetEntityTag. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -370,11 +370,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string issueId, bool? expandCommentsAttachments = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string issueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
@@ -386,22 +385,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<IssueContractData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(IssueContractData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IssueContractData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -419,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> IssueContracts_Get. </description>
+        /// <description> IssueContracts_GetEntityTag. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -428,11 +419,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string issueId, bool? expandCommentsAttachments = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string issueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
@@ -444,22 +434,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<IssueContractData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(IssueContractData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IssueContractData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {

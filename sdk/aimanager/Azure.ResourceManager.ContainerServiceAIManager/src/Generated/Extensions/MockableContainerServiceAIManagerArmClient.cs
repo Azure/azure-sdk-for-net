@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> Returns a <see cref="AIManagerResource"/> object. </returns>
         public virtual AIManagerResource GetAIManagerResource(ResourceIdentifier id)
         {
-            AIManagerResource.ValidateResourceId(id);
             return new AIManagerResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> Returns a <see cref="AIManagerNamespaceResource"/> object. </returns>
         public virtual AIManagerNamespaceResource GetAIManagerNamespaceResource(ResourceIdentifier id)
         {
-            AIManagerNamespaceResource.ValidateResourceId(id);
             return new AIManagerNamespaceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> Returns a <see cref="AIModelResource"/> object. </returns>
         public virtual AIModelResource GetAIModelResource(ResourceIdentifier id)
         {
-            AIModelResource.ValidateResourceId(id);
             return new AIModelResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> Returns a <see cref="ModelSourceResource"/> object. </returns>
         public virtual ModelSourceResource GetModelSourceResource(ResourceIdentifier id)
         {
-            ModelSourceResource.ValidateResourceId(id);
             return new ModelSourceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> Returns a <see cref="ModelDeploymentResource"/> object. </returns>
         public virtual ModelDeploymentResource GetModelDeploymentResource(ResourceIdentifier id)
         {
-            ModelDeploymentResource.ValidateResourceId(id);
             return new ModelDeploymentResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> Returns a <see cref="CustomAIModelResource"/> object. </returns>
         public virtual CustomAIModelResource GetCustomAIModelResource(ResourceIdentifier id)
         {
-            CustomAIModelResource.ValidateResourceId(id);
             return new CustomAIModelResource(Client, id);
         }
     }

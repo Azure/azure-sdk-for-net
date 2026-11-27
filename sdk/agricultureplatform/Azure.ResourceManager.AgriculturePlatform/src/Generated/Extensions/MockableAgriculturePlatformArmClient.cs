@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// <returns> Returns a <see cref="AgricultureServiceResource"/> object. </returns>
         public virtual AgricultureServiceResource GetAgricultureServiceResource(ResourceIdentifier id)
         {
-            AgricultureServiceResource.ValidateResourceId(id);
             return new AgricultureServiceResource(Client, id);
         }
     }

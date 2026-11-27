@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <returns> Returns a <see cref="AppComplianceReportResource"/> object. </returns>
         public virtual AppComplianceReportResource GetAppComplianceReportResource(ResourceIdentifier id)
         {
-            AppComplianceReportResource.ValidateResourceId(id);
             return new AppComplianceReportResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <returns> Returns a <see cref="AppComplianceReportWebhookResource"/> object. </returns>
         public virtual AppComplianceReportWebhookResource GetAppComplianceReportWebhookResource(ResourceIdentifier id)
         {
-            AppComplianceReportWebhookResource.ValidateResourceId(id);
             return new AppComplianceReportWebhookResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <returns> Returns a <see cref="AppComplianceReportSnapshotResource"/> object. </returns>
         public virtual AppComplianceReportSnapshotResource GetAppComplianceReportSnapshotResource(ResourceIdentifier id)
         {
-            AppComplianceReportSnapshotResource.ValidateResourceId(id);
             return new AppComplianceReportSnapshotResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <returns> Returns a <see cref="AppComplianceReportScopingConfigurationResource"/> object. </returns>
         public virtual AppComplianceReportScopingConfigurationResource GetAppComplianceReportScopingConfigurationResource(ResourceIdentifier id)
         {
-            AppComplianceReportScopingConfigurationResource.ValidateResourceId(id);
             return new AppComplianceReportScopingConfigurationResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <returns> Returns a <see cref="AppComplianceReportEvidenceResource"/> object. </returns>
         public virtual AppComplianceReportEvidenceResource GetAppComplianceReportEvidenceResource(ResourceIdentifier id)
         {
-            AppComplianceReportEvidenceResource.ValidateResourceId(id);
             return new AppComplianceReportEvidenceResource(Client, id);
         }
     }
