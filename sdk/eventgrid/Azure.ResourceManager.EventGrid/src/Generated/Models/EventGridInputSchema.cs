@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventGridInputSchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridInputSchema?(string value) => value == null ? null : new EventGridInputSchema(value);
+        public static implicit operator EventGridInputSchema?(string value) => value == null ? (EventGridInputSchema?)null : new EventGridInputSchema(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveMaintenanceModeJustification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveMaintenanceModeJustification?(string value) => value == null ? null : new VirtualEnclaveMaintenanceModeJustification(value);
+        public static implicit operator VirtualEnclaveMaintenanceModeJustification?(string value) => value == null ? (VirtualEnclaveMaintenanceModeJustification?)null : new VirtualEnclaveMaintenanceModeJustification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

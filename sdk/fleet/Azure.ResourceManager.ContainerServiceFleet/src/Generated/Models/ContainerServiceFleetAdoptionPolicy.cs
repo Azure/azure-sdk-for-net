@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetAdoptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetAdoptionPolicy?(string value) => value == null ? null : new ContainerServiceFleetAdoptionPolicy(value);
+        public static implicit operator ContainerServiceFleetAdoptionPolicy?(string value) => value == null ? (ContainerServiceFleetAdoptionPolicy?)null : new ContainerServiceFleetAdoptionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

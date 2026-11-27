@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PrivateEndpointConnectionsParentTypeCsharp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateEndpointConnectionsParentTypeCsharp?(string value) => value == null ? null : new PrivateEndpointConnectionsParentTypeCsharp(value);
+        public static implicit operator PrivateEndpointConnectionsParentTypeCsharp?(string value) => value == null ? (PrivateEndpointConnectionsParentTypeCsharp?)null : new PrivateEndpointConnectionsParentTypeCsharp(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="BackendPrivateEndpointStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackendPrivateEndpointStatus?(string value) => value == null ? null : new BackendPrivateEndpointStatus(value);
+        public static implicit operator BackendPrivateEndpointStatus?(string value) => value == null ? (BackendPrivateEndpointStatus?)null : new BackendPrivateEndpointStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

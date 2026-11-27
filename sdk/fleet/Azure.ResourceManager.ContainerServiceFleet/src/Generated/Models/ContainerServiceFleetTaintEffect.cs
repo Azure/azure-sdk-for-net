@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetTaintEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetTaintEffect?(string value) => value == null ? null : new ContainerServiceFleetTaintEffect(value);
+        public static implicit operator ContainerServiceFleetTaintEffect?(string value) => value == null ? (ContainerServiceFleetTaintEffect?)null : new ContainerServiceFleetTaintEffect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclavePrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclavePrincipalType?(string value) => value == null ? null : new VirtualEnclavePrincipalType(value);
+        public static implicit operator VirtualEnclavePrincipalType?(string value) => value == null ? (VirtualEnclavePrincipalType?)null : new VirtualEnclavePrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

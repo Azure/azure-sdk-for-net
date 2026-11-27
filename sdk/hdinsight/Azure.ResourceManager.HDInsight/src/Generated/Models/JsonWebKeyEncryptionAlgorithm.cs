@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="JsonWebKeyEncryptionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JsonWebKeyEncryptionAlgorithm?(string value) => value == null ? null : new JsonWebKeyEncryptionAlgorithm(value);
+        public static implicit operator JsonWebKeyEncryptionAlgorithm?(string value) => value == null ? (JsonWebKeyEncryptionAlgorithm?)null : new JsonWebKeyEncryptionAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

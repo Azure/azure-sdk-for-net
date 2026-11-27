@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudHsmClusterPublicNetworkAccess?(string value) => value == null ? null : new CloudHsmClusterPublicNetworkAccess(value);
+        public static implicit operator CloudHsmClusterPublicNetworkAccess?(string value) => value == null ? (CloudHsmClusterPublicNetworkAccess?)null : new CloudHsmClusterPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

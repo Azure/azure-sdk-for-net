@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="FilterOperatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilterOperatorType?(string value) => value == null ? null : new FilterOperatorType(value);
+        public static implicit operator FilterOperatorType?(string value) => value == null ? (FilterOperatorType?)null : new FilterOperatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="ClientCertificateValidationScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientCertificateValidationScheme?(string value) => value == null ? null : new ClientCertificateValidationScheme(value);
+        public static implicit operator ClientCertificateValidationScheme?(string value) => value == null ? (ClientCertificateValidationScheme?)null : new ClientCertificateValidationScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

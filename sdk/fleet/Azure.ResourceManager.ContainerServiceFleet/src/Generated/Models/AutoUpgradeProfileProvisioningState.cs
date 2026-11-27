@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoUpgradeProfileProvisioningState?(string value) => value == null ? null : new AutoUpgradeProfileProvisioningState(value);
+        public static implicit operator AutoUpgradeProfileProvisioningState?(string value) => value == null ? (AutoUpgradeProfileProvisioningState?)null : new AutoUpgradeProfileProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

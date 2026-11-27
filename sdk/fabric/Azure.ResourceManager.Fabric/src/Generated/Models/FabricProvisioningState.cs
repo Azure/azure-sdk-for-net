@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> Converts a string to a <see cref="FabricProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricProvisioningState?(string value) => value == null ? null : new FabricProvisioningState(value);
+        public static implicit operator FabricProvisioningState?(string value) => value == null ? (FabricProvisioningState?)null : new FabricProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

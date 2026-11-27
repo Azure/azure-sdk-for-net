@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ClusterMeshState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterMeshState?(string value) => value == null ? null : new ClusterMeshState(value);
+        public static implicit operator ClusterMeshState?(string value) => value == null ? (ClusterMeshState?)null : new ClusterMeshState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

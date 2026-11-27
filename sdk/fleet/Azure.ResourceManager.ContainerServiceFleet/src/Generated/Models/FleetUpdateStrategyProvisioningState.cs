@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FleetUpdateStrategyProvisioningState?(string value) => value == null ? null : new FleetUpdateStrategyProvisioningState(value);
+        public static implicit operator FleetUpdateStrategyProvisioningState?(string value) => value == null ? (FleetUpdateStrategyProvisioningState?)null : new FleetUpdateStrategyProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

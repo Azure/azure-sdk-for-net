@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorCertificateSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorCertificateSource?(string value) => value == null ? null : new FrontDoorCertificateSource(value);
+        public static implicit operator FrontDoorCertificateSource?(string value) => value == null ? (FrontDoorCertificateSource?)null : new FrontDoorCertificateSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

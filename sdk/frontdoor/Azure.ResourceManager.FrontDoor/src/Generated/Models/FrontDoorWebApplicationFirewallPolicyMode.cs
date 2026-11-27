@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorWebApplicationFirewallPolicyMode?(string value) => value == null ? null : new FrontDoorWebApplicationFirewallPolicyMode(value);
+        public static implicit operator FrontDoorWebApplicationFirewallPolicyMode?(string value) => value == null ? (FrontDoorWebApplicationFirewallPolicyMode?)null : new FrontDoorWebApplicationFirewallPolicyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

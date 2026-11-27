@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaApiKey"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaApiKey?(string value) => value == null ? null : new GrafanaApiKey(value);
+        public static implicit operator GrafanaApiKey?(string value) => value == null ? (GrafanaApiKey?)null : new GrafanaApiKey(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

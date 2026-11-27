@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetRolloutStrategyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetRolloutStrategyType?(string value) => value == null ? null : new ContainerServiceFleetRolloutStrategyType(value);
+        public static implicit operator ContainerServiceFleetRolloutStrategyType?(string value) => value == null ? (ContainerServiceFleetRolloutStrategyType?)null : new ContainerServiceFleetRolloutStrategyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

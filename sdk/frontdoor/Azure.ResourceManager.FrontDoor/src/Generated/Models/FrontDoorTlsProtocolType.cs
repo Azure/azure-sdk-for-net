@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorTlsProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorTlsProtocolType?(string value) => value == null ? null : new FrontDoorTlsProtocolType(value);
+        public static implicit operator FrontDoorTlsProtocolType?(string value) => value == null ? (FrontDoorTlsProtocolType?)null : new FrontDoorTlsProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

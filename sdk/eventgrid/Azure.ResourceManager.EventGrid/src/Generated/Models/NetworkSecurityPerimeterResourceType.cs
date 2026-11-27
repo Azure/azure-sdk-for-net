@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterResourceType?(string value) => value == null ? null : new NetworkSecurityPerimeterResourceType(value);
+        public static implicit operator NetworkSecurityPerimeterResourceType?(string value) => value == null ? (NetworkSecurityPerimeterResourceType?)null : new NetworkSecurityPerimeterResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

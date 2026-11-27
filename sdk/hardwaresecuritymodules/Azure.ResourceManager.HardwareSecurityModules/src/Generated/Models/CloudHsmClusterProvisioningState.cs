@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="CloudHsmClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudHsmClusterProvisioningState?(string value) => value == null ? null : new CloudHsmClusterProvisioningState(value);
+        public static implicit operator CloudHsmClusterProvisioningState?(string value) => value == null ? (CloudHsmClusterProvisioningState?)null : new CloudHsmClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

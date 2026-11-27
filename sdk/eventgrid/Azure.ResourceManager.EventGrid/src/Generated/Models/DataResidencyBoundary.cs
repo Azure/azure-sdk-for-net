@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="DataResidencyBoundary"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataResidencyBoundary?(string value) => value == null ? null : new DataResidencyBoundary(value);
+        public static implicit operator DataResidencyBoundary?(string value) => value == null ? (DataResidencyBoundary?)null : new DataResidencyBoundary(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

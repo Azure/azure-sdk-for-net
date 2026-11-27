@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="RulesEngineHeaderActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RulesEngineHeaderActionType?(string value) => value == null ? null : new RulesEngineHeaderActionType(value);
+        public static implicit operator RulesEngineHeaderActionType?(string value) => value == null ? (RulesEngineHeaderActionType?)null : new RulesEngineHeaderActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

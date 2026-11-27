@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="HardwareSecurityModuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HardwareSecurityModuleState?(string value) => value == null ? null : new HardwareSecurityModuleState(value);
+        public static implicit operator HardwareSecurityModuleState?(string value) => value == null ? (HardwareSecurityModuleState?)null : new HardwareSecurityModuleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

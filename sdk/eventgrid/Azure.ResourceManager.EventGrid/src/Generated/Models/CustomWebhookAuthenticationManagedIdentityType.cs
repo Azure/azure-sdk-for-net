@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="CustomWebhookAuthenticationManagedIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomWebhookAuthenticationManagedIdentityType?(string value) => value == null ? null : new CustomWebhookAuthenticationManagedIdentityType(value);
+        public static implicit operator CustomWebhookAuthenticationManagedIdentityType?(string value) => value == null ? (CustomWebhookAuthenticationManagedIdentityType?)null : new CustomWebhookAuthenticationManagedIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateTiming"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetGateTiming?(string value) => value == null ? null : new ContainerServiceFleetGateTiming(value);
+        public static implicit operator ContainerServiceFleetGateTiming?(string value) => value == null ? (ContainerServiceFleetGateTiming?)null : new ContainerServiceFleetGateTiming(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

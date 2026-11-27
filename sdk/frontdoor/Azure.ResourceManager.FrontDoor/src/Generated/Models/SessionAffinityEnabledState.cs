@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="SessionAffinityEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionAffinityEnabledState?(string value) => value == null ? null : new SessionAffinityEnabledState(value);
+        public static implicit operator SessionAffinityEnabledState?(string value) => value == null ? (SessionAffinityEnabledState?)null : new SessionAffinityEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

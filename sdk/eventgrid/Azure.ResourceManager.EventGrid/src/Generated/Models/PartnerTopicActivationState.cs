@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PartnerTopicActivationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerTopicActivationState?(string value) => value == null ? null : new PartnerTopicActivationState(value);
+        public static implicit operator PartnerTopicActivationState?(string value) => value == null ? (PartnerTopicActivationState?)null : new PartnerTopicActivationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

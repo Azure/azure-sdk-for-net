@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGroupPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGroupPolicyType?(string value) => value == null ? null : new ApplicationGroupPolicyType(value);
+        public static implicit operator ApplicationGroupPolicyType?(string value) => value == null ? (ApplicationGroupPolicyType?)null : new ApplicationGroupPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

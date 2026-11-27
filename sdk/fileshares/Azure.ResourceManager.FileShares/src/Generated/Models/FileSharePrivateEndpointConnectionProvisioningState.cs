@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="FileSharePrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileSharePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new FileSharePrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator FileSharePrivateEndpointConnectionProvisioningState?(string value) => value == null ? (FileSharePrivateEndpointConnectionProvisioningState?)null : new FileSharePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsResourceAssociationAccessMode?(string value) => value == null ? null : new EventHubsResourceAssociationAccessMode(value);
+        public static implicit operator EventHubsResourceAssociationAccessMode?(string value) => value == null ? (EventHubsResourceAssociationAccessMode?)null : new EventHubsResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

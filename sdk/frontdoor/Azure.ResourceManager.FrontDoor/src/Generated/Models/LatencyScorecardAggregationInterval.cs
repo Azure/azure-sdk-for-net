@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="LatencyScorecardAggregationInterval"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LatencyScorecardAggregationInterval?(string value) => value == null ? null : new LatencyScorecardAggregationInterval(value);
+        public static implicit operator LatencyScorecardAggregationInterval?(string value) => value == null ? (LatencyScorecardAggregationInterval?)null : new LatencyScorecardAggregationInterval(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

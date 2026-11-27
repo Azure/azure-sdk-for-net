@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightClusterProvisioningState?(string value) => value == null ? null : new HDInsightClusterProvisioningState(value);
+        public static implicit operator HDInsightClusterProvisioningState?(string value) => value == null ? (HDInsightClusterProvisioningState?)null : new HDInsightClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

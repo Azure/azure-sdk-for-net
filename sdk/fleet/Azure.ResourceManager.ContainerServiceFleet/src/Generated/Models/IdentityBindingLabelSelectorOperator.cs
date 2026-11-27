@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="IdentityBindingLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IdentityBindingLabelSelectorOperator?(string value) => value == null ? null : new IdentityBindingLabelSelectorOperator(value);
+        public static implicit operator IdentityBindingLabelSelectorOperator?(string value) => value == null ? (IdentityBindingLabelSelectorOperator?)null : new IdentityBindingLabelSelectorOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

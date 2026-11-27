@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveTransitOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveTransitOptionType?(string value) => value == null ? null : new VirtualEnclaveTransitOptionType(value);
+        public static implicit operator VirtualEnclaveTransitOptionType?(string value) => value == null ? (VirtualEnclaveTransitOptionType?)null : new VirtualEnclaveTransitOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

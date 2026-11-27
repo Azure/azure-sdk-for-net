@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="AutoUpgradeLastTriggerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoUpgradeLastTriggerStatus?(string value) => value == null ? null : new AutoUpgradeLastTriggerStatus(value);
+        public static implicit operator AutoUpgradeLastTriggerStatus?(string value) => value == null ? (AutoUpgradeLastTriggerStatus?)null : new AutoUpgradeLastTriggerStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

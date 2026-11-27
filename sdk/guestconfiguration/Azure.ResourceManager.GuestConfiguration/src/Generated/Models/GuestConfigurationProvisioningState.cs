@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="GuestConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GuestConfigurationProvisioningState?(string value) => value == null ? null : new GuestConfigurationProvisioningState(value);
+        public static implicit operator GuestConfigurationProvisioningState?(string value) => value == null ? (GuestConfigurationProvisioningState?)null : new GuestConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

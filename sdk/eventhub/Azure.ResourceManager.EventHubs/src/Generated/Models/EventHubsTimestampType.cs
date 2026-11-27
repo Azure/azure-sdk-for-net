@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsTimestampType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsTimestampType?(string value) => value == null ? null : new EventHubsTimestampType(value);
+        public static implicit operator EventHubsTimestampType?(string value) => value == null ? (EventHubsTimestampType?)null : new EventHubsTimestampType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsAccessKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsAccessKeyType?(string value) => value == null ? null : new EventHubsAccessKeyType(value);
+        public static implicit operator EventHubsAccessKeyType?(string value) => value == null ? (EventHubsAccessKeyType?)null : new EventHubsAccessKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

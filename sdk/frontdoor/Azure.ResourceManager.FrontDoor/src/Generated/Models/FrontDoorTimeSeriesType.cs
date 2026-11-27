@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorTimeSeriesType?(string value) => value == null ? null : new FrontDoorTimeSeriesType(value);
+        public static implicit operator FrontDoorTimeSeriesType?(string value) => value == null ? (FrontDoorTimeSeriesType?)null : new FrontDoorTimeSeriesType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

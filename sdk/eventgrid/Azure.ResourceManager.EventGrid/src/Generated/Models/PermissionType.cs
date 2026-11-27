@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PermissionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PermissionType?(string value) => value == null ? null : new PermissionType(value);
+        public static implicit operator PermissionType?(string value) => value == null ? (PermissionType?)null : new PermissionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

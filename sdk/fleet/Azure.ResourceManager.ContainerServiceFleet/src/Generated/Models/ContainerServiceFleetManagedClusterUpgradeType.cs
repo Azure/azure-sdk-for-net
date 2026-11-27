@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetManagedClusterUpgradeType?(string value) => value == null ? null : new ContainerServiceFleetManagedClusterUpgradeType(value);
+        public static implicit operator ContainerServiceFleetManagedClusterUpgradeType?(string value) => value == null ? (ContainerServiceFleetManagedClusterUpgradeType?)null : new ContainerServiceFleetManagedClusterUpgradeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterAssociationAccessMode?(string value) => value == null ? null : new NetworkSecurityPerimeterAssociationAccessMode(value);
+        public static implicit operator NetworkSecurityPerimeterAssociationAccessMode?(string value) => value == null ? (NetworkSecurityPerimeterAssociationAccessMode?)null : new NetworkSecurityPerimeterAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

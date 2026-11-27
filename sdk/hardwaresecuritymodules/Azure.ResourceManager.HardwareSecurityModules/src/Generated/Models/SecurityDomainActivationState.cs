@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="SecurityDomainActivationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityDomainActivationState?(string value) => value == null ? null : new SecurityDomainActivationState(value);
+        public static implicit operator SecurityDomainActivationState?(string value) => value == null ? (SecurityDomainActivationState?)null : new SecurityDomainActivationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

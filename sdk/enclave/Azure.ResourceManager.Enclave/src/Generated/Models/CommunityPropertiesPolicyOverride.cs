@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="CommunityPropertiesPolicyOverride"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunityPropertiesPolicyOverride?(string value) => value == null ? null : new CommunityPropertiesPolicyOverride(value);
+        public static implicit operator CommunityPropertiesPolicyOverride?(string value) => value == null ? (CommunityPropertiesPolicyOverride?)null : new CommunityPropertiesPolicyOverride(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

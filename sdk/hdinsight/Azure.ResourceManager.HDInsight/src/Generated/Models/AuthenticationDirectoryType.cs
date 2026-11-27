@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="AuthenticationDirectoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthenticationDirectoryType?(string value) => value == null ? null : new AuthenticationDirectoryType(value);
+        public static implicit operator AuthenticationDirectoryType?(string value) => value == null ? (AuthenticationDirectoryType?)null : new AuthenticationDirectoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

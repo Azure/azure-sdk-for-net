@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="DeliveryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryMode?(string value) => value == null ? null : new DeliveryMode(value);
+        public static implicit operator DeliveryMode?(string value) => value == null ? (DeliveryMode?)null : new DeliveryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

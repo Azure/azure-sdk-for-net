@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsClusterSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsClusterSkuName?(string value) => value == null ? null : new EventHubsClusterSkuName(value);
+        public static implicit operator EventHubsClusterSkuName?(string value) => value == null ? (EventHubsClusterSkuName?)null : new EventHubsClusterSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

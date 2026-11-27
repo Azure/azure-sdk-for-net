@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaProvisioningState?(string value) => value == null ? null : new GrafanaProvisioningState(value);
+        public static implicit operator GrafanaProvisioningState?(string value) => value == null ? (GrafanaProvisioningState?)null : new GrafanaProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

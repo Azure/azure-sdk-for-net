@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="CustomJwtAuthenticationManagedIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomJwtAuthenticationManagedIdentityType?(string value) => value == null ? null : new CustomJwtAuthenticationManagedIdentityType(value);
+        public static implicit operator CustomJwtAuthenticationManagedIdentityType?(string value) => value == null ? (CustomJwtAuthenticationManagedIdentityType?)null : new CustomJwtAuthenticationManagedIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

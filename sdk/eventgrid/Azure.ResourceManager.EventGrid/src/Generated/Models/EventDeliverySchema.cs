@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EventDeliverySchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventDeliverySchema?(string value) => value == null ? null : new EventDeliverySchema(value);
+        public static implicit operator EventDeliverySchema?(string value) => value == null ? (EventDeliverySchema?)null : new EventDeliverySchema(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

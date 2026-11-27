@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> Converts a string to a <see cref="CapacityOverageState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityOverageState?(string value) => value == null ? null : new CapacityOverageState(value);
+        public static implicit operator CapacityOverageState?(string value) => value == null ? (CapacityOverageState?)null : new CapacityOverageState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

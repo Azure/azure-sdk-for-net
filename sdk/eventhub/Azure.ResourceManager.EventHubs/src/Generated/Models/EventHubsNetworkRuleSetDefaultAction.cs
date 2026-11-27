@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsNetworkRuleSetDefaultAction?(string value) => value == null ? null : new EventHubsNetworkRuleSetDefaultAction(value);
+        public static implicit operator EventHubsNetworkRuleSetDefaultAction?(string value) => value == null ? (EventHubsNetworkRuleSetDefaultAction?)null : new EventHubsNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="ApproverActionPerformed"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApproverActionPerformed?(string value) => value == null ? null : new ApproverActionPerformed(value);
+        public static implicit operator ApproverActionPerformed?(string value) => value == null ? (ApproverActionPerformed?)null : new ApproverActionPerformed(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

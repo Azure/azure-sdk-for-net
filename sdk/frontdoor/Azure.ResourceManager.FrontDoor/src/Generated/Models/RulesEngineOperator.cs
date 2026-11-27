@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="RulesEngineOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RulesEngineOperator?(string value) => value == null ? null : new RulesEngineOperator(value);
+        public static implicit operator RulesEngineOperator?(string value) => value == null ? (RulesEngineOperator?)null : new RulesEngineOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Converts a string to a <see cref="DedicatedHsmSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DedicatedHsmSkuName?(string value) => value == null ? null : new DedicatedHsmSkuName(value);
+        public static implicit operator DedicatedHsmSkuName?(string value) => value == null ? (DedicatedHsmSkuName?)null : new DedicatedHsmSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

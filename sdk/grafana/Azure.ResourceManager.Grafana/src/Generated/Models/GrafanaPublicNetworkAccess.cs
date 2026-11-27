@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaPublicNetworkAccess?(string value) => value == null ? null : new GrafanaPublicNetworkAccess(value);
+        public static implicit operator GrafanaPublicNetworkAccess?(string value) => value == null ? (GrafanaPublicNetworkAccess?)null : new GrafanaPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

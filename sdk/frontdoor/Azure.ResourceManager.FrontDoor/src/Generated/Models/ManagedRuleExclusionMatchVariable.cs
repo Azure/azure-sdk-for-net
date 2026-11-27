@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="ManagedRuleExclusionMatchVariable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedRuleExclusionMatchVariable?(string value) => value == null ? null : new ManagedRuleExclusionMatchVariable(value);
+        public static implicit operator ManagedRuleExclusionMatchVariable?(string value) => value == null ? (ManagedRuleExclusionMatchVariable?)null : new ManagedRuleExclusionMatchVariable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

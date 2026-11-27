@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="ShareRootSquash"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShareRootSquash?(string value) => value == null ? null : new ShareRootSquash(value);
+        public static implicit operator ShareRootSquash?(string value) => value == null ? (ShareRootSquash?)null : new ShareRootSquash(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

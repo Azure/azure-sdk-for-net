@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsSkuTier?(string value) => value == null ? null : new EventHubsSkuTier(value);
+        public static implicit operator EventHubsSkuTier?(string value) => value == null ? (EventHubsSkuTier?)null : new EventHubsSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

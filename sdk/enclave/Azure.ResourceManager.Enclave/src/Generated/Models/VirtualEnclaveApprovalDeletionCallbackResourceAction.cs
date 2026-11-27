@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveApprovalDeletionCallbackResourceAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveApprovalDeletionCallbackResourceAction?(string value) => value == null ? null : new VirtualEnclaveApprovalDeletionCallbackResourceAction(value);
+        public static implicit operator VirtualEnclaveApprovalDeletionCallbackResourceAction?(string value) => value == null ? (VirtualEnclaveApprovalDeletionCallbackResourceAction?)null : new VirtualEnclaveApprovalDeletionCallbackResourceAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

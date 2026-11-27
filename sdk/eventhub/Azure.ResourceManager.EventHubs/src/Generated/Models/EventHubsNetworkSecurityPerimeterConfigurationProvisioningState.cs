@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(value);
+        public static implicit operator EventHubsNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? (EventHubsNetworkSecurityPerimeterConfigurationProvisioningState?)null : new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

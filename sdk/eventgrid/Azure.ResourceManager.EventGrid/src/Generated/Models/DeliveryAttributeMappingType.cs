@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="DeliveryAttributeMappingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryAttributeMappingType?(string value) => value == null ? null : new DeliveryAttributeMappingType(value);
+        public static implicit operator DeliveryAttributeMappingType?(string value) => value == null ? (DeliveryAttributeMappingType?)null : new DeliveryAttributeMappingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

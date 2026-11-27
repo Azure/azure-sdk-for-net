@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GuestConfigurationAssignmentType?(string value) => value == null ? null : new GuestConfigurationAssignmentType(value);
+        public static implicit operator GuestConfigurationAssignmentType?(string value) => value == null ? (GuestConfigurationAssignmentType?)null : new GuestConfigurationAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightPrivateLinkConfigurationProvisioningState?(string value) => value == null ? null : new HDInsightPrivateLinkConfigurationProvisioningState(value);
+        public static implicit operator HDInsightPrivateLinkConfigurationProvisioningState?(string value) => value == null ? (HDInsightPrivateLinkConfigurationProvisioningState?)null : new HDInsightPrivateLinkConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="FileShareNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareNameUnavailableReason?(string value) => value == null ? null : new FileShareNameUnavailableReason(value);
+        public static implicit operator FileShareNameUnavailableReason?(string value) => value == null ? (FileShareNameUnavailableReason?)null : new FileShareNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

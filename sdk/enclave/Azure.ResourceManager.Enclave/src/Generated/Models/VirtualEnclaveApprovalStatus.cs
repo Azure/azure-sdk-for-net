@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveApprovalStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveApprovalStatus?(string value) => value == null ? null : new VirtualEnclaveApprovalStatus(value);
+        public static implicit operator VirtualEnclaveApprovalStatus?(string value) => value == null ? (VirtualEnclaveApprovalStatus?)null : new VirtualEnclaveApprovalStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

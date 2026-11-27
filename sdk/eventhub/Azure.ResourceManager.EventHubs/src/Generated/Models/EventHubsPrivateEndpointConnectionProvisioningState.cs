@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new EventHubsPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator EventHubsPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (EventHubsPrivateEndpointConnectionProvisioningState?)null : new EventHubsPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

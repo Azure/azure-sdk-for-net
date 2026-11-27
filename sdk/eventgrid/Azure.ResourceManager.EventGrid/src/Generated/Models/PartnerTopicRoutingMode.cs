@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PartnerTopicRoutingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerTopicRoutingMode?(string value) => value == null ? null : new PartnerTopicRoutingMode(value);
+        public static implicit operator PartnerTopicRoutingMode?(string value) => value == null ? (PartnerTopicRoutingMode?)null : new PartnerTopicRoutingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

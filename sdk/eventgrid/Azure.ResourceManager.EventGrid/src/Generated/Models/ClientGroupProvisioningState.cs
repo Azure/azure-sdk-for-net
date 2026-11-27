@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="ClientGroupProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientGroupProvisioningState?(string value) => value == null ? null : new ClientGroupProvisioningState(value);
+        public static implicit operator ClientGroupProvisioningState?(string value) => value == null ? (ClientGroupProvisioningState?)null : new ClientGroupProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

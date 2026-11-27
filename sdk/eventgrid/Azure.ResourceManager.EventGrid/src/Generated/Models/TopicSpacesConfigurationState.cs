@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="TopicSpacesConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TopicSpacesConfigurationState?(string value) => value == null ? null : new TopicSpacesConfigurationState(value);
+        public static implicit operator TopicSpacesConfigurationState?(string value) => value == null ? (TopicSpacesConfigurationState?)null : new TopicSpacesConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

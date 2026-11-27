@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="CustomRuleEnabledState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomRuleEnabledState?(string value) => value == null ? null : new CustomRuleEnabledState(value);
+        public static implicit operator CustomRuleEnabledState?(string value) => value == null ? (CustomRuleEnabledState?)null : new CustomRuleEnabledState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EndpointType?(string value) => value == null ? null : new EndpointType(value);
+        public static implicit operator EndpointType?(string value) => value == null ? (EndpointType?)null : new EndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

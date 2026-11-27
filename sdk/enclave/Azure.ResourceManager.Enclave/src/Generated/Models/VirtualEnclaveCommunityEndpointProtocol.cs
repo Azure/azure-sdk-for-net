@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Converts a string to a <see cref="VirtualEnclaveCommunityEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveCommunityEndpointProtocol?(string value) => value == null ? null : new VirtualEnclaveCommunityEndpointProtocol(value);
+        public static implicit operator VirtualEnclaveCommunityEndpointProtocol?(string value) => value == null ? (VirtualEnclaveCommunityEndpointProtocol?)null : new VirtualEnclaveCommunityEndpointProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

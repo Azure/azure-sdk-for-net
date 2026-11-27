@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightRoleName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightRoleName?(string value) => value == null ? null : new HDInsightRoleName(value);
+        public static implicit operator HDInsightRoleName?(string value) => value == null ? (HDInsightRoleName?)null : new HDInsightRoleName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

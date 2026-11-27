@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="FileShareRedundancyLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareRedundancyLevel?(string value) => value == null ? null : new FileShareRedundancyLevel(value);
+        public static implicit operator FileShareRedundancyLevel?(string value) => value == null ? (FileShareRedundancyLevel?)null : new FileShareRedundancyLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

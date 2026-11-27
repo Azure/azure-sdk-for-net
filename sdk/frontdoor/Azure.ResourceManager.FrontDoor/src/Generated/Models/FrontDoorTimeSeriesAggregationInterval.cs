@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesAggregationInterval"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorTimeSeriesAggregationInterval?(string value) => value == null ? null : new FrontDoorTimeSeriesAggregationInterval(value);
+        public static implicit operator FrontDoorTimeSeriesAggregationInterval?(string value) => value == null ? (FrontDoorTimeSeriesAggregationInterval?)null : new FrontDoorTimeSeriesAggregationInterval(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

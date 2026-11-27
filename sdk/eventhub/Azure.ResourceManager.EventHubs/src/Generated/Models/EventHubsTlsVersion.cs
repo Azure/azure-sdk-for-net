@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsTlsVersion?(string value) => value == null ? null : new EventHubsTlsVersion(value);
+        public static implicit operator EventHubsTlsVersion?(string value) => value == null ? (EventHubsTlsVersion?)null : new EventHubsTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

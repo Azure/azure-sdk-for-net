@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="ContainerServiceFleetDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetDayOfWeek?(string value) => value == null ? null : new ContainerServiceFleetDayOfWeek(value);
+        public static implicit operator ContainerServiceFleetDayOfWeek?(string value) => value == null ? (ContainerServiceFleetDayOfWeek?)null : new ContainerServiceFleetDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

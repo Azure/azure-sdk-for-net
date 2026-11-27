@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> Converts a string to a <see cref="FabricNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricNameUnavailableReason?(string value) => value == null ? null : new FabricNameUnavailableReason(value);
+        public static implicit operator FabricNameUnavailableReason?(string value) => value == null ? (FabricNameUnavailableReason?)null : new FabricNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

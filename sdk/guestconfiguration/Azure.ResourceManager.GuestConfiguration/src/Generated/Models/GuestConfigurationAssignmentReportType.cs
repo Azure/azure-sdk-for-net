@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GuestConfigurationAssignmentReportType?(string value) => value == null ? null : new GuestConfigurationAssignmentReportType(value);
+        public static implicit operator GuestConfigurationAssignmentReportType?(string value) => value == null ? (GuestConfigurationAssignmentReportType?)null : new GuestConfigurationAssignmentReportType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

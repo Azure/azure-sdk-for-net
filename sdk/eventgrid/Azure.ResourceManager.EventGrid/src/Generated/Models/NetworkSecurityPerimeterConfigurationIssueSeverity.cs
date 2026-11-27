@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterConfigurationIssueSeverity?(string value) => value == null ? null : new NetworkSecurityPerimeterConfigurationIssueSeverity(value);
+        public static implicit operator NetworkSecurityPerimeterConfigurationIssueSeverity?(string value) => value == null ? (NetworkSecurityPerimeterConfigurationIssueSeverity?)null : new NetworkSecurityPerimeterConfigurationIssueSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

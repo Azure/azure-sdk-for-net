@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontendEndpointCustomHttpsProvisioningSubstate?(string value) => value == null ? null : new FrontendEndpointCustomHttpsProvisioningSubstate(value);
+        public static implicit operator FrontendEndpointCustomHttpsProvisioningSubstate?(string value) => value == null ? (FrontendEndpointCustomHttpsProvisioningSubstate?)null : new FrontendEndpointCustomHttpsProvisioningSubstate(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

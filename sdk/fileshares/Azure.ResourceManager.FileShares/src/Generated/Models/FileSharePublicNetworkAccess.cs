@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Converts a string to a <see cref="FileSharePublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileSharePublicNetworkAccess?(string value) => value == null ? null : new FileSharePublicNetworkAccess(value);
+        public static implicit operator FileSharePublicNetworkAccess?(string value) => value == null ? (FileSharePublicNetworkAccess?)null : new FileSharePublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaCreatorCanAdmin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaCreatorCanAdmin?(string value) => value == null ? null : new GrafanaCreatorCanAdmin(value);
+        public static implicit operator GrafanaCreatorCanAdmin?(string value) => value == null ? (GrafanaCreatorCanAdmin?)null : new GrafanaCreatorCanAdmin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

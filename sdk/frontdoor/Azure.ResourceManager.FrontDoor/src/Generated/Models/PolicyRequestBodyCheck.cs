@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="PolicyRequestBodyCheck"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyRequestBodyCheck?(string value) => value == null ? null : new PolicyRequestBodyCheck(value);
+        public static implicit operator PolicyRequestBodyCheck?(string value) => value == null ? (PolicyRequestBodyCheck?)null : new PolicyRequestBodyCheck(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

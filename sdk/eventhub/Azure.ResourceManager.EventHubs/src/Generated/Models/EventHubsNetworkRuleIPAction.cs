@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Converts a string to a <see cref="EventHubsNetworkRuleIPAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsNetworkRuleIPAction?(string value) => value == null ? null : new EventHubsNetworkRuleIPAction(value);
+        public static implicit operator EventHubsNetworkRuleIPAction?(string value) => value == null ? (EventHubsNetworkRuleIPAction?)null : new EventHubsNetworkRuleIPAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

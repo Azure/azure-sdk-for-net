@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="CustomDomainValidationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomDomainValidationState?(string value) => value == null ? null : new CustomDomainValidationState(value);
+        public static implicit operator CustomDomainValidationState?(string value) => value == null ? (CustomDomainValidationState?)null : new CustomDomainValidationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

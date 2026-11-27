@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="GrafanaZoneRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrafanaZoneRedundancy?(string value) => value == null ? null : new GrafanaZoneRedundancy(value);
+        public static implicit operator GrafanaZoneRedundancy?(string value) => value == null ? (GrafanaZoneRedundancy?)null : new GrafanaZoneRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

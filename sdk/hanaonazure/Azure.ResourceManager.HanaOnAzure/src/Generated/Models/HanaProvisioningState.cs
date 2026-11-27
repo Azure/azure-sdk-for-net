@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
 
         /// <summary> Converts a string to a <see cref="HanaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HanaProvisioningState?(string value) => value == null ? null : new HanaProvisioningState(value);
+        public static implicit operator HanaProvisioningState?(string value) => value == null ? (HanaProvisioningState?)null : new HanaProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

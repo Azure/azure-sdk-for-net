@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Converts a string to a <see cref="FrontDoorHealthProbeMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorHealthProbeMethod?(string value) => value == null ? null : new FrontDoorHealthProbeMethod(value);
+        public static implicit operator FrontDoorHealthProbeMethod?(string value) => value == null ? (FrontDoorHealthProbeMethod?)null : new FrontDoorHealthProbeMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

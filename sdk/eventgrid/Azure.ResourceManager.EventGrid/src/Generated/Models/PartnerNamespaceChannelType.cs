@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Converts a string to a <see cref="PartnerNamespaceChannelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerNamespaceChannelType?(string value) => value == null ? null : new PartnerNamespaceChannelType(value);
+        public static implicit operator PartnerNamespaceChannelType?(string value) => value == null ? (PartnerNamespaceChannelType?)null : new PartnerNamespaceChannelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

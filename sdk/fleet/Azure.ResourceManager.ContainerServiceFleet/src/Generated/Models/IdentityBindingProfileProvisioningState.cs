@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Converts a string to a <see cref="IdentityBindingProfileProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IdentityBindingProfileProvisioningState?(string value) => value == null ? null : new IdentityBindingProfileProvisioningState(value);
+        public static implicit operator IdentityBindingProfileProvisioningState?(string value) => value == null ? (IdentityBindingProfileProvisioningState?)null : new IdentityBindingProfileProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

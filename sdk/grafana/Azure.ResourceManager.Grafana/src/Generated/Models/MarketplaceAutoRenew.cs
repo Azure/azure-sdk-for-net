@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceAutoRenew"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceAutoRenew?(string value) => value == null ? null : new MarketplaceAutoRenew(value);
+        public static implicit operator MarketplaceAutoRenew?(string value) => value == null ? (MarketplaceAutoRenew?)null : new MarketplaceAutoRenew(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
