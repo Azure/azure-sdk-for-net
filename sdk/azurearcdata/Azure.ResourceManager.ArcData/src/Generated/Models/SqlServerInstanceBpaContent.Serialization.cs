@@ -15,61 +15,61 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The request for retrieving SQL best practices assessment results. </summary>
-    internal partial class SqlServerInstanceBpaRequest : IJsonModel<SqlServerInstanceBpaRequest>
+    internal partial class SqlServerInstanceBpaContent : IJsonModel<SqlServerInstanceBpaContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlServerInstanceBpaRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlServerInstanceBpaContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSqlServerInstanceBpaRequest(document.RootElement, options);
+                        return DeserializeSqlServerInstanceBpaContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerInstanceBpaRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerInstanceBpaContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerInstanceBpaRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerInstanceBpaContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlServerInstanceBpaRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlServerInstanceBpaContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlServerInstanceBpaRequest IPersistableModel<SqlServerInstanceBpaRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlServerInstanceBpaContent IPersistableModel<SqlServerInstanceBpaContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlServerInstanceBpaRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlServerInstanceBpaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sqlServerInstanceBpaRequest"> The <see cref="SqlServerInstanceBpaRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SqlServerInstanceBpaRequest sqlServerInstanceBpaRequest)
+        /// <param name="sqlServerInstanceBpaContent"> The <see cref="SqlServerInstanceBpaContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlServerInstanceBpaContent sqlServerInstanceBpaContent)
         {
-            if (sqlServerInstanceBpaRequest == null)
+            if (sqlServerInstanceBpaContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(sqlServerInstanceBpaRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sqlServerInstanceBpaContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SqlServerInstanceBpaRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlServerInstanceBpaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerInstanceBpaRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerInstanceBpaContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ReportType))
             {
@@ -124,24 +124,24 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlServerInstanceBpaRequest IJsonModel<SqlServerInstanceBpaRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlServerInstanceBpaContent IJsonModel<SqlServerInstanceBpaContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlServerInstanceBpaRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlServerInstanceBpaContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceBpaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerInstanceBpaRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerInstanceBpaContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSqlServerInstanceBpaRequest(document.RootElement, options);
+            return DeserializeSqlServerInstanceBpaContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SqlServerInstanceBpaRequest DeserializeSqlServerInstanceBpaRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlServerInstanceBpaContent DeserializeSqlServerInstanceBpaContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlServerInstanceBpaRequest(reportType, reportId, skipToken, queryType, additionalBinaryDataProperties);
+            return new SqlServerInstanceBpaContent(reportType, reportId, skipToken, queryType, additionalBinaryDataProperties);
         }
     }
 }

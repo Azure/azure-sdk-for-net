@@ -12,15 +12,15 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The Arc SQL Server instance telemetry retrieval request. </summary>
-    internal partial class SqlServerInstanceTelemetryRequest
+    internal partial class SqlServerInstanceTelemetryContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTelemetryRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTelemetryContent"/>. </summary>
         /// <param name="datasetName"> The name of the telemetry dataset to retrieve. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public SqlServerInstanceTelemetryRequest(string datasetName)
+        public SqlServerInstanceTelemetryContent(string datasetName)
         {
             Argument.AssertNotNull(datasetName, nameof(datasetName));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ArcData.Models
             DatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTelemetryRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTelemetryContent"/>. </summary>
         /// <param name="datasetName"> The name of the telemetry dataset to retrieve. </param>
         /// <param name="startsOn"> The start time for the time range to fetch telemetry for. If not specified, the current time minus 1 hour is used. </param>
         /// <param name="endsOn"> The end time for the time range to fetch telemetry for. If not specified, the current time is used. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="aggregationType"> The aggregation type to use for the numerical columns in the dataset. </param>
         /// <param name="databaseNames"> The list of database names to return telemetry for. If not specified, telemetry for all databases will be aggregated and returned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceTelemetryRequest(string datasetName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? interval, AggregationType? aggregationType, IList<string> databaseNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceTelemetryContent(string datasetName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? interval, AggregationType? aggregationType, IList<string> databaseNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatasetName = datasetName;
             StartsOn = startsOn;

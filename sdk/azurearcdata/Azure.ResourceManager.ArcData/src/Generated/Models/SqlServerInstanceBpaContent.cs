@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The request for retrieving SQL best practices assessment results. </summary>
-    internal partial class SqlServerInstanceBpaRequest
+    internal partial class SqlServerInstanceBpaContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceBpaRequest"/>. </summary>
-        public SqlServerInstanceBpaRequest()
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceBpaContent"/>. </summary>
+        public SqlServerInstanceBpaContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceBpaRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceBpaContent"/>. </summary>
         /// <param name="reportType"> The report type that needs to be fetched. If not specified, the default is AssessmentSummary. </param>
         /// <param name="reportId"> The GUID of the report to return best practices assessment results for. If not specified, summaries for all reports will be returned. </param>
         /// <param name="skipToken"> The opaque token to use to skip to a specific page of the report. If not specified, the first page will be returned. </param>
         /// <param name="queryType"> The type of query to run for summarizing the best practices assessment results. If not specified, the default is 'Basic'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceBpaRequest(SqlServerInstanceBpaReportType? reportType, string reportId, string skipToken, SqlServerInstanceBpaQueryType? queryType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceBpaContent(SqlServerInstanceBpaReportType? reportType, string reportId, string skipToken, SqlServerInstanceBpaQueryType? queryType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReportType = reportType;
             ReportId = reportId;

@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request to fetch the SQL best practices assessment results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal async Task<ArmOperation<SqlServerInstanceBpaResult>> GetBestPracticesAssessmentAsync(WaitUntil waitUntil, SqlServerInstanceBpaRequest content, CancellationToken cancellationToken = default)
+        internal async Task<ArmOperation<SqlServerInstanceBpaResult>> GetBestPracticesAssessmentAsync(WaitUntil waitUntil, SqlServerInstanceBpaContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sqlServerInstancesClientDiagnostics.CreateScope("SqlServerInstanceResource.GetBestPracticesAssessment");
             scope.Start();
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerInstancesRestClient.CreateGetBestPracticesAssessmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceBpaRequest.ToRequestContent(content), context);
+                HttpMessage message = _sqlServerInstancesRestClient.CreateGetBestPracticesAssessmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceBpaContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerInstanceBpaResult> operation = new ArcDataArmOperation<SqlServerInstanceBpaResult>(
                     new SqlServerInstanceBpaResultOperationSource(),
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request to fetch the SQL best practices assessment results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal ArmOperation<SqlServerInstanceBpaResult> GetBestPracticesAssessment(WaitUntil waitUntil, SqlServerInstanceBpaRequest content, CancellationToken cancellationToken = default)
+        internal ArmOperation<SqlServerInstanceBpaResult> GetBestPracticesAssessment(WaitUntil waitUntil, SqlServerInstanceBpaContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sqlServerInstancesClientDiagnostics.CreateScope("SqlServerInstanceResource.GetBestPracticesAssessment");
             scope.Start();
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerInstancesRestClient.CreateGetBestPracticesAssessmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceBpaRequest.ToRequestContent(content), context);
+                HttpMessage message = _sqlServerInstancesRestClient.CreateGetBestPracticesAssessmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceBpaContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerInstanceBpaResult> operation = new ArcDataArmOperation<SqlServerInstanceBpaResult>(
                     new SqlServerInstanceBpaResultOperationSource(),
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Contains the parameters to get SQL Server instance telemetry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal async Task<ArmOperation<SqlServerInstanceTelemetryResult>> GetTelemetryAsync(WaitUntil waitUntil, SqlServerInstanceTelemetryRequest content, CancellationToken cancellationToken = default)
+        internal async Task<ArmOperation<SqlServerInstanceTelemetryResult>> GetTelemetryAsync(WaitUntil waitUntil, SqlServerInstanceTelemetryContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sqlServerInstancesClientDiagnostics.CreateScope("SqlServerInstanceResource.GetTelemetry");
             scope.Start();
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerInstancesRestClient.CreateGetTelemetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceTelemetryRequest.ToRequestContent(content), context);
+                HttpMessage message = _sqlServerInstancesRestClient.CreateGetTelemetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceTelemetryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerInstanceTelemetryResult> operation = new ArcDataArmOperation<SqlServerInstanceTelemetryResult>(
                     new SqlServerInstanceTelemetryResultOperationSource(),
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Contains the parameters to get SQL Server instance telemetry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal ArmOperation<SqlServerInstanceTelemetryResult> GetTelemetry(WaitUntil waitUntil, SqlServerInstanceTelemetryRequest content, CancellationToken cancellationToken = default)
+        internal ArmOperation<SqlServerInstanceTelemetryResult> GetTelemetry(WaitUntil waitUntil, SqlServerInstanceTelemetryContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sqlServerInstancesClientDiagnostics.CreateScope("SqlServerInstanceResource.GetTelemetry");
             scope.Start();
@@ -1478,7 +1478,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerInstancesRestClient.CreateGetTelemetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceTelemetryRequest.ToRequestContent(content), context);
+                HttpMessage message = _sqlServerInstancesRestClient.CreateGetTelemetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlServerInstanceTelemetryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerInstanceTelemetryResult> operation = new ArcDataArmOperation<SqlServerInstanceTelemetryResult>(
                     new SqlServerInstanceTelemetryResultOperationSource(),

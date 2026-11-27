@@ -15,66 +15,66 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The Arc SQL Server instance telemetry retrieval request. </summary>
-    internal partial class SqlServerInstanceTelemetryRequest : IJsonModel<SqlServerInstanceTelemetryRequest>
+    internal partial class SqlServerInstanceTelemetryContent : IJsonModel<SqlServerInstanceTelemetryContent>
     {
-        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTelemetryRequest"/> for deserialization. </summary>
-        internal SqlServerInstanceTelemetryRequest()
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTelemetryContent"/> for deserialization. </summary>
+        internal SqlServerInstanceTelemetryContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlServerInstanceTelemetryRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlServerInstanceTelemetryContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSqlServerInstanceTelemetryRequest(document.RootElement, options);
+                        return DeserializeSqlServerInstanceTelemetryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlServerInstanceTelemetryRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlServerInstanceTelemetryContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlServerInstanceTelemetryRequest IPersistableModel<SqlServerInstanceTelemetryRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlServerInstanceTelemetryContent IPersistableModel<SqlServerInstanceTelemetryContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlServerInstanceTelemetryRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlServerInstanceTelemetryContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sqlServerInstanceTelemetryRequest"> The <see cref="SqlServerInstanceTelemetryRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SqlServerInstanceTelemetryRequest sqlServerInstanceTelemetryRequest)
+        /// <param name="sqlServerInstanceTelemetryContent"> The <see cref="SqlServerInstanceTelemetryContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlServerInstanceTelemetryContent sqlServerInstanceTelemetryContent)
         {
-            if (sqlServerInstanceTelemetryRequest == null)
+            if (sqlServerInstanceTelemetryContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(sqlServerInstanceTelemetryRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sqlServerInstanceTelemetryContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SqlServerInstanceTelemetryRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlServerInstanceTelemetryContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("datasetName"u8);
             writer.WriteStringValue(DatasetName);
@@ -146,24 +146,24 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlServerInstanceTelemetryRequest IJsonModel<SqlServerInstanceTelemetryRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlServerInstanceTelemetryContent IJsonModel<SqlServerInstanceTelemetryContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlServerInstanceTelemetryRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlServerInstanceTelemetryContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceTelemetryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerInstanceTelemetryContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSqlServerInstanceTelemetryRequest(document.RootElement, options);
+            return DeserializeSqlServerInstanceTelemetryContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SqlServerInstanceTelemetryRequest DeserializeSqlServerInstanceTelemetryRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlServerInstanceTelemetryContent DeserializeSqlServerInstanceTelemetryContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlServerInstanceTelemetryRequest(
+            return new SqlServerInstanceTelemetryContent(
                 datasetName,
                 startsOn,
                 endsOn,
