@@ -5,9 +5,12 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Quota
 {
+    // Preserve the shipped collection name when the generated resource name changes.
+    [CodeGenType("ManagementGroupGroupQuotaSubscriptionIdCollection")]
     public partial class GroupQuotaSubscriptionCollection
     {
         /// <summary>

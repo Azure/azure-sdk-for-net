@@ -582,10 +582,10 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Gets a collection of ManagementGroupGroupQuotaSubscriptionIds in the <see cref="GroupQuotaEntityResource"/>. </summary>
-        /// <returns> An object representing collection of ManagementGroupGroupQuotaSubscriptionIds and their operations over a ManagementGroupGroupQuotaSubscriptionIdResource. </returns>
-        public virtual ManagementGroupGroupQuotaSubscriptionIdCollection GetManagementGroupGroupQuotaSubscriptionIds()
+        /// <returns> An object representing collection of ManagementGroupGroupQuotaSubscriptionIds and their operations over a GroupQuotaSubscriptionResource. </returns>
+        public virtual GroupQuotaSubscriptionCollection GetManagementGroupGroupQuotaSubscriptionIds()
         {
-            return GetCachedClient(client => new ManagementGroupGroupQuotaSubscriptionIdCollection(client, Id));
+            return GetCachedClient(client => new GroupQuotaSubscriptionCollection(client, Id));
         }
 
         /// <summary> Returns the subscriptionIds along with its provisioning state for being associated with the GroupQuota. If the subscription is not a member of GroupQuota, it will return 404, else 200. </summary>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagementGroupGroupQuotaSubscriptionIdResource>> GetManagementGroupGroupQuotaSubscriptionIdAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GroupQuotaSubscriptionResource>> GetManagementGroupGroupQuotaSubscriptionIdAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagementGroupGroupQuotaSubscriptionIdResource> GetManagementGroupGroupQuotaSubscriptionId(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaSubscriptionResource> GetManagementGroupGroupQuotaSubscriptionId(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 

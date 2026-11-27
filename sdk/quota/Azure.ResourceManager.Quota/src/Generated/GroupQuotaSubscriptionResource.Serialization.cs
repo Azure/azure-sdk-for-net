@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary></summary>
-    public partial class ManagementGroupGroupQuotaSubscriptionIdResource : IJsonModel<GroupQuotaSubscriptionData>
+    public partial class GroupQuotaSubscriptionResource : IJsonModel<GroupQuotaSubscriptionData>
     {
         private static IJsonModel<GroupQuotaSubscriptionData> s_dataDeserializationInstance;
 

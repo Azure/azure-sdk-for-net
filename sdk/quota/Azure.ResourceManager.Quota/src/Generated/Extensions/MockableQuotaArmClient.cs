@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new GroupQuotaEntityResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> object. </returns>
-        public virtual ManagementGroupGroupQuotaSubscriptionIdResource GetManagementGroupGroupQuotaSubscriptionIdResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
+        public virtual GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(ResourceIdentifier id)
         {
-            ManagementGroupGroupQuotaSubscriptionIdResource.ValidateResourceId(id);
-            return new ManagementGroupGroupQuotaSubscriptionIdResource(Client, id);
+            GroupQuotaSubscriptionResource.ValidateResourceId(id);
+            return new GroupQuotaSubscriptionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>

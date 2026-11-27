@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GroupQuotaSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetManagementGroupGroupQuotaSubscriptionIdResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaSubscriptionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> object. </returns>
-        public static ManagementGroupGroupQuotaSubscriptionIdResource GetManagementGroupGroupQuotaSubscriptionIdResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
+        public static GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetManagementGroupGroupQuotaSubscriptionIdResource(id);
+            return GetMockableQuotaArmClient(client).GetGroupQuotaSubscriptionResource(id);
         }
 
         /// <summary>

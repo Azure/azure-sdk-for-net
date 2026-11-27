@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Quota.Models;
 
@@ -11,6 +12,26 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class GroupQuotaEntityResource
     {
+        // Preserve the shipped accessors after the generated subscription resource was renamed.
+        /// <summary> Gets the group quota subscriptions. </summary>
+        /// <returns> The group quota subscription collection. </returns>
+        public virtual GroupQuotaSubscriptionCollection GetGroupQuotaSubscriptions()
+            => GetManagementGroupGroupQuotaSubscriptionIds();
+
+        /// <summary> Gets a group quota subscription. </summary>
+        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The group quota subscription. </returns>
+        public virtual Task<Response<GroupQuotaSubscriptionResource>> GetGroupQuotaSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+            => GetManagementGroupGroupQuotaSubscriptionIdAsync(subscriptionId, cancellationToken);
+
+        /// <summary> Gets a group quota subscription. </summary>
+        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The group quota subscription. </returns>
+        public virtual Response<GroupQuotaSubscriptionResource> GetGroupQuotaSubscription(string subscriptionId, CancellationToken cancellationToken = default)
+            => GetManagementGroupGroupQuotaSubscriptionId(subscriptionId, cancellationToken);
+
         /// <summary>
         /// Gets the GroupQuotas usages and limits(quota). Location is required paramter.
         /// <list type="bullet">
