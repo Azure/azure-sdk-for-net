@@ -382,6 +382,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         if (Mode == RecordedTestMode.Playback)
             return;
+
         AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider());
 
         // Remove Agents.
