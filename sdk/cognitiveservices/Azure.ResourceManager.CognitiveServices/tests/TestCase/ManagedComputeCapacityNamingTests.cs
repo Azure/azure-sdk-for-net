@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Models;
 using NUnit.Framework;
 
@@ -83,47 +81,160 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             }
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task CapacityListUsesExpectedRequest(bool async)
+        [Test]
+        public void ReleasedAccountPropertiesFactoryPreservesValues()
         {
-            const string subscriptionId = "83aa47df-e3e9-49ff-877b-94304bf3d3ad";
-            var deploymentId = new ResourceIdentifier("/subscriptions/83aa47df-e3e9-49ff-877b-94304bf3d3ad/resourceGroups/rg/providers/Microsoft.CognitiveServices/accounts/account/deployments/deployment");
-            string requestUri = null;
-            var options = new ArmClientOptions
-            {
-                Transport = new MockTransport(request =>
-                {
-                    requestUri = request.Uri.ToString();
-                    var response = new MockResponse(200);
-                    response.SetContent("{\"value\":[]}");
-                    return response;
-                })
-            };
-            var client = new ArmClient(new MockCredential(), subscriptionId, options);
-            var subscription = client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{subscriptionId}"));
+            var properties = ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties(
+                default, "endpoint", default, default, default, default, default, default, default,
+                default, default, default, default, default, default, default, default, default,
+                true, default, default, default, default, default, default, default, default,
+                default, default, default, default, default, true, "project", new[] { "project" },
+                new CognitiveServicesTrustedCertificateSource[0]);
 
-            if (async)
+            Assert.AreEqual("endpoint", properties.Endpoint);
+            Assert.AreEqual(true, properties.IsA365LoggingEnabled);
+            Assert.AreEqual(true, properties.AllowProjectManagement);
+            Assert.AreEqual("project", properties.DefaultProject);
+            CollectionAssert.AreEqual(new[] { "project" }, properties.AssociatedProjects);
+            Assert.IsEmpty(properties.TrustedCertificateSources);
+        }
+
+        [Test]
+        public void ReleasedDeploymentPropertiesFactoryPreservesValues()
+        {
+            var cacheId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000");
+            var capabilities = new Dictionary<string, string> { ["key"] = "value" };
+            var routing = new CognitiveServicesDeploymentRouting();
+            var properties = ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties(
+                default, default, cacheId, default, capabilities, "policy", default, default, default,
+                default, default, default, "parent", "spillover", default, default, routing);
+
+            Assert.AreEqual(cacheId, properties.ContextCacheContainerId);
+            Assert.AreEqual("value", properties.Capabilities["key"]);
+            Assert.AreEqual("policy", properties.RaiPolicyName);
+            Assert.AreEqual("parent", properties.ParentDeploymentName);
+            Assert.AreSame(routing, properties.Routing);
+        }
+
+        [Test]
+        public void DeploymentPropertiesFactoryPreservesPartialPositionalCalls()
+        {
+            var cacheId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000");
+            var scaleSettings = new CognitiveServicesAccountDeploymentScaleSettings { Capacity = 2 };
+            var capabilities = new Dictionary<string, string> { ["key"] = "value" };
+            var properties = ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties(
+                default, default, cacheId, scaleSettings, capabilities, "policy");
+
+            Assert.AreEqual(cacheId, properties.ContextCacheContainerId);
+            Assert.AreSame(scaleSettings, properties.ScaleSettings);
+            Assert.AreEqual("value", properties.Capabilities["key"]);
+            Assert.AreEqual("policy", properties.RaiPolicyName);
+        }
+
+        [Test]
+        public void DeploymentPropertiesFactoryPreservesOptionalAndNewArguments()
+        {
+            Assert.IsNotNull(ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties());
+
+            var scaleSettings = new CognitiveServicesAccountDeploymentScaleSettings { Capacity = 2 };
+            var speculativeDecoding = ArmCognitiveServicesModelFactory.DeploymentSpeculativeDecoding(draftTokenCount: 3);
+            var properties = ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentProperties(
+                scaleSettings: scaleSettings, speculativeDecoding: speculativeDecoding);
+
+            Assert.AreSame(scaleSettings, properties.ScaleSettings);
+            Assert.AreSame(speculativeDecoding, properties.SpeculativeDecoding);
+        }
+
+        [Test]
+        public void ReleasedRaiPolicyPropertiesFactoryPreservesValues()
+        {
+            var egressPolicy = new RaiEgressPolicyConfig();
+            var properties = ArmCognitiveServicesModelFactory.RaiPolicyProperties(
+                RaiPolicyType.UserManaged, RaiPolicyMode.Blocking, "base", default, default, default, egressPolicy);
+
+            Assert.AreEqual(RaiPolicyType.UserManaged, properties.PolicyType);
+            Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
+            Assert.AreEqual("base", properties.BasePolicyName);
+            Assert.AreSame(egressPolicy, properties.EgressPolicy);
+        }
+
+        [Test]
+        public void RaiPolicyPropertiesFactoryPreservesPartialPositionalCalls()
+        {
+            var policy = ArmCognitiveServicesModelFactory.RaiPolicyProperties(RaiPolicyType.UserManaged);
+            Assert.AreEqual(RaiPolicyType.UserManaged, policy.PolicyType);
+
+            var properties = ArmCognitiveServicesModelFactory.RaiPolicyProperties(
+                RaiPolicyType.UserManaged, RaiPolicyMode.Blocking, "base");
+            Assert.AreEqual(RaiPolicyType.UserManaged, properties.PolicyType);
+            Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
+            Assert.AreEqual("base", properties.BasePolicyName);
+        }
+
+        [Test]
+        public void RaiPolicyPropertiesFactoryPreservesOptionalAndNewArguments()
+        {
+            Assert.IsNotNull(ArmCognitiveServicesModelFactory.RaiPolicyProperties());
+
+            var policy = ArmCognitiveServicesModelFactory.RaiPolicyProperties(policyType: RaiPolicyType.UserManaged);
+            Assert.AreEqual(RaiPolicyType.UserManaged, policy.PolicyType);
+
+            var properties = ArmCognitiveServicesModelFactory.RaiPolicyProperties(
+                RaiPolicyType.UserManaged, RaiPolicyMode.Blocking, "base", format: RaiPolicyFormat.ACS);
+            Assert.AreEqual(RaiPolicyType.UserManaged, properties.PolicyType);
+            Assert.AreEqual(RaiPolicyMode.Blocking, properties.Mode);
+            Assert.AreEqual("base", properties.BasePolicyName);
+            Assert.AreEqual(RaiPolicyFormat.ACS, properties.Format);
+        }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.CognitiveServices/accounts/account/computes/cluster")]
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/virtualClusters/cluster")]
+        public void ComputeAndWorkbenchResourceIdsPreserveWireValues(string clusterId)
+        {
+            var resourceId = new ResourceIdentifier(clusterId);
+            const string imageLink = "mcr.microsoft.com/azureml/workbench:latest";
+            var options = new ModelReaderWriterOptions("W");
+            object[] models =
             {
-                await foreach (var item in subscription.GetCognitiveServicesManagedComputeCapacitiesAsync("offer", "gpu", deploymentId, "eastus"))
+                new ContainerInstanceComputeProperties("eastus", resourceId, imageLink),
+                new CognitiveServicesWorkbenchProperties(resourceId, imageLink),
+                new CognitiveServicesWorkbenchPatchProperties { TargetClusterId = resourceId },
+                ArmCognitiveServicesModelFactory.ContainerInstanceComputeProperties(
+                    location: "eastus", targetClusterId: resourceId, imageLink: imageLink),
+                ArmCognitiveServicesModelFactory.CognitiveServicesWorkbenchProperties(
+                    targetClusterId: resourceId, imageLink: imageLink),
+                ArmCognitiveServicesModelFactory.CognitiveServicesWorkbenchPatchProperties(targetClusterId: resourceId)
+            };
+
+            foreach (object model in models)
+            {
+                var data = ModelReaderWriter.Write(model, options, AzureResourceManagerCognitiveServicesContext.Default);
+                using (JsonDocument document = JsonDocument.Parse(data.ToString()))
                 {
-                    Assert.Fail("Expected no capacities.");
+                    Assert.AreEqual(clusterId, document.RootElement.GetProperty("targetClusterId").GetString());
+                }
+
+                var roundTrip = ModelReaderWriter.Read(data, model.GetType(), options, AzureResourceManagerCognitiveServicesContext.Default);
+                var roundTripData = ModelReaderWriter.Write(roundTrip, options, AzureResourceManagerCognitiveServicesContext.Default);
+                using (JsonDocument document = JsonDocument.Parse(roundTripData.ToString()))
+                {
+                    Assert.AreEqual(clusterId, document.RootElement.GetProperty("targetClusterId").GetString());
                 }
             }
-            else
-            {
-                Assert.IsEmpty(subscription.GetCognitiveServicesManagedComputeCapacities("offer", "gpu", deploymentId, "eastus").ToList());
-            }
+        }
 
-            Assert.NotNull(requestUri);
-            var uri = new Uri(requestUri);
-            Assert.AreEqual($"/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/managedComputeCapacities", uri.AbsolutePath);
-            string query = Uri.UnescapeDataString(uri.Query);
-            StringAssert.Contains("offer=offer", query);
-            StringAssert.Contains("acceleratorType=gpu", query);
-            StringAssert.Contains($"deploymentId={deploymentId}", query);
-            StringAssert.Contains("location=eastus", query);
-            StringAssert.Contains("api-version=2026-11-01", query);
+        [TestCase(false)]
+        [TestCase(true)]
+        public void WorkbenchPatchOmitsUnspecifiedResourceId(bool useFactory)
+        {
+            var properties = useFactory
+                ? ArmCognitiveServicesModelFactory.CognitiveServicesWorkbenchPatchProperties()
+                : new CognitiveServicesWorkbenchPatchProperties();
+            var data = ModelReaderWriter.Write(properties, new ModelReaderWriterOptions("W"));
+            using (JsonDocument document = JsonDocument.Parse(data.ToString()))
+            {
+                Assert.IsFalse(document.RootElement.TryGetProperty("targetClusterId", out _));
+            }
         }
     }
 }

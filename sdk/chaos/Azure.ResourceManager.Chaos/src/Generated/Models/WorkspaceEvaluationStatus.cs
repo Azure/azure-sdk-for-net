@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string InProgressValue = "InProgress";
         /// <summary> The evaluation completed successfully. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> The evaluation partially succeeded — some scenarios succeeded while others failed. </summary>
+        /// <summary> Unless cancellation won terminal settlement, at least one template applicability test completed and at least one failed or was canceled. Discovery completeness does not determine this processing status. The first terminal settlement is authoritative; a later cancellation does not replace it. </summary>
         private const string PartiallySucceededValue = "PartiallySucceeded";
-        /// <summary> The evaluation failed. </summary>
+        /// <summary> No template applicability test completed and at least one failed, unless cancellation won terminal settlement. The accepted resource snapshot and discovery result reference remain present; an admission failure creates no evaluation result. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> The evaluation was canceled. </summary>
+        /// <summary> Cancellation won terminal settlement, or all admitted template tests were canceled. Previously recorded outcomes may remain. A later callback cannot replace this terminal result, and cancellation cannot replace an already settled result. </summary>
         private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceEvaluationStatus"/>. </summary>
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> The evaluation completed successfully. </summary>
         public static WorkspaceEvaluationStatus Succeeded { get; } = new WorkspaceEvaluationStatus(SucceededValue);
 
-        /// <summary> The evaluation partially succeeded — some scenarios succeeded while others failed. </summary>
+        /// <summary> Unless cancellation won terminal settlement, at least one template applicability test completed and at least one failed or was canceled. Discovery completeness does not determine this processing status. The first terminal settlement is authoritative; a later cancellation does not replace it. </summary>
         public static WorkspaceEvaluationStatus PartiallySucceeded { get; } = new WorkspaceEvaluationStatus(PartiallySucceededValue);
 
-        /// <summary> The evaluation failed. </summary>
+        /// <summary> No template applicability test completed and at least one failed, unless cancellation won terminal settlement. The accepted resource snapshot and discovery result reference remain present; an admission failure creates no evaluation result. </summary>
         public static WorkspaceEvaluationStatus Failed { get; } = new WorkspaceEvaluationStatus(FailedValue);
 
-        /// <summary> The evaluation was canceled. </summary>
+        /// <summary> Cancellation won terminal settlement, or all admitted template tests were canceled. Previously recorded outcomes may remain. A later callback cannot replace this terminal result, and cancellation cannot replace an already settled result. </summary>
         public static WorkspaceEvaluationStatus Canceled { get; } = new WorkspaceEvaluationStatus(CanceledValue);
 
         /// <summary> Determines if two <see cref="WorkspaceEvaluationStatus"/> values are the same. </summary>

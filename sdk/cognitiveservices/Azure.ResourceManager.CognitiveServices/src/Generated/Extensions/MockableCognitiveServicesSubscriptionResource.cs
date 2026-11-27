@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         private CognitiveServicesClient _cognitiveServicesClientRestClient;
         private ClientDiagnostics _deletedAccountsClientDiagnostics;
         private DeletedAccounts _deletedAccountsRestClient;
+        private ClientDiagnostics _managedComputeUsagesOperationGroupClientDiagnostics;
+        private ManagedComputeUsagesOperationGroup _managedComputeUsagesOperationGroupRestClient;
         private ClientDiagnostics _managedComputeCapacitiesClientDiagnostics;
         private ManagedComputeCapacities _managedComputeCapacitiesRestClient;
         private ClientDiagnostics _resourceSkusOperationGroupClientDiagnostics;
@@ -58,47 +60,51 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string apiVersion) ? apiVersion : "2026-11-01");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string apiVersion) ? apiVersion : "2026-11-15-preview");
 
         private ClientDiagnostics CommitmentPlanOperationGroupClientDiagnostics => _commitmentPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/commitmentPlans", out string apiVersion0) ? apiVersion0 : "2026-11-01");
+        private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/commitmentPlans", out string apiVersion0) ? apiVersion0 : "2026-11-15-preview");
 
         private ClientDiagnostics CognitiveServicesClientClientDiagnostics => _cognitiveServicesClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
+
+        private ClientDiagnostics ManagedComputeUsagesOperationGroupClientDiagnostics => _managedComputeUsagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ManagedComputeUsagesOperationGroup ManagedComputeUsagesOperationGroupRestClient => _managedComputeUsagesOperationGroupRestClient ??= new ManagedComputeUsagesOperationGroup(ManagedComputeUsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics ManagedComputeCapacitiesClientDiagnostics => _managedComputeCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedComputeCapacities ManagedComputeCapacitiesRestClient => _managedComputeCapacitiesRestClient ??= new ManagedComputeCapacities(ManagedComputeCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private ManagedComputeCapacities ManagedComputeCapacitiesRestClient => _managedComputeCapacitiesRestClient ??= new ManagedComputeCapacities(ManagedComputeCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics ResourceSkusOperationGroupClientDiagnostics => _resourceSkusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceSkusOperationGroup ResourceSkusOperationGroupRestClient => _resourceSkusOperationGroupRestClient ??= new ResourceSkusOperationGroup(ResourceSkusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private ResourceSkusOperationGroup ResourceSkusOperationGroupRestClient => _resourceSkusOperationGroupRestClient ??= new ResourceSkusOperationGroup(ResourceSkusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics CommitmentTiersOperationGroupClientDiagnostics => _commitmentTiersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommitmentTiersOperationGroup CommitmentTiersOperationGroupRestClient => _commitmentTiersOperationGroupRestClient ??= new CommitmentTiersOperationGroup(CommitmentTiersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private CommitmentTiersOperationGroup CommitmentTiersOperationGroupRestClient => _commitmentTiersOperationGroupRestClient ??= new CommitmentTiersOperationGroup(CommitmentTiersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics LocationBasedModelCapacitiesOperationGroupClientDiagnostics => _locationBasedModelCapacitiesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocationBasedModelCapacitiesOperationGroup LocationBasedModelCapacitiesOperationGroupRestClient => _locationBasedModelCapacitiesOperationGroupRestClient ??= new LocationBasedModelCapacitiesOperationGroup(LocationBasedModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private LocationBasedModelCapacitiesOperationGroup LocationBasedModelCapacitiesOperationGroupRestClient => _locationBasedModelCapacitiesOperationGroupRestClient ??= new LocationBasedModelCapacitiesOperationGroup(LocationBasedModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics ModelCapacitiesOperationGroupClientDiagnostics => _modelCapacitiesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ModelCapacitiesOperationGroup ModelCapacitiesOperationGroupRestClient => _modelCapacitiesOperationGroupRestClient ??= new ModelCapacitiesOperationGroup(ModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private ModelCapacitiesOperationGroup ModelCapacitiesOperationGroupRestClient => _modelCapacitiesOperationGroupRestClient ??= new ModelCapacitiesOperationGroup(ModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         private ClientDiagnostics CognitiveServicesModelsClientDiagnostics => _cognitiveServicesModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CognitiveServicesModels CognitiveServicesModelsRestClient => _cognitiveServicesModelsRestClient ??= new CognitiveServicesModels(CognitiveServicesModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
+        private CognitiveServicesModels CognitiveServicesModelsRestClient => _cognitiveServicesModelsRestClient ??= new CognitiveServicesModels(CognitiveServicesModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-15-preview");
 
         /// <summary> Gets a collection of CognitiveServicesDeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of CognitiveServicesDeletedAccounts and their operations over a CognitiveServicesDeletedAccountResource. </returns>
@@ -120,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,7 +197,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +291,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +358,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +395,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +424,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,7 +453,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -475,7 +481,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,7 +509,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,7 +537,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -559,7 +565,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -598,7 +604,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -637,7 +643,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -685,7 +691,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -733,7 +739,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -781,7 +787,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -829,7 +835,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -857,7 +863,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -870,6 +876,64 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 CancellationToken = cancellationToken
             };
             return new CognitiveServicesAccountData1CollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
+        }
+
+        /// <summary>
+        /// List managed compute quota usages for a subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/managedComputeUsages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedComputeUsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesManagedComputeUsage> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CognitiveServicesManagedComputeUsageAsyncCollectionResultOfT(ManagedComputeUsagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// List managed compute quota usages for a subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/managedComputeUsages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedComputeUsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesManagedComputeUsage> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CognitiveServicesManagedComputeUsageCollectionResultOfT(ManagedComputeUsagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetAll");
         }
 
         /// <summary>
@@ -886,7 +950,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -942,7 +1006,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -997,7 +1061,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1025,7 +1089,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1053,7 +1117,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1089,7 +1153,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1125,7 +1189,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1154,7 +1218,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1183,7 +1247,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1229,7 +1293,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1275,7 +1339,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1319,7 +1383,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1363,7 +1427,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1392,7 +1456,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
+            WorkspaceUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,12 +191,21 @@ namespace Azure.ResourceManager.Chaos.Models
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerChaosContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = WorkspaceUpdateProperties.DeserializeWorkspaceUpdateProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChaosWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
+            return new ChaosWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, additionalBinaryDataProperties);
         }
     }
 }

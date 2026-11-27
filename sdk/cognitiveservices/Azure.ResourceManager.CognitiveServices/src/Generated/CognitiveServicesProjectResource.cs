@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-11-01");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-11-01. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -775,6 +775,72 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetCognitiveServicesAgentApplications().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesWorkbenches in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesWorkbenches and their operations over a CognitiveServicesWorkbenchResource. </returns>
+        public virtual CognitiveServicesWorkbenchCollection GetCognitiveServicesWorkbenches()
+        {
+            return GetCachedClient(client => new CognitiveServicesWorkbenchCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified workbench associated with the project. </summary>
+        /// <param name="workbenchName"> The name of the workbench associated with the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesWorkbenchResource>> GetCognitiveServicesWorkbenchAsync(string workbenchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
+
+            return await GetCognitiveServicesWorkbenches().GetAsync(workbenchName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified workbench associated with the project. </summary>
+        /// <param name="workbenchName"> The name of the workbench associated with the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesWorkbenchResource> GetCognitiveServicesWorkbench(string workbenchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
+
+            return GetCognitiveServicesWorkbenches().Get(workbenchName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesProjectCostControls in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesProjectCostControls and their operations over a CognitiveServicesProjectCostControlResource. </returns>
+        public virtual CognitiveServicesProjectCostControlCollection GetCognitiveServicesProjectCostControls()
+        {
+            return GetCachedClient(client => new CognitiveServicesProjectCostControlCollection(client, Id));
+        }
+
+        /// <summary> Gets a project-owned cost control and its representation entity tag. </summary>
+        /// <param name="costControlName"> The cost-control name. Names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesProjectCostControlResource>> GetCognitiveServicesProjectCostControlAsync(string costControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
+
+            return await GetCognitiveServicesProjectCostControls().GetAsync(costControlName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a project-owned cost control and its representation entity tag. </summary>
+        /// <param name="costControlName"> The cost-control name. Names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesProjectCostControlResource> GetCognitiveServicesProjectCostControl(string costControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
+
+            return GetCognitiveServicesProjectCostControls().Get(costControlName, cancellationToken);
         }
     }
 }

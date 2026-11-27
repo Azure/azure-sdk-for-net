@@ -39,6 +39,8 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ResourceMethod> _actions;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
+        private readonly ResourceMethod? _checkExistence;
+        private readonly IReadOnlyList<ResourceMethod> _resourceMethods;
 
         // Cached Get method providers
         private MethodProvider? _getAsyncMethodProvider;
@@ -46,7 +48,8 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider? _getAllSyncMethodProvider;
 
         // Support for multiple rest clients
-        private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
+        private Dictionary<InputClient, RestClientInfo>? _clientInfosCache;
+        private Dictionary<InputClient, RestClientInfo> _clientInfos => _clientInfosCache ??= BuildClientInfos();
 
         // This is the resource type of the current resource. Not the resource type of my parent resource
         private ScopedApi<ResourceType> _resourceTypeExpression;
@@ -57,15 +60,19 @@ namespace Azure.Generator.Management.Providers
         {
             _resourceMetadata = resourceMetadata;
             _resource = resource;
-
-            // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
+            _resourceMethods = resourceMethods;
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             var contextualPath = GetContextualPath(resourceMetadata);
-            (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
+            (_get, _checkExistence, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
             _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
+        }
+
+        private Dictionary<InputClient, RestClientInfo> BuildClientInfos()
+        {
+            return _resourceMetadata.CreateClientInfosMap(this,
+                _resourceMethods.Where(method => method.Kind != ResourceOperationKind.CheckExistence || ReferenceEquals(method, _checkExistence)));
         }
 
         private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
@@ -167,11 +174,12 @@ namespace Azure.Generator.Management.Providers
                 ?? SynthesizedParameterNameHelper.GetExistingParameterName(library.ExtensionProvider, methodName, parameterTypes, index, offset + 1, [mockable.ArmCoreType, .. prefixTypes]);
         }
 
-        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(
+        private static (ResourceMethod? Get, ResourceMethod? CheckExistence, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(
             IReadOnlyList<ResourceMethod> resourceMethods,
             RequestPathPattern contextualPath)
         {
             ResourceMethod? getMethod = null;
+            ResourceMethod? checkExistenceMethod = null;
             ResourceMethod? createMethod = null;
             var listMethods = new List<ResourceMethod>();
             var actionMethods = new List<ResourceMethod>();
@@ -182,6 +190,9 @@ namespace Azure.Generator.Management.Providers
                 {
                     case ResourceOperationKind.Read:
                         getMethod ??= method;
+                        break;
+                    case ResourceOperationKind.CheckExistence:
+                        checkExistenceMethod ??= method;
                         break;
                     case ResourceOperationKind.List:
                         listMethods.Add(method);
@@ -195,7 +206,7 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath), actionMethods);
+            return (getMethod, checkExistenceMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath), actionMethods);
         }
 
         private static IReadOnlyList<ResourceMethod> SortGetAllMethodsByScopeBreadth(
@@ -685,17 +696,18 @@ namespace Azure.Generator.Management.Providers
 
         private List<MethodProvider> BuildExistsMethods()
         {
-            if (_get is null)
+            var method = _checkExistence ?? _get;
+            if (method is null)
             {
                 return [];
             }
 
             var result = new List<MethodProvider>();
-            var restClientInfo = _clientInfos[_get.InputClient];
-            var parameterMappings = BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path));
+            var restClientInfo = _clientInfos[method.InputClient];
+            var parameterMappings = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, _get.InputMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, method.InputMethod, method.Kind, isAsync);
                 result.Add(existsMethodProvider);
             }
 

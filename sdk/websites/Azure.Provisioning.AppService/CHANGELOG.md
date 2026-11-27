@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `WebAppRequest` to `WebAppContent` and changed the type of `WebAppRequestHistoryProperties.Request` from `WebAppRequest` to `WebAppContent`.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("errorCode"u8);
-                writer.WriteNumberValue(ErrorCode);
+                writer.WriteStringValue(ErrorCode);
             }
             if (options.Format != "W")
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            int errorCode = default;
+            string errorCode = default;
             string errorMessage = default;
             string remediationUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("errorCode"u8))
                 {
-                    errorCode = prop.Value.GetInt32();
+                    errorCode = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))

@@ -410,6 +410,104 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Check whether the named configuration exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/checkConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_CheckConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> CheckConfigurationAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.CheckConfiguration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _foosRestClient.CreateCheckConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                if (result.IsError)
+                {
+                    throw new RequestFailedException(result);
+                }
+                return Response.FromValue(result.Status != 404, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check whether the named configuration exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/checkConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_CheckConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> CheckConfiguration(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.CheckConfiguration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _foosRestClient.CreateCheckConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                if (result.IsError)
+                {
+                    throw new RequestFailedException(result);
+                }
+                return Response.FromValue(result.Status != 404, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// FooAction
         /// <list type="bullet">
         /// <item>
