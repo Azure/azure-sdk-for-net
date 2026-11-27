@@ -3,8 +3,10 @@
 
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
+using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -528,6 +530,9 @@ namespace Azure.Generator.Management.Visitors
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
         private readonly Dictionary<FlattenedSetterCacheKey, bool> _flattenedIntoParentWithLastContractSetterCache = [];
+        private readonly HashSet<PropertyProvider> _requiredCollectionSetters = new(ReferenceEqualityComparer.Instance);
+        private readonly HashSet<PropertyProvider> _requiredScalarLeafSetters = new(ReferenceEqualityComparer.Instance);
+        private readonly HashSet<InputProperty> _requiredScalarSetterSources = new(ReferenceEqualityComparer.Instance);
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -551,6 +556,7 @@ namespace Azure.Generator.Management.Visitors
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
             foreach (var internalProperty in model.Properties.Concat(model.CustomCodeView?.Properties ?? []))
             {
+                ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterCanonicalProperty(internalProperty, model);
                 // only flatten complex type properties
                 var propertyType = internalProperty.Type;
                 if (!TryGetModelProvider(propertyType, out var modelProvider))
@@ -565,6 +571,10 @@ namespace Azure.Generator.Management.Visitors
                 }
 
                 var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
+                foreach (var innerProperty in innerProperties)
+                {
+                    ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterCanonicalProperty(innerProperty, modelProvider);
+                }
 
                 // handle `@flattenProperty`
                 // Use name-based matching instead of reference equality because custom code
@@ -577,46 +587,8 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
                 // safe flatten single property
-                else
+                else if (CanSafeFlatten(model, internalProperty, modelProvider, innerProperties))
                 {
-                    // A wrapper property that was public in the GA contract must remain public. Safe flattening
-                    // would internalize it and replace it with its child, changing the shipped API shape.
-                    if (ShouldPreserveLastContractProperty(model, internalProperty))
-                    {
-                        continue;
-                    }
-
-                    // Count independent instance properties, but do not count a backing wrapper
-                    // again when its data is already represented by flattened properties.
-                    var flattenedWrappers = innerProperties.OfType<FlattenedPropertyProvider>()
-                        .Select(p => p.FlattenedProperty).ToHashSet();
-                    var effectiveProperties = innerProperties
-                        .Where(p => IsEffectiveModelProperty(p) && !flattenedWrappers.Contains(p)).ToArray();
-                    if (effectiveProperties.Length != 1 || !IsFlattenableProperty(effectiveProperties[0]))
-                    {
-                        continue;
-                    }
-
-                    // skip if internal property type is base abstract discriminator model
-                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
-                    {
-                        continue;
-                    }
-
-                    // skip if internal property type is a discriminator base model (has a discriminator property),
-                    // because flattening would make the base type internal, breaking the polymorphic hierarchy
-                    if (innerProperties.Any(p => p.IsDiscriminator))
-                    {
-                        continue;
-                    }
-
-                    // skip if the inner model opts out of safe-flatten via
-                    // @@clientOption(InnerModel, "disable-safe-flatten", true, "csharp")
-                    if (ManagementClientGenerator.Instance.OutputLibrary.SafeFlattenDisabledModels.Contains(modelProvider))
-                    {
-                        continue;
-                    }
-
                     isSafeFlatten = SafeFlatten(model, innerProperties, propertyMap, internalProperty, modelProvider);
                 }
             }
@@ -639,6 +611,24 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
+        private static bool CanSafeFlatten(ModelProvider model, PropertyProvider wrapper, ModelProvider innerModel,
+            IReadOnlyList<PropertyProvider> innerProperties)
+        {
+            // Preserve a shipped wrapper and count its flattened representation only once.
+            if (ShouldPreserveLastContractProperty(model, wrapper))
+            {
+                return false;
+            }
+            var flattenedWrappers = innerProperties.OfType<FlattenedPropertyProvider>()
+                .Select(p => p.FlattenedProperty).ToHashSet();
+            var effectiveProperties = innerProperties
+                .Where(p => IsEffectiveModelProperty(p) && !flattenedWrappers.Contains(p)).ToArray();
+            return effectiveProperties.Length == 1 && IsFlattenableProperty(effectiveProperties[0]) &&
+                !innerModel.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract) &&
+                !innerProperties.Any(p => p.IsDiscriminator) &&
+                !ManagementClientGenerator.Instance.OutputLibrary.SafeFlattenDisabledModels.Contains(innerModel);
+        }
+
         private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
             foreach (var innerProperty in innerProperties)
@@ -647,24 +637,42 @@ namespace Azure.Generator.Management.Visitors
                 {
                     continue;
                 }
-                UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
                 // flatten the property to public and associate it with the internal property
-                var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
                 var flattenPropertyName = ResolveFlattenedDateTimePropertyName(
                     model,
+                    internalProperty,
                     innerProperty,
                     innerProperty.Name,
                     propertyMap,
+                    innerProperties,
                     static historicalName => historicalName); // TODO: handle name conflicts
+                flattenPropertyName = ResolveFlattenedAcronymPropertyName(
+                    model, internalProperty, innerProperty, flattenPropertyName, propertyMap, innerProperties, static historicalName => historicalName);
 
                 // New properties reflect wrapper optionality; shipped value-type nullability
                 // takes precedence without changing the serialized inner property.
                 var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
                 var propertyType = GetFlattenedPropertyType(model, flattenPropertyName, innerProperty, shouldLiftToNullable);
-                var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
+                var path = GetFlattenedWirePath(internalProperty, innerProperty);
+                var contractSetter = FindLastContractSetter(model, flattenPropertyName, innerProperty.Type, path);
+                var restrictedSetter = HasRestrictedContractSetter(model, flattenPropertyName, innerProperty.Type, path);
+                var getterOnlyContract = HasGetterOnlyContractProperty(model, flattenPropertyName, innerProperty.Type, path);
+                var delegationOnlyScalar = HasDelegationOnlyScalarSetter(innerProperty);
+                var parentNeedsSetter = (innerProperty.Type.IsCollection || restrictedSetter || !innerProperty.Body.HasSetter || delegationOnlyScalar) &&
+                    IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName, internalProperty, innerProperty);
+                var canAssignWrapper = CanAssignWrapper(model, internalProperty);
+                var canConstructWrapper = PropertyHelpers.HasAccessibleDefaultConstructor(propertyModel);
+                var shouldEmitSetter = (contractSetter is not null || parentNeedsSetter) && canAssignWrapper && canConstructWrapper && CanAssignProperty(innerProperty);
+                EnsureFlattenedWrapperSetter(model, internalProperty, shouldEmitSetter);
+                EnsureScalarLeafSetter(innerProperty, shouldEmitSetter);
+                UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model, shouldEmitSetter);
+                var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
                 var flattenPropertyBody = new MethodPropertyBody(
-                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty, propertyType),
-                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, propertyType.IsNullable, shouldPreserveSetter)
+                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty, propertyType, canAssignWrapper && canConstructWrapper),
+                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter || !canAssignWrapper || !canConstructWrapper || !CanAssignProperty(innerProperty) ||
+                        (restrictedSetter && !parentNeedsSetter) || (delegationOnlyScalar && !shouldEmitSetter) ? null :
+                        PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, propertyType.IsNullable, shouldEmitSetter),
+                    GetContractSetterModifier(contractSetter, innerProperty.Modifiers, model, (restrictedSetter || getterOnlyContract) && parentNeedsSetter)
                 );
 
                 var flattenedProperty =
@@ -724,27 +732,65 @@ namespace Azure.Generator.Management.Visitors
             var innerProperty = innerProperties.Single(IsFlattenableProperty);
             isFlattened = true;
 
-            UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
             // flatten the single property to public and associate it with the internal property
-            var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
             var flattenPropertyName = ResolveFlattenedDateTimePropertyName(
                 model,
+                internalProperty,
                 innerProperty,
                 PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty),
                 propertyMap,
+                innerProperties,
                 historicalName => PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty, historicalName)); // TODO: handle name conflicts
+            flattenPropertyName = ResolveFlattenedAcronymPropertyName(
+                model, internalProperty, innerProperty, flattenPropertyName, propertyMap, innerProperties,
+                historicalName => PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty, historicalName));
 
             // Apply the same historical type preservation as explicit property flattening.
             var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
             var propertyType = GetFlattenedPropertyType(model, flattenPropertyName, innerProperty, shouldLiftToNullable);
 
-            var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
-            var shouldEmitCollectionSetter = shouldPreserveSetter
-                || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
+            var path = GetFlattenedWirePath(internalProperty, innerProperty);
+            var contractSetter = FindLastContractSetter(model, flattenPropertyName, innerProperty.Type, path);
+            var restrictedSetter = HasRestrictedContractSetter(model, flattenPropertyName, innerProperty.Type, path);
+            var getterOnlyContract = HasGetterOnlyContractProperty(model, flattenPropertyName, innerProperty.Type, path);
+            var delegationOnlyScalar = HasDelegationOnlyScalarSetter(innerProperty);
+            var parentNeedsSetter = (innerProperty.Type.IsCollection || restrictedSetter || !innerProperty.Body.HasSetter || delegationOnlyScalar) &&
+                IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName, internalProperty, innerProperty);
+            var canAssignWrapper = CanAssignWrapper(model, internalProperty);
+            var canAssignInner = CanAssignProperty(innerProperty);
+            // BuildSetterForSafeFlatten unwraps a lifted nullable value only when the inner value is non-nullable.
+            var constructorArgumentType = propertyType.IsNullable && innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable
+                ? innerProperty.Type : propertyType;
+            var needsConstructor = !canAssignInner ||
+                ((!innerProperty.Body.HasSetter || delegationOnlyScalar) && contractSetter is null && !parentNeedsSetter);
+            var hasValueConstructor = HasAccessibleSingleValueConstructor(modelProvider, constructorArgumentType);
+            var canConstructFromValue = needsConstructor && innerProperty is not FlattenedPropertyProvider && hasValueConstructor;
+            var hasCallableDefaultConstructor = PropertyHelpers.HasAccessibleDefaultConstructor(modelProvider);
+            var canUseDefaultConstructor = (contractSetter is not null || parentNeedsSetter) && canAssignInner &&
+                PropertyHelpers.HasSafeFlattenDefaultConstructor(modelProvider);
+            var needsUnwrap = propertyType.IsNullable && innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
+            var requiresDefaultConstructor = innerProperty is FlattenedPropertyProvider && !needsUnwrap;
+            var canConstructSetter = requiresDefaultConstructor ? hasCallableDefaultConstructor :
+                hasValueConstructor || canUseDefaultConstructor ||
+                hasCallableDefaultConstructor && PropertyHelpers.HasDefaultPublicCtor(innerProperty.EnclosingType as ModelProvider);
+            var shouldEmitSetter = (contractSetter is not null || parentNeedsSetter) && canAssignWrapper &&
+                (canAssignInner || canConstructFromValue) && canConstructSetter;
+            EnsureFlattenedWrapperSetter(model, internalProperty, shouldEmitSetter);
+            EnsureScalarLeafSetter(innerProperty, shouldEmitSetter);
+            UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model, shouldEmitSetter && innerProperty.Type.IsCollection);
+            var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
+            var canUseConstructor = canConstructFromValue && internalProperty.Body.HasSetter;
             var flattenPropertyBody = new MethodPropertyBody(
-                PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty, propertyType),
+                PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty, propertyType,
+                    canAssignWrapper && hasCallableDefaultConstructor),
                 // Emit collection setters only when compatibility or parent delegation requires them.
-                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, propertyType.IsNullable)
+                (isFlattenedPropertyReadOnly && !canUseConstructor) || !canAssignWrapper || !canConstructSetter || (!canAssignInner && !canUseConstructor) ||
+                    (restrictedSetter && !parentNeedsSetter) || (delegationOnlyScalar && !shouldEmitSetter && !canUseConstructor) ||
+                    (innerProperty.Type.IsCollection && !shouldEmitSetter) ? null :
+                    PropertyHelpers.BuildSetterForSafeFlatten(canUseConstructor ? false : includeSetterNullCheck, modelProvider, internalProperty, innerProperty, propertyType.IsNullable,
+                        // Preserve the existing value-constructor semantics whenever that route is callable.
+                        allowDefaultConstructorForCompatibility: shouldEmitSetter && canAssignInner && (!hasValueConstructor || requiresDefaultConstructor)),
+                GetContractSetterModifier(contractSetter, innerProperty.Modifiers, model, (restrictedSetter || getterOnlyContract) && parentNeedsSetter)
             );
 
             var flattenedProperty =
@@ -828,20 +874,557 @@ namespace Azure.Generator.Management.Visitors
                 p.Type.HasSamePublicType(property.Type, ignoreNullable: true)) == true;
         }
 
-        private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName)
+        private static PropertyProvider? FindLastContractSetter(ModelProvider model, string propertyName, CSharpType type, string? path)
+            => model.LastContractView?.Properties.FirstOrDefault(p => p.Name == propertyName && HasPublicContractSetter(p) &&
+                HasSameFlattenedType(p.Type, type) && HasCompatibleWirePath(p, path) &&
+                !ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, p));
+
+        private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName, CSharpType type, string? path)
+            => FindLastContractSetter(model, propertyName, type, path) is not null;
+
+        private static bool HasRestrictedContractSetter(ModelProvider model, string name, CSharpType type, string? path)
+            => model.LastContractView?.Properties.Any(p => p.Name == name && IsPublicApi(p.Modifiers) && p.Body.HasSetter &&
+                !HasPublicContractSetter(p) && HasSameFlattenedType(p.Type, type) &&
+                HasCompatibleWirePath(p, path) && !ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, p)) == true;
+
+        private static bool HasGetterOnlyContractProperty(ModelProvider model, string name, CSharpType type, string? path)
+            => model.LastContractView?.Properties.Any(p => p.Name == name && IsPublicApi(p.Modifiers) && !p.Body.HasSetter &&
+                HasSameFlattenedType(p.Type, type) && HasCompatibleWirePath(p, path) &&
+                !ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, p)) == true;
+
+        private static MethodSignatureModifiers GetContractSetterModifier(PropertyProvider? contractSetter,
+            MethodSignatureModifiers propertyModifiers, ModelProvider model, bool internalDelegation)
         {
-            return model.LastContractView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
+            if (internalDelegation)
+            {
+                return propertyModifiers.HasFlag(MethodSignatureModifiers.Public) ? MethodSignatureModifiers.Internal : MethodSignatureModifiers.None;
+            }
+            var modifiers = contractSetter?.Body switch
+            {
+                AutoPropertyBody body => body.SetterModifiers,
+                MethodPropertyBody body => body.SetterModifiers,
+                _ => MethodSignatureModifiers.None
+            };
+            const MethodSignatureModifiers access = MethodSignatureModifiers.Public | MethodSignatureModifiers.Protected |
+                MethodSignatureModifiers.Internal | MethodSignatureModifiers.Private;
+            modifiers &= access;
+            if (modifiers == MethodSignatureModifiers.Protected && propertyModifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                IsUsedByAnotherModel(model))
+            {
+                // Preserve protected access outside the assembly while allowing generated forwarding setters.
+                return MethodSignatureModifiers.Protected | MethodSignatureModifiers.Internal;
+            }
+            return modifiers == MethodSignatureModifiers.Public || modifiers == (propertyModifiers & access)
+                ? MethodSignatureModifiers.None : modifiers;
+        }
+
+        private static bool IsUsedByAnotherModel(ModelProvider model)
+            => ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>()
+                .Where(parent => parent != model)
+                .Any(parent => parent.Properties.Concat(parent.CustomCodeView?.Properties ?? [])
+                    .Any(property => property.Type.AreNamesEqual(model.Type)));
+
+        private static bool HasPublicContractSetter(PropertyProvider property)
+        {
+            if (!IsPublicApi(property.Modifiers) || property.Modifiers.HasFlag(MethodSignatureModifiers.Static) || !property.Body.HasSetter ||
+                HasInitOnlyContractSetter(property))
+            {
+                return false;
+            }
+            var modifiers = property.Body switch
+            {
+                AutoPropertyBody body => body.SetterModifiers,
+                MethodPropertyBody body => body.SetterModifiers,
+                _ => MethodSignatureModifiers.None
+            };
+            return modifiers == MethodSignatureModifiers.None || IsPublicApi(modifiers);
+        }
+
+        private static bool HasInitOnlyContractSetter(PropertyProvider property)
+        {
+            // MTG's public property-body API cannot emit init accessors. Do not silently replace one with a
+            // public setter; an init-only contract needs a separate compatibility solution.
+            return IsInitOnlySetter(property, ManagementClientGenerator.Instance.SourceInputModel.LastContract) == true;
+        }
+
+        private static bool? IsInitOnlySetter(PropertyProvider property, Compilation? compilation)
+        {
+            var type = property.EnclosingType.Type;
+            var symbol = compilation?.GetTypeByMetadataName($"{type.Namespace}.{type.ClrMetadataName}");
+            var properties = symbol?.GetMembers(property.Name).OfType<IPropertySymbol>().ToArray();
+            return properties is { Length: 1 } && properties[0].SetMethod is { } setter ? setter.IsInitOnly : null;
         }
 
         private static bool IsPublicApi(MethodSignatureModifiers modifiers)
             => (modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected)) &&
                 !modifiers.HasFlag(MethodSignatureModifiers.Private);
 
-        private static string ResolveFlattenedDateTimePropertyName(
+        private static string ResolveFlattenedAcronymPropertyName(
             ModelProvider model,
+            PropertyProvider wrapper,
             PropertyProvider innerProperty,
             string currentName,
             IReadOnlyDictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap,
+            IReadOnlyList<PropertyProvider> projectedSiblings,
+            Func<string, string> buildHistoricalFlattenedName)
+        {
+            var matcher = ManagementClientGenerator.Instance.DateTimePropertyMatcher;
+            var source = matcher.GetSourceProperty(innerProperty);
+            var previousProperties = model.LastContractView?.Properties;
+            var path = GetFlattenedWirePath(wrapper, innerProperty);
+            if (source is null || previousProperties is null ||
+                previousProperties.Any(p => p.Name == currentName && IsPublicApi(p.Modifiers) &&
+                    !p.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
+                    HasSameFlattenedType(p.Type, innerProperty.Type) &&
+                    !ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, p) && HasCompatibleWirePath(p, path)))
+            {
+                return currentName;
+            }
+
+            var dateTimeName = !source.IsExactName && matcher.TryGetPreviousMpgDateTimePropertyName(innerProperty, out var historicalInnerName)
+                ? buildHistoricalFlattenedName(BuildHistoricalDateTimeName(innerProperty, historicalInnerName)) : null;
+            var candidates = previousProperties.Where(previous =>
+                IsPublicApi(previous.Modifiers) &&
+                !previous.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
+                (IsAcronymNormalization(previous.Name, currentName) ||
+                    dateTimeName is not null && IsAcronymNormalization(previous.Name, dateTimeName)) &&
+                HasSameFlattenedType(previous.Type, innerProperty.Type) &&
+                !ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, previous) &&
+                RetainsExactContributors(previous.Name, currentName, wrapper, innerProperty, matcher) &&
+                HasCompatibleWirePath(previous, path) &&
+                !HasCompetingInputName(model, wrapper, innerProperty, source, previous.Name, matcher) &&
+                !projectedSiblings.Any(p => !ReferenceEquals(p, innerProperty) && IsFlattenableProperty(p) && p.Name == previous.Name) &&
+                !HasMemberNameCollision(model, previous.Name) &&
+                model.CustomCodeView?.Properties.Any(p => p.Name == previous.Name || p.Name == currentName ||
+                    p.OriginalName == currentName || p.OriginalName == previous.Name || p.OriginalName == source.Name) != true &&
+                model.CustomCodeView?.Fields.Any(f => f.Name == previous.Name || f.Name == currentName ||
+                    HasCustomMemberMapping(f.Attributes, currentName, previous.Name, source.Name)) != true &&
+                !propertyMap.Values.SelectMany(v => v).Any(info => info.FlattenedProperty.Name == previous.Name))
+                .ToArray();
+            return candidates.Length == 1 ? candidates[0].Name : currentName;
+        }
+
+        private static string BuildHistoricalDateTimeName(PropertyProvider property, string historicalLeafName)
+        {
+            if (property is not FlattenedPropertyProvider flattened)
+            {
+                return historicalLeafName;
+            }
+
+            var innerName = BuildHistoricalDateTimeName(flattened.OriginalProperty, historicalLeafName);
+            var explicitlyFlattened = flattened.EnclosingType is ModelProvider model &&
+                ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var properties) &&
+                properties.Any(p => p.Name == flattened.FlattenedProperty.Name);
+            return explicitlyFlattened ? innerName :
+                PropertyHelpers.GetCombinedPropertyName(flattened.OriginalProperty, flattened.FlattenedProperty, innerName);
+        }
+
+        private static bool RetainsExactContributors(string previousName, string currentName,
+            PropertyProvider wrapper, PropertyProvider innerProperty, MtgDateTimePropertyMatcher matcher)
+        {
+            var source = matcher.GetSourceProperty(innerProperty);
+            if (source?.IsExactName == true && !RetainsExactName(previousName, currentName, source.Name))
+            {
+                return false;
+            }
+
+            var currentWrapper = wrapper;
+            var currentInner = innerProperty;
+            while (true)
+            {
+                var wrapperSource = matcher.GetSourceProperty(currentWrapper);
+                var wrapperType = wrapperSource?.Type is InputNullableType nullable ? nullable.Type : wrapperSource?.Type;
+                var exactTypeName = currentWrapper.Name == "Properties" && wrapperType is InputModelType { IsExactName: true } inputModel
+                    ? inputModel.Name.EndsWith("Properties", StringComparison.Ordinal)
+                        ? inputModel.Name[..^"Properties".Length] : inputModel.Name
+                    : null;
+                // A wrapper named Properties contributes its model type name, not the wrapper's text.
+                var exactWrapperName = wrapperSource?.IsExactName == true && currentWrapper.Name != "Properties"
+                    ? wrapperSource.Name : null;
+                var wrapperContributes = !IsExplicitlyFlattenedWrapper(currentWrapper) &&
+                    PropertyHelpers.GetCombinedPropertyName(currentInner, currentWrapper) != currentInner.Name;
+                if (wrapperContributes &&
+                    (!RetainsExactName(previousName, currentName, exactWrapperName) ||
+                     !RetainsExactName(previousName, currentName, exactTypeName)))
+                {
+                    return false;
+                }
+                if (currentInner is not FlattenedPropertyProvider flattened)
+                {
+                    return true;
+                }
+                currentWrapper = flattened.FlattenedProperty;
+                currentInner = flattened.OriginalProperty;
+            }
+        }
+
+        private static bool HasCompetingInputName(ModelProvider model, PropertyProvider wrapper, PropertyProvider innerProperty,
+            InputProperty source, string previousName, MtgDateTimePropertyMatcher matcher)
+        {
+            static bool ClaimsName(InputProperty property, InputProperty source, string name)
+            {
+                if (ReferenceEquals(property, source))
+                {
+                    return false;
+                }
+                var identifier = property.IsExactName ? property.Name : property.Name.ToIdentifierName();
+                if (string.IsNullOrEmpty(identifier) || identifier.Length > name.Length)
+                {
+                    return false;
+                }
+                var suffix = name[^identifier.Length..];
+                // A safe-flattened sibling may prepend a wrapper name to its leaf. Conservatively reserve
+                // both its input spelling and its canonical acronym spelling, even if it is visited later.
+                return suffix == identifier || !property.IsExactName && IsAcronymNormalization(identifier, suffix);
+            }
+
+            // Only effective public siblings can claim a direct projection. Raw input siblings may have
+            // been replaced by private custom members and must not reserve a public name.
+            var leaf = innerProperty;
+            while (leaf is FlattenedPropertyProvider flattened)
+            {
+                leaf = flattened.OriginalProperty;
+            }
+            var leafOwner = leaf.EnclosingType as ModelProvider;
+            if (leafOwner is null)
+            {
+                TryGetModelProvider(leaf.EnclosingType.Type, out leafOwner);
+            }
+            if (leafOwner is null || HasBaseModelCycle(leafOwner))
+            {
+                return true;
+            }
+            if (PropertyHelpers.GetAllProperties(leafOwner).Any(p => IsFlattenableProperty(p) && p.Name == previousName &&
+                !ReferenceEquals(matcher.GetSourceProperty(p), source)))
+            {
+                return true;
+            }
+
+            var visited = new HashSet<ModelProvider>(ReferenceEqualityComparer.Instance);
+            bool CanProject(ModelProvider owner, PropertyProvider candidate, ModelProvider nested)
+            {
+                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(owner, out var mappings) &&
+                    mappings.Any(p => p.Name == candidate.Name))
+                {
+                    return true;
+                }
+                if (ShouldPreserveLastContractProperty(owner, candidate))
+                {
+                    return false;
+                }
+                if (HasBaseModelCycle(nested))
+                {
+                    return true;
+                }
+                var nestedProperties = PropertyHelpers.GetAllProperties(nested);
+                return CanSafeFlatten(owner, candidate, nested, nestedProperties) ||
+                    !HasMultipleGuaranteedEffectiveProperties(nested, nestedProperties);
+            }
+
+            bool Search(ModelProvider current)
+            {
+                if (!visited.Add(current))
+                {
+                    return false;
+                }
+                if (HasBaseModelCycle(current))
+                {
+                    return true;
+                }
+                foreach (var property in PropertyHelpers.GetAllProperties(current).Where(IsFlattenableProperty))
+                {
+                    var input = matcher.GetSourceProperty(property);
+                    if (property.Name == previousName || input is not null && ClaimsName(input, source, previousName))
+                    {
+                        return true;
+                    }
+                    if (TryGetModelProvider(property.Type, out var nested) && CanProject(current, property, nested) && Search(nested))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            foreach (var otherWrapper in model.Properties.Concat(model.CustomCodeView?.Properties ?? [])
+                .Where(p => !ReferenceEquals(p, wrapper)))
+            {
+                if (!TryGetModelProvider(otherWrapper.Type, out var otherModel) || !CanProject(model, otherWrapper, otherModel))
+                {
+                    continue;
+                }
+                var explicitFlatten = ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var mappings) &&
+                    mappings.Any(p => p.Name == otherWrapper.Name);
+                if (!explicitFlatten && !HasBaseModelCycle(otherModel))
+                {
+                    var otherProperties = PropertyHelpers.GetAllProperties(otherModel);
+                    var leaves = otherProperties.Where(IsFlattenableProperty).ToArray();
+                    if (CanSafeFlatten(model, otherWrapper, otherModel, otherProperties) && leaves.Length == 1 &&
+                        !TryGetModelProvider(leaves[0].Type, out _))
+                    {
+                        var actualName = PropertyHelpers.GetCombinedPropertyName(leaves[0], otherWrapper);
+                        var historicalName = matcher.TryGetPreviousMpgDateTimePropertyName(leaves[0], out var historicalLeaf)
+                            ? PropertyHelpers.GetCombinedPropertyName(leaves[0], otherWrapper, historicalLeaf) : null;
+                        if (actualName != previousName && !IsAcronymNormalization(previousName, actualName) &&
+                            (historicalName is null || historicalName != previousName && !IsAcronymNormalization(previousName, historicalName)))
+                        {
+                            continue;
+                        }
+                    }
+                }
+                if (Search(otherModel))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool HasMultipleGuaranteedEffectiveProperties(ModelProvider model, IReadOnlyList<PropertyProvider> properties)
+        {
+            var flattenedWrappers = properties.OfType<FlattenedPropertyProvider>().Select(p => p.FlattenedProperty).ToHashSet();
+            ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var explicitProperties);
+            return properties.Count(p => IsEffectiveModelProperty(p) && !flattenedWrappers.Contains(p) &&
+                explicitProperties?.Any(item => item.Name == p.Name) != true) >= 2;
+        }
+
+        private static bool HasBaseModelCycle(ModelProvider model)
+        {
+            var visited = new HashSet<ModelProvider>(ReferenceEqualityComparer.Instance);
+            for (ModelProvider? current = model; current is not null; current = current.BaseModelProvider)
+            {
+                if (!visited.Add(current))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool HasMemberNameCollision(ModelProvider model, string name)
+        {
+            var visited = new HashSet<ModelProvider>(ReferenceEqualityComparer.Instance);
+            for (ModelProvider? current = model; current is not null; current = current.BaseModelProvider)
+            {
+                if (!visited.Add(current))
+                {
+                    return true;
+                }
+                if (current.Properties.Any(p => p.Name == name) || current.Fields.Any(f => f.Name == name) ||
+                    current.Methods.Any(m => m.Signature.Name == name) ||
+                    current.CustomCodeView?.Properties.Any(p => p.Name == name) == true ||
+                    current.CustomCodeView?.Fields.Any(f => f.Name == name) == true ||
+                    current.CustomCodeView?.Methods.Any(m => m.Signature.Name == name) == true ||
+                    HasCustomNestedTypeOrEvent(current, name))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool HasCustomNestedTypeOrEvent(ModelProvider model, string name)
+        {
+            var view = model.CustomCodeView;
+            var compilation = ManagementClientGenerator.Instance.SourceInputModel.Customization;
+            if (view is null || compilation is null)
+            {
+                return false;
+            }
+            var type = view.Type;
+            var symbol = compilation.Assembly.GetTypeByMetadataName($"{type.Namespace}.{type.ClrMetadataName}");
+            return symbol?.GetMembers(name).Any(member => member is INamedTypeSymbol or IEventSymbol) == true;
+        }
+
+        private static bool IsExplicitlyFlattenedWrapper(PropertyProvider wrapper)
+        {
+            var owner = wrapper.EnclosingType as ModelProvider;
+            if (owner is null && !TryGetModelProvider(wrapper.EnclosingType.Type, out owner))
+            {
+                return false;
+            }
+            return ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(owner, out var properties) &&
+                properties.Any(p => p.Name == wrapper.Name);
+        }
+
+        private static bool RetainsExactName(string previousName, string currentName, string? exactName)
+        {
+            if (string.IsNullOrEmpty(exactName))
+            {
+                return true;
+            }
+            var retainedName = exactName;
+            var index = currentName.IndexOf(retainedName, StringComparison.Ordinal);
+            if (index < 0)
+            {
+                // Safe flattening can remove a wrapper's conventional suffix before composing the name.
+                // Protect the part that remains; if it cannot be identified, do not guess.
+                foreach (var suffix in new[] { "Profile", "Policy", "Configuration", "Properties", "Settings" })
+                {
+                    if (exactName.Length > suffix.Length && exactName.EndsWith(suffix, StringComparison.Ordinal))
+                    {
+                        retainedName = exactName[..^suffix.Length];
+                        index = currentName.IndexOf(retainedName, StringComparison.Ordinal);
+                        break;
+                    }
+                }
+                if (index < 0)
+                {
+                    return false;
+                }
+            }
+            // When the same token occurs in several contributors, its exact origin cannot be determined
+            // from the composed name alone. Fail closed if any occurrence would change.
+            while (index >= 0)
+            {
+                if (index + retainedName.Length > previousName.Length ||
+                    !previousName.AsSpan(index, retainedName.Length).SequenceEqual(retainedName))
+                {
+                    return false;
+                }
+                index = currentName.IndexOf(retainedName, index + 1, StringComparison.Ordinal);
+            }
+            return true;
+        }
+
+        private static bool HasCustomMemberMapping(IReadOnlyList<AttributeStatement> attributes, params string[] names)
+        {
+            foreach (var attribute in attributes)
+            {
+                try
+                {
+                    if (attribute.Type.Name == "CodeGenMemberAttribute" &&
+                        (attribute.Arguments.Count != 1 || attribute.Arguments[0] is not LiteralExpression { Literal: string originalName } ||
+                         names.Contains(originalName, StringComparer.Ordinal)))
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // An unresolved customization cannot safely be assumed not to claim the name.
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static string? GetFlattenedWirePath(PropertyProvider wrapper, PropertyProvider innerProperty)
+        {
+            if (wrapper.WireInfo is null)
+            {
+                return null;
+            }
+
+            var segments = new List<string> { wrapper.WireInfo.SerializedName };
+            var current = innerProperty;
+            while (current is FlattenedPropertyProvider flattened)
+            {
+                if (flattened.FlattenedProperty.WireInfo is null)
+                {
+                    return null;
+                }
+                segments.Add(flattened.FlattenedProperty.WireInfo.SerializedName);
+                current = flattened.OriginalProperty;
+            }
+            if (current.WireInfo is null)
+            {
+                return null;
+            }
+            segments.Add(current.WireInfo.SerializedName);
+            // WirePath joins unescaped segments with dots; a literal dot makes the path ambiguous.
+            return segments.Any(segment => segment.Contains('.', StringComparison.Ordinal)) ? null : string.Join('.', segments);
+        }
+
+        private static bool HasCompatibleWirePath(PropertyProvider previous, string? currentPath)
+        {
+            var hasPath = false;
+            foreach (var attribute in previous.Attributes)
+            {
+                try
+                {
+                    var name = attribute.Type.Name;
+                    if (name == "ExperimentalAttribute")
+                    {
+                        return false;
+                    }
+                    if (name != "WirePathAttribute")
+                    {
+                        continue;
+                    }
+                    if (hasPath || currentPath is null || attribute.Arguments.Count != 1 ||
+                        attribute.Arguments[0] is not LiteralExpression { Literal: string previousPath } ||
+                        previousPath != currentPath)
+                    {
+                        return false;
+                    }
+                    hasPath = true;
+                }
+                catch
+                {
+                    // Do not guess identity when baseline attribute metadata cannot be resolved.
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Match MTG's property acronym rules, not arbitrary case-insensitive names. Keep this list in sync
+        // with MTG's CSharpNameExtensions; the comparison tests exercise the actual MTG property naming path.
+        private static readonly (string Source, string Replacement)[] AcronymRules =
+        [
+            ("Ipv4", "IPv4"), ("Ipv6", "IPv6"), ("IpV4", "IPv4"), ("IpV6", "IPv6"),
+            ("Ip", "IP"), ("Db", "DB"), ("Os", "OS")
+        ];
+
+        private static bool IsAcronymNormalization(string previous, string current)
+        {
+            if (previous.Length != current.Length)
+            {
+                return false;
+            }
+
+            var changed = false;
+            for (var i = 0; i < previous.Length;)
+            {
+                var matched = false;
+                foreach (var (source, replacement) in AcronymRules)
+                {
+                    var end = i + source.Length;
+                    if (end > previous.Length || !previous.AsSpan(i).StartsWith(source, StringComparison.Ordinal) ||
+                        (end < previous.Length && !char.IsUpper(previous[end])))
+                    {
+                        continue;
+                    }
+                    var currentPart = current.AsSpan(i, source.Length);
+                    if (!currentPart.SequenceEqual(source) && !currentPart.SequenceEqual(replacement))
+                    {
+                        return false;
+                    }
+                    changed |= !currentPart.SequenceEqual(source);
+                    i = end;
+                    matched = true;
+                    break;
+                }
+                if (!matched && previous[i] != current[i])
+                {
+                    return false;
+                }
+                if (!matched)
+                {
+                    i++;
+                }
+            }
+            return changed;
+        }
+
+        private static string ResolveFlattenedDateTimePropertyName(
+            ModelProvider model,
+            PropertyProvider wrapper,
+            PropertyProvider innerProperty,
+            string currentName,
+            IReadOnlyDictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap,
+            IReadOnlyList<PropertyProvider> projectedSiblings,
             Func<string, string> buildHistoricalFlattenedName)
         {
             var lastContractProperties = model.LastContractView?.Properties;
@@ -871,60 +1454,430 @@ namespace Azure.Generator.Management.Visitors
                 return currentName;
             }
 
+            // Identifier normalization adds matches that the previous date-time matcher did not handle.
+            // Apply the same identity and ownership safeguards as acronym recovery to those new matches,
+            // without changing the existing behavior for previously recognized date-time names.
+            if (!matcher.WasMtgRenamedDateTimePropertyBeforeIdentifierNormalization(innerProperty))
+            {
+                var source = matcher.GetSourceProperty(innerProperty);
+                var path = GetFlattenedWirePath(wrapper, innerProperty);
+                if (source is null || !IsPublicApi(previousProperty.Modifiers) ||
+                    previousProperty.Modifiers.HasFlag(MethodSignatureModifiers.Static) ||
+                    ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, previousProperty) ||
+                    !HasCompatibleWirePath(previousProperty, path) ||
+                    !RetainsExactContributors(previousProperty.Name, currentName, wrapper, innerProperty, matcher) ||
+                    HasMemberNameCollision(model, previousProperty.Name) ||
+                    HasCompetingInputName(model, wrapper, innerProperty, source, previousProperty.Name, matcher) ||
+                    projectedSiblings.Any(p => !ReferenceEquals(p, innerProperty) && IsFlattenableProperty(p) && p.Name == previousProperty.Name) ||
+                    model.CustomCodeView?.Properties.Any(p => p.Name == currentName || p.OriginalName == currentName ||
+                        p.OriginalName == previousProperty.Name || p.OriginalName == source.Name) == true ||
+                    model.CustomCodeView?.Fields.Any(f => f.Name == currentName ||
+                        HasCustomMemberMapping(f.Attributes, currentName, previousProperty.Name, source.Name)) == true)
+                {
+                    return currentName;
+                }
+            }
             return previousProperty.Name;
         }
 
-        private bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
+        private bool IsFlattenedIntoParentWithLastContractSetter(
+            ModelProvider model, string propertyName, PropertyProvider wrapper, PropertyProvider innerProperty)
         {
-            var cacheKey = new FlattenedSetterCacheKey(model.Type.Namespace, model.Type.Name, propertyName);
+            var cacheKey = new FlattenedSetterCacheKey(model.Type.Namespace, model.Type.Name, propertyName, wrapper, innerProperty);
             if (_flattenedIntoParentWithLastContractSetterCache.TryGetValue(cacheKey, out var result))
             {
                 return result;
             }
 
-            foreach (var parent in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            // Explicit flattening retains the child name and safe flattening can only prepend a wrapper
+            // name. If no compatible GA setter can possibly match that suffix, avoid enumerating every
+            // path through a shared parent graph. This is only a necessary-condition filter; path and
+            // exact-name checks still run for each surviving route.
+            var matcher = ManagementClientGenerator.Instance.DateTimePropertyMatcher;
+            var source = matcher.GetSourceProperty(innerProperty);
+            string? historicalName = null;
+            if (source is { IsExactName: false } && matcher.TryGetPreviousMpgDateTimePropertyName(innerProperty, out var historicalLeafName))
             {
-                if (parent == model || !ShouldPreserveLastContractSetter(parent, propertyName) || HasCustomSetter(parent, propertyName))
-                {
-                    continue;
-                }
+                var innerName = BuildHistoricalDateTimeName(innerProperty, historicalLeafName);
+                var explicitFlatten = ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var mappings) &&
+                    mappings.Any(p => p.Name == wrapper.Name);
+                historicalName = explicitFlatten ? innerName : PropertyHelpers.GetCombinedPropertyName(innerProperty, wrapper, innerName);
+            }
+            var initialPath = GetFlattenedWirePath(wrapper, innerProperty);
+            var hasPossibleSetter = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>()
+                .Any(parent => parent.LastContractView?.Properties.Any(previous =>
+                    HasPublicContractSetter(previous) && HasSameFlattenedType(previous.Type, innerProperty.Type) &&
+                    !ModelCompatibilityValidator.IsPropertyRemovalAccepted(parent, previous) &&
+                    (CouldMatchAncestorName(previous.Name, propertyName) ||
+                        historicalName is not null && CouldMatchAncestorName(previous.Name, historicalName)) &&
+                    CouldMatchAncestorWirePath(previous, initialPath)) == true);
+            if (!hasPossibleSetter)
+            {
+                _flattenedIntoParentWithLastContractSetterCache[cacheKey] = false;
+                return false;
+            }
 
-                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(parent, out var propertiesToFlatten)
-                    && propertiesToFlatten.Any(p => p.Type.AreNamesEqual(model.Type)))
+            var wrappers = new List<PropertyProvider> { wrapper };
+            var visiting = new HashSet<ModelProvider>();
+
+            bool CanProjectSingleSource(ModelProvider current, HashSet<ModelProvider> visited)
+            {
+                if (source is null || !visited.Add(current))
                 {
-                    _flattenedIntoParentWithLastContractSetterCache[cacheKey] = true;
+                    return false;
+                }
+                var properties = PropertyHelpers.GetAllProperties(current);
+                var flattenedWrappers = properties.OfType<FlattenedPropertyProvider>().Select(p => p.FlattenedProperty).ToHashSet();
+                var effective = properties.Where(p => IsEffectiveModelProperty(p) && !flattenedWrappers.Contains(p)).ToArray();
+                if (effective.Length != 1 || !IsFlattenableProperty(effective[0]))
+                {
+                    return false;
+                }
+                var property = effective[0];
+                if (ReferenceEquals(matcher.GetSourceProperty(property), source))
+                {
                     return true;
+                }
+                if (!TryGetModelProvider(property.Type, out var nested))
+                {
+                    return false;
+                }
+                var explicitFlatten = ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(current, out var mappings) &&
+                    mappings.Any(p => p.Name == property.Name);
+                return (explicitFlatten || CanSafeFlatten(current, property, nested, PropertyHelpers.GetAllProperties(nested))) &&
+                    CanProjectSingleSource(nested, visited);
+            }
+
+            bool HasParentSetter(ModelProvider child, string childName, string? historicalChildName, string? childPath)
+            {
+                if (!visiting.Add(child))
+                {
+                    return false;
+                }
+                try
+                {
+                    foreach (var parent in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+                    {
+                        if (parent == child || visiting.Contains(parent))
+                        {
+                            continue;
+                        }
+
+                        foreach (var parentWrapper in parent.Properties.Concat(parent.CustomCodeView?.Properties ?? [])
+                            .Where(p => p.Type.AreNamesEqual(child.Type)))
+                        {
+                            var explicitFlatten = ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(parent, out var mappings) &&
+                                mappings.Any(p => p.Name == parentWrapper.Name);
+                            if (!explicitFlatten && (!CanSafeFlatten(parent, parentWrapper, child, PropertyHelpers.GetAllProperties(child)) ||
+                                !CanProjectSingleSource(child, [])))
+                            {
+                                continue;
+                            }
+                            var projectedName = explicitFlatten ? childName :
+                                PropertyHelpers.GetCombinedPropertyName(innerProperty, parentWrapper, childName);
+                            var historicalProjectedName = historicalChildName is null ? null : explicitFlatten ? historicalChildName :
+                                PropertyHelpers.GetCombinedPropertyName(innerProperty, parentWrapper, historicalChildName);
+                            if (HasCustomSetter(parent, projectedName))
+                            {
+                                continue;
+                            }
+                            var prefix = parentWrapper.WireInfo?.SerializedName;
+                            var path = prefix is null || prefix.Contains('.', StringComparison.Ordinal) || childPath is null
+                                ? null : $"{prefix}.{childPath}";
+                            wrappers.Add(parentWrapper);
+                            try
+                            {
+                                if (ShouldPreserveLastContractSetter(parent, projectedName, innerProperty.Type, path))
+                                {
+                                    return true;
+                                }
+                                if (source is not null && parent.LastContractView is { } contract)
+                                {
+                                    var candidates = contract.Properties.Where(previous =>
+                                        HasPublicContractSetter(previous) &&
+                                        (IsAcronymNormalization(previous.Name, projectedName) || historicalProjectedName is not null &&
+                                            (previous.Name == historicalProjectedName || IsAcronymNormalization(previous.Name, historicalProjectedName))) &&
+                                        HasSameFlattenedType(previous.Type, innerProperty.Type) &&
+                                        !ModelCompatibilityValidator.IsPropertyRemovalAccepted(parent, previous) &&
+                                        wrappers.All(w => RetainsExactContributors(previous.Name, projectedName, w, innerProperty, matcher)) &&
+                                        HasCompatibleWirePath(previous, path) && !HasCustomSetter(parent, previous.Name) &&
+                                        !HasMemberNameCollision(parent, previous.Name) &&
+                                        !HasCompetingInputName(parent, parentWrapper, innerProperty, source, previous.Name, matcher))
+                                        .ToArray();
+                                    if (candidates.Length == 1)
+                                    {
+                                        return true;
+                                    }
+                                }
+                                if (HasParentSetter(parent, projectedName, historicalProjectedName, path))
+                                {
+                                    return true;
+                                }
+                            }
+                            finally
+                            {
+                                wrappers.RemoveAt(wrappers.Count - 1);
+                            }
+                        }
+                    }
+                    return false;
+                }
+                finally
+                {
+                    visiting.Remove(child);
                 }
             }
 
-            _flattenedIntoParentWithLastContractSetterCache[cacheKey] = false;
-            return false;
+            result = HasParentSetter(model, propertyName, historicalName, initialPath);
+            _flattenedIntoParentWithLastContractSetterCache[cacheKey] = result;
+            return result;
         }
 
-        private sealed record FlattenedSetterCacheKey(string? Namespace, string Name, string PropertyName);
+        private static bool CouldMatchAncestorName(string previousName, string childName)
+        {
+            if (previousName.Length < childName.Length)
+            {
+                return false;
+            }
+            var suffix = previousName[^childName.Length..];
+            return suffix == childName || IsAcronymNormalization(suffix, childName);
+        }
+
+        private static bool CouldMatchAncestorWirePath(PropertyProvider previous, string? childPath)
+        {
+            foreach (var attribute in previous.Attributes)
+            {
+                try
+                {
+                    if (attribute.Type.Name == "WirePathAttribute" && attribute.Arguments.Count == 1 &&
+                        attribute.Arguments[0] is LiteralExpression { Literal: string previousPath })
+                    {
+                        return childPath is not null && (previousPath == childPath ||
+                            previousPath.EndsWith($".{childPath}", StringComparison.Ordinal));
+                    }
+                }
+                catch
+                {
+                    // Unknown metadata cannot prove that a route is impossible.
+                    return true;
+                }
+            }
+            return true;
+        }
+
+        private sealed record FlattenedSetterCacheKey(
+            string? Namespace, string Name, string PropertyName, PropertyProvider Wrapper, PropertyProvider InnerProperty);
 
         private static bool HasCustomSetter(ModelProvider model, string propertyName)
             => model.CustomCodeView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
 
-        private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
+        private static void EnsureFlattenedWrapperSetter(ModelProvider model, PropertyProvider wrapper, bool shouldEmitSetter)
+        {
+            if (shouldEmitSetter && wrapper.Body is AutoPropertyBody { HasSetter: false } wrapperBody &&
+                model.CustomCodeView?.Properties.Any(p => p.Name == wrapper.Name) != true)
+            {
+                // The internalized wrapper must be assignable so the historical setter can lazily
+                // reconstruct it after deserialization as well as after public construction.
+                wrapper.Update(body: wrapperBody with { HasSetter = true, SetterModifiers = MethodSignatureModifiers.None });
+            }
+        }
+
+        private static PropertyProvider? FindCustomProperty(PropertyProvider property)
+        {
+            var custom = property.EnclosingType.CustomCodeView?.Properties;
+            if (TryGetModelProvider(property.EnclosingType.Type, out var model))
+            {
+                custom = model.CustomCodeView?.Properties ?? custom;
+            }
+            return custom?.FirstOrDefault(p => ReferenceEquals(p, property) || p.Name == property.Name || p.OriginalName == property.Name);
+        }
+
+        private static bool HasAccessibleSingleValueConstructor(ModelProvider model, CSharpType valueType)
+        {
+            // External model providers describe input projections, not the constructors of the referenced type.
+            if (model is SystemObjectModelProvider)
+            {
+                return PropertyHelpers.HasAccessibleExternalValueConstructor(model, valueType);
+            }
+            var applicable = model.CanonicalView.Constructors.Concat(model.SerializationProviders.SelectMany(p => p.Constructors))
+                .Where(c => c.Signature.Parameters.Count > 0 &&
+                !c.Signature.Parameters[0].IsRef && !c.Signature.Parameters[0].IsOut &&
+                !c.Signature.Parameters[0].IsIn && !c.Signature.Parameters[0].IsParams &&
+                c.Signature.Parameters.Skip(1).All(p => p.DefaultValue is not null || p.IsParams)).ToArray();
+            // An exact one-argument overload wins over a collection conversion. Check that specific
+            // overload even if it is inaccessible or lacks SetsRequiredMembers; a different callable
+            // overload is not evidence that the emitted uncast new T(value) will choose it.
+            var exact = applicable.Where(c => HasSameFlattenedType(c.Signature.Parameters[0].Type, valueType)).ToArray();
+            ConstructorProvider? selected;
+            if (exact.Length > 0)
+            {
+                var singleArgument = exact.Where(c => c.Signature.Parameters.Count == 1).ToArray();
+                selected = singleArgument.Length == 1 ? singleArgument[0] : null;
+            }
+            else
+            {
+                // IList<T> and related list interfaces convert to IEnumerable<T>. If another
+                // one-argument-compatible overload exists, its overload priority is uncertain.
+                selected = applicable.Length == 1 && applicable[0].Signature.Parameters.Count == 1 &&
+                    applicable[0].Signature.Parameters[0].Type.IsFrameworkType &&
+                    applicable[0].Signature.Parameters[0].Type.FrameworkType == typeof(IEnumerable<>) &&
+                    valueType.IsList && !valueType.IsReadOnlyMemory &&
+                    applicable[0].Signature.Parameters[0].Type.Arguments.Count == 1 && valueType.Arguments.Count == 1 &&
+                    HasSameFlattenedType(applicable[0].Signature.Parameters[0].Type.Arguments[0], valueType.Arguments[0])
+                    ? applicable[0] : null;
+            }
+            return selected is not null &&
+                (!valueType.IsValueType || !valueType.IsNullable || selected.Signature.Parameters[0].Type.IsNullable) &&
+                !selected.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Private) &&
+                (selected.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) ||
+                 selected.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) && model is not SystemObjectModelProvider) &&
+                PropertyHelpers.CanConstructWithoutUnsatisfiedRequiredMembers(model, selected);
+        }
+
+        private static bool HasSameFlattenedType(CSharpType first, CSharpType second)
+        {
+            if (!first.HasSamePublicType(second, ignoreNullable: true))
+            {
+                return false;
+            }
+            if (first.IsArray || second.IsArray)
+            {
+                return first.IsArray && second.IsArray && first.AreNamesEqual(second) &&
+                    HasSameFlattenedType(first.ElementType, second.ElementType);
+            }
+            if (first.DeclaringType is null != (second.DeclaringType is null) ||
+                first.DeclaringType is not null && second.DeclaringType is not null &&
+                    !HasSameFlattenedType(first.DeclaringType, second.DeclaringType))
+            {
+                return false;
+            }
+            return first.Arguments.Zip(second.Arguments).All(p => HasSameFlattenedType(p.First, p.Second));
+        }
+
+        private static bool CanAssignWrapper(ModelProvider owner, PropertyProvider wrapper)
+        {
+            var custom = FindCustomProperty(wrapper);
+            var actual = custom ?? wrapper;
+            if (actual.EnclosingType.Type.AreNamesEqual(owner.Type) && actual.Body.HasSetter)
+            {
+                // A wrapper is accessed from its own partial class, where private/protected setters are
+                // callable. Init-only custom setters are still unavailable from ordinary methods.
+                return custom is null || IsInitOnlySetter(custom, ManagementClientGenerator.Instance.SourceInputModel.Customization) == false;
+            }
+            return CanAssignProperty(wrapper);
+        }
+
+        private static bool CanAssignProperty(PropertyProvider property)
+        {
+            if (property.EnclosingType is SystemObjectModelProvider external)
+            {
+                var symbol = PropertyHelpers.GetExternalTypeSymbol(external.Type);
+                for (var current = symbol; current is not null; current = current.BaseType)
+                {
+                    var members = current.GetMembers(property.Name);
+                    if (members.Length > 0)
+                    {
+                        return members.Length == 1 && members[0] is IPropertySymbol
+                        {
+                            IsStatic: false,
+                            DeclaredAccessibility: Accessibility.Public,
+                            SetMethod: { IsInitOnly: false, DeclaredAccessibility: Accessibility.Public }
+                        };
+                    }
+                }
+                return false;
+            }
+            var custom = FindCustomProperty(property);
+            if (custom is not null &&
+                (!custom.Body.HasSetter || IsInitOnlySetter(custom, ManagementClientGenerator.Instance.SourceInputModel.Customization) != false))
+            {
+                return false;
+            }
+            var actual = custom ?? property;
+            if (!actual.Body.HasSetter)
+            {
+                // A generated auto-property can receive an internal delegation setter when needed.
+                return custom is null;
+            }
+            var modifiers = actual.Body switch
+            {
+                AutoPropertyBody body => body.SetterModifiers,
+                MethodPropertyBody body => body.SetterModifiers,
+                _ => MethodSignatureModifiers.None
+            };
+            return !modifiers.HasFlag(MethodSignatureModifiers.Private) &&
+                (!modifiers.HasFlag(MethodSignatureModifiers.Protected) || modifiers.HasFlag(MethodSignatureModifiers.Internal));
+        }
+
+        private bool HasDelegationOnlyScalarSetter(PropertyProvider property)
+        {
+            if (property.Type.IsCollection)
+            {
+                return false;
+            }
+            var matcher = ManagementClientGenerator.Instance.DateTimePropertyMatcher;
+            var source = matcher.GetSourceProperty(property);
+            if (source is not null && _requiredScalarSetterSources.Contains(source))
+            {
+                return true;
+            }
+            for (var current = property; ;)
+            {
+                if (_requiredScalarLeafSetters.Contains(current))
+                {
+                    return true;
+                }
+                if (current is not FlattenedPropertyProvider flattened)
+                {
+                    return false;
+                }
+                current = flattened.OriginalProperty;
+            }
+        }
+
+        private void EnsureScalarLeafSetter(PropertyProvider property, bool shouldEmitSetter)
+        {
+            if (shouldEmitSetter && !property.Type.IsCollection && property.Body is AutoPropertyBody { HasSetter: false } body &&
+                FindCustomProperty(property) is null)
+            {
+                _requiredScalarLeafSetters.Add(property);
+                var source = ManagementClientGenerator.Instance.DateTimePropertyMatcher.GetSourceProperty(property);
+                if (source is not null)
+                {
+                    _requiredScalarSetterSources.Add(source);
+                }
+                property.Update(body: body with { HasSetter = true, SetterModifiers = MethodSignatureModifiers.Internal });
+            }
+        }
+
+        private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider, bool allowSetter = false)
         {
             // Skip updating the body if the inner property is a flattened property from safe-flatten
             // These properties need a custom getter that wires to the backing object, not initialization
-            if (innerProperty is FlattenedPropertyProvider)
+            if (innerProperty is FlattenedPropertyProvider || FindCustomProperty(innerProperty) is not null)
             {
                 return;
             }
 
             if (innerProperty.Type.IsCollection)
             {
+                // The same input property can be projected by several owners. Once a GA setter requires
+                // delegation through this property, a later projection must not remove that internal setter.
+                if (allowSetter)
+                {
+                    _requiredCollectionSetters.Add(innerProperty);
+                }
+                allowSetter = _requiredCollectionSetters.Contains(innerProperty);
                 // add initialization for collection type property
                 if (innerProperty.Type.IsList)
                 {
-                    innerProperty.Update(body: new AutoPropertyBody(false, InitializationExpression: New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(innerProperty.Type.Arguments))));
+                    innerProperty.Update(body: new AutoPropertyBody(allowSetter, allowSetter ? MethodSignatureModifiers.Internal : MethodSignatureModifiers.None,
+                        InitializationExpression: New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(innerProperty.Type.Arguments))));
                 }
                 else if (innerProperty.Type.IsDictionary)
                 {
-                    innerProperty.Update(body: new AutoPropertyBody(false, InitializationExpression: New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(innerProperty.Type.Arguments))));
+                    innerProperty.Update(body: new AutoPropertyBody(allowSetter, allowSetter ? MethodSignatureModifiers.Internal : MethodSignatureModifiers.None,
+                        InitializationExpression: New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(innerProperty.Type.Arguments))));
                 }
             }
         }

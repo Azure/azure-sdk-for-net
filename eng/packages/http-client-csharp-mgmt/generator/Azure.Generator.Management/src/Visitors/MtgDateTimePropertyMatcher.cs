@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -57,6 +58,75 @@ internal sealed class MtgDateTimePropertyMatcher
         }
     }
 
+    internal void RegisterCanonicalProperty(PropertyProvider property, ModelProvider model)
+    {
+        if (_sourceProperties.ContainsKey(property))
+        {
+            return;
+        }
+
+        // Canonical views can substitute a handwritten property for the input-backed provider. Use the
+        // canonical wire identity rather than independently guessing MTG's name-precedence decisions.
+        var visited = new HashSet<ModelProvider>(ReferenceEqualityComparer.Instance);
+        ModelProvider? owner = model;
+        while (owner is not null && visited.Add(owner))
+        {
+            if (owner.CustomCodeView?.Properties.Any(p => ReferenceEquals(p, property)) == true)
+            {
+                break;
+            }
+            owner = owner.BaseModelProvider;
+        }
+        if (owner is null || !visited.Contains(owner) || owner.CustomCodeView?.Properties.Any(p => ReferenceEquals(p, property)) != true)
+        {
+            return;
+        }
+
+        if (property.WireInfo is null || HasCustomSerialization(owner))
+        {
+            return;
+        }
+
+        var ownerTypes = new List<ModelProvider>();
+        visited.Clear();
+        for (var current = owner; current is not null && visited.Add(current); current = current.BaseModelProvider)
+        {
+            ownerTypes.Add(current);
+        }
+        var candidates = _sourceProperties.Where(pair =>
+            ownerTypes.Any(candidate => pair.Key.EnclosingType.Type.AreNamesEqual(candidate.Type) &&
+                (ReferenceEquals(candidate, owner) || pair.Value.EnclosingType?.External is not null)) &&
+            pair.Value.SerializedName == property.WireInfo.SerializedName)
+            .Select(pair => pair.Value).Distinct<InputProperty>(ReferenceEqualityComparer.Instance).ToArray();
+        if (candidates.Length == 1)
+        {
+            _sourceProperties[property] = candidates[0];
+        }
+    }
+
+    private static bool HasCustomSerialization(ModelProvider owner)
+    {
+        foreach (var attribute in owner.CustomCodeView?.Attributes ?? [])
+        {
+            try
+            {
+                if (attribute.Type.Name == "CodeGenSerializationAttribute")
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                // An unresolved attribute could override the wire name, so it cannot establish identity.
+                return true;
+            }
+        }
+        return false;
+    }
+
+    internal InputProperty? GetSourceProperty(PropertyProvider property)
+        => _sourceProperties.TryGetValue(property, out var inputProperty) ? inputProperty : null;
+
     internal bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
     {
         if (property is null ||
@@ -66,7 +136,16 @@ internal sealed class MtgDateTimePropertyMatcher
             return false;
         }
 
-        var name = inputProperty.Name;
+        var name = inputProperty.IsExactName ? inputProperty.Name : inputProperty.Name.ToIdentifierName();
+        return IsMtgRenamedDateTimeName(name);
+    }
+
+    internal bool WasMtgRenamedDateTimePropertyBeforeIdentifierNormalization(PropertyProvider? property)
+        => property is not null && _sourceProperties.TryGetValue(property, out var inputProperty) &&
+            IsDateTimeInputType(inputProperty.Type) && IsMtgRenamedDateTimeName(inputProperty.Name);
+
+    private static bool IsMtgRenamedDateTimeName(string name)
+    {
         var suffixLength = GetMtgDateTimeSuffixLength(name);
         if (suffixLength == 0 || suffixLength == name.Length || HasExcludedMtgDateTimeComponent(name, suffixLength))
         {

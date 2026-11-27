@@ -3,6 +3,8 @@
 
 using Azure.Generator.Management.Primitives;
 using Humanizer;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -66,7 +68,7 @@ namespace Azure.Generator.Management.Utilities
             return (true, null, false);
         }
 
-        private static bool HasDefaultPublicCtor(ModelProvider? innerModel)
+        public static bool HasDefaultPublicCtor(ModelProvider? innerModel)
         {
             if (innerModel is null)
                 return false;
@@ -80,7 +82,7 @@ namespace Azure.Generator.Management.Utilities
             return false;
         }
 
-        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty, CSharpType publicPropertyType)
+        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty, CSharpType publicPropertyType, bool allowWrapperAssignment = true)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
             ValueExpression value = new MemberExpression(internalProperty, innerProperty.Name);
@@ -96,7 +98,7 @@ namespace Azure.Generator.Management.Utilities
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
-                if (!internalProperty.Body.HasSetter)
+                if (!internalProperty.Body.HasSetter || !allowWrapperAssignment)
                 {
                     return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, value));
                 }
@@ -112,6 +114,10 @@ namespace Azure.Generator.Management.Utilities
 
             if (includeGetterNullCheck == true)
             {
+                if (!allowWrapperAssignment)
+                {
+                    return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, value));
+                }
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {
@@ -124,7 +130,7 @@ namespace Azure.Generator.Management.Utilities
             {
                 // For collection types with a settable internal property, initialize the internal property
                 // to avoid returning null, which would cause NullReferenceException during serialization.
-                if (innerProperty.Type.IsCollection && internalProperty.Body.HasSetter)
+                if (innerProperty.Type.IsCollection && internalProperty.Body.HasSetter && allowWrapperAssignment)
                 {
                     return new List<MethodBodyStatement> {
                         new IfStatement(checkNullExpression)
@@ -163,10 +169,231 @@ namespace Azure.Generator.Management.Utilities
             return BuildLazyCreateAndAssignSetter(innerModel, internalProperty, innerProperty, isPropertyLiftedToNullable);
         }
 
-        public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable)
+        public static bool HasAccessibleDefaultConstructor(ModelProvider model)
         {
-            // To not introduce breaking change, for collection types, we keep the setter for collection-type properties during safe flatten.
-            if (includeSetterCheck)
+            if (model is SystemObjectModelProvider)
+            {
+                return HasAccessibleExternalDefaultConstructor(model);
+            }
+            var constructors = model.CanonicalView.Constructors
+                .Concat(model.SerializationProviders.SelectMany(p => p.Constructors)).ToArray();
+            if (constructors.Length == 0)
+            {
+                // An implicit parameterless constructor still has to satisfy required members.
+                return CanConstructWithoutUnsatisfiedRequiredMembers(model, null);
+            }
+
+            var applicable = constructors.Where(c => c.Signature.Parameters.All(p => p.DefaultValue is not null || p.IsParams)).ToArray();
+            // A parameterless overload wins over optional/params overloads. Otherwise fail closed
+            // when multiple overloads could make new T() ambiguous.
+            var parameterless = applicable.Where(c => c.Signature.Parameters.Count == 0).ToArray();
+            var candidate = parameterless.Length == 1 ? parameterless[0] :
+                parameterless.Length == 0 && applicable.Length == 1 ? applicable[0] : null;
+            if (candidate is null && model.Type.IsStruct && parameterless.Length == 0 && applicable.Length == 0)
+            {
+                return CanConstructWithoutUnsatisfiedRequiredMembers(model, null);
+            }
+            return candidate is not null && !candidate.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Private) &&
+                (candidate.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) ||
+                 candidate.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) && model is not SystemObjectModelProvider) &&
+                CanConstructWithoutUnsatisfiedRequiredMembers(model, candidate);
+        }
+
+        public static INamedTypeSymbol? GetExternalTypeSymbol(CSharpType type)
+        {
+            var metadataName = $"{type.Namespace}.{type.ClrMetadataName}";
+            var source = ManagementClientGenerator.Instance.SourceInputModel;
+            var symbol = source.Customization?.GetTypeByMetadataName(metadataName) ?? source.LastContract?.GetTypeByMetadataName(metadataName);
+            if (symbol is not null)
+            {
+                return symbol;
+            }
+
+            // Inspect already-loaded runtime metadata when neither source compilation resolves the type.
+            // Do not load arbitrary assemblies or treat an input projection as the actual external type.
+            var runtimeType = type.IsFrameworkType ? type.FrameworkType : Type.GetType(metadataName) ??
+                AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetType(metadataName, throwOnError: false)).FirstOrDefault(t => t is not null);
+            if (runtimeType is null)
+            {
+                return null;
+            }
+            var paths = new[] { typeof(object).Assembly.Location, runtimeType.Assembly.Location }
+                .Where(path => !string.IsNullOrEmpty(path) && System.IO.File.Exists(path)).Distinct(StringComparer.Ordinal);
+            var references = paths.Select(path => MetadataReference.CreateFromFile(path));
+            return CSharpCompilation.Create("ExternalTypeInspection", references: references).GetTypeByMetadataName(metadataName);
+        }
+
+        private static bool HasAccessibleExternalDefaultConstructor(ModelProvider model)
+        {
+            var symbol = GetExternalTypeSymbol(model.Type);
+            if (symbol is null || symbol.IsAbstract)
+            {
+                return false;
+            }
+            var applicable = symbol.InstanceConstructors.Where(c => c.Parameters.All(p => p.IsOptional || p.IsParams)).ToArray();
+            var parameterless = applicable.Where(c => c.Parameters.Length == 0).ToArray();
+            var candidate = parameterless.Length == 1 ? parameterless[0] :
+                parameterless.Length == 0 && applicable.Length == 1 ? applicable[0] : null;
+            if (candidate is null || candidate.DeclaredAccessibility != Accessibility.Public)
+            {
+                return false;
+            }
+            return ExternalConstructorSatisfiesRequiredMembers(symbol, candidate);
+        }
+
+        public static bool HasAccessibleExternalValueConstructor(ModelProvider model, CSharpType valueType)
+        {
+            var symbol = GetExternalTypeSymbol(model.Type);
+            if (symbol is null || symbol.IsAbstract)
+            {
+                return false;
+            }
+            var applicable = symbol.InstanceConstructors.Where(c => c.Parameters.Length > 0 &&
+                c.Parameters[0].RefKind == RefKind.None && !c.Parameters[0].IsParams &&
+                c.Parameters.Skip(1).All(p => p.IsOptional || p.IsParams)).ToArray();
+            var exact = applicable.Where(c => ExternalTypeMatches(c.Parameters[0].Type, valueType)).ToArray();
+            var singleArgument = exact.Where(c => c.Parameters.Length == 1).ToArray();
+            var candidate = singleArgument.Length == 1 ? singleArgument[0] : null;
+            return candidate is not null && candidate.DeclaredAccessibility == Accessibility.Public &&
+                ExternalConstructorSatisfiesRequiredMembers(symbol, candidate);
+        }
+
+        private static bool ExternalTypeMatches(ITypeSymbol symbol, CSharpType type)
+        {
+            if (symbol is IArrayTypeSymbol array)
+            {
+                if (!type.IsArray)
+                {
+                    return false;
+                }
+                var rank = type.IsFrameworkType ? type.FrameworkType.GetArrayRank() : GetGeneratedArrayRank(type.Name);
+                return array.Rank == rank && ExternalTypeMatches(array.ElementType, type.ElementType);
+            }
+            if (symbol is not INamedTypeSymbol named)
+            {
+                return false;
+            }
+            if (named.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T)
+            {
+                return type.IsValueType && type.IsNullable && ExternalTypeMatches(named.TypeArguments[0], type.WithNullable(false));
+            }
+            return !(type.IsValueType && type.IsNullable) && named.Name == type.Name &&
+                named.ContainingNamespace.ToDisplayString() == type.Namespace && named.TypeArguments.Length == type.Arguments.Count &&
+                (named.ContainingType is null && type.DeclaringType is null ||
+                 named.ContainingType is not null && type.DeclaringType is not null && ExternalTypeMatches(named.ContainingType, type.DeclaringType)) &&
+                named.TypeArguments.Zip(type.Arguments).All(p => ExternalTypeMatches(p.First, p.Second));
+        }
+
+        private static int GetGeneratedArrayRank(string name)
+        {
+            var start = name.LastIndexOf('[');
+            if (start < 0 || !name.EndsWith(']'))
+            {
+                return 0;
+            }
+            var dimensions = name.AsSpan(start + 1, name.Length - start - 2);
+            var rank = 1;
+            foreach (var dimension in dimensions)
+            {
+                if (dimension != ',')
+                {
+                    return 0;
+                }
+                rank++;
+            }
+            return rank;
+        }
+
+        private static bool ExternalConstructorSatisfiesRequiredMembers(INamedTypeSymbol type, IMethodSymbol constructor)
+        {
+            for (var current = type; current is not null; current = current.BaseType)
+            {
+                if (current.GetMembers().Any(member => member is IPropertySymbol { IsRequired: true } or IFieldSymbol { IsRequired: true }))
+                {
+                    return constructor.GetAttributes().Any(a =>
+                        a.AttributeClass?.ToDisplayString() == "System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute");
+                }
+            }
+            return true;
+        }
+
+        public static bool HasSafeFlattenDefaultConstructor(ModelProvider model)
+            => model is SystemObjectModelProvider ? HasAccessibleExternalDefaultConstructor(model) :
+                model.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 0 &&
+                !c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Private) &&
+                (c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) ||
+                 c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) && model is not SystemObjectModelProvider) &&
+                CanConstructWithoutUnsatisfiedRequiredMembers(model, c));
+
+        public static bool CanConstructWithoutUnsatisfiedRequiredMembers(ModelProvider model, ConstructorProvider? constructor)
+        {
+            if (model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract) ||
+                model.CustomCodeView?.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract) == true)
+            {
+                return false;
+            }
+            var compilation = ManagementClientGenerator.Instance.SourceInputModel.Customization;
+            var visited = new HashSet<ModelProvider>();
+            var hasRequiredMembers = false;
+            for (var current = model; current is not null && visited.Add(current); current = current.BaseModelProvider)
+            {
+                var custom = current.CustomCodeView;
+                var type = custom?.Type ?? (current is SystemObjectModelProvider ? current.Type : null);
+                if (type is null)
+                {
+                    continue;
+                }
+                var symbol = compilation?.GetTypeByMetadataName($"{type.Namespace}.{type.ClrMetadataName}");
+                if (symbol is null)
+                {
+                    return false;
+                }
+                for (var declaring = symbol; declaring is not null; declaring = declaring.BaseType)
+                {
+                    if (declaring.GetMembers().Any(member => member is IPropertySymbol { IsRequired: true } or IFieldSymbol { IsRequired: true }))
+                    {
+                        hasRequiredMembers = true;
+                        break;
+                    }
+                }
+            }
+            if (!hasRequiredMembers)
+            {
+                return true;
+            }
+            if (constructor is null)
+            {
+                return false;
+            }
+            if (constructor.Signature.Attributes.Any(a => a.Type.Namespace == "System.Diagnostics.CodeAnalysis" && a.Type.Name == "SetsRequiredMembersAttribute"))
+            {
+                return true;
+            }
+
+            // Custom constructor providers omit this attribute. Confirm it on the source symbol;
+            // require every same-name/arity match to carry the attribute when overloads are ambiguous.
+            var customView = model.CustomCodeView;
+            if (customView is null || !customView.Constructors.Any(c => ReferenceEquals(c, constructor)))
+            {
+                return false;
+            }
+            var customType = customView.Type;
+            var customSymbol = compilation?.GetTypeByMetadataName($"{customType.Namespace}.{customType.ClrMetadataName}");
+            var matches = customSymbol?.InstanceConstructors.Where(c =>
+                c.Parameters.Length == constructor.Signature.Parameters.Count &&
+                c.Parameters.Zip(constructor.Signature.Parameters).All(p => p.First.Name == p.Second.Name)).ToArray();
+            return matches is { Length: > 0 } && matches.All(c => c.GetAttributes().Any(a =>
+                a.AttributeClass?.ToDisplayString() == "System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute"));
+        }
+
+        public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable, bool allowDefaultConstructorForCompatibility = false)
+        {
+            // An output-only model may have an internal parameterless initialization constructor even when
+            // it has no public one. Use it for a restored setter instead of assuming a one-value constructor.
+            // Keep the existing safe-flatten choice between value construction and assignment:
+            // serialization-only constructors must not change its null-setter semantics.
+            var hasAccessibleDefaultConstructor = allowDefaultConstructorForCompatibility && HasSafeFlattenDefaultConstructor(innerModel);
+            if (includeSetterCheck && HasAccessibleDefaultConstructor(innerModel) || hasAccessibleDefaultConstructor)
             {
                 // Same shape as property flatten: lazy-create the wrapper and assign the
                 // leaf, with a HasValue guard around the body when the public type was
