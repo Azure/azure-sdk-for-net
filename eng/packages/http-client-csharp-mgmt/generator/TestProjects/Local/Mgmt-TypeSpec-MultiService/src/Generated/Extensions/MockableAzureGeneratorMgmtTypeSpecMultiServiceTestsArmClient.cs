@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.MultiService.Tests;
 using Azure.ResourceManager;
@@ -28,18 +29,24 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="FooResource"/> object. </returns>
         public virtual FooResource GetFooResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             FooResource.ValidateResourceId(id);
             return new FooResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>
         public virtual BarResource GetBarResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             BarResource.ValidateResourceId(id);
             return new BarResource(Client, id);
         }

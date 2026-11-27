@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.Generator.MgmtApiVersionOverride.Tests;
 using Azure.ResourceManager;
@@ -28,27 +29,36 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
 
         /// <summary> Gets an object representing a <see cref="EscapedWireVersionTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="EscapedWireVersionTestResource"/> object. </returns>
         public virtual EscapedWireVersionTestResource GetEscapedWireVersionTestResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             EscapedWireVersionTestResource.ValidateResourceId(id);
             return new EscapedWireVersionTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WireVersionTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="WireVersionTestResource"/> object. </returns>
         public virtual WireVersionTestResource GetWireVersionTestResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             WireVersionTestResource.ValidateResourceId(id);
             return new WireVersionTestResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="OrdinaryWireVersionTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="OrdinaryWireVersionTestResource"/> object. </returns>
         public virtual OrdinaryWireVersionTestResource GetOrdinaryWireVersionTestResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             OrdinaryWireVersionTestResource.ValidateResourceId(id);
             return new OrdinaryWireVersionTestResource(Client, id);
         }

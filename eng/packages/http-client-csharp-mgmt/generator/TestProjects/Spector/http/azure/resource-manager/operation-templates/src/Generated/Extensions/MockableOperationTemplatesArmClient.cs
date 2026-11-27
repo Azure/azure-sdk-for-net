@@ -32,9 +32,12 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
 
         /// <summary> Gets an object representing a <see cref="CostReportResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="CostReportResource"/> object. </returns>
         public virtual CostReportResource GetCostReportResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             CostReportResource.ValidateResourceId(id);
             return new CostReportResource(Client, id);
         }
@@ -79,18 +82,24 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
 
         /// <summary> Gets an object representing a <see cref="WidgetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="WidgetResource"/> object. </returns>
         public virtual WidgetResource GetWidgetResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             WidgetResource.ValidateResourceId(id);
             return new WidgetResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> Returns a <see cref="MonitorResource"/> object. </returns>
         public virtual MonitorResource GetMonitorResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             MonitorResource.ValidateResourceId(id);
             return new MonitorResource(Client, id);
         }

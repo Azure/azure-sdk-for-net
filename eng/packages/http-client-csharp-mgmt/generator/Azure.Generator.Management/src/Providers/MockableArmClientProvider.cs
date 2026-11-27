@@ -106,7 +106,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildGetResourceIdMethodForResource(ResourceClientProvider resource)
         {
-            var idParameter = new ParameterProvider("id", $"The resource ID of the resource to get.", typeof(ResourceIdentifier));
+            var idParameter = new ParameterProvider("id", $"The resource ID of the resource to get.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
             var signature = new MethodSignature(
                 $"Get{resource.Name}",
                 $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it but with no data.",
