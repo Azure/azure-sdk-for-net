@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="WindowsVMGuestPatchMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsVMGuestPatchMode?(string value) => value == null ? null : new WindowsVMGuestPatchMode(value);
+        public static implicit operator WindowsVMGuestPatchMode?(string value) => value == null ? (WindowsVMGuestPatchMode?)null : new WindowsVMGuestPatchMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

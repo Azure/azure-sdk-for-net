@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppProtocol?(string value) => value == null ? null : new ContainerAppProtocol(value);
+        public static implicit operator ContainerAppProtocol?(string value) => value == null ? (ContainerAppProtocol?)null : new ContainerAppProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

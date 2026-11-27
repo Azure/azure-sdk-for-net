@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ConfidentialLedgerEnclavePlatform"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerEnclavePlatform?(string value) => value == null ? null : new ConfidentialLedgerEnclavePlatform(value);
+        public static implicit operator ConfidentialLedgerEnclavePlatform?(string value) => value == null ? (ConfidentialLedgerEnclavePlatform?)null : new ConfidentialLedgerEnclavePlatform(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

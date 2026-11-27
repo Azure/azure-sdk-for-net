@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinuxVmGuestPatchMode?(string value) => value == null ? null : new LinuxVmGuestPatchMode(value);
+        public static implicit operator LinuxVmGuestPatchMode?(string value) => value == null ? (LinuxVmGuestPatchMode?)null : new LinuxVmGuestPatchMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="PublicIPAddressSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicIPAddressSkuName?(string value) => value == null ? null : new PublicIPAddressSkuName(value);
+        public static implicit operator PublicIPAddressSkuName?(string value) => value == null ? (PublicIPAddressSkuName?)null : new PublicIPAddressSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

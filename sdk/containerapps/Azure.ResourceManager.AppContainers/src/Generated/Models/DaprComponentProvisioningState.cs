@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="DaprComponentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaprComponentProvisioningState?(string value) => value == null ? null : new DaprComponentProvisioningState(value);
+        public static implicit operator DaprComponentProvisioningState?(string value) => value == null ? (DaprComponentProvisioningState?)null : new DaprComponentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

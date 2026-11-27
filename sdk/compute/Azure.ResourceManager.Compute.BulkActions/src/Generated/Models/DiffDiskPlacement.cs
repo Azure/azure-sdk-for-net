@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="DiffDiskPlacement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiffDiskPlacement?(string value) => value == null ? null : new DiffDiskPlacement(value);
+        public static implicit operator DiffDiskPlacement?(string value) => value == null ? (DiffDiskPlacement?)null : new DiffDiskPlacement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

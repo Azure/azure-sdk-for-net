@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="IPVersions"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPVersions?(string value) => value == null ? null : new IPVersions(value);
+        public static implicit operator IPVersions?(string value) => value == null ? (IPVersions?)null : new IPVersions(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

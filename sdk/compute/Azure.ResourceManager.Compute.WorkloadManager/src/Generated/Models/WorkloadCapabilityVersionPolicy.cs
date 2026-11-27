@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadCapabilityVersionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadCapabilityVersionPolicy?(string value) => value == null ? null : new WorkloadCapabilityVersionPolicy(value);
+        public static implicit operator WorkloadCapabilityVersionPolicy?(string value) => value == null ? (WorkloadCapabilityVersionPolicy?)null : new WorkloadCapabilityVersionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

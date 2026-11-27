@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SecretsProvisioningComponentName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretsProvisioningComponentName?(string value) => value == null ? null : new SecretsProvisioningComponentName(value);
+        public static implicit operator SecretsProvisioningComponentName?(string value) => value == null ? (SecretsProvisioningComponentName?)null : new SecretsProvisioningComponentName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

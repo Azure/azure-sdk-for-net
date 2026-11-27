@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="DomainRecordVerificationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainRecordVerificationType?(string value) => value == null ? null : new DomainRecordVerificationType(value);
+        public static implicit operator DomainRecordVerificationType?(string value) => value == null ? (DomainRecordVerificationType?)null : new DomainRecordVerificationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="PartnerConnectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PartnerConnectorType?(string value) => value == null ? null : new PartnerConnectorType(value);
+        public static implicit operator PartnerConnectorType?(string value) => value == null ? (PartnerConnectorType?)null : new PartnerConnectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

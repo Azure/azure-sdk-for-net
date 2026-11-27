@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ProcessorMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProcessorMode?(string value) => value == null ? null : new ProcessorMode(value);
+        public static implicit operator ProcessorMode?(string value) => value == null ? (ProcessorMode?)null : new ProcessorMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

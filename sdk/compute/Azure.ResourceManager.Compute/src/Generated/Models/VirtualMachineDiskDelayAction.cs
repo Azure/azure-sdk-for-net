@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineDiskDelayAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineDiskDelayAction?(string value) => value == null ? null : new VirtualMachineDiskDelayAction(value);
+        public static implicit operator VirtualMachineDiskDelayAction?(string value) => value == null ? (VirtualMachineDiskDelayAction?)null : new VirtualMachineDiskDelayAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

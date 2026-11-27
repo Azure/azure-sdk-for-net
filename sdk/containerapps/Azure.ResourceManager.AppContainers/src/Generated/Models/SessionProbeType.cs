@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="SessionProbeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionProbeType?(string value) => value == null ? null : new SessionProbeType(value);
+        public static implicit operator SessionProbeType?(string value) => value == null ? (SessionProbeType?)null : new SessionProbeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

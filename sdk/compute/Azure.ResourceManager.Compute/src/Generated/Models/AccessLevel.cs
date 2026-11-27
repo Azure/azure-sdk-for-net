@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="AccessLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessLevel?(string value) => value == null ? null : new AccessLevel(value);
+        public static implicit operator AccessLevel?(string value) => value == null ? (AccessLevel?)null : new AccessLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

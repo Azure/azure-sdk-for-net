@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppIngressClientCertificateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppIngressClientCertificateMode?(string value) => value == null ? null : new ContainerAppIngressClientCertificateMode(value);
+        public static implicit operator ContainerAppIngressClientCertificateMode?(string value) => value == null ? (ContainerAppIngressClientCertificateMode?)null : new ContainerAppIngressClientCertificateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

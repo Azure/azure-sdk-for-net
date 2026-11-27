@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionsScheduleMonth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionsScheduleMonth?(string value) => value == null ? null : new ScheduledActionsScheduleMonth(value);
+        public static implicit operator ScheduledActionsScheduleMonth?(string value) => value == null ? (ScheduledActionsScheduleMonth?)null : new ScheduledActionsScheduleMonth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

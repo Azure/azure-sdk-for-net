@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ZonalPlatformFaultDomainAlignMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonalPlatformFaultDomainAlignMode?(string value) => value == null ? null : new ZonalPlatformFaultDomainAlignMode(value);
+        public static implicit operator ZonalPlatformFaultDomainAlignMode?(string value) => value == null ? (ZonalPlatformFaultDomainAlignMode?)null : new ZonalPlatformFaultDomainAlignMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

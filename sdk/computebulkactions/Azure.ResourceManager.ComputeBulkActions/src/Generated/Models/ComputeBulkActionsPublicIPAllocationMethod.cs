@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsPublicIPAllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsPublicIPAllocationMethod?(string value) => value == null ? null : new ComputeBulkActionsPublicIPAllocationMethod(value);
+        public static implicit operator ComputeBulkActionsPublicIPAllocationMethod?(string value) => value == null ? (ComputeBulkActionsPublicIPAllocationMethod?)null : new ComputeBulkActionsPublicIPAllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

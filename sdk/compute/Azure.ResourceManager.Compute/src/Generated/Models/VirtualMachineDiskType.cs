@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineDiskType?(string value) => value == null ? null : new VirtualMachineDiskType(value);
+        public static implicit operator VirtualMachineDiskType?(string value) => value == null ? (VirtualMachineDiskType?)null : new VirtualMachineDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

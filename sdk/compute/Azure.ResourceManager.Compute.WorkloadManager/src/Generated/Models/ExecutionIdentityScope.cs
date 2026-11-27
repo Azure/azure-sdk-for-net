@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="ExecutionIdentityScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExecutionIdentityScope?(string value) => value == null ? null : new ExecutionIdentityScope(value);
+        public static implicit operator ExecutionIdentityScope?(string value) => value == null ? (ExecutionIdentityScope?)null : new ExecutionIdentityScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

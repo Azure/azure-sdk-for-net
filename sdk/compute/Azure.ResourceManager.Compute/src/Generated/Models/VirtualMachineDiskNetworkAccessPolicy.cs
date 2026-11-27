@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineDiskNetworkAccessPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineDiskNetworkAccessPolicy?(string value) => value == null ? null : new VirtualMachineDiskNetworkAccessPolicy(value);
+        public static implicit operator VirtualMachineDiskNetworkAccessPolicy?(string value) => value == null ? (VirtualMachineDiskNetworkAccessPolicy?)null : new VirtualMachineDiskNetworkAccessPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

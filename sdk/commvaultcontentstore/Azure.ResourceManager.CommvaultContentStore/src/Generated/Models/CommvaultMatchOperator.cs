@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultMatchOperator?(string value) => value == null ? null : new CommvaultMatchOperator(value);
+        public static implicit operator CommvaultMatchOperator?(string value) => value == null ? (CommvaultMatchOperator?)null : new CommvaultMatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

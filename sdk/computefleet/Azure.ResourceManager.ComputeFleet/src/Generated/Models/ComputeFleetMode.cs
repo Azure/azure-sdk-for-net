@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetMode?(string value) => value == null ? null : new ComputeFleetMode(value);
+        public static implicit operator ComputeFleetMode?(string value) => value == null ? (ComputeFleetMode?)null : new ComputeFleetMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

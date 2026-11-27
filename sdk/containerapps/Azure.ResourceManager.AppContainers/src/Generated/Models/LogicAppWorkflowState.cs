@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="LogicAppWorkflowState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogicAppWorkflowState?(string value) => value == null ? null : new LogicAppWorkflowState(value);
+        public static implicit operator LogicAppWorkflowState?(string value) => value == null ? (LogicAppWorkflowState?)null : new LogicAppWorkflowState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

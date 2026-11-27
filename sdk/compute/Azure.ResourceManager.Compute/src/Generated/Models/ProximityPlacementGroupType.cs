@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ProximityPlacementGroupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProximityPlacementGroupType?(string value) => value == null ? null : new ProximityPlacementGroupType(value);
+        public static implicit operator ProximityPlacementGroupType?(string value) => value == null ? (ProximityPlacementGroupType?)null : new ProximityPlacementGroupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

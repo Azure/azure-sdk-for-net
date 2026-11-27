@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppRevisionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppRevisionProvisioningState?(string value) => value == null ? null : new ContainerAppRevisionProvisioningState(value);
+        public static implicit operator ContainerAppRevisionProvisioningState?(string value) => value == null ? (ContainerAppRevisionProvisioningState?)null : new ContainerAppRevisionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

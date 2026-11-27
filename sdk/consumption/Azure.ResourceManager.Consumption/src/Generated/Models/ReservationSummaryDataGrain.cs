@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ReservationSummaryDataGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationSummaryDataGrain?(string value) => value == null ? null : new ReservationSummaryDataGrain(value);
+        public static implicit operator ReservationSummaryDataGrain?(string value) => value == null ? (ReservationSummaryDataGrain?)null : new ReservationSummaryDataGrain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

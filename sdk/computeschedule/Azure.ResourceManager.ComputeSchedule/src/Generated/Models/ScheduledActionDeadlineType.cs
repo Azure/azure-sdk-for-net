@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionDeadlineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionDeadlineType?(string value) => value == null ? null : new ScheduledActionDeadlineType(value);
+        public static implicit operator ScheduledActionDeadlineType?(string value) => value == null ? (ScheduledActionDeadlineType?)null : new ScheduledActionDeadlineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

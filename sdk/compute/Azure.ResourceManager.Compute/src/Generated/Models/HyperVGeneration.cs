@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="HyperVGeneration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HyperVGeneration?(string value) => value == null ? null : new HyperVGeneration(value);
+        public static implicit operator HyperVGeneration?(string value) => value == null ? (HyperVGeneration?)null : new HyperVGeneration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

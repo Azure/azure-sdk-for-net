@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryScriptParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryScriptParameterType?(string value) => value == null ? null : new GalleryScriptParameterType(value);
+        public static implicit operator GalleryScriptParameterType?(string value) => value == null ? (GalleryScriptParameterType?)null : new GalleryScriptParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

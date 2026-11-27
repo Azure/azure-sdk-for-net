@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskDeleteOptionType?(string value) => value == null ? null : new ComputeFleetDiskDeleteOptionType(value);
+        public static implicit operator ComputeFleetDiskDeleteOptionType?(string value) => value == null ? (ComputeFleetDiskDeleteOptionType?)null : new ComputeFleetDiskDeleteOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

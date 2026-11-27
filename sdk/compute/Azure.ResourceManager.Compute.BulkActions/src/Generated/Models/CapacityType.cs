@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="CapacityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityType?(string value) => value == null ? null : new CapacityType(value);
+        public static implicit operator CapacityType?(string value) => value == null ? (CapacityType?)null : new CapacityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

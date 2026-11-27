@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsHostEndpointMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsHostEndpointMode?(string value) => value == null ? null : new ComputeBulkActionsHostEndpointMode(value);
+        public static implicit operator ComputeBulkActionsHostEndpointMode?(string value) => value == null ? (ComputeBulkActionsHostEndpointMode?)null : new ComputeBulkActionsHostEndpointMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConfluentAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentAuthType?(string value) => value == null ? null : new ConfluentAuthType(value);
+        public static implicit operator ConfluentAuthType?(string value) => value == null ? (ConfluentAuthType?)null : new ConfluentAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

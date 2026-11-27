@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDomainNameLabelScopeType?(string value) => value == null ? null : new ComputeFleetDomainNameLabelScopeType(value);
+        public static implicit operator ComputeFleetDomainNameLabelScopeType?(string value) => value == null ? (ComputeFleetDomainNameLabelScopeType?)null : new ComputeFleetDomainNameLabelScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SelectPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelectPermission?(string value) => value == null ? null : new SelectPermission(value);
+        public static implicit operator SelectPermission?(string value) => value == null ? (SelectPermission?)null : new SelectPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

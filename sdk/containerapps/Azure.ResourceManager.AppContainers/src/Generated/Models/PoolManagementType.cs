@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="PoolManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PoolManagementType?(string value) => value == null ? null : new PoolManagementType(value);
+        public static implicit operator PoolManagementType?(string value) => value == null ? (PoolManagementType?)null : new PoolManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

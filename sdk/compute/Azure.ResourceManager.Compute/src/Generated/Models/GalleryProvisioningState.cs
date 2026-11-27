@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryProvisioningState?(string value) => value == null ? null : new GalleryProvisioningState(value);
+        public static implicit operator GalleryProvisioningState?(string value) => value == null ? (GalleryProvisioningState?)null : new GalleryProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

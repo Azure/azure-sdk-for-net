@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GallerySoftDeletedArtifactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GallerySoftDeletedArtifactType?(string value) => value == null ? null : new GallerySoftDeletedArtifactType(value);
+        public static implicit operator GallerySoftDeletedArtifactType?(string value) => value == null ? (GallerySoftDeletedArtifactType?)null : new GallerySoftDeletedArtifactType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

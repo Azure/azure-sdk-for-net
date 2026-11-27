@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppProbeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppProbeType?(string value) => value == null ? null : new ContainerAppProbeType(value);
+        public static implicit operator ContainerAppProbeType?(string value) => value == null ? (ContainerAppProbeType?)null : new ContainerAppProbeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

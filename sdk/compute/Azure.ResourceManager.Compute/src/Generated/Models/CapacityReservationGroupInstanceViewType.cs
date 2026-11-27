@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="CapacityReservationGroupInstanceViewType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityReservationGroupInstanceViewType?(string value) => value == null ? null : new CapacityReservationGroupInstanceViewType(value);
+        public static implicit operator CapacityReservationGroupInstanceViewType?(string value) => value == null ? (CapacityReservationGroupInstanceViewType?)null : new CapacityReservationGroupInstanceViewType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

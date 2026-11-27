@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultRetentionInterval"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultRetentionInterval?(string value) => value == null ? null : new CommvaultRetentionInterval(value);
+        public static implicit operator CommvaultRetentionInterval?(string value) => value == null ? (CommvaultRetentionInterval?)null : new CommvaultRetentionInterval(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

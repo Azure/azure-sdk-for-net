@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ConsistencyModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsistencyModeType?(string value) => value == null ? null : new ConsistencyModeType(value);
+        public static implicit operator ConsistencyModeType?(string value) => value == null ? (ConsistencyModeType?)null : new ConsistencyModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

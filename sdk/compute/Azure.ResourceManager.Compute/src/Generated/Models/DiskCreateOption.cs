@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskCreateOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskCreateOption?(string value) => value == null ? null : new DiskCreateOption(value);
+        public static implicit operator DiskCreateOption?(string value) => value == null ? (DiskCreateOption?)null : new DiskCreateOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

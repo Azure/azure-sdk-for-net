@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskEncryptionSetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskEncryptionSetType?(string value) => value == null ? null : new DiskEncryptionSetType(value);
+        public static implicit operator DiskEncryptionSetType?(string value) => value == null ? (DiskEncryptionSetType?)null : new DiskEncryptionSetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

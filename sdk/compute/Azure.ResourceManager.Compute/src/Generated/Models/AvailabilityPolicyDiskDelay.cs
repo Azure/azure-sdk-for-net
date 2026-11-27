@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="AvailabilityPolicyDiskDelay"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityPolicyDiskDelay?(string value) => value == null ? null : new AvailabilityPolicyDiskDelay(value);
+        public static implicit operator AvailabilityPolicyDiskDelay?(string value) => value == null ? (AvailabilityPolicyDiskDelay?)null : new AvailabilityPolicyDiskDelay(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

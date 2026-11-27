@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
 
         /// <summary> Converts a string to a <see cref="ComputeLimitResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeLimitResourceProvisioningState?(string value) => value == null ? null : new ComputeLimitResourceProvisioningState(value);
+        public static implicit operator ComputeLimitResourceProvisioningState?(string value) => value == null ? (ComputeLimitResourceProvisioningState?)null : new ComputeLimitResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

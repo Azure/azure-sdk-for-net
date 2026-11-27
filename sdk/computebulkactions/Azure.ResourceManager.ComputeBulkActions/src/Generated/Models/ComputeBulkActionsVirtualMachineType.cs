@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsVirtualMachineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsVirtualMachineType?(string value) => value == null ? null : new ComputeBulkActionsVirtualMachineType(value);
+        public static implicit operator ComputeBulkActionsVirtualMachineType?(string value) => value == null ? (ComputeBulkActionsVirtualMachineType?)null : new ComputeBulkActionsVirtualMachineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

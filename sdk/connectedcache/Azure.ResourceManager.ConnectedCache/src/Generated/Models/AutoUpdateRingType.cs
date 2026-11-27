@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="AutoUpdateRingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoUpdateRingType?(string value) => value == null ? null : new AutoUpdateRingType(value);
+        public static implicit operator AutoUpdateRingType?(string value) => value == null ? (AutoUpdateRingType?)null : new AutoUpdateRingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetProvisioningState?(string value) => value == null ? null : new ComputeFleetProvisioningState(value);
+        public static implicit operator ComputeFleetProvisioningState?(string value) => value == null ? (ComputeFleetProvisioningState?)null : new ComputeFleetProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

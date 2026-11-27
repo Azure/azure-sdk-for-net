@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConfluentSaaSOfferStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentSaaSOfferStatus?(string value) => value == null ? null : new ConfluentSaaSOfferStatus(value);
+        public static implicit operator ConfluentSaaSOfferStatus?(string value) => value == null ? (ConfluentSaaSOfferStatus?)null : new ConfluentSaaSOfferStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

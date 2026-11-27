@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="NetworkAccessPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkAccessPolicy?(string value) => value == null ? null : new NetworkAccessPolicy(value);
+        public static implicit operator NetworkAccessPolicy?(string value) => value == null ? (NetworkAccessPolicy?)null : new NetworkAccessPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

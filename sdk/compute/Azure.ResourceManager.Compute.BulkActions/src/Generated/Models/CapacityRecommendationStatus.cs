@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="CapacityRecommendationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityRecommendationStatus?(string value) => value == null ? null : new CapacityRecommendationStatus(value);
+        public static implicit operator CapacityRecommendationStatus?(string value) => value == null ? (CapacityRecommendationStatus?)null : new CapacityRecommendationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

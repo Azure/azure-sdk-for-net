@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetSecurityEncryptionType?(string value) => value == null ? null : new ComputeFleetSecurityEncryptionType(value);
+        public static implicit operator ComputeFleetSecurityEncryptionType?(string value) => value == null ? (ComputeFleetSecurityEncryptionType?)null : new ComputeFleetSecurityEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

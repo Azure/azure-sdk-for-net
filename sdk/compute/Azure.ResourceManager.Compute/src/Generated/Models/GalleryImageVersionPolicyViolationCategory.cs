@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryImageVersionPolicyViolationCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryImageVersionPolicyViolationCategory?(string value) => value == null ? null : new GalleryImageVersionPolicyViolationCategory(value);
+        public static implicit operator GalleryImageVersionPolicyViolationCategory?(string value) => value == null ? (GalleryImageVersionPolicyViolationCategory?)null : new GalleryImageVersionPolicyViolationCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="LinuxPatchAssessmentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinuxPatchAssessmentMode?(string value) => value == null ? null : new LinuxPatchAssessmentMode(value);
+        public static implicit operator LinuxPatchAssessmentMode?(string value) => value == null ? (LinuxPatchAssessmentMode?)null : new LinuxPatchAssessmentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

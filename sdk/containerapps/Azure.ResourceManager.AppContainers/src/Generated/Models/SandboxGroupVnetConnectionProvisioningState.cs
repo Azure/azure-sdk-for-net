@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="SandboxGroupVnetConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SandboxGroupVnetConnectionProvisioningState?(string value) => value == null ? null : new SandboxGroupVnetConnectionProvisioningState(value);
+        public static implicit operator SandboxGroupVnetConnectionProvisioningState?(string value) => value == null ? (SandboxGroupVnetConnectionProvisioningState?)null : new SandboxGroupVnetConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

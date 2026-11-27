@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppStorageType?(string value) => value == null ? null : new ContainerAppStorageType(value);
+        public static implicit operator ContainerAppStorageType?(string value) => value == null ? (ContainerAppStorageType?)null : new ContainerAppStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

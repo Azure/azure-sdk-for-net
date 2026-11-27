@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountStrategy?(string value) => value == null ? null : new StorageAccountStrategy(value);
+        public static implicit operator StorageAccountStrategy?(string value) => value == null ? (StorageAccountStrategy?)null : new StorageAccountStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

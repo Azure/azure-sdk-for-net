@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="LocalStorageDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalStorageDiskType?(string value) => value == null ? null : new LocalStorageDiskType(value);
+        public static implicit operator LocalStorageDiskType?(string value) => value == null ? (LocalStorageDiskType?)null : new LocalStorageDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

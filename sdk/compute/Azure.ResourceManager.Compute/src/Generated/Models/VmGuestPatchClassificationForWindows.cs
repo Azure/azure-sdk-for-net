@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationForWindows"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmGuestPatchClassificationForWindows?(string value) => value == null ? null : new VmGuestPatchClassificationForWindows(value);
+        public static implicit operator VmGuestPatchClassificationForWindows?(string value) => value == null ? (VmGuestPatchClassificationForWindows?)null : new VmGuestPatchClassificationForWindows(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

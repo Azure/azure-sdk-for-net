@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppReplicaRunningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppReplicaRunningState?(string value) => value == null ? null : new ContainerAppReplicaRunningState(value);
+        public static implicit operator ContainerAppReplicaRunningState?(string value) => value == null ? (ContainerAppReplicaRunningState?)null : new ContainerAppReplicaRunningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

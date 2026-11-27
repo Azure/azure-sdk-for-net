@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="OperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperatingSystemType?(string value) => value == null ? null : new OperatingSystemType(value);
+        public static implicit operator OperatingSystemType?(string value) => value == null ? (OperatingSystemType?)null : new OperatingSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

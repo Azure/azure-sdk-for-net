@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliaryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetNetworkInterfaceAuxiliaryMode?(string value) => value == null ? null : new ComputeFleetNetworkInterfaceAuxiliaryMode(value);
+        public static implicit operator ComputeFleetNetworkInterfaceAuxiliaryMode?(string value) => value == null ? (ComputeFleetNetworkInterfaceAuxiliaryMode?)null : new ComputeFleetNetworkInterfaceAuxiliaryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

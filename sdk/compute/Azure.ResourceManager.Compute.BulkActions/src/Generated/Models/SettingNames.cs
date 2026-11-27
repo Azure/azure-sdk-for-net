@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="SettingNames"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SettingNames?(string value) => value == null ? null : new SettingNames(value);
+        public static implicit operator SettingNames?(string value) => value == null ? (SettingNames?)null : new SettingNames(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

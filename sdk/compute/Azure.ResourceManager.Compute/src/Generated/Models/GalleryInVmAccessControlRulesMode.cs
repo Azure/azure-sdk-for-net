@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryInVmAccessControlRulesMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryInVmAccessControlRulesMode?(string value) => value == null ? null : new GalleryInVmAccessControlRulesMode(value);
+        public static implicit operator GalleryInVmAccessControlRulesMode?(string value) => value == null ? (GalleryInVmAccessControlRulesMode?)null : new GalleryInVmAccessControlRulesMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ConfidentialVmVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialVmVersion?(string value) => value == null ? null : new ConfidentialVmVersion(value);
+        public static implicit operator ConfidentialVmVersion?(string value) => value == null ? (ConfidentialVmVersion?)null : new ConfidentialVmVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SharingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SharingState?(string value) => value == null ? null : new SharingState(value);
+        public static implicit operator SharingState?(string value) => value == null ? (SharingState?)null : new SharingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

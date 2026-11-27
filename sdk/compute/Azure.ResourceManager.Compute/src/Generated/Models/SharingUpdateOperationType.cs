@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SharingUpdateOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SharingUpdateOperationType?(string value) => value == null ? null : new SharingUpdateOperationType(value);
+        public static implicit operator SharingUpdateOperationType?(string value) => value == null ? (SharingUpdateOperationType?)null : new SharingUpdateOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

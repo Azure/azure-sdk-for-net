@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ComputeScheduleOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeScheduleOSType?(string value) => value == null ? null : new ComputeScheduleOSType(value);
+        public static implicit operator ComputeScheduleOSType?(string value) => value == null ? (ComputeScheduleOSType?)null : new ComputeScheduleOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

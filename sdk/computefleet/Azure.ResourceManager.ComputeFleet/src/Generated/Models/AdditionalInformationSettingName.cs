@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="AdditionalInformationSettingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalInformationSettingName?(string value) => value == null ? null : new AdditionalInformationSettingName(value);
+        public static implicit operator AdditionalInformationSettingName?(string value) => value == null ? (AdditionalInformationSettingName?)null : new AdditionalInformationSettingName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

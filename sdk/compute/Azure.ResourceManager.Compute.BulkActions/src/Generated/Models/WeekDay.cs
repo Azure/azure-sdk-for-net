@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="WeekDay"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WeekDay?(string value) => value == null ? null : new WeekDay(value);
+        public static implicit operator WeekDay?(string value) => value == null ? (WeekDay?)null : new WeekDay(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

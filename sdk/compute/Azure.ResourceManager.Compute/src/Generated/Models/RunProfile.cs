@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="RunProfile"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunProfile?(string value) => value == null ? null : new RunProfile(value);
+        public static implicit operator RunProfile?(string value) => value == null ? (RunProfile?)null : new RunProfile(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

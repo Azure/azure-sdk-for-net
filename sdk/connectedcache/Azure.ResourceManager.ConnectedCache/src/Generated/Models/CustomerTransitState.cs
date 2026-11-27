@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Converts a string to a <see cref="CustomerTransitState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomerTransitState?(string value) => value == null ? null : new CustomerTransitState(value);
+        public static implicit operator CustomerTransitState?(string value) => value == null ? (CustomerTransitState?)null : new CustomerTransitState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConfluentPackage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentPackage?(string value) => value == null ? null : new ConfluentPackage(value);
+        public static implicit operator ConfluentPackage?(string value) => value == null ? (ConfluentPackage?)null : new ConfluentPackage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

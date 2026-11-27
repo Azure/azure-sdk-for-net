@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ReplicationStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationStatusType?(string value) => value == null ? null : new ReplicationStatusType(value);
+        public static implicit operator ReplicationStatusType?(string value) => value == null ? (ReplicationStatusType?)null : new ReplicationStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

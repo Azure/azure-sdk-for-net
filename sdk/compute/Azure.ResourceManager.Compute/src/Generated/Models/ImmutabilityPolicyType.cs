@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ImmutabilityPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImmutabilityPolicyType?(string value) => value == null ? null : new ImmutabilityPolicyType(value);
+        public static implicit operator ImmutabilityPolicyType?(string value) => value == null ? (ImmutabilityPolicyType?)null : new ImmutabilityPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="NotificationAlertTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationAlertTriggerType?(string value) => value == null ? null : new NotificationAlertTriggerType(value);
+        public static implicit operator NotificationAlertTriggerType?(string value) => value == null ? (NotificationAlertTriggerType?)null : new NotificationAlertTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

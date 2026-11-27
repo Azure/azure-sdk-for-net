@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetEvictionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetEvictionPolicy?(string value) => value == null ? null : new ComputeFleetEvictionPolicy(value);
+        public static implicit operator ComputeFleetEvictionPolicy?(string value) => value == null ? (ComputeFleetEvictionPolicy?)null : new ComputeFleetEvictionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

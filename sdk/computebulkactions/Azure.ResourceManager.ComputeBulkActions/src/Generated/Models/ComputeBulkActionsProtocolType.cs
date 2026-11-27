@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsProtocolType?(string value) => value == null ? null : new ComputeBulkActionsProtocolType(value);
+        public static implicit operator ComputeBulkActionsProtocolType?(string value) => value == null ? (ComputeBulkActionsProtocolType?)null : new ComputeBulkActionsProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

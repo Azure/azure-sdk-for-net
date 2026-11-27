@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ImageAlternativeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageAlternativeType?(string value) => value == null ? null : new ImageAlternativeType(value);
+        public static implicit operator ImageAlternativeType?(string value) => value == null ? (ImageAlternativeType?)null : new ImageAlternativeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

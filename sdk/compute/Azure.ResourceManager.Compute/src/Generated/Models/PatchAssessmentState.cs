@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="PatchAssessmentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PatchAssessmentState?(string value) => value == null ? null : new PatchAssessmentState(value);
+        public static implicit operator PatchAssessmentState?(string value) => value == null ? (PatchAssessmentState?)null : new PatchAssessmentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

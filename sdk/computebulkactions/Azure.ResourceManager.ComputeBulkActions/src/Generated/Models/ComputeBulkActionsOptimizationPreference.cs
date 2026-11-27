@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsOptimizationPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsOptimizationPreference?(string value) => value == null ? null : new ComputeBulkActionsOptimizationPreference(value);
+        public static implicit operator ComputeBulkActionsOptimizationPreference?(string value) => value == null ? (ComputeBulkActionsOptimizationPreference?)null : new ComputeBulkActionsOptimizationPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

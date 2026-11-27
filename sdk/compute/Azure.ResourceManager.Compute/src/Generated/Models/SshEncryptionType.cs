@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="SshEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SshEncryptionType?(string value) => value == null ? null : new SshEncryptionType(value);
+        public static implicit operator SshEncryptionType?(string value) => value == null ? (SshEncryptionType?)null : new SshEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

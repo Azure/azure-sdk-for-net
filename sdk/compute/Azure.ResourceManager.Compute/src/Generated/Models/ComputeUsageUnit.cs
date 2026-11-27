@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeUsageUnit?(string value) => value == null ? null : new ComputeUsageUnit(value);
+        public static implicit operator ComputeUsageUnit?(string value) => value == null ? (ComputeUsageUnit?)null : new ComputeUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

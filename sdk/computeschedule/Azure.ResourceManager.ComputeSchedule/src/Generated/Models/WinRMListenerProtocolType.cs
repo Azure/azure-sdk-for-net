@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="WinRMListenerProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WinRMListenerProtocolType?(string value) => value == null ? null : new WinRMListenerProtocolType(value);
+        public static implicit operator WinRMListenerProtocolType?(string value) => value == null ? (WinRMListenerProtocolType?)null : new WinRMListenerProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

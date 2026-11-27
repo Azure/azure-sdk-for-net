@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Converts a string to a <see cref="UserEngagementTracking"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UserEngagementTracking?(string value) => value == null ? null : new UserEngagementTracking(value);
+        public static implicit operator UserEngagementTracking?(string value) => value == null ? (UserEngagementTracking?)null : new UserEngagementTracking(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

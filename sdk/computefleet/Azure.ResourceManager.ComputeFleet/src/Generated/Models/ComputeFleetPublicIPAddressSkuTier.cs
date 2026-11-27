@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetPublicIPAddressSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetPublicIPAddressSkuTier?(string value) => value == null ? null : new ComputeFleetPublicIPAddressSkuTier(value);
+        public static implicit operator ComputeFleetPublicIPAddressSkuTier?(string value) => value == null ? (ComputeFleetPublicIPAddressSkuTier?)null : new ComputeFleetPublicIPAddressSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ConfidentialLedgerProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerProvisioningState?(string value) => value == null ? null : new ConfidentialLedgerProvisioningState(value);
+        public static implicit operator ConfidentialLedgerProvisioningState?(string value) => value == null ? (ConfidentialLedgerProvisioningState?)null : new ConfidentialLedgerProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

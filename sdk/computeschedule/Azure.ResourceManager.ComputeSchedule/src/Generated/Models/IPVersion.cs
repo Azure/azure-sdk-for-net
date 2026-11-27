@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="IPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPVersion?(string value) => value == null ? null : new IPVersion(value);
+        public static implicit operator IPVersion?(string value) => value == null ? (IPVersion?)null : new IPVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

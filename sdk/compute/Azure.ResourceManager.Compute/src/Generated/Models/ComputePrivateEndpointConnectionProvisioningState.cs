@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputePrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new ComputePrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator ComputePrivateEndpointConnectionProvisioningState?(string value) => value == null ? (ComputePrivateEndpointConnectionProvisioningState?)null : new ComputePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

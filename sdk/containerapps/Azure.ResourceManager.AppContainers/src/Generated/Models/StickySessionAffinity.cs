@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="StickySessionAffinity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StickySessionAffinity?(string value) => value == null ? null : new StickySessionAffinity(value);
+        public static implicit operator StickySessionAffinity?(string value) => value == null ? (StickySessionAffinity?)null : new StickySessionAffinity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

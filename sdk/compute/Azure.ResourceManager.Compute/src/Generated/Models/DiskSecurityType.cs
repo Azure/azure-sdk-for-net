@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskSecurityType?(string value) => value == null ? null : new DiskSecurityType(value);
+        public static implicit operator DiskSecurityType?(string value) => value == null ? (DiskSecurityType?)null : new DiskSecurityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

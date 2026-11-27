@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultStorageClassType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultStorageClassType?(string value) => value == null ? null : new CommvaultStorageClassType(value);
+        public static implicit operator CommvaultStorageClassType?(string value) => value == null ? (CommvaultStorageClassType?)null : new CommvaultStorageClassType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

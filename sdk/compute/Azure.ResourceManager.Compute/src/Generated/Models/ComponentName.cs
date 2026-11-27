@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComponentName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentName?(string value) => value == null ? null : new ComponentName(value);
+        public static implicit operator ComponentName?(string value) => value == null ? (ComponentName?)null : new ComponentName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

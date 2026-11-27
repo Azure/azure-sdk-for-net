@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GalleryImageVersionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GalleryImageVersionState?(string value) => value == null ? null : new GalleryImageVersionState(value);
+        public static implicit operator GalleryImageVersionState?(string value) => value == null ? (GalleryImageVersionState?)null : new GalleryImageVersionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

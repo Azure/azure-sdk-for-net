@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="BulkActionVMOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BulkActionVMOperationStatus?(string value) => value == null ? null : new BulkActionVMOperationStatus(value);
+        public static implicit operator BulkActionVMOperationStatus?(string value) => value == null ? (BulkActionVMOperationStatus?)null : new BulkActionVMOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

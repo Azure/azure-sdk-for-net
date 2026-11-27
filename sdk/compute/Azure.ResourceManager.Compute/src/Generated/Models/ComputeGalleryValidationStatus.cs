@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeGalleryValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeGalleryValidationStatus?(string value) => value == null ? null : new ComputeGalleryValidationStatus(value);
+        public static implicit operator ComputeGalleryValidationStatus?(string value) => value == null ? (ComputeGalleryValidationStatus?)null : new ComputeGalleryValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputeEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeEncryptionType?(string value) => value == null ? null : new ComputeEncryptionType(value);
+        public static implicit operator ComputeEncryptionType?(string value) => value == null ? (ComputeEncryptionType?)null : new ComputeEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

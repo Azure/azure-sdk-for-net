@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialVmEncryptionType?(string value) => value == null ? null : new ConfidentialVmEncryptionType(value);
+        public static implicit operator ConfidentialVmEncryptionType?(string value) => value == null ? (ConfidentialVmEncryptionType?)null : new ConfidentialVmEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

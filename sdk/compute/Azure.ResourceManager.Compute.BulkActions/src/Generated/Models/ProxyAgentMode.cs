@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ProxyAgentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProxyAgentMode?(string value) => value == null ? null : new ProxyAgentMode(value);
+        public static implicit operator ProxyAgentMode?(string value) => value == null ? (ProxyAgentMode?)null : new ProxyAgentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

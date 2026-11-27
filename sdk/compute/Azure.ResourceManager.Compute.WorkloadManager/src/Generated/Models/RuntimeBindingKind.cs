@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeBindingKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeBindingKind?(string value) => value == null ? null : new RuntimeBindingKind(value);
+        public static implicit operator RuntimeBindingKind?(string value) => value == null ? (RuntimeBindingKind?)null : new RuntimeBindingKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Converts a string to a <see cref="RuntimeBindingProvisioningMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeBindingProvisioningMode?(string value) => value == null ? null : new RuntimeBindingProvisioningMode(value);
+        public static implicit operator RuntimeBindingProvisioningMode?(string value) => value == null ? (RuntimeBindingProvisioningMode?)null : new RuntimeBindingProvisioningMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

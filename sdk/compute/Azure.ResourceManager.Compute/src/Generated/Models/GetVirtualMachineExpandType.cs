@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="GetVirtualMachineExpandType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GetVirtualMachineExpandType?(string value) => value == null ? null : new GetVirtualMachineExpandType(value);
+        public static implicit operator GetVirtualMachineExpandType?(string value) => value == null ? (GetVirtualMachineExpandType?)null : new GetVirtualMachineExpandType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

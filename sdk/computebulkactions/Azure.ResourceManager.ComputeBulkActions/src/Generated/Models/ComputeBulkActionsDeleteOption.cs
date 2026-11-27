@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsDeleteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsDeleteOption?(string value) => value == null ? null : new ComputeBulkActionsDeleteOption(value);
+        public static implicit operator ComputeBulkActionsDeleteOption?(string value) => value == null ? (ComputeBulkActionsDeleteOption?)null : new ComputeBulkActionsDeleteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

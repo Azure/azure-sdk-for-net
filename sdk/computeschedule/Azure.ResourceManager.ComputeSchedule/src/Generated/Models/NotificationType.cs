@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="NotificationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationType?(string value) => value == null ? null : new NotificationType(value);
+        public static implicit operator NotificationType?(string value) => value == null ? (NotificationType?)null : new NotificationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

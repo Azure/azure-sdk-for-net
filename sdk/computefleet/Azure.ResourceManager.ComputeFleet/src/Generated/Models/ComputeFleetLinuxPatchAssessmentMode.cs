@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetLinuxPatchAssessmentMode?(string value) => value == null ? null : new ComputeFleetLinuxPatchAssessmentMode(value);
+        public static implicit operator ComputeFleetLinuxPatchAssessmentMode?(string value) => value == null ? (ComputeFleetLinuxPatchAssessmentMode?)null : new ComputeFleetLinuxPatchAssessmentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

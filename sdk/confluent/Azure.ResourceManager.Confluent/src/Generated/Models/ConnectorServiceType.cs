@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConnectorServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorServiceType?(string value) => value == null ? null : new ConnectorServiceType(value);
+        public static implicit operator ConnectorServiceType?(string value) => value == null ? (ConnectorServiceType?)null : new ConnectorServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

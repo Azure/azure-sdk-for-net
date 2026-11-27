@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ResilientVmDeletionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilientVmDeletionStatus?(string value) => value == null ? null : new ResilientVmDeletionStatus(value);
+        public static implicit operator ResilientVmDeletionStatus?(string value) => value == null ? (ResilientVmDeletionStatus?)null : new ResilientVmDeletionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

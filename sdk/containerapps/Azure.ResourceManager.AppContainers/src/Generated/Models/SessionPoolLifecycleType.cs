@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="SessionPoolLifecycleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionPoolLifecycleType?(string value) => value == null ? null : new SessionPoolLifecycleType(value);
+        public static implicit operator SessionPoolLifecycleType?(string value) => value == null ? (SessionPoolLifecycleType?)null : new SessionPoolLifecycleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

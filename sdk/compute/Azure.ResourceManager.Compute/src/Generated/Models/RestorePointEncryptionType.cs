@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="RestorePointEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestorePointEncryptionType?(string value) => value == null ? null : new RestorePointEncryptionType(value);
+        public static implicit operator RestorePointEncryptionType?(string value) => value == null ? (RestorePointEncryptionType?)null : new RestorePointEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

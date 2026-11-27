@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="UsageDetailsKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UsageDetailsKind?(string value) => value == null ? null : new UsageDetailsKind(value);
+        public static implicit operator UsageDetailsKind?(string value) => value == null ? (UsageDetailsKind?)null : new UsageDetailsKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

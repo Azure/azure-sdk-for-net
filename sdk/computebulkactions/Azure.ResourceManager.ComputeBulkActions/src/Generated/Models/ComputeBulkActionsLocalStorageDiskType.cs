@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsLocalStorageDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsLocalStorageDiskType?(string value) => value == null ? null : new ComputeBulkActionsLocalStorageDiskType(value);
+        public static implicit operator ComputeBulkActionsLocalStorageDiskType?(string value) => value == null ? (ComputeBulkActionsLocalStorageDiskType?)null : new ComputeBulkActionsLocalStorageDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

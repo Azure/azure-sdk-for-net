@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConfluentProvisionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentProvisionState?(string value) => value == null ? null : new ConfluentProvisionState(value);
+        public static implicit operator ConfluentProvisionState?(string value) => value == null ? (ConfluentProvisionState?)null : new ConfluentProvisionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

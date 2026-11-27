@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetVmOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetVmOperationStatus?(string value) => value == null ? null : new ComputeFleetVmOperationStatus(value);
+        public static implicit operator ComputeFleetVmOperationStatus?(string value) => value == null ? (ComputeFleetVmOperationStatus?)null : new ComputeFleetVmOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

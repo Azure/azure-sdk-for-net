@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="RecipientNotificationLanguageCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecipientNotificationLanguageCode?(string value) => value == null ? null : new RecipientNotificationLanguageCode(value);
+        public static implicit operator RecipientNotificationLanguageCode?(string value) => value == null ? (RecipientNotificationLanguageCode?)null : new RecipientNotificationLanguageCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

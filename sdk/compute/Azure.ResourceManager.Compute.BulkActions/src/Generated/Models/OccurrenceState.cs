@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="OccurrenceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OccurrenceState?(string value) => value == null ? null : new OccurrenceState(value);
+        public static implicit operator OccurrenceState?(string value) => value == null ? (OccurrenceState?)null : new OccurrenceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

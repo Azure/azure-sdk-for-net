@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ComputeSchedulePriorityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeSchedulePriorityType?(string value) => value == null ? null : new ComputeSchedulePriorityType(value);
+        public static implicit operator ComputeSchedulePriorityType?(string value) => value == null ? (ComputeSchedulePriorityType?)null : new ComputeSchedulePriorityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

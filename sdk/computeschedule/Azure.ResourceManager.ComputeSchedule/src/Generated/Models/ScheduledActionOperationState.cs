@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionOperationState?(string value) => value == null ? null : new ScheduledActionOperationState(value);
+        public static implicit operator ScheduledActionOperationState?(string value) => value == null ? (ScheduledActionOperationState?)null : new ScheduledActionOperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

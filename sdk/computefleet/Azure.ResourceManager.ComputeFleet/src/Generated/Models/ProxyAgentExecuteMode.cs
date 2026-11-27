@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ProxyAgentExecuteMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProxyAgentExecuteMode?(string value) => value == null ? null : new ProxyAgentExecuteMode(value);
+        public static implicit operator ProxyAgentExecuteMode?(string value) => value == null ? (ProxyAgentExecuteMode?)null : new ProxyAgentExecuteMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

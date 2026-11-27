@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionsResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionsResourceType?(string value) => value == null ? null : new ScheduledActionsResourceType(value);
+        public static implicit operator ScheduledActionsResourceType?(string value) => value == null ? (ScheduledActionsResourceType?)null : new ScheduledActionsResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

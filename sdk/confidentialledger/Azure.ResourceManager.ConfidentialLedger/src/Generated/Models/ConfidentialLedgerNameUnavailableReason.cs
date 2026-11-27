@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ConfidentialLedgerNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerNameUnavailableReason?(string value) => value == null ? null : new ConfidentialLedgerNameUnavailableReason(value);
+        public static implicit operator ConfidentialLedgerNameUnavailableReason?(string value) => value == null ? (ConfidentialLedgerNameUnavailableReason?)null : new ConfidentialLedgerNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

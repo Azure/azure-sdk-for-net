@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetGetExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineScaleSetGetExpand?(string value) => value == null ? null : new VirtualMachineScaleSetGetExpand(value);
+        public static implicit operator VirtualMachineScaleSetGetExpand?(string value) => value == null ? (VirtualMachineScaleSetGetExpand?)null : new VirtualMachineScaleSetGetExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

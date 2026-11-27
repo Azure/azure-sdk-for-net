@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="PriorityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PriorityType?(string value) => value == null ? null : new PriorityType(value);
+        public static implicit operator PriorityType?(string value) => value == null ? (PriorityType?)null : new PriorityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

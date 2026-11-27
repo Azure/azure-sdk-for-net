@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetIPVersion?(string value) => value == null ? null : new ComputeFleetIPVersion(value);
+        public static implicit operator ComputeFleetIPVersion?(string value) => value == null ? (ComputeFleetIPVersion?)null : new ComputeFleetIPVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

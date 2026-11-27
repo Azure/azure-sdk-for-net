@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="DiskStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskStorageAccountType?(string value) => value == null ? null : new DiskStorageAccountType(value);
+        public static implicit operator DiskStorageAccountType?(string value) => value == null ? (DiskStorageAccountType?)null : new DiskStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

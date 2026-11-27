@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="RegularPriorityAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegularPriorityAllocationStrategy?(string value) => value == null ? null : new RegularPriorityAllocationStrategy(value);
+        public static implicit operator RegularPriorityAllocationStrategy?(string value) => value == null ? (RegularPriorityAllocationStrategy?)null : new RegularPriorityAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

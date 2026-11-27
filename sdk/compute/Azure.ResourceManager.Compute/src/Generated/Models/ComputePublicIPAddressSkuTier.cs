@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ComputePublicIPAddressSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputePublicIPAddressSkuTier?(string value) => value == null ? null : new ComputePublicIPAddressSkuTier(value);
+        public static implicit operator ComputePublicIPAddressSkuTier?(string value) => value == null ? (ComputePublicIPAddressSkuTier?)null : new ComputePublicIPAddressSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

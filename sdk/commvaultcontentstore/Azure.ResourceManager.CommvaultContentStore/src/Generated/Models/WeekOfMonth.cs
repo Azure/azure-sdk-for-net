@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="WeekOfMonth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WeekOfMonth?(string value) => value == null ? null : new WeekOfMonth(value);
+        public static implicit operator WeekOfMonth?(string value) => value == null ? (WeekOfMonth?)null : new WeekOfMonth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

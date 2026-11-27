@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Converts a string to a <see cref="ScheduledActionResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionResourceType?(string value) => value == null ? null : new ScheduledActionResourceType(value);
+        public static implicit operator ScheduledActionResourceType?(string value) => value == null ? (ScheduledActionResourceType?)null : new ScheduledActionResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

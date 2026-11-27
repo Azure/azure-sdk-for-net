@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ArchitectureType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArchitectureType?(string value) => value == null ? null : new ArchitectureType(value);
+        public static implicit operator ArchitectureType?(string value) => value == null ? (ArchitectureType?)null : new ArchitectureType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

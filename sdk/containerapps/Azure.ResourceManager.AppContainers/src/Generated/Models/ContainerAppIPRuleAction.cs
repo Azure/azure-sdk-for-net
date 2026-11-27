@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppIPRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppIPRuleAction?(string value) => value == null ? null : new ContainerAppIPRuleAction(value);
+        public static implicit operator ContainerAppIPRuleAction?(string value) => value == null ? (ContainerAppIPRuleAction?)null : new ContainerAppIPRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

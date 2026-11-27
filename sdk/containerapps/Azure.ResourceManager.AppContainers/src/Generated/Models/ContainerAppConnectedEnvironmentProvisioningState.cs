@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppConnectedEnvironmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppConnectedEnvironmentProvisioningState?(string value) => value == null ? null : new ContainerAppConnectedEnvironmentProvisioningState(value);
+        public static implicit operator ContainerAppConnectedEnvironmentProvisioningState?(string value) => value == null ? (ContainerAppConnectedEnvironmentProvisioningState?)null : new ContainerAppConnectedEnvironmentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

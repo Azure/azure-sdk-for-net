@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="HostEndpointSettingsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostEndpointSettingsMode?(string value) => value == null ? null : new HostEndpointSettingsMode(value);
+        public static implicit operator HostEndpointSettingsMode?(string value) => value == null ? (HostEndpointSettingsMode?)null : new HostEndpointSettingsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

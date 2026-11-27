@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppJobTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppJobTriggerType?(string value) => value == null ? null : new ContainerAppJobTriggerType(value);
+        public static implicit operator ContainerAppJobTriggerType?(string value) => value == null ? (ContainerAppJobTriggerType?)null : new ContainerAppJobTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

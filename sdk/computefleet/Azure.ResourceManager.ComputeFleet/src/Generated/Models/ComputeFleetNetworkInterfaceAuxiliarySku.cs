@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetNetworkInterfaceAuxiliarySku?(string value) => value == null ? null : new ComputeFleetNetworkInterfaceAuxiliarySku(value);
+        public static implicit operator ComputeFleetNetworkInterfaceAuxiliarySku?(string value) => value == null ? (ComputeFleetNetworkInterfaceAuxiliarySku?)null : new ComputeFleetNetworkInterfaceAuxiliarySku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Converts a string to a <see cref="ProvisionedBandwidthCopyOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisionedBandwidthCopyOption?(string value) => value == null ? null : new ProvisionedBandwidthCopyOption(value);
+        public static implicit operator ProvisionedBandwidthCopyOption?(string value) => value == null ? (ProvisionedBandwidthCopyOption?)null : new ProvisionedBandwidthCopyOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

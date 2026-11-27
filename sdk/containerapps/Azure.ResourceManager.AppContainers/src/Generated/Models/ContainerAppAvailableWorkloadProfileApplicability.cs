@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppAvailableWorkloadProfileApplicability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppAvailableWorkloadProfileApplicability?(string value) => value == null ? null : new ContainerAppAvailableWorkloadProfileApplicability(value);
+        public static implicit operator ContainerAppAvailableWorkloadProfileApplicability?(string value) => value == null ? (ContainerAppAvailableWorkloadProfileApplicability?)null : new ContainerAppAvailableWorkloadProfileApplicability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

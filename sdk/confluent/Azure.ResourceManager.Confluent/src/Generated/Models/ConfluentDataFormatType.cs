@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Converts a string to a <see cref="ConfluentDataFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentDataFormatType?(string value) => value == null ? null : new ConfluentDataFormatType(value);
+        public static implicit operator ConfluentDataFormatType?(string value) => value == null ? (ConfluentDataFormatType?)null : new ConfluentDataFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

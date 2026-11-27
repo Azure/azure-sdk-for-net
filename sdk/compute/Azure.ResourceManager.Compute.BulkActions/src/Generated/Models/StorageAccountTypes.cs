@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountTypes?(string value) => value == null ? null : new StorageAccountTypes(value);
+        public static implicit operator StorageAccountTypes?(string value) => value == null ? (StorageAccountTypes?)null : new StorageAccountTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

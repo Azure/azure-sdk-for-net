@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Converts a string to a <see cref="CommvaultRoleName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommvaultRoleName?(string value) => value == null ? null : new CommvaultRoleName(value);
+        public static implicit operator CommvaultRoleName?(string value) => value == null ? (CommvaultRoleName?)null : new CommvaultRoleName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

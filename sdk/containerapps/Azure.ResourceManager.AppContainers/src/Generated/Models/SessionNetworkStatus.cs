@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="SessionNetworkStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionNetworkStatus?(string value) => value == null ? null : new SessionNetworkStatus(value);
+        public static implicit operator SessionNetworkStatus?(string value) => value == null ? (SessionNetworkStatus?)null : new SessionNetworkStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

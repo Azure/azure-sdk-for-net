@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="DotNetComponentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DotNetComponentType?(string value) => value == null ? null : new DotNetComponentType(value);
+        public static implicit operator DotNetComponentType?(string value) => value == null ? (DotNetComponentType?)null : new DotNetComponentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Converts a string to a <see cref="ComputeBulkActionsAdditionalUnattendContentPassName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkActionsAdditionalUnattendContentPassName?(string value) => value == null ? null : new ComputeBulkActionsAdditionalUnattendContentPassName(value);
+        public static implicit operator ComputeBulkActionsAdditionalUnattendContentPassName?(string value) => value == null ? (ComputeBulkActionsAdditionalUnattendContentPassName?)null : new ComputeBulkActionsAdditionalUnattendContentPassName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

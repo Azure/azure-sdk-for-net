@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="SessionPoolProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionPoolProvisioningState?(string value) => value == null ? null : new SessionPoolProvisioningState(value);
+        public static implicit operator SessionPoolProvisioningState?(string value) => value == null ? (SessionPoolProvisioningState?)null : new SessionPoolProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod?(string value) => value == null ? null : new ContainerAppOpenIdConnectClientCredentialMethod(value);
+        public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod?(string value) => value == null ? (ContainerAppOpenIdConnectClientCredentialMethod?)null : new ContainerAppOpenIdConnectClientCredentialMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

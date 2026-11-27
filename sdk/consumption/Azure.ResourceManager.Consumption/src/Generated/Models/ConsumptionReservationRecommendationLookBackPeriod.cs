@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Converts a string to a <see cref="ConsumptionReservationRecommendationLookBackPeriod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsumptionReservationRecommendationLookBackPeriod?(string value) => value == null ? null : new ConsumptionReservationRecommendationLookBackPeriod(value);
+        public static implicit operator ConsumptionReservationRecommendationLookBackPeriod?(string value) => value == null ? (ConsumptionReservationRecommendationLookBackPeriod?)null : new ConsumptionReservationRecommendationLookBackPeriod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

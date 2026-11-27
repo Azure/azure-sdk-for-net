@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Converts a string to a <see cref="ComputeFleetCachingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetCachingType?(string value) => value == null ? null : new ComputeFleetCachingType(value);
+        public static implicit operator ComputeFleetCachingType?(string value) => value == null ? (ComputeFleetCachingType?)null : new ComputeFleetCachingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

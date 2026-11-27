@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Converts a string to a <see cref="LogicAppWorkflowKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogicAppWorkflowKind?(string value) => value == null ? null : new LogicAppWorkflowKind(value);
+        public static implicit operator LogicAppWorkflowKind?(string value) => value == null ? (LogicAppWorkflowKind?)null : new LogicAppWorkflowKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
