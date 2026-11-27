@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerAadAdministratorResource"/> object. </returns>
         public virtual MySqlFlexibleServerAadAdministratorResource GetMySqlFlexibleServerAadAdministratorResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerAadAdministratorResource.ValidateResourceId(id);
             return new MySqlFlexibleServerAadAdministratorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerResource"/> object. </returns>
         public virtual MySqlFlexibleServerResource GetMySqlFlexibleServerResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerResource.ValidateResourceId(id);
             return new MySqlFlexibleServerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerBackupResource"/> object. </returns>
         public virtual MySqlFlexibleServerBackupResource GetMySqlFlexibleServerBackupResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerBackupResource.ValidateResourceId(id);
             return new MySqlFlexibleServerBackupResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerBackupV2Resource"/> object. </returns>
         public virtual MySqlFlexibleServerBackupV2Resource GetMySqlFlexibleServerBackupV2Resource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerBackupV2Resource.ValidateResourceId(id);
             return new MySqlFlexibleServerBackupV2Resource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerConfigurationResource"/> object. </returns>
         public virtual MySqlFlexibleServerConfigurationResource GetMySqlFlexibleServerConfigurationResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerConfigurationResource.ValidateResourceId(id);
             return new MySqlFlexibleServerConfigurationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerDatabaseResource"/> object. </returns>
         public virtual MySqlFlexibleServerDatabaseResource GetMySqlFlexibleServerDatabaseResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerDatabaseResource.ValidateResourceId(id);
             return new MySqlFlexibleServerDatabaseResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerFirewallRuleResource"/> object. </returns>
         public virtual MySqlFlexibleServerFirewallRuleResource GetMySqlFlexibleServerFirewallRuleResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerFirewallRuleResource.ValidateResourceId(id);
             return new MySqlFlexibleServerFirewallRuleResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="AdvancedThreatProtectionResource"/> object. </returns>
         public virtual AdvancedThreatProtectionResource GetAdvancedThreatProtectionResource(ResourceIdentifier id)
         {
-            AdvancedThreatProtectionResource.ValidateResourceId(id);
             return new AdvancedThreatProtectionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServersCapabilityResource"/> object. </returns>
         public virtual MySqlFlexibleServersCapabilityResource GetMySqlFlexibleServersCapabilityResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServersCapabilityResource.ValidateResourceId(id);
             return new MySqlFlexibleServersCapabilityResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServerMaintenanceResource"/> object. </returns>
         public virtual MySqlFlexibleServerMaintenanceResource GetMySqlFlexibleServerMaintenanceResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServerMaintenanceResource.ValidateResourceId(id);
             return new MySqlFlexibleServerMaintenanceResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MySqlFlexibleServersPrivateEndpointConnectionResource GetMySqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            MySqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
         }
     }

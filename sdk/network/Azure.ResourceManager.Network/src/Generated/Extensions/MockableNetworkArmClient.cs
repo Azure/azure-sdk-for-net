@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayResource"/> object. </returns>
         public virtual ApplicationGatewayResource GetApplicationGatewayResource(ResourceIdentifier id)
         {
-            ApplicationGatewayResource.ValidateResourceId(id);
             return new ApplicationGatewayResource(Client, id);
         }
 
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
         public virtual ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfoResource(ResourceIdentifier id)
         {
-            ApplicationGatewayAvailableSslOptionsInfoResource.ValidateResourceId(id);
             return new ApplicationGatewayAvailableSslOptionsInfoResource(Client, id);
         }
 
@@ -52,7 +50,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ApplicationGatewayPrivateEndpointConnectionResource GetApplicationGatewayPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ApplicationGatewayPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ApplicationGatewayPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationSecurityGroupResource"/> object. </returns>
         public virtual ApplicationSecurityGroupResource GetApplicationSecurityGroupResource(ResourceIdentifier id)
         {
-            ApplicationSecurityGroupResource.ValidateResourceId(id);
             return new ApplicationSecurityGroupResource(Client, id);
         }
 
@@ -70,7 +66,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> object. </returns>
         public virtual IdentityIntegrationAuthenticationPolicyResource GetIdentityIntegrationAuthenticationPolicyResource(ResourceIdentifier id)
         {
-            IdentityIntegrationAuthenticationPolicyResource.ValidateResourceId(id);
             return new IdentityIntegrationAuthenticationPolicyResource(Client, id);
         }
 
@@ -79,7 +74,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="AzureFirewallResource"/> object. </returns>
         public virtual AzureFirewallResource GetAzureFirewallResource(ResourceIdentifier id)
         {
-            AzureFirewallResource.ValidateResourceId(id);
             return new AzureFirewallResource(Client, id);
         }
 
@@ -88,7 +82,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="BastionHostResource"/> object. </returns>
         public virtual BastionHostResource GetBastionHostResource(ResourceIdentifier id)
         {
-            BastionHostResource.ValidateResourceId(id);
             return new BastionHostResource(Client, id);
         }
 
@@ -97,7 +90,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteProviderPortResource"/> object. </returns>
         public virtual ExpressRouteProviderPortResource GetExpressRouteProviderPortResource(ResourceIdentifier id)
         {
-            ExpressRouteProviderPortResource.ValidateResourceId(id);
             return new ExpressRouteProviderPortResource(Client, id);
         }
 
@@ -106,7 +98,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
         public virtual NetworkInterfaceResource GetNetworkInterfaceResource(ResourceIdentifier id)
         {
-            NetworkInterfaceResource.ValidateResourceId(id);
             return new NetworkInterfaceResource(Client, id);
         }
 
@@ -115,7 +106,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PublicIPAddressResource"/> object. </returns>
         public virtual PublicIPAddressResource GetPublicIPAddressResource(ResourceIdentifier id)
         {
-            PublicIPAddressResource.ValidateResourceId(id);
             return new PublicIPAddressResource(Client, id);
         }
 
@@ -124,7 +114,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="DdosCustomPolicyResource"/> object. </returns>
         public virtual DdosCustomPolicyResource GetDdosCustomPolicyResource(ResourceIdentifier id)
         {
-            DdosCustomPolicyResource.ValidateResourceId(id);
             return new DdosCustomPolicyResource(Client, id);
         }
 
@@ -133,7 +122,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="DdosProtectionPlanResource"/> object. </returns>
         public virtual DdosProtectionPlanResource GetDdosProtectionPlanResource(ResourceIdentifier id)
         {
-            DdosProtectionPlanResource.ValidateResourceId(id);
             return new DdosProtectionPlanResource(Client, id);
         }
 
@@ -142,7 +130,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorizationResource"/> object. </returns>
         public virtual ExpressRouteCircuitAuthorizationResource GetExpressRouteCircuitAuthorizationResource(ResourceIdentifier id)
         {
-            ExpressRouteCircuitAuthorizationResource.ValidateResourceId(id);
             return new ExpressRouteCircuitAuthorizationResource(Client, id);
         }
 
@@ -151,7 +138,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteCircuitResource"/> object. </returns>
         public virtual ExpressRouteCircuitResource GetExpressRouteCircuitResource(ResourceIdentifier id)
         {
-            ExpressRouteCircuitResource.ValidateResourceId(id);
             return new ExpressRouteCircuitResource(Client, id);
         }
 
@@ -160,7 +146,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeeringResource"/> object. </returns>
         public virtual ExpressRouteCircuitPeeringResource GetExpressRouteCircuitPeeringResource(ResourceIdentifier id)
         {
-            ExpressRouteCircuitPeeringResource.ValidateResourceId(id);
             return new ExpressRouteCircuitPeeringResource(Client, id);
         }
 
@@ -169,7 +154,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnectionResource"/> object. </returns>
         public virtual ExpressRouteCircuitConnectionResource GetExpressRouteCircuitConnectionResource(ResourceIdentifier id)
         {
-            ExpressRouteCircuitConnectionResource.ValidateResourceId(id);
             return new ExpressRouteCircuitConnectionResource(Client, id);
         }
 
@@ -178,7 +162,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnectionResource"/> object. </returns>
         public virtual PeerExpressRouteCircuitConnectionResource GetPeerExpressRouteCircuitConnectionResource(ResourceIdentifier id)
         {
-            PeerExpressRouteCircuitConnectionResource.ValidateResourceId(id);
             return new PeerExpressRouteCircuitConnectionResource(Client, id);
         }
 
@@ -187,7 +170,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionResource"/> object. </returns>
         public virtual ExpressRouteCrossConnectionResource GetExpressRouteCrossConnectionResource(ResourceIdentifier id)
         {
-            ExpressRouteCrossConnectionResource.ValidateResourceId(id);
             return new ExpressRouteCrossConnectionResource(Client, id);
         }
 
@@ -196,7 +178,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRoutePortsLocationResource"/> object. </returns>
         public virtual ExpressRoutePortsLocationResource GetExpressRoutePortsLocationResource(ResourceIdentifier id)
         {
-            ExpressRoutePortsLocationResource.ValidateResourceId(id);
             return new ExpressRoutePortsLocationResource(Client, id);
         }
 
@@ -205,7 +186,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRoutePortResource"/> object. </returns>
         public virtual ExpressRoutePortResource GetExpressRoutePortResource(ResourceIdentifier id)
         {
-            ExpressRoutePortResource.ValidateResourceId(id);
             return new ExpressRoutePortResource(Client, id);
         }
 
@@ -214,7 +194,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRoutePortAuthorizationResource"/> object. </returns>
         public virtual ExpressRoutePortAuthorizationResource GetExpressRoutePortAuthorizationResource(ResourceIdentifier id)
         {
-            ExpressRoutePortAuthorizationResource.ValidateResourceId(id);
             return new ExpressRoutePortAuthorizationResource(Client, id);
         }
 
@@ -223,7 +202,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteLagResource"/> object. </returns>
         public virtual ExpressRouteLagResource GetExpressRouteLagResource(ResourceIdentifier id)
         {
-            ExpressRouteLagResource.ValidateResourceId(id);
             return new ExpressRouteLagResource(Client, id);
         }
 
@@ -232,7 +210,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteLagAuthorizationResource"/> object. </returns>
         public virtual ExpressRouteLagAuthorizationResource GetExpressRouteLagAuthorizationResource(ResourceIdentifier id)
         {
-            ExpressRouteLagAuthorizationResource.ValidateResourceId(id);
             return new ExpressRouteLagAuthorizationResource(Client, id);
         }
 
@@ -241,7 +218,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyResource"/> object. </returns>
         public virtual FirewallPolicyResource GetFirewallPolicyResource(ResourceIdentifier id)
         {
-            FirewallPolicyResource.ValidateResourceId(id);
             return new FirewallPolicyResource(Client, id);
         }
 
@@ -250,7 +226,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupResource"/> object. </returns>
         public virtual FirewallPolicyRuleCollectionGroupResource GetFirewallPolicyRuleCollectionGroupResource(ResourceIdentifier id)
         {
-            FirewallPolicyRuleCollectionGroupResource.ValidateResourceId(id);
             return new FirewallPolicyRuleCollectionGroupResource(Client, id);
         }
 
@@ -259,7 +234,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyKubeSelectorGroupResource"/> object. </returns>
         public virtual FirewallPolicyKubeSelectorGroupResource GetFirewallPolicyKubeSelectorGroupResource(ResourceIdentifier id)
         {
-            FirewallPolicyKubeSelectorGroupResource.ValidateResourceId(id);
             return new FirewallPolicyKubeSelectorGroupResource(Client, id);
         }
 
@@ -268,7 +242,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource"/> object. </returns>
         public virtual PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdpsResource(ResourceIdentifier id)
         {
-            PolicySignaturesOverridesForIdpsResource.ValidateResourceId(id);
             return new PolicySignaturesOverridesForIdpsResource(Client, id);
         }
 
@@ -277,7 +250,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyDraftResource"/> object. </returns>
         public virtual FirewallPolicyDraftResource GetFirewallPolicyDraftResource(ResourceIdentifier id)
         {
-            FirewallPolicyDraftResource.ValidateResourceId(id);
             return new FirewallPolicyDraftResource(Client, id);
         }
 
@@ -286,7 +258,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupDraftResource"/> object. </returns>
         public virtual FirewallPolicyRuleCollectionGroupDraftResource GetFirewallPolicyRuleCollectionGroupDraftResource(ResourceIdentifier id)
         {
-            FirewallPolicyRuleCollectionGroupDraftResource.ValidateResourceId(id);
             return new FirewallPolicyRuleCollectionGroupDraftResource(Client, id);
         }
 
@@ -295,7 +266,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="IpamPoolResource"/> object. </returns>
         public virtual IpamPoolResource GetIpamPoolResource(ResourceIdentifier id)
         {
-            IpamPoolResource.ValidateResourceId(id);
             return new IpamPoolResource(Client, id);
         }
 
@@ -304,7 +274,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerResource"/> object. </returns>
         public virtual NetworkManagerResource GetNetworkManagerResource(ResourceIdentifier id)
         {
-            NetworkManagerResource.ValidateResourceId(id);
             return new NetworkManagerResource(Client, id);
         }
 
@@ -313,7 +282,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="StaticCidrResource"/> object. </returns>
         public virtual StaticCidrResource GetStaticCidrResource(ResourceIdentifier id)
         {
-            StaticCidrResource.ValidateResourceId(id);
             return new StaticCidrResource(Client, id);
         }
 
@@ -322,7 +290,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="IPAllocationResource"/> object. </returns>
         public virtual IPAllocationResource GetIPAllocationResource(ResourceIdentifier id)
         {
-            IPAllocationResource.ValidateResourceId(id);
             return new IPAllocationResource(Client, id);
         }
 
@@ -331,7 +298,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="IPGroupResource"/> object. </returns>
         public virtual IPGroupResource GetIPGroupResource(ResourceIdentifier id)
         {
-            IPGroupResource.ValidateResourceId(id);
             return new IPGroupResource(Client, id);
         }
 
@@ -340,7 +306,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="LoadBalancerResource"/> object. </returns>
         public virtual LoadBalancerResource GetLoadBalancerResource(ResourceIdentifier id)
         {
-            LoadBalancerResource.ValidateResourceId(id);
             return new LoadBalancerResource(Client, id);
         }
 
@@ -349,7 +314,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="InboundNatRuleResource"/> object. </returns>
         public virtual InboundNatRuleResource GetInboundNatRuleResource(ResourceIdentifier id)
         {
-            InboundNatRuleResource.ValidateResourceId(id);
             return new InboundNatRuleResource(Client, id);
         }
 
@@ -358,7 +322,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NatGatewayResource"/> object. </returns>
         public virtual NatGatewayResource GetNatGatewayResource(ResourceIdentifier id)
         {
-            NatGatewayResource.ValidateResourceId(id);
             return new NatGatewayResource(Client, id);
         }
 
@@ -367,7 +330,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfigurationResource"/> object. </returns>
         public virtual NetworkInterfaceIPConfigurationResource GetNetworkInterfaceIPConfigurationResource(ResourceIdentifier id)
         {
-            NetworkInterfaceIPConfigurationResource.ValidateResourceId(id);
             return new NetworkInterfaceIPConfigurationResource(Client, id);
         }
 
@@ -376,7 +338,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfigurationResource"/> object. </returns>
         public virtual NetworkInterfaceTapConfigurationResource GetNetworkInterfaceTapConfigurationResource(ResourceIdentifier id)
         {
-            NetworkInterfaceTapConfigurationResource.ValidateResourceId(id);
             return new NetworkInterfaceTapConfigurationResource(Client, id);
         }
 
@@ -385,7 +346,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ManagementGroupNetworkManagerConnectionResource"/> object. </returns>
         public virtual ManagementGroupNetworkManagerConnectionResource GetManagementGroupNetworkManagerConnectionResource(ResourceIdentifier id)
         {
-            ManagementGroupNetworkManagerConnectionResource.ValidateResourceId(id);
             return new ManagementGroupNetworkManagerConnectionResource(Client, id);
         }
 
@@ -394,7 +354,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ConnectivityConfigurationResource"/> object. </returns>
         public virtual ConnectivityConfigurationResource GetConnectivityConfigurationResource(ResourceIdentifier id)
         {
-            ConnectivityConfigurationResource.ValidateResourceId(id);
             return new ConnectivityConfigurationResource(Client, id);
         }
 
@@ -403,7 +362,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkGroupResource"/> object. </returns>
         public virtual NetworkGroupResource GetNetworkGroupResource(ResourceIdentifier id)
         {
-            NetworkGroupResource.ValidateResourceId(id);
             return new NetworkGroupResource(Client, id);
         }
 
@@ -412,7 +370,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkGroupStaticMemberResource"/> object. </returns>
         public virtual NetworkGroupStaticMemberResource GetNetworkGroupStaticMemberResource(ResourceIdentifier id)
         {
-            NetworkGroupStaticMemberResource.ValidateResourceId(id);
             return new NetworkGroupStaticMemberResource(Client, id);
         }
 
@@ -421,7 +378,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerRoutingConfigurationResource"/> object. </returns>
         public virtual NetworkManagerRoutingConfigurationResource GetNetworkManagerRoutingConfigurationResource(ResourceIdentifier id)
         {
-            NetworkManagerRoutingConfigurationResource.ValidateResourceId(id);
             return new NetworkManagerRoutingConfigurationResource(Client, id);
         }
 
@@ -430,7 +386,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerRoutingRulesResource"/> object. </returns>
         public virtual NetworkManagerRoutingRulesResource GetNetworkManagerRoutingRulesResource(ResourceIdentifier id)
         {
-            NetworkManagerRoutingRulesResource.ValidateResourceId(id);
             return new NetworkManagerRoutingRulesResource(Client, id);
         }
 
@@ -439,7 +394,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerRoutingRuleResource"/> object. </returns>
         public virtual NetworkManagerRoutingRuleResource GetNetworkManagerRoutingRuleResource(ResourceIdentifier id)
         {
-            NetworkManagerRoutingRuleResource.ValidateResourceId(id);
             return new NetworkManagerRoutingRuleResource(Client, id);
         }
 
@@ -448,7 +402,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ScopeConnectionResource"/> object. </returns>
         public virtual ScopeConnectionResource GetScopeConnectionResource(ResourceIdentifier id)
         {
-            ScopeConnectionResource.ValidateResourceId(id);
             return new ScopeConnectionResource(Client, id);
         }
 
@@ -457,7 +410,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerConfigurationCommitResource"/> object. </returns>
         public virtual NetworkManagerConfigurationCommitResource GetNetworkManagerConfigurationCommitResource(ResourceIdentifier id)
         {
-            NetworkManagerConfigurationCommitResource.ValidateResourceId(id);
             return new NetworkManagerConfigurationCommitResource(Client, id);
         }
 
@@ -466,7 +418,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="SecurityAdminConfigurationResource"/> object. </returns>
         public virtual SecurityAdminConfigurationResource GetSecurityAdminConfigurationResource(ResourceIdentifier id)
         {
-            SecurityAdminConfigurationResource.ValidateResourceId(id);
             return new SecurityAdminConfigurationResource(Client, id);
         }
 
@@ -475,7 +426,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="AdminRuleGroupResource"/> object. </returns>
         public virtual AdminRuleGroupResource GetAdminRuleGroupResource(ResourceIdentifier id)
         {
-            AdminRuleGroupResource.ValidateResourceId(id);
             return new AdminRuleGroupResource(Client, id);
         }
 
@@ -484,7 +434,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerSecurityUserConfigurationResource"/> object. </returns>
         public virtual NetworkManagerSecurityUserConfigurationResource GetNetworkManagerSecurityUserConfigurationResource(ResourceIdentifier id)
         {
-            NetworkManagerSecurityUserConfigurationResource.ValidateResourceId(id);
             return new NetworkManagerSecurityUserConfigurationResource(Client, id);
         }
 
@@ -493,7 +442,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerSecurityUserRulesResource"/> object. </returns>
         public virtual NetworkManagerSecurityUserRulesResource GetNetworkManagerSecurityUserRulesResource(ResourceIdentifier id)
         {
-            NetworkManagerSecurityUserRulesResource.ValidateResourceId(id);
             return new NetworkManagerSecurityUserRulesResource(Client, id);
         }
 
@@ -502,7 +450,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkManagerSecurityUserRuleResource"/> object. </returns>
         public virtual NetworkManagerSecurityUserRuleResource GetNetworkManagerSecurityUserRuleResource(ResourceIdentifier id)
         {
-            NetworkManagerSecurityUserRuleResource.ValidateResourceId(id);
             return new NetworkManagerSecurityUserRuleResource(Client, id);
         }
 
@@ -511,7 +458,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkProfileResource"/> object. </returns>
         public virtual NetworkProfileResource GetNetworkProfileResource(ResourceIdentifier id)
         {
-            NetworkProfileResource.ValidateResourceId(id);
             return new NetworkProfileResource(Client, id);
         }
 
@@ -520,7 +466,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityGroupResource"/> object. </returns>
         public virtual NetworkSecurityGroupResource GetNetworkSecurityGroupResource(ResourceIdentifier id)
         {
-            NetworkSecurityGroupResource.ValidateResourceId(id);
             return new NetworkSecurityGroupResource(Client, id);
         }
 
@@ -529,7 +474,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="SecurityRuleResource"/> object. </returns>
         public virtual SecurityRuleResource GetSecurityRuleResource(ResourceIdentifier id)
         {
-            SecurityRuleResource.ValidateResourceId(id);
             return new SecurityRuleResource(Client, id);
         }
 
@@ -538,7 +482,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="DefaultSecurityRuleResource"/> object. </returns>
         public virtual DefaultSecurityRuleResource GetDefaultSecurityRuleResource(ResourceIdentifier id)
         {
-            DefaultSecurityRuleResource.ValidateResourceId(id);
             return new DefaultSecurityRuleResource(Client, id);
         }
 
@@ -547,7 +490,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterResource GetNetworkSecurityPerimeterResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterResource(Client, id);
         }
 
@@ -556,7 +498,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ReachabilityAnalysisIntentResource"/> object. </returns>
         public virtual ReachabilityAnalysisIntentResource GetReachabilityAnalysisIntentResource(ResourceIdentifier id)
         {
-            ReachabilityAnalysisIntentResource.ValidateResourceId(id);
             return new ReachabilityAnalysisIntentResource(Client, id);
         }
 
@@ -565,7 +506,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkVerifierWorkspaceResource"/> object. </returns>
         public virtual NetworkVerifierWorkspaceResource GetNetworkVerifierWorkspaceResource(ResourceIdentifier id)
         {
-            NetworkVerifierWorkspaceResource.ValidateResourceId(id);
             return new NetworkVerifierWorkspaceResource(Client, id);
         }
 
@@ -574,7 +514,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ReachabilityAnalysisRunResource"/> object. </returns>
         public virtual ReachabilityAnalysisRunResource GetReachabilityAnalysisRunResource(ResourceIdentifier id)
         {
-            ReachabilityAnalysisRunResource.ValidateResourceId(id);
             return new ReachabilityAnalysisRunResource(Client, id);
         }
 
@@ -583,7 +522,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkVirtualApplianceConnectionResource"/> object. </returns>
         public virtual NetworkVirtualApplianceConnectionResource GetNetworkVirtualApplianceConnectionResource(ResourceIdentifier id)
         {
-            NetworkVirtualApplianceConnectionResource.ValidateResourceId(id);
             return new NetworkVirtualApplianceConnectionResource(Client, id);
         }
 
@@ -592,7 +530,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkVirtualApplianceResource"/> object. </returns>
         public virtual NetworkVirtualApplianceResource GetNetworkVirtualApplianceResource(ResourceIdentifier id)
         {
-            NetworkVirtualApplianceResource.ValidateResourceId(id);
             return new NetworkVirtualApplianceResource(Client, id);
         }
 
@@ -601,7 +538,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualApplianceSiteResource"/> object. </returns>
         public virtual VirtualApplianceSiteResource GetVirtualApplianceSiteResource(ResourceIdentifier id)
         {
-            VirtualApplianceSiteResource.ValidateResourceId(id);
             return new VirtualApplianceSiteResource(Client, id);
         }
 
@@ -610,7 +546,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkWatcherResource"/> object. </returns>
         public virtual NetworkWatcherResource GetNetworkWatcherResource(ResourceIdentifier id)
         {
-            NetworkWatcherResource.ValidateResourceId(id);
             return new NetworkWatcherResource(Client, id);
         }
 
@@ -619,7 +554,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ConnectionAnalyzerResource"/> object. </returns>
         public virtual ConnectionAnalyzerResource GetConnectionAnalyzerResource(ResourceIdentifier id)
         {
-            ConnectionAnalyzerResource.ValidateResourceId(id);
             return new ConnectionAnalyzerResource(Client, id);
         }
 
@@ -628,7 +562,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FlowLogResource"/> object. </returns>
         public virtual FlowLogResource GetFlowLogResource(ResourceIdentifier id)
         {
-            FlowLogResource.ValidateResourceId(id);
             return new FlowLogResource(Client, id);
         }
 
@@ -637,7 +570,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PrivateEndpointResource"/> object. </returns>
         public virtual PrivateEndpointResource GetPrivateEndpointResource(ResourceIdentifier id)
         {
-            PrivateEndpointResource.ValidateResourceId(id);
             return new PrivateEndpointResource(Client, id);
         }
 
@@ -646,7 +578,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PrivateLinkServiceResource"/> object. </returns>
         public virtual PrivateLinkServiceResource GetPrivateLinkServiceResource(ResourceIdentifier id)
         {
-            PrivateLinkServiceResource.ValidateResourceId(id);
             return new PrivateLinkServiceResource(Client, id);
         }
 
@@ -655,7 +586,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkPrivateEndpointConnectionResource"/> object. </returns>
         public virtual NetworkPrivateEndpointConnectionResource GetNetworkPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            NetworkPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new NetworkPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -664,7 +594,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PublicIPPrefixResource"/> object. </returns>
         public virtual PublicIPPrefixResource GetPublicIPPrefixResource(ResourceIdentifier id)
         {
-            PublicIPPrefixResource.ValidateResourceId(id);
             return new PublicIPPrefixResource(Client, id);
         }
 
@@ -673,7 +602,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="RouteFilterResource"/> object. </returns>
         public virtual RouteFilterResource GetRouteFilterResource(ResourceIdentifier id)
         {
-            RouteFilterResource.ValidateResourceId(id);
             return new RouteFilterResource(Client, id);
         }
 
@@ -682,7 +610,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="RouteTableResource"/> object. </returns>
         public virtual RouteTableResource GetRouteTableResource(ResourceIdentifier id)
         {
-            RouteTableResource.ValidateResourceId(id);
             return new RouteTableResource(Client, id);
         }
 
@@ -691,7 +618,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="RouteResource"/> object. </returns>
         public virtual RouteResource GetRouteResource(ResourceIdentifier id)
         {
-            RouteResource.ValidateResourceId(id);
             return new RouteResource(Client, id);
         }
 
@@ -700,7 +626,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="SecurityPartnerProviderResource"/> object. </returns>
         public virtual SecurityPartnerProviderResource GetSecurityPartnerProviderResource(ResourceIdentifier id)
         {
-            SecurityPartnerProviderResource.ValidateResourceId(id);
             return new SecurityPartnerProviderResource(Client, id);
         }
 
@@ -709,7 +634,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ServiceEndpointPolicyResource"/> object. </returns>
         public virtual ServiceEndpointPolicyResource GetServiceEndpointPolicyResource(ResourceIdentifier id)
         {
-            ServiceEndpointPolicyResource.ValidateResourceId(id);
             return new ServiceEndpointPolicyResource(Client, id);
         }
 
@@ -718,7 +642,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinitionResource"/> object. </returns>
         public virtual ServiceEndpointPolicyDefinitionResource GetServiceEndpointPolicyDefinitionResource(ResourceIdentifier id)
         {
-            ServiceEndpointPolicyDefinitionResource.ValidateResourceId(id);
             return new ServiceEndpointPolicyDefinitionResource(Client, id);
         }
 
@@ -727,7 +650,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkResource"/> object. </returns>
         public virtual VirtualNetworkResource GetVirtualNetworkResource(ResourceIdentifier id)
         {
-            VirtualNetworkResource.ValidateResourceId(id);
             return new VirtualNetworkResource(Client, id);
         }
 
@@ -736,7 +658,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="SubnetResource"/> object. </returns>
         public virtual SubnetResource GetSubnetResource(ResourceIdentifier id)
         {
-            SubnetResource.ValidateResourceId(id);
             return new SubnetResource(Client, id);
         }
 
@@ -745,7 +666,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkPeeringResource"/> object. </returns>
         public virtual VirtualNetworkPeeringResource GetVirtualNetworkPeeringResource(ResourceIdentifier id)
         {
-            VirtualNetworkPeeringResource.ValidateResourceId(id);
             return new VirtualNetworkPeeringResource(Client, id);
         }
 
@@ -754,7 +674,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkGatewayResource"/> object. </returns>
         public virtual VirtualNetworkGatewayResource GetVirtualNetworkGatewayResource(ResourceIdentifier id)
         {
-            VirtualNetworkGatewayResource.ValidateResourceId(id);
             return new VirtualNetworkGatewayResource(Client, id);
         }
 
@@ -763,7 +682,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnectionResource"/> object. </returns>
         public virtual VirtualNetworkGatewayConnectionResource GetVirtualNetworkGatewayConnectionResource(ResourceIdentifier id)
         {
-            VirtualNetworkGatewayConnectionResource.ValidateResourceId(id);
             return new VirtualNetworkGatewayConnectionResource(Client, id);
         }
 
@@ -772,7 +690,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="LocalNetworkGatewayResource"/> object. </returns>
         public virtual LocalNetworkGatewayResource GetLocalNetworkGatewayResource(ResourceIdentifier id)
         {
-            LocalNetworkGatewayResource.ValidateResourceId(id);
             return new LocalNetworkGatewayResource(Client, id);
         }
 
@@ -781,7 +698,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRuleResource"/> object. </returns>
         public virtual VirtualNetworkGatewayNatRuleResource GetVirtualNetworkGatewayNatRuleResource(ResourceIdentifier id)
         {
-            VirtualNetworkGatewayNatRuleResource.ValidateResourceId(id);
             return new VirtualNetworkGatewayNatRuleResource(Client, id);
         }
 
@@ -790,7 +706,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkTapResource"/> object. </returns>
         public virtual VirtualNetworkTapResource GetVirtualNetworkTapResource(ResourceIdentifier id)
         {
-            VirtualNetworkTapResource.ValidateResourceId(id);
             return new VirtualNetworkTapResource(Client, id);
         }
 
@@ -799,7 +714,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualRouterResource"/> object. </returns>
         public virtual VirtualRouterResource GetVirtualRouterResource(ResourceIdentifier id)
         {
-            VirtualRouterResource.ValidateResourceId(id);
             return new VirtualRouterResource(Client, id);
         }
 
@@ -808,7 +722,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualRouterPeeringResource"/> object. </returns>
         public virtual VirtualRouterPeeringResource GetVirtualRouterPeeringResource(ResourceIdentifier id)
         {
-            VirtualRouterPeeringResource.ValidateResourceId(id);
             return new VirtualRouterPeeringResource(Client, id);
         }
 
@@ -817,7 +730,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualWanResource"/> object. </returns>
         public virtual VirtualWanResource GetVirtualWanResource(ResourceIdentifier id)
         {
-            VirtualWanResource.ValidateResourceId(id);
             return new VirtualWanResource(Client, id);
         }
 
@@ -826,7 +738,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> object. </returns>
         public virtual VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(Client, id);
         }
 
@@ -835,7 +746,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> object. </returns>
         public virtual VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(Client, id);
         }
 
@@ -844,7 +754,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnSiteResource"/> object. </returns>
         public virtual VpnSiteResource GetVpnSiteResource(ResourceIdentifier id)
         {
-            VpnSiteResource.ValidateResourceId(id);
             return new VpnSiteResource(Client, id);
         }
 
@@ -853,7 +762,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnSiteLinkResource"/> object. </returns>
         public virtual VpnSiteLinkResource GetVpnSiteLinkResource(ResourceIdentifier id)
         {
-            VpnSiteLinkResource.ValidateResourceId(id);
             return new VpnSiteLinkResource(Client, id);
         }
 
@@ -862,7 +770,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnServerConfigurationResource"/> object. </returns>
         public virtual VpnServerConfigurationResource GetVpnServerConfigurationResource(ResourceIdentifier id)
         {
-            VpnServerConfigurationResource.ValidateResourceId(id);
             return new VpnServerConfigurationResource(Client, id);
         }
 
@@ -871,7 +778,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualHubResource"/> object. </returns>
         public virtual VirtualHubResource GetVirtualHubResource(ResourceIdentifier id)
         {
-            VirtualHubResource.ValidateResourceId(id);
             return new VirtualHubResource(Client, id);
         }
 
@@ -880,7 +786,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="RouteMapResource"/> object. </returns>
         public virtual RouteMapResource GetRouteMapResource(ResourceIdentifier id)
         {
-            RouteMapResource.ValidateResourceId(id);
             return new RouteMapResource(Client, id);
         }
 
@@ -889,7 +794,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnGatewayResource"/> object. </returns>
         public virtual VpnGatewayResource GetVpnGatewayResource(ResourceIdentifier id)
         {
-            VpnGatewayResource.ValidateResourceId(id);
             return new VpnGatewayResource(Client, id);
         }
 
@@ -898,7 +802,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnSiteLinkConnectionResource"/> object. </returns>
         public virtual VpnSiteLinkConnectionResource GetVpnSiteLinkConnectionResource(ResourceIdentifier id)
         {
-            VpnSiteLinkConnectionResource.ValidateResourceId(id);
             return new VpnSiteLinkConnectionResource(Client, id);
         }
 
@@ -907,7 +810,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteGatewayResource"/> object. </returns>
         public virtual ExpressRouteGatewayResource GetExpressRouteGatewayResource(ResourceIdentifier id)
         {
-            ExpressRouteGatewayResource.ValidateResourceId(id);
             return new ExpressRouteGatewayResource(Client, id);
         }
 
@@ -916,7 +818,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="HubRouteTableResource"/> object. </returns>
         public virtual HubRouteTableResource GetHubRouteTableResource(ResourceIdentifier id)
         {
-            HubRouteTableResource.ValidateResourceId(id);
             return new HubRouteTableResource(Client, id);
         }
 
@@ -925,7 +826,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ConnectionPolicyResource"/> object. </returns>
         public virtual ConnectionPolicyResource GetConnectionPolicyResource(ResourceIdentifier id)
         {
-            ConnectionPolicyResource.ValidateResourceId(id);
             return new ConnectionPolicyResource(Client, id);
         }
 
@@ -934,7 +834,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicyResource"/> object. </returns>
         public virtual WebApplicationFirewallPolicyResource GetWebApplicationFirewallPolicyResource(ResourceIdentifier id)
         {
-            WebApplicationFirewallPolicyResource.ValidateResourceId(id);
             return new WebApplicationFirewallPolicyResource(Client, id);
         }
 
@@ -943,7 +842,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkApplianceResource"/> object. </returns>
         public virtual VirtualNetworkApplianceResource GetVirtualNetworkApplianceResource(ResourceIdentifier id)
         {
-            VirtualNetworkApplianceResource.ValidateResourceId(id);
             return new VirtualNetworkApplianceResource(Client, id);
         }
 
@@ -952,7 +850,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkApplianceCapabilityResource"/> object. </returns>
         public virtual VirtualNetworkApplianceCapabilityResource GetVirtualNetworkApplianceCapabilityResource(ResourceIdentifier id)
         {
-            VirtualNetworkApplianceCapabilityResource.ValidateResourceId(id);
             return new VirtualNetworkApplianceCapabilityResource(Client, id);
         }
 
@@ -961,7 +858,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ServiceGatewayResource"/> object. </returns>
         public virtual ServiceGatewayResource GetServiceGatewayResource(ResourceIdentifier id)
         {
-            ServiceGatewayResource.ValidateResourceId(id);
             return new ServiceGatewayResource(Client, id);
         }
 
@@ -970,7 +866,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="InterconnectGroupResource"/> object. </returns>
         public virtual InterconnectGroupResource GetInterconnectGroupResource(ResourceIdentifier id)
         {
-            InterconnectGroupResource.ValidateResourceId(id);
             return new InterconnectGroupResource(Client, id);
         }
 
@@ -979,7 +874,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="InterconnectGroupSubgroupResource"/> object. </returns>
         public virtual InterconnectGroupSubgroupResource GetInterconnectGroupSubgroupResource(ResourceIdentifier id)
         {
-            InterconnectGroupSubgroupResource.ValidateResourceId(id);
             return new InterconnectGroupSubgroupResource(Client, id);
         }
 
@@ -988,7 +882,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirstPartyServiceTagResource"/> object. </returns>
         public virtual FirstPartyServiceTagResource GetFirstPartyServiceTagResource(ResourceIdentifier id)
         {
-            FirstPartyServiceTagResource.ValidateResourceId(id);
             return new FirstPartyServiceTagResource(Client, id);
         }
 
@@ -997,7 +890,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="AddressPrefixSetResource"/> object. </returns>
         public virtual AddressPrefixSetResource GetAddressPrefixSetResource(ResourceIdentifier id)
         {
-            AddressPrefixSetResource.ValidateResourceId(id);
             return new AddressPrefixSetResource(Client, id);
         }
 
@@ -1006,7 +898,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource"/> object. </returns>
         public virtual ApplicationGatewayWafDynamicManifestResource GetApplicationGatewayWafDynamicManifestResource(ResourceIdentifier id)
         {
-            ApplicationGatewayWafDynamicManifestResource.ValidateResourceId(id);
             return new ApplicationGatewayWafDynamicManifestResource(Client, id);
         }
 
@@ -1015,7 +906,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="AzureWebCategoryResource"/> object. </returns>
         public virtual AzureWebCategoryResource GetAzureWebCategoryResource(ResourceIdentifier id)
         {
-            AzureWebCategoryResource.ValidateResourceId(id);
             return new AzureWebCategoryResource(Client, id);
         }
 
@@ -1024,7 +914,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="CloudServiceSwapResource"/> object. </returns>
         public virtual CloudServiceSwapResource GetCloudServiceSwapResource(ResourceIdentifier id)
         {
-            CloudServiceSwapResource.ValidateResourceId(id);
             return new CloudServiceSwapResource(Client, id);
         }
 
@@ -1059,7 +948,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="CustomIPPrefixResource"/> object. </returns>
         public virtual CustomIPPrefixResource GetCustomIPPrefixResource(ResourceIdentifier id)
         {
-            CustomIPPrefixResource.ValidateResourceId(id);
             return new CustomIPPrefixResource(Client, id);
         }
 
@@ -1068,7 +956,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="DscpConfigurationResource"/> object. </returns>
         public virtual DscpConfigurationResource GetDscpConfigurationResource(ResourceIdentifier id)
         {
-            DscpConfigurationResource.ValidateResourceId(id);
             return new DscpConfigurationResource(Client, id);
         }
 
@@ -1077,7 +964,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeeringResource"/> object. </returns>
         public virtual ExpressRouteCrossConnectionPeeringResource GetExpressRouteCrossConnectionPeeringResource(ResourceIdentifier id)
         {
-            ExpressRouteCrossConnectionPeeringResource.ValidateResourceId(id);
             return new ExpressRouteCrossConnectionPeeringResource(Client, id);
         }
 
@@ -1086,7 +972,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteLinkResource"/> object. </returns>
         public virtual ExpressRouteLinkResource GetExpressRouteLinkResource(ResourceIdentifier id)
         {
-            ExpressRouteLinkResource.ValidateResourceId(id);
             return new ExpressRouteLinkResource(Client, id);
         }
 
@@ -1095,7 +980,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="BackendAddressPoolResource"/> object. </returns>
         public virtual BackendAddressPoolResource GetBackendAddressPoolResource(ResourceIdentifier id)
         {
-            BackendAddressPoolResource.ValidateResourceId(id);
             return new BackendAddressPoolResource(Client, id);
         }
 
@@ -1104,7 +988,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FrontendIPConfigurationResource"/> object. </returns>
         public virtual FrontendIPConfigurationResource GetFrontendIPConfigurationResource(ResourceIdentifier id)
         {
-            FrontendIPConfigurationResource.ValidateResourceId(id);
             return new FrontendIPConfigurationResource(Client, id);
         }
 
@@ -1113,7 +996,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="LoadBalancingRuleResource"/> object. </returns>
         public virtual LoadBalancingRuleResource GetLoadBalancingRuleResource(ResourceIdentifier id)
         {
-            LoadBalancingRuleResource.ValidateResourceId(id);
             return new LoadBalancingRuleResource(Client, id);
         }
 
@@ -1122,7 +1004,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="OutboundRuleResource"/> object. </returns>
         public virtual OutboundRuleResource GetOutboundRuleResource(ResourceIdentifier id)
         {
-            OutboundRuleResource.ValidateResourceId(id);
             return new OutboundRuleResource(Client, id);
         }
 
@@ -1131,7 +1012,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ProbeResource"/> object. </returns>
         public virtual ProbeResource GetProbeResource(ResourceIdentifier id)
         {
-            ProbeResource.ValidateResourceId(id);
             return new ProbeResource(Client, id);
         }
 
@@ -1140,7 +1020,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="SubscriptionNetworkManagerConnectionResource"/> object. </returns>
         public virtual SubscriptionNetworkManagerConnectionResource GetSubscriptionNetworkManagerConnectionResource(ResourceIdentifier id)
         {
-            SubscriptionNetworkManagerConnectionResource.ValidateResourceId(id);
             return new SubscriptionNetworkManagerConnectionResource(Client, id);
         }
 
@@ -1149,7 +1028,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="BaseAdminRuleResource"/> object. </returns>
         public virtual BaseAdminRuleResource GetBaseAdminRuleResource(ResourceIdentifier id)
         {
-            BaseAdminRuleResource.ValidateResourceId(id);
             return new BaseAdminRuleResource(Client, id);
         }
 
@@ -1158,7 +1036,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterProfileResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterProfileResource GetNetworkSecurityPerimeterProfileResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterProfileResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterProfileResource(Client, id);
         }
 
@@ -1167,7 +1044,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterAccessRuleResource GetNetworkSecurityPerimeterAccessRuleResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterAccessRuleResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterAccessRuleResource(Client, id);
         }
 
@@ -1176,7 +1052,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterAssociationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterAssociationResource GetNetworkSecurityPerimeterAssociationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterAssociationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterAssociationResource(Client, id);
         }
 
@@ -1185,7 +1060,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterLinkResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterLinkResource GetNetworkSecurityPerimeterLinkResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterLinkResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterLinkResource(Client, id);
         }
 
@@ -1194,7 +1068,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterLinkReferenceResource GetNetworkSecurityPerimeterLinkReferenceResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterLinkReferenceResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterLinkReferenceResource(Client, id);
         }
 
@@ -1203,7 +1076,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterLoggingConfigurationResource GetNetworkSecurityPerimeterLoggingConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterLoggingConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterLoggingConfigurationResource(Client, id);
         }
 
@@ -1212,7 +1084,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSkuResource"/> object. </returns>
         public virtual NetworkVirtualApplianceSkuResource GetNetworkVirtualApplianceSkuResource(ResourceIdentifier id)
         {
-            NetworkVirtualApplianceSkuResource.ValidateResourceId(id);
             return new NetworkVirtualApplianceSkuResource(Client, id);
         }
 
@@ -1221,7 +1092,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="InboundSecurityRuleResource"/> object. </returns>
         public virtual InboundSecurityRuleResource GetInboundSecurityRuleResource(ResourceIdentifier id)
         {
-            InboundSecurityRuleResource.ValidateResourceId(id);
             return new InboundSecurityRuleResource(Client, id);
         }
 
@@ -1230,7 +1100,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PacketCaptureResource"/> object. </returns>
         public virtual PacketCaptureResource GetPacketCaptureResource(ResourceIdentifier id)
         {
-            PacketCaptureResource.ValidateResourceId(id);
             return new PacketCaptureResource(Client, id);
         }
 
@@ -1239,7 +1108,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ConnectionMonitorResource"/> object. </returns>
         public virtual ConnectionMonitorResource GetConnectionMonitorResource(ResourceIdentifier id)
         {
-            ConnectionMonitorResource.ValidateResourceId(id);
             return new ConnectionMonitorResource(Client, id);
         }
 
@@ -1248,7 +1116,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PrivateDnsZoneGroupResource"/> object. </returns>
         public virtual PrivateDnsZoneGroupResource GetPrivateDnsZoneGroupResource(ResourceIdentifier id)
         {
-            PrivateDnsZoneGroupResource.ValidateResourceId(id);
             return new PrivateDnsZoneGroupResource(Client, id);
         }
 
@@ -1257,7 +1124,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="RouteFilterRuleResource"/> object. </returns>
         public virtual RouteFilterRuleResource GetRouteFilterRuleResource(ResourceIdentifier id)
         {
-            RouteFilterRuleResource.ValidateResourceId(id);
             return new RouteFilterRuleResource(Client, id);
         }
 
@@ -1266,7 +1132,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> object. </returns>
         public virtual VirtualMachineScaleSetNetworkInterfaceResource GetVirtualMachineScaleSetNetworkInterfaceResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetNetworkInterfaceResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetNetworkInterfaceResource(Client, id);
         }
 
@@ -1275,7 +1140,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnServerConfigurationPolicyGroupResource"/> object. </returns>
         public virtual VpnServerConfigurationPolicyGroupResource GetVpnServerConfigurationPolicyGroupResource(ResourceIdentifier id)
         {
-            VpnServerConfigurationPolicyGroupResource.ValidateResourceId(id);
             return new VpnServerConfigurationPolicyGroupResource(Client, id);
         }
 
@@ -1284,7 +1148,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="HubVirtualNetworkConnectionResource"/> object. </returns>
         public virtual HubVirtualNetworkConnectionResource GetHubVirtualNetworkConnectionResource(ResourceIdentifier id)
         {
-            HubVirtualNetworkConnectionResource.ValidateResourceId(id);
             return new HubVirtualNetworkConnectionResource(Client, id);
         }
 
@@ -1293,7 +1156,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2Resource"/> object. </returns>
         public virtual VirtualHubRouteTableV2Resource GetVirtualHubRouteTableV2Resource(ResourceIdentifier id)
         {
-            VirtualHubRouteTableV2Resource.ValidateResourceId(id);
             return new VirtualHubRouteTableV2Resource(Client, id);
         }
 
@@ -1302,7 +1164,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnConnectionResource"/> object. </returns>
         public virtual VpnConnectionResource GetVpnConnectionResource(ResourceIdentifier id)
         {
-            VpnConnectionResource.ValidateResourceId(id);
             return new VpnConnectionResource(Client, id);
         }
 
@@ -1311,7 +1172,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnLinkConnectionSharedKeyResource"/> object. </returns>
         public virtual VpnLinkConnectionSharedKeyResource GetVpnLinkConnectionSharedKeyResource(ResourceIdentifier id)
         {
-            VpnLinkConnectionSharedKeyResource.ValidateResourceId(id);
             return new VpnLinkConnectionSharedKeyResource(Client, id);
         }
 
@@ -1320,7 +1180,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnGatewayNatRuleResource"/> object. </returns>
         public virtual VpnGatewayNatRuleResource GetVpnGatewayNatRuleResource(ResourceIdentifier id)
         {
-            VpnGatewayNatRuleResource.ValidateResourceId(id);
             return new VpnGatewayNatRuleResource(Client, id);
         }
 
@@ -1329,7 +1188,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="P2SVpnGatewayResource"/> object. </returns>
         public virtual P2SVpnGatewayResource GetP2SVpnGatewayResource(ResourceIdentifier id)
         {
-            P2SVpnGatewayResource.ValidateResourceId(id);
             return new P2SVpnGatewayResource(Client, id);
         }
 
@@ -1338,7 +1196,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ExpressRouteConnectionResource"/> object. </returns>
         public virtual ExpressRouteConnectionResource GetExpressRouteConnectionResource(ResourceIdentifier id)
         {
-            ExpressRouteConnectionResource.ValidateResourceId(id);
             return new ExpressRouteConnectionResource(Client, id);
         }
 
@@ -1347,7 +1204,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="BgpConnectionResource"/> object. </returns>
         public virtual BgpConnectionResource GetBgpConnectionResource(ResourceIdentifier id)
         {
-            BgpConnectionResource.ValidateResourceId(id);
             return new BgpConnectionResource(Client, id);
         }
 
@@ -1356,7 +1212,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="HubIPConfigurationResource"/> object. </returns>
         public virtual HubIPConfigurationResource GetHubIPConfigurationResource(ResourceIdentifier id)
         {
-            HubIPConfigurationResource.ValidateResourceId(id);
             return new HubIPConfigurationResource(Client, id);
         }
 
@@ -1365,7 +1220,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="RoutingIntentResource"/> object. </returns>
         public virtual RoutingIntentResource GetRoutingIntentResource(ResourceIdentifier id)
         {
-            RoutingIntentResource.ValidateResourceId(id);
             return new RoutingIntentResource(Client, id);
         }
     }

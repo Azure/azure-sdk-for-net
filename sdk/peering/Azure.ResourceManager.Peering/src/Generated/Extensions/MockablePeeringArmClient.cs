@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="PeerAsnResource"/> object. </returns>
         public virtual PeerAsnResource GetPeerAsnResource(ResourceIdentifier id)
         {
-            PeerAsnResource.ValidateResourceId(id);
             return new PeerAsnResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="PeeringResource"/> object. </returns>
         public virtual PeeringResource GetPeeringResource(ResourceIdentifier id)
         {
-            PeeringResource.ValidateResourceId(id);
             return new PeeringResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="ConnectionMonitorTestResource"/> object. </returns>
         public virtual ConnectionMonitorTestResource GetConnectionMonitorTestResource(ResourceIdentifier id)
         {
-            ConnectionMonitorTestResource.ValidateResourceId(id);
             return new ConnectionMonitorTestResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="PeeringServiceResource"/> object. </returns>
         public virtual PeeringServiceResource GetPeeringServiceResource(ResourceIdentifier id)
         {
-            PeeringServiceResource.ValidateResourceId(id);
             return new PeeringServiceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="PeeringRegisteredAsnResource"/> object. </returns>
         public virtual PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(ResourceIdentifier id)
         {
-            PeeringRegisteredAsnResource.ValidateResourceId(id);
             return new PeeringRegisteredAsnResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource"/> object. </returns>
         public virtual PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(ResourceIdentifier id)
         {
-            PeeringRegisteredPrefixResource.ValidateResourceId(id);
             return new PeeringRegisteredPrefixResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> Returns a <see cref="PeeringServicePrefixResource"/> object. </returns>
         public virtual PeeringServicePrefixResource GetPeeringServicePrefixResource(ResourceIdentifier id)
         {
-            PeeringServicePrefixResource.ValidateResourceId(id);
             return new PeeringServicePrefixResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> Returns a <see cref="NewRelicObservabilityTagRuleResource"/> object. </returns>
         public virtual NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(ResourceIdentifier id)
         {
-            NewRelicObservabilityTagRuleResource.ValidateResourceId(id);
             return new NewRelicObservabilityTagRuleResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> Returns a <see cref="NewRelicMonitoredSubscriptionResource"/> object. </returns>
         public virtual NewRelicMonitoredSubscriptionResource GetNewRelicMonitoredSubscriptionResource(ResourceIdentifier id)
         {
-            NewRelicMonitoredSubscriptionResource.ValidateResourceId(id);
             return new NewRelicMonitoredSubscriptionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> Returns a <see cref="NewRelicMonitorResource"/> object. </returns>
         public virtual NewRelicMonitorResource GetNewRelicMonitorResource(ResourceIdentifier id)
         {
-            NewRelicMonitorResource.ValidateResourceId(id);
             return new NewRelicMonitorResource(Client, id);
         }
     }

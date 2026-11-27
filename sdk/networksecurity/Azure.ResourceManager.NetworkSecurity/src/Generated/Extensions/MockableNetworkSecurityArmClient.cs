@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <returns> Returns a <see cref="NeuroShieldResource"/> object. </returns>
         public virtual NeuroShieldResource GetNeuroShieldResource(ResourceIdentifier id)
         {
-            NeuroShieldResource.ValidateResourceId(id);
             return new NeuroShieldResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <returns> Returns a <see cref="NeuroShieldSummaryResource"/> object. </returns>
         public virtual NeuroShieldSummaryResource GetNeuroShieldSummaryResource(ResourceIdentifier id)
         {
-            NeuroShieldSummaryResource.ValidateResourceId(id);
             return new NeuroShieldSummaryResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <returns> Returns a <see cref="NeuroShieldProtectedResource"/> object. </returns>
         public virtual NeuroShieldProtectedResource GetNeuroShieldProtectedResource(ResourceIdentifier id)
         {
-            NeuroShieldProtectedResource.ValidateResourceId(id);
             return new NeuroShieldProtectedResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <returns> Returns a <see cref="NeuroShieldFindingResource"/> object. </returns>
         public virtual NeuroShieldFindingResource GetNeuroShieldFindingResource(ResourceIdentifier id)
         {
-            NeuroShieldFindingResource.ValidateResourceId(id);
             return new NeuroShieldFindingResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <returns> Returns a <see cref="NeuroShieldMitigationResource"/> object. </returns>
         public virtual NeuroShieldMitigationResource GetNeuroShieldMitigationResource(ResourceIdentifier id)
         {
-            NeuroShieldMitigationResource.ValidateResourceId(id);
             return new NeuroShieldMitigationResource(Client, id);
         }
     }

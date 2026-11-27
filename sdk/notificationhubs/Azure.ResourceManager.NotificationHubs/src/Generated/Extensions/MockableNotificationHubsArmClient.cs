@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> Returns a <see cref="NotificationHubResource"/> object. </returns>
         public virtual NotificationHubResource GetNotificationHubResource(ResourceIdentifier id)
         {
-            NotificationHubResource.ValidateResourceId(id);
             return new NotificationHubResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> object. </returns>
         public virtual NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier id)
         {
-            NotificationHubNamespaceAuthorizationRuleResource.ValidateResourceId(id);
             return new NotificationHubNamespaceAuthorizationRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> Returns a <see cref="NotificationHubNamespaceResource"/> object. </returns>
         public virtual NotificationHubNamespaceResource GetNotificationHubNamespaceResource(ResourceIdentifier id)
         {
-            NotificationHubNamespaceResource.ValidateResourceId(id);
             return new NotificationHubNamespaceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource"/> object. </returns>
         public virtual NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(ResourceIdentifier id)
         {
-            NotificationHubAuthorizationRuleResource.ValidateResourceId(id);
             return new NotificationHubAuthorizationRuleResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> Returns a <see cref="NotificationHubPrivateEndpointConnectionResource"/> object. </returns>
         public virtual NotificationHubPrivateEndpointConnectionResource GetNotificationHubPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            NotificationHubPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new NotificationHubPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> Returns a <see cref="NotificationHubsPrivateLinkResource"/> object. </returns>
         public virtual NotificationHubsPrivateLinkResource GetNotificationHubsPrivateLinkResource(ResourceIdentifier id)
         {
-            NotificationHubsPrivateLinkResource.ValidateResourceId(id);
             return new NotificationHubsPrivateLinkResource(Client, id);
         }
     }

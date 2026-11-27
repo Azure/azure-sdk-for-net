@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppResourceQuotaLimitsAccountResource"/> object. </returns>
         public virtual NetAppResourceQuotaLimitsAccountResource GetNetAppResourceQuotaLimitsAccountResource(ResourceIdentifier id)
         {
-            NetAppResourceQuotaLimitsAccountResource.ValidateResourceId(id);
             return new NetAppResourceQuotaLimitsAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppVolumeGroupResource"/> object. </returns>
         public virtual NetAppVolumeGroupResource GetNetAppVolumeGroupResource(ResourceIdentifier id)
         {
-            NetAppVolumeGroupResource.ValidateResourceId(id);
             return new NetAppVolumeGroupResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
         public virtual NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(ResourceIdentifier id)
         {
-            NetAppBackupVaultBackupResource.ValidateResourceId(id);
             return new NetAppBackupVaultBackupResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppVolumeResource"/> object. </returns>
         public virtual NetAppVolumeResource GetNetAppVolumeResource(ResourceIdentifier id)
         {
-            NetAppVolumeResource.ValidateResourceId(id);
             return new NetAppVolumeResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppVolumeSnapshotResource"/> object. </returns>
         public virtual NetAppVolumeSnapshotResource GetNetAppVolumeSnapshotResource(ResourceIdentifier id)
         {
-            NetAppVolumeSnapshotResource.ValidateResourceId(id);
             return new NetAppVolumeSnapshotResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="SnapshotPolicyResource"/> object. </returns>
         public virtual SnapshotPolicyResource GetSnapshotPolicyResource(ResourceIdentifier id)
         {
-            SnapshotPolicyResource.ValidateResourceId(id);
             return new SnapshotPolicyResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppBackupPolicyResource"/> object. </returns>
         public virtual NetAppBackupPolicyResource GetNetAppBackupPolicyResource(ResourceIdentifier id)
         {
-            NetAppBackupPolicyResource.ValidateResourceId(id);
             return new NetAppBackupPolicyResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppVolumeQuotaRuleResource"/> object. </returns>
         public virtual NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(ResourceIdentifier id)
         {
-            NetAppVolumeQuotaRuleResource.ValidateResourceId(id);
             return new NetAppVolumeQuotaRuleResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="RansomwareReportResource"/> object. </returns>
         public virtual RansomwareReportResource GetRansomwareReportResource(ResourceIdentifier id)
         {
-            RansomwareReportResource.ValidateResourceId(id);
             return new RansomwareReportResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppBackupVaultResource"/> object. </returns>
         public virtual NetAppBackupVaultResource GetNetAppBackupVaultResource(ResourceIdentifier id)
         {
-            NetAppBackupVaultResource.ValidateResourceId(id);
             return new NetAppBackupVaultResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
         public virtual NetAppBucketResource GetNetAppBucketResource(ResourceIdentifier id)
         {
-            NetAppBucketResource.ValidateResourceId(id);
             return new NetAppBucketResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppCacheResource"/> object. </returns>
         public virtual NetAppCacheResource GetNetAppCacheResource(ResourceIdentifier id)
         {
-            NetAppCacheResource.ValidateResourceId(id);
             return new NetAppCacheResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppSubscriptionQuotaItemResource"/> object. </returns>
         public virtual NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(ResourceIdentifier id)
         {
-            NetAppSubscriptionQuotaItemResource.ValidateResourceId(id);
             return new NetAppSubscriptionQuotaItemResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="RegionInfoResource"/> object. </returns>
         public virtual RegionInfoResource GetRegionInfoResource(ResourceIdentifier id)
         {
-            RegionInfoResource.ValidateResourceId(id);
             return new RegionInfoResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="NetAppAccountResource"/> object. </returns>
         public virtual NetAppAccountResource GetNetAppAccountResource(ResourceIdentifier id)
         {
-            NetAppAccountResource.ValidateResourceId(id);
             return new NetAppAccountResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="CapacityPoolResource"/> object. </returns>
         public virtual CapacityPoolResource GetCapacityPoolResource(ResourceIdentifier id)
         {
-            CapacityPoolResource.ValidateResourceId(id);
             return new CapacityPoolResource(Client, id);
         }
     }
