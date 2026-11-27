@@ -1,14 +1,13 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2026-11-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version from `2026-07-15` to `2026-09-01`.
+- Added `VmApplicationResource`, `VmApplicationCollection`, and `VmApplicationData` to manage VM applications on hybrid machines, accessible via `HybridComputeMachineResource.GetVmApplications()`.
+- Added `ClientPublicKey` property to `HybridComputeMachinePatch`.
+- Added `TpmTransition` value to `HybridComputeIdentityKeyStore`.
 
 ## 1.1.0 (2026-07-31)
 
