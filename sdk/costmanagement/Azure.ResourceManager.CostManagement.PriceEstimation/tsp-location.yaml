@@ -1,0 +1,6 @@
+directory: specification/cost-management/resource-manager/Microsoft.CostManagement/PriceEstimation
+commit: 6f85bbb3b12e33f8b08eebcf220a4fb8086fffb1
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
