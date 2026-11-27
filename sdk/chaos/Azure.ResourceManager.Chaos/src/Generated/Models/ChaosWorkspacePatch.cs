@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ChaosWorkspacePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="properties"> The resource-specific fields to update. Omitted fields are unchanged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosWorkspacePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosWorkspacePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, WorkspaceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,32 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The resource-specific fields to update. Omitted fields are unchanged. </summary>
+        internal WorkspaceUpdateProperties Properties { get; set; }
+
+        /// <summary>
+        /// The customer key configuration to merge on a CMK-created Workspace.
+        /// Null deletion is rejected on CMK and is a no-op only when already absent
+        /// on a Microsoft-managed Workspace. An empty object retains an existing
+        /// complete pair without a lookup when neither member changes, but is invalid
+        /// when the merged pair is incomplete. Unsupported mode changes are rejected
+        /// before vault lookup, operation creation, desired mutation, or Storage effects.
+        /// </summary>
+        public WorkspaceCustomerManagedKeyEncryptionPatch WorkspaceUpdateCustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceUpdateProperties();
+                }
+                Properties.CustomerManagedKeyEncryption = value;
+            }
+        }
     }
 }

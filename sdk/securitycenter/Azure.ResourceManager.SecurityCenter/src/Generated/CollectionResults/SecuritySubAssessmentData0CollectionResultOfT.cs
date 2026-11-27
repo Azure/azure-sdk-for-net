@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _context) : _client.CreateGetAllRequest(_scope, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListAllRequest(nextLink, _scope, _context) : _client.CreateListAllRequest(_scope, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

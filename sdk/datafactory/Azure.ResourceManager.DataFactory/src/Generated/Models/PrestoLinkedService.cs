@@ -49,8 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverVersion"/> is null. </exception>
         public PrestoLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, PrestoAuthenticationType authenticationType) : this(host, catalog, authenticationType)
         {
+            Argument.AssertNotNull(serverVersion, nameof(serverVersion));
+
             ServerVersion = serverVersion;
         }
 

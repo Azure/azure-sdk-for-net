@@ -109,11 +109,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("certificateIssuer"u8);
                 writer.WriteStringValue(CertificateIssuer);
             }
-            if (Optional.IsDefined(DstsPrincipal))
-            {
-                writer.WritePropertyName("dstsPrincipal"u8);
-                writer.WriteStringValue(DstsPrincipal);
-            }
             if (options.Format != "W" && Optional.IsDefined(DataPlaneEndpoint))
             {
                 writer.WritePropertyName("dataPlaneEndpoint"u8);
@@ -177,7 +172,6 @@ namespace Azure.ResourceManager.Chaos.Models
             Guid? tenantId = default;
             string certificateSubjectName = default;
             string certificateIssuer = default;
-            string dstsPrincipal = default;
             Uri dataPlaneEndpoint = default;
             ChaosConnectionStatus? status = default;
             ChaosProvisioningState? provisioningState = default;
@@ -222,11 +216,6 @@ namespace Azure.ResourceManager.Chaos.Models
                     certificateIssuer = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dstsPrincipal"u8))
-                {
-                    dstsPrincipal = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("dataPlaneEndpoint"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -266,7 +255,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 tenantId,
                 certificateSubjectName,
                 certificateIssuer,
-                dstsPrincipal,
                 dataPlaneEndpoint,
                 status,
                 provisioningState,

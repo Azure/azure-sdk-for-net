@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -43,8 +44,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorProperties"/>. </summary>
         /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
         /// <param name="hostType"> Host cloud the public cloud connector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="awsCloudProfile"/> is null. </exception>
         public PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType) : this(hostType)
         {
+            Argument.AssertNotNull(awsCloudProfile, nameof(awsCloudProfile));
+
             AwsCloudProfile = awsCloudProfile;
         }
 

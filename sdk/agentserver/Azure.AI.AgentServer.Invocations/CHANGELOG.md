@@ -6,11 +6,15 @@
 
 ### Breaking Changes
 
+- Voice `agentserver.connection` spans are no longer sent to the Agent365 exporter. `Microsoft.OpenTelemetry` 1.0.4 exports only GenAI spans (spans with a supported `gen_ai.operation.name`) to Agent365. Per-turn voice spans (`invoke_agent`) are still exported to Agent365, and Azure Monitor and OTLP exports are unchanged. This matches the Python `azure-ai-agentserver-invocations` package.
+
 ### Bugs Fixed
 
 - Malformed original-subject metadata now returns a platform `400` response even when the host does not install Core middleware.
 
 ### Other Changes
+
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`. This fixes the `MissingMethodException` that hosted agents hit at startup when Agent365 export is enabled.
 
 ## 1.0.0-beta.8 (2026-10-28)
 

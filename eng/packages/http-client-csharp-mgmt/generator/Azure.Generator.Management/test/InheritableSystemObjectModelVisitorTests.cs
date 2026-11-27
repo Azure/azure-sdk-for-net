@@ -20,6 +20,31 @@ namespace Azure.Generator.Mgmt.Tests
 {
     public class InheritableSystemObjectModelVisitorTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ResourceTypeStringAliasKeepsItsOriginalBody(bool required)
+        {
+            var resourceType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
+            var baseProperty = InputFactory.Property("resourceType", resourceType, isRequired: required, isReadOnly: true, serializedName: "type");
+            baseProperty.Update(originalName: "type");
+            var baseModel = InputFactory.Model("NetworkTrackedResourceData", properties: [baseProperty],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var alias = InputFactory.Property("type", InputPrimitiveType.String, isRequired: required, isReadOnly: true, serializedName: "type");
+            var model = InputFactory.Model("ExpressRouteLagData", properties: [alias], baseModel: baseModel,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, model]);
+
+            var provider = new ScmModelProvider(model);
+            var property = provider.Properties.Single(property => property.Name == "Type");
+            var originalBody = property.Body;
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+
+            visitor.InvokePreVisitModel(model, provider);
+
+            Assert.That(property.Type.WithNullable(false), Is.EqualTo(new CSharpType(typeof(string))));
+            Assert.That(provider.Properties.Single(property => property.Name == "Type").Body, Is.SameAs(originalBody));
+        }
+
         [Test]
         public void EnsureFrameworkTypeRegistered_RegistersBothTypes()
         {

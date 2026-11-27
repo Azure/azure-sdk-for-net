@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityContent CheckNameAvailabilityContent(string name = default, string @type = default)
         {
-            return new CheckNameAvailabilityRequest(name, @type, default);
+            return new CheckNameAvailabilityContent(name, @type, default);
         }
 
         /// <summary> The check availability result. </summary>
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new OrderProperties(productId, amount, provisioningState, default);
         }
 
-        /// <summary> The ExportRequest. </summary>
+        /// <summary> The ExportContent. </summary>
         /// <param name="format"> Format of the exported order. </param>
-        /// <returns> A new <see cref="Models.ExportRequest"/> instance for mocking. </returns>
-        public static ExportRequest ExportRequest(string format = default)
+        /// <returns> A new <see cref="Models.ExportContent"/> instance for mocking. </returns>
+        public static ExportContent ExportContent(string format = default)
         {
-            return new ExportRequest(format, default);
+            return new ExportContent(format, default);
         }
 
         /// <summary> The ExportResult. </summary>
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new WidgetProperties(name, description, provisioningState, default);
         }
 
-        /// <summary> The ActionRequest. </summary>
+        /// <summary> The ActionContent. </summary>
         /// <param name="actionType"> The action type to perform. </param>
         /// <param name="parameters"> Additional action parameters. </param>
-        /// <returns> A new <see cref="Models.ActionRequest"/> instance for mocking. </returns>
-        public static ActionRequest ActionRequest(string actionType = default, string parameters = default)
+        /// <returns> A new <see cref="Models.ActionContent"/> instance for mocking. </returns>
+        public static ActionContent ActionContent(string actionType = default, string parameters = default)
         {
-            return new ActionRequest(actionType, parameters, default);
+            return new ActionContent(actionType, parameters, default);
         }
 
         /// <summary> The ActionResult. </summary>
@@ -207,13 +207,13 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ActionResult(result, default);
         }
 
-        /// <summary> The ChangeAllowanceRequest. </summary>
+        /// <summary> The ChangeAllowanceContent. </summary>
         /// <param name="totalAllowed"> The new total allowed widgets. </param>
         /// <param name="reason"> The reason for the change. </param>
-        /// <returns> A new <see cref="Models.ChangeAllowanceRequest"/> instance for mocking. </returns>
-        public static ChangeAllowanceRequest ChangeAllowanceRequest(int? totalAllowed = default, string reason = default)
+        /// <returns> A new <see cref="Models.ChangeAllowanceContent"/> instance for mocking. </returns>
+        public static ChangeAllowanceContent ChangeAllowanceContent(int? totalAllowed = default, string reason = default)
         {
-            return new ChangeAllowanceRequest(totalAllowed, reason, default);
+            return new ChangeAllowanceContent(totalAllowed, reason, default);
         }
 
         /// <summary> The ChangeAllowanceResult. </summary>
@@ -258,12 +258,12 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new MonitorProperties(status, provisioningState, default);
         }
 
-        /// <summary> The LogStatusRequest. </summary>
+        /// <summary> The LogStatusContent. </summary>
         /// <param name="filter"> Filter for the monitored resources. </param>
-        /// <returns> A new <see cref="Models.LogStatusRequest"/> instance for mocking. </returns>
-        public static LogStatusRequest LogStatusRequest(string filter = default)
+        /// <returns> A new <see cref="Models.LogStatusContent"/> instance for mocking. </returns>
+        public static LogStatusContent LogStatusContent(string filter = default)
         {
-            return new LogStatusRequest(filter, default);
+            return new LogStatusContent(filter, default);
         }
 
         /// <summary> The MonitoredResource. </summary>

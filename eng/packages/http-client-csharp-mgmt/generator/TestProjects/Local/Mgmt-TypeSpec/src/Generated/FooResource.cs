@@ -434,7 +434,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<FooActionResult>> FooActionAsync(WaitUntil waitUntil, FooActionRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FooActionResult>> FooActionAsync(WaitUntil waitUntil, FooActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -446,7 +446,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<FooActionResult> operation = new TestsArmOperation<FooActionResult>(
                     new FooActionResultOperationSource(),
@@ -494,7 +494,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<FooActionResult> FooAction(WaitUntil waitUntil, FooActionRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FooActionResult> FooAction(WaitUntil waitUntil, FooActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -506,7 +506,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<FooActionResult> operation = new TestsArmOperation<FooActionResult>(
                     new FooActionResultOperationSource(),

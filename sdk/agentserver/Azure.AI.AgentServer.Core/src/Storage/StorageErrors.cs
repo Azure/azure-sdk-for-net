@@ -5,6 +5,8 @@ using System;
 using System.Text.Json;
 using Azure;
 
+#pragma warning disable AAAS004 // Maps service failures to the experimental storage exceptions.
+
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary>

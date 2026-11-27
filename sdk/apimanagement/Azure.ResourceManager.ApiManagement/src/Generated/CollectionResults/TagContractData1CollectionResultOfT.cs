@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByProductRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _productId, _filter, _top, _skip, _context) : _client.CreateGetByProductRequest(_subscriptionId, _resourceGroupName, _serviceName, _productId, _filter, _top, _skip, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByProductRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _productId, _filter, _top, _skip, _context) : _client.CreateListByProductRequest(_subscriptionId, _resourceGroupName, _serviceName, _productId, _filter, _top, _skip, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

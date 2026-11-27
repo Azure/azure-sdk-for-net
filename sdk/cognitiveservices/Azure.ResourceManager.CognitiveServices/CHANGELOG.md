@@ -1,5 +1,15 @@
 # Release History
 
+## 1.8.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.7.0 (2026-11-13)
 
 ### Features Added
@@ -7,8 +17,9 @@
 - Upgraded API version to 2026-11-01.
 - Added `CognitiveServicesAccountProperties.TrustedCertificateSources` to trust private CA certificate bundles stored in Azure Key Vault.
 - Added RAI policy egress configuration through `RaiPolicyProperties.EgressPolicy`.
-- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription.
-- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
+- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription, with `deploymentId` typed as `Azure.Core.ResourceIdentifier` and `location` typed as `Azure.Core.AzureLocation?` for both synchronous and asynchronous calls.
+- Added the extensible `CognitiveServicesManagedComputeCapacityOfferScope` type for `CognitiveServicesManagedComputeCapacityProperties.OfferScope`, with known values `Global` and `DataZone` and support for unknown values.
+- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId` typed as `Azure.Core.ResourceIdentifier`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
 
 ### Breaking Changes
 

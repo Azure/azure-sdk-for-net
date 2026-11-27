@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _context) : _client.CreateGetByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _context) : _client.CreateListByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

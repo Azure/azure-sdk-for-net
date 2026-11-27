@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="remediationUri"> The remediation uri. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceStateError(ResourceIdentifier resourceId, int errorCode, string errorMessage, string remediationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceStateError(ResourceIdentifier resourceId, string errorCode, string errorMessage, string remediationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ErrorCode = errorCode;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The error code. </summary>
-        public int ErrorCode { get; }
+        public string ErrorCode { get; }
 
         /// <summary> The error message. </summary>
         public string ErrorMessage { get; }

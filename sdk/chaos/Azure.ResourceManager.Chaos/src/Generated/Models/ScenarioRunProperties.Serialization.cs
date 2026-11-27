@@ -134,6 +134,16 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (ScenarioRunWarning item in Warnings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ExecutionErrors))
             {
                 writer.WritePropertyName("executionErrors"u8);
@@ -220,6 +230,7 @@ namespace Azure.ResourceManager.Chaos.Models
             IReadOnlyList<ScenarioRunResource> resources = default;
             IReadOnlyList<ScenarioRunResource> excludedResources = default;
             IReadOnlyList<ChaosOperationError> errors = default;
+            IReadOnlyList<ScenarioRunWarning> warnings = default;
             ScenarioErrors executionErrors = default;
             string scenarioRunJson = default;
             IReadOnlyList<ScenarioRunSummaryAction> scenarioRunSummary = default;
@@ -297,6 +308,20 @@ namespace Azure.ResourceManager.Chaos.Models
                     errors = array;
                     continue;
                 }
+                if (prop.NameEquals("warnings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ScenarioRunWarning> array = new List<ScenarioRunWarning>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ScenarioRunWarning.DeserializeScenarioRunWarning(item, options));
+                    }
+                    warnings = array;
+                    continue;
+                }
                 if (prop.NameEquals("executionErrors"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -363,6 +388,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 resources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 excludedResources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),
+                warnings ?? new ChangeTrackingList<ScenarioRunWarning>(),
                 executionErrors,
                 scenarioRunJson,
                 scenarioRunSummary ?? new ChangeTrackingList<ScenarioRunSummaryAction>(),

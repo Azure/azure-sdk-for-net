@@ -34,6 +34,16 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(KeyVaultNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(KeyVaultNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(KeyVaultNetworkRuleSet))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterAccessRule))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterAccessRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterAccessRuleSubscription))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterConfiguration))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterProvisioningIssue))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityPerimeterResourceAssociation))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultNetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(KeyVaultPatch))]
     [ModelReaderWriterBuildable(typeof(KeyVaultPatchProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultPrivateEndpointConnectionData))]
@@ -86,8 +96,11 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(SecretPatchProperties))]
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TokenBindingConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultListResult))]
+    [ModelReaderWriterBuildable(typeof(WrappingKeyConfiguration))]
+    [ModelReaderWriterBuildable(typeof(WrappingKeyValue))]
     public partial class AzureResourceManagerKeyVaultContext : ModelReaderWriterContext
     {
     }
