@@ -6,14 +6,12 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProfessionalService;
 using Azure.ResourceManager.ProfessionalService.Models;
 using Azure.ResourceManager.Resources;
@@ -25,8 +23,6 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
     {
         private ClientDiagnostics _professionalServiceSubscriptionLevelGlobalClientDiagnostics;
         private ProfessionalServiceSubscriptionLevelGlobal _professionalServiceSubscriptionLevelGlobalRestClient;
-        private ClientDiagnostics _professionalServiceOperationStatusesClientDiagnostics;
-        private ProfessionalServiceOperationStatuses _professionalServiceOperationStatusesRestClient;
 
         /// <summary> Initializes a new instance of MockableProfessionalServiceSubscriptionResource for mocking. </summary>
         protected MockableProfessionalServiceSubscriptionResource()
@@ -49,10 +45,6 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
             Endpoint,
             "2026-05-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-
-        private ClientDiagnostics ProfessionalServiceOperationStatusesClientDiagnostics => _professionalServiceOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProfessionalService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ProfessionalServiceOperationStatuses ProfessionalServiceOperationStatusesRestClient => _professionalServiceOperationStatusesRestClient ??= new ProfessionalServiceOperationStatuses(ProfessionalServiceOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
 
         /// <summary>
         /// Lists all Professional Service resources within an Azure subscription.
@@ -289,104 +281,6 @@ namespace Azure.ResourceManager.ProfessionalService.Mocking
                 HttpMessage message = ProfessionalServiceSubscriptionLevelGlobalRestClient.CreateValidatePurchaseBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), ProfessionalServicePurchaseValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProfessionalServiceValidationResult> response = Response.FromValue(ProfessionalServiceValidationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running Professional Service operation at the subscription scope. All async operations, including resource-group-scoped ones, poll through this endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProfessionalService/operationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProfessionalServiceOperationStatuses_GetSubscriptionOperationStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetSubscriptionOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ProfessionalServiceOperationStatusesClientDiagnostics.CreateScope("MockableProfessionalServiceSubscriptionResource.GetSubscriptionOperationStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProfessionalServiceOperationStatusesRestClient.CreateGetSubscriptionOperationStatusRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerProfessionalServiceContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of a long-running Professional Service operation at the subscription scope. All async operations, including resource-group-scoped ones, poll through this endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProfessionalService/operationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProfessionalServiceOperationStatuses_GetSubscriptionOperationStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> GetSubscriptionOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ProfessionalServiceOperationStatusesClientDiagnostics.CreateScope("MockableProfessionalServiceSubscriptionResource.GetSubscriptionOperationStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProfessionalServiceOperationStatusesRestClient.CreateGetSubscriptionOperationStatusRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerProfessionalServiceContext.Default), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
