@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningInputDeliveryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningInputDeliveryMode?(string value) => value == null ? null : new MachineLearningInputDeliveryMode(value);
+        public static implicit operator MachineLearningInputDeliveryMode?(string value) => value == null ? (MachineLearningInputDeliveryMode?)null : new MachineLearningInputDeliveryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

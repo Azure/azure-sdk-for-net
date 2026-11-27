@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultNetworkSecurityPerimeterProvisioningIssueType?(string value) => value == null ? null : new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(value);
+        public static implicit operator KeyVaultNetworkSecurityPerimeterProvisioningIssueType?(string value) => value == null ? (KeyVaultNetworkSecurityPerimeterProvisioningIssueType?)null : new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

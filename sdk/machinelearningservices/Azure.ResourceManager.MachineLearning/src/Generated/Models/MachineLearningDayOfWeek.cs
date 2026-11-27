@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningDayOfWeek?(string value) => value == null ? null : new MachineLearningDayOfWeek(value);
+        public static implicit operator MachineLearningDayOfWeek?(string value) => value == null ? (MachineLearningDayOfWeek?)null : new MachineLearningDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

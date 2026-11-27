@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningNetwork"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningNetwork?(string value) => value == null ? null : new MachineLearningNetwork(value);
+        public static implicit operator MachineLearningNetwork?(string value) => value == null ? (MachineLearningNetwork?)null : new MachineLearningNetwork(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

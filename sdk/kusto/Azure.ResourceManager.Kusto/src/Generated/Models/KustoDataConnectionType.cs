@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoDataConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoDataConnectionType?(string value) => value == null ? null : new KustoDataConnectionType(value);
+        public static implicit operator KustoDataConnectionType?(string value) => value == null ? (KustoDataConnectionType?)null : new KustoDataConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

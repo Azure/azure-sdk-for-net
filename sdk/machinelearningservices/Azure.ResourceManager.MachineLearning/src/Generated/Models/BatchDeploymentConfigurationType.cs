@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="BatchDeploymentConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchDeploymentConfigurationType?(string value) => value == null ? null : new BatchDeploymentConfigurationType(value);
+        public static implicit operator BatchDeploymentConfigurationType?(string value) => value == null ? (BatchDeploymentConfigurationType?)null : new BatchDeploymentConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

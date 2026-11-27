@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoScaleType?(string value) => value == null ? null : new KustoScaleType(value);
+        public static implicit operator KustoScaleType?(string value) => value == null ? (KustoScaleType?)null : new KustoScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

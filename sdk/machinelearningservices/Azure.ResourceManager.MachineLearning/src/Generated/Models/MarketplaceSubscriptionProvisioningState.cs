@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceSubscriptionProvisioningState?(string value) => value == null ? null : new MarketplaceSubscriptionProvisioningState(value);
+        public static implicit operator MarketplaceSubscriptionProvisioningState?(string value) => value == null ? (MarketplaceSubscriptionProvisioningState?)null : new MarketplaceSubscriptionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

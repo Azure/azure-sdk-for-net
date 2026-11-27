@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="SparkJobEntryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SparkJobEntryType?(string value) => value == null ? null : new SparkJobEntryType(value);
+        public static implicit operator SparkJobEntryType?(string value) => value == null ? (SparkJobEntryType?)null : new SparkJobEntryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

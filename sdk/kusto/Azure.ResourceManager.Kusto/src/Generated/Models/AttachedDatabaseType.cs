@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="AttachedDatabaseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttachedDatabaseType?(string value) => value == null ? null : new AttachedDatabaseType(value);
+        public static implicit operator AttachedDatabaseType?(string value) => value == null ? (AttachedDatabaseType?)null : new AttachedDatabaseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

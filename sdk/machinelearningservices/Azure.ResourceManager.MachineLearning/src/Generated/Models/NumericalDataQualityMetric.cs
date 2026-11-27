@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="NumericalDataQualityMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NumericalDataQualityMetric?(string value) => value == null ? null : new NumericalDataQualityMetric(value);
+        public static implicit operator NumericalDataQualityMetric?(string value) => value == null ? (NumericalDataQualityMetric?)null : new NumericalDataQualityMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

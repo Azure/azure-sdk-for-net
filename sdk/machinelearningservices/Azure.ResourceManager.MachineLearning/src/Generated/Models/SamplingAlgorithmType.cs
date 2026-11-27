@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="SamplingAlgorithmType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SamplingAlgorithmType?(string value) => value == null ? null : new SamplingAlgorithmType(value);
+        public static implicit operator SamplingAlgorithmType?(string value) => value == null ? (SamplingAlgorithmType?)null : new SamplingAlgorithmType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

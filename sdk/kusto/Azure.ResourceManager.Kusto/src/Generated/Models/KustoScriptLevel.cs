@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoScriptLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoScriptLevel?(string value) => value == null ? null : new KustoScriptLevel(value);
+        public static implicit operator KustoScriptLevel?(string value) => value == null ? (KustoScriptLevel?)null : new KustoScriptLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <summary> Converts a string to a <see cref="FluxConfigurationProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FluxConfigurationProviderType?(string value) => value == null ? null : new FluxConfigurationProviderType(value);
+        public static implicit operator FluxConfigurationProviderType?(string value) => value == null ? (FluxConfigurationProviderType?)null : new FluxConfigurationProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

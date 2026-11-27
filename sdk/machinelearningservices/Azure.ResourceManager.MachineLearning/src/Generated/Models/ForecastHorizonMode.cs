@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ForecastHorizonMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForecastHorizonMode?(string value) => value == null ? null : new ForecastHorizonMode(value);
+        public static implicit operator ForecastHorizonMode?(string value) => value == null ? (ForecastHorizonMode?)null : new ForecastHorizonMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

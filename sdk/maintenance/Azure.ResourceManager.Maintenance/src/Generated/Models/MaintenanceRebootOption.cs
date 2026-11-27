@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceRebootOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceRebootOption?(string value) => value == null ? null : new MaintenanceRebootOption(value);
+        public static implicit operator MaintenanceRebootOption?(string value) => value == null ? (MaintenanceRebootOption?)null : new MaintenanceRebootOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

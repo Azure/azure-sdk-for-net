@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningServiceDataAccessAuthIdentity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningServiceDataAccessAuthIdentity?(string value) => value == null ? null : new MachineLearningServiceDataAccessAuthIdentity(value);
+        public static implicit operator MachineLearningServiceDataAccessAuthIdentity?(string value) => value == null ? (MachineLearningServiceDataAccessAuthIdentity?)null : new MachineLearningServiceDataAccessAuthIdentity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

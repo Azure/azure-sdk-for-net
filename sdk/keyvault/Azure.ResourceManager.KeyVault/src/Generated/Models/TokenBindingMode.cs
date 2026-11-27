@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="TokenBindingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TokenBindingMode?(string value) => value == null ? null : new TokenBindingMode(value);
+        public static implicit operator TokenBindingMode?(string value) => value == null ? (TokenBindingMode?)null : new TokenBindingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

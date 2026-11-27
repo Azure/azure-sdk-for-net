@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="DataConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataConnectionKind?(string value) => value == null ? null : new DataConnectionKind(value);
+        public static implicit operator DataConnectionKind?(string value) => value == null ? (DataConnectionKind?)null : new DataConnectionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="IdentityAccessKeyPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IdentityAccessKeyPermission?(string value) => value == null ? null : new IdentityAccessKeyPermission(value);
+        public static implicit operator IdentityAccessKeyPermission?(string value) => value == null ? (IdentityAccessKeyPermission?)null : new IdentityAccessKeyPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

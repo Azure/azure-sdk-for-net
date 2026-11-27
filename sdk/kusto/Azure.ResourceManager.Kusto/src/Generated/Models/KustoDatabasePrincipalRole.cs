@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoDatabasePrincipalRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoDatabasePrincipalRole?(string value) => value == null ? null : new KustoDatabasePrincipalRole(value);
+        public static implicit operator KustoDatabasePrincipalRole?(string value) => value == null ? (KustoDatabasePrincipalRole?)null : new KustoDatabasePrincipalRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

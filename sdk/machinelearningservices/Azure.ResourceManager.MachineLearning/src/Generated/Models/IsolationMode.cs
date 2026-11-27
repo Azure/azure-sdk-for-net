@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="IsolationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsolationMode?(string value) => value == null ? null : new IsolationMode(value);
+        public static implicit operator IsolationMode?(string value) => value == null ? (IsolationMode?)null : new IsolationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="NCrossValidationsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NCrossValidationsMode?(string value) => value == null ? null : new NCrossValidationsMode(value);
+        public static implicit operator NCrossValidationsMode?(string value) => value == null ? (NCrossValidationsMode?)null : new NCrossValidationsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

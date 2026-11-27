@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoDatabaseShareOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoDatabaseShareOrigin?(string value) => value == null ? null : new KustoDatabaseShareOrigin(value);
+        public static implicit operator KustoDatabaseShareOrigin?(string value) => value == null ? (KustoDatabaseShareOrigin?)null : new KustoDatabaseShareOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

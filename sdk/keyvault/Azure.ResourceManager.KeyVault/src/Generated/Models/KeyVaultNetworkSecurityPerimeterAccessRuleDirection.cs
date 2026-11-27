@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultNetworkSecurityPerimeterAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultNetworkSecurityPerimeterAccessRuleDirection?(string value) => value == null ? null : new KeyVaultNetworkSecurityPerimeterAccessRuleDirection(value);
+        public static implicit operator KeyVaultNetworkSecurityPerimeterAccessRuleDirection?(string value) => value == null ? (KeyVaultNetworkSecurityPerimeterAccessRuleDirection?)null : new KeyVaultNetworkSecurityPerimeterAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

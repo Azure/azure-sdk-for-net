@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="SecretsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretsType?(string value) => value == null ? null : new SecretsType(value);
+        public static implicit operator SecretsType?(string value) => value == null ? (SecretsType?)null : new SecretsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="OneLakeArtifactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OneLakeArtifactType?(string value) => value == null ? null : new OneLakeArtifactType(value);
+        public static implicit operator OneLakeArtifactType?(string value) => value == null ? (OneLakeArtifactType?)null : new OneLakeArtifactType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

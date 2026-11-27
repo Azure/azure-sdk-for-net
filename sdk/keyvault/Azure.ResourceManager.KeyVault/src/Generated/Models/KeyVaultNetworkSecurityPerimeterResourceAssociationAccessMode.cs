@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? null : new KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode(value);
+        public static implicit operator KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? (KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode?)null : new KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

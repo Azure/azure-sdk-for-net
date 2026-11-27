@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceAuthorizationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningComputeInstanceAuthorizationType?(string value) => value == null ? null : new MachineLearningComputeInstanceAuthorizationType(value);
+        public static implicit operator MachineLearningComputeInstanceAuthorizationType?(string value) => value == null ? (MachineLearningComputeInstanceAuthorizationType?)null : new MachineLearningComputeInstanceAuthorizationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

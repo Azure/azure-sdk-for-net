@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningMountAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningMountAction?(string value) => value == null ? null : new MachineLearningMountAction(value);
+        public static implicit operator MachineLearningMountAction?(string value) => value == null ? (MachineLearningMountAction?)null : new MachineLearningMountAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

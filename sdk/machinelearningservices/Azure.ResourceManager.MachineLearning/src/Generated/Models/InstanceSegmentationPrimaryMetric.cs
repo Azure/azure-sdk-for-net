@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="InstanceSegmentationPrimaryMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceSegmentationPrimaryMetric?(string value) => value == null ? null : new InstanceSegmentationPrimaryMetric(value);
+        public static implicit operator InstanceSegmentationPrimaryMetric?(string value) => value == null ? (InstanceSegmentationPrimaryMetric?)null : new InstanceSegmentationPrimaryMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

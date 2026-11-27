@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultProvisioningState?(string value) => value == null ? null : new KeyVaultProvisioningState(value);
+        public static implicit operator KeyVaultProvisioningState?(string value) => value == null ? (KeyVaultProvisioningState?)null : new KeyVaultProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

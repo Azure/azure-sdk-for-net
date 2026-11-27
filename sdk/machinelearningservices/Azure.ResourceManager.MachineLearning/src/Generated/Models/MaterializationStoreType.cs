@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MaterializationStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaterializationStoreType?(string value) => value == null ? null : new MaterializationStoreType(value);
+        public static implicit operator MaterializationStoreType?(string value) => value == null ? (MaterializationStoreType?)null : new MaterializationStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

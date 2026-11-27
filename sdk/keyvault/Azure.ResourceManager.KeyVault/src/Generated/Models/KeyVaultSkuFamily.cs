@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultSkuFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultSkuFamily?(string value) => value == null ? null : new KeyVaultSkuFamily(value);
+        public static implicit operator KeyVaultSkuFamily?(string value) => value == null ? (KeyVaultSkuFamily?)null : new KeyVaultSkuFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

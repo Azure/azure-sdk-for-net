@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningGoal"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningGoal?(string value) => value == null ? null : new MachineLearningGoal(value);
+        public static implicit operator MachineLearningGoal?(string value) => value == null ? (MachineLearningGoal?)null : new MachineLearningGoal(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

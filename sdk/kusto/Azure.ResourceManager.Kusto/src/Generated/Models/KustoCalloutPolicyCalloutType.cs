@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoCalloutPolicyCalloutType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoCalloutPolicyCalloutType?(string value) => value == null ? null : new KustoCalloutPolicyCalloutType(value);
+        public static implicit operator KustoCalloutPolicyCalloutType?(string value) => value == null ? (KustoCalloutPolicyCalloutType?)null : new KustoCalloutPolicyCalloutType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

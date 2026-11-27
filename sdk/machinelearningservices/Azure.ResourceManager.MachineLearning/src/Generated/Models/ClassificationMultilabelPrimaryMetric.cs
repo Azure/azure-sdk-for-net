@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClassificationMultilabelPrimaryMetric?(string value) => value == null ? null : new ClassificationMultilabelPrimaryMetric(value);
+        public static implicit operator ClassificationMultilabelPrimaryMetric?(string value) => value == null ? (ClassificationMultilabelPrimaryMetric?)null : new ClassificationMultilabelPrimaryMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="TargetRollingWindowSizeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TargetRollingWindowSizeMode?(string value) => value == null ? null : new TargetRollingWindowSizeMode(value);
+        public static implicit operator TargetRollingWindowSizeMode?(string value) => value == null ? (TargetRollingWindowSizeMode?)null : new TargetRollingWindowSizeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

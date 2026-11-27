@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceUpdateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceUpdateStatus?(string value) => value == null ? null : new MaintenanceUpdateStatus(value);
+        public static implicit operator MaintenanceUpdateStatus?(string value) => value == null ? (MaintenanceUpdateStatus?)null : new MaintenanceUpdateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

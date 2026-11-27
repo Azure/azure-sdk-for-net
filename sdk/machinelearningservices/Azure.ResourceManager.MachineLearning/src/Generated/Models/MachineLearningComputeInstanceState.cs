@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningComputeInstanceState?(string value) => value == null ? null : new MachineLearningComputeInstanceState(value);
+        public static implicit operator MachineLearningComputeInstanceState?(string value) => value == null ? (MachineLearningComputeInstanceState?)null : new MachineLearningComputeInstanceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoManagedPrivateEndpointsType?(string value) => value == null ? null : new KustoManagedPrivateEndpointsType(value);
+        public static implicit operator KustoManagedPrivateEndpointsType?(string value) => value == null ? (KustoManagedPrivateEndpointsType?)null : new KustoManagedPrivateEndpointsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

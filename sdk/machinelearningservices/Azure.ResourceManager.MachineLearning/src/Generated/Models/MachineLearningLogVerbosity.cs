@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningLogVerbosity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningLogVerbosity?(string value) => value == null ? null : new MachineLearningLogVerbosity(value);
+        public static implicit operator MachineLearningLogVerbosity?(string value) => value == null ? (MachineLearningLogVerbosity?)null : new MachineLearningLogVerbosity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

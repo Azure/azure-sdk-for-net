@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="PrincipalPermissionsAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrincipalPermissionsAction?(string value) => value == null ? null : new PrincipalPermissionsAction(value);
+        public static implicit operator PrincipalPermissionsAction?(string value) => value == null ? (PrincipalPermissionsAction?)null : new PrincipalPermissionsAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

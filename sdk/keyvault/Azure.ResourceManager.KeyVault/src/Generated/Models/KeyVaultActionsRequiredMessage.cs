@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultActionsRequiredMessage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultActionsRequiredMessage?(string value) => value == null ? null : new KeyVaultActionsRequiredMessage(value);
+        public static implicit operator KeyVaultActionsRequiredMessage?(string value) => value == null ? (KeyVaultActionsRequiredMessage?)null : new KeyVaultActionsRequiredMessage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

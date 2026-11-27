@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="NumericalDataDriftMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NumericalDataDriftMetric?(string value) => value == null ? null : new NumericalDataDriftMetric(value);
+        public static implicit operator NumericalDataDriftMetric?(string value) => value == null ? (NumericalDataDriftMetric?)null : new NumericalDataDriftMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

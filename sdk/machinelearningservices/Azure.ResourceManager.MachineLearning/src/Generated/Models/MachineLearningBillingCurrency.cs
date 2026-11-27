@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningBillingCurrency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningBillingCurrency?(string value) => value == null ? null : new MachineLearningBillingCurrency(value);
+        public static implicit operator MachineLearningBillingCurrency?(string value) => value == null ? (MachineLearningBillingCurrency?)null : new MachineLearningBillingCurrency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

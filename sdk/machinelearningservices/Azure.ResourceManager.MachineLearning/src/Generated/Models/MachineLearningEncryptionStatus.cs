@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningEncryptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningEncryptionStatus?(string value) => value == null ? null : new MachineLearningEncryptionStatus(value);
+        public static implicit operator MachineLearningEncryptionStatus?(string value) => value == null ? (MachineLearningEncryptionStatus?)null : new MachineLearningEncryptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ForecastingModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForecastingModel?(string value) => value == null ? null : new ForecastingModel(value);
+        public static implicit operator ForecastingModel?(string value) => value == null ? (ForecastingModel?)null : new ForecastingModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

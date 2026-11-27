@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="JobLimitsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobLimitsType?(string value) => value == null ? null : new JobLimitsType(value);
+        public static implicit operator JobLimitsType?(string value) => value == null ? (JobLimitsType?)null : new JobLimitsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

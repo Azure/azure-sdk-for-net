@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ForecastingPrimaryMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForecastingPrimaryMetric?(string value) => value == null ? null : new ForecastingPrimaryMetric(value);
+        public static implicit operator ForecastingPrimaryMetric?(string value) => value == null ? (ForecastingPrimaryMetric?)null : new ForecastingPrimaryMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

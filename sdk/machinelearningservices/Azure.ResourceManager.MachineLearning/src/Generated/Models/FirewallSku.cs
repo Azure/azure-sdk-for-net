@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="FirewallSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallSku?(string value) => value == null ? null : new FirewallSku(value);
+        public static implicit operator FirewallSku?(string value) => value == null ? (FirewallSku?)null : new FirewallSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

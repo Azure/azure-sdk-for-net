@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType?(string value) => value == null ? null : new KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType(value);
+        public static implicit operator KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType?(string value) => value == null ? (KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType?)null : new KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

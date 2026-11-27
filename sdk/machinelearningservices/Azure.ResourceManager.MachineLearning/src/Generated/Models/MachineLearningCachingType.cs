@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningCachingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningCachingType?(string value) => value == null ? null : new MachineLearningCachingType(value);
+        public static implicit operator MachineLearningCachingType?(string value) => value == null ? (MachineLearningCachingType?)null : new MachineLearningCachingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

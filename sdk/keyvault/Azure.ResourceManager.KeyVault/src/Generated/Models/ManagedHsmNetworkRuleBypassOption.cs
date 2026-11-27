@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="ManagedHsmNetworkRuleBypassOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmNetworkRuleBypassOption?(string value) => value == null ? null : new ManagedHsmNetworkRuleBypassOption(value);
+        public static implicit operator ManagedHsmNetworkRuleBypassOption?(string value) => value == null ? (ManagedHsmNetworkRuleBypassOption?)null : new ManagedHsmNetworkRuleBypassOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

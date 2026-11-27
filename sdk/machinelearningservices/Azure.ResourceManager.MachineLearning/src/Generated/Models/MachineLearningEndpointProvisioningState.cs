@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningEndpointProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningEndpointProvisioningState?(string value) => value == null ? null : new MachineLearningEndpointProvisioningState(value);
+        public static implicit operator MachineLearningEndpointProvisioningState?(string value) => value == null ? (MachineLearningEndpointProvisioningState?)null : new MachineLearningEndpointProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

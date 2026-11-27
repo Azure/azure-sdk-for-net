@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningFeaturizationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningFeaturizationMode?(string value) => value == null ? null : new MachineLearningFeaturizationMode(value);
+        public static implicit operator MachineLearningFeaturizationMode?(string value) => value == null ? (MachineLearningFeaturizationMode?)null : new MachineLearningFeaturizationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="EarlyTerminationPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EarlyTerminationPolicyType?(string value) => value == null ? null : new EarlyTerminationPolicyType(value);
+        public static implicit operator EarlyTerminationPolicyType?(string value) => value == null ? (EarlyTerminationPolicyType?)null : new EarlyTerminationPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

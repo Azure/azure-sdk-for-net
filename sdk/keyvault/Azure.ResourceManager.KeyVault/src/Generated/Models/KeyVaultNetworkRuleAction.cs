@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Converts a string to a <see cref="KeyVaultNetworkRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultNetworkRuleAction?(string value) => value == null ? null : new KeyVaultNetworkRuleAction(value);
+        public static implicit operator KeyVaultNetworkRuleAction?(string value) => value == null ? (KeyVaultNetworkRuleAction?)null : new KeyVaultNetworkRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

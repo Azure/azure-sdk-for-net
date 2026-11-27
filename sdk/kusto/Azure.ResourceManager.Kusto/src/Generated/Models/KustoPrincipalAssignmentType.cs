@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoPrincipalAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoPrincipalAssignmentType?(string value) => value == null ? null : new KustoPrincipalAssignmentType(value);
+        public static implicit operator KustoPrincipalAssignmentType?(string value) => value == null ? (KustoPrincipalAssignmentType?)null : new KustoPrincipalAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

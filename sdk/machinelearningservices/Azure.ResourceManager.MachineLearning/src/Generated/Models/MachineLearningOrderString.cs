@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningOrderString"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningOrderString?(string value) => value == null ? null : new MachineLearningOrderString(value);
+        public static implicit operator MachineLearningOrderString?(string value) => value == null ? (MachineLearningOrderString?)null : new MachineLearningOrderString(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

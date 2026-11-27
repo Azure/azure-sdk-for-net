@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningLoadBalancerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningLoadBalancerType?(string value) => value == null ? null : new MachineLearningLoadBalancerType(value);
+        public static implicit operator MachineLearningLoadBalancerType?(string value) => value == null ? (MachineLearningLoadBalancerType?)null : new MachineLearningLoadBalancerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

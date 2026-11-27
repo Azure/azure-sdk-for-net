@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningEndpointComputeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningEndpointComputeType?(string value) => value == null ? null : new MachineLearningEndpointComputeType(value);
+        public static implicit operator MachineLearningEndpointComputeType?(string value) => value == null ? (MachineLearningEndpointComputeType?)null : new MachineLearningEndpointComputeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

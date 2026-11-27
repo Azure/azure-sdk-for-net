@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="TargetLagsMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TargetLagsMode?(string value) => value == null ? null : new TargetLagsMode(value);
+        public static implicit operator TargetLagsMode?(string value) => value == null ? (TargetLagsMode?)null : new TargetLagsMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

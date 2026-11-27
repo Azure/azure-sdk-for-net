@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningEnvironmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningEnvironmentType?(string value) => value == null ? null : new MachineLearningEnvironmentType(value);
+        public static implicit operator MachineLearningEnvironmentType?(string value) => value == null ? (MachineLearningEnvironmentType?)null : new MachineLearningEnvironmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

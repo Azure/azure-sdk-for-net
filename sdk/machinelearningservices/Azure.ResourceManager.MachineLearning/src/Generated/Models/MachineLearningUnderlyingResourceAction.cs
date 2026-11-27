@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningUnderlyingResourceAction?(string value) => value == null ? null : new MachineLearningUnderlyingResourceAction(value);
+        public static implicit operator MachineLearningUnderlyingResourceAction?(string value) => value == null ? (MachineLearningUnderlyingResourceAction?)null : new MachineLearningUnderlyingResourceAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

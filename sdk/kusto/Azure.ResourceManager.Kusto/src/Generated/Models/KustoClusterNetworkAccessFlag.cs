@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoClusterNetworkAccessFlag?(string value) => value == null ? null : new KustoClusterNetworkAccessFlag(value);
+        public static implicit operator KustoClusterNetworkAccessFlag?(string value) => value == null ? (KustoClusterNetworkAccessFlag?)null : new KustoClusterNetworkAccessFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

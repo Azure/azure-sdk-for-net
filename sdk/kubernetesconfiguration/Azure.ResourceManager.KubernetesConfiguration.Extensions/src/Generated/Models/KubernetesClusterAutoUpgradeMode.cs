@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesClusterAutoUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterAutoUpgradeMode?(string value) => value == null ? null : new KubernetesClusterAutoUpgradeMode(value);
+        public static implicit operator KubernetesClusterAutoUpgradeMode?(string value) => value == null ? (KubernetesClusterAutoUpgradeMode?)null : new KubernetesClusterAutoUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

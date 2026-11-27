@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoCalloutPolicyOutboundAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoCalloutPolicyOutboundAccess?(string value) => value == null ? null : new KustoCalloutPolicyOutboundAccess(value);
+        public static implicit operator KustoCalloutPolicyOutboundAccess?(string value) => value == null ? (KustoCalloutPolicyOutboundAccess?)null : new KustoCalloutPolicyOutboundAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

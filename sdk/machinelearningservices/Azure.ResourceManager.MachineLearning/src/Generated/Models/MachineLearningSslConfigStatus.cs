@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningSslConfigStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningSslConfigStatus?(string value) => value == null ? null : new MachineLearningSslConfigStatus(value);
+        public static implicit operator MachineLearningSslConfigStatus?(string value) => value == null ? (MachineLearningSslConfigStatus?)null : new MachineLearningSslConfigStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

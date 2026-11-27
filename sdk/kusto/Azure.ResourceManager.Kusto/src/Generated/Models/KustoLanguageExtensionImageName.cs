@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoLanguageExtensionImageName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoLanguageExtensionImageName?(string value) => value == null ? null : new KustoLanguageExtensionImageName(value);
+        public static implicit operator KustoLanguageExtensionImageName?(string value) => value == null ? (KustoLanguageExtensionImageName?)null : new KustoLanguageExtensionImageName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

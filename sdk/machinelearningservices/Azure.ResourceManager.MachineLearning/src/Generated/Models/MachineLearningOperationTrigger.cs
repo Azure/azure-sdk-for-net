@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningOperationTrigger"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningOperationTrigger?(string value) => value == null ? null : new MachineLearningOperationTrigger(value);
+        public static implicit operator MachineLearningOperationTrigger?(string value) => value == null ? (MachineLearningOperationTrigger?)null : new MachineLearningOperationTrigger(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

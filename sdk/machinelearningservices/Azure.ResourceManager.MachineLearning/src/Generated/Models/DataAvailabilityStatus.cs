@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="DataAvailabilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataAvailabilityStatus?(string value) => value == null ? null : new DataAvailabilityStatus(value);
+        public static implicit operator DataAvailabilityStatus?(string value) => value == null ? (DataAvailabilityStatus?)null : new DataAvailabilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

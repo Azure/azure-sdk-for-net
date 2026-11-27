@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="EmailNotificationEnableType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmailNotificationEnableType?(string value) => value == null ? null : new EmailNotificationEnableType(value);
+        public static implicit operator EmailNotificationEnableType?(string value) => value == null ? (EmailNotificationEnableType?)null : new EmailNotificationEnableType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

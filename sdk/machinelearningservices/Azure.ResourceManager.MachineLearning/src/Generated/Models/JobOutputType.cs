@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="JobOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobOutputType?(string value) => value == null ? null : new JobOutputType(value);
+        public static implicit operator JobOutputType?(string value) => value == null ? (JobOutputType?)null : new JobOutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="WebhookType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebhookType?(string value) => value == null ? null : new WebhookType(value);
+        public static implicit operator WebhookType?(string value) => value == null ? (WebhookType?)null : new WebhookType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

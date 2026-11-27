@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="StochasticOptimizer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StochasticOptimizer?(string value) => value == null ? null : new StochasticOptimizer(value);
+        public static implicit operator StochasticOptimizer?(string value) => value == null ? (StochasticOptimizer?)null : new StochasticOptimizer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

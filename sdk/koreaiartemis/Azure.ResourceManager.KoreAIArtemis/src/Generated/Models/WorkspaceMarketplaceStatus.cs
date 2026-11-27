@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceMarketplaceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceMarketplaceStatus?(string value) => value == null ? null : new WorkspaceMarketplaceStatus(value);
+        public static implicit operator WorkspaceMarketplaceStatus?(string value) => value == null ? (WorkspaceMarketplaceStatus?)null : new WorkspaceMarketplaceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

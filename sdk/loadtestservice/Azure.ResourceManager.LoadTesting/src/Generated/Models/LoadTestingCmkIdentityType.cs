@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         /// <summary> Converts a string to a <see cref="LoadTestingCmkIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadTestingCmkIdentityType?(string value) => value == null ? null : new LoadTestingCmkIdentityType(value);
+        public static implicit operator LoadTestingCmkIdentityType?(string value) => value == null ? (LoadTestingCmkIdentityType?)null : new LoadTestingCmkIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

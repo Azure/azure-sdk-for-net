@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningEgressPublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningEgressPublicNetworkAccessType?(string value) => value == null ? null : new MachineLearningEgressPublicNetworkAccessType(value);
+        public static implicit operator MachineLearningEgressPublicNetworkAccessType?(string value) => value == null ? (MachineLearningEgressPublicNetworkAccessType?)null : new MachineLearningEgressPublicNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

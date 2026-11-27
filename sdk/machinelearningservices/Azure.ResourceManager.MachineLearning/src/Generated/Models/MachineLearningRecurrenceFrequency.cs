@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningRecurrenceFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningRecurrenceFrequency?(string value) => value == null ? null : new MachineLearningRecurrenceFrequency(value);
+        public static implicit operator MachineLearningRecurrenceFrequency?(string value) => value == null ? (MachineLearningRecurrenceFrequency?)null : new MachineLearningRecurrenceFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

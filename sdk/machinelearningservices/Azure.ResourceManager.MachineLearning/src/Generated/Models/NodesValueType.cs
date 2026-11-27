@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="NodesValueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodesValueType?(string value) => value == null ? null : new NodesValueType(value);
+        public static implicit operator NodesValueType?(string value) => value == null ? (NodesValueType?)null : new NodesValueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

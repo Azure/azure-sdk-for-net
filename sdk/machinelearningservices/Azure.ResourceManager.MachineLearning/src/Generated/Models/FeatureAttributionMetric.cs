@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="FeatureAttributionMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureAttributionMetric?(string value) => value == null ? null : new FeatureAttributionMetric(value);
+        public static implicit operator FeatureAttributionMetric?(string value) => value == null ? (FeatureAttributionMetric?)null : new FeatureAttributionMetric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState?)null : new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

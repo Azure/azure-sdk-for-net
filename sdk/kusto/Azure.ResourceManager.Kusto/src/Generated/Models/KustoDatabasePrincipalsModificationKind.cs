@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="KustoDatabasePrincipalsModificationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KustoDatabasePrincipalsModificationKind?(string value) => value == null ? null : new KustoDatabasePrincipalsModificationKind(value);
+        public static implicit operator KustoDatabasePrincipalsModificationKind?(string value) => value == null ? (KustoDatabasePrincipalsModificationKind?)null : new KustoDatabasePrincipalsModificationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

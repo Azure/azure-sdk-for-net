@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="MachineLearningApplicationSharingPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineLearningApplicationSharingPolicy?(string value) => value == null ? null : new MachineLearningApplicationSharingPolicy(value);
+        public static implicit operator MachineLearningApplicationSharingPolicy?(string value) => value == null ? (MachineLearningApplicationSharingPolicy?)null : new MachineLearningApplicationSharingPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Converts a string to a <see cref="MigrationClusterRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationClusterRole?(string value) => value == null ? null : new MigrationClusterRole(value);
+        public static implicit operator MigrationClusterRole?(string value) => value == null ? (MigrationClusterRole?)null : new MigrationClusterRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

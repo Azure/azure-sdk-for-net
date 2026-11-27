@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Converts a string to a <see cref="ScheduleActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleActionType?(string value) => value == null ? null : new ScheduleActionType(value);
+        public static implicit operator ScheduleActionType?(string value) => value == null ? (ScheduleActionType?)null : new ScheduleActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
