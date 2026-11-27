@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> Converts a string to a <see cref="PlaywrightQuotaName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlaywrightQuotaName?(string value) => value == null ? null : new PlaywrightQuotaName(value);
+        public static implicit operator PlaywrightQuotaName?(string value) => value == null ? (PlaywrightQuotaName?)null : new PlaywrightQuotaName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

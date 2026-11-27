@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerStorageAutoGrowthSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerStorageAutoGrowthSupported(value);
+        public static implicit operator PostgreSqlFlexibleServerStorageAutoGrowthSupported?(string value) => value == null ? (PostgreSqlFlexibleServerStorageAutoGrowthSupported?)null : new PostgreSqlFlexibleServerStorageAutoGrowthSupported(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

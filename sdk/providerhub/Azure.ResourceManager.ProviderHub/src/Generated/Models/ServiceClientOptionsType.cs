@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ServiceClientOptionsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceClientOptionsType?(string value) => value == null ? null : new ServiceClientOptionsType(value);
+        public static implicit operator ServiceClientOptionsType?(string value) => value == null ? (ServiceClientOptionsType?)null : new ServiceClientOptionsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

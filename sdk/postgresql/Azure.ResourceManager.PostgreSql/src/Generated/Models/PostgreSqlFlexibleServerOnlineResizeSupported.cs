@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerOnlineResizeSupported"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerOnlineResizeSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerOnlineResizeSupported(value);
+        public static implicit operator PostgreSqlFlexibleServerOnlineResizeSupported?(string value) => value == null ? (PostgreSqlFlexibleServerOnlineResizeSupported?)null : new PostgreSqlFlexibleServerOnlineResizeSupported(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

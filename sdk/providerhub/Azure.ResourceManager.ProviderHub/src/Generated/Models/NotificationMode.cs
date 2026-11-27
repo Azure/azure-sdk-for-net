@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="NotificationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationMode?(string value) => value == null ? null : new NotificationMode(value);
+        public static implicit operator NotificationMode?(string value) => value == null ? (NotificationMode?)null : new NotificationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

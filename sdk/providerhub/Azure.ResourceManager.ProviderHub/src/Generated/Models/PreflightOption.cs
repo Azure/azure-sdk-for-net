@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="PreflightOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PreflightOption?(string value) => value == null ? null : new PreflightOption(value);
+        public static implicit operator PreflightOption?(string value) => value == null ? (PreflightOption?)null : new PreflightOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

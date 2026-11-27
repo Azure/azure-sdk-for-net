@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderRegistrationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderRegistrationKind?(string value) => value == null ? null : new ProviderRegistrationKind(value);
+        public static implicit operator ProviderRegistrationKind?(string value) => value == null ? (ProviderRegistrationKind?)null : new ProviderRegistrationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

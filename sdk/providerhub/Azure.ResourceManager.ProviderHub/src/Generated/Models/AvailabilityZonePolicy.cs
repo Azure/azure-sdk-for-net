@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="AvailabilityZonePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityZonePolicy?(string value) => value == null ? null : new AvailabilityZonePolicy(value);
+        public static implicit operator AvailabilityZonePolicy?(string value) => value == null ? (AvailabilityZonePolicy?)null : new AvailabilityZonePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

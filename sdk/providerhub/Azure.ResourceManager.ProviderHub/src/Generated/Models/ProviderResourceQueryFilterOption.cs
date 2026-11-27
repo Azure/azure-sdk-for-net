@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderResourceQueryFilterOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderResourceQueryFilterOption?(string value) => value == null ? null : new ProviderResourceQueryFilterOption(value);
+        public static implicit operator ProviderResourceQueryFilterOption?(string value) => value == null ? (ProviderResourceQueryFilterOption?)null : new ProviderResourceQueryFilterOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

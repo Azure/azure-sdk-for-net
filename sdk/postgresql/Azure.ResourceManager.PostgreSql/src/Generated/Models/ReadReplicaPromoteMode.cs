@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="ReadReplicaPromoteMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReadReplicaPromoteMode?(string value) => value == null ? null : new ReadReplicaPromoteMode(value);
+        public static implicit operator ReadReplicaPromoteMode?(string value) => value == null ? (ReadReplicaPromoteMode?)null : new ReadReplicaPromoteMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

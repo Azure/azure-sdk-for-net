@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <summary> Converts a string to a <see cref="PortalServicesResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PortalServicesResourceProvisioningState?(string value) => value == null ? null : new PortalServicesResourceProvisioningState(value);
+        public static implicit operator PortalServicesResourceProvisioningState?(string value) => value == null ? (PortalServicesResourceProvisioningState?)null : new PortalServicesResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

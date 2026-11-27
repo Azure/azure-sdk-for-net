@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerKeyType?(string value) => value == null ? null : new PostgreSqlFlexibleServerKeyType(value);
+        public static implicit operator PostgreSqlFlexibleServerKeyType?(string value) => value == null ? (PostgreSqlFlexibleServerKeyType?)null : new PostgreSqlFlexibleServerKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

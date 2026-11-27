@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="StorageAutoGrow"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAutoGrow?(string value) => value == null ? null : new StorageAutoGrow(value);
+        public static implicit operator StorageAutoGrow?(string value) => value == null ? (StorageAutoGrow?)null : new StorageAutoGrow(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

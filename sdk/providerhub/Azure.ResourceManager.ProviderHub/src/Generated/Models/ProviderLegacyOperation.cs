@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderLegacyOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderLegacyOperation?(string value) => value == null ? null : new ProviderLegacyOperation(value);
+        public static implicit operator ProviderLegacyOperation?(string value) => value == null ? (ProviderLegacyOperation?)null : new ProviderLegacyOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

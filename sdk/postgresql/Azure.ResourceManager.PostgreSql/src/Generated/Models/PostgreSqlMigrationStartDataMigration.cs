@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationStartDataMigration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationStartDataMigration?(string value) => value == null ? null : new PostgreSqlMigrationStartDataMigration(value);
+        public static implicit operator PostgreSqlMigrationStartDataMigration?(string value) => value == null ? (PostgreSqlMigrationStartDataMigration?)null : new PostgreSqlMigrationStartDataMigration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

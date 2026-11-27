@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="IdentityManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IdentityManagementType?(string value) => value == null ? null : new IdentityManagementType(value);
+        public static implicit operator IdentityManagementType?(string value) => value == null ? (IdentityManagementType?)null : new IdentityManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

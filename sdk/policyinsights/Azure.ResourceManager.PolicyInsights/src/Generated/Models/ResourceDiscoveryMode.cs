@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Converts a string to a <see cref="ResourceDiscoveryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceDiscoveryMode?(string value) => value == null ? null : new ResourceDiscoveryMode(value);
+        public static implicit operator ResourceDiscoveryMode?(string value) => value == null ? (ResourceDiscoveryMode?)null : new ResourceDiscoveryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="DataProcessingOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProcessingOperation?(string value) => value == null ? null : new DataProcessingOperation(value);
+        public static implicit operator DataProcessingOperation?(string value) => value == null ? (DataProcessingOperation?)null : new DataProcessingOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

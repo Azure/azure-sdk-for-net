@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="OptInHeaderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OptInHeaderType?(string value) => value == null ? null : new OptInHeaderType(value);
+        public static implicit operator OptInHeaderType?(string value) => value == null ? (OptInHeaderType?)null : new OptInHeaderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

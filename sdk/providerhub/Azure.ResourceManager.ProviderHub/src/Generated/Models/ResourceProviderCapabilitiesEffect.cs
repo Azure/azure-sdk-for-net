@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceProviderCapabilitiesEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProviderCapabilitiesEffect?(string value) => value == null ? null : new ResourceProviderCapabilitiesEffect(value);
+        public static implicit operator ResourceProviderCapabilitiesEffect?(string value) => value == null ? (ResourceProviderCapabilitiesEffect?)null : new ResourceProviderCapabilitiesEffect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

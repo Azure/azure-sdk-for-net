@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <summary> Converts a string to a <see cref="ProviderProvisioningStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderProvisioningStatus?(string value) => value == null ? null : new ProviderProvisioningStatus(value);
+        public static implicit operator ProviderProvisioningStatus?(string value) => value == null ? (ProviderProvisioningStatus?)null : new ProviderProvisioningStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

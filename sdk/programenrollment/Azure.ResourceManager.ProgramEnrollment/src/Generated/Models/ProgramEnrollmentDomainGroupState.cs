@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
 
         /// <summary> Converts a string to a <see cref="ProgramEnrollmentDomainGroupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProgramEnrollmentDomainGroupState?(string value) => value == null ? null : new ProgramEnrollmentDomainGroupState(value);
+        public static implicit operator ProgramEnrollmentDomainGroupState?(string value) => value == null ? (ProgramEnrollmentDomainGroupState?)null : new ProgramEnrollmentDomainGroupState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

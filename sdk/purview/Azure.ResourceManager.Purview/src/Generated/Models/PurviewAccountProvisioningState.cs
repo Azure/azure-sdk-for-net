@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewAccountProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewAccountProvisioningState?(string value) => value == null ? null : new PurviewAccountProvisioningState(value);
+        public static implicit operator PurviewAccountProvisioningState?(string value) => value == null ? (PurviewAccountProvisioningState?)null : new PurviewAccountProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

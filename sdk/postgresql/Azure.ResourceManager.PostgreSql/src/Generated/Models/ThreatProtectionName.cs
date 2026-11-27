@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="ThreatProtectionName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatProtectionName?(string value) => value == null ? null : new ThreatProtectionName(value);
+        public static implicit operator ThreatProtectionName?(string value) => value == null ? (ThreatProtectionName?)null : new ThreatProtectionName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

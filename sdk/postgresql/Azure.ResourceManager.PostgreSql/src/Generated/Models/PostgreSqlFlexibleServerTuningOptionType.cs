@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerTuningOptionType?(string value) => value == null ? null : new PostgreSqlFlexibleServerTuningOptionType(value);
+        public static implicit operator PostgreSqlFlexibleServerTuningOptionType?(string value) => value == null ? (PostgreSqlFlexibleServerTuningOptionType?)null : new PostgreSqlFlexibleServerTuningOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

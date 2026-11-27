@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeSkuScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeSkuScaleType?(string value) => value == null ? null : new ResourceTypeSkuScaleType(value);
+        public static implicit operator ResourceTypeSkuScaleType?(string value) => value == null ? (ResourceTypeSkuScaleType?)null : new ResourceTypeSkuScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

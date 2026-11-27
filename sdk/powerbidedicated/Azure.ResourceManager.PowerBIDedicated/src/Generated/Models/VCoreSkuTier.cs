@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         /// <summary> Converts a string to a <see cref="VCoreSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VCoreSkuTier?(string value) => value == null ? null : new VCoreSkuTier(value);
+        public static implicit operator VCoreSkuTier?(string value) => value == null ? (VCoreSkuTier?)null : new VCoreSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

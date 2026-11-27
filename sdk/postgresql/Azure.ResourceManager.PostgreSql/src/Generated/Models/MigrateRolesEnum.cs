@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MigrateRolesEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrateRolesEnum?(string value) => value == null ? null : new MigrateRolesEnum(value);
+        public static implicit operator MigrateRolesEnum?(string value) => value == null ? (MigrateRolesEnum?)null : new MigrateRolesEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

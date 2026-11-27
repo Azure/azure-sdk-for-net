@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceManagementSupportedOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceManagementSupportedOperation?(string value) => value == null ? null : new ResourceManagementSupportedOperation(value);
+        public static implicit operator ResourceManagementSupportedOperation?(string value) => value == null ? (ResourceManagementSupportedOperation?)null : new ResourceManagementSupportedOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

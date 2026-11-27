@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="PolicyExecutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyExecutionType?(string value) => value == null ? null : new PolicyExecutionType(value);
+        public static implicit operator PolicyExecutionType?(string value) => value == null ? (PolicyExecutionType?)null : new PolicyExecutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

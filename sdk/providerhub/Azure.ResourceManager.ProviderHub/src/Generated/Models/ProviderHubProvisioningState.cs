@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderHubProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderHubProvisioningState?(string value) => value == null ? null : new ProviderHubProvisioningState(value);
+        public static implicit operator ProviderHubProvisioningState?(string value) => value == null ? (ProviderHubProvisioningState?)null : new ProviderHubProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

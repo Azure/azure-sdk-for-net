@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerMaintenanceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerMaintenanceType?(string value) => value == null ? null : new PostgreSqlFlexibleServerMaintenanceType(value);
+        public static implicit operator PostgreSqlFlexibleServerMaintenanceType?(string value) => value == null ? (PostgreSqlFlexibleServerMaintenanceType?)null : new PostgreSqlFlexibleServerMaintenanceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

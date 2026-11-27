@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlKeyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlKeyStatus?(string value) => value == null ? null : new PostgreSqlKeyStatus(value);
+        public static implicit operator PostgreSqlKeyStatus?(string value) => value == null ? (PostgreSqlKeyStatus?)null : new PostgreSqlKeyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

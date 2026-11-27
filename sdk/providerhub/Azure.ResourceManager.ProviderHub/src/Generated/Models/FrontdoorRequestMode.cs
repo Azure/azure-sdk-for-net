@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="FrontdoorRequestMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FrontdoorRequestMode?(string value) => value == null ? null : new FrontdoorRequestMode(value);
+        public static implicit operator FrontdoorRequestMode?(string value) => value == null ? (FrontdoorRequestMode?)null : new FrontdoorRequestMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

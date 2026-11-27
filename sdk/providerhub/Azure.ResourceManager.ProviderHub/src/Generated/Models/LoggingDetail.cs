@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="LoggingDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoggingDetail?(string value) => value == null ? null : new LoggingDetail(value);
+        public static implicit operator LoggingDetail?(string value) => value == null ? (LoggingDetail?)null : new LoggingDetail(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

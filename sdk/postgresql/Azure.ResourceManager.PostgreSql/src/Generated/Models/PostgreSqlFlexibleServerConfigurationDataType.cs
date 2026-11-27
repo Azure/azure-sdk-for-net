@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerConfigurationDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerConfigurationDataType?(string value) => value == null ? null : new PostgreSqlFlexibleServerConfigurationDataType(value);
+        public static implicit operator PostgreSqlFlexibleServerConfigurationDataType?(string value) => value == null ? (PostgreSqlFlexibleServerConfigurationDataType?)null : new PostgreSqlFlexibleServerConfigurationDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

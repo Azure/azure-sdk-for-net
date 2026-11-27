@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Converts a string to a <see cref="PureStorageHealthAlertLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PureStorageHealthAlertLevel?(string value) => value == null ? null : new PureStorageHealthAlertLevel(value);
+        public static implicit operator PureStorageHealthAlertLevel?(string value) => value == null ? (PureStorageHealthAlertLevel?)null : new PureStorageHealthAlertLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

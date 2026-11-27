@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerVersion?(string value) => value == null ? null : new PostgreSqlFlexibleServerVersion(value);
+        public static implicit operator PostgreSqlFlexibleServerVersion?(string value) => value == null ? (PostgreSqlFlexibleServerVersion?)null : new PostgreSqlFlexibleServerVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

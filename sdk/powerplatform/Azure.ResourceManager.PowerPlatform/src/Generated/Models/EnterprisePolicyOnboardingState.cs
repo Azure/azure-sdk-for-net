@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <summary> Converts a string to a <see cref="EnterprisePolicyOnboardingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnterprisePolicyOnboardingState?(string value) => value == null ? null : new EnterprisePolicyOnboardingState(value);
+        public static implicit operator EnterprisePolicyOnboardingState?(string value) => value == null ? (EnterprisePolicyOnboardingState?)null : new EnterprisePolicyOnboardingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

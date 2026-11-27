@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewTenantEndpointState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewTenantEndpointState?(string value) => value == null ? null : new PurviewTenantEndpointState(value);
+        public static implicit operator PurviewTenantEndpointState?(string value) => value == null ? (PurviewTenantEndpointState?)null : new PurviewTenantEndpointState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

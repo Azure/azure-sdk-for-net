@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         /// <summary> Converts a string to a <see cref="CapacityProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityProvisioningState?(string value) => value == null ? null : new CapacityProvisioningState(value);
+        public static implicit operator CapacityProvisioningState?(string value) => value == null ? (CapacityProvisioningState?)null : new CapacityProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

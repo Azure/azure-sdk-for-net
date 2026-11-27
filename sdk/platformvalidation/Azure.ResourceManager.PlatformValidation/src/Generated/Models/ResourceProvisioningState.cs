@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Converts a string to a <see cref="ResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProvisioningState?(string value) => value == null ? null : new ResourceProvisioningState(value);
+        public static implicit operator ResourceProvisioningState?(string value) => value == null ? (ResourceProvisioningState?)null : new ResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

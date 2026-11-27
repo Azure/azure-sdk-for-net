@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceConcurrencyPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceConcurrencyPolicy?(string value) => value == null ? null : new ResourceConcurrencyPolicy(value);
+        public static implicit operator ResourceConcurrencyPolicy?(string value) => value == null ? (ResourceConcurrencyPolicy?)null : new ResourceConcurrencyPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="AdditionalOptionAsyncOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalOptionAsyncOperation?(string value) => value == null ? null : new AdditionalOptionAsyncOperation(value);
+        public static implicit operator AdditionalOptionAsyncOperation?(string value) => value == null ? (AdditionalOptionAsyncOperation?)null : new AdditionalOptionAsyncOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

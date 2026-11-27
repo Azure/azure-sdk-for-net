@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Converts a string to a <see cref="PureStorageResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PureStorageResourceProvisioningState?(string value) => value == null ? null : new PureStorageResourceProvisioningState(value);
+        public static implicit operator PureStorageResourceProvisioningState?(string value) => value == null ? (PureStorageResourceProvisioningState?)null : new PureStorageResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

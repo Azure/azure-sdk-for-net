@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewPrivateLinkServiceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewPrivateLinkServiceStatus?(string value) => value == null ? null : new PurviewPrivateLinkServiceStatus(value);
+        public static implicit operator PurviewPrivateLinkServiceStatus?(string value) => value == null ? (PurviewPrivateLinkServiceStatus?)null : new PurviewPrivateLinkServiceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

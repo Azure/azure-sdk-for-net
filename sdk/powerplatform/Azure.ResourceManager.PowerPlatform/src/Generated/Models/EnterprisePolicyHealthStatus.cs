@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <summary> Converts a string to a <see cref="EnterprisePolicyHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnterprisePolicyHealthStatus?(string value) => value == null ? null : new EnterprisePolicyHealthStatus(value);
+        public static implicit operator EnterprisePolicyHealthStatus?(string value) => value == null ? (EnterprisePolicyHealthStatus?)null : new EnterprisePolicyHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

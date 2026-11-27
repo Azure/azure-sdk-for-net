@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         /// <summary> Converts a string to a <see cref="VCoreProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VCoreProvisioningState?(string value) => value == null ? null : new VCoreProvisioningState(value);
+        public static implicit operator VCoreProvisioningState?(string value) => value == null ? (VCoreProvisioningState?)null : new VCoreProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

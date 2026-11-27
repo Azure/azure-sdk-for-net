@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationNameUnavailableReason?(string value) => value == null ? null : new PostgreSqlMigrationNameUnavailableReason(value);
+        public static implicit operator PostgreSqlMigrationNameUnavailableReason?(string value) => value == null ? (PostgreSqlMigrationNameUnavailableReason?)null : new PostgreSqlMigrationNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

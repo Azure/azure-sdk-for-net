@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerPublicNetworkAccessState?(string value) => value == null ? null : new PostgreSqlFlexibleServerPublicNetworkAccessState(value);
+        public static implicit operator PostgreSqlFlexibleServerPublicNetworkAccessState?(string value) => value == null ? (PostgreSqlFlexibleServerPublicNetworkAccessState?)null : new PostgreSqlFlexibleServerPublicNetworkAccessState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlExecutionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlExecutionStatus?(string value) => value == null ? null : new PostgreSqlExecutionStatus(value);
+        public static implicit operator PostgreSqlExecutionStatus?(string value) => value == null ? (PostgreSqlExecutionStatus?)null : new PostgreSqlExecutionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

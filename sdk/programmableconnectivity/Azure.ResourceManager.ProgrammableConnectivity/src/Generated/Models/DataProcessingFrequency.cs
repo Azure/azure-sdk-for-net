@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="DataProcessingFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProcessingFrequency?(string value) => value == null ? null : new DataProcessingFrequency(value);
+        public static implicit operator DataProcessingFrequency?(string value) => value == null ? (DataProcessingFrequency?)null : new DataProcessingFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

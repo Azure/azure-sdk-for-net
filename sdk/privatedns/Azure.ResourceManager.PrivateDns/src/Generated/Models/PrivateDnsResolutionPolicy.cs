@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> Converts a string to a <see cref="PrivateDnsResolutionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateDnsResolutionPolicy?(string value) => value == null ? null : new PrivateDnsResolutionPolicy(value);
+        public static implicit operator PrivateDnsResolutionPolicy?(string value) => value == null ? (PrivateDnsResolutionPolicy?)null : new PrivateDnsResolutionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

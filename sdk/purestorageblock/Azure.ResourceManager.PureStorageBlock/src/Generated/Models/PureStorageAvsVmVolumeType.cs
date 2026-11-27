@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Converts a string to a <see cref="PureStorageAvsVmVolumeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PureStorageAvsVmVolumeType?(string value) => value == null ? null : new PureStorageAvsVmVolumeType(value);
+        public static implicit operator PureStorageAvsVmVolumeType?(string value) => value == null ? (PureStorageAvsVmVolumeType?)null : new PureStorageAvsVmVolumeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

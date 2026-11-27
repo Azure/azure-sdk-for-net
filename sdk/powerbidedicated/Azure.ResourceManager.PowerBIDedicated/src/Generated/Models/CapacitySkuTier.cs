@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         /// <summary> Converts a string to a <see cref="CapacitySkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacitySkuTier?(string value) => value == null ? null : new CapacitySkuTier(value);
+        public static implicit operator CapacitySkuTier?(string value) => value == null ? (CapacitySkuTier?)null : new CapacitySkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

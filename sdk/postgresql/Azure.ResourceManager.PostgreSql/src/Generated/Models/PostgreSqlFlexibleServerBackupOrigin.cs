@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerBackupOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerBackupOrigin?(string value) => value == null ? null : new PostgreSqlFlexibleServerBackupOrigin(value);
+        public static implicit operator PostgreSqlFlexibleServerBackupOrigin?(string value) => value == null ? (PostgreSqlFlexibleServerBackupOrigin?)null : new PostgreSqlFlexibleServerBackupOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

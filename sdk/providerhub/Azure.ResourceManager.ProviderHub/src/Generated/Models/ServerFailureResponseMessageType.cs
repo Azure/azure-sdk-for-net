@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ServerFailureResponseMessageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerFailureResponseMessageType?(string value) => value == null ? null : new ServerFailureResponseMessageType(value);
+        public static implicit operator ServerFailureResponseMessageType?(string value) => value == null ? (ServerFailureResponseMessageType?)null : new ServerFailureResponseMessageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

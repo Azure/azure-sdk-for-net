@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerSkuTier?(string value) => value == null ? null : new PostgreSqlFlexibleServerSkuTier(value);
+        public static implicit operator PostgreSqlFlexibleServerSkuTier?(string value) => value == null ? (PostgreSqlFlexibleServerSkuTier?)null : new PostgreSqlFlexibleServerSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

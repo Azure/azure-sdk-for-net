@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlManagedDiskPerformanceTier?(string value) => value == null ? null : new PostgreSqlManagedDiskPerformanceTier(value);
+        public static implicit operator PostgreSqlManagedDiskPerformanceTier?(string value) => value == null ? (PostgreSqlManagedDiskPerformanceTier?)null : new PostgreSqlManagedDiskPerformanceTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

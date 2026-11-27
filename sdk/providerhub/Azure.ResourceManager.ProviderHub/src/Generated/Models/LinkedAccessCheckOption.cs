@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="LinkedAccessCheckOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkedAccessCheckOption?(string value) => value == null ? null : new LinkedAccessCheckOption(value);
+        public static implicit operator LinkedAccessCheckOption?(string value) => value == null ? (LinkedAccessCheckOption?)null : new LinkedAccessCheckOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

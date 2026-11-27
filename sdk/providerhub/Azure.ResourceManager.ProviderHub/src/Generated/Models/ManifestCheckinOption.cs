@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ManifestCheckinOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManifestCheckinOption?(string value) => value == null ? null : new ManifestCheckinOption(value);
+        public static implicit operator ManifestCheckinOption?(string value) => value == null ? (ManifestCheckinOption?)null : new ManifestCheckinOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

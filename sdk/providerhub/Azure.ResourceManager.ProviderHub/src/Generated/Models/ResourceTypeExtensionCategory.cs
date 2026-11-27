@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceTypeExtensionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeExtensionCategory?(string value) => value == null ? null : new ResourceTypeExtensionCategory(value);
+        public static implicit operator ResourceTypeExtensionCategory?(string value) => value == null ? (ResourceTypeExtensionCategory?)null : new ResourceTypeExtensionCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="DataProcessingDuration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProcessingDuration?(string value) => value == null ? null : new DataProcessingDuration(value);
+        public static implicit operator DataProcessingDuration?(string value) => value == null ? (DataProcessingDuration?)null : new DataProcessingDuration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

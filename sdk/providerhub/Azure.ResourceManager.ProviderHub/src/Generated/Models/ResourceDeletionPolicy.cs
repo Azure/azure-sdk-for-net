@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceDeletionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceDeletionPolicy?(string value) => value == null ? null : new ResourceDeletionPolicy(value);
+        public static implicit operator ResourceDeletionPolicy?(string value) => value == null ? (ResourceDeletionPolicy?)null : new ResourceDeletionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

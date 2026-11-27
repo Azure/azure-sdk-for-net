@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ExpeditedRolloutIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpeditedRolloutIntent?(string value) => value == null ? null : new ExpeditedRolloutIntent(value);
+        public static implicit operator ExpeditedRolloutIntent?(string value) => value == null ? (ExpeditedRolloutIntent?)null : new ExpeditedRolloutIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

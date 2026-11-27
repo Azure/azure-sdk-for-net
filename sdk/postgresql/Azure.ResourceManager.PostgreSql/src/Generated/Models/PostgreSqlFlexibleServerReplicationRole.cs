@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerReplicationRole?(string value) => value == null ? null : new PostgreSqlFlexibleServerReplicationRole(value);
+        public static implicit operator PostgreSqlFlexibleServerReplicationRole?(string value) => value == null ? (PostgreSqlFlexibleServerReplicationRole?)null : new PostgreSqlFlexibleServerReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

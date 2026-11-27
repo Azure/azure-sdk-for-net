@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Converts a string to a <see cref="PolicyStateSummaryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyStateSummaryType?(string value) => value == null ? null : new PolicyStateSummaryType(value);
+        public static implicit operator PolicyStateSummaryType?(string value) => value == null ? (PolicyStateSummaryType?)null : new PolicyStateSummaryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

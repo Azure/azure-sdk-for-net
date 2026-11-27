@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
 
         /// <summary> Converts a string to a <see cref="PlanetaryComputerProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlanetaryComputerProvisioningState?(string value) => value == null ? null : new PlanetaryComputerProvisioningState(value);
+        public static implicit operator PlanetaryComputerProvisioningState?(string value) => value == null ? (PlanetaryComputerProvisioningState?)null : new PlanetaryComputerProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

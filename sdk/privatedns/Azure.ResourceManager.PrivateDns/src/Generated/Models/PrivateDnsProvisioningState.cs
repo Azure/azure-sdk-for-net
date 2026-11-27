@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> Converts a string to a <see cref="PrivateDnsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateDnsProvisioningState?(string value) => value == null ? null : new PrivateDnsProvisioningState(value);
+        public static implicit operator PrivateDnsProvisioningState?(string value) => value == null ? (PrivateDnsProvisioningState?)null : new PrivateDnsProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

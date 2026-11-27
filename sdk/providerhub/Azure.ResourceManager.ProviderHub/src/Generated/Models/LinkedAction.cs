@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="LinkedAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkedAction?(string value) => value == null ? null : new LinkedAction(value);
+        public static implicit operator LinkedAction?(string value) => value == null ? (LinkedAction?)null : new LinkedAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

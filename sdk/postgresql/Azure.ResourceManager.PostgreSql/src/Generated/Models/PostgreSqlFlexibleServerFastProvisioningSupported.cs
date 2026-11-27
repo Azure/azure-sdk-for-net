@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerFastProvisioningSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerFastProvisioningSupported(value);
+        public static implicit operator PostgreSqlFlexibleServerFastProvisioningSupported?(string value) => value == null ? (PostgreSqlFlexibleServerFastProvisioningSupported?)null : new PostgreSqlFlexibleServerFastProvisioningSupported(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

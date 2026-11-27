@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <summary> Converts a string to a <see cref="EnterprisePolicyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnterprisePolicyKind?(string value) => value == null ? null : new EnterprisePolicyKind(value);
+        public static implicit operator EnterprisePolicyKind?(string value) => value == null ? (EnterprisePolicyKind?)null : new EnterprisePolicyKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

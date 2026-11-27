@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ProviderQuotaPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderQuotaPolicy?(string value) => value == null ? null : new ProviderQuotaPolicy(value);
+        public static implicit operator ProviderQuotaPolicy?(string value) => value == null ? (ProviderQuotaPolicy?)null : new ProviderQuotaPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

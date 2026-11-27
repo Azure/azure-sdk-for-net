@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationListFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationListFilter?(string value) => value == null ? null : new PostgreSqlMigrationListFilter(value);
+        public static implicit operator PostgreSqlMigrationListFilter?(string value) => value == null ? (PostgreSqlMigrationListFilter?)null : new PostgreSqlMigrationListFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

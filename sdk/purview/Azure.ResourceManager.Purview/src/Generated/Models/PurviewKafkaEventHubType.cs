@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewKafkaEventHubType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewKafkaEventHubType?(string value) => value == null ? null : new PurviewKafkaEventHubType(value);
+        public static implicit operator PurviewKafkaEventHubType?(string value) => value == null ? (PurviewKafkaEventHubType?)null : new PurviewKafkaEventHubType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

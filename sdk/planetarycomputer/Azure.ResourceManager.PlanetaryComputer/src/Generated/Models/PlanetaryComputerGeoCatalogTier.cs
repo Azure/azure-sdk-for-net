@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
 
         /// <summary> Converts a string to a <see cref="PlanetaryComputerGeoCatalogTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlanetaryComputerGeoCatalogTier?(string value) => value == null ? null : new PlanetaryComputerGeoCatalogTier(value);
+        public static implicit operator PlanetaryComputerGeoCatalogTier?(string value) => value == null ? (PlanetaryComputerGeoCatalogTier?)null : new PlanetaryComputerGeoCatalogTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

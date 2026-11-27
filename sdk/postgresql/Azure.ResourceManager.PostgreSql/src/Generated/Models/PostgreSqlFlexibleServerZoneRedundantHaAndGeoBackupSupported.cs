@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(value);
+        public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported?(string value) => value == null ? (PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported?)null : new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

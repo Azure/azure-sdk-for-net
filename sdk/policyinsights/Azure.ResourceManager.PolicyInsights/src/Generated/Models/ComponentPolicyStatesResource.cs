@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentPolicyStatesResource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentPolicyStatesResource?(string value) => value == null ? null : new ComponentPolicyStatesResource(value);
+        public static implicit operator ComponentPolicyStatesResource?(string value) => value == null ? (ComponentPolicyStatesResource?)null : new ComponentPolicyStatesResource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="ResourceValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceValidation?(string value) => value == null ? null : new ResourceValidation(value);
+        public static implicit operator ResourceValidation?(string value) => value == null ? (ResourceValidation?)null : new ResourceValidation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

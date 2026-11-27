@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="OptOutHeaderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OptOutHeaderType?(string value) => value == null ? null : new OptOutHeaderType(value);
+        public static implicit operator OptOutHeaderType?(string value) => value == null ? (OptOutHeaderType?)null : new OptOutHeaderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

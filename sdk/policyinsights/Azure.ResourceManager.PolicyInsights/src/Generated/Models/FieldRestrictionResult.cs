@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Converts a string to a <see cref="FieldRestrictionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FieldRestrictionResult?(string value) => value == null ? null : new FieldRestrictionResult(value);
+        public static implicit operator FieldRestrictionResult?(string value) => value == null ? (FieldRestrictionResult?)null : new FieldRestrictionResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

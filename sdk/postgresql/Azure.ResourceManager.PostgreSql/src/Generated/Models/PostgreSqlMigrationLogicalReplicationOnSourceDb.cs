@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlMigrationLogicalReplicationOnSourceDb?(string value) => value == null ? null : new PostgreSqlMigrationLogicalReplicationOnSourceDb(value);
+        public static implicit operator PostgreSqlMigrationLogicalReplicationOnSourceDb?(string value) => value == null ? (PostgreSqlMigrationLogicalReplicationOnSourceDb?)null : new PostgreSqlMigrationLogicalReplicationOnSourceDb(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

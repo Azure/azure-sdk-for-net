@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="TemplateDeploymentCapability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemplateDeploymentCapability?(string value) => value == null ? null : new TemplateDeploymentCapability(value);
+        public static implicit operator TemplateDeploymentCapability?(string value) => value == null ? (TemplateDeploymentCapability?)null : new TemplateDeploymentCapability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewEventStreamingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewEventStreamingState?(string value) => value == null ? null : new PurviewEventStreamingState(value);
+        public static implicit operator PurviewEventStreamingState?(string value) => value == null ? (PurviewEventStreamingState?)null : new PurviewEventStreamingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

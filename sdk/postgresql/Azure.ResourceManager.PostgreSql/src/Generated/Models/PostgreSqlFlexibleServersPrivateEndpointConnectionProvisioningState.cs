@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState?)null : new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

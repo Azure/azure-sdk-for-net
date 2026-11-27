@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Converts a string to a <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PurviewAccountNameUnavailableReason?(string value) => value == null ? null : new PurviewAccountNameUnavailableReason(value);
+        public static implicit operator PurviewAccountNameUnavailableReason?(string value) => value == null ? (PurviewAccountNameUnavailableReason?)null : new PurviewAccountNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Converts a string to a <see cref="AllowedUnauthorizedActionIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowedUnauthorizedActionIntent?(string value) => value == null ? null : new AllowedUnauthorizedActionIntent(value);
+        public static implicit operator AllowedUnauthorizedActionIntent?(string value) => value == null ? (AllowedUnauthorizedActionIntent?)null : new AllowedUnauthorizedActionIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
