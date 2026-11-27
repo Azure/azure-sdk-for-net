@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayClusterProvisioningState?(string value) => value == null ? null : new RelayClusterProvisioningState(value);
+        public static implicit operator RelayClusterProvisioningState?(string value) => value == null ? (RelayClusterProvisioningState?)null : new RelayClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

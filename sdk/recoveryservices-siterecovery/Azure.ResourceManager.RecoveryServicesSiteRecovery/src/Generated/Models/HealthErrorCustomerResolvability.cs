@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="HealthErrorCustomerResolvability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthErrorCustomerResolvability?(string value) => value == null ? null : new HealthErrorCustomerResolvability(value);
+        public static implicit operator HealthErrorCustomerResolvability?(string value) => value == null ? (HealthErrorCustomerResolvability?)null : new HealthErrorCustomerResolvability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

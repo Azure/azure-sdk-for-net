@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationJobState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationJobState?(string value) => value == null ? null : new DataReplicationJobState(value);
+        public static implicit operator DataReplicationJobState?(string value) => value == null ? (DataReplicationJobState?)null : new DataReplicationJobState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

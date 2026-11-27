@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryVmSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryVmSecurityType?(string value) => value == null ? null : new SiteRecoveryVmSecurityType(value);
+        public static implicit operator SiteRecoveryVmSecurityType?(string value) => value == null ? (SiteRecoveryVmSecurityType?)null : new SiteRecoveryVmSecurityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

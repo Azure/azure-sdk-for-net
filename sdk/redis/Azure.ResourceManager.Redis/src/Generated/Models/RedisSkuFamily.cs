@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="RedisSkuFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisSkuFamily?(string value) => value == null ? null : new RedisSkuFamily(value);
+        public static implicit operator RedisSkuFamily?(string value) => value == null ? (RedisSkuFamily?)null : new RedisSkuFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

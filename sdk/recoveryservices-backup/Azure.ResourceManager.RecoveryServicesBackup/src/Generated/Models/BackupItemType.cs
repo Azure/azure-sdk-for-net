@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupItemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupItemType?(string value) => value == null ? null : new BackupItemType(value);
+        public static implicit operator BackupItemType?(string value) => value == null ? (BackupItemType?)null : new BackupItemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

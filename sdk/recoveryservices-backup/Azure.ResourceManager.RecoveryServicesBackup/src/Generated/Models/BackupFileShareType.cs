@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupFileShareType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupFileShareType?(string value) => value == null ? null : new BackupFileShareType(value);
+        public static implicit operator BackupFileShareType?(string value) => value == null ? (BackupFileShareType?)null : new BackupFileShareType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

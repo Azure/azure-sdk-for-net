@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="BackupStorageVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupStorageVersion?(string value) => value == null ? null : new BackupStorageVersion(value);
+        public static implicit operator BackupStorageVersion?(string value) => value == null ? (BackupStorageVersion?)null : new BackupStorageVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterCustomerManagedEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterCustomerManagedEncryptionType?(string value) => value == null ? null : new HcpOpenShiftClusterCustomerManagedEncryptionType(value);
+        public static implicit operator HcpOpenShiftClusterCustomerManagedEncryptionType?(string value) => value == null ? (HcpOpenShiftClusterCustomerManagedEncryptionType?)null : new HcpOpenShiftClusterCustomerManagedEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

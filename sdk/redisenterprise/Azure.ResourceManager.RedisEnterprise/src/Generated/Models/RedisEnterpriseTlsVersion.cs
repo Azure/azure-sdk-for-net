@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseTlsVersion?(string value) => value == null ? null : new RedisEnterpriseTlsVersion(value);
+        public static implicit operator RedisEnterpriseTlsVersion?(string value) => value == null ? (RedisEnterpriseTlsVersion?)null : new RedisEnterpriseTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="A2ARecoveryAvailabilityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator A2ARecoveryAvailabilityType?(string value) => value == null ? null : new A2ARecoveryAvailabilityType(value);
+        public static implicit operator A2ARecoveryAvailabilityType?(string value) => value == null ? (A2ARecoveryAvailabilityType?)null : new A2ARecoveryAvailabilityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryErrorSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryErrorSeverity?(string value) => value == null ? null : new SiteRecoveryErrorSeverity(value);
+        public static implicit operator SiteRecoveryErrorSeverity?(string value) => value == null ? (SiteRecoveryErrorSeverity?)null : new SiteRecoveryErrorSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="PersistenceSettingRdbFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistenceSettingRdbFrequency?(string value) => value == null ? null : new PersistenceSettingRdbFrequency(value);
+        public static implicit operator PersistenceSettingRdbFrequency?(string value) => value == null ? (PersistenceSettingRdbFrequency?)null : new PersistenceSettingRdbFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

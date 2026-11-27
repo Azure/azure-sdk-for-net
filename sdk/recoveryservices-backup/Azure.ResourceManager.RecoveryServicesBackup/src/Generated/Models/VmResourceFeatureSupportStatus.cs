@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="VmResourceFeatureSupportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmResourceFeatureSupportStatus?(string value) => value == null ? null : new VmResourceFeatureSupportStatus(value);
+        public static implicit operator VmResourceFeatureSupportStatus?(string value) => value == null ? (VmResourceFeatureSupportStatus?)null : new VmResourceFeatureSupportStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

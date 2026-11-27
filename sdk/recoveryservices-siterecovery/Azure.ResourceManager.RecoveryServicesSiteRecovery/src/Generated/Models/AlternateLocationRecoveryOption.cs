@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="AlternateLocationRecoveryOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlternateLocationRecoveryOption?(string value) => value == null ? null : new AlternateLocationRecoveryOption(value);
+        public static implicit operator AlternateLocationRecoveryOption?(string value) => value == null ? (AlternateLocationRecoveryOption?)null : new AlternateLocationRecoveryOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

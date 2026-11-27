@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="CrossSubscriptionRestoreState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CrossSubscriptionRestoreState?(string value) => value == null ? null : new CrossSubscriptionRestoreState(value);
+        public static implicit operator CrossSubscriptionRestoreState?(string value) => value == null ? (CrossSubscriptionRestoreState?)null : new CrossSubscriptionRestoreState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="DeferUpgradeSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeferUpgradeSetting?(string value) => value == null ? null : new DeferUpgradeSetting(value);
+        public static implicit operator DeferUpgradeSetting?(string value) => value == null ? (DeferUpgradeSetting?)null : new DeferUpgradeSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

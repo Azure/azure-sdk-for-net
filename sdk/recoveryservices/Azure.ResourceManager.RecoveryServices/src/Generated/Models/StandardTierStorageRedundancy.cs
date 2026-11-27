@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="StandardTierStorageRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandardTierStorageRedundancy?(string value) => value == null ? null : new StandardTierStorageRedundancy(value);
+        public static implicit operator StandardTierStorageRedundancy?(string value) => value == null ? (StandardTierStorageRedundancy?)null : new StandardTierStorageRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

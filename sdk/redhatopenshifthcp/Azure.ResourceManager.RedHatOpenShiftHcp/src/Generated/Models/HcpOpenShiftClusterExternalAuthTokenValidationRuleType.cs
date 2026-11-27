@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterExternalAuthTokenValidationRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterExternalAuthTokenValidationRuleType?(string value) => value == null ? null : new HcpOpenShiftClusterExternalAuthTokenValidationRuleType(value);
+        public static implicit operator HcpOpenShiftClusterExternalAuthTokenValidationRuleType?(string value) => value == null ? (HcpOpenShiftClusterExternalAuthTokenValidationRuleType?)null : new HcpOpenShiftClusterExternalAuthTokenValidationRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

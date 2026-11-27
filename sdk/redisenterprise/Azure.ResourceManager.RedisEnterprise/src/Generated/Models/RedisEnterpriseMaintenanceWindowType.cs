@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseMaintenanceWindowType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseMaintenanceWindowType?(string value) => value == null ? null : new RedisEnterpriseMaintenanceWindowType(value);
+        public static implicit operator RedisEnterpriseMaintenanceWindowType?(string value) => value == null ? (RedisEnterpriseMaintenanceWindowType?)null : new RedisEnterpriseMaintenanceWindowType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="ProtectedItemActiveLocation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectedItemActiveLocation?(string value) => value == null ? null : new ProtectedItemActiveLocation(value);
+        public static implicit operator ProtectedItemActiveLocation?(string value) => value == null ? (ProtectedItemActiveLocation?)null : new ProtectedItemActiveLocation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

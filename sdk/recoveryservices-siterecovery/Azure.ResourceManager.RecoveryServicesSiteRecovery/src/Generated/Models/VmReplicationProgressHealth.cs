@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="VmReplicationProgressHealth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmReplicationProgressHealth?(string value) => value == null ? null : new VmReplicationProgressHealth(value);
+        public static implicit operator VmReplicationProgressHealth?(string value) => value == null ? (VmReplicationProgressHealth?)null : new VmReplicationProgressHealth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

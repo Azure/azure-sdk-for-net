@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayNameUnavailableReason?(string value) => value == null ? null : new RelayNameUnavailableReason(value);
+        public static implicit operator RelayNameUnavailableReason?(string value) => value == null ? (RelayNameUnavailableReason?)null : new RelayNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

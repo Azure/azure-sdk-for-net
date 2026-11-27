@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupStorageTypeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupStorageTypeState?(string value) => value == null ? null : new BackupStorageTypeState(value);
+        public static implicit operator BackupStorageTypeState?(string value) => value == null ? (BackupStorageTypeState?)null : new BackupStorageTypeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

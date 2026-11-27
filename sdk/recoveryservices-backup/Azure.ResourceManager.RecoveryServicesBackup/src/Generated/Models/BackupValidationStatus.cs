@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupValidationStatus?(string value) => value == null ? null : new BackupValidationStatus(value);
+        public static implicit operator BackupValidationStatus?(string value) => value == null ? (BackupValidationStatus?)null : new BackupValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

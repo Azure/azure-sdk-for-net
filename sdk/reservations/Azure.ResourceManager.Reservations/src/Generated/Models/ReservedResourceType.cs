@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="ReservedResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservedResourceType?(string value) => value == null ? null : new ReservedResourceType(value);
+        public static implicit operator ReservedResourceType?(string value) => value == null ? (ReservedResourceType?)null : new ReservedResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

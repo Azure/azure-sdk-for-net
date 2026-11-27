@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseMaintenanceDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseMaintenanceDayOfWeek?(string value) => value == null ? null : new RedisEnterpriseMaintenanceDayOfWeek(value);
+        public static implicit operator RedisEnterpriseMaintenanceDayOfWeek?(string value) => value == null ? (RedisEnterpriseMaintenanceDayOfWeek?)null : new RedisEnterpriseMaintenanceDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Converts a string to a <see cref="QuotaRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuotaRequestStatus?(string value) => value == null ? null : new QuotaRequestStatus(value);
+        public static implicit operator QuotaRequestStatus?(string value) => value == null ? (QuotaRequestStatus?)null : new QuotaRequestStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

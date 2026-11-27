@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayPublicNetworkAccess?(string value) => value == null ? null : new RelayPublicNetworkAccess(value);
+        public static implicit operator RelayPublicNetworkAccess?(string value) => value == null ? (RelayPublicNetworkAccess?)null : new RelayPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

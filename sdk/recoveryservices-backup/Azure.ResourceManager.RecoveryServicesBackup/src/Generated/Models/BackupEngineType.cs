@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupEngineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupEngineType?(string value) => value == null ? null : new BackupEngineType(value);
+        public static implicit operator BackupEngineType?(string value) => value == null ? (BackupEngineType?)null : new BackupEngineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

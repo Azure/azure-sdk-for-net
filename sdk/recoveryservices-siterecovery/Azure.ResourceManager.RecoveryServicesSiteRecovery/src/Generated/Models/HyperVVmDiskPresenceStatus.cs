@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="HyperVVmDiskPresenceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HyperVVmDiskPresenceStatus?(string value) => value == null ? null : new HyperVVmDiskPresenceStatus(value);
+        public static implicit operator HyperVVmDiskPresenceStatus?(string value) => value == null ? (HyperVVmDiskPresenceStatus?)null : new HyperVVmDiskPresenceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

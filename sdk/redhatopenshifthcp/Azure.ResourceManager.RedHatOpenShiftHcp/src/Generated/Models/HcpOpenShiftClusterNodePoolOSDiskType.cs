@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterNodePoolOSDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterNodePoolOSDiskType?(string value) => value == null ? null : new HcpOpenShiftClusterNodePoolOSDiskType(value);
+        public static implicit operator HcpOpenShiftClusterNodePoolOSDiskType?(string value) => value == null ? (HcpOpenShiftClusterNodePoolOSDiskType?)null : new HcpOpenShiftClusterNodePoolOSDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="VaultXcoolState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultXcoolState?(string value) => value == null ? null : new VaultXcoolState(value);
+        public static implicit operator VaultXcoolState?(string value) => value == null ? (VaultXcoolState?)null : new VaultXcoolState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

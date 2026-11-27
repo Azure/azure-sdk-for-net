@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryServicesIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesIdentityType?(string value) => value == null ? null : new RecoveryServicesIdentityType(value);
+        public static implicit operator RecoveryServicesIdentityType?(string value) => value == null ? (RecoveryServicesIdentityType?)null : new RecoveryServicesIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

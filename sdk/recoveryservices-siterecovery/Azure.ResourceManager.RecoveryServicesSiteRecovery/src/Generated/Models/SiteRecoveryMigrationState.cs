@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryMigrationState?(string value) => value == null ? null : new SiteRecoveryMigrationState(value);
+        public static implicit operator SiteRecoveryMigrationState?(string value) => value == null ? (SiteRecoveryMigrationState?)null : new SiteRecoveryMigrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

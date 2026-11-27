@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="ImmutabilityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImmutabilityType?(string value) => value == null ? null : new ImmutabilityType(value);
+        public static implicit operator ImmutabilityType?(string value) => value == null ? (ImmutabilityType?)null : new ImmutabilityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

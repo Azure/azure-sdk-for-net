@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryNetworkConfigAutoSyncPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryNetworkConfigAutoSyncPolicy?(string value) => value == null ? null : new RecoveryNetworkConfigAutoSyncPolicy(value);
+        public static implicit operator RecoveryNetworkConfigAutoSyncPolicy?(string value) => value == null ? (RecoveryNetworkConfigAutoSyncPolicy?)null : new RecoveryNetworkConfigAutoSyncPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

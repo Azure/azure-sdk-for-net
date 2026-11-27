@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationRecoveryPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationRecoveryPointType?(string value) => value == null ? null : new DataReplicationRecoveryPointType(value);
+        public static implicit operator DataReplicationRecoveryPointType?(string value) => value == null ? (DataReplicationRecoveryPointType?)null : new DataReplicationRecoveryPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

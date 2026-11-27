@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseMigrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseMigrationProvisioningState?(string value) => value == null ? null : new RedisEnterpriseMigrationProvisioningState(value);
+        public static implicit operator RedisEnterpriseMigrationProvisioningState?(string value) => value == null ? (RedisEnterpriseMigrationProvisioningState?)null : new RedisEnterpriseMigrationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

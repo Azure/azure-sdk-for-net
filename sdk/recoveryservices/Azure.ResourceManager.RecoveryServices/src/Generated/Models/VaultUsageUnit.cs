@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="VaultUsageUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultUsageUnit?(string value) => value == null ? null : new VaultUsageUnit(value);
+        public static implicit operator VaultUsageUnit?(string value) => value == null ? (VaultUsageUnit?)null : new VaultUsageUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

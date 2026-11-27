@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="SoftDeleteFeatureState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SoftDeleteFeatureState?(string value) => value == null ? null : new SoftDeleteFeatureState(value);
+        public static implicit operator SoftDeleteFeatureState?(string value) => value == null ? (SoftDeleteFeatureState?)null : new SoftDeleteFeatureState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="VmNicSelection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmNicSelection?(string value) => value == null ? null : new VmNicSelection(value);
+        public static implicit operator VmNicSelection?(string value) => value == null ? (VmNicSelection?)null : new VmNicSelection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

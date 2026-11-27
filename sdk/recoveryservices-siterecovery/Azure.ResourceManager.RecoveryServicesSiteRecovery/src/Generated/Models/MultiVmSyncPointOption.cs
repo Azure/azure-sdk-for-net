@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="MultiVmSyncPointOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultiVmSyncPointOption?(string value) => value == null ? null : new MultiVmSyncPointOption(value);
+        public static implicit operator MultiVmSyncPointOption?(string value) => value == null ? (MultiVmSyncPointOption?)null : new MultiVmSyncPointOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

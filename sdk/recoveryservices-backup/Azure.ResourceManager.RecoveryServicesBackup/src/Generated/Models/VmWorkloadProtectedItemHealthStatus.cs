@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmWorkloadProtectedItemHealthStatus?(string value) => value == null ? null : new VmWorkloadProtectedItemHealthStatus(value);
+        public static implicit operator VmWorkloadProtectedItemHealthStatus?(string value) => value == null ? (VmWorkloadProtectedItemHealthStatus?)null : new VmWorkloadProtectedItemHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

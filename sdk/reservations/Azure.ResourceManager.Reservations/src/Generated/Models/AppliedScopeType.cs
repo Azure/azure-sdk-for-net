@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="AppliedScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppliedScopeType?(string value) => value == null ? null : new AppliedScopeType(value);
+        public static implicit operator AppliedScopeType?(string value) => value == null ? (AppliedScopeType?)null : new AppliedScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

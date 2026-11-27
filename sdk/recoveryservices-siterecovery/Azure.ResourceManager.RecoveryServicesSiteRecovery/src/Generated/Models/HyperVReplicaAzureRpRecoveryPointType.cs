@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="HyperVReplicaAzureRpRecoveryPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HyperVReplicaAzureRpRecoveryPointType?(string value) => value == null ? null : new HyperVReplicaAzureRpRecoveryPointType(value);
+        public static implicit operator HyperVReplicaAzureRpRecoveryPointType?(string value) => value == null ? (HyperVReplicaAzureRpRecoveryPointType?)null : new HyperVReplicaAzureRpRecoveryPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

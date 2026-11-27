@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupWorkloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupWorkloadType?(string value) => value == null ? null : new BackupWorkloadType(value);
+        public static implicit operator BackupWorkloadType?(string value) => value == null ? (BackupWorkloadType?)null : new BackupWorkloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

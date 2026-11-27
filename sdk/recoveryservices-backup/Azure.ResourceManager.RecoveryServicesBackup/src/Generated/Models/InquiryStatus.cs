@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="InquiryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InquiryStatus?(string value) => value == null ? null : new InquiryStatus(value);
+        public static implicit operator InquiryStatus?(string value) => value == null ? (InquiryStatus?)null : new InquiryStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

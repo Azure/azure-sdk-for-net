@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="IaasVmPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IaasVmPolicyType?(string value) => value == null ? null : new IaasVmPolicyType(value);
+        public static implicit operator IaasVmPolicyType?(string value) => value == null ? (IaasVmPolicyType?)null : new IaasVmPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

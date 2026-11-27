@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="SavingsPlanTerm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SavingsPlanTerm?(string value) => value == null ? null : new SavingsPlanTerm(value);
+        public static implicit operator SavingsPlanTerm?(string value) => value == null ? (SavingsPlanTerm?)null : new SavingsPlanTerm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

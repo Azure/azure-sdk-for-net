@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="RehydrationPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RehydrationPriority?(string value) => value == null ? null : new RehydrationPriority(value);
+        public static implicit operator RehydrationPriority?(string value) => value == null ? (RehydrationPriority?)null : new RehydrationPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

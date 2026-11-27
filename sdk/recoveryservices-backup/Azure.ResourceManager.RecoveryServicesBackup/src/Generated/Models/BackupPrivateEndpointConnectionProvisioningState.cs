@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new BackupPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator BackupPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (BackupPrivateEndpointConnectionProvisioningState?)null : new BackupPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupThreatState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupThreatState?(string value) => value == null ? null : new BackupThreatState(value);
+        public static implicit operator BackupThreatState?(string value) => value == null ? (BackupThreatState?)null : new BackupThreatState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

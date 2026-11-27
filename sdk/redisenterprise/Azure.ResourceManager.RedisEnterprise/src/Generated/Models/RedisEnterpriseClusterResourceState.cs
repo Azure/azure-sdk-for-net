@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseClusterResourceState?(string value) => value == null ? null : new RedisEnterpriseClusterResourceState(value);
+        public static implicit operator RedisEnterpriseClusterResourceState?(string value) => value == null ? (RedisEnterpriseClusterResourceState?)null : new RedisEnterpriseClusterResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

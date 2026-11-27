@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="VaultUpgradeTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultUpgradeTriggerType?(string value) => value == null ? null : new VaultUpgradeTriggerType(value);
+        public static implicit operator VaultUpgradeTriggerType?(string value) => value == null ? (VaultUpgradeTriggerType?)null : new VaultUpgradeTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

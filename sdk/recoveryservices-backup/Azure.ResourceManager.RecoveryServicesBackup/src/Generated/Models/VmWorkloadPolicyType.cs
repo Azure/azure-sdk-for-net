@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="VmWorkloadPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmWorkloadPolicyType?(string value) => value == null ? null : new VmWorkloadPolicyType(value);
+        public static implicit operator VmWorkloadPolicyType?(string value) => value == null ? (VmWorkloadPolicyType?)null : new VmWorkloadPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

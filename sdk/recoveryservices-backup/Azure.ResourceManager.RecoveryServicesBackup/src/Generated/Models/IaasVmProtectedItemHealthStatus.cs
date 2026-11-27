@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="IaasVmProtectedItemHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IaasVmProtectedItemHealthStatus?(string value) => value == null ? null : new IaasVmProtectedItemHealthStatus(value);
+        public static implicit operator IaasVmProtectedItemHealthStatus?(string value) => value == null ? (IaasVmProtectedItemHealthStatus?)null : new IaasVmProtectedItemHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

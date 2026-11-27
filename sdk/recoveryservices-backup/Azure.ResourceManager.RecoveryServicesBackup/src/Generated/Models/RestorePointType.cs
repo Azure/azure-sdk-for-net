@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="RestorePointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestorePointType?(string value) => value == null ? null : new RestorePointType(value);
+        public static implicit operator RestorePointType?(string value) => value == null ? (RestorePointType?)null : new RestorePointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

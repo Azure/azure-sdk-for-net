@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="ReservationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationKind?(string value) => value == null ? null : new ReservationKind(value);
+        public static implicit operator ReservationKind?(string value) => value == null ? (ReservationKind?)null : new ReservationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

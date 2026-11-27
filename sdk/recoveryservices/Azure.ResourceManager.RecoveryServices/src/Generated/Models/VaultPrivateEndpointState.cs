@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="VaultPrivateEndpointState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VaultPrivateEndpointState?(string value) => value == null ? null : new VaultPrivateEndpointState(value);
+        public static implicit operator VaultPrivateEndpointState?(string value) => value == null ? (VaultPrivateEndpointState?)null : new VaultPrivateEndpointState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

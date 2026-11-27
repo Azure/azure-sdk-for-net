@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterOutboundType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterOutboundType?(string value) => value == null ? null : new HcpOpenShiftClusterOutboundType(value);
+        public static implicit operator HcpOpenShiftClusterOutboundType?(string value) => value == null ? (HcpOpenShiftClusterOutboundType?)null : new HcpOpenShiftClusterOutboundType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

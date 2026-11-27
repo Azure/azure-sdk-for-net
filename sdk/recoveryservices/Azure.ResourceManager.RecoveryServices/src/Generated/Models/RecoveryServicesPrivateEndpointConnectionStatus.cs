@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesPrivateEndpointConnectionStatus?(string value) => value == null ? null : new RecoveryServicesPrivateEndpointConnectionStatus(value);
+        public static implicit operator RecoveryServicesPrivateEndpointConnectionStatus?(string value) => value == null ? (RecoveryServicesPrivateEndpointConnectionStatus?)null : new RecoveryServicesPrivateEndpointConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

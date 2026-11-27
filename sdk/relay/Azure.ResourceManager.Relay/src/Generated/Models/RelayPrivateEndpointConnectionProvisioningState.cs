@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> Converts a string to a <see cref="RelayPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelayPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new RelayPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator RelayPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (RelayPrivateEndpointConnectionProvisioningState?)null : new RelayPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

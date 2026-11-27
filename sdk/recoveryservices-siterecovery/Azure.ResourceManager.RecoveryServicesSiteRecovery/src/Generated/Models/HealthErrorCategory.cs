@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="HealthErrorCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthErrorCategory?(string value) => value == null ? null : new HealthErrorCategory(value);
+        public static implicit operator HealthErrorCategory?(string value) => value == null ? (HealthErrorCategory?)null : new HealthErrorCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

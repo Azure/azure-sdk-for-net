@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Converts a string to a <see cref="QuotaUsagesType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuotaUsagesType?(string value) => value == null ? null : new QuotaUsagesType(value);
+        public static implicit operator QuotaUsagesType?(string value) => value == null ? (QuotaUsagesType?)null : new QuotaUsagesType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupCreateMode?(string value) => value == null ? null : new BackupCreateMode(value);
+        public static implicit operator BackupCreateMode?(string value) => value == null ? (BackupCreateMode?)null : new BackupCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

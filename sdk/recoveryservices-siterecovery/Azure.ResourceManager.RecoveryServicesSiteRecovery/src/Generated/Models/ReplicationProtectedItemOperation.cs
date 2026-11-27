@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="ReplicationProtectedItemOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationProtectedItemOperation?(string value) => value == null ? null : new ReplicationProtectedItemOperation(value);
+        public static implicit operator ReplicationProtectedItemOperation?(string value) => value == null ? (ReplicationProtectedItemOperation?)null : new ReplicationProtectedItemOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

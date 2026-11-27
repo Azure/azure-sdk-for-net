@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryProtectionHealth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryProtectionHealth?(string value) => value == null ? null : new SiteRecoveryProtectionHealth(value);
+        public static implicit operator SiteRecoveryProtectionHealth?(string value) => value == null ? (SiteRecoveryProtectionHealth?)null : new SiteRecoveryProtectionHealth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

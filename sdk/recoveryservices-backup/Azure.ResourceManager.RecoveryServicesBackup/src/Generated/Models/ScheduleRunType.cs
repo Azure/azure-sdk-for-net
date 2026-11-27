@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="ScheduleRunType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleRunType?(string value) => value == null ? null : new ScheduleRunType(value);
+        public static implicit operator ScheduleRunType?(string value) => value == null ? (ScheduleRunType?)null : new ScheduleRunType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="RedisRebootType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisRebootType?(string value) => value == null ? null : new RedisRebootType(value);
+        public static implicit operator RedisRebootType?(string value) => value == null ? (RedisRebootType?)null : new RedisRebootType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

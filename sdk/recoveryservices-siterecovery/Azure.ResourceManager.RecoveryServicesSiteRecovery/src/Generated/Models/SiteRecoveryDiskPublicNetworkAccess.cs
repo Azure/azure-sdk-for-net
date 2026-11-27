@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryDiskPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryDiskPublicNetworkAccess?(string value) => value == null ? null : new SiteRecoveryDiskPublicNetworkAccess(value);
+        public static implicit operator SiteRecoveryDiskPublicNetworkAccess?(string value) => value == null ? (SiteRecoveryDiskPublicNetworkAccess?)null : new SiteRecoveryDiskPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

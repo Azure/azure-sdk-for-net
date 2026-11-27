@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="RedisSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisSkuName?(string value) => value == null ? null : new RedisSkuName(value);
+        public static implicit operator RedisSkuName?(string value) => value == null ? (RedisSkuName?)null : new RedisSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

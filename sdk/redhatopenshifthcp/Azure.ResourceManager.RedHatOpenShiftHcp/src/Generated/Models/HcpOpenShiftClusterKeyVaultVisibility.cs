@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterKeyVaultVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterKeyVaultVisibility?(string value) => value == null ? null : new HcpOpenShiftClusterKeyVaultVisibility(value);
+        public static implicit operator HcpOpenShiftClusterKeyVaultVisibility?(string value) => value == null ? (HcpOpenShiftClusterKeyVaultVisibility?)null : new HcpOpenShiftClusterKeyVaultVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

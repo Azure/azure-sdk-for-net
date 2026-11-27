@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="AccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessType?(string value) => value == null ? null : new AccessType(value);
+        public static implicit operator AccessType?(string value) => value == null ? (AccessType?)null : new AccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

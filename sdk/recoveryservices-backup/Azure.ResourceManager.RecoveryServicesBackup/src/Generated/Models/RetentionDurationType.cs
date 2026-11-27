@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="RetentionDurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RetentionDurationType?(string value) => value == null ? null : new RetentionDurationType(value);
+        public static implicit operator RetentionDurationType?(string value) => value == null ? (RetentionDurationType?)null : new RetentionDurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

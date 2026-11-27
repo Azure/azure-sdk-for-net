@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationTestFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationTestFailoverState?(string value) => value == null ? null : new DataReplicationTestFailoverState(value);
+        public static implicit operator DataReplicationTestFailoverState?(string value) => value == null ? (DataReplicationTestFailoverState?)null : new DataReplicationTestFailoverState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

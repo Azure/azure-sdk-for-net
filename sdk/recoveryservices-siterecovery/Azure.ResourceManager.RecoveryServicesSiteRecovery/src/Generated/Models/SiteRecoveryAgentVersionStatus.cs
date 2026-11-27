@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryAgentVersionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryAgentVersionStatus?(string value) => value == null ? null : new SiteRecoveryAgentVersionStatus(value);
+        public static implicit operator SiteRecoveryAgentVersionStatus?(string value) => value == null ? (SiteRecoveryAgentVersionStatus?)null : new SiteRecoveryAgentVersionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

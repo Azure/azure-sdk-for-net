@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationResynchronizationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationResynchronizationState?(string value) => value == null ? null : new DataReplicationResynchronizationState(value);
+        public static implicit operator DataReplicationResynchronizationState?(string value) => value == null ? (DataReplicationResynchronizationState?)null : new DataReplicationResynchronizationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

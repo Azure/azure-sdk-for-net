@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="UpdateChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateChannel?(string value) => value == null ? null : new UpdateChannel(value);
+        public static implicit operator UpdateChannel?(string value) => value == null ? (UpdateChannel?)null : new UpdateChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

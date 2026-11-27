@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="InfrastructureEncryptionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InfrastructureEncryptionState?(string value) => value == null ? null : new InfrastructureEncryptionState(value);
+        public static implicit operator InfrastructureEncryptionState?(string value) => value == null ? (InfrastructureEncryptionState?)null : new InfrastructureEncryptionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

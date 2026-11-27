@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMwareToAzureMigrateResyncState?(string value) => value == null ? null : new VMwareToAzureMigrateResyncState(value);
+        public static implicit operator VMwareToAzureMigrateResyncState?(string value) => value == null ? (VMwareToAzureMigrateResyncState?)null : new VMwareToAzureMigrateResyncState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

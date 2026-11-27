@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="ProtectableContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectableContainerType?(string value) => value == null ? null : new ProtectableContainerType(value);
+        public static implicit operator ProtectableContainerType?(string value) => value == null ? (ProtectableContainerType?)null : new ProtectableContainerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

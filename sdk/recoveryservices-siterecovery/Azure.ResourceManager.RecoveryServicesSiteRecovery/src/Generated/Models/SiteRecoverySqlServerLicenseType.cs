@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoverySqlServerLicenseType?(string value) => value == null ? null : new SiteRecoverySqlServerLicenseType(value);
+        public static implicit operator SiteRecoverySqlServerLicenseType?(string value) => value == null ? (SiteRecoverySqlServerLicenseType?)null : new SiteRecoverySqlServerLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

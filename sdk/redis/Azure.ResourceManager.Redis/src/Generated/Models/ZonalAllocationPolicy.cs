@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Converts a string to a <see cref="ZonalAllocationPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonalAllocationPolicy?(string value) => value == null ? null : new ZonalAllocationPolicy(value);
+        public static implicit operator ZonalAllocationPolicy?(string value) => value == null ? (ZonalAllocationPolicy?)null : new ZonalAllocationPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

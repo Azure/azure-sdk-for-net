@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Converts a string to a <see cref="OpenShiftVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenShiftVisibility?(string value) => value == null ? null : new OpenShiftVisibility(value);
+        public static implicit operator OpenShiftVisibility?(string value) => value == null ? (OpenShiftVisibility?)null : new OpenShiftVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

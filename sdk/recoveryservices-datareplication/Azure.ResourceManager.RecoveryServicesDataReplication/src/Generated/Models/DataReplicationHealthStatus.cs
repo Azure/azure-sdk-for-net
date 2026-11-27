@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationHealthStatus?(string value) => value == null ? null : new DataReplicationHealthStatus(value);
+        public static implicit operator DataReplicationHealthStatus?(string value) => value == null ? (DataReplicationHealthStatus?)null : new DataReplicationHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="OperatorIdentityRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperatorIdentityRequired?(string value) => value == null ? null : new OperatorIdentityRequired(value);
+        public static implicit operator OperatorIdentityRequired?(string value) => value == null ? (OperatorIdentityRequired?)null : new OperatorIdentityRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

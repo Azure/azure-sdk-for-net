@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="IaasVmSnapshotConsistencyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IaasVmSnapshotConsistencyType?(string value) => value == null ? null : new IaasVmSnapshotConsistencyType(value);
+        public static implicit operator IaasVmSnapshotConsistencyType?(string value) => value == null ? (IaasVmSnapshotConsistencyType?)null : new IaasVmSnapshotConsistencyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

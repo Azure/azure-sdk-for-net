@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupUsagesUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupUsagesUnit?(string value) => value == null ? null : new BackupUsagesUnit(value);
+        public static implicit operator BackupUsagesUnit?(string value) => value == null ? (BackupUsagesUnit?)null : new BackupUsagesUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

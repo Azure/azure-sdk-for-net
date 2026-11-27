@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="PlannedFailoverStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlannedFailoverStatus?(string value) => value == null ? null : new PlannedFailoverStatus(value);
+        public static implicit operator PlannedFailoverStatus?(string value) => value == null ? (PlannedFailoverStatus?)null : new PlannedFailoverStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterConditionStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterConditionStatusType?(string value) => value == null ? null : new HcpOpenShiftClusterConditionStatusType(value);
+        public static implicit operator HcpOpenShiftClusterConditionStatusType?(string value) => value == null ? (HcpOpenShiftClusterConditionStatusType?)null : new HcpOpenShiftClusterConditionStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

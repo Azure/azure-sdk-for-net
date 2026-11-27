@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Converts a string to a <see cref="ReservationTerm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReservationTerm?(string value) => value == null ? null : new ReservationTerm(value);
+        public static implicit operator ReservationTerm?(string value) => value == null ? (ReservationTerm?)null : new ReservationTerm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

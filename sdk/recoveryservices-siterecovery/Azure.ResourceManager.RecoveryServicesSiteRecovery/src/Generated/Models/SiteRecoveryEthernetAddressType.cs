@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SiteRecoveryEthernetAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteRecoveryEthernetAddressType?(string value) => value == null ? null : new SiteRecoveryEthernetAddressType(value);
+        public static implicit operator SiteRecoveryEthernetAddressType?(string value) => value == null ? (SiteRecoveryEthernetAddressType?)null : new SiteRecoveryEthernetAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

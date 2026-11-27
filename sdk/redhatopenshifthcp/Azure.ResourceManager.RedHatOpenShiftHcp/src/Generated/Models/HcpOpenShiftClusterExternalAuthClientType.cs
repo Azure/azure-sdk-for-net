@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterExternalAuthClientType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterExternalAuthClientType?(string value) => value == null ? null : new HcpOpenShiftClusterExternalAuthClientType(value);
+        public static implicit operator HcpOpenShiftClusterExternalAuthClientType?(string value) => value == null ? (HcpOpenShiftClusterExternalAuthClientType?)null : new HcpOpenShiftClusterExternalAuthClientType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Relationships.Models
 
         /// <summary> Converts a string to a <see cref="RelationshipProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelationshipProvisioningState?(string value) => value == null ? null : new RelationshipProvisioningState(value);
+        public static implicit operator RelationshipProvisioningState?(string value) => value == null ? (RelationshipProvisioningState?)null : new RelationshipProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

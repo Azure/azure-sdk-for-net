@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Converts a string to a <see cref="QuotaLimitType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuotaLimitType?(string value) => value == null ? null : new QuotaLimitType(value);
+        public static implicit operator QuotaLimitType?(string value) => value == null ? (QuotaLimitType?)null : new QuotaLimitType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

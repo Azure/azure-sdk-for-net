@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Converts a string to a <see cref="DataReplicationVaultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationVaultType?(string value) => value == null ? null : new DataReplicationVaultType(value);
+        public static implicit operator DataReplicationVaultType?(string value) => value == null ? (DataReplicationVaultType?)null : new DataReplicationVaultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

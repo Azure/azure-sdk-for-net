@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Converts a string to a <see cref="FileShareCopyOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareCopyOption?(string value) => value == null ? null : new FileShareCopyOption(value);
+        public static implicit operator FileShareCopyOption?(string value) => value == null ? (FileShareCopyOption?)null : new FileShareCopyOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

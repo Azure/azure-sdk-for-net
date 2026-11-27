@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Converts a string to a <see cref="RedisEnterpriseEvictionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedisEnterpriseEvictionPolicy?(string value) => value == null ? null : new RedisEnterpriseEvictionPolicy(value);
+        public static implicit operator RedisEnterpriseEvictionPolicy?(string value) => value == null ? (RedisEnterpriseEvictionPolicy?)null : new RedisEnterpriseEvictionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

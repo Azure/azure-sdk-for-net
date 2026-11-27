@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="SourceSiteOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceSiteOperation?(string value) => value == null ? null : new SourceSiteOperation(value);
+        public static implicit operator SourceSiteOperation?(string value) => value == null ? (SourceSiteOperation?)null : new SourceSiteOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

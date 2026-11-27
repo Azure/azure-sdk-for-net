@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="MultiUserAuthorization"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultiUserAuthorization?(string value) => value == null ? null : new MultiUserAuthorization(value);
+        public static implicit operator MultiUserAuthorization?(string value) => value == null ? (MultiUserAuthorization?)null : new MultiUserAuthorization(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

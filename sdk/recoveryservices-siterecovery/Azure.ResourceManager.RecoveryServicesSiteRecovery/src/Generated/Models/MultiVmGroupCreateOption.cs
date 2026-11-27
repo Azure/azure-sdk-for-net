@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Converts a string to a <see cref="MultiVmGroupCreateOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultiVmGroupCreateOption?(string value) => value == null ? null : new MultiVmGroupCreateOption(value);
+        public static implicit operator MultiVmGroupCreateOption?(string value) => value == null ? (MultiVmGroupCreateOption?)null : new MultiVmGroupCreateOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

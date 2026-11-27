@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="ResourceMoveState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceMoveState?(string value) => value == null ? null : new ResourceMoveState(value);
+        public static implicit operator ResourceMoveState?(string value) => value == null ? (ResourceMoveState?)null : new ResourceMoveState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

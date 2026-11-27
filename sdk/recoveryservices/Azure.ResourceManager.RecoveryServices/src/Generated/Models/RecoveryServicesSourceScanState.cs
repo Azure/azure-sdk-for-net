@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryServicesSourceScanState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesSourceScanState?(string value) => value == null ? null : new RecoveryServicesSourceScanState(value);
+        public static implicit operator RecoveryServicesSourceScanState?(string value) => value == null ? (RecoveryServicesSourceScanState?)null : new RecoveryServicesSourceScanState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
