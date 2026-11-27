@@ -316,6 +316,158 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SolutionMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadataResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionMetadataResource"/> object. </returns>
+        public static SolutionMetadataResource GetSolutionMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="SolutionMetadataCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetAllSolutionMetadata(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="SolutionMetadataResource"/> objects. </returns>
+        public static SolutionMetadataCollection GetAllSolutionMetadata(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetAllSolutionMetadata(scope);
+        }
+
+        /// <summary>
+        /// Get a Solution resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadata(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataName"> Name of the solution metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SolutionMetadataResource> GetSolutionMetadata(this ArmClient client, ResourceIdentifier scope, string solutionMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadata(scope, solutionMetadataName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Solution resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadataAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataName"> Name of the solution metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SolutionMetadataResource>> GetSolutionMetadataAsync(this ArmClient client, ResourceIdentifier scope, string solutionMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadataAsync(scope, solutionMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionMetadataVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadataVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionMetadataVersionResource"/> object. </returns>
+        public static SolutionMetadataVersionResource GetSolutionMetadataVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadataVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="SolutionMetadataVersionCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadataVersions(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="SolutionMetadataVersionResource"/> objects. </returns>
+        public static SolutionMetadataVersionCollection GetSolutionMetadataVersions(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadataVersions(scope);
+        }
+
+        /// <summary>
+        /// Get a Solution resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadataVersion(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataVersionName"> Name of the solution metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SolutionMetadataVersionResource> GetSolutionMetadataVersion(this ArmClient client, ResourceIdentifier scope, string solutionMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadataVersion(scope, solutionMetadataVersionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Solution resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionMetadataVersionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataVersionName"> Name of the solution metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SolutionMetadataVersionResource>> GetSolutionMetadataVersionAsync(this ArmClient client, ResourceIdentifier scope, string solutionMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableWorkloadOrchestrationArmClient(client).GetSolutionMetadataVersionAsync(scope, solutionMetadataVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="EdgeSolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -529,6 +681,230 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSiteReferenceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionSchemaResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionSchemaResource"/> object. </returns>
+        public static SolutionSchemaResource GetSolutionSchemaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionSchemaResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConfigTemplateSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetConfigTemplateSchemaResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConfigTemplateSchemaResource"/> object. </returns>
+        public static ConfigTemplateSchemaResource GetConfigTemplateSchemaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetConfigTemplateSchemaResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConfigTemplateMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetConfigTemplateMetadataResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConfigTemplateMetadataResource"/> object. </returns>
+        public static ConfigTemplateMetadataResource GetConfigTemplateMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetConfigTemplateMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HierarchyConfigurationMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadataResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HierarchyConfigurationMetadataResource"/> object. </returns>
+        public static HierarchyConfigurationMetadataResource GetHierarchyConfigurationMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="HierarchyConfigurationMetadataCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetAllHierarchyConfigurationMetadata(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="HierarchyConfigurationMetadataResource"/> objects. </returns>
+        public static HierarchyConfigurationMetadataCollection GetAllHierarchyConfigurationMetadata(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetAllHierarchyConfigurationMetadata(scope);
+        }
+
+        /// <summary>
+        /// Get a Hierarchy Configuration Metadata resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadata(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataName"> Name of the hierarchy configuration metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HierarchyConfigurationMetadataResource> GetHierarchyConfigurationMetadata(this ArmClient client, ResourceIdentifier scope, string hierarchyConfigurationMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadata(scope, hierarchyConfigurationMetadataName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Hierarchy Configuration Metadata resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadataAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataName"> Name of the hierarchy configuration metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HierarchyConfigurationMetadataResource>> GetHierarchyConfigurationMetadataAsync(this ArmClient client, ResourceIdentifier scope, string hierarchyConfigurationMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadataAsync(scope, hierarchyConfigurationMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HierarchyConfigurationMetadataVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadataVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HierarchyConfigurationMetadataVersionResource"/> object. </returns>
+        public static HierarchyConfigurationMetadataVersionResource GetHierarchyConfigurationMetadataVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadataVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="HierarchyConfigurationMetadataVersionCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadataVersions(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="HierarchyConfigurationMetadataVersionResource"/> objects. </returns>
+        public static HierarchyConfigurationMetadataVersionCollection GetHierarchyConfigurationMetadataVersions(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadataVersions(scope);
+        }
+
+        /// <summary>
+        /// Get a Hierarchy Configuration Metadata Version resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadataVersion(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataVersionName"> Name of the hierarchy configuration metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HierarchyConfigurationMetadataVersionResource> GetHierarchyConfigurationMetadataVersion(this ArmClient client, ResourceIdentifier scope, string hierarchyConfigurationMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadataVersion(scope, hierarchyConfigurationMetadataVersionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Hierarchy Configuration Metadata Version resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetHierarchyConfigurationMetadataVersionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataVersionName"> Name of the hierarchy configuration metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HierarchyConfigurationMetadataVersionResource>> GetHierarchyConfigurationMetadataVersionAsync(this ArmClient client, ResourceIdentifier scope, string hierarchyConfigurationMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableWorkloadOrchestrationArmClient(client).GetHierarchyConfigurationMetadataVersionAsync(scope, hierarchyConfigurationMetadataVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionDeploymentResource"/> object. </returns>
+        public static SolutionDeploymentResource GetSolutionDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionDeploymentResource(id);
         }
 
         /// <summary>
@@ -862,6 +1238,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
+        /// Gets a collection of SolutionDeployments in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSolutionDeployments()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of SolutionDeployments and their operations over a SolutionDeploymentResource. </returns>
+        public static SolutionDeploymentCollection GetSolutionDeployments(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSolutionDeployments();
+        }
+
+        /// <summary>
+        /// Get a SolutionDeployment Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSolutionDeploymentAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="solutionDeploymentName"> The name of the SolutionDeployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SolutionDeploymentResource>> GetSolutionDeploymentAsync(this ResourceGroupResource resourceGroupResource, string solutionDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSolutionDeploymentAsync(solutionDeploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SolutionDeployment Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSolutionDeployment(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="solutionDeploymentName"> The name of the SolutionDeployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SolutionDeploymentResource> GetSolutionDeployment(this ResourceGroupResource resourceGroupResource, string solutionDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSolutionDeployment(solutionDeploymentName, cancellationToken);
+        }
+
+        /// <summary>
         /// List by subscription
         /// <item>
         /// <term> Mocking. </term>
@@ -1075,6 +1506,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeContexts(cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeploymentsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SolutionDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionDeploymentResource> GetSolutionDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetSolutionDeploymentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SolutionDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionDeploymentResource> GetSolutionDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetSolutionDeployments(cancellationToken);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Capability, to match in Solution Templates and Targets. </summary>
+    /// <summary> Capability, to match in Solution Templates &amp; Targets. </summary>
     public partial class ContextCapability
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

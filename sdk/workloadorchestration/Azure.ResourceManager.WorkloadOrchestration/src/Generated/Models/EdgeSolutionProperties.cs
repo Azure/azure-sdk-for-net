@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeSolutionProperties"/>. </summary>
         /// <param name="solutionTemplateId"> Solution template Id. </param>
+        /// <param name="displayName"> Display name of the solution. </param>
         /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionProperties(string solutionTemplateId, IReadOnlyList<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSolutionProperties(string solutionTemplateId, string displayName, IReadOnlyList<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionTemplateId = solutionTemplateId;
+            DisplayName = displayName;
             AvailableSolutionTemplateVersions = availableSolutionTemplateVersions;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +40,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Solution template Id. </summary>
         public string SolutionTemplateId { get; }
+
+        /// <summary> Display name of the solution. </summary>
+        public string DisplayName { get; }
 
         /// <summary> List of latest revisions for available solution template versions. </summary>
         public IReadOnlyList<AvailableSolutionTemplateVersion> AvailableSolutionTemplateVersions { get; }

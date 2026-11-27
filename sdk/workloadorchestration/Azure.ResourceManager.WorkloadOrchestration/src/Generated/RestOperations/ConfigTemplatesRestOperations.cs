@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
             uri.AppendPath(configTemplateName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
             uri.AppendPath(configTemplateName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
             uri.AppendPath(configTemplateName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -104,6 +104,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateLinkToHierarchiesRequest(Guid subscriptionId, string resourceGroupName, string configTemplateName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
+            uri.AppendPath(configTemplateName, true);
+            uri.AppendPath("/linkToHierarchies", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUnLinkFromHierarchiesRequest(Guid subscriptionId, string resourceGroupName, string configTemplateName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
+            uri.AppendPath(configTemplateName, true);
+            uri.AppendPath("/unLinkFromHierarchies", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
@@ -119,7 +163,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
             uri.AppendPath(configTemplateName, true);
             uri.AppendPath("/createVersion", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -142,7 +186,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
             uri.AppendPath(configTemplateName, true);
             uri.AppendPath("/removeVersion", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -164,7 +208,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates/", false);
             uri.AppendPath(configTemplateName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +226,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -203,7 +247,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -220,7 +264,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/configTemplates", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -241,7 +285,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -26,23 +26,39 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             Argument.AssertNotNull(targetId, nameof(targetId));
 
             TargetId = targetId;
+            SolutionDependencies = new ChangeTrackingList<EdgeSolutionDependencyContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkPublishTargetDetails"/>. </summary>
         /// <param name="targetId"> ArmId of Target. </param>
+        /// <param name="solutionDependencies"> Solution dependencies. </param>
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
+        /// <param name="solutionVersionId"> ArmId of Target Solution Version. </param>
+        /// <param name="solutionConfiguration"> Configuration of solution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkPublishTargetDetails(ResourceIdentifier targetId, string solutionInstanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkPublishTargetDetails(ResourceIdentifier targetId, IList<EdgeSolutionDependencyContent> solutionDependencies, string solutionInstanceName, ResourceIdentifier solutionVersionId, string solutionConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetId = targetId;
+            SolutionDependencies = solutionDependencies;
             SolutionInstanceName = solutionInstanceName;
+            SolutionVersionId = solutionVersionId;
+            SolutionConfiguration = solutionConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ArmId of Target. </summary>
         public ResourceIdentifier TargetId { get; }
 
+        /// <summary> Solution dependencies. </summary>
+        public IList<EdgeSolutionDependencyContent> SolutionDependencies { get; }
+
         /// <summary> Name of the solution instance. </summary>
         public string SolutionInstanceName { get; set; }
+
+        /// <summary> ArmId of Target Solution Version. </summary>
+        public ResourceIdentifier SolutionVersionId { get; set; }
+
+        /// <summary> Configuration of solution. </summary>
+        public string SolutionConfiguration { get; set; }
     }
 }

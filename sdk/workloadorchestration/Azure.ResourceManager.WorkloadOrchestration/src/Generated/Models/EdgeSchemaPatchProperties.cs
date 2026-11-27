@@ -22,10 +22,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeSchemaPatchProperties"/>. </summary>
+        /// <param name="currentVersion"> Current Version of schema. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSchemaPatchProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSchemaPatchProperties(string currentVersion, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            CurrentVersion = currentVersion;
+            ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Current Version of schema. </summary>
+        public string CurrentVersion { get; }
+
+        /// <summary> Provisioning state of resource. </summary>
+        public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }
     }
 }

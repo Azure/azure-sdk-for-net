@@ -17,10 +17,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private readonly string _value;
         /// <summary> A deployment job. </summary>
         private const string DeployValue = "deploy";
+        /// <summary> A publish job. </summary>
+        private const string PublishValue = "publish";
         /// <summary> A staging job. </summary>
         private const string StagingValue = "staging";
         /// <summary> A validation job. </summary>
         private const string ExternalValidationValue = "externalValidation";
+        /// <summary> An Uninstall job. </summary>
+        private const string UninstallValue = "uninstall";
 
         /// <summary> Initializes a new instance of <see cref="EdgeJobType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,11 +39,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> A deployment job. </summary>
         public static EdgeJobType Deploy { get; } = new EdgeJobType(DeployValue);
 
+        /// <summary> A publish job. </summary>
+        public static EdgeJobType Publish { get; } = new EdgeJobType(PublishValue);
+
         /// <summary> A staging job. </summary>
         public static EdgeJobType Staging { get; } = new EdgeJobType(StagingValue);
 
         /// <summary> A validation job. </summary>
         public static EdgeJobType ExternalValidation { get; } = new EdgeJobType(ExternalValidationValue);
+
+        /// <summary> An Uninstall job. </summary>
+        public static EdgeJobType Uninstall { get; } = new EdgeJobType(UninstallValue);
 
         /// <summary> Determines if two <see cref="EdgeJobType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -39,8 +39,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="triggeredBy"> The OID or identity that triggered the job. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <param name="additionalData"> Additional metadata or properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IReadOnlyList<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IReadOnlyList<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, AdditionalData additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             StartOn = startOn;
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             TriggeredBy = triggeredBy;
             ProvisioningState = provisioningState;
             ErrorDetails = errorDetails;
+            AdditionalData = additionalData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -84,5 +86,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Error Details if any failure is there. </summary>
         public ResponseError ErrorDetails { get; }
+
+        /// <summary> Additional metadata or properties. </summary>
+        internal AdditionalData AdditionalData { get; }
+
+        /// <summary> Id of the workflow. </summary>
+        public string AdditionalDataWorkflowId
+        {
+            get
+            {
+                return AdditionalData is null ? default : AdditionalData.WorkflowId;
+            }
+        }
     }
 }
