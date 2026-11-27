@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeJobType?(string value) => value == null ? null : new DataBoxEdgeJobType(value);
+        public static implicit operator DataBoxEdgeJobType?(string value) => value == null ? (DataBoxEdgeJobType?)null : new DataBoxEdgeJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Converts a string to a <see cref="NotificationStageName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationStageName?(string value) => value == null ? null : new NotificationStageName(value);
+        public static implicit operator NotificationStageName?(string value) => value == null ? (NotificationStageName?)null : new NotificationStageName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

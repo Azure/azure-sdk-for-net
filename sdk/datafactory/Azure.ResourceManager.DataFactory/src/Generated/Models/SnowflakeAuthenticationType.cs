@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SnowflakeAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnowflakeAuthenticationType?(string value) => value == null ? null : new SnowflakeAuthenticationType(value);
+        public static implicit operator SnowflakeAuthenticationType?(string value) => value == null ? (SnowflakeAuthenticationType?)null : new SnowflakeAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

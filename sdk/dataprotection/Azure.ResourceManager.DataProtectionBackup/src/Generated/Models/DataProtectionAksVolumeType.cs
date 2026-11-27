@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataProtectionAksVolumeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionAksVolumeType?(string value) => value == null ? null : new DataProtectionAksVolumeType(value);
+        public static implicit operator DataProtectionAksVolumeType?(string value) => value == null ? (DataProtectionAksVolumeType?)null : new DataProtectionAksVolumeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

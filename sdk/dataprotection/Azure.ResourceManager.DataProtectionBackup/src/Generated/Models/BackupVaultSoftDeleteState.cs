@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupVaultSoftDeleteState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupVaultSoftDeleteState?(string value) => value == null ? null : new BackupVaultSoftDeleteState(value);
+        public static implicit operator BackupVaultSoftDeleteState?(string value) => value == null ? (BackupVaultSoftDeleteState?)null : new BackupVaultSoftDeleteState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

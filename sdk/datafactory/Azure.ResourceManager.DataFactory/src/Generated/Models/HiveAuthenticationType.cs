@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HiveAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HiveAuthenticationType?(string value) => value == null ? null : new HiveAuthenticationType(value);
+        public static implicit operator HiveAuthenticationType?(string value) => value == null ? (HiveAuthenticationType?)null : new HiveAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

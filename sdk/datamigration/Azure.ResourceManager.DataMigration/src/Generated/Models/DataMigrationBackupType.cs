@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationBackupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationBackupType?(string value) => value == null ? null : new DataMigrationBackupType(value);
+        public static implicit operator DataMigrationBackupType?(string value) => value == null ? (DataMigrationBackupType?)null : new DataMigrationBackupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

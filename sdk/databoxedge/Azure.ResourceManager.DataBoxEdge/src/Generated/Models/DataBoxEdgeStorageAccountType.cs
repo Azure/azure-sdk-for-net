@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeStorageAccountType?(string value) => value == null ? null : new DataBoxEdgeStorageAccountType(value);
+        public static implicit operator DataBoxEdgeStorageAccountType?(string value) => value == null ? (DataBoxEdgeStorageAccountType?)null : new DataBoxEdgeStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

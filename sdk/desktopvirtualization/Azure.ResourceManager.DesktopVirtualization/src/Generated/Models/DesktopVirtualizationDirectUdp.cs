@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationDirectUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationDirectUdp?(string value) => value == null ? null : new DesktopVirtualizationDirectUdp(value);
+        public static implicit operator DesktopVirtualizationDirectUdp?(string value) => value == null ? (DesktopVirtualizationDirectUdp?)null : new DesktopVirtualizationDirectUdp(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

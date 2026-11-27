@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterDevBoxDeleteMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterDevBoxDeleteMode?(string value) => value == null ? null : new DevCenterDevBoxDeleteMode(value);
+        public static implicit operator DevCenterDevBoxDeleteMode?(string value) => value == null ? (DevCenterDevBoxDeleteMode?)null : new DevCenterDevBoxDeleteMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

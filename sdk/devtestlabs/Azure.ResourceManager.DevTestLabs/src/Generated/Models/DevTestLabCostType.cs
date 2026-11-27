@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabCostType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabCostType?(string value) => value == null ? null : new DevTestLabCostType(value);
+        public static implicit operator DevTestLabCostType?(string value) => value == null ? (DevTestLabCostType?)null : new DevTestLabCostType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

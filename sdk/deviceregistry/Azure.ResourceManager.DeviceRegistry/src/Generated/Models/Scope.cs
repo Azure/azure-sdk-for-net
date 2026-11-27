@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="Scope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Scope?(string value) => value == null ? null : new Scope(value);
+        public static implicit operator Scope?(string value) => value == null ? (Scope?)null : new Scope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

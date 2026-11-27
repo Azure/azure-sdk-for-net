@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabUsagePermissionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabUsagePermissionType?(string value) => value == null ? null : new DevTestLabUsagePermissionType(value);
+        public static implicit operator DevTestLabUsagePermissionType?(string value) => value == null ? (DevTestLabUsagePermissionType?)null : new DevTestLabUsagePermissionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

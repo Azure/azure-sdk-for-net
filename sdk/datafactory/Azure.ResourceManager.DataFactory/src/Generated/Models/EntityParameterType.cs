@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="EntityParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityParameterType?(string value) => value == null ? null : new EntityParameterType(value);
+        public static implicit operator EntityParameterType?(string value) => value == null ? (EntityParameterType?)null : new EntityParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

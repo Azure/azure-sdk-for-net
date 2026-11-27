@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="SystemAssignedServiceIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SystemAssignedServiceIdentityType?(string value) => value == null ? null : new SystemAssignedServiceIdentityType(value);
+        public static implicit operator SystemAssignedServiceIdentityType?(string value) => value == null ? (SystemAssignedServiceIdentityType?)null : new SystemAssignedServiceIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

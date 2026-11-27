@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ScriptActivityLogDestination"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptActivityLogDestination?(string value) => value == null ? null : new ScriptActivityLogDestination(value);
+        public static implicit operator ScriptActivityLogDestination?(string value) => value == null ? (ScriptActivityLogDestination?)null : new ScriptActivityLogDestination(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

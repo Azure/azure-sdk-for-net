@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="LinkingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkingState?(string value) => value == null ? null : new LinkingState(value);
+        public static implicit operator LinkingState?(string value) => value == null ? (LinkingState?)null : new LinkingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

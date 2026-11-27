@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="GoogleBigQueryV2AuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GoogleBigQueryV2AuthenticationType?(string value) => value == null ? null : new GoogleBigQueryV2AuthenticationType(value);
+        public static implicit operator GoogleBigQueryV2AuthenticationType?(string value) => value == null ? (GoogleBigQueryV2AuthenticationType?)null : new GoogleBigQueryV2AuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

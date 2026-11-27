@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ServiceNowAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceNowAuthenticationType?(string value) => value == null ? null : new ServiceNowAuthenticationType(value);
+        public static implicit operator ServiceNowAuthenticationType?(string value) => value == null ? (ServiceNowAuthenticationType?)null : new ServiceNowAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

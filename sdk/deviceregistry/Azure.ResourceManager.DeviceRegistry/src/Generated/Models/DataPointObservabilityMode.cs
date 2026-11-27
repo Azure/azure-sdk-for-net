@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="DataPointObservabilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataPointObservabilityMode?(string value) => value == null ? null : new DataPointObservabilityMode(value);
+        public static implicit operator DataPointObservabilityMode?(string value) => value == null ? (DataPointObservabilityMode?)null : new DataPointObservabilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

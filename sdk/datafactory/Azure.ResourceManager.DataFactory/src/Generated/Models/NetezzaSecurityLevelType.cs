@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="NetezzaSecurityLevelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetezzaSecurityLevelType?(string value) => value == null ? null : new NetezzaSecurityLevelType(value);
+        public static implicit operator NetezzaSecurityLevelType?(string value) => value == null ? (NetezzaSecurityLevelType?)null : new NetezzaSecurityLevelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

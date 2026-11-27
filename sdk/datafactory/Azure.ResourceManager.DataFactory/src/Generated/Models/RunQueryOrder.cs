@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="RunQueryOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunQueryOrder?(string value) => value == null ? null : new RunQueryOrder(value);
+        public static implicit operator RunQueryOrder?(string value) => value == null ? (RunQueryOrder?)null : new RunQueryOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

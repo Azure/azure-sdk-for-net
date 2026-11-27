@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksVirtualNetworkPeeringProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksVirtualNetworkPeeringProvisioningState?(string value) => value == null ? null : new DatabricksVirtualNetworkPeeringProvisioningState(value);
+        public static implicit operator DatabricksVirtualNetworkPeeringProvisioningState?(string value) => value == null ? (DatabricksVirtualNetworkPeeringProvisioningState?)null : new DatabricksVirtualNetworkPeeringProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SsisObjectMetadataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SsisObjectMetadataType?(string value) => value == null ? null : new SsisObjectMetadataType(value);
+        public static implicit operator SsisObjectMetadataType?(string value) => value == null ? (SsisObjectMetadataType?)null : new SsisObjectMetadataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

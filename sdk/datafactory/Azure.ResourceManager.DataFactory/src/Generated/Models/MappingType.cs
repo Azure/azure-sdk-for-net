@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="MappingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MappingType?(string value) => value == null ? null : new MappingType(value);
+        public static implicit operator MappingType?(string value) => value == null ? (MappingType?)null : new MappingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

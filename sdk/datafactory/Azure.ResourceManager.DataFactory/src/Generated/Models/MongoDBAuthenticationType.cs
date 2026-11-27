@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="MongoDBAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoDBAuthenticationType?(string value) => value == null ? null : new MongoDBAuthenticationType(value);
+        public static implicit operator MongoDBAuthenticationType?(string value) => value == null ? (MongoDBAuthenticationType?)null : new MongoDBAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

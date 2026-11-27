@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupVaultImmutabilityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupVaultImmutabilityState?(string value) => value == null ? null : new BackupVaultImmutabilityState(value);
+        public static implicit operator BackupVaultImmutabilityState?(string value) => value == null ? (BackupVaultImmutabilityState?)null : new BackupVaultImmutabilityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksComputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksComputeMode?(string value) => value == null ? null : new DatabricksComputeMode(value);
+        public static implicit operator DatabricksComputeMode?(string value) => value == null ? (DatabricksComputeMode?)null : new DatabricksComputeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

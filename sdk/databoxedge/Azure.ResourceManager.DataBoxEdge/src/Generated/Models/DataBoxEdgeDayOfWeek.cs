@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDayOfWeek?(string value) => value == null ? null : new DataBoxEdgeDayOfWeek(value);
+        public static implicit operator DataBoxEdgeDayOfWeek?(string value) => value == null ? (DataBoxEdgeDayOfWeek?)null : new DataBoxEdgeDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

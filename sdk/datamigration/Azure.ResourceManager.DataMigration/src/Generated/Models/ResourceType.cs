@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceType?(string value) => value == null ? null : new ResourceType(value);
+        public static implicit operator ResourceType?(string value) => value == null ? (ResourceType?)null : new ResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

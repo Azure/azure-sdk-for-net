@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationScalingMethodType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationScalingMethodType?(string value) => value == null ? null : new DesktopVirtualizationScalingMethodType(value);
+        public static implicit operator DesktopVirtualizationScalingMethodType?(string value) => value == null ? (DesktopVirtualizationScalingMethodType?)null : new DesktopVirtualizationScalingMethodType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

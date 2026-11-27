@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="ResourcePredictionsProfileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcePredictionsProfileType?(string value) => value == null ? null : new ResourcePredictionsProfileType(value);
+        public static implicit operator ResourcePredictionsProfileType?(string value) => value == null ? (ResourcePredictionsProfileType?)null : new ResourcePredictionsProfileType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

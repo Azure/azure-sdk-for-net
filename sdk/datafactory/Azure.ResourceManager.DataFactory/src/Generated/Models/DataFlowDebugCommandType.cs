@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFlowDebugCommandType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFlowDebugCommandType?(string value) => value == null ? null : new DataFlowDebugCommandType(value);
+        public static implicit operator DataFlowDebugCommandType?(string value) => value == null ? (DataFlowDebugCommandType?)null : new DataFlowDebugCommandType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

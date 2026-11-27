@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterPoolDevBoxDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterPoolDevBoxDefinitionType?(string value) => value == null ? null : new DevCenterPoolDevBoxDefinitionType(value);
+        public static implicit operator DevCenterPoolDevBoxDefinitionType?(string value) => value == null ? (DevCenterPoolDevBoxDefinitionType?)null : new DevCenterPoolDevBoxDefinitionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

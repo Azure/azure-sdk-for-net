@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="InstallRebootBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstallRebootBehavior?(string value) => value == null ? null : new InstallRebootBehavior(value);
+        public static implicit operator InstallRebootBehavior?(string value) => value == null ? (InstallRebootBehavior?)null : new InstallRebootBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabEnableStatus?(string value) => value == null ? null : new DevTestLabEnableStatus(value);
+        public static implicit operator DevTestLabEnableStatus?(string value) => value == null ? (DevTestLabEnableStatus?)null : new DevTestLabEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

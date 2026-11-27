@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationServiceScalability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationServiceScalability?(string value) => value == null ? null : new DataMigrationServiceScalability(value);
+        public static implicit operator DataMigrationServiceScalability?(string value) => value == null ? (DataMigrationServiceScalability?)null : new DataMigrationServiceScalability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

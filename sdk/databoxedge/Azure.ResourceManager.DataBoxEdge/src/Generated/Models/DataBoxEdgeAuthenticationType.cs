@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeAuthenticationType?(string value) => value == null ? null : new DataBoxEdgeAuthenticationType(value);
+        public static implicit operator DataBoxEdgeAuthenticationType?(string value) => value == null ? (DataBoxEdgeAuthenticationType?)null : new DataBoxEdgeAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

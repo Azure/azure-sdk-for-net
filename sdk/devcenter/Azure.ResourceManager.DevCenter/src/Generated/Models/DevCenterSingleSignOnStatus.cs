@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterSingleSignOnStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterSingleSignOnStatus?(string value) => value == null ? null : new DevCenterSingleSignOnStatus(value);
+        public static implicit operator DevCenterSingleSignOnStatus?(string value) => value == null ? (DevCenterSingleSignOnStatus?)null : new DevCenterSingleSignOnStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ODataAadServicePrincipalCredentialType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ODataAadServicePrincipalCredentialType?(string value) => value == null ? null : new ODataAadServicePrincipalCredentialType(value);
+        public static implicit operator ODataAadServicePrincipalCredentialType?(string value) => value == null ? (ODataAadServicePrincipalCredentialType?)null : new ODataAadServicePrincipalCredentialType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

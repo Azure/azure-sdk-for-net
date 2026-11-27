@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeSsisCatalogPricingTier?(string value) => value == null ? null : new IntegrationRuntimeSsisCatalogPricingTier(value);
+        public static implicit operator IntegrationRuntimeSsisCatalogPricingTier?(string value) => value == null ? (IntegrationRuntimeSsisCatalogPricingTier?)null : new IntegrationRuntimeSsisCatalogPricingTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeDataResidencyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDataResidencyType?(string value) => value == null ? null : new DataBoxEdgeDataResidencyType(value);
+        public static implicit operator DataBoxEdgeDataResidencyType?(string value) => value == null ? (DataBoxEdgeDataResidencyType?)null : new DataBoxEdgeDataResidencyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupVaultSecureScoreLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupVaultSecureScoreLevel?(string value) => value == null ? null : new BackupVaultSecureScoreLevel(value);
+        public static implicit operator BackupVaultSecureScoreLevel?(string value) => value == null ? (BackupVaultSecureScoreLevel?)null : new BackupVaultSecureScoreLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BlobBackupPatternType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobBackupPatternType?(string value) => value == null ? null : new BlobBackupPatternType(value);
+        public static implicit operator BlobBackupPatternType?(string value) => value == null ? (BlobBackupPatternType?)null : new BlobBackupPatternType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

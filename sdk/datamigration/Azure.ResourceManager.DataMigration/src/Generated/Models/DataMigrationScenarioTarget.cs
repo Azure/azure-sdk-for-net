@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationScenarioTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationScenarioTarget?(string value) => value == null ? null : new DataMigrationScenarioTarget(value);
+        public static implicit operator DataMigrationScenarioTarget?(string value) => value == null ? (DataMigrationScenarioTarget?)null : new DataMigrationScenarioTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

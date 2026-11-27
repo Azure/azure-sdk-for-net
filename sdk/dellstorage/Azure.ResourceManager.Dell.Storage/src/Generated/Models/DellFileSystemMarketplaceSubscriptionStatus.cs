@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
 
         /// <summary> Converts a string to a <see cref="DellFileSystemMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DellFileSystemMarketplaceSubscriptionStatus?(string value) => value == null ? null : new DellFileSystemMarketplaceSubscriptionStatus(value);
+        public static implicit operator DellFileSystemMarketplaceSubscriptionStatus?(string value) => value == null ? (DellFileSystemMarketplaceSubscriptionStatus?)null : new DellFileSystemMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

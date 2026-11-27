@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SsisLogLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SsisLogLocationType?(string value) => value == null ? null : new SsisLogLocationType(value);
+        public static implicit operator SsisLogLocationType?(string value) => value == null ? (SsisLogLocationType?)null : new SsisLogLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

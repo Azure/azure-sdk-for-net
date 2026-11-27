@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="MapperConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapperConnectionType?(string value) => value == null ? null : new MapperConnectionType(value);
+        public static implicit operator MapperConnectionType?(string value) => value == null ? (MapperConnectionType?)null : new MapperConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

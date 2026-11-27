@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="AzureFunctionActivityMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureFunctionActivityMethod?(string value) => value == null ? null : new AzureFunctionActivityMethod(value);
+        public static implicit operator AzureFunctionActivityMethod?(string value) => value == null ? (AzureFunctionActivityMethod?)null : new AzureFunctionActivityMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

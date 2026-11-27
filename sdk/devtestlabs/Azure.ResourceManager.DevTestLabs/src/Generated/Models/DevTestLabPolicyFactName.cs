@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabPolicyFactName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabPolicyFactName?(string value) => value == null ? null : new DevTestLabPolicyFactName(value);
+        public static implicit operator DevTestLabPolicyFactName?(string value) => value == null ? (DevTestLabPolicyFactName?)null : new DevTestLabPolicyFactName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

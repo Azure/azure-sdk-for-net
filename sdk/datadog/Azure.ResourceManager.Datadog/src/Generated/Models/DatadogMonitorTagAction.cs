@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Converts a string to a <see cref="DatadogMonitorTagAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatadogMonitorTagAction?(string value) => value == null ? null : new DatadogMonitorTagAction(value);
+        public static implicit operator DatadogMonitorTagAction?(string value) => value == null ? (DatadogMonitorTagAction?)null : new DatadogMonitorTagAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

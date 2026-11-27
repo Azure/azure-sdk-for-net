@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedAkvAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlAlwaysEncryptedAkvAuthType?(string value) => value == null ? null : new SqlAlwaysEncryptedAkvAuthType(value);
+        public static implicit operator SqlAlwaysEncryptedAkvAuthType?(string value) => value == null ? (SqlAlwaysEncryptedAkvAuthType?)null : new SqlAlwaysEncryptedAkvAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

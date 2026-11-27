@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BlobBackupRuleMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobBackupRuleMode?(string value) => value == null ? null : new BlobBackupRuleMode(value);
+        public static implicit operator BlobBackupRuleMode?(string value) => value == null ? (BlobBackupRuleMode?)null : new BlobBackupRuleMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

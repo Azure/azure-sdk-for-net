@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationMongoDBProgressResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationMongoDBProgressResultType?(string value) => value == null ? null : new DataMigrationMongoDBProgressResultType(value);
+        public static implicit operator DataMigrationMongoDBProgressResultType?(string value) => value == null ? (DataMigrationMongoDBProgressResultType?)null : new DataMigrationMongoDBProgressResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

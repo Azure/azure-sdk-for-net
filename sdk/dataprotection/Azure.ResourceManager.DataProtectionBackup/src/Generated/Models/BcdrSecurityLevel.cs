@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BcdrSecurityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BcdrSecurityLevel?(string value) => value == null ? null : new BcdrSecurityLevel(value);
+        public static implicit operator BcdrSecurityLevel?(string value) => value == null ? (BcdrSecurityLevel?)null : new BcdrSecurityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

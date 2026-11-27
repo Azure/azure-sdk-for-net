@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HBaseAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HBaseAuthenticationType?(string value) => value == null ? null : new HBaseAuthenticationType(value);
+        public static implicit operator HBaseAuthenticationType?(string value) => value == null ? (HBaseAuthenticationType?)null : new HBaseAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

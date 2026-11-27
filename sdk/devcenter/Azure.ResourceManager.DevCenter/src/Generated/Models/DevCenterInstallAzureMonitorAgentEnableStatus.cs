@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterInstallAzureMonitorAgentEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterInstallAzureMonitorAgentEnableStatus?(string value) => value == null ? null : new DevCenterInstallAzureMonitorAgentEnableStatus(value);
+        public static implicit operator DevCenterInstallAzureMonitorAgentEnableStatus?(string value) => value == null ? (DevCenterInstallAzureMonitorAgentEnableStatus?)null : new DevCenterInstallAzureMonitorAgentEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

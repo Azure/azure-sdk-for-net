@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationVirtualMachineDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationVirtualMachineDiskType?(string value) => value == null ? null : new DesktopVirtualizationVirtualMachineDiskType(value);
+        public static implicit operator DesktopVirtualizationVirtualMachineDiskType?(string value) => value == null ? (DesktopVirtualizationVirtualMachineDiskType?)null : new DesktopVirtualizationVirtualMachineDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

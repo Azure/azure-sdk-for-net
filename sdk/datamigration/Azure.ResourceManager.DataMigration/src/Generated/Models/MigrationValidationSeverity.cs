@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="MigrationValidationSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationValidationSeverity?(string value) => value == null ? null : new MigrationValidationSeverity(value);
+        public static implicit operator MigrationValidationSeverity?(string value) => value == null ? (MigrationValidationSeverity?)null : new MigrationValidationSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="PhoenixAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PhoenixAuthenticationType?(string value) => value == null ? null : new PhoenixAuthenticationType(value);
+        public static implicit operator PhoenixAuthenticationType?(string value) => value == null ? (PhoenixAuthenticationType?)null : new PhoenixAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="HostPlatformType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPlatformType?(string value) => value == null ? null : new HostPlatformType(value);
+        public static implicit operator HostPlatformType?(string value) => value == null ? (HostPlatformType?)null : new HostPlatformType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

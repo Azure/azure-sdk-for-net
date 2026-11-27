@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="RestoreTargetLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestoreTargetLocationType?(string value) => value == null ? null : new RestoreTargetLocationType(value);
+        public static implicit operator RestoreTargetLocationType?(string value) => value == null ? (RestoreTargetLocationType?)null : new RestoreTargetLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

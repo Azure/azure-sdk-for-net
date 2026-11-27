@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="VirtualApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualApplicationType?(string value) => value == null ? null : new VirtualApplicationType(value);
+        public static implicit operator VirtualApplicationType?(string value) => value == null ? (VirtualApplicationType?)null : new VirtualApplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

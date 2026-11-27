@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHostLoadBalancingAlgorithm?(string value) => value == null ? null : new SessionHostLoadBalancingAlgorithm(value);
+        public static implicit operator SessionHostLoadBalancingAlgorithm?(string value) => value == null ? (SessionHostLoadBalancingAlgorithm?)null : new SessionHostLoadBalancingAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

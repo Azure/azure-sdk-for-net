@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeNetworkGroup?(string value) => value == null ? null : new DataBoxEdgeNetworkGroup(value);
+        public static implicit operator DataBoxEdgeNetworkGroup?(string value) => value == null ? (DataBoxEdgeNetworkGroup?)null : new DataBoxEdgeNetworkGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

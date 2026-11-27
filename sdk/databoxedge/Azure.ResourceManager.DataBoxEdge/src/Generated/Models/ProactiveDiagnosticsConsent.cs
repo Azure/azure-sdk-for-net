@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="ProactiveDiagnosticsConsent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProactiveDiagnosticsConsent?(string value) => value == null ? null : new ProactiveDiagnosticsConsent(value);
+        public static implicit operator ProactiveDiagnosticsConsent?(string value) => value == null ? (ProactiveDiagnosticsConsent?)null : new ProactiveDiagnosticsConsent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

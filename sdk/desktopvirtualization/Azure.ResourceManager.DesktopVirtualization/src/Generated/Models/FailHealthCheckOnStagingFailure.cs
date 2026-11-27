@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="FailHealthCheckOnStagingFailure"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailHealthCheckOnStagingFailure?(string value) => value == null ? null : new FailHealthCheckOnStagingFailure(value);
+        public static implicit operator FailHealthCheckOnStagingFailure?(string value) => value == null ? (FailHealthCheckOnStagingFailure?)null : new FailHealthCheckOnStagingFailure(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

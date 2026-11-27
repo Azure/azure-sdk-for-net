@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuSignupOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeSkuSignupOption?(string value) => value == null ? null : new DataBoxEdgeSkuSignupOption(value);
+        public static implicit operator DataBoxEdgeSkuSignupOption?(string value) => value == null ? (DataBoxEdgeSkuSignupOption?)null : new DataBoxEdgeSkuSignupOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

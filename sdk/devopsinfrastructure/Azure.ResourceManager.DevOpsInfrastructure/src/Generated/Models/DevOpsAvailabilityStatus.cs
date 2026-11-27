@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsAvailabilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsAvailabilityStatus?(string value) => value == null ? null : new DevOpsAvailabilityStatus(value);
+        public static implicit operator DevOpsAvailabilityStatus?(string value) => value == null ? (DevOpsAvailabilityStatus?)null : new DevOpsAvailabilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageContainerDataFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeStorageContainerDataFormat?(string value) => value == null ? null : new DataBoxEdgeStorageContainerDataFormat(value);
+        public static implicit operator DataBoxEdgeStorageContainerDataFormat?(string value) => value == null ? (DataBoxEdgeStorageContainerDataFormat?)null : new DataBoxEdgeStorageContainerDataFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

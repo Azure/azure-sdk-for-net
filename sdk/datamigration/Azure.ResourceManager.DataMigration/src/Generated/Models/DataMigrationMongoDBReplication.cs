@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationMongoDBReplication"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationMongoDBReplication?(string value) => value == null ? null : new DataMigrationMongoDBReplication(value);
+        public static implicit operator DataMigrationMongoDBReplication?(string value) => value == null ? (DataMigrationMongoDBReplication?)null : new DataMigrationMongoDBReplication(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

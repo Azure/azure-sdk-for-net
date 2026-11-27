@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="HDInsightClusterAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HDInsightClusterAuthenticationType?(string value) => value == null ? null : new HDInsightClusterAuthenticationType(value);
+        public static implicit operator HDInsightClusterAuthenticationType?(string value) => value == null ? (HDInsightClusterAuthenticationType?)null : new HDInsightClusterAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="EdgeClusterWitnessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeClusterWitnessType?(string value) => value == null ? null : new EdgeClusterWitnessType(value);
+        public static implicit operator EdgeClusterWitnessType?(string value) => value == null ? (EdgeClusterWitnessType?)null : new EdgeClusterWitnessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

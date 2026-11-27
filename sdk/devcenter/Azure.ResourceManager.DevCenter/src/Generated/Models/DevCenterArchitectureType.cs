@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterArchitectureType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterArchitectureType?(string value) => value == null ? null : new DevCenterArchitectureType(value);
+        public static implicit operator DevCenterArchitectureType?(string value) => value == null ? (DevCenterArchitectureType?)null : new DevCenterArchitectureType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

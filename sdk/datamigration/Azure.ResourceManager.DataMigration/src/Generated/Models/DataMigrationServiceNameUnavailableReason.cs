@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationServiceNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationServiceNameUnavailableReason?(string value) => value == null ? null : new DataMigrationServiceNameUnavailableReason(value);
+        public static implicit operator DataMigrationServiceNameUnavailableReason?(string value) => value == null ? (DataMigrationServiceNameUnavailableReason?)null : new DataMigrationServiceNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

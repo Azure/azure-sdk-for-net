@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksDefaultStorageFirewall"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksDefaultStorageFirewall?(string value) => value == null ? null : new DatabricksDefaultStorageFirewall(value);
+        public static implicit operator DatabricksDefaultStorageFirewall?(string value) => value == null ? (DatabricksDefaultStorageFirewall?)null : new DatabricksDefaultStorageFirewall(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

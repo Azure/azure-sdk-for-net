@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksProvisioningState?(string value) => value == null ? null : new DatabricksProvisioningState(value);
+        public static implicit operator DatabricksProvisioningState?(string value) => value == null ? (DatabricksProvisioningState?)null : new DatabricksProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

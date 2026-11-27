@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupVaultResourceMoveState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupVaultResourceMoveState?(string value) => value == null ? null : new BackupVaultResourceMoveState(value);
+        public static implicit operator BackupVaultResourceMoveState?(string value) => value == null ? (BackupVaultResourceMoveState?)null : new BackupVaultResourceMoveState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

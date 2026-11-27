@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
 
         /// <summary> Converts a string to a <see cref="ExportDependenciesStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExportDependenciesStatusCode?(string value) => value == null ? null : new ExportDependenciesStatusCode(value);
+        public static implicit operator ExportDependenciesStatusCode?(string value) => value == null ? (ExportDependenciesStatusCode?)null : new ExportDependenciesStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

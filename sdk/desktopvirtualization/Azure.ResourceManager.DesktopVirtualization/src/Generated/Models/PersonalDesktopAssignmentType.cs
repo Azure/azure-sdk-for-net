@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="PersonalDesktopAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersonalDesktopAssignmentType?(string value) => value == null ? null : new PersonalDesktopAssignmentType(value);
+        public static implicit operator PersonalDesktopAssignmentType?(string value) => value == null ? (PersonalDesktopAssignmentType?)null : new PersonalDesktopAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

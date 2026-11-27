@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="SsisMigrationStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SsisMigrationStage?(string value) => value == null ? null : new SsisMigrationStage(value);
+        public static implicit operator SsisMigrationStage?(string value) => value == null ? (SsisMigrationStage?)null : new SsisMigrationStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

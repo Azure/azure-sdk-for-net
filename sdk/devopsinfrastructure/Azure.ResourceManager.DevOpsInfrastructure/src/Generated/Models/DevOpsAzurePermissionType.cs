@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsAzurePermissionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsAzurePermissionType?(string value) => value == null ? null : new DevOpsAzurePermissionType(value);
+        public static implicit operator DevOpsAzurePermissionType?(string value) => value == null ? (DevOpsAzurePermissionType?)null : new DevOpsAzurePermissionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

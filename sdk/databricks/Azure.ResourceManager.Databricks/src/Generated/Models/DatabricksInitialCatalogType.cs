@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksInitialCatalogType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksInitialCatalogType?(string value) => value == null ? null : new DatabricksInitialCatalogType(value);
+        public static implicit operator DatabricksInitialCatalogType?(string value) => value == null ? (DatabricksInitialCatalogType?)null : new DatabricksInitialCatalogType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

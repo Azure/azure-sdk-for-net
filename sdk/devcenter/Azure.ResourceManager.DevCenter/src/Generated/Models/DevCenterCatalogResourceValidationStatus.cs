@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterCatalogResourceValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterCatalogResourceValidationStatus?(string value) => value == null ? null : new DevCenterCatalogResourceValidationStatus(value);
+        public static implicit operator DevCenterCatalogResourceValidationStatus?(string value) => value == null ? (DevCenterCatalogResourceValidationStatus?)null : new DevCenterCatalogResourceValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

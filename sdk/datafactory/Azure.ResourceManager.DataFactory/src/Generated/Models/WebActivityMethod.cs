@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="WebActivityMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebActivityMethod?(string value) => value == null ? null : new WebActivityMethod(value);
+        public static implicit operator WebActivityMethod?(string value) => value == null ? (WebActivityMethod?)null : new WebActivityMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

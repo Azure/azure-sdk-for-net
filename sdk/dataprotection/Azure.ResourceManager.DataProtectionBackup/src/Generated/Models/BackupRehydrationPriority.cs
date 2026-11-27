@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupRehydrationPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupRehydrationPriority?(string value) => value == null ? null : new BackupRehydrationPriority(value);
+        public static implicit operator BackupRehydrationPriority?(string value) => value == null ? (BackupRehydrationPriority?)null : new BackupRehydrationPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

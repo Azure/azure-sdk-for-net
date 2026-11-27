@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupSolutionType?(string value) => value == null ? null : new BackupSolutionType(value);
+        public static implicit operator BackupSolutionType?(string value) => value == null ? (BackupSolutionType?)null : new BackupSolutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

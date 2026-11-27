@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterKeepAwakeEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterKeepAwakeEnableStatus?(string value) => value == null ? null : new DevCenterKeepAwakeEnableStatus(value);
+        public static implicit operator DevCenterKeepAwakeEnableStatus?(string value) => value == null ? (DevCenterKeepAwakeEnableStatus?)null : new DevCenterKeepAwakeEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksIdentityType?(string value) => value == null ? null : new DatabricksIdentityType(value);
+        public static implicit operator DatabricksIdentityType?(string value) => value == null ? (DatabricksIdentityType?)null : new DatabricksIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

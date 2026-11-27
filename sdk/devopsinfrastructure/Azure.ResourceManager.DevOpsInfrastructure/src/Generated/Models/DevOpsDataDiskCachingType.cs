@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsDataDiskCachingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsDataDiskCachingType?(string value) => value == null ? null : new DevOpsDataDiskCachingType(value);
+        public static implicit operator DevOpsDataDiskCachingType?(string value) => value == null ? (DevOpsDataDiskCachingType?)null : new DevOpsDataDiskCachingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

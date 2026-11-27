@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="GranularityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GranularityLevel?(string value) => value == null ? null : new GranularityLevel(value);
+        public static implicit operator GranularityLevel?(string value) => value == null ? (GranularityLevel?)null : new GranularityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

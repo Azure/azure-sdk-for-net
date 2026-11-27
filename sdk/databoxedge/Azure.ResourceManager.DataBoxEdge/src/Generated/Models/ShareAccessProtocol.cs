@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="ShareAccessProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShareAccessProtocol?(string value) => value == null ? null : new ShareAccessProtocol(value);
+        public static implicit operator ShareAccessProtocol?(string value) => value == null ? (ShareAccessProtocol?)null : new ShareAccessProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

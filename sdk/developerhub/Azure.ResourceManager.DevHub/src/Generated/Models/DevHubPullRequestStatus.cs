@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubPullRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubPullRequestStatus?(string value) => value == null ? null : new DevHubPullRequestStatus(value);
+        public static implicit operator DevHubPullRequestStatus?(string value) => value == null ? (DevHubPullRequestStatus?)null : new DevHubPullRequestStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

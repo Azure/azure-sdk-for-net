@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterMicrosoftHostedNetworkEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterMicrosoftHostedNetworkEnableStatus?(string value) => value == null ? null : new DevCenterMicrosoftHostedNetworkEnableStatus(value);
+        public static implicit operator DevCenterMicrosoftHostedNetworkEnableStatus?(string value) => value == null ? (DevCenterMicrosoftHostedNetworkEnableStatus?)null : new DevCenterMicrosoftHostedNetworkEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

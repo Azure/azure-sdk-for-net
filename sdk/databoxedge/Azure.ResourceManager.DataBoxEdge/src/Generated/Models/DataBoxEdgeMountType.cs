@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeMountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeMountType?(string value) => value == null ? null : new DataBoxEdgeMountType(value);
+        public static implicit operator DataBoxEdgeMountType?(string value) => value == null ? (DataBoxEdgeMountType?)null : new DataBoxEdgeMountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

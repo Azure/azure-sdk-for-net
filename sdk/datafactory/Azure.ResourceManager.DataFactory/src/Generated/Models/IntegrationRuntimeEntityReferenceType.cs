@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeEntityReferenceType?(string value) => value == null ? null : new IntegrationRuntimeEntityReferenceType(value);
+        public static implicit operator IntegrationRuntimeEntityReferenceType?(string value) => value == null ? (IntegrationRuntimeEntityReferenceType?)null : new IntegrationRuntimeEntityReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

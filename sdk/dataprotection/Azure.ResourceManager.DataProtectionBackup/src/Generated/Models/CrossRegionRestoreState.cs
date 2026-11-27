@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="CrossRegionRestoreState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CrossRegionRestoreState?(string value) => value == null ? null : new CrossRegionRestoreState(value);
+        public static implicit operator CrossRegionRestoreState?(string value) => value == null ? (CrossRegionRestoreState?)null : new CrossRegionRestoreState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHostStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHostStatus?(string value) => value == null ? null : new SessionHostStatus(value);
+        public static implicit operator SessionHostStatus?(string value) => value == null ? (SessionHostStatus?)null : new SessionHostStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

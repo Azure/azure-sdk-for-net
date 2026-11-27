@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupVaultCmkKekIdentityType?(string value) => value == null ? null : new BackupVaultCmkKekIdentityType(value);
+        public static implicit operator BackupVaultCmkKekIdentityType?(string value) => value == null ? (BackupVaultCmkKekIdentityType?)null : new BackupVaultCmkKekIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

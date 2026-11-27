@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeNetworkAdapterRdmaStatus?(string value) => value == null ? null : new DataBoxEdgeNetworkAdapterRdmaStatus(value);
+        public static implicit operator DataBoxEdgeNetworkAdapterRdmaStatus?(string value) => value == null ? (DataBoxEdgeNetworkAdapterRdmaStatus?)null : new DataBoxEdgeNetworkAdapterRdmaStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

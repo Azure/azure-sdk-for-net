@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsStorageAccountType?(string value) => value == null ? null : new DevOpsStorageAccountType(value);
+        public static implicit operator DevOpsStorageAccountType?(string value) => value == null ? (DevOpsStorageAccountType?)null : new DevOpsStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

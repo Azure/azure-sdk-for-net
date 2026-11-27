@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SparkJobReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SparkJobReferenceType?(string value) => value == null ? null : new SparkJobReferenceType(value);
+        public static implicit operator SparkJobReferenceType?(string value) => value == null ? (SparkJobReferenceType?)null : new SparkJobReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

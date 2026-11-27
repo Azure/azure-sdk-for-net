@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DomainJoinType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainJoinType?(string value) => value == null ? null : new DomainJoinType(value);
+        public static implicit operator DomainJoinType?(string value) => value == null ? (DomainJoinType?)null : new DomainJoinType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

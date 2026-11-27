@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeDataPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDataPolicy?(string value) => value == null ? null : new DataBoxEdgeDataPolicy(value);
+        public static implicit operator DataBoxEdgeDataPolicy?(string value) => value == null ? (DataBoxEdgeDataPolicy?)null : new DataBoxEdgeDataPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeRoleAddonProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeRoleAddonProvisioningState?(string value) => value == null ? null : new DataBoxEdgeRoleAddonProvisioningState(value);
+        public static implicit operator DataBoxEdgeRoleAddonProvisioningState?(string value) => value == null ? (DataBoxEdgeRoleAddonProvisioningState?)null : new DataBoxEdgeRoleAddonProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

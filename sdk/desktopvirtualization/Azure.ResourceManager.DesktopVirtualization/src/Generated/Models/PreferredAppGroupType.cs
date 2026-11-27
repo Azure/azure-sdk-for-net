@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="PreferredAppGroupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PreferredAppGroupType?(string value) => value == null ? null : new PreferredAppGroupType(value);
+        public static implicit operator PreferredAppGroupType?(string value) => value == null ? (PreferredAppGroupType?)null : new PreferredAppGroupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

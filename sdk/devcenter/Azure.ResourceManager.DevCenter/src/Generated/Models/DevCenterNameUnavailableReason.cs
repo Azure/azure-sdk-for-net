@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterNameUnavailableReason?(string value) => value == null ? null : new DevCenterNameUnavailableReason(value);
+        public static implicit operator DevCenterNameUnavailableReason?(string value) => value == null ? (DevCenterNameUnavailableReason?)null : new DevCenterNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

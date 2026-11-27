@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="PipelineVariableType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineVariableType?(string value) => value == null ? null : new PipelineVariableType(value);
+        public static implicit operator PipelineVariableType?(string value) => value == null ? (PipelineVariableType?)null : new PipelineVariableType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

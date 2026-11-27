@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="DeviceRegistryProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceRegistryProvisioningState?(string value) => value == null ? null : new DeviceRegistryProvisioningState(value);
+        public static implicit operator DeviceRegistryProvisioningState?(string value) => value == null ? (DeviceRegistryProvisioningState?)null : new DeviceRegistryProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationManagementType?(string value) => value == null ? null : new DesktopVirtualizationManagementType(value);
+        public static implicit operator DesktopVirtualizationManagementType?(string value) => value == null ? (DesktopVirtualizationManagementType?)null : new DesktopVirtualizationManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

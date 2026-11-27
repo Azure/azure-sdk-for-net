@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="DataProtectionBackupProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupProvisioningState?(string value) => value == null ? null : new DataProtectionBackupProvisioningState(value);
+        public static implicit operator DataProtectionBackupProvisioningState?(string value) => value == null ? (DataProtectionBackupProvisioningState?)null : new DataProtectionBackupProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

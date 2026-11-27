@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="MigrationValidatioUpdateActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationValidatioUpdateActionType?(string value) => value == null ? null : new MigrationValidatioUpdateActionType(value);
+        public static implicit operator MigrationValidatioUpdateActionType?(string value) => value == null ? (MigrationValidatioUpdateActionType?)null : new MigrationValidatioUpdateActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

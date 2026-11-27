@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="MongoMigrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoMigrationStatus?(string value) => value == null ? null : new MongoMigrationStatus(value);
+        public static implicit operator MongoMigrationStatus?(string value) => value == null ? (MongoMigrationStatus?)null : new MongoMigrationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

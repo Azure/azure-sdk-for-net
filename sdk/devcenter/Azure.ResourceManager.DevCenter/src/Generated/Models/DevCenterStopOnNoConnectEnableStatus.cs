@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterStopOnNoConnectEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterStopOnNoConnectEnableStatus?(string value) => value == null ? null : new DevCenterStopOnNoConnectEnableStatus(value);
+        public static implicit operator DevCenterStopOnNoConnectEnableStatus?(string value) => value == null ? (DevCenterStopOnNoConnectEnableStatus?)null : new DevCenterStopOnNoConnectEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

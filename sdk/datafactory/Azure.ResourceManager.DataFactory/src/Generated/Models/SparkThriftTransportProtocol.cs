@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SparkThriftTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SparkThriftTransportProtocol?(string value) => value == null ? null : new SparkThriftTransportProtocol(value);
+        public static implicit operator SparkThriftTransportProtocol?(string value) => value == null ? (SparkThriftTransportProtocol?)null : new SparkThriftTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

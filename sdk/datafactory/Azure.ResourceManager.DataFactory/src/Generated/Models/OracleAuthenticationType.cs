@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="OracleAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleAuthenticationType?(string value) => value == null ? null : new OracleAuthenticationType(value);
+        public static implicit operator OracleAuthenticationType?(string value) => value == null ? (OracleAuthenticationType?)null : new OracleAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

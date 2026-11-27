@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactorySparkConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactorySparkConfigurationType?(string value) => value == null ? null : new DataFactorySparkConfigurationType(value);
+        public static implicit operator DataFactorySparkConfigurationType?(string value) => value == null ? (DataFactorySparkConfigurationType?)null : new DataFactorySparkConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

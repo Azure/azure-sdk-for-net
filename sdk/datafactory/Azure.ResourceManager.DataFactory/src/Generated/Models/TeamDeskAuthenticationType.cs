@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="TeamDeskAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TeamDeskAuthenticationType?(string value) => value == null ? null : new TeamDeskAuthenticationType(value);
+        public static implicit operator TeamDeskAuthenticationType?(string value) => value == null ? (TeamDeskAuthenticationType?)null : new TeamDeskAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

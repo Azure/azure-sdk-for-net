@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupAbsoluteMarker"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupAbsoluteMarker?(string value) => value == null ? null : new BackupAbsoluteMarker(value);
+        public static implicit operator BackupAbsoluteMarker?(string value) => value == null ? (BackupAbsoluteMarker?)null : new BackupAbsoluteMarker(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

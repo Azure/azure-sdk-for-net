@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="SecretStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretStoreType?(string value) => value == null ? null : new SecretStoreType(value);
+        public static implicit operator SecretStoreType?(string value) => value == null ? (SecretStoreType?)null : new SecretStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="VirtualApplicationCommandLineSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualApplicationCommandLineSetting?(string value) => value == null ? null : new VirtualApplicationCommandLineSetting(value);
+        public static implicit operator VirtualApplicationCommandLineSetting?(string value) => value == null ? (VirtualApplicationCommandLineSetting?)null : new VirtualApplicationCommandLineSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

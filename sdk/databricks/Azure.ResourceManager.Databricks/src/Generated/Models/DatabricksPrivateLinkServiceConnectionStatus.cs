@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new DatabricksPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator DatabricksPrivateLinkServiceConnectionStatus?(string value) => value == null ? (DatabricksPrivateLinkServiceConnectionStatus?)null : new DatabricksPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

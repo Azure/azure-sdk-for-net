@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="HostPoolRegistrationTokenOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPoolRegistrationTokenOperation?(string value) => value == null ? null : new HostPoolRegistrationTokenOperation(value);
+        public static implicit operator HostPoolRegistrationTokenOperation?(string value) => value == null ? (HostPoolRegistrationTokenOperation?)null : new HostPoolRegistrationTokenOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

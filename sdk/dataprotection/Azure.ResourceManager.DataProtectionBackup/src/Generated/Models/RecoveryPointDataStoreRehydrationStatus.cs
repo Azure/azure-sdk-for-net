@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryPointDataStoreRehydrationStatus?(string value) => value == null ? null : new RecoveryPointDataStoreRehydrationStatus(value);
+        public static implicit operator RecoveryPointDataStoreRehydrationStatus?(string value) => value == null ? (RecoveryPointDataStoreRehydrationStatus?)null : new RecoveryPointDataStoreRehydrationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupValidationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupValidationType?(string value) => value == null ? null : new BackupValidationType(value);
+        public static implicit operator BackupValidationType?(string value) => value == null ? (BackupValidationType?)null : new BackupValidationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

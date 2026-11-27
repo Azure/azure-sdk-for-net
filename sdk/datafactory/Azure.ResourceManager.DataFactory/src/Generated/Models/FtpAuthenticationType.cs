@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="FtpAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FtpAuthenticationType?(string value) => value == null ? null : new FtpAuthenticationType(value);
+        public static implicit operator FtpAuthenticationType?(string value) => value == null ? (FtpAuthenticationType?)null : new FtpAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeSkuName?(string value) => value == null ? null : new DataBoxEdgeSkuName(value);
+        public static implicit operator DataBoxEdgeSkuName?(string value) => value == null ? (DataBoxEdgeSkuName?)null : new DataBoxEdgeSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

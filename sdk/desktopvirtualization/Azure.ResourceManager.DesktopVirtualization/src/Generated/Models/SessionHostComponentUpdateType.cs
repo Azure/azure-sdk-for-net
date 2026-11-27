@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="SessionHostComponentUpdateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionHostComponentUpdateType?(string value) => value == null ? null : new SessionHostComponentUpdateType(value);
+        public static implicit operator SessionHostComponentUpdateType?(string value) => value == null ? (SessionHostComponentUpdateType?)null : new SessionHostComponentUpdateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationPublicNetworkAccess?(string value) => value == null ? null : new DesktopVirtualizationPublicNetworkAccess(value);
+        public static implicit operator DesktopVirtualizationPublicNetworkAccess?(string value) => value == null ? (DesktopVirtualizationPublicNetworkAccess?)null : new DesktopVirtualizationPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

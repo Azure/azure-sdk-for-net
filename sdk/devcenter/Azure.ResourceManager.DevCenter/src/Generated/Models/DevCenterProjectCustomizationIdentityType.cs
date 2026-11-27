@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterProjectCustomizationIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterProjectCustomizationIdentityType?(string value) => value == null ? null : new DevCenterProjectCustomizationIdentityType(value);
+        public static implicit operator DevCenterProjectCustomizationIdentityType?(string value) => value == null ? (DevCenterProjectCustomizationIdentityType?)null : new DevCenterProjectCustomizationIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

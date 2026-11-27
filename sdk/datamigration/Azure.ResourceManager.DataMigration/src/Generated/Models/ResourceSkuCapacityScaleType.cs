@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="ResourceSkuCapacityScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceSkuCapacityScaleType?(string value) => value == null ? null : new ResourceSkuCapacityScaleType(value);
+        public static implicit operator ResourceSkuCapacityScaleType?(string value) => value == null ? (ResourceSkuCapacityScaleType?)null : new ResourceSkuCapacityScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

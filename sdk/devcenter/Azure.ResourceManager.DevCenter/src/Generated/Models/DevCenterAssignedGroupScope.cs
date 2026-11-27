@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterAssignedGroupScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterAssignedGroupScope?(string value) => value == null ? null : new DevCenterAssignedGroupScope(value);
+        public static implicit operator DevCenterAssignedGroupScope?(string value) => value == null ? (DevCenterAssignedGroupScope?)null : new DevCenterAssignedGroupScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

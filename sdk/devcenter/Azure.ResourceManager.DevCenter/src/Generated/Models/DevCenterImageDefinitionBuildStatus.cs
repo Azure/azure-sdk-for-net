@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterImageDefinitionBuildStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterImageDefinitionBuildStatus?(string value) => value == null ? null : new DevCenterImageDefinitionBuildStatus(value);
+        public static implicit operator DevCenterImageDefinitionBuildStatus?(string value) => value == null ? (DevCenterImageDefinitionBuildStatus?)null : new DevCenterImageDefinitionBuildStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

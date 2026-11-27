@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsInfrastructureProvisioningState?(string value) => value == null ? null : new DevOpsInfrastructureProvisioningState(value);
+        public static implicit operator DevOpsInfrastructureProvisioningState?(string value) => value == null ? (DevOpsInfrastructureProvisioningState?)null : new DevOpsInfrastructureProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

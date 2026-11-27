@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="PosixComplianceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PosixComplianceStatus?(string value) => value == null ? null : new PosixComplianceStatus(value);
+        public static implicit operator PosixComplianceStatus?(string value) => value == null ? (PosixComplianceStatus?)null : new PosixComplianceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

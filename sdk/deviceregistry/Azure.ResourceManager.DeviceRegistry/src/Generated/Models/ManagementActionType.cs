@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="ManagementActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagementActionType?(string value) => value == null ? null : new ManagementActionType(value);
+        public static implicit operator ManagementActionType?(string value) => value == null ? (ManagementActionType?)null : new ManagementActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

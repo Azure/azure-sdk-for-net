@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
 
         /// <summary> Converts a string to a <see cref="DependencyMapProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DependencyMapProvisioningState?(string value) => value == null ? null : new DependencyMapProvisioningState(value);
+        public static implicit operator DependencyMapProvisioningState?(string value) => value == null ? (DependencyMapProvisioningState?)null : new DependencyMapProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

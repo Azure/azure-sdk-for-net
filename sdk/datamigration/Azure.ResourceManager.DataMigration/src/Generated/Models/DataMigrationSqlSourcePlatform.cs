@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationSqlSourcePlatform"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationSqlSourcePlatform?(string value) => value == null ? null : new DataMigrationSqlSourcePlatform(value);
+        public static implicit operator DataMigrationSqlSourcePlatform?(string value) => value == null ? (DataMigrationSqlSourcePlatform?)null : new DataMigrationSqlSourcePlatform(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

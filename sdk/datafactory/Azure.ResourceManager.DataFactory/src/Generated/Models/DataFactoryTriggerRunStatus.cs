@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryTriggerRunStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryTriggerRunStatus?(string value) => value == null ? null : new DataFactoryTriggerRunStatus(value);
+        public static implicit operator DataFactoryTriggerRunStatus?(string value) => value == null ? (DataFactoryTriggerRunStatus?)null : new DataFactoryTriggerRunStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

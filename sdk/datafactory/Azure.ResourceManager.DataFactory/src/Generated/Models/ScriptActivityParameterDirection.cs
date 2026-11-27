@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="ScriptActivityParameterDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptActivityParameterDirection?(string value) => value == null ? null : new ScriptActivityParameterDirection(value);
+        public static implicit operator ScriptActivityParameterDirection?(string value) => value == null ? (ScriptActivityParameterDirection?)null : new ScriptActivityParameterDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

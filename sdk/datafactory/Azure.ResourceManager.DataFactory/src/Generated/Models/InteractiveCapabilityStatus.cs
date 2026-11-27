@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="InteractiveCapabilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InteractiveCapabilityStatus?(string value) => value == null ? null : new InteractiveCapabilityStatus(value);
+        public static implicit operator InteractiveCapabilityStatus?(string value) => value == null ? (InteractiveCapabilityStatus?)null : new InteractiveCapabilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

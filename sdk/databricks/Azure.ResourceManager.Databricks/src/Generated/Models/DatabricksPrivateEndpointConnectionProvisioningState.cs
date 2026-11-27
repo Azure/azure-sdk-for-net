@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new DatabricksPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator DatabricksPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (DatabricksPrivateEndpointConnectionProvisioningState?)null : new DatabricksPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

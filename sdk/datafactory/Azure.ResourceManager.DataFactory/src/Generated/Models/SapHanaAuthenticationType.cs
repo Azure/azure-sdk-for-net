@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SapHanaAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapHanaAuthenticationType?(string value) => value == null ? null : new SapHanaAuthenticationType(value);
+        public static implicit operator SapHanaAuthenticationType?(string value) => value == null ? (SapHanaAuthenticationType?)null : new SapHanaAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

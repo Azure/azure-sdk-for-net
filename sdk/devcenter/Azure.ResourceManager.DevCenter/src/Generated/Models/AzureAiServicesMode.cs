@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="AzureAiServicesMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureAiServicesMode?(string value) => value == null ? null : new AzureAiServicesMode(value);
+        public static implicit operator AzureAiServicesMode?(string value) => value == null ? (AzureAiServicesMode?)null : new AzureAiServicesMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

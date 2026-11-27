@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubGenerationLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubGenerationLanguage?(string value) => value == null ? null : new DevHubGenerationLanguage(value);
+        public static implicit operator DevHubGenerationLanguage?(string value) => value == null ? (DevHubGenerationLanguage?)null : new DevHubGenerationLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

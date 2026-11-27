@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterUserCustomizationsEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterUserCustomizationsEnableStatus?(string value) => value == null ? null : new DevCenterUserCustomizationsEnableStatus(value);
+        public static implicit operator DevCenterUserCustomizationsEnableStatus?(string value) => value == null ? (DevCenterUserCustomizationsEnableStatus?)null : new DevCenterUserCustomizationsEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

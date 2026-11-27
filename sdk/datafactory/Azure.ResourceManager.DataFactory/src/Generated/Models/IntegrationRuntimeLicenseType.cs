@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeLicenseType?(string value) => value == null ? null : new IntegrationRuntimeLicenseType(value);
+        public static implicit operator IntegrationRuntimeLicenseType?(string value) => value == null ? (IntegrationRuntimeLicenseType?)null : new IntegrationRuntimeLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

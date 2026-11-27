@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="AuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthenticationMethod?(string value) => value == null ? null : new AuthenticationMethod(value);
+        public static implicit operator AuthenticationMethod?(string value) => value == null ? (AuthenticationMethod?)null : new AuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

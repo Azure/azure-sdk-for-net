@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
 
         /// <summary> Converts a string to a <see cref="DellFileSystemEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DellFileSystemEncryptionType?(string value) => value == null ? null : new DellFileSystemEncryptionType(value);
+        public static implicit operator DellFileSystemEncryptionType?(string value) => value == null ? (DellFileSystemEncryptionType?)null : new DellFileSystemEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

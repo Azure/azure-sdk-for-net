@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksPublicNetworkAccess?(string value) => value == null ? null : new DatabricksPublicNetworkAccess(value);
+        public static implicit operator DatabricksPublicNetworkAccess?(string value) => value == null ? (DatabricksPublicNetworkAccess?)null : new DatabricksPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

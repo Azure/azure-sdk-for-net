@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterPolicyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterPolicyAction?(string value) => value == null ? null : new DevCenterPolicyAction(value);
+        public static implicit operator DevCenterPolicyAction?(string value) => value == null ? (DevCenterPolicyAction?)null : new DevCenterPolicyAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

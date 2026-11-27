@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="EdgeRemoteApplicationAccessLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeRemoteApplicationAccessLevel?(string value) => value == null ? null : new EdgeRemoteApplicationAccessLevel(value);
+        public static implicit operator EdgeRemoteApplicationAccessLevel?(string value) => value == null ? (EdgeRemoteApplicationAccessLevel?)null : new EdgeRemoteApplicationAccessLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

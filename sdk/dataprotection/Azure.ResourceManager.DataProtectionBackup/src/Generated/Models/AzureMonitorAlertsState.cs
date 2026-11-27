@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="AzureMonitorAlertsState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureMonitorAlertsState?(string value) => value == null ? null : new AzureMonitorAlertsState(value);
+        public static implicit operator AzureMonitorAlertsState?(string value) => value == null ? (AzureMonitorAlertsState?)null : new AzureMonitorAlertsState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

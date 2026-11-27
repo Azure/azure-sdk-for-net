@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SparkAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SparkAuthenticationType?(string value) => value == null ? null : new SparkAuthenticationType(value);
+        public static implicit operator SparkAuthenticationType?(string value) => value == null ? (SparkAuthenticationType?)null : new SparkAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

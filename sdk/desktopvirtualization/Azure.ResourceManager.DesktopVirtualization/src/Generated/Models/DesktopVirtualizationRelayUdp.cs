@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="DesktopVirtualizationRelayUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationRelayUdp?(string value) => value == null ? null : new DesktopVirtualizationRelayUdp(value);
+        public static implicit operator DesktopVirtualizationRelayUdp?(string value) => value == null ? (DesktopVirtualizationRelayUdp?)null : new DesktopVirtualizationRelayUdp(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

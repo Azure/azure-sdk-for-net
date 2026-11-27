@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="HostPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostPoolType?(string value) => value == null ? null : new HostPoolType(value);
+        public static implicit operator HostPoolType?(string value) => value == null ? (HostPoolType?)null : new HostPoolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

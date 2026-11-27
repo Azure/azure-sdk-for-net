@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="MqttDestinationQo"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MqttDestinationQo?(string value) => value == null ? null : new MqttDestinationQo(value);
+        public static implicit operator MqttDestinationQo?(string value) => value == null ? (MqttDestinationQo?)null : new MqttDestinationQo(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

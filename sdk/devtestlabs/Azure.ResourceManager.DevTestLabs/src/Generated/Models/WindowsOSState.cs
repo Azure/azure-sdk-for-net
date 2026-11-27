@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="WindowsOSState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsOSState?(string value) => value == null ? null : new WindowsOSState(value);
+        public static implicit operator WindowsOSState?(string value) => value == null ? (WindowsOSState?)null : new WindowsOSState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

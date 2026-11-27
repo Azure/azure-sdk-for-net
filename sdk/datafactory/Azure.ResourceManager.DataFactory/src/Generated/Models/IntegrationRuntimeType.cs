@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeType?(string value) => value == null ? null : new IntegrationRuntimeType(value);
+        public static implicit operator IntegrationRuntimeType?(string value) => value == null ? (IntegrationRuntimeType?)null : new IntegrationRuntimeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

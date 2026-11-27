@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Converts a string to a <see cref="DataFactoryScriptType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryScriptType?(string value) => value == null ? null : new DataFactoryScriptType(value);
+        public static implicit operator DataFactoryScriptType?(string value) => value == null ? (DataFactoryScriptType?)null : new DataFactoryScriptType(value);
     }
 }

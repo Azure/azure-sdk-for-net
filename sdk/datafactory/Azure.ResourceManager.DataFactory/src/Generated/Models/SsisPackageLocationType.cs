@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SsisPackageLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SsisPackageLocationType?(string value) => value == null ? null : new SsisPackageLocationType(value);
+        public static implicit operator SsisPackageLocationType?(string value) => value == null ? (SsisPackageLocationType?)null : new SsisPackageLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="SchemaMigrationOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SchemaMigrationOption?(string value) => value == null ? null : new SchemaMigrationOption(value);
+        public static implicit operator SchemaMigrationOption?(string value) => value == null ? (SchemaMigrationOption?)null : new SchemaMigrationOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SalesforceV2SinkWriteBehavior?(string value) => value == null ? null : new SalesforceV2SinkWriteBehavior(value);
+        public static implicit operator SalesforceV2SinkWriteBehavior?(string value) => value == null ? (SalesforceV2SinkWriteBehavior?)null : new SalesforceV2SinkWriteBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

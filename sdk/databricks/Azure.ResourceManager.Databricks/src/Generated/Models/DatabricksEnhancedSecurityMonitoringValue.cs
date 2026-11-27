@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Converts a string to a <see cref="DatabricksEnhancedSecurityMonitoringValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksEnhancedSecurityMonitoringValue?(string value) => value == null ? null : new DatabricksEnhancedSecurityMonitoringValue(value);
+        public static implicit operator DatabricksEnhancedSecurityMonitoringValue?(string value) => value == null ? (DatabricksEnhancedSecurityMonitoringValue?)null : new DatabricksEnhancedSecurityMonitoringValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

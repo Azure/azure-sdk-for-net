@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeDeviceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDeviceType?(string value) => value == null ? null : new DataBoxEdgeDeviceType(value);
+        public static implicit operator DataBoxEdgeDeviceType?(string value) => value == null ? (DataBoxEdgeDeviceType?)null : new DataBoxEdgeDeviceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

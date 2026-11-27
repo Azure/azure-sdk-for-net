@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubOperationOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubOperationOrigin?(string value) => value == null ? null : new DevHubOperationOrigin(value);
+        public static implicit operator DevHubOperationOrigin?(string value) => value == null ? (DevHubOperationOrigin?)null : new DevHubOperationOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterFeatureStateModifiable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterFeatureStateModifiable?(string value) => value == null ? null : new DevCenterFeatureStateModifiable(value);
+        public static implicit operator DevCenterFeatureStateModifiable?(string value) => value == null ? (DevCenterFeatureStateModifiable?)null : new DevCenterFeatureStateModifiable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

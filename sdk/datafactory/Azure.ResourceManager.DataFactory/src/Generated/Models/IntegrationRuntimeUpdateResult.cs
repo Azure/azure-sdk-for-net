@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="IntegrationRuntimeUpdateResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IntegrationRuntimeUpdateResult?(string value) => value == null ? null : new IntegrationRuntimeUpdateResult(value);
+        public static implicit operator IntegrationRuntimeUpdateResult?(string value) => value == null ? (IntegrationRuntimeUpdateResult?)null : new IntegrationRuntimeUpdateResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

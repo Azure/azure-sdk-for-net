@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationState?(string value) => value == null ? null : new DataMigrationState(value);
+        public static implicit operator DataMigrationState?(string value) => value == null ? (DataMigrationState?)null : new DataMigrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

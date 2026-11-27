@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SapCloudForCustomerSinkWriteBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapCloudForCustomerSinkWriteBehavior?(string value) => value == null ? null : new SapCloudForCustomerSinkWriteBehavior(value);
+        public static implicit operator SapCloudForCustomerSinkWriteBehavior?(string value) => value == null ? (SapCloudForCustomerSinkWriteBehavior?)null : new SapCloudForCustomerSinkWriteBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

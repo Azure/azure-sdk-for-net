@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="DataFactoryTriggerReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFactoryTriggerReferenceType?(string value) => value == null ? null : new DataFactoryTriggerReferenceType(value);
+        public static implicit operator DataFactoryTriggerReferenceType?(string value) => value == null ? (DataFactoryTriggerReferenceType?)null : new DataFactoryTriggerReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

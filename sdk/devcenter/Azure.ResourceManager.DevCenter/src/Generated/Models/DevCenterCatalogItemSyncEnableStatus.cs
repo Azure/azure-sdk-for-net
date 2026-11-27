@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterCatalogItemSyncEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterCatalogItemSyncEnableStatus?(string value) => value == null ? null : new DevCenterCatalogItemSyncEnableStatus(value);
+        public static implicit operator DevCenterCatalogItemSyncEnableStatus?(string value) => value == null ? (DevCenterCatalogItemSyncEnableStatus?)null : new DevCenterCatalogItemSyncEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

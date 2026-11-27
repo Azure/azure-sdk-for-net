@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="SelfHostedIntegrationRuntimeNodeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelfHostedIntegrationRuntimeNodeStatus?(string value) => value == null ? null : new SelfHostedIntegrationRuntimeNodeStatus(value);
+        public static implicit operator SelfHostedIntegrationRuntimeNodeStatus?(string value) => value == null ? (SelfHostedIntegrationRuntimeNodeStatus?)null : new SelfHostedIntegrationRuntimeNodeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

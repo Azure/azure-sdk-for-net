@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="PrestoAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrestoAuthenticationType?(string value) => value == null ? null : new PrestoAuthenticationType(value);
+        public static implicit operator PrestoAuthenticationType?(string value) => value == null ? (PrestoAuthenticationType?)null : new PrestoAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

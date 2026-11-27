@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationDatabaseCompatLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationDatabaseCompatLevel?(string value) => value == null ? null : new DataMigrationDatabaseCompatLevel(value);
+        public static implicit operator DataMigrationDatabaseCompatLevel?(string value) => value == null ? (DataMigrationDatabaseCompatLevel?)null : new DataMigrationDatabaseCompatLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

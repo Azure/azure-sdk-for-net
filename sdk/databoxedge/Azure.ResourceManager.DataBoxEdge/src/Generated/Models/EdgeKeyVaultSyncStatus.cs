@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeKeyVaultSyncStatus?(string value) => value == null ? null : new EdgeKeyVaultSyncStatus(value);
+        public static implicit operator EdgeKeyVaultSyncStatus?(string value) => value == null ? (EdgeKeyVaultSyncStatus?)null : new EdgeKeyVaultSyncStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

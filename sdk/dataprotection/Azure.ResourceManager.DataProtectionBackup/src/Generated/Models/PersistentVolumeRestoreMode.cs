@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="PersistentVolumeRestoreMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistentVolumeRestoreMode?(string value) => value == null ? null : new PersistentVolumeRestoreMode(value);
+        public static implicit operator PersistentVolumeRestoreMode?(string value) => value == null ? (PersistentVolumeRestoreMode?)null : new PersistentVolumeRestoreMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

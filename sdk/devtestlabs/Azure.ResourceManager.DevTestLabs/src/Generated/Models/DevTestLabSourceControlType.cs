@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabSourceControlType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabSourceControlType?(string value) => value == null ? null : new DevTestLabSourceControlType(value);
+        public static implicit operator DevTestLabSourceControlType?(string value) => value == null ? (DevTestLabSourceControlType?)null : new DevTestLabSourceControlType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

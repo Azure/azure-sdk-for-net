@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Converts a string to a <see cref="DataMigrationTaskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMigrationTaskType?(string value) => value == null ? null : new DataMigrationTaskType(value);
+        public static implicit operator DataMigrationTaskType?(string value) => value == null ? (DataMigrationTaskType?)null : new DataMigrationTaskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

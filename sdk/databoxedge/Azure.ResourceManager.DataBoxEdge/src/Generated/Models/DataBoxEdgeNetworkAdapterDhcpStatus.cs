@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterDhcpStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeNetworkAdapterDhcpStatus?(string value) => value == null ? null : new DataBoxEdgeNetworkAdapterDhcpStatus(value);
+        public static implicit operator DataBoxEdgeNetworkAdapterDhcpStatus?(string value) => value == null ? (DataBoxEdgeNetworkAdapterDhcpStatus?)null : new DataBoxEdgeNetworkAdapterDhcpStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

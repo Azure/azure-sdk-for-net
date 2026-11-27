@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Converts a string to a <see cref="DevTestLabCustomImageOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabCustomImageOSType?(string value) => value == null ? null : new DevTestLabCustomImageOSType(value);
+        public static implicit operator DevTestLabCustomImageOSType?(string value) => value == null ? (DevTestLabCustomImageOSType?)null : new DevTestLabCustomImageOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

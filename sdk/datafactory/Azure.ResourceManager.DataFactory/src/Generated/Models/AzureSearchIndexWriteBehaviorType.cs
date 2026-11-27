@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="AzureSearchIndexWriteBehaviorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureSearchIndexWriteBehaviorType?(string value) => value == null ? null : new AzureSearchIndexWriteBehaviorType(value);
+        public static implicit operator AzureSearchIndexWriteBehaviorType?(string value) => value == null ? (AzureSearchIndexWriteBehaviorType?)null : new AzureSearchIndexWriteBehaviorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

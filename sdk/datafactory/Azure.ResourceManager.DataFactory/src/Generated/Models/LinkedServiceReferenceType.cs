@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="LinkedServiceReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkedServiceReferenceType?(string value) => value == null ? null : new LinkedServiceReferenceType(value);
+        public static implicit operator LinkedServiceReferenceType?(string value) => value == null ? (LinkedServiceReferenceType?)null : new LinkedServiceReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

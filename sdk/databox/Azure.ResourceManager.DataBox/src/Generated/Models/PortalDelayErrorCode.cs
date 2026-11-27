@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Converts a string to a <see cref="PortalDelayErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PortalDelayErrorCode?(string value) => value == null ? null : new PortalDelayErrorCode(value);
+        public static implicit operator PortalDelayErrorCode?(string value) => value == null ? (PortalDelayErrorCode?)null : new PortalDelayErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

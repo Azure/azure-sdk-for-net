@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="TeradataAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TeradataAuthenticationType?(string value) => value == null ? null : new TeradataAuthenticationType(value);
+        public static implicit operator TeradataAuthenticationType?(string value) => value == null ? (TeradataAuthenticationType?)null : new TeradataAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

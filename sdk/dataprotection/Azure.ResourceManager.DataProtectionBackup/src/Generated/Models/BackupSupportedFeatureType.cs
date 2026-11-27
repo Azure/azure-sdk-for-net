@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="BackupSupportedFeatureType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupSupportedFeatureType?(string value) => value == null ? null : new BackupSupportedFeatureType(value);
+        public static implicit operator BackupSupportedFeatureType?(string value) => value == null ? (BackupSupportedFeatureType?)null : new BackupSupportedFeatureType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

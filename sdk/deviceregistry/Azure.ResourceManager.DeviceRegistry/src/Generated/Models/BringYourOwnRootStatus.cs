@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="BringYourOwnRootStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BringYourOwnRootStatus?(string value) => value == null ? null : new BringYourOwnRootStatus(value);
+        public static implicit operator BringYourOwnRootStatus?(string value) => value == null ? (BringYourOwnRootStatus?)null : new BringYourOwnRootStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Converts a string to a <see cref="DeviceRegistryTopicRetainType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceRegistryTopicRetainType?(string value) => value == null ? null : new DeviceRegistryTopicRetainType(value);
+        public static implicit operator DeviceRegistryTopicRetainType?(string value) => value == null ? (DeviceRegistryTopicRetainType?)null : new DeviceRegistryTopicRetainType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

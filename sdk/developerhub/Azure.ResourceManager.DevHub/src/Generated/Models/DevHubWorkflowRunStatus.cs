@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubWorkflowRunStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubWorkflowRunStatus?(string value) => value == null ? null : new DevHubWorkflowRunStatus(value);
+        public static implicit operator DevHubWorkflowRunStatus?(string value) => value == null ? (DevHubWorkflowRunStatus?)null : new DevHubWorkflowRunStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

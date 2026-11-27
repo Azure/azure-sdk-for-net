@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterAutoStartEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterAutoStartEnableStatus?(string value) => value == null ? null : new DevCenterAutoStartEnableStatus(value);
+        public static implicit operator DevCenterAutoStartEnableStatus?(string value) => value == null ? (DevCenterAutoStartEnableStatus?)null : new DevCenterAutoStartEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

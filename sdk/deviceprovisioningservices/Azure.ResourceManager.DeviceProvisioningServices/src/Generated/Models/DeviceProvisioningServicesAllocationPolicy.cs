@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesAllocationPolicy?(string value) => value == null ? null : new DeviceProvisioningServicesAllocationPolicy(value);
+        public static implicit operator DeviceProvisioningServicesAllocationPolicy?(string value) => value == null ? (DeviceProvisioningServicesAllocationPolicy?)null : new DeviceProvisioningServicesAllocationPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

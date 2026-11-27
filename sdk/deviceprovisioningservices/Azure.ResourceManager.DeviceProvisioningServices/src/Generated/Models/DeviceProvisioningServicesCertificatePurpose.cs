@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesCertificatePurpose?(string value) => value == null ? null : new DeviceProvisioningServicesCertificatePurpose(value);
+        public static implicit operator DeviceProvisioningServicesCertificatePurpose?(string value) => value == null ? (DeviceProvisioningServicesCertificatePurpose?)null : new DeviceProvisioningServicesCertificatePurpose(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

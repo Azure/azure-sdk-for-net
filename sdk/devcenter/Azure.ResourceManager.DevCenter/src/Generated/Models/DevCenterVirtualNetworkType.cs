@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevCenterVirtualNetworkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevCenterVirtualNetworkType?(string value) => value == null ? null : new DevCenterVirtualNetworkType(value);
+        public static implicit operator DevCenterVirtualNetworkType?(string value) => value == null ? (DevCenterVirtualNetworkType?)null : new DevCenterVirtualNetworkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

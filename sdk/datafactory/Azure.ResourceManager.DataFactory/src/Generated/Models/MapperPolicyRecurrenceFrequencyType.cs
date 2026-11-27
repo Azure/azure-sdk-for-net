@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapperPolicyRecurrenceFrequencyType?(string value) => value == null ? null : new MapperPolicyRecurrenceFrequencyType(value);
+        public static implicit operator MapperPolicyRecurrenceFrequencyType?(string value) => value == null ? (MapperPolicyRecurrenceFrequencyType?)null : new MapperPolicyRecurrenceFrequencyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

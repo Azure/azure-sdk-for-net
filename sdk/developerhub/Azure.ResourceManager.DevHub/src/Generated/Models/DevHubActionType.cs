@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <summary> Converts a string to a <see cref="DevHubActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevHubActionType?(string value) => value == null ? null : new DevHubActionType(value);
+        public static implicit operator DevHubActionType?(string value) => value == null ? (DevHubActionType?)null : new DevHubActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

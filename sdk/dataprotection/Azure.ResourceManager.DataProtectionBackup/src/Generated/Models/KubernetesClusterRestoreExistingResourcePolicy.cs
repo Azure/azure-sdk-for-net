@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesClusterRestoreExistingResourcePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterRestoreExistingResourcePolicy?(string value) => value == null ? null : new KubernetesClusterRestoreExistingResourcePolicy(value);
+        public static implicit operator KubernetesClusterRestoreExistingResourcePolicy?(string value) => value == null ? (KubernetesClusterRestoreExistingResourcePolicy?)null : new KubernetesClusterRestoreExistingResourcePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

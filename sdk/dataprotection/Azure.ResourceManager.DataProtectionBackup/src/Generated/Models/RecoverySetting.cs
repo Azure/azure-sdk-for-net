@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Converts a string to a <see cref="RecoverySetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoverySetting?(string value) => value == null ? null : new RecoverySetting(value);
+        public static implicit operator RecoverySetting?(string value) => value == null ? (RecoverySetting?)null : new RecoverySetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

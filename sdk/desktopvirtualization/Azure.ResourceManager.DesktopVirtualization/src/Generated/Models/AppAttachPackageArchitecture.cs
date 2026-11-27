@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Converts a string to a <see cref="AppAttachPackageArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppAttachPackageArchitecture?(string value) => value == null ? null : new AppAttachPackageArchitecture(value);
+        public static implicit operator AppAttachPackageArchitecture?(string value) => value == null ? (AppAttachPackageArchitecture?)null : new AppAttachPackageArchitecture(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

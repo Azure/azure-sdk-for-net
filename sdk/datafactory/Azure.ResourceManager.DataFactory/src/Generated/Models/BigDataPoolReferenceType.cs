@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Converts a string to a <see cref="BigDataPoolReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BigDataPoolReferenceType?(string value) => value == null ? null : new BigDataPoolReferenceType(value);
+        public static implicit operator BigDataPoolReferenceType?(string value) => value == null ? (BigDataPoolReferenceType?)null : new BigDataPoolReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
