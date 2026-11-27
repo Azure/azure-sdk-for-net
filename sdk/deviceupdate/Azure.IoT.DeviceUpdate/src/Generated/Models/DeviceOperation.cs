@@ -19,14 +19,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Initializes a new instance of <see cref="DeviceOperation"/>. </summary>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="status"> Operation status. </param>
-        /// <param name="lastActionDateTime"> Date and time in UTC when the operation status was last updated. </param>
-        /// <param name="createdDateTime"> Date and time in UTC when the operation was created. </param>
-        internal DeviceOperation(string operationId, OperationStatus status, DateTimeOffset lastActionDateTime, DateTimeOffset createdDateTime)
+        /// <param name="lastActionOn"> Date and time in UTC when the operation status was last updated. </param>
+        /// <param name="createdOn"> Date and time in UTC when the operation was created. </param>
+        internal DeviceOperation(string operationId, OperationStatus status, DateTimeOffset lastActionOn, DateTimeOffset createdOn)
         {
             OperationId = operationId;
             Status = status;
-            LastActionDateTime = lastActionDateTime;
-            CreatedDateTime = createdDateTime;
+            LastActionOn = lastActionOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceOperation"/>. </summary>
@@ -37,18 +37,18 @@ namespace Azure.IoT.DeviceUpdate
         /// Operation correlation identity that can used by Microsoft Support for
         /// troubleshooting.
         /// </param>
-        /// <param name="lastActionDateTime"> Date and time in UTC when the operation status was last updated. </param>
-        /// <param name="createdDateTime"> Date and time in UTC when the operation was created. </param>
+        /// <param name="lastActionOn"> Date and time in UTC when the operation status was last updated. </param>
+        /// <param name="createdOn"> Date and time in UTC when the operation was created. </param>
         /// <param name="etag"> Operation ETag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceOperation(string operationId, OperationStatus status, Error error, string traceId, DateTimeOffset lastActionDateTime, DateTimeOffset createdDateTime, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceOperation(string operationId, OperationStatus status, Error error, string traceId, DateTimeOffset lastActionOn, DateTimeOffset createdOn, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             Status = status;
             Error = error;
             TraceId = traceId;
-            LastActionDateTime = lastActionDateTime;
-            CreatedDateTime = createdDateTime;
+            LastActionOn = lastActionOn;
+            CreatedOn = createdOn;
             Etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -69,10 +69,10 @@ namespace Azure.IoT.DeviceUpdate
         public string TraceId { get; }
 
         /// <summary> Date and time in UTC when the operation status was last updated. </summary>
-        public DateTimeOffset LastActionDateTime { get; }
+        public DateTimeOffset LastActionOn { get; }
 
         /// <summary> Date and time in UTC when the operation was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Operation ETag. </summary>
         public string Etag { get; }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.LoggerType;
+                return Properties is null ? (LoggerType?)default : Properties.LoggerType;
             }
             set
             {

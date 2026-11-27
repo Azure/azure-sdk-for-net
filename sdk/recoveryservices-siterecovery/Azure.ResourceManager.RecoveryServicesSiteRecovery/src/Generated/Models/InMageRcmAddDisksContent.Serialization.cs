@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InMageRcmAddDisksContent(instanceType, additionalBinaryDataProperties, disks);
+            return new InMageRcmAddDisksContent(instanceType, additionalBinaryDataProperties, disks ?? new ChangeTrackingList<InMageRcmDiskContent>());
         }
     }
 }

@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    extensionSettings = BinaryData.FromString(prop.Value.GetRawText());
+                    extensionSettings = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("inputDataSources"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExtensionDataSource(

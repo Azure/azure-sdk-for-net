@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Type.Model.Inheritance.NotDiscriminated.csproj" />
+  <Project Path="tests/Type.Model.Inheritance.NotDiscriminated.Tests.csproj" />
 </Solution>

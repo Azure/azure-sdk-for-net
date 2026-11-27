@@ -51,13 +51,13 @@ public class BasicRedisTests
               name: take('cache-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {
-                sku: {
-                  name: 'Standard'
-                  family: 'C'
-                  capacity: 1
-                }
                 enableNonSslPort: false
                 minimumTlsVersion: '1.2'
+                sku: {
+                  capacity: 1
+                  family: 'C'
+                  name: 'Standard'
+                }
               }
             }
             """);

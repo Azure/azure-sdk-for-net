@@ -136,7 +136,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerThreshold = default;
             int? maxOutputDocuments = default;
             KnowledgeSourceKind kind = default;
-            bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string language = default;
             string market = default;
@@ -208,15 +207,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enableImageServing"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableImageServing = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("language"u8))
                 {
                     language = prop.Value.GetString();
@@ -243,7 +233,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebKnowledgeSourceParams(
@@ -255,7 +245,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 rerankerThreshold,
                 maxOutputDocuments,
                 kind,
-                enableImageServing,
                 additionalBinaryDataProperties,
                 language,
                 market,

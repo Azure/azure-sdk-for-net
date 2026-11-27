@@ -56,5 +56,38 @@ namespace Azure.Generator.Provisioning.Tests
                 Assert.That(customization.ObsoleteMessage, Is.EqualTo("Use CurrentKind instead."));
             });
         }
+
+        [Test]
+        public void AllowsDuplicateOrdinals()
+        {
+            const string customizationSource = """
+                using System;
+                using Microsoft.TypeSpec.Generator.Customizations;
+
+                [assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3)]
+                [assembly: CodeGenEnumValue("SampleKind", "LegacyKind", 3)]
+
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+                    internal sealed class CodeGenEnumValueAttribute : Attribute
+                    {
+                        public CodeGenEnumValueAttribute(string enumName, string memberName, int value)
+                        {
+                        }
+
+                    }
+                }
+                """;
+
+            var generator = ProvisioningMockHelpers.LoadMockPlugin(customizationSources: [customizationSource]);
+
+            var customizations = generator.Object.EnumValueCustomizationResolver
+                .GetAdditionalValues("SampleKind", new HashSet<string>())
+                .ToArray();
+
+            Assert.That(customizations, Has.Length.EqualTo(2));
+            Assert.That(customizations.Select(customization => customization.Value), Is.All.EqualTo(3));
+        }
     }
 }

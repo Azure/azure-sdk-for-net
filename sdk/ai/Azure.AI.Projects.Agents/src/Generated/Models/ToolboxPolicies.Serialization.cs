@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(ToolboxPolicies)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RaiConfig))
+            if (Optional.IsDefined(ContentFilterConfiguration))
             {
                 writer.WritePropertyName("rai_config"u8);
-                writer.WriteObjectValue(RaiConfig, options);
+                writer.WriteObjectValue(ContentFilterConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            ContentFilterConfiguration raiConfig = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -127,15 +127,15 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    raiConfig = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ToolboxPolicies(raiConfig, additionalBinaryDataProperties);
+            return new ToolboxPolicies(contentFilterConfiguration, additionalBinaryDataProperties);
         }
     }
 }

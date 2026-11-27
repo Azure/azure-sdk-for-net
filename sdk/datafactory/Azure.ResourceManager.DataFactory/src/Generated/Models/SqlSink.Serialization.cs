@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storedProcedureParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    storedProcedureParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("storedProcedureTableTypeParameterName"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new SqlSink(
                 copySinkType,

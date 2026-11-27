@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -84,9 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
                 }
 
-                builder.SetSampler(exporterOptions.TracesPerSecond != null ?
-                    new RateLimitedSampler(exporterOptions.TracesPerSecond.Value) :
-                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+                builder.SetSampler(SamplerFactory.Create(exporterOptions, MultiEndpointConfig.Enabled));
 
                 if (credential != null)
                 {
@@ -206,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exporter = new AzureMonitorLogExporter(options);
             BaseProcessor<LogRecord> processor = options.EnableTraceBasedLogsSampler
-                ? new LogFilteringProcessor(exporter)
+                ? new LogFilteringProcessor(exporter, SampleRateHelper.GetFallbackSampleRate(options))
                 : new AzureMonitorBatchLogRecordExportProcessor(exporter);
 
             loggerOptions.AddProcessor(new MainAgentAttributionLogProcessor());
@@ -280,7 +279,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 var exporter = new AzureMonitorLogExporter(exporterOptions);
                 BaseProcessor<LogRecord> exportProcessor = exporterOptions.EnableTraceBasedLogsSampler
-                    ? new LogFilteringProcessor(exporter)
+                    ? new LogFilteringProcessor(exporter, SampleRateHelper.GetFallbackSampleRate(exporterOptions))
                     : new AzureMonitorBatchLogRecordExportProcessor(exporter);
 
                 return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]

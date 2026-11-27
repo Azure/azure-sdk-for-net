@@ -1,6 +1,6 @@
 # Release History
 
-## 12.29.0-beta.2 (Unreleased)
+## 12.30.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.30.0-beta.2 (2026-11-19)
+
+### Bugs Fixed
+
+- Fixed an issue where conditional `409 *AlreadyExists` responses on structured-message requests were incorrectly classified as non-errors, which could cause `InvalidDataException` to be thrown instead of the expected `RequestFailedException`.
+
+## 12.29.1 (2026-11-19)
+
+### Bugs Fixed
+
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values (e.g. `AccountSasBuilder`). Times are now converted to UTC before formatting/signing to prevent unintended validity windows in st/se and related delegation key time fields.
+- Fixed an issue where conditional `409 *AlreadyExists` responses on structured-message requests were incorrectly classified as non-errors, which could cause `InvalidDataException` to be thrown instead of the expected `RequestFailedException`.
+
+## 12.30.0-beta.1 (2026-11-05)
+
+### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values (e.g. `AccountSasBuilder`). Times are now converted to UTC before formatting/signing to prevent unintended validity windows in st/se and related delegation key time fields.
+
+## 12.29.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.29.0-beta.1
 
 ## 12.29.0-beta.1 (2026-07-21)
 

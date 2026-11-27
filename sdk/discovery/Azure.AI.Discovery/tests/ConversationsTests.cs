@@ -37,7 +37,7 @@ namespace Azure.AI.Discovery.Tests
             Assert.That(conversation, Is.Not.Null);
             Assert.That(conversation.ProjectName, Is.EqualTo(TestEnvironment.ProjectName));
             Assert.That(conversation.Name, Is.Not.Null);
-            Assert.That(conversation.CreatedAt, Is.Not.Null);
+            Assert.That(conversation.CreatedOn, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -52,7 +52,7 @@ namespace Azure.AI.Discovery.Tests
             Assert.That(conversation, Is.Not.Null);
             Assert.That(conversation.Name, Is.EqualTo(created.Name));
             Assert.That(conversation.ProjectName, Is.EqualTo(TestEnvironment.ProjectName));
-            Assert.That(conversation.CreatedAt, Is.Not.Null);
+            Assert.That(conversation.CreatedOn, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -70,7 +70,7 @@ namespace Azure.AI.Discovery.Tests
             foreach (DiscoveryConversation conv in page.Value)
             {
                 Assert.That(conv.ProjectName, Is.EqualTo(TestEnvironment.ProjectName));
-                Assert.That(conv.CreatedAt, Is.Not.Null);
+                Assert.That(conv.CreatedOn, Is.Not.Null);
                 Assert.That(conv.InvestigationName, Is.Not.Null);
                 if (conv.Name == created.Name)
                 {
@@ -92,7 +92,7 @@ namespace Azure.AI.Discovery.Tests
             var updated = (DiscoveryConversation)response;
 
             Assert.That(updated.DisplayName, Is.EqualTo("Updated conversation"));
-            Assert.That(updated.LastModifiedAt, Is.Not.Null);
+            Assert.That(updated.LastModifiedOn, Is.Not.Null);
         }
 
         [RecordedTest]

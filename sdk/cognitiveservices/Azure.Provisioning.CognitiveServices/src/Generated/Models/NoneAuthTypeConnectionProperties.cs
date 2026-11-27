@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new NoneAuthTypeConnectionProperties. </summary>
         public NoneAuthTypeConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.None);
         }
 
         /// <summary> Define all the provisionable properties for NoneAuthTypeConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "None");
             DefineAdditionalProperties();
         }
 

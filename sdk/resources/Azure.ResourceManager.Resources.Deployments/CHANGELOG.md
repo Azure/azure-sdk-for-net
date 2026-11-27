@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0 (2026-11-10)
+
+### Features Added
+
+- Updated to support API version `2026-06-01`.
+
+### Other Changes
+
+- Retained `ExtensionConfigPropertyType`, `ArmDeploymentExtensionConfigItem.ExtensionConfigPropertyType`, and the existing model factory signature for compatibility with SDK version `1.0.0`, although API version `2026-06-01` no longer defines the extension configuration `type` property.
+
 ## 1.0.0 (2026-08-25)
 
 ### Features Added

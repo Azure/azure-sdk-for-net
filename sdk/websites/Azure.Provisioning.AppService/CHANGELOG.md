@@ -1,14 +1,22 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Renamed `WebAppRequest` to `WebAppContent` and changed the type of `WebAppRequestHistoryProperties.Request` from `WebAppRequest` to `WebAppContent`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.3 (2026-09-18)
+
+### Other Changes
+
+- Migrated code generation to the TypeSpec-based provisioning generator.
 
 ## 1.4.0-beta.2 (2026-03-02)
 

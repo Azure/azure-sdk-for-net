@@ -16,6 +16,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new MabProtectionPolicy. </summary>
         public MabProtectionPolicy()
         {
+            BackupManagementType.Assign("MAB");
         }
 
         /// <summary> Gets or sets the SchedulePolicy. </summary>
@@ -52,7 +53,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupManagementType", new string[] { "backupManagementType" }, defaultValue: "MAB");
             _schedulePolicy = DefineModelProperty<BackupSchedulePolicy>(nameof(SchedulePolicy), new string[] { "schedulePolicy" });
             _retentionPolicy = DefineModelProperty<BackupRetentionPolicy>(nameof(RetentionPolicy), new string[] { "retentionPolicy" });
             DefineAdditionalProperties();

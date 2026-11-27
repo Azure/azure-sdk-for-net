@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of Advanced Ingress Routing Config resources. </summary>
+    /// <summary> Collection of rule based Http Route Config resources. </summary>
     internal partial class HttpRouteConfigCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSqlAutoProtectionIntent : WorkloadAutoProtectionIntent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
-        public WorkloadSqlAutoProtectionIntent()
+        public WorkloadSqlAutoProtectionIntent() : base("AzureWorkloadSQLAutoProtectionIntent")
         {
         }
 

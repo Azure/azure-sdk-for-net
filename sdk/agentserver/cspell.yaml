@@ -3,6 +3,8 @@ import:
 overrides:
   - filename: '**/sdk/agentserver/**/*'
     words:
+      - aaas
+      - AAIP
       - Includable
       - Logprobs
       - MCPHTTP

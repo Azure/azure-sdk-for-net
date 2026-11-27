@@ -139,7 +139,7 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(MaxResults.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(ShareItems))
+            if (ShareItems != null && Optional.IsCollectionDefined(ShareItems))
             {
                 writer.WriteStartElement("Shares");
                 foreach (ShareItemInternal item in ShareItems)

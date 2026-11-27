@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricSkuData, NetworkFabricSkuResource>(new NetworkFabricSkusGetBySubscriptionAsyncCollectionResultOfT(_networkFabricSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkFabricSkuCollection.GetAll"), data => new NetworkFabricSkuResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricSkuData, NetworkFabricSkuResource>(new NetworkFabricSkuDataAsyncCollectionResultOfT(_networkFabricSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkFabricSkuCollection.GetAll"), data => new NetworkFabricSkuResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricSkuData, NetworkFabricSkuResource>(new NetworkFabricSkusGetBySubscriptionCollectionResultOfT(_networkFabricSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkFabricSkuCollection.GetAll"), data => new NetworkFabricSkuResource(Client, data));
+            return new PageableWrapper<NetworkFabricSkuData, NetworkFabricSkuResource>(new NetworkFabricSkuDataCollectionResultOfT(_networkFabricSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkFabricSkuCollection.GetAll"), data => new NetworkFabricSkuResource(Client, data));
         }
 
         /// <summary>

@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="PhotoAvatarBaseMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PhotoAvatarBaseMode?(string value) => value == null ? null : new PhotoAvatarBaseMode(value);
+        public static implicit operator PhotoAvatarBaseMode?(string value) => value == null ? (PhotoAvatarBaseMode?)null : new PhotoAvatarBaseMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

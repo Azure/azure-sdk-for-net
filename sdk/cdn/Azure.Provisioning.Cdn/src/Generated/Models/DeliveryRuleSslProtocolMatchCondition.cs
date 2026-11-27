@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleSslProtocolMatchCondition. </summary>
         public DeliveryRuleSslProtocolMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters);
         }
 
         /// <summary> Gets or sets the SslProtocolOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleSslProtocolConditionParameters");
             _sslProtocolOperator = DefineProperty<SslProtocolOperator>(nameof(SslProtocolOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<DeliveryRuleSslProtocol>(nameof(MatchValues), new string[] { "matchValues" });

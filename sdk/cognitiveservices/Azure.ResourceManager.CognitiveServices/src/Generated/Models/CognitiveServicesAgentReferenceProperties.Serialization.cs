@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesAgentReferenceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AgentId))
+            if (Optional.IsDefined(AgentId, _agentIdIsDefined))
             {
-                writer.WritePropertyName("agentId"u8);
-                writer.WriteStringValue(AgentId);
+                if (AgentId != null)
+                {
+                    writer.WritePropertyName("agentId"u8);
+                    writer.WriteStringValue(AgentId);
+                }
+                else
+                {
+                    writer.WriteNull("agentId"u8);
+                }
             }
-            if (Optional.IsDefined(AgentName))
+            if (Optional.IsDefined(AgentName, _agentNameIsDefined))
             {
-                writer.WritePropertyName("agentName"u8);
-                writer.WriteStringValue(AgentName);
+                if (AgentName != null)
+                {
+                    writer.WritePropertyName("agentName"u8);
+                    writer.WriteStringValue(AgentName);
+                }
+                else
+                {
+                    writer.WriteNull("agentName"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool agentIdIsDefined = false;
             string agentId = default;
+            bool agentNameIsDefined = false;
             string agentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("agentId"u8))
                 {
+                    agentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentId = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("agentName"u8))
                 {
+                    agentNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentName = null;
@@ -153,10 +171,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesAgentReferenceProperties(agentId, agentName, additionalBinaryDataProperties);
+            return new CognitiveServicesAgentReferenceProperties(agentId, agentName, additionalBinaryDataProperties)
+            {
+                _agentIdIsDefined = agentIdIsDefined,
+                _agentNameIsDefined = agentNameIsDefined
+            };
         }
     }
 }

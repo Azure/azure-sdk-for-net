@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkIPConfigurationBgpPeeringAddress(ipConfigurationId, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

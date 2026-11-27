@@ -61,7 +61,7 @@ foreach (DiscoveryGroup discoGroup in response)
     int index = 0;
     foreach (DiscoveryRunResult discoRun in discoRunPageResponse)
     {
-        Console.WriteLine($" - started: {discoRun.StartedDate}, finished: {discoRun.CompletedDate}, assets found: {discoRun.TotalAssetsFoundCount}, status: {discoRun.State}");
+        Console.WriteLine($" - started: {discoRun.StartedOn}, finished: {discoRun.CompletedOn}, assets found: {discoRun.TotalAssetsFoundCount}, status: {discoRun.State}");
         if (++index == 5)
         {
             break;

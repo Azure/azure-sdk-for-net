@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.ApplicationInsights;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
@@ -131,19 +132,19 @@ public class BasicAppServiceTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'Storage'
               location: location
+              kind: 'Storage'
+              properties: {
+                defaultToOAuthAuthentication: true
+                supportsHttpsTrafficOnly: true
+              }
               sku: {
                 name: 'Standard_LRS'
-              }
-              properties: {
-                supportsHttpsTrafficOnly: true
-                defaultToOAuthAuthentication: true
               }
             }
 
             resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
-              name: take('hostingPlan-${uniqueString(resourceGroup().id)}', 60)
+              name: take('hostingplan${uniqueString(resourceGroup().id)}', 24)
               location: location
               sku: {
                 name: 'Y1'
@@ -153,8 +154,8 @@ public class BasicAppServiceTests
 
             resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
               name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)
-              kind: 'web'
               location: location
+              kind: 'web'
               properties: {
                 Application_Type: 'web'
                 Request_Source: 'rest'
@@ -166,9 +167,13 @@ public class BasicAppServiceTests
             resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
               name: funcAppName
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'functionapp'
               properties: {
-                serverFarmId: hostingPlan.id
                 httpsOnly: true
+                serverFarmId: hostingPlan.id
                 siteConfig: {
                   appSettings: [
                     {
@@ -200,14 +205,87 @@ public class BasicAppServiceTests
                       value: appInsights.properties.InstrumentationKey
                     }
                   ]
-                  minTlsVersion: '1.2'
                   ftpsState: 'FtpsOnly'
+                  minTlsVersion: '1.2'
                 }
               }
-              identity: {
-                type: 'SystemAssigned'
+            }
+            """);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task CustomDeploymentPropertiesSharePropertiesObject(bool useLegacyConcurrency)
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                FunctionAppScaleAndConcurrency scaleAndConcurrency = new()
+                {
+                    FunctionAppMaximumInstanceCount = 10
+                };
+                if (useLegacyConcurrency)
+                {
+                    scaleAndConcurrency.HttpPerInstanceConcurrency = 2.5F;
+                }
+                else
+                {
+                    scaleAndConcurrency.ConcurrentHttpPerInstanceConcurrency = 3;
+                }
+
+                WebSite site = new(nameof(site))
+                {
+                    Name = "site",
+                    Location = new AzureLocation("westus"),
+                    FunctionAppConfig = new FunctionAppConfig
+                    {
+                        ScaleAndConcurrency = scaleAndConcurrency
+                    }
+                };
+                infra.Add(site);
+
+                SiteExtension extension = new(nameof(extension))
+                {
+                    Parent = site,
+                    ConnectionString = "Server=example;",
+                    DBType = "SQL",
+                    IsAppOffline = true,
+                    SkipAppData = true
+                };
+                infra.Add(extension);
+
+                return infra;
+            });
+
+        test.Compare(
+            $$"""
+            resource site 'Microsoft.Web/sites@2025-03-01' = {
+              name: 'site'
+              location: 'westus'
+              properties: {
+                functionAppConfig: {
+                  scaleAndConcurrency: {
+                    maximumInstanceCount: 10
+                    triggers: {
+                      http: {
+                        perInstanceConcurrency: {{(useLegacyConcurrency ? "json('2.5')" : "3")}}
+                      }
+                    }
+                  }
+                }
               }
-              kind: 'functionapp'
+            }
+
+            resource extension 'Microsoft.Web/sites/extensions@2025-03-01' = {
+              name: 'MSDeploy'
+              parent: site
+              properties: {
+                appOffline: true
+                connectionString: 'Server=example;'
+                dbType: 'SQL'
+                skipAppData: true
+              }
             }
             """);
     }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(BootstrapKubeletConfig)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterFQDN))
+            if (options.Format != "W" && Optional.IsDefined(ClusterFqdn))
             {
                 writer.WritePropertyName("clusterFQDN"u8);
-                writer.WriteStringValue(ClusterFQDN);
+                writer.WriteStringValue(ClusterFqdn);
             }
             if (options.Format != "W" && Optional.IsDefined(CaCertData))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            string clusterFQDN = default;
+            string clusterFqdn = default;
             string caCertData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clusterFQDN"u8))
                 {
-                    clusterFQDN = prop.Value.GetString();
+                    clusterFqdn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("caCertData"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BootstrapKubeletConfig(clusterFQDN, caCertData, additionalBinaryDataProperties);
+            return new BootstrapKubeletConfig(clusterFqdn, caCertData, additionalBinaryDataProperties);
         }
     }
 }

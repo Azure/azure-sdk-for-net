@@ -198,7 +198,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SetAccessControlRecursiveResponse(directoriesSuccessful, filesSuccessful, failureCount, failedEntries ?? new ChangeTrackingList<AclFailedEntry>(), additionalBinaryDataProperties);

@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="serviceId"> Identifier of the service associated with this problem classification result. </param>
         /// <param name="problemClassificationId"> Identifier that may be used for support ticket creation. </param>
         /// <param name="relatedService"> Related service. </param>
+        /// <param name="articleId"> Identifier of the article associated with this problem classification result. This value is populated only when a related article is available; otherwise it is omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationsClassificationResult(string problemId, string title, string description, string serviceId, string problemClassificationId, SupportClassificationService relatedService, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProblemClassificationsClassificationResult(string problemId, string title, string description, string serviceId, string problemClassificationId, SupportClassificationService relatedService, string articleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProblemId = problemId;
             Title = title;
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Support.Models
             ServiceId = serviceId;
             ProblemClassificationId = problemClassificationId;
             RelatedService = relatedService;
+            ArticleId = articleId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +59,8 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Related service. </summary>
         public SupportClassificationService RelatedService { get; }
+
+        /// <summary> Identifier of the article associated with this problem classification result. This value is populated only when a related article is available; otherwise it is omitted. </summary>
+        public string ArticleId { get; }
     }
 }

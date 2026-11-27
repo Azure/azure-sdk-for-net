@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
+using TypeSpecCodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
@@ -18,8 +19,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
     // that call into MockableEventGridSubscriptionResource. The current generated mockable class
     // does not emit these specific methods, so we provide them here to preserve the existing
     // extension surface and mockable/virtual behavior.
-    [CodeGenSuppress("GetEventSubscriptions", typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptions", typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptionsAsync", typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class MockableEventGridSubscriptionResource
     {
         /// <summary> List global event subscriptions under a subscription for a topic type. </summary>

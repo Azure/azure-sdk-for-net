@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
@@ -32,8 +33,15 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="minimumTlsVersion">
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </param>
+        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNamespaceProperties(string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayNamespaceProperties(string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -43,6 +51,8 @@ namespace Azure.ResourceManager.Relay.Models
             MetricId = metricId;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            MinimumTlsVersion = minimumTlsVersion;
+            ClusterArmId = clusterArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,5 +79,16 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </summary>
+        public RelayTlsVersion? MinimumTlsVersion { get; set; }
+
+        /// <summary> Cluster ARM ID of the Namespace. </summary>
+        public ResourceIdentifier ClusterArmId { get; set; }
     }
 }

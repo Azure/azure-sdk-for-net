@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Search.Documents.Utilities;
 
@@ -75,20 +76,20 @@ namespace Azure.Search.Documents.Models
         {
             if (FacetType != FacetType.Range)
             { throw new InvalidCastException(); }
-            return new RangeFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T>(From), ConvertValue<T>(To));
+            return new RangeFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T?>(From), ConvertValue<T?>(To));
         }
 
         /// <summary>
-        /// Converts a boxed value to a nullable type T, handling numeric type conversions.
+        /// Converts compatible facet values while preserving values of the requested type.
         /// </summary>
-        private static T? ConvertValue<T>(object value) where T : struct
+        private static T ConvertValue<T>(object value)
         {
-            if (value == null)
+            if (value == null || value is T)
             {
-                return null;
+                return (T)value;
             }
 
-            return (T)Convert.ChangeType(value, typeof(T));
+            return (T)Convert.ChangeType(value, Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T), CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace Azure.Search.Documents.Models
         {
             if (FacetType != FacetType.Value)
             { throw new InvalidCastException(); }
-            return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
+            return new ValueFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T>(Value));
         }
 
         internal IDictionary<string, object> AdditionalProperties => _additionalBinaryDataProperties.ToObjectDictionary();
@@ -140,12 +141,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             long? count = default;
-            double? avg = default;
-            double? min = default;
-            double? max = default;
-            double? sum = default;
-            long? cardinality = default;
-            IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
+
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,70 +154,6 @@ namespace Azure.Search.Documents.Models
                     count = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("avg"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    avg = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("min"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    min = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("max"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    max = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("sum"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sum = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("cardinality"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    cardinality = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("@search.facets"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, IList<FacetResult>> nestedFacets = new Dictionary<string, IList<FacetResult>>();
-                    foreach (var facetProp in prop.Value.EnumerateObject())
-                    {
-                        List<FacetResult> facetList = new List<FacetResult>();
-                        foreach (var item in facetProp.Value.EnumerateArray())
-                        {
-                            facetList.Add(DeserializeFacetResult(item, options));
-                        }
-                        nestedFacets.Add(facetProp.Name, facetList);
-                    }
-                    facets = nestedFacets;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -229,12 +161,6 @@ namespace Azure.Search.Documents.Models
             }
             return new FacetResult(
                 count,
-                avg,
-                min,
-                max,
-                sum,
-                cardinality,
-                facets,
                 additionalProperties);
         }
     }

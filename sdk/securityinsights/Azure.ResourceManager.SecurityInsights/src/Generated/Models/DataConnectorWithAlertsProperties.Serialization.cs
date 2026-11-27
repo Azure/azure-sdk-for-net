@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Data connector properties. </summary>
     internal partial class DataConnectorWithAlertsProperties : IJsonModel<DataConnectorWithAlertsProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataConnectorWithAlertsProperties(dataTypes, additionalBinaryDataProperties);

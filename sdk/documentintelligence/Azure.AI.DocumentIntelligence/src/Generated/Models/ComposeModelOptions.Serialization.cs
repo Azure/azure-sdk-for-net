@@ -235,7 +235,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComposeModelOptions(
@@ -243,7 +243,7 @@ namespace Azure.AI.DocumentIntelligence
                 description,
                 classifierId,
                 split,
-                documentTypes,
+                documentTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

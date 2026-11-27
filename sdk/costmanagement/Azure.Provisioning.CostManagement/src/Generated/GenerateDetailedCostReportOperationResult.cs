@@ -20,6 +20,7 @@ namespace Azure.Provisioning.CostManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private DownloadURL _properties;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new GenerateDetailedCostReportOperationResult. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -73,12 +74,27 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Gets the ExpiryOn. </summary>
         public BicepValue<DateTimeOffset> ExpiryOn
         {
             get
             {
-                return Properties.ExpiryOn;
+                return Properties is null ? default : Properties.ExpiryOn;
             }
         }
 
@@ -87,7 +103,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ValidTill;
+                return Properties is null ? default : Properties.ValidTill;
             }
         }
 
@@ -96,7 +112,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.DownloadUri;
+                return Properties is null ? default : Properties.DownloadUri;
             }
         }
 
@@ -108,6 +124,7 @@ namespace Azure.Provisioning.CostManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DownloadURL>(nameof(Properties), new string[] { "properties" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

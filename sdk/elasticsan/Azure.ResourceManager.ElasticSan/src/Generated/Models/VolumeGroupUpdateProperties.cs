@@ -27,14 +27,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
+        /// <param name="reservedIops"> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </param>
+        /// <param name="reservedMBps"> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </param>
+        /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupUpdateProperties(ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, bool? enforceDataIntegrityCheckForIscsi, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeGroupUpdateProperties(ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, bool? enforceDataIntegrityCheckForIscsi, int? reservedIops, int? reservedMBps, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtocolType = protocolType;
             Encryption = encryption;
             EncryptionProperties = encryptionProperties;
             NetworkAcls = networkAcls;
             EnforceDataIntegrityCheckForIscsi = enforceDataIntegrityCheckForIscsi;
+            ReservedIops = reservedIops;
+            ReservedMBps = reservedMBps;
+            DeleteRetentionPolicy = deleteRetentionPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +58,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> A boolean indicating whether or not Data Integrity Check is enabled. </summary>
         public bool? EnforceDataIntegrityCheckForIscsi { get; set; }
+
+        /// <summary> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedIops { get; set; }
+
+        /// <summary> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedMBps { get; set; }
+
+        /// <summary> The retention policy for the soft deleted volume group and its associated resources. </summary>
+        public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
 
         /// <summary> The list of virtual network rules. </summary>
         public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules

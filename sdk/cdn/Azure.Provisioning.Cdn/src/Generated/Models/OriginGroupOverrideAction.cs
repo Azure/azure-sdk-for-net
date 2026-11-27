@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.Provisioning;
-
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> Defines the origin group override action for the delivery rule. </summary>
@@ -18,10 +15,11 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new OriginGroupOverrideAction. </summary>
         public OriginGroupOverrideAction()
         {
+            Name.Assign(DeliveryRuleActionName.OriginGroupOverride);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal OriginGroupOverrideActionProperties Properties
+        public OriginGroupOverrideActionProperties Properties
         {
             get
             {
@@ -35,28 +33,10 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> OriginGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OriginGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginGroupOverrideActionProperties();
-                }
-                Properties.OriginGroupId = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for OriginGroupOverrideAction. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "OriginGroupOverride");
             _properties = DefineModelProperty<OriginGroupOverrideActionProperties>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The PostgreSQLV2 table dataset. </summary>
     public partial class PostgreSqlV2TableDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlV2TableDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public PostgreSqlV2TableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("PostgreSqlV2Table", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlV2TableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

@@ -140,7 +140,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new ArrowTextConfigurationInternal(schema);
+            return new ArrowTextConfigurationInternal(schema ?? new ChangeTrackingList<ArrowFieldInternal>());
         }
 
         /// <param name="writer"> The XML writer. </param>

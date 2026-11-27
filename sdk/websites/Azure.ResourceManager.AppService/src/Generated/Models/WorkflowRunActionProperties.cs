@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionProperties"/>. </summary>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="status"> Gets the status. </param>
         /// <param name="code"> Gets the code. </param>
         /// <param name="error"> Gets the error. </param>
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, WebAppRunActionCorrelation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunActionProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, WebAppRunActionCorrelation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             Code = code;
             Error = error;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets the end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets the status. </summary>
         [WirePath("status")]

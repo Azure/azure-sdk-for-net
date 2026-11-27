@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     public static partial class ArmOnlineExperimentationModelFactory
     {
 
+        /// <summary> An online experimentation workspace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 default);
         }
 
+        /// <summary> Customer-managed key encryption properties for the resource. </summary>
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
         }
 
+        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
         /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
         /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
         /// <param name="federatedClientId"> application client identity to use for accessing key encryption key Url in a different tenant. Ex: f83c6b1b-4d34-47e4-bb34-9d83df58b540. </param>
@@ -93,6 +96,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, federatedClientId, default);
         }
 
+        /// <summary> Private endpoint connection resource for an online experimentation workspace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -110,6 +114,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 default);
         }
 
+        /// <summary> Properties of the private endpoint connection. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -131,6 +137,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new OnlineExperimentationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         /// <param name="name"> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </param>
         /// <param name="tier"> The name of the SKU tier. </param>
         /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceSku"/> instance for mocking. </returns>
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new OnlineExperimentationWorkspaceSku(name, tier, default);
         }
 
+        /// <summary> Partial update of an online experimentation workspace resource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
@@ -164,6 +172,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new OnlineExperimentationWorkspacePatchProperties(logAnalyticsWorkspaceResourceId, logsExporterStorageAccountResourceId, customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, default), publicNetworkAccess, default);
         }
 
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -181,6 +190,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>

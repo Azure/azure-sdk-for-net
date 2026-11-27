@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageApplianceRunReadCommandsContent(commands, limitTimeSeconds, additionalBinaryDataProperties);
+            return new StorageApplianceRunReadCommandsContent(commands ?? new ChangeTrackingList<StorageApplianceCommandSpecification>(), limitTimeSeconds, additionalBinaryDataProperties);
         }
     }
 }

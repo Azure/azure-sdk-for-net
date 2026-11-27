@@ -167,10 +167,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedDocumentModelDetails(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedDocumentModelDetails(value ?? new ChangeTrackingList<DocumentModelDetails>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

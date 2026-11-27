@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryResourceQualification"/>. </summary>
         /// <param name="recoveryResource"> Recovery orchestration resource. </param>
         /// <param name="operationQualificationDetails"> Details of qualification for the operation. </param>
-        internal RecoveryResourceQualification(RecoveryMembersData recoveryResource, OperationQualificationDetails operationQualificationDetails)
+        internal RecoveryResourceQualification(RecoveryMembersData recoveryResource, RecoveryOperationQualificationDetails operationQualificationDetails)
         {
             RecoveryResource = recoveryResource;
             OperationQualificationDetails = operationQualificationDetails;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="recoveryResource"> Recovery orchestration resource. </param>
         /// <param name="operationQualificationDetails"> Details of qualification for the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryResourceQualification(RecoveryMembersData recoveryResource, OperationQualificationDetails operationQualificationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryResourceQualification(RecoveryMembersData recoveryResource, RecoveryOperationQualificationDetails operationQualificationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecoveryResource = recoveryResource;
             OperationQualificationDetails = operationQualificationDetails;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public RecoveryMembersData RecoveryResource { get; }
 
         /// <summary> Details of qualification for the operation. </summary>
-        public OperationQualificationDetails OperationQualificationDetails { get; }
+        public RecoveryOperationQualificationDetails OperationQualificationDetails { get; }
     }
 }

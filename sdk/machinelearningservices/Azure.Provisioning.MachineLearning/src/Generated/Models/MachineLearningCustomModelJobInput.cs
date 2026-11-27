@@ -19,6 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningCustomModelJobInput. </summary>
         public MachineLearningCustomModelJobInput()
         {
+            JobInputType.Assign(MachineLearning.JobInputType.CustomModel);
         }
 
         /// <summary> Gets or sets the Mode. </summary>
@@ -55,7 +56,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobInputType", new string[] { "jobInputType" }, defaultValue: "custom_model");
             _mode = DefineProperty<MachineLearningInputDeliveryMode>(nameof(Mode), new string[] { "mode" });
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" }, isRequired: true);
             DefineAdditionalProperties();

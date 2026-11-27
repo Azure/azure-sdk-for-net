@@ -7,15 +7,15 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
-[CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
-[CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
+[CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
+[CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateMemories", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(int?), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(int?), typeof(CancellationToken))]
 [CodeGenSuppress("GetMemoryStores", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemoryStoresAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemories", typeof(string), typeof(BinaryContent), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -271,13 +271,13 @@ public partial class AIProjectMemoryStores
     public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
-        ListMemoriesRequest spreadModel = new ListMemoriesRequest(scope, default);
+        ListMemoriesContent spreadModel = new ListMemoriesContent(scope, default);
         return new InternalOpenAICollectionResultOfT<MemoryItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoriesRequest(
                     name: localCollectionOptions.Filters[0],
-                    content: new ListMemoriesRequest(localCollectionOptions.Filters[1], default),
+                    content: new ListMemoriesContent(localCollectionOptions.Filters[1], default),
                     kind: localCollectionOptions.Filters.Count > 2 ? localCollectionOptions.Filters[2] : default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
@@ -324,7 +324,7 @@ public partial class AIProjectMemoryStores
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoriesRequest(
                     name: localCollectionOptions.Filters[0],
-                    content: new ListMemoriesRequest(localCollectionOptions.Filters[1], default),
+                    content: new ListMemoriesContent(localCollectionOptions.Filters[1], default),
                     kind: localCollectionOptions.Filters.Count > 2 ? localCollectionOptions.Filters[2] : default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,

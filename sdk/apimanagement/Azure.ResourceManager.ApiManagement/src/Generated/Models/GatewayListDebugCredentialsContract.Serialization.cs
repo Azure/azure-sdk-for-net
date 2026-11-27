@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GatewayListDebugCredentialsContract(credentialsExpireAfter, purposes, apiId, additionalBinaryDataProperties);
+            return new GatewayListDebugCredentialsContract(credentialsExpireAfter, purposes ?? new ChangeTrackingList<GatewayListDebugCredentialsContractPurpose>(), apiId, additionalBinaryDataProperties);
         }
     }
 }

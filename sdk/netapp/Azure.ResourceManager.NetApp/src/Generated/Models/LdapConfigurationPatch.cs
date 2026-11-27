@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="LdapConfigurationPatch"/>. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfigurationPatch(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, IList<IPAddress> dnsServers, int? ldapPort, string userDN, string groupDN, string netGroupDN, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapConfigurationPatch(string domain, IList<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IList<IPAddress> dnsServers, int? ldapPort, string userDN, string groupDN, string netGroupDN, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
-            IsLdapOverTlsEnabled = isLdapOverTlsEnabled;
+            SecureLdapType = secureLdapType;
             ServerCACertificate = serverCACertificate;
             CertificateCNHost = certificateCNHost;
             DnsServers = dnsServers;
@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.NetApp.Models
             BindPasswordAkvConfig = bindPasswordAkvConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </summary>
+        public SecureLdapType? SecureLdapType { get; set; }
 
         /// <summary> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </summary>
         public IList<IPAddress> DnsServers { get; }

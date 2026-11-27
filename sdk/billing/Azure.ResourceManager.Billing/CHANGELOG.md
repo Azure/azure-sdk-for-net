@@ -17,8 +17,6 @@
 - Temporary generator-bug workarounds shipped in this beta (each tracked by an open issue; the corresponding `src/Custom/` shim will be removed once the upstream fix ships):
   - [#58747](https://github.com/Azure/azure-sdk-for-net/issues/58747) – `[CodeGenSuppress]` for `AddTag` / `SetTags` / `RemoveTag` on `BillingTransferDetailResource` and `PartnerTransferDetailResource` (tag-helper boilerplate is emitted against a PUT operation whose request body is not the resource data type).
   - [#59539](https://github.com/Azure/azure-sdk-for-net/issues/59539) – `[CodeGenSuppress]` plus hand-written `BillingAccountResource.CancelPaymentTerms` / `CancelPaymentTermsAsync`, because the generator emits `DateTimeOffset.ToRequestContent(...)` which does not exist.
-  - [#59540](https://github.com/Azure/azure-sdk-for-net/issues/59540) – `[CodeGenSuppress]` plus hand-written `BillingProfileResource.GetProducts` / `GetProductsAsync`, because the shared `ProductsGetProductsCollectionResultOfT` constructor demands an `invoiceSectionName` argument the billing-profile call site cannot supply.
-  - [#59545](https://github.com/Azure/azure-sdk-for-net/issues/59545) – `[CodeGenSuppress("Tags")]` plus a redeclared `Tags` property on `BillingAccountPatch`, `BillingProductPatch`, `BillingSubscriptionPatch`, and `BillingTransactionData`, because `enable-wire-path-attribute: true` emits a duplicate `[WirePath("tags")]` attribute.
 
 ## 1.2.2 (2026-04-20)
 

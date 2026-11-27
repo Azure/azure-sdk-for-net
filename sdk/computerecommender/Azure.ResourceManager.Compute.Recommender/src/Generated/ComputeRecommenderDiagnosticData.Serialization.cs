@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Recommender
 {
-    /// <summary> Contains metadata of a diagnostic type. </summary>
+    /// <summary> Contains metadata of the Spot Placement Scores resource. </summary>
     public partial class ComputeRecommenderDiagnosticData : ResourceData, IJsonModel<ComputeRecommenderDiagnosticData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Recommender
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ComputeRecommenderDiagnosticProperties properties = default;
+            ComputeRecommenderPlacementScoresProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.Compute.Recommender
                     {
                         continue;
                     }
-                    properties = ComputeRecommenderDiagnosticProperties.DeserializeComputeRecommenderDiagnosticProperties(prop.Value, options);
+                    properties = ComputeRecommenderPlacementScoresProperties.DeserializeComputeRecommenderPlacementScoresProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeRecommenderDiagnosticData(

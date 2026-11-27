@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataBox
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

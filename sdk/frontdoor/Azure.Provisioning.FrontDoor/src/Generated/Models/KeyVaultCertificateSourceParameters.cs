@@ -58,7 +58,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Vault.Id;
+                return Vault is null ? default : Vault.Id;
             }
         }
 

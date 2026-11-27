@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    context = BinaryData.FromString(prop.Value.GetRawText());
+                    context = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("egressConfig"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    egressConfig = BinaryData.FromString(prop.Value.GetRawText());
+                    egressConfig = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("customProperties"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServiceAlertProperties(essentials, context, egressConfig, customProperties ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

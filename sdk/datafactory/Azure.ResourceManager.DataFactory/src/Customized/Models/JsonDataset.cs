@@ -14,11 +14,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator preserves members whose types use @@alternateType identity (#59298).
     public partial class JsonDataset
     {
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public JsonDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Json", linkedServiceName)
-        {
-        }
-
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public new DataFactoryElement<BinaryData> Schema { get; set; }
     }

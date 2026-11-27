@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory
 {
@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="outputTokens"> The number of output tokens. </param>
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
-        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens)
+        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseInputTokenUsageDetails inputTokensDetails, long outputTokens, ResponseOutputTokenUsageDetails outputTokensDetails, long totalTokens)
         {
             EmbeddingTokens = embeddingTokens;
             InputTokens = inputTokens;
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseInputTokenUsageDetails inputTokensDetails, long outputTokens, ResponseOutputTokenUsageDetails outputTokensDetails, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EmbeddingTokens = embeddingTokens;
             InputTokens = inputTokens;
@@ -59,13 +59,13 @@ namespace Azure.AI.Projects.Memory
         public long InputTokens { get; }
 
         /// <summary> A detailed breakdown of the input tokens. </summary>
-        public ResponseUsageInputTokensDetails InputTokensDetails { get; }
+        public ResponseInputTokenUsageDetails InputTokensDetails { get; }
 
         /// <summary> The number of output tokens. </summary>
         public long OutputTokens { get; }
 
         /// <summary> A detailed breakdown of the output tokens. </summary>
-        public ResponseUsageOutputTokensDetails OutputTokensDetails { get; }
+        public ResponseOutputTokenUsageDetails OutputTokensDetails { get; }
 
         /// <summary> The total number of tokens used. </summary>
         public long TotalTokens { get; }

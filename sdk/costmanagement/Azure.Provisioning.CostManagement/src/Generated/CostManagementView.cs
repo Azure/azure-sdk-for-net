@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CostManagement
         private SystemData _systemData;
         private ViewProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementView. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -352,7 +352,7 @@ namespace Azure.Provisioning.CostManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ViewProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

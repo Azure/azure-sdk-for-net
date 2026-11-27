@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataBox.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/>. </summary>
+        protected DataCenterAddressResult() : this(default)
+        {
+        }
+
         /// <summary> Data center address type. </summary>
         internal DatacenterAddressType DatacenterAddressType { get; set; }
 

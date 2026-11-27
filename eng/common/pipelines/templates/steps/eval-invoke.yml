@@ -1,7 +1,8 @@
 # Invokes `vally eval` for one shard. UseAzSdkAuthentication=false (default) runs the hermetic
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
-# copilot-sdk authenticates the model session via GITHUB_TOKEN (from the linked eval variable group).
+# The shard's login-to-copilot template supplies the executor and prompt-judge token.
+# Callers may override the existing service connection through azureSubscription.
 
 parameters:
   - name: vallyRoot
@@ -16,9 +17,21 @@ parameters:
   - name: azureSubscription
     type: string
     default: opensource-api-connection
+  - name: vallyArguments
+    # Supplementary non-reserved --option value pairs and --switch flags, not shell text.
+    # --tag does not filter the matrix; callers must keep every planned eval non-empty.
+    # JSON-escape dollar signs below so agent macros cannot rewrite argument data.
+    type: object
+    default: []
 
 steps:
-  - ${{ if parameters.UseAzSdkAuthentication }}:
+  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}:
+    - script: |
+        echo "##vso[task.logissue type=error]azureSubscription must be provided when UseAzSdkAuthentication is true."
+        exit 1
+      displayName: 'Validate authenticated eval service connection'
+
+  - ${{ elseif parameters.UseAzSdkAuthentication }}:
     - task: AzureCLI@2
       displayName: 'vally eval $(shardName) (authenticated)'
       inputs:
@@ -32,9 +45,9 @@ steps:
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
             --threshold ${{ parameters.threshold }}
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-        env:
-          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+      env:
+        COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}
 
   - ${{ else }}:
     - script: |
@@ -45,6 +58,6 @@ steps:
           --threshold ${{ parameters.threshold }}
       displayName: 'vally eval $(shardName)'
       workingDirectory: ${{ parameters.vallyRoot }}
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-        env:
-          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+      env:
+        COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}

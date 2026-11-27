@@ -20,11 +20,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
-        /// <param name="expiresAt"> The expiration of the access token. </param>
+        /// <param name="expiresOn"> The expiration of the access token. </param>
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetProjectName"/>, <paramref name="accessToken"/>, <paramref name="targetResourceId"/> or <paramref name="targetResourceRegion"/> is null. </exception>
-        public ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion)
+        public ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresOn, string targetResourceId, string targetResourceRegion)
         {
             Argument.AssertNotNull(targetProjectName, nameof(targetProjectName));
             Argument.AssertNotNull(accessToken, nameof(accessToken));
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             ProjectKind = projectKind;
             TargetProjectName = targetProjectName;
             AccessToken = accessToken;
-            ExpiresAt = expiresAt;
+            ExpiresOn = expiresOn;
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;
         }
@@ -43,16 +43,16 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
-        /// <param name="expiresAt"> The expiration of the access token. </param>
+        /// <param name="expiresOn"> The expiration of the access token. </param>
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresOn, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             TargetProjectName = targetProjectName;
             AccessToken = accessToken;
-            ExpiresAt = expiresAt;
+            ExpiresOn = expiresOn;
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string AccessToken { get; set; }
 
         /// <summary> The expiration of the access token. </summary>
-        public DateTimeOffset ExpiresAt { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary> Represents the target Azure resource ID. </summary>
         public string TargetResourceId { get; set; }

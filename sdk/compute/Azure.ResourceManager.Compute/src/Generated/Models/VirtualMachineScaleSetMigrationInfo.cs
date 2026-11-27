@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeWriteableSubResourceData MigrateToVirtualMachineScaleSet { get; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier MigrateToVirtualMachineScaleSetId
+        public virtual ResourceIdentifier MigrateToVirtualMachineScaleSetId
         {
             get
             {

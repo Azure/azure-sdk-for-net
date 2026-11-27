@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.Mode;
+                return Properties is null ? (WorkspaceManagerConfigurationMode?)default : Properties.Mode;
             }
             set
             {

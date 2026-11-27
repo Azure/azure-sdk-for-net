@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyAssignmentVersion = prop.Value.GetString();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new ComponentPolicyState(
                 oDataId,

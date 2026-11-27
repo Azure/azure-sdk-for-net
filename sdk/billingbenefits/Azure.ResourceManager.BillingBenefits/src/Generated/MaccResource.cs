@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaccResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maccApiVersion);
             _maccsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maccApiVersion ?? "2025-12-01-preview");
+            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BillingBenefits/maccs", out string maccsApiVersionOverride) ? maccsApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for charging shortfall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MaccResource>> ChargeShortfallAsync(WaitUntil waitUntil, ChargeShortfallRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaccResource>> ChargeShortfallAsync(WaitUntil waitUntil, ChargeShortfallContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
+                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for charging shortfall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MaccResource> ChargeShortfall(WaitUntil waitUntil, ChargeShortfallRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaccResource> ChargeShortfall(WaitUntil waitUntil, ChargeShortfallContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
+                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -853,10 +853,9 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -896,10 +895,9 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

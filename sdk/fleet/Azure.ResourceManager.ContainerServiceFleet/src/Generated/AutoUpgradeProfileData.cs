@@ -73,6 +73,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <summary> Configures how auto-upgrade will be run. </summary>
+        [CodeGenMember("Channel")]
+        public ContainerServiceFleetUpgradeChannel? Channel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Channel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.Channel = value;
+            }
+        }
+
         /// <summary>
         /// If set to False: the auto upgrade has effect - target managed clusters will be upgraded on schedule.
         /// If set to True: the auto upgrade has no effect - no upgrade will be run on the target managed clusters.
@@ -116,7 +134,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
         ///   By default, this is empty.
         ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
-        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
+        ///   If upgrade channel is not TargetKubernetesVersion, this field must be empty.
         /// </summary>
         public string TargetKubernetesVersion
         {
@@ -171,24 +189,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Properties = new AutoUpgradeProfileProperties();
                 }
                 Properties.SelectionType = value;
-            }
-        }
-
-        /// <summary> Configures how auto-upgrade will be run. </summary>
-        [CodeGenMember("Channel")]
-        public ContainerServiceFleetUpgradeChannel? Channel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Channel;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AutoUpgradeProfileProperties();
-                }
-                Properties.Channel = value;
             }
         }
     }

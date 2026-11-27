@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EdgeActions
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(ResourceType, out string edgeActionVersionApiVersion);
             _edgeActionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", ResourceType.Namespace, Diagnostics);
-            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion ?? "2025-12-01-preview");
+            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionVersion
+        /// Updates the tags of an Edge Action version. Omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. Version properties are not changed. If deploymentType or isDefaultVersion is supplied, it must match the existing value; use swapDefault to change the default version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionVersion
+        /// Updates the tags of an Edge Action version. Omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. Version properties are not changed. If deploymentType or isDefaultVersion is supplied, it must match the existing value; use swapDefault to change the default version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -407,7 +408,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// DeployVersionCode
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -431,7 +432,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeActionVersionProperties>> DeployVersionCodeAsync(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeActionVersionResource>> DeployVersionCodeAsync(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -445,8 +446,8 @@ namespace Azure.ResourceManager.EdgeActions
                 };
                 HttpMessage message = _edgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionCode.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
-                    new EdgeActionVersionPropertiesOperationSource(),
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -466,7 +467,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// DeployVersionCode
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -478,7 +479,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -490,7 +491,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeActionVersionProperties> DeployVersionCode(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeActionVersionResource> DeployVersionCode(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -504,8 +505,8 @@ namespace Azure.ResourceManager.EdgeActions
                 };
                 HttpMessage message = _edgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionCode.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
-                    new EdgeActionVersionPropertiesOperationSource(),
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -537,7 +538,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -592,7 +593,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -647,7 +648,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -696,7 +697,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -842,10 +843,9 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -885,10 +885,9 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

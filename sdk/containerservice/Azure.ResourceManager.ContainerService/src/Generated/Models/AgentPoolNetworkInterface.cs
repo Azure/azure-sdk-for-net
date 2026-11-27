@@ -27,12 +27,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="type"> Type of NIC to be provisioned on the VM. </param>
         /// <param name="vnetSubnetId"> The resource ID of the subnet which will be attached to the secondary network interface. Required when `type` is `Standard`; must be an empty string (`""`) or omitted when `type` is `Dynamic`. </param>
         /// <param name="enableAcceleratedNetworking"> Whether accelerated networking is enabled on this secondary NIC. If omitted, this defaults to true only when the agent pool VM SKU supports accelerated networking. Validation will fail if it is enabled on an unsupported SKU or NIC configuration. </param>
+        /// <param name="publicIPAddressConfiguration"> Public IP configuration for this secondary NIC. Only valid when `type` is `Standard`. Set `publicIPAddressVersion` to provision a per-VM instance-level public IP for the NIC, then optionally shape it with `ipTags` or `publicIPPrefixID`. If omitted, no public IP is provisioned. Idle timeout is not configurable. For more information, see https://aka.ms/aks/multi-nic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNetworkInterface(AgentPoolNetworkInterfaceType? @type, ResourceIdentifier vnetSubnetId, bool? enableAcceleratedNetworking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNetworkInterface(AgentPoolNetworkInterfaceType? @type, ResourceIdentifier vnetSubnetId, bool? enableAcceleratedNetworking, AgentPoolNicPublicIPAddressConfiguration publicIPAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             VnetSubnetId = vnetSubnetId;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            PublicIPAddressConfiguration = publicIPAddressConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +49,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether accelerated networking is enabled on this secondary NIC. If omitted, this defaults to true only when the agent pool VM SKU supports accelerated networking. Validation will fail if it is enabled on an unsupported SKU or NIC configuration. </summary>
         [WirePath("enableAcceleratedNetworking")]
         public bool? EnableAcceleratedNetworking { get; set; }
+
+        /// <summary> Public IP configuration for this secondary NIC. Only valid when `type` is `Standard`. Set `publicIPAddressVersion` to provision a per-VM instance-level public IP for the NIC, then optionally shape it with `ipTags` or `publicIPPrefixID`. If omitted, no public IP is provisioned. Idle timeout is not configurable. For more information, see https://aka.ms/aks/multi-nic. </summary>
+        [WirePath("publicIPAddressConfiguration")]
+        public AgentPoolNicPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
     }
 }

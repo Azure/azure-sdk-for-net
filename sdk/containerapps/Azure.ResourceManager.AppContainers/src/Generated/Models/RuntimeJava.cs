@@ -24,21 +24,15 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="RuntimeJava"/>. </summary>
         /// <param name="enableMetrics"> Enable jmx core metrics for the java app. </param>
-        /// <param name="javaAgent"> Diagnostic capabilities achieved by java agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeJava(bool? enableMetrics, ContainerAppRuntimeJavaAgent javaAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeJava(bool? enableMetrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableMetrics = enableMetrics;
-            JavaAgent = javaAgent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable jmx core metrics for the java app. </summary>
         [WirePath("enableMetrics")]
         public bool? EnableMetrics { get; set; }
-
-        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
-        [WirePath("javaAgent")]
-        public ContainerAppRuntimeJavaAgent JavaAgent { get; set; }
     }
 }

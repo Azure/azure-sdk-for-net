@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="computeVm"> The compute virtual machine properties. </param>
         /// <param name="networkInterface"> The network interface properties. </param>
         /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
-        /// <param name="expireOn"> The expiration date for VM. </param>
+        /// <param name="expiresOn"> The expiration date for VM. </param>
         /// <param name="allowClaim"> Indicates whether another user can take ownership of the virtual machine. </param>
         /// <param name="storageType"> Storage type to use for virtual machine (i.e. Standard, Premium). </param>
         /// <param name="vmCreationSource"> Tells source of creation of lab virtual machine. Output property only. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabVirtualMachineProperties(string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabVirtualMachineProperties(string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expiresOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ComputeVm = computeVm;
             NetworkInterface = networkInterface;
             ApplicableSchedule = applicableSchedule;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             AllowClaim = allowClaim;
             StorageType = storageType;
             VmCreationSource = vmCreationSource;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabApplicableSchedule ApplicableSchedule { get; }
 
         /// <summary> The expiration date for VM. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Indicates whether another user can take ownership of the virtual machine. </summary>
         public bool? AllowClaim { get; set; }

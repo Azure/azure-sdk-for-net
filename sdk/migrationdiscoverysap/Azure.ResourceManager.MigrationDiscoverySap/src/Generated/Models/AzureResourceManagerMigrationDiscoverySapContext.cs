@@ -28,20 +28,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
     [ModelReaderWriterBuildable(typeof(SapDiscoveryServerInstancePatch))]
     [ModelReaderWriterBuildable(typeof(SapDiscoveryServerInstanceResource))]
     [ModelReaderWriterBuildable(typeof(SapDiscoverySiteData))]
-    [ModelReaderWriterBuildable(typeof(SAPDiscoverySiteListResult))]
     [ModelReaderWriterBuildable(typeof(SapDiscoverySitePatch))]
-    [ModelReaderWriterBuildable(typeof(SAPDiscoverySiteProperties))]
     [ModelReaderWriterBuildable(typeof(SapDiscoverySiteResource))]
     [ModelReaderWriterBuildable(typeof(SapInstanceData))]
-    [ModelReaderWriterBuildable(typeof(SAPInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(SapInstancePatch))]
-    [ModelReaderWriterBuildable(typeof(SAPInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(SapInstanceResource))]
     [ModelReaderWriterBuildable(typeof(SapMigrateError))]
-    [ModelReaderWriterBuildable(typeof(ServerInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(ServerInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownPerformanceDetail))]
     public partial class AzureResourceManagerMigrationDiscoverySapContext : ModelReaderWriterContext
     {
     }

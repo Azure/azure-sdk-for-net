@@ -26,6 +26,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new ImageClassificationMultilabel. </summary>
         public ImageClassificationMultilabel()
         {
+            TaskType.Assign(MachineLearning.TaskType.ImageClassificationMultilabel);
         }
 
         /// <summary> Gets or sets the ModelSettings. </summary>
@@ -137,7 +138,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "ImageClassificationMultilabel");
             _modelSettings = DefineModelProperty<ImageModelSettingsClassification>(nameof(ModelSettings), new string[] { "modelSettings" });
             _searchSpace = DefineListProperty<ImageModelDistributionSettingsClassification>(nameof(SearchSpace), new string[] { "searchSpace" });
             _limitSettings = DefineModelProperty<ImageLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" }, isRequired: true);

@@ -92,6 +92,42 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PaymentHsmClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesArmClient.GetPaymentHsmClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PaymentHsmClusterResource"/> object. </returns>
+        public static PaymentHsmClusterResource GetPaymentHsmClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHardwareSecurityModulesArmClient(client).GetPaymentHsmClusterResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PaymentHsmClusterPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesArmClient.GetPaymentHsmClusterPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PaymentHsmClusterPrivateEndpointConnectionResource"/> object. </returns>
+        public static PaymentHsmClusterPrivateEndpointConnectionResource GetPaymentHsmClusterPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHardwareSecurityModulesArmClient(client).GetPaymentHsmClusterPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CloudHsmClusters in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -202,6 +238,61 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
+        /// Gets a collection of PaymentHsmClusters in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetPaymentHsmClusters()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of PaymentHsmClusters and their operations over a PaymentHsmClusterResource. </returns>
+        public static PaymentHsmClusterCollection GetPaymentHsmClusters(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetPaymentHsmClusters();
+        }
+
+        /// <summary>
+        /// Gets the specified Payment HSM Cluster
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetPaymentHsmClusterAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="paymentHsmClusterName"> The name of the Payment HSM Cluster within the specified resource group. Payment HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PaymentHsmClusterResource>> GetPaymentHsmClusterAsync(this ResourceGroupResource resourceGroupResource, string paymentHsmClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetPaymentHsmClusterAsync(paymentHsmClusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Payment HSM Cluster
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetPaymentHsmCluster(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="paymentHsmClusterName"> The name of the Payment HSM Cluster within the specified resource group. Payment HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PaymentHsmClusterResource> GetPaymentHsmCluster(this ResourceGroupResource resourceGroupResource, string paymentHsmClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetPaymentHsmCluster(paymentHsmClusterName, cancellationToken);
+        }
+
+        /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -275,6 +366,44 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsms(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// The List operation gets information about the Payment HSM Clusters associated with the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClustersAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PaymentHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PaymentHsmClusterResource> GetPaymentHsmClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetPaymentHsmClustersAsync(skiptoken, cancellationToken);
+        }
+
+        /// <summary>
+        /// The List operation gets information about the Payment HSM Clusters associated with the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PaymentHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PaymentHsmClusterResource> GetPaymentHsmClusters(this SubscriptionResource subscriptionResource, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetPaymentHsmClusters(skiptoken, cancellationToken);
         }
     }
 }

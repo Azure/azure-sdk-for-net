@@ -101,6 +101,126 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
+        internal HttpMessage CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName.ToString(), true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/lockTimeBasedImmutability", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName.ToString(), true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/removeLegalHoldImmutability", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName.ToString(), true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/removeTimeBasedImmutability", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName.ToString(), true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/setLegalHoldImmutability", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetByResourceGroupDatabaseRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

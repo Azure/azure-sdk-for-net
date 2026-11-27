@@ -45,8 +45,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
         /// <param name="afcConfiguration"> AFC configuration for the Azure Firewall. </param>
+        /// <param name="isAISecurityAddOnEnabled"> Indicates whether the AI security add-on is enabled for the Azure Firewall. </param>
+        /// <param name="tcpIdleTimeoutInMinutes"> The TCP idle timeout for the Azure Firewall, in minutes. Valid values range from 4 to 64, inclusive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallPropertiesFormat(IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, NetworkSubResource virtualHub, NetworkSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallPropertiesFormat(IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, NetworkSubResource virtualHub, NetworkSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration, bool? isAISecurityAddOnEnabled, int? tcpIdleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationRuleCollections = applicationRuleCollections;
             NatRuleCollections = natRuleCollections;
@@ -63,6 +65,8 @@ namespace Azure.ResourceManager.Network.Models
             AdditionalProperties = additionalProperties;
             AutoscaleConfiguration = autoscaleConfiguration;
             AfcConfiguration = afcConfiguration;
+            IsAISecurityAddOnEnabled = isAISecurityAddOnEnabled;
+            TcpIdleTimeoutInMinutes = tcpIdleTimeoutInMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -125,6 +129,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> AFC configuration for the Azure Firewall. </summary>
         [WirePath("afcConfiguration")]
         internal AfcConfiguration AfcConfiguration { get; }
+
+        /// <summary> Indicates whether the AI security add-on is enabled for the Azure Firewall. </summary>
+        [WirePath("aiSecurityAddOn")]
+        public bool? IsAISecurityAddOnEnabled { get; set; }
+
+        /// <summary> The TCP idle timeout for the Azure Firewall, in minutes. Valid values range from 4 to 64, inclusive. </summary>
+        [WirePath("tcpIdleTimeoutInMinutes")]
+        public int? TcpIdleTimeoutInMinutes { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("virtualHub.id")]

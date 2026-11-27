@@ -69,7 +69,7 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <summary> Converts a string to a <see cref="DiagnosticCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiagnosticCode?(string value) => value == null ? null : new DiagnosticCode(value);
+        public static implicit operator DiagnosticCode?(string value) => value == null ? (DiagnosticCode?)null : new DiagnosticCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

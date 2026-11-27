@@ -10,10 +10,10 @@ In order to get the reduced embeddings using either the `text-embedding-3-small`
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings_Index
 string vectorSearchProfileName = "vector-profile";
 string vectorSearchHnswConfig = "hsnw-vector-config";
-string deploymentName = "text-embedding-3-small";
+string deploymentName = "text-embedding-3-large";
 int modelDimensions = 256; // Here's the reduced model dimensions
 
 string indexName = "hotel";
@@ -48,9 +48,8 @@ SearchIndex searchIndex = new(indexName)
                 Parameters  = new AzureOpenAIVectorizerParameters()
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                    ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                     DeploymentName = deploymentName,
-                    ModelName = AzureOpenAIModelName.TextEmbedding3Small
+                    ModelName = AzureOpenAIModelName.TextEmbedding3Large
                 }
             }
         }
@@ -60,10 +59,9 @@ SearchIndex searchIndex = new(indexName)
 
 After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Create_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-AzureKeyCredential credential = new(key);
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);
@@ -73,7 +71,7 @@ await indexClient.CreateIndexAsync(searchIndex);
 
 Let's create a simple model type for `Hotel`:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Model
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchCommons_Model
 public class Hotel
 {
     public string HotelId { get; set; }
@@ -93,15 +91,14 @@ You can use Azure OpenAI embedding models, `text-embedding-3-small` or `text-emb
 
 For more details about how to generate embeddings, refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). Here's an example of how you can get embeddings using [Azure.AI.OpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md) library.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings_WithDimensions
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings_GetEmbeddings_WithDimensions
 public static ReadOnlyMemory<float> GetEmbeddings(string input)
 {
     Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-    AzureKeyCredential credential = new AzureKeyCredential(key);
+    TokenCredential credential = new DefaultAzureCredential();
 
     AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
-    EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("my-text-embedding-3-small");
+    EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-3-large");
 
     EmbeddingGenerationOptions embeddingsOptions = new EmbeddingGenerationOptions()
     {
@@ -114,7 +111,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
 
 In the sample code below, we are using `GetEmbeddings` method mentioned above to get embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Documents
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings_Documents
 public static Hotel[] GetHotelDocuments()
 {
     return new[]
@@ -150,7 +147,7 @@ public static Hotel[] GetHotelDocuments()
 
 Now, we can instantiate the `SearchClient` and upload the documents to the `Hotel` index we created earlier:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Upload_Documents
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings_Upload_Documents
 SearchClient searchClient = new(endpoint, indexName, credential);
 Hotel[] hotelDocuments = GetHotelDocuments();
 await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
@@ -166,7 +163,7 @@ Let's query the index and make sure everything works as implemented. You can als
 
 In this vector query, the `VectorQueries` contains the vectorizable text of the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search
+```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {

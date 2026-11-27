@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+
+#pragma warning disable AAAS005 // Implement the experimental attribution contract.
 
 namespace Azure.AI.AgentServer.Core;
 
@@ -50,12 +54,19 @@ public sealed class FoundryAgentRequestContext
     public string? UserId { get; init; }
 
     /// <summary>
-    /// The session ID sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment variable
-    /// at process start (via <see cref="FoundryEnvironment.SessionId"/>). This is a process-level
-    /// value that does not reflect per-request overrides (e.g. the <c>agent_session_id</c> query
-    /// parameter); <see langword="null"/> when the variable is absent.
+    /// The process-level session ID sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment
+    /// variable via <see cref="FoundryEnvironment.SessionId"/>. The value is refreshed after
+    /// snapshot restoration and does not reflect per-request overrides (e.g. the
+    /// <c>agent_session_id</c> query parameter); <see langword="null"/> when the variable is absent.
     /// </summary>
     public string? SessionId { get; init; }
+
+    /// <summary>
+    /// Gets the invocation-local original-subject assertions, if supplied.
+    /// These assertions are not proof of identity.
+    /// </summary>
+    [Experimental("AAAS005")]
+    public FoundryOriginalSubject? OriginalSubject { get; init; }
 
     /// <summary>
     /// Gets the platform identity context for the current request. Never returns
@@ -86,6 +97,36 @@ public sealed class FoundryAgentRequestContext
     }
 
     /// <summary>
+    /// Binds a context to the current asynchronous execution until the returned
+    /// scope is disposed. Dispose nested scopes in reverse order.
+    /// </summary>
+    /// <param name="context">The context to bind.</param>
+    /// <returns>A scope that restores the prior context.</returns>
+    [Experimental("AAAS005")]
+    public static IDisposable BeginScope(FoundryAgentRequestContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        return new ContextScope(Exchange(context));
+    }
+
+    private sealed class ContextScope : IDisposable
+    {
+        private readonly FoundryAgentRequestContext? _previous;
+        private bool _disposed;
+
+        public ContextScope(FoundryAgentRequestContext? previous) => _previous = previous;
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _disposed = true;
+                Exchange(_previous);
+            }
+        }
+    }
+
+    /// <summary>
     /// Builds the platform identity headers to echo on outbound Foundry-bound
     /// calls. Only <c>x-agent-foundry-call-id</c> is included; <c>x-agent-user-id</c>
     /// is never echoed. Mirrors the Python SDK's <c>FoundryAgentRequestContext.platform_headers()</c>.
@@ -97,5 +138,91 @@ public sealed class FoundryAgentRequestContext
         {
             yield return new KeyValuePair<string, string>(Azure.AI.AgentServer.Core.PlatformHeaders.FoundryCallId, CallId);
         }
+    }
+
+    /// <summary>
+    /// Creates per-call headers for a model endpoint that explicitly supports
+    /// original-subject attribution. Never use these as shared client defaults
+    /// or send them to arbitrary endpoints, storage, or tools.
+    /// </summary>
+    /// <param name="headers">Existing per-call headers to copy and merge.</param>
+    /// <returns>A new header dictionary; the input and model credentials are unchanged.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// The subject is incomplete, unsafe, or exceeds the attribution transport limits.
+    /// </exception>
+    [Experimental("AAAS005")]
+    public IDictionary<string, string> ModelAttributionHeaders(
+        IEnumerable<KeyValuePair<string, string>>? headers = null)
+    {
+        const string subjectHeader = "x-ms-original-subject";
+        const string baggageHeader = "x-ms-foundry-baggage";
+        const string subjectKey = "foundry.original_subject";
+        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        var baggage = new List<string>();
+        if (headers is not null)
+        {
+            foreach (var header in headers)
+            {
+                if (string.Equals(header.Key, baggageHeader, StringComparison.OrdinalIgnoreCase))
+                {
+                    foreach (string part in header.Value.Split(','))
+                    {
+                        string member = part.Trim();
+                        string key = member.Split(';')[0].Split('=')[0].Trim();
+                        key = Uri.UnescapeDataString(key);
+                        if (member.Length != 0
+                            && !string.Equals(key, subjectKey, StringComparison.OrdinalIgnoreCase)
+                            && !key.StartsWith(subjectKey + ".", StringComparison.OrdinalIgnoreCase))
+                        {
+                            baggage.Add(member);
+                        }
+                    }
+                }
+                else if (!string.Equals(header.Key, subjectHeader, StringComparison.OrdinalIgnoreCase)
+                    && !header.Key.StartsWith(subjectHeader + "-", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(header.Key, Azure.AI.AgentServer.Core.PlatformHeaders.FoundryCallId, StringComparison.OrdinalIgnoreCase))
+                {
+                    result[header.Key] = header.Value;
+                }
+            }
+        }
+
+        if (OriginalSubject is null)
+        {
+            if (baggage.Count != 0)
+            {
+                result[baggageHeader] = string.Join(",", baggage);
+            }
+
+            return result;
+        }
+
+        string[] values = { OriginalSubject.ObjectId!, OriginalSubject.TenantId!, OriginalSubject.IdentityType! };
+        if (values.Any(value => string.IsNullOrEmpty(value) || value.Any(character => character < '!' || character > '~')))
+        {
+            throw new InvalidOperationException("Original-subject attribution requires a complete, HTTP-safe tuple.");
+        }
+
+        static string Escape(string value) => value.Replace("\\", "\\\\").Replace("\"", "\\\"");
+        string subject = $"oid=\"{Escape(values[0])}\", tid=\"{Escape(values[1])}\", idtype=\"{Escape(values[2])}\"";
+        if (subject.Length > 256)
+        {
+            throw new InvalidOperationException("Original-subject attribution requires a quoted tuple of at most 256 characters.");
+        }
+
+        baggage.Insert(0, subjectKey + "=" + Uri.EscapeDataString(subject));
+        string merged = string.Join(",", baggage);
+        if (merged.Length > 1024)
+        {
+            throw new InvalidOperationException("Original-subject attribution requires merged baggage of at most 1024 characters.");
+        }
+
+        result[baggageHeader] = merged;
+        if (CallId is not null)
+        {
+            result[Azure.AI.AgentServer.Core.PlatformHeaders.FoundryCallId] = CallId;
+        }
+
+        return result;
     }
 }

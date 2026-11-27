@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="productCode"> Represents catalog UPN. </param>
         /// <param name="billingAccountResourceId"> Fully-qualified identifier of the billing account where the MACC is applied. Present only for Enterprise Agreement customers. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="startOn"> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </param>
-        /// <param name="endOn"> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
+        /// <param name="startsOn"> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </param>
+        /// <param name="endsOn"> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
         /// <param name="systemId"> This is the globally unique identifier of the MACC which will not change for the lifetime of the MACC. </param>
         /// <param name="automaticShortfall"> Setting this to 'Enable' enables automatic shortfall charging when commitment is not met. </param>
         /// <param name="automaticShortfallSuppressReason"> Optional field to record suppression reason for automatic shortfall. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="primaryResourceId"> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </param>
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary MACC. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaccModelProperties(string provisioningState, MaccStatus? status, MaccEntityType maccEntityType, string displayName, string productCode, ResourceIdentifier billingAccountResourceId, BillingBenefitsCommitment commitment, DateTimeOffset? startOn, DateTimeOffset? endOn, string systemId, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, Shortfall shortfall, IList<MaccMilestone> milestones, ResourceIdentifier resourceId, bool? isAllowContributors, ResourceIdentifier primaryResourceId, ResourceIdentifier primaryBillingAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaccModelProperties(string provisioningState, MaccStatus? status, MaccEntityType maccEntityType, string displayName, string productCode, ResourceIdentifier billingAccountResourceId, BillingBenefitsCommitment commitment, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string systemId, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, Shortfall shortfall, IList<MaccMilestone> milestones, ResourceIdentifier resourceId, bool? isAllowContributors, ResourceIdentifier primaryResourceId, ResourceIdentifier primaryBillingAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ProductCode = productCode;
             BillingAccountResourceId = billingAccountResourceId;
             Commitment = commitment;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             SystemId = systemId;
             AutomaticShortfall = automaticShortfall;
             AutomaticShortfallSuppressReason = automaticShortfallSuppressReason;
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Commitment { get; set; }
 
         /// <summary> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> This is the globally unique identifier of the MACC which will not change for the lifetime of the MACC. </summary>
         public string SystemId { get; set; }

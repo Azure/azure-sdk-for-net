@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
-    /// <summary> The response to an attestation policy operation. </summary>
     internal partial class PolicyResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PolicyResponse"/>. </summary>
         internal PolicyResponse()
         {
@@ -17,9 +22,11 @@ namespace Azure.Security.Attestation
 
         /// <summary> Initializes a new instance of <see cref="PolicyResponse"/>. </summary>
         /// <param name="token"> An RFC7519 JSON Web Token structure whose body is an PolicyResult object. </param>
-        internal PolicyResponse(string token)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyResponse(string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An RFC7519 JSON Web Token structure whose body is an PolicyResult object. </summary>

@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.FileShares.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FileShareProvisioningRecommendationOutputProperties(provisionedIOPerSec, provisionedThroughputMiBPerSec, availableRedundancyOptions, additionalBinaryDataProperties);
+            return new FileShareProvisioningRecommendationOutputProperties(provisionedIOPerSec, provisionedThroughputMiBPerSec, availableRedundancyOptions ?? new ChangeTrackingList<FileShareRedundancyLevel>(), additionalBinaryDataProperties);
         }
     }
 }

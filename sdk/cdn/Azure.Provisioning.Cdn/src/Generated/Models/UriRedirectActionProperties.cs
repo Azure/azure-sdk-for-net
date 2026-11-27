@@ -22,6 +22,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriRedirectActionProperties. </summary>
         public UriRedirectActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleUrlRedirectActionParameters);
         }
 
         /// <summary> Gets or sets the RedirectType. </summary>
@@ -118,7 +119,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleUrlRedirectActionParameters");
             _redirectType = DefineProperty<RedirectType>(nameof(RedirectType), new string[] { "redirectType" }, isRequired: true);
             _destinationProtocol = DefineProperty<DestinationProtocol>(nameof(DestinationProtocol), new string[] { "destinationProtocol" });
             _customPath = DefineProperty<string>(nameof(CustomPath), new string[] { "customPath" });

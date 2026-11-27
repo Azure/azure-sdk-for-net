@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base model for Trigger of the schedule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/>, <see cref="RecurrenceTrigger"/>, and <see cref="OneTimeTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/>, <see cref="OneTimeTrigger"/>, and <see cref="RecurrenceTrigger"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTrigger))]
     public abstract partial class ScheduleTrigger : IJsonModel<ScheduleTrigger>
@@ -129,10 +129,10 @@ namespace Azure.AI.Projects.Evaluation
                 {
                     case "Cron":
                         return CronTrigger.DeserializeCronTrigger(element, options);
-                    case "Recurrence":
-                        return RecurrenceTrigger.DeserializeRecurrenceTrigger(element, options);
                     case "OneTime":
                         return OneTimeTrigger.DeserializeOneTimeTrigger(element, options);
+                    case "Recurrence":
+                        return RecurrenceTrigger.DeserializeRecurrenceTrigger(element, options);
                 }
             }
             return UnknownTrigger.DeserializeUnknownTrigger(element, options);

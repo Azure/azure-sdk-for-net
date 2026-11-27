@@ -38,26 +38,42 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             {
                 case AddSocketToRoomAction addToRoom:
                     {
-                        AssertNotNullOrEmpty(addToRoom.Room, nameof(addToRoom.Room));
-                        AssertNotNullOrEmpty(addToRoom.Namespace, nameof(addToRoom.Namespace));
-                        AssertNotNullOrEmpty(addToRoom.SocketId, nameof(addToRoom.SocketId));
+                        // Direct .NET callers bypass the converter, and converted actions can be modified.
+                        // Capture the routing values so validation and the service request use the same values.
+                        var room = addToRoom.Room;
+                        var socketNamespace = addToRoom.Namespace;
+                        var socketId = addToRoom.SocketId;
+                        AssertNotNullOrEmpty(room, nameof(addToRoom.Room));
+                        AssertNotNullOrEmpty(socketNamespace, nameof(addToRoom.Namespace));
+                        AssertNotNullOrEmpty(socketId, nameof(addToRoom.SocketId));
+                        Utilities.ValidateRoomJoinIdentifiers(room, socketNamespace, socketId);
 
-                        if (!_socketLifetimeStore.TryFindConnectionIdBySocketId(addToRoom.SocketId, out var connId, out var @namespace))
+                        if (!_socketLifetimeStore.TryFindConnectionIdBySocketId(socketId, out var connId, out var cachedNamespace))
                         {
                             await SendToService(new AddConnectionsToGroupsAction
                             {
-                                Groups = new string[] { Utilities.GetGroupNameByNamespaceRoom(addToRoom.Namespace, addToRoom.Room) },
+                                Groups = new string[] { Utilities.GetGroupNameByNamespaceRoom(socketNamespace, room) },
                                 // SocketId is also a room name.
-                                Filter = Utilities.GenerateRoomFilter(addToRoom.Namespace, addToRoom.SocketId, false),
+                                Filter = Utilities.GenerateRoomFilter(socketNamespace, socketId, false),
                             }, cancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
+                            // This path uses the cached namespace; a rejected value here is invalid cache state.
+                            try
+                            {
+                                Utilities.ValidateRoomJoinIdentifier(cachedNamespace, nameof(cachedNamespace));
+                            }
+                            catch (ArgumentException ex)
+                            {
+                                throw new InvalidOperationException("The cached namespace contains U+FFFD or an unpaired UTF-16 surrogate.", ex);
+                            }
+
                             // Use AddConnectionToGroup is faster if we can.
                             await SendToService(new AddConnectionToGroupAction
                             {
                                 ConnectionId = connId,
-                                Group = Utilities.GetGroupNameByNamespaceRoom(@namespace, addToRoom.Room),
+                                Group = Utilities.GetGroupNameByNamespaceRoom(cachedNamespace, room),
                             }, cancellationToken).ConfigureAwait(false);
                         }
                         break;

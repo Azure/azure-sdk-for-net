@@ -15,6 +15,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new ManagedIdentityAuthTypeConnectionProperties. </summary>
         public ManagedIdentityAuthTypeConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.ManagedIdentity);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "ManagedIdentity");
             _credentials = DefineModelProperty<CognitiveServicesConnectionManagedIdentity>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

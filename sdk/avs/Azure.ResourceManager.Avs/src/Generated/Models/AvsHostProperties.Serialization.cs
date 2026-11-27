@@ -109,6 +109,16 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("faultDomain"u8);
                 writer.WriteStringValue(FaultDomain);
             }
+            if (Optional.IsCollectionDefined(Licenses))
+            {
+                writer.WritePropertyName("licenses"u8);
+                writer.WriteStartArray();
+                foreach (HostLicense item in Licenses)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

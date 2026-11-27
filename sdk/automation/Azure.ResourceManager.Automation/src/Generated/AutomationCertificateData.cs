@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

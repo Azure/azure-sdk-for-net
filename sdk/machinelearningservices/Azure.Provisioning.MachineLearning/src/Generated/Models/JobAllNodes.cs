@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new JobAllNodes. </summary>
         public JobAllNodes()
         {
+            NodesValueType.Assign(MachineLearning.NodesValueType.All);
         }
 
         /// <summary> Define all the provisionable properties for JobAllNodes. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("nodesValueType", new string[] { "nodesValueType" }, defaultValue: "All");
             DefineAdditionalProperties();
         }
 

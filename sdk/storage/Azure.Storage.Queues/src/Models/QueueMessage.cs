@@ -105,8 +105,8 @@ namespace Azure.Storage.Queues.Models
                 Body = QueueMessageCodec.DecodeMessageBody(message.MessageText, messageEncoding),
                 DequeueCount = message.DequeueCount,
                 NextVisibleOn = message.TimeNextVisible,
-                InsertedOn = message.InsertionTime,
-                ExpiresOn = message.ExpirationTime,
+                InsertedOn = message.InsertionOn,
+                ExpiresOn = message.ExpiresOn,
             };
         }
     }

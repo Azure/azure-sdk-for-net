@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectsGetByNetworkFabricAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectDataAsyncCollectionResultOfT(
                 _networkToNetworkInterconnectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectsGetByNetworkFabricCollectionResultOfT(
+            return new PageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectDataCollectionResultOfT(
                 _networkToNetworkInterconnectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

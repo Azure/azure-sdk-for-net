@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The base source model for data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptDataGenerationJobSource"/>, <see cref="AgentDataGenerationJobSource"/>, <see cref="TracesDataGenerationJobSource"/>, and <see cref="FileDataGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentDataGenerationJobSource"/>, <see cref="FileDataGenerationJobSource"/>, <see cref="PromptDataGenerationJobSource"/>, and <see cref="TracesDataGenerationJobSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobSource))]
     public abstract partial class DataGenerationJobSource : IJsonModel<DataGenerationJobSource>
@@ -131,14 +131,14 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "prompt":
-                        return PromptDataGenerationJobSource.DeserializePromptDataGenerationJobSource(element, options);
                     case "agent":
                         return AgentDataGenerationJobSource.DeserializeAgentDataGenerationJobSource(element, options);
-                    case "traces":
-                        return TracesDataGenerationJobSource.DeserializeTracesDataGenerationJobSource(element, options);
                     case "file":
                         return FileDataGenerationJobSource.DeserializeFileDataGenerationJobSource(element, options);
+                    case "prompt":
+                        return PromptDataGenerationJobSource.DeserializePromptDataGenerationJobSource(element, options);
+                    case "traces":
+                        return TracesDataGenerationJobSource.DeserializeTracesDataGenerationJobSource(element, options);
                 }
             }
             return UnknownDataGenerationJobSource.DeserializeUnknownDataGenerationJobSource(element, options);

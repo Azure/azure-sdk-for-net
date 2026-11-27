@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Sql
         internal ServerBlobAuditingPolicyProperties Properties { get; set; }
 
         /// <summary>
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
@@ -233,13 +236,32 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </summary>
+        [WirePath("properties.requiredFields")]
+        public IList<string> RequiredFields
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBlobAuditingPolicyProperties();
+                }
+                return Properties.RequiredFields;
+            }
+        }
+
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         [WirePath("properties.state")]
         public BlobAuditingPolicyState? State
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (BlobAuditingPolicyState?)default : Properties.State;
             }
             set
             {

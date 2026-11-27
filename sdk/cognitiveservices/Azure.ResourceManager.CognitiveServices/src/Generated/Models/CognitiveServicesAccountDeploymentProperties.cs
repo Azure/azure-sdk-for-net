@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -16,6 +17,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CognitiveServicesDeploymentServiceTier? _serviceTier;
+        private bool _serviceTierIsDefined;
+        private CognitiveServicesDeploymentState? _deploymentState;
+        private bool _deploymentStateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         public CognitiveServicesAccountDeploymentProperties()
@@ -27,6 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="contextCacheContainerId"> The resource ID of the context cache container associated with this deployment. </param>
         /// <param name="speculativeDecoding"> Speculative decoding settings for the deployment. This configuration applies to Fireworks model formats. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
         /// <param name="capabilities"> The capabilities. </param>
@@ -43,10 +49,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
         /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, DeploymentSpeculativeDecoding speculativeDecoding, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, ResourceIdentifier contextCacheContainerId, DeploymentSpeculativeDecoding speculativeDecoding, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Model = model;
+            ContextCacheContainerId = contextCacheContainerId;
             SpeculativeDecoding = speculativeDecoding;
             ScaleSettings = scaleSettings;
             Capabilities = capabilities;
@@ -59,8 +66,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CapacitySettings = capacitySettings;
             ParentDeploymentName = parentDeploymentName;
             SpilloverDeploymentName = spilloverDeploymentName;
-            ServiceTier = serviceTier;
-            DeploymentState = deploymentState;
+            _serviceTier = serviceTier;
+            _deploymentState = deploymentState;
             Routing = routing;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -72,6 +79,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
         [WirePath("model")]
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
+
+        /// <summary> The resource ID of the context cache container associated with this deployment. </summary>
+        [WirePath("contextCacheContainerId")]
+        public ResourceIdentifier ContextCacheContainerId { get; set; }
 
         /// <summary> Speculative decoding settings for the deployment. This configuration applies to Fireworks model formats. </summary>
         [WirePath("speculativeDecoding")]
@@ -123,11 +134,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </summary>
         [WirePath("serviceTier")]
-        public CognitiveServicesDeploymentServiceTier? ServiceTier { get; set; }
+        public CognitiveServicesDeploymentServiceTier? ServiceTier
+        {
+            get
+            {
+                return _serviceTier;
+            }
+            set
+            {
+                _serviceTier = value;
+                _serviceTierIsDefined = true;
+            }
+        }
 
         /// <summary> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </summary>
         [WirePath("deploymentState")]
-        public CognitiveServicesDeploymentState? DeploymentState { get; set; }
+        public CognitiveServicesDeploymentState? DeploymentState
+        {
+            get
+            {
+                return _deploymentState;
+            }
+            set
+            {
+                _deploymentState = value;
+                _deploymentStateIsDefined = true;
+            }
+        }
 
         /// <summary> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </summary>
         [WirePath("routing")]

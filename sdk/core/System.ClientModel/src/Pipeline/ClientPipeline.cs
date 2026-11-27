@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -235,9 +236,21 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(message, nameof(message));
 
+        SsePipelineResponseHandler? sse =
+            SsePipelineResponseHandler.TryCreate(this, message);
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
 
-        policies[0].Process(message, policies, 0);
+        try
+        {
+            policies[0].Process(message, policies, 0);
+            sse?.WrapResponse(message);
+        }
+        catch
+        {
+            sse?.RestoreClassifier(message);
+            sse?.Dispose();
+            throw;
+        }
     }
 
     /// <summary>
@@ -257,9 +270,87 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(message, nameof(message));
 
+        SsePipelineResponseHandler? sse =
+            SsePipelineResponseHandler.TryCreate(this, message);
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
 
-        await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
+        try
+        {
+            await policies[0].ProcessAsync(
+                message,
+                policies,
+                0).ConfigureAwait(false);
+            if (sse is not null)
+            {
+                await sse.WrapResponseAsync(
+                    message).ConfigureAwait(false);
+            }
+        }
+        catch
+        {
+            sse?.RestoreClassifier(message);
+            sse?.Dispose();
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Send the provided <see cref="PipelineMessage"/> using the specified
+    /// cancellation token.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to send.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> to
+    /// use instead of the message's current cancellation token.</param>
+    /// <exception cref="ClientResultException">Thrown if an error other than
+    /// the service responding with an error response occurred while sending
+    /// the HTTP request.</exception>
+    /// <remarks>
+    /// All necessary values on <see cref="PipelineMessage.Request"/> should be
+    /// set prior to calling this method. After the method returns,
+    /// <see cref="PipelineMessage.Response"/> will be populated with the
+    /// details of the service response.
+    /// The supplied token replaces <see cref="PipelineMessage.CancellationToken"/>,
+    /// including when it is <see cref="CancellationToken.None"/>. It is not
+    /// combined with the previous token. Other options already applied to the
+    /// message are preserved, and the original <see cref="RequestOptions"/>
+    /// instance is not modified.
+    /// </remarks>
+    public void Send(PipelineMessage message, CancellationToken cancellationToken)
+    {
+        Argument.AssertNotNull(message, nameof(message));
+
+        message.CancellationToken = cancellationToken;
+        Send(message);
+    }
+
+    /// <summary>
+    /// Send the provided <see cref="PipelineMessage"/> using the specified
+    /// cancellation token.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to send.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> to
+    /// use instead of the message's current cancellation token.</param>
+    /// <returns>A task representing the asynchronous send operation.</returns>
+    /// <exception cref="ClientResultException">Thrown if an error other than
+    /// the service responding with an error response occurred while sending
+    /// the HTTP request.</exception>
+    /// <remarks>
+    /// All necessary values on <see cref="PipelineMessage.Request"/> should be
+    /// set prior to calling this method. After the method returns,
+    /// <see cref="PipelineMessage.Response"/> will be populated with the
+    /// details of the service response.
+    /// The supplied token replaces <see cref="PipelineMessage.CancellationToken"/>,
+    /// including when it is <see cref="CancellationToken.None"/>. It is not
+    /// combined with the previous token. Other options already applied to the
+    /// message are preserved, and the original <see cref="RequestOptions"/>
+    /// instance is not modified.
+    /// </remarks>
+    public ValueTask SendAsync(PipelineMessage message, CancellationToken cancellationToken)
+    {
+        Argument.AssertNotNull(message, nameof(message));
+
+        message.CancellationToken = cancellationToken;
+        return SendAsync(message);
     }
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)

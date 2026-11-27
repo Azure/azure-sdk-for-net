@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
             string startTime = default;
             string endTime = default;
             StaticSiteProperties staticSiteProperties = default;
-            WebAppErrorResponse error = default;
+            WebAppErrorResult error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = WebAppErrorResponse.DeserializeWebAppErrorResponse(prop.Value, options);
+                    error = WebAppErrorResult.DeserializeWebAppErrorResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StaticSitesOperationStatusProperties(

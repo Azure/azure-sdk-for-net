@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Marketplace.Reviews.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Marketplace.Reviews.Tests.csproj" />
+</Solution>

@@ -74,30 +74,58 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LastRevisionApplied))
+            if (Optional.IsDefined(LastRevisionApplied, _lastRevisionAppliedIsDefined))
             {
-                writer.WritePropertyName("lastRevisionApplied"u8);
-                writer.WriteNumberValue(LastRevisionApplied.Value);
+                if (LastRevisionApplied != null)
+                {
+                    writer.WritePropertyName("lastRevisionApplied"u8);
+                    writer.WriteNumberValue(LastRevisionApplied.Value);
+                }
+                else
+                {
+                    writer.WriteNull("lastRevisionApplied"u8);
+                }
             }
             if (Optional.IsDefined(HelmChartRef))
             {
                 writer.WritePropertyName("helmChartRef"u8);
                 writer.WriteObjectValue(HelmChartRef, options);
             }
-            if (Optional.IsDefined(FailureCount))
+            if (Optional.IsDefined(FailureCount, _failureCountIsDefined))
             {
-                writer.WritePropertyName("failureCount"u8);
-                writer.WriteNumberValue(FailureCount.Value);
+                if (FailureCount != null)
+                {
+                    writer.WritePropertyName("failureCount"u8);
+                    writer.WriteNumberValue(FailureCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("failureCount"u8);
+                }
             }
-            if (Optional.IsDefined(InstallFailureCount))
+            if (Optional.IsDefined(InstallFailureCount, _installFailureCountIsDefined))
             {
-                writer.WritePropertyName("installFailureCount"u8);
-                writer.WriteNumberValue(InstallFailureCount.Value);
+                if (InstallFailureCount != null)
+                {
+                    writer.WritePropertyName("installFailureCount"u8);
+                    writer.WriteNumberValue(InstallFailureCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("installFailureCount"u8);
+                }
             }
-            if (Optional.IsDefined(UpgradeFailureCount))
+            if (Optional.IsDefined(UpgradeFailureCount, _upgradeFailureCountIsDefined))
             {
-                writer.WritePropertyName("upgradeFailureCount"u8);
-                writer.WriteNumberValue(UpgradeFailureCount.Value);
+                if (UpgradeFailureCount != null)
+                {
+                    writer.WritePropertyName("upgradeFailureCount"u8);
+                    writer.WriteNumberValue(UpgradeFailureCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("upgradeFailureCount"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,16 +169,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool lastRevisionAppliedIsDefined = false;
             long? lastRevisionApplied = default;
             FluxObjectReference helmChartRef = default;
+            bool failureCountIsDefined = false;
             long? failureCount = default;
+            bool installFailureCountIsDefined = false;
             long? installFailureCount = default;
+            bool upgradeFailureCountIsDefined = false;
             long? upgradeFailureCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("lastRevisionApplied"u8))
                 {
+                    lastRevisionAppliedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastRevisionApplied = null;
@@ -170,6 +203,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("failureCount"u8))
                 {
+                    failureCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         failureCount = null;
@@ -180,6 +214,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("installFailureCount"u8))
                 {
+                    installFailureCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         installFailureCount = null;
@@ -190,6 +225,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("upgradeFailureCount"u8))
                 {
+                    upgradeFailureCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         upgradeFailureCount = null;
@@ -200,7 +236,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HelmReleaseProperties(
@@ -209,7 +245,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 failureCount,
                 installFailureCount,
                 upgradeFailureCount,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _lastRevisionAppliedIsDefined = lastRevisionAppliedIsDefined,
+                _failureCountIsDefined = failureCountIsDefined,
+                _installFailureCountIsDefined = installFailureCountIsDefined,
+                _upgradeFailureCountIsDefined = upgradeFailureCountIsDefined
+            };
         }
     }
 }

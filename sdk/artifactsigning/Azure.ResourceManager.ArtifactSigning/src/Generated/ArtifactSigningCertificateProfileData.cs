@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             get
             {
-                return Properties is null ? default : Properties.CertificateProfileType;
+                return Properties is null ? (CertificateProfileType?)default : Properties.CertificateProfileType;
             }
             set
             {

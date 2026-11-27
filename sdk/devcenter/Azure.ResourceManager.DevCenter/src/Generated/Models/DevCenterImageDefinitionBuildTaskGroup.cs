@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterImageDefinitionBuildTaskGroup"/>. </summary>
         /// <param name="name"> The name of the task group. </param>
         /// <param name="status"> The status of the task group. </param>
-        /// <param name="startOn"> Start time of the task group. </param>
-        /// <param name="endOn"> End time of the task group. </param>
+        /// <param name="startsOn"> Start time of the task group. </param>
+        /// <param name="endsOn"> End time of the task group. </param>
         /// <param name="tasks"> The list of tasks executed during the task group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterImageDefinitionBuildTaskGroup(string name, DevCenterImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<DevCenterImageDefinitionBuildTask> tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterImageDefinitionBuildTaskGroup(string name, DevCenterImageDefinitionBuildStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<DevCenterImageDefinitionBuildTask> tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Tasks = tasks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterImageDefinitionBuildStatus? Status { get; }
 
         /// <summary> Start time of the task group. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the task group. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The list of tasks executed during the task group. </summary>
         public IReadOnlyList<DevCenterImageDefinitionBuildTask> Tasks { get; }

@@ -201,6 +201,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableFIPS"u8);
                 writer.WriteBooleanValue(IsFipsEnabled.Value);
             }
+            if (Optional.IsDefined(EnableNodeHardening))
+            {
+                writer.WritePropertyName("enableNodeHardening"u8);
+                writer.WriteBooleanValue(EnableNodeHardening.Value);
+            }
             if (Optional.IsDefined(IsNamespaceResourcesEnabled))
             {
                 writer.WritePropertyName("enableNamespaceResources"u8);
@@ -332,6 +337,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("aiToolchainOperatorProfile"u8);
                 writer.WriteObjectValue(AiToolchainOperatorProfile, options);
             }
+            if (Optional.IsDefined(AgentSandboxProfile))
+            {
+                writer.WritePropertyName("agentSandboxProfile"u8);
+                writer.WriteObjectValue(AgentSandboxProfile, options);
+            }
+            if (Optional.IsDefined(PodSnapshotProfile))
+            {
+                writer.WritePropertyName("podSnapshotProfile"u8);
+                writer.WriteObjectValue(PodSnapshotProfile, options);
+            }
             if (Optional.IsDefined(SchedulerProfile))
             {
                 writer.WritePropertyName("schedulerProfile"u8);
@@ -427,6 +442,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             bool? isRbacEnabled = default;
             KubernetesSupportPlan? supportPlan = default;
             bool? isFipsEnabled = default;
+            bool? enableNodeHardening = default;
             bool? isNamespaceResourcesEnabled = default;
             ContainerServiceNetworkProfile networkProfile = default;
             ManagedClusterAadProfile aadProfile = default;
@@ -451,6 +467,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default;
             ManagedClusterBootstrapProfile bootstrapProfile = default;
             ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile = default;
+            ManagedClusterAgentSandboxProfile agentSandboxProfile = default;
+            ManagedClusterPodSnapshotProfile podSnapshotProfile = default;
             SchedulerProfile schedulerProfile = default;
             ManagedClusterHostedSystemProfile hostedSystemProfile = default;
             ManagedClusterHealthMonitorProfile healthMonitorProfile = default;
@@ -639,6 +657,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     isFipsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableNodeHardening"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableNodeHardening = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableNamespaceResources"u8))
@@ -867,6 +894,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     aiToolchainOperatorProfile = ManagedClusterAIToolchainOperatorProfile.DeserializeManagedClusterAIToolchainOperatorProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agentSandboxProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentSandboxProfile = ManagedClusterAgentSandboxProfile.DeserializeManagedClusterAgentSandboxProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("podSnapshotProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    podSnapshotProfile = ManagedClusterPodSnapshotProfile.DeserializeManagedClusterPodSnapshotProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("schedulerProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -923,7 +968,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterProperties(
@@ -950,6 +995,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 isRbacEnabled,
                 supportPlan,
                 isFipsEnabled,
+                enableNodeHardening,
                 isNamespaceResourcesEnabled,
                 networkProfile,
                 aadProfile,
@@ -974,6 +1020,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 nodeProvisioningProfile,
                 bootstrapProfile,
                 aiToolchainOperatorProfile,
+                agentSandboxProfile,
+                podSnapshotProfile,
                 schedulerProfile,
                 hostedSystemProfile,
                 healthMonitorProfile,

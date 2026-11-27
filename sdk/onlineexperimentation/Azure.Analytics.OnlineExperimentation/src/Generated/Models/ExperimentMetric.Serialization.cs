@@ -17,11 +17,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> Defines experiment metric metadata and computation details. </summary>
     public partial class ExperimentMetric : IJsonModel<ExperimentMetric>
     {
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/> for deserialization. </summary>
-        internal ExperimentMetric()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -132,7 +127,7 @@ namespace Azure.Analytics.OnlineExperimentation
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
-                writer.WriteStringValue(LastModifiedAt, "O");
+                writer.WriteStringValue(LastModifiedOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -184,7 +179,7 @@ namespace Azure.Analytics.OnlineExperimentation
             DesiredDirection desiredDirection = default;
             ExperimentMetricDefinition definition = default;
             ETag eTag = default;
-            DateTimeOffset lastModifiedAt = default;
+            DateTimeOffset lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -242,12 +237,12 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (prop.NameEquals("lastModifiedAt"u8))
                 {
-                    lastModifiedAt = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExperimentMetric(
@@ -255,11 +250,11 @@ namespace Azure.Analytics.OnlineExperimentation
                 lifecycle,
                 displayName,
                 description,
-                categories,
+                categories ?? new ChangeTrackingList<string>(),
                 desiredDirection,
                 definition,
                 eTag,
-                lastModifiedAt,
+                lastModifiedOn,
                 additionalBinaryDataProperties);
         }
     }

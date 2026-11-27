@@ -132,14 +132,14 @@ namespace Azure.AI.Projects.Evaluation
             {
                 return null;
             }
-            DatasetReference reference = default;
+            VersionedDatasetReference reference = default;
             IList<string> datasetRowKinds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dataset"u8))
                 {
-                    reference = DatasetReference.DeserializeDatasetReference(prop.Value, options);
+                    reference = VersionedDatasetReference.DeserializeVersionedDatasetReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kinds"u8))
@@ -161,10 +161,10 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvaluatorGenerationArtifacts(reference, datasetRowKinds, additionalBinaryDataProperties);
+            return new EvaluatorGenerationArtifacts(reference, datasetRowKinds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

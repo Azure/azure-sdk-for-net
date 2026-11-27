@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByCustomerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync2CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByCustomerCollectionResultOfT(
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData2CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByCustomerAsyncCollectionResultOfT(
+            return new BillingSubscriptionDataAsync1CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByCustomerCollectionResultOfT(
+            return new BillingSubscriptionData1CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingCustomersCheckAccessByCustomerAsyncCollectionResultOfT(
+            return new BillingProfileCustomerResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT(
+            return new BillingProfileCustomerResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomersGetBillingPermissionsAsyncCollectionResultOfT(
+            return new BillingPermissionAsync1CollectionResultOfT(
                 _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomersGetBillingPermissionsCollectionResultOfT(
+            return new BillingPermission1CollectionResultOfT(
                 _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -948,8 +948,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -959,19 +959,19 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingTransactionData> GetByCustomerAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingTransactionData> GetByCustomerAsync(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByCustomerAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsync1CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,
@@ -1004,8 +1004,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -1015,19 +1015,19 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingTransactionData> GetByCustomer(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingTransactionData> GetByCustomer(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByCustomerCollectionResultOfT(
+            return new BillingTransactionData1CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,

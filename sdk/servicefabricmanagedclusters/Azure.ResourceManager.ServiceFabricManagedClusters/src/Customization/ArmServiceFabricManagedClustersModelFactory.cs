@@ -10,12 +10,29 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
+    [CodeGenSuppress("FaultSimulationContent", typeof(string), typeof(bool?), typeof(DateTimeOffset?))]
+    [CodeGenSuppress("ZoneFaultSimulationContent", typeof(bool?), typeof(DateTimeOffset?), typeof(IEnumerable<string>))]
     public static partial class ArmServiceFabricManagedClustersModelFactory
     {
+        /// <summary> Initializes fault simulation content with an arbitrary discriminator for mocking. </summary>
+        public static FaultSimulationContent FaultSimulationContent(string faultKind = default, bool? isForced = default, DateTimeOffset? constraintsExpireOn = default)
+        {
+            FaultKind kind = faultKind is null ? default : new FaultKind(faultKind);
+            return new UnknownFaultSimulationContent(kind, isForced, constraintsExpireOn is null ? default : new FaultSimulationConstraints(constraintsExpireOn, default), default);
+        }
+
+        /// <summary> Initializes zone fault simulation content for mocking. </summary>
+        public static ZoneFaultSimulationContent ZoneFaultSimulationContent(bool? isForced = default, DateTimeOffset? constraintsExpireOn = default, IEnumerable<string> zones = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            return new ZoneFaultSimulationContent(FaultKind.Zone, isForced, constraintsExpireOn is null ? default : new FaultSimulationConstraints(constraintsExpireOn, default), default, zones.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

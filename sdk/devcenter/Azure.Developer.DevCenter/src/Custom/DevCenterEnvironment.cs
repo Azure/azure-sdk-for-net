@@ -11,6 +11,14 @@ namespace Azure.Developer.DevCenter.Models
     [CodeGenSuppress("DevCenterEnvironment", typeof(string), typeof(string), typeof(string))]
     public partial class DevCenterEnvironment
     {
+        // The generator emits a public parameterless constructor because the spec has no required
+        // constructor parameters, but Name is get-only and is required by CreateOrUpdateEnvironment.
+        // Keep it internal so it remains available for ModelReaderWriter without exposing an unusable constructor.
+        internal DevCenterEnvironment()
+        {
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="environmentName"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>

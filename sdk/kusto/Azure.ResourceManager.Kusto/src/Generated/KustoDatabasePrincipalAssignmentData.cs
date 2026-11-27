@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Kusto
         {
             get
             {
-                return Properties is null ? default : Properties.Role;
+                return Properties is null ? (KustoDatabasePrincipalRole?)default : Properties.Role;
             }
             set
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Kusto
         {
             get
             {
-                return Properties is null ? default : Properties.PrincipalType;
+                return Properties is null ? (KustoPrincipalAssignmentType?)default : Properties.PrincipalType;
             }
             set
             {

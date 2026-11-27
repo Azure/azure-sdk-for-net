@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             WebAppRunActionCorrelation correlation = default;
             WorkflowStatus? status = default;
             string code = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("correlation"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = BinaryData.FromString(prop.Value.GetRawText());
+                    error = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("trackingId"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inputs = BinaryData.FromString(prop.Value.GetRawText());
+                    inputs = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("inputsLink"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    outputs = BinaryData.FromString(prop.Value.GetRawText());
+                    outputs = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("outputsLink"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    trackedProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    trackedProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("retryHistory"u8))
@@ -310,12 +310,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OperationResult(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 correlation,
                 status,
                 code,

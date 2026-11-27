@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchNodeRebootKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeRebootKind?(string value) => value == null ? null : new BatchNodeRebootKind(value);
+        public static implicit operator BatchNodeRebootKind?(string value) => value == null ? (BatchNodeRebootKind?)null : new BatchNodeRebootKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

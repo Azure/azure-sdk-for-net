@@ -12,7 +12,9 @@ namespace Azure.AI.Projects.Memory
     public readonly partial struct MemoryStoreListOrder : IEquatable<MemoryStoreListOrder>
     {
         private readonly string _value;
+        /// <summary> Return items in ascending creation-time order. </summary>
         private const string AscValue = "asc";
+        /// <summary> Return items in descending creation-time order. </summary>
         private const string DescValue = "desc";
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreListOrder"/>. </summary>
@@ -41,7 +43,7 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Converts a string to a <see cref="MemoryStoreListOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MemoryStoreListOrder?(string value) => value == null ? null : new MemoryStoreListOrder(value);
+        public static implicit operator MemoryStoreListOrder?(string value) => value == null ? (MemoryStoreListOrder?)null : new MemoryStoreListOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

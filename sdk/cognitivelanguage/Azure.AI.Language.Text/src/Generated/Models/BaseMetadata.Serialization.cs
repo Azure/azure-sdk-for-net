@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for entity Metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeMetadata"/>, <see cref="VolumeMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="AreaMetadata"/>, <see cref="LengthMetadata"/>, <see cref="InformationMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="WeightMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="AddressMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TimeMetadata"/>, <see cref="NumberMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="TemporalSpanMetadata"/>, and <see cref="NumericRangeMetadata"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddressMetadata"/>, <see cref="AgeMetadata"/>, <see cref="AreaMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="InformationMetadata"/>, <see cref="LengthMetadata"/>, <see cref="NumberMetadata"/>, <see cref="NumericRangeMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TemporalSpanMetadata"/>, <see cref="TimeMetadata"/>, <see cref="VolumeMetadata"/>, and <see cref="WeightMetadata"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBaseMetadata))]
     public abstract partial class BaseMetadata : IJsonModel<BaseMetadata>
@@ -129,42 +129,42 @@ namespace Azure.AI.Language.Text
             {
                 switch (discriminator.GetString())
                 {
-                    case "AgeMetadata":
-                        return AgeMetadata.DeserializeAgeMetadata(element, options);
-                    case "VolumeMetadata":
-                        return VolumeMetadata.DeserializeVolumeMetadata(element, options);
-                    case "SpeedMetadata":
-                        return SpeedMetadata.DeserializeSpeedMetadata(element, options);
-                    case "AreaMetadata":
-                        return AreaMetadata.DeserializeAreaMetadata(element, options);
-                    case "LengthMetadata":
-                        return LengthMetadata.DeserializeLengthMetadata(element, options);
-                    case "InformationMetadata":
-                        return InformationMetadata.DeserializeInformationMetadata(element, options);
-                    case "TemperatureMetadata":
-                        return TemperatureMetadata.DeserializeTemperatureMetadata(element, options);
-                    case "WeightMetadata":
-                        return WeightMetadata.DeserializeWeightMetadata(element, options);
-                    case "CurrencyMetadata":
-                        return CurrencyMetadata.DeserializeCurrencyMetadata(element, options);
                     case "AddressMetadata":
                         return AddressMetadata.DeserializeAddressMetadata(element, options);
+                    case "AgeMetadata":
+                        return AgeMetadata.DeserializeAgeMetadata(element, options);
+                    case "AreaMetadata":
+                        return AreaMetadata.DeserializeAreaMetadata(element, options);
+                    case "CurrencyMetadata":
+                        return CurrencyMetadata.DeserializeCurrencyMetadata(element, options);
                     case "DateMetadata":
                         return DateMetadata.DeserializeDateMetadata(element, options);
                     case "DateTimeMetadata":
                         return DateTimeMetadata.DeserializeDateTimeMetadata(element, options);
-                    case "TemporalSetMetadata":
-                        return TemporalSetMetadata.DeserializeTemporalSetMetadata(element, options);
-                    case "TimeMetadata":
-                        return TimeMetadata.DeserializeTimeMetadata(element, options);
+                    case "InformationMetadata":
+                        return InformationMetadata.DeserializeInformationMetadata(element, options);
+                    case "LengthMetadata":
+                        return LengthMetadata.DeserializeLengthMetadata(element, options);
                     case "NumberMetadata":
                         return NumberMetadata.DeserializeNumberMetadata(element, options);
-                    case "OrdinalMetadata":
-                        return OrdinalMetadata.DeserializeOrdinalMetadata(element, options);
-                    case "TemporalSpanMetadata":
-                        return TemporalSpanMetadata.DeserializeTemporalSpanMetadata(element, options);
                     case "NumericRangeMetadata":
                         return NumericRangeMetadata.DeserializeNumericRangeMetadata(element, options);
+                    case "OrdinalMetadata":
+                        return OrdinalMetadata.DeserializeOrdinalMetadata(element, options);
+                    case "SpeedMetadata":
+                        return SpeedMetadata.DeserializeSpeedMetadata(element, options);
+                    case "TemperatureMetadata":
+                        return TemperatureMetadata.DeserializeTemperatureMetadata(element, options);
+                    case "TemporalSetMetadata":
+                        return TemporalSetMetadata.DeserializeTemporalSetMetadata(element, options);
+                    case "TemporalSpanMetadata":
+                        return TemporalSpanMetadata.DeserializeTemporalSpanMetadata(element, options);
+                    case "TimeMetadata":
+                        return TimeMetadata.DeserializeTimeMetadata(element, options);
+                    case "VolumeMetadata":
+                        return VolumeMetadata.DeserializeVolumeMetadata(element, options);
+                    case "WeightMetadata":
+                        return WeightMetadata.DeserializeWeightMetadata(element, options);
                 }
             }
             return UnknownBaseMetadata.DeserializeUnknownBaseMetadata(element, options);

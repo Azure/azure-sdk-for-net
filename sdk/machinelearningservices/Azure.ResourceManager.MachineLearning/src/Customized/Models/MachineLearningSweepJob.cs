@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         // TypeSpec decorators do not control constructor overload ordering, so keep the old overload and delegate to the generated shape.
         /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         public MachineLearningSweepJob(MachineLearningObjective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial)
-            : this(description: null, properties: null, tags: null, additionalBinaryDataProperties: null, componentId: null, computeId: null, displayName: null, experimentName: null, identity: null, isArchived: null, jobType: JobType.Sweep, notificationSetting: null, parentJobName: null, services: null, status: null, earlyTermination: null, inputs: null, limits: null, objective, outputs: null, queueSettings: null, samplingAlgorithm, searchSpace, trial)
+            : this(description: null, properties: null, tags: null, additionalBinaryDataProperties: null, componentId: null, computeId: null, displayName: null, experimentName: null, identity: null, isArchived: null, jobType: JobType.Sweep, notificationSetting: null, services: null, status: null, earlyTermination: null, inputs: null, limits: null, objective, outputs: null, queueSettings: null, samplingAlgorithm, searchSpace, trial)
         {
         }
 

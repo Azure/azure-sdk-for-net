@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary> Optional customer-managed Storage account where Experiment schema will be stored. </summary>
-        public ChaosCustomerDataStorageProperties CustomerDataStorage
+        public CustomerDataStorageProperties CustomerDataStorage
         {
             get
             {

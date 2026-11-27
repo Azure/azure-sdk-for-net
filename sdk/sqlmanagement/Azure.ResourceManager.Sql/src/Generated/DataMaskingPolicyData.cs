@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.DataMaskingState;
+                return Properties is null ? (DataMaskingState?)default : Properties.DataMaskingState;
             }
             set
             {

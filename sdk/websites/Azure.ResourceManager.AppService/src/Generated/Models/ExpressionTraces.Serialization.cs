@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    value = BinaryData.FromString(prop.Value.GetRawText());
+                    value = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("inputs"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExpressionTraces(value, inputs ?? new ChangeTrackingList<WorkflowExpressionRoot>(), nextLink, additionalBinaryDataProperties);

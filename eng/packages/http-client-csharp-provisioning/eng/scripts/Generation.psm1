@@ -26,7 +26,8 @@ function Get-Provisioning-TspCommand {
         [string]$generationDir,
         [bool]$generateStub = $false,
         [string]$apiVersion = $null,
-        [bool]$debug = $false
+        [bool]$debug = $false,
+        [bool]$newProject = $true
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-provisioning"
@@ -45,7 +46,7 @@ function Get-Provisioning-TspCommand {
         $command += " --option @azure-typespec/http-client-csharp-provisioning.api-version=$apiVersion"
     }
 
-    $command += " --option @azure-typespec/http-client-csharp-provisioning.new-project=true"
+    $command += " --option @azure-typespec/http-client-csharp-provisioning.new-project=$($newProject.ToString().ToLowerInvariant())"
 
     if ($debug) {
         $command += " --option @azure-typespec/http-client-csharp-provisioning.debug=true"

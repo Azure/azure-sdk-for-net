@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,6 +159,71 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetDedicatedHsms().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PaymentHsmClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PaymentHsmClusters and their operations over a PaymentHsmClusterResource. </returns>
+        public virtual PaymentHsmClusterCollection GetPaymentHsmClusters()
+        {
+            return GetCachedClient(client => new PaymentHsmClusterCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified Payment HSM Cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentHsmClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="paymentHsmClusterName"> The name of the Payment HSM Cluster within the specified resource group. Payment HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="paymentHsmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="paymentHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PaymentHsmClusterResource>> GetPaymentHsmClusterAsync(string paymentHsmClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(paymentHsmClusterName, nameof(paymentHsmClusterName));
+
+            return await GetPaymentHsmClusters().GetAsync(paymentHsmClusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Payment HSM Cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentHsmClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="paymentHsmClusterName"> The name of the Payment HSM Cluster within the specified resource group. Payment HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="paymentHsmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="paymentHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PaymentHsmClusterResource> GetPaymentHsmCluster(string paymentHsmClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(paymentHsmClusterName, nameof(paymentHsmClusterName));
+
+            return GetPaymentHsmClusters().Get(paymentHsmClusterName, cancellationToken);
         }
     }
 }

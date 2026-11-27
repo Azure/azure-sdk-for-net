@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new BackupServerEngine. </summary>
         public BackupServerEngine()
         {
+            BackupEngineType.Assign(RecoveryServicesBackup.BackupEngineType.AzureBackupServerEngine);
         }
 
         /// <summary> Define all the provisionable properties for BackupServerEngine. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupEngineType", new string[] { "backupEngineType" }, defaultValue: "AzureBackupServerEngine");
             DefineAdditionalProperties();
         }
 

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComponentData, ComponentResource>(new ComponentsGetByNetworkFunctionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ComponentData, ComponentResource>(new ComponentDataAsyncCollectionResultOfT(
                 _componentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComponentData, ComponentResource>(new ComponentsGetByNetworkFunctionCollectionResultOfT(
+            return new PageableWrapper<ComponentData, ComponentResource>(new ComponentDataCollectionResultOfT(
                 _componentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

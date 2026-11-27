@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     public static partial class ArmHealthDataAIServicesModelFactory
     {
 
+        /// <summary> A HealthDataAIServicesProviderHub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 default);
         }
 
+        /// <summary> Details of the HealthDataAIServices DeidService. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serviceUri"> Deid service url. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             return new DeidServiceProperties(provisioningState, serviceUri, (privateEndpointConnections ?? new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>()).ToList(), publicNetworkAccess, default);
         }
 
+        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -84,6 +87,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -104,6 +108,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             return new DeidServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, default), default);
         }
 
+        /// <summary> Holder for private endpoint connections. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 default);
         }
 
+        /// <summary> Private Links for DeidService resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -138,6 +144,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>

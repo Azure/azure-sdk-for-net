@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -36,6 +37,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             AddressValidationStatus = addressValidationStatus;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>
+        /// <param name="contactDetails"> Contact details for the address. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
+        public EdgeOrderItemAddressProperties(EdgeOrderAddressContactDetails contactDetails) : this()
+        {
+            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+
+            ContactDetails = contactDetails;
         }
 
         /// <summary> Type of address based on its usage context. </summary>

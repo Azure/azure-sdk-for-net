@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningAksCompute. </summary>
         public MachineLearningAksCompute()
         {
+            ComputeType.Assign(MachineLearning.ComputeType.AKS);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "AKS");
             _properties = DefineModelProperty<MachineLearningAksComputeProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

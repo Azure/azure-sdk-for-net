@@ -155,7 +155,6 @@ namespace Azure.ResourceManager.Redis
             ResourceType resourceType = default;
             SystemData systemData = default;
             RedisPatchScheduleSettings properties = default;
-            RedisPatchScheduleDefaultName defaultName = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RedisPatchScheduleData(
@@ -217,7 +216,6 @@ namespace Azure.ResourceManager.Redis
                 resourceType,
                 systemData,
                 properties,
-                defaultName,
                 location,
                 additionalBinaryDataProperties);
         }

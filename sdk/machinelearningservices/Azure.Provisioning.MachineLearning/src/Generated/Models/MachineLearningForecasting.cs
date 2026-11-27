@@ -28,6 +28,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningForecasting. </summary>
         public MachineLearningForecasting()
         {
+            TaskType.Assign(MachineLearning.TaskType.Forecasting);
         }
 
         /// <summary> Gets or sets the CvSplitColumnNames. </summary>
@@ -214,7 +215,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "Forecasting");
             _cvSplitColumnNames = DefineListProperty<string>(nameof(CvSplitColumnNames), new string[] { "cvSplitColumnNames" });
             _featurizationSettings = DefineModelProperty<TableVerticalFeaturizationSettings>(nameof(FeaturizationSettings), new string[] { "featurizationSettings" });
             _limitSettings = DefineModelProperty<TableVerticalLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" });

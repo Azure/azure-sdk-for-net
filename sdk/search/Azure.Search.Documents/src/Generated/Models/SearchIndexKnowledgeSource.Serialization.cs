@@ -114,6 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string description = default;
             KnowledgeSourceKind kind = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SearchIndexKnowledgeSourceParameters searchIndexParameters = default;
@@ -145,6 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -160,7 +162,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchIndexKnowledgeSource(
@@ -170,7 +172,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties,
-                searchIndexParameters);
+                searchIndexParameters)
+            {
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

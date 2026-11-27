@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The Endpoint resource, which contains information about file sources and targets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="S3WithHmacEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, and <see cref="SmbMountEndpointUpdateProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/>, <see cref="S3WithHmacEndpointUpdateProperties"/>, and <see cref="SmbMountEndpointUpdateProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEndpointBaseUpdateProperties))]
     public abstract partial class EndpointBaseUpdateProperties : IJsonModel<EndpointBaseUpdateProperties>
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer":
-                        return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element, options);
-                    case "S3WithHMAC":
-                        return S3WithHmacEndpointUpdateProperties.DeserializeS3WithHmacEndpointUpdateProperties(element, options);
-                    case "NfsMount":
-                        return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element, options);
-                    case "AzureStorageSmbFileShare":
-                        return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element, options);
-                    case "AzureStorageNfsFileShare":
-                        return AzureStorageNfsFileShareEndpointUpdateProperties.DeserializeAzureStorageNfsFileShareEndpointUpdateProperties(element, options);
                     case "AzureMultiCloudConnector":
                         return AzureMultiCloudConnectorEndpointUpdateProperties.DeserializeAzureMultiCloudConnectorEndpointUpdateProperties(element, options);
+                    case "AzureStorageBlobContainer":
+                        return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element, options);
+                    case "AzureStorageNfsFileShare":
+                        return AzureStorageNfsFileShareEndpointUpdateProperties.DeserializeAzureStorageNfsFileShareEndpointUpdateProperties(element, options);
+                    case "AzureStorageSmbFileShare":
+                        return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element, options);
+                    case "NfsMount":
+                        return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element, options);
+                    case "S3WithHMAC":
+                        return S3WithHmacEndpointUpdateProperties.DeserializeS3WithHmacEndpointUpdateProperties(element, options);
                     case "SmbMount":
                         return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element, options);
                 }

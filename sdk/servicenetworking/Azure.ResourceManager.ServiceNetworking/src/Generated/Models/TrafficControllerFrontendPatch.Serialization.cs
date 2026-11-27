@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            FrontendUpdateProperties properties = default;
+            TrafficControllerFrontendUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    properties = FrontendUpdateProperties.DeserializeFrontendUpdateProperties(prop.Value, options);
+                    properties = TrafficControllerFrontendUpdateProperties.DeserializeTrafficControllerFrontendUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TrafficControllerFrontendPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);

@@ -21,6 +21,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VaultBackupJob. </summary>
         public VaultBackupJob()
         {
+            JobType.Assign("VaultJob");
         }
 
         /// <summary> Gets the Duration. </summary>
@@ -68,7 +69,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             get
             {
-                return ExtendedInfo.PropertyBag;
+                return ExtendedInfo is null ? default : ExtendedInfo.PropertyBag;
             }
         }
 
@@ -76,7 +77,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "VaultJob");
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _errorDetails = DefineListProperty<VaultBackupJobErrorInfo>(nameof(ErrorDetails), new string[] { "errorDetails" });

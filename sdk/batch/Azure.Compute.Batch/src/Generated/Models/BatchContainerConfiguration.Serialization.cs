@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> The configuration for container-enabled Pools. </summary>
     public partial class BatchContainerConfiguration : IJsonModel<BatchContainerConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchContainerConfiguration"/> for deserialization. </summary>
-        internal BatchContainerConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchContainerConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -195,7 +190,7 @@ namespace Azure.Compute.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BatchContainerConfiguration(@type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<ContainerRegistryReference>(), additionalBinaryDataProperties);

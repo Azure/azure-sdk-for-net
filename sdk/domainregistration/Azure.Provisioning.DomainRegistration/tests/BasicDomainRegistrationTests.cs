@@ -72,6 +72,14 @@ public class BasicDomainRegistrationTests
               name: 'example.com'
               location: location
               properties: {
+                autoRenew: true
+                consent: {
+                  agreedAt: '2026-01-01T00:00:00.0000000Z'
+                  agreedBy: '192.0.2.1'
+                  agreementKeys: [
+                    'agreement-key'
+                  ]
+                }
                 contactAdmin: {
                   addressMailing: {
                     address1: '1 Microsoft Way'
@@ -125,14 +133,6 @@ public class BasicDomainRegistrationTests
                   phone: '+1.4255550100'
                 }
                 privacy: true
-                autoRenew: true
-                consent: {
-                  agreementKeys: [
-                    'agreement-key'
-                  ]
-                  agreedBy: '192.0.2.1'
-                  agreedAt: '2026-01-01T00:00:00.0000000Z'
-                }
               }
             }
             """);

@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
         /// <param name="productType"> Indicates the product type of the license. </param>
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
+        /// <param name="billingStartsOn"> The timestamp in UTC when the billing starts. </param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="billingEndsOn"> The timestamp in UTC when the billing ends. </param>
         /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfileArmProductProfileProperties(LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LicenseProfileArmProductProfileProperties(LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartsOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndsOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionStatus = subscriptionStatus;
             ProductType = productType;
             EnrollmentOn = enrollmentOn;
-            BillingStartOn = billingStartOn;
+            BillingStartsOn = billingStartsOn;
             DisenrollmentOn = disenrollmentOn;
-            BillingEndOn = billingEndOn;
+            BillingEndsOn = billingEndsOn;
             Error = error;
             ProductFeatures = productFeatures;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The timestamp in UTC when the billing starts. </summary>
         [WirePath("billingStartDate")]
-        public DateTimeOffset? BillingStartOn { get; }
+        public DateTimeOffset? BillingStartsOn { get; }
 
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
         [WirePath("disenrollmentDate")]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The timestamp in UTC when the billing ends. </summary>
         [WirePath("billingEndDate")]
-        public DateTimeOffset? BillingEndOn { get; }
+        public DateTimeOffset? BillingEndsOn { get; }
 
         /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
         [WirePath("error")]

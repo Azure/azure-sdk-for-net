@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SafeguardsAvailableVersionsProperties properties = default;
+            ContainerServiceSafeguardsAvailableVersionsProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = SafeguardsAvailableVersionsProperties.DeserializeSafeguardsAvailableVersionsProperties(prop.Value, options);
+                    properties = ContainerServiceSafeguardsAvailableVersionsProperties.DeserializeContainerServiceSafeguardsAvailableVersionsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerServiceSafeguardsAvailableVersionData(

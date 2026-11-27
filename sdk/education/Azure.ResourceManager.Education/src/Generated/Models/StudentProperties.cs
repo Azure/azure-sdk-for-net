@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="email"> Student Email. </param>
         /// <param name="role"> Student Role. </param>
         /// <param name="budget"> Student Budget. </param>
-        /// <param name="expireOn"> Date this student is set to expire from the lab. </param>
+        /// <param name="expiresOn"> Date this student is set to expire from the lab. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firstName"/>, <paramref name="lastName"/>, <paramref name="email"/> or <paramref name="budget"/> is null. </exception>
-        public StudentProperties(string firstName, string lastName, string email, StudentRole role, EducationAmount budget, DateTimeOffset expireOn)
+        public StudentProperties(string firstName, string lastName, string email, StudentRole role, EducationAmount budget, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNull(firstName, nameof(firstName));
             Argument.AssertNotNull(lastName, nameof(lastName));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Education.Models
             Email = email;
             Role = role;
             Budget = budget;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="StudentProperties"/>. </summary>
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="role"> Student Role. </param>
         /// <param name="budget"> Student Budget. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="expireOn"> Date this student is set to expire from the lab. </param>
+        /// <param name="expiresOn"> Date this student is set to expire from the lab. </param>
         /// <param name="status"> Student Lab Status. </param>
         /// <param name="effectiveOn"> Date student was added to the lab. </param>
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StudentProperties(string firstName, string lastName, string email, StudentRole role, EducationAmount budget, string subscriptionId, DateTimeOffset expireOn, StudentLabStatus? status, DateTimeOffset? effectiveOn, string subscriptionAlias, DateTimeOffset? subscriptionInviteLastSentOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StudentProperties(string firstName, string lastName, string email, StudentRole role, EducationAmount budget, string subscriptionId, DateTimeOffset expiresOn, StudentLabStatus? status, DateTimeOffset? effectiveOn, string subscriptionAlias, DateTimeOffset? subscriptionInviteLastSentOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Education.Models
             Role = role;
             Budget = budget;
             SubscriptionId = subscriptionId;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             Status = status;
             EffectiveOn = effectiveOn;
             SubscriptionAlias = subscriptionAlias;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Education.Models
         public string SubscriptionId { get; }
 
         /// <summary> Date this student is set to expire from the lab. </summary>
-        public DateTimeOffset ExpireOn { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary> Student Lab Status. </summary>
         public StudentLabStatus? Status { get; }

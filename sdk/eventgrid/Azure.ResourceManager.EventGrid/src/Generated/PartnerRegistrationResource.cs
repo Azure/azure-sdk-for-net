@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerRegistrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string partnerRegistrationApiVersion);
             _partnerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _partnerRegistrationsRestClient = new PartnerRegistrations(_partnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerRegistrationApiVersion ?? "2025-07-15-preview");
+            _partnerRegistrationsRestClient = new PartnerRegistrations(_partnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerRegistrations", out string partnerRegistrationsApiVersionOverride) ? partnerRegistrationsApiVersionOverride : "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

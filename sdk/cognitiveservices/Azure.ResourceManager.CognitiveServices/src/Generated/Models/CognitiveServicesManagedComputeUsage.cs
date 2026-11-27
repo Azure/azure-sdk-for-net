@@ -30,10 +30,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="limit"> Maximum value for this metric. </param>
         /// <param name="currentValue"> Current value for this metric. </param>
-        /// <param name="offerScope"> Offer scope (e.g., 'Global', 'Datazone-US'). </param>
+        /// <param name="offerScope"> Offer scope. Supported values are 'Global' and 'DataZone'. </param>
+        /// <param name="scopeId"> Scope identifier for the managed compute usage. Supported values are '' (empty), 'US', and 'EU'. </param>
         /// <param name="deployments"> Deployments consuming this managed compute quota. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeUsage(string id, ServiceAccountUsageMetricName name, string @type, ServiceAccountUsageUnitType? unit, double? limit, double? currentValue, string offerScope, IList<CognitiveServicesManagedComputeDeploymentInfo> deployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeUsage(string id, ServiceAccountUsageMetricName name, string @type, ServiceAccountUsageUnitType? unit, double? limit, double? currentValue, string offerScope, string scopeId, IList<CognitiveServicesManagedComputeDeploymentInfo> deployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Limit = limit;
             CurrentValue = currentValue;
             OfferScope = offerScope;
+            ScopeId = scopeId;
             Deployments = deployments;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -70,9 +72,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("currentValue")]
         public double? CurrentValue { get; }
 
-        /// <summary> Offer scope (e.g., 'Global', 'Datazone-US'). </summary>
+        /// <summary> Offer scope. Supported values are 'Global' and 'DataZone'. </summary>
         [WirePath("offerScope")]
         public string OfferScope { get; }
+
+        /// <summary> Scope identifier for the managed compute usage. Supported values are '' (empty), 'US', and 'EU'. </summary>
+        [WirePath("scopeId")]
+        public string ScopeId { get; }
 
         /// <summary> Deployments consuming this managed compute quota. </summary>
         [WirePath("deployments")]

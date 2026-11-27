@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new IotHubConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 

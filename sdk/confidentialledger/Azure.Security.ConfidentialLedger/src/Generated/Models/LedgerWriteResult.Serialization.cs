@@ -92,6 +92,23 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
             writer.WritePropertyName("collectionId"u8);
             writer.WriteStringValue(CollectionId);
+            if (Optional.IsDefined(Receipt))
+            {
+                writer.WritePropertyName("receipt"u8);
+                writer.WriteObjectValue(Receipt, options);
+            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
+            if (Optional.IsCollectionDefined(ApplicationClaims))
+            {
+                writer.WritePropertyName("applicationClaims"u8);
+                writer.WriteStartArray();
+                foreach (ApplicationClaim item in ApplicationClaims)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,6 +153,9 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
             string transactionId = default;
             string collectionId = default;
+            ReceiptContents receipt = default;
+            TransactionState state = default;
+            IList<ApplicationClaim> applicationClaims = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +164,46 @@ namespace Azure.Security.ConfidentialLedger.Models
                     collectionId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("receipt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    receipt = ReceiptContents.DeserializeReceiptContents(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    state = new TransactionState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("applicationClaims"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ApplicationClaim> array = new List<ApplicationClaim>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ApplicationClaim.DeserializeApplicationClaim(item, options));
+                    }
+                    applicationClaims = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LedgerWriteResult(transactionId, collectionId, additionalBinaryDataProperties);
+            return new LedgerWriteResult(
+                transactionId,
+                collectionId,
+                receipt,
+                state,
+                applicationClaims ?? new ChangeTrackingList<ApplicationClaim>(),
+                additionalBinaryDataProperties);
         }
     }
 }

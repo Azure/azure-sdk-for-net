@@ -14,11 +14,6 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluation Taxonomy Definition. </summary>
     public partial class EvaluationTaxonomy : IJsonModel<EvaluationTaxonomy>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomy"/> for deserialization. </summary>
-        internal EvaluationTaxonomy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluationTaxonomy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -295,7 +290,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EvaluationTaxonomy(

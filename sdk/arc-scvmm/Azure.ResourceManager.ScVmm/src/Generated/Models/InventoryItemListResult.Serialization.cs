@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ScVmm.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InventoryItemListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InventoryItemListResult(value ?? new ChangeTrackingList<ScVmmInventoryItemData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

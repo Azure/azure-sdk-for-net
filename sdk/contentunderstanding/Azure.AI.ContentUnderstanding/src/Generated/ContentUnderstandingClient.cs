@@ -88,7 +88,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Initializes a new instance of ContentUnderstandingClient from a <see cref="ContentUnderstandingClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ContentUnderstandingClient. </param>
         [Experimental("SCME0002")]
-        public ContentUnderstandingClient(ContentUnderstandingClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public ContentUnderstandingClient(ContentUnderstandingClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -251,7 +251,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(sourceAnalyzerId, nameof(sourceAnalyzerId));
 
-            CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
+            CopyAnalyzerContent spreadModel = new CopyAnalyzerContent(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = CopyAnalyzer(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer");
         }
@@ -271,7 +271,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(sourceAnalyzerId, nameof(sourceAnalyzerId));
 
-            CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
+            CopyAnalyzerContent spreadModel = new CopyAnalyzerContent(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = await CopyAnalyzerAsync(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer");
         }
@@ -1047,7 +1047,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(targetAzureResourceId, nameof(targetAzureResourceId));
 
-            GrantCopyAuthorizationRequest spreadModel = new GrantCopyAuthorizationRequest(targetAzureResourceId, targetRegion, default);
+            GrantCopyAuthorizationContent spreadModel = new GrantCopyAuthorizationContent(targetAzureResourceId, targetRegion, default);
             Response result = GrantCopyAuthorization(analyzerId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((CopyAuthorization)result, result);
         }
@@ -1065,7 +1065,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(targetAzureResourceId, nameof(targetAzureResourceId));
 
-            GrantCopyAuthorizationRequest spreadModel = new GrantCopyAuthorizationRequest(targetAzureResourceId, targetRegion, default);
+            GrantCopyAuthorizationContent spreadModel = new GrantCopyAuthorizationContent(targetAzureResourceId, targetRegion, default);
             Response result = await GrantCopyAuthorizationAsync(analyzerId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CopyAuthorization)result, result);
         }

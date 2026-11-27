@@ -506,7 +506,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadPagesFromUriRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateUploadPagesFromUrlRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -559,7 +559,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadPagesFromUriRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateUploadPagesFromUrlRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

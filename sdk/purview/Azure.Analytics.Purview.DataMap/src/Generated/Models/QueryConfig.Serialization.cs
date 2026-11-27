@@ -234,7 +234,7 @@ namespace Azure.Analytics.Purview.DataMap
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     @orderby = array;
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    filter = BinaryData.FromString(prop.Value.GetRawText());
+                    filter = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("facets"u8))
@@ -274,7 +274,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new QueryConfig(

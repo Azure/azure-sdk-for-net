@@ -18,6 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningEndpointScheduleAction. </summary>
         public MachineLearningEndpointScheduleAction()
         {
+            ActionType.Assign(ScheduleActionType.InvokeBatchEndpoint);
         }
 
         /// <summary> Gets or sets the EndpointInvocationDefinition. </summary>
@@ -39,7 +40,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("actionType", new string[] { "actionType" }, defaultValue: "InvokeBatchEndpoint");
             _endpointInvocationDefinition = DefineDictionaryProperty<BinaryData>(nameof(EndpointInvocationDefinition), new string[] { "endpointInvocationDefinition" }, isRequired: true);
             DefineAdditionalProperties();
         }

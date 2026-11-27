@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return NodeIdentity.ResourceId;
+                return NodeIdentity is null ? default : NodeIdentity.ResourceId;
             }
         }
 

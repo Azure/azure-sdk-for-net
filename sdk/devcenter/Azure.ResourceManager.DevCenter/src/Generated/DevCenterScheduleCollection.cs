@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterScheduleData, DevCenterScheduleResource>(new SchedulesGetByPoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterScheduleData, DevCenterScheduleResource>(new DevCenterScheduleDataAsyncCollectionResultOfT(
                 _schedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterScheduleData, DevCenterScheduleResource>(new SchedulesGetByPoolCollectionResultOfT(
+            return new PageableWrapper<DevCenterScheduleData, DevCenterScheduleResource>(new DevCenterScheduleDataCollectionResultOfT(
                 _schedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

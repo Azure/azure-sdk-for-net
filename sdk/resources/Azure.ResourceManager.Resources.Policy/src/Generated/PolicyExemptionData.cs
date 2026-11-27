@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties is null ? default : Properties.ExemptionCategory;
+                return Properties is null ? (PolicyExemptionCategory?)default : Properties.ExemptionCategory;
             }
             set
             {

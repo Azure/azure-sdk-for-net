@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AutoSeasonality. </summary>
         public AutoSeasonality()
         {
+            Mode.Assign(SeasonalityMode.Auto);
         }
 
         /// <summary> Define all the provisionable properties for AutoSeasonality. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("mode", new string[] { "mode" }, defaultValue: "Auto");
             DefineAdditionalProperties();
         }
 

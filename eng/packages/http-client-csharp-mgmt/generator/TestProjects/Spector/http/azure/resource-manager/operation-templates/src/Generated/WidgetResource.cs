@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.OperationTemplates.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.OperationTemplates
 {
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ActionResult>> PostAsync(ActionRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActionResult>> PostAsync(ActionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Post");
             scope.Start();
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActionResult> response = Response.FromValue(ActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ActionResult> Post(ActionRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<ActionResult> Post(ActionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Post");
             scope.Start();
@@ -369,7 +370,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActionResult> response = Response.FromValue(ActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -495,10 +496,9 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -538,10 +538,9 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

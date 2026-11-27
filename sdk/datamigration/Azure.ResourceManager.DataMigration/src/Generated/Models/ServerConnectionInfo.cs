@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Defines the connection properties of a server
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationSqlConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="DataMigrationMISqlConnectionInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="DataMigrationSqlConnectionInfo"/>.
     /// </summary>
     public abstract partial class ServerConnectionInfo
     {

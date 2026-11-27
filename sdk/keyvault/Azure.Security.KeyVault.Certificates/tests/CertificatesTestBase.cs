@@ -13,6 +13,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
+        CertificateClientOptions.ServiceVersion.V2026_04_01,
         CertificateClientOptions.ServiceVersion.V2025_07_01,
         CertificateClientOptions.ServiceVersion.V7_6,
         CertificateClientOptions.ServiceVersion.V7_5,
@@ -217,7 +218,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         return await Client.GetDeletedCertificateAsync(name).ConfigureAwait(false);

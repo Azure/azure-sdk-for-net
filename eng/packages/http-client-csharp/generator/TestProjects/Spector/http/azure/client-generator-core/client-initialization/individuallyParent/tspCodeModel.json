@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "BlobProperties",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient.BlobProperties",
       "usage": "Output,Json",
@@ -59,6 +60,7 @@
           "$id": "6",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "7",
@@ -85,6 +87,7 @@
           "$id": "8",
           "kind": "property",
           "name": "size",
+          "apiVersions": [],
           "serializedName": "size",
           "type": {
             "$id": "9",
@@ -111,6 +114,7 @@
           "$id": "10",
           "kind": "property",
           "name": "contentType",
+          "apiVersions": [],
           "serializedName": "contentType",
           "type": {
             "$id": "11",
@@ -137,6 +141,7 @@
           "$id": "12",
           "kind": "property",
           "name": "createdOn",
+          "apiVersions": [],
           "serializedName": "createdOn",
           "type": {
             "$id": "13",
@@ -236,7 +241,6 @@
                 "$id": "21",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithPathClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -376,7 +380,6 @@
                 "$id": "31",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithPathClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -502,7 +505,6 @@
                 "$id": "37",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithPathClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -627,7 +629,6 @@
                 "$id": "45",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithQueryClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -764,7 +765,6 @@
                 "$id": "55",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithQueryClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -887,7 +887,6 @@
                 "$id": "61",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithQueryClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1009,7 +1008,6 @@
                 "$id": "69",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithHeaderClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1146,7 +1144,6 @@
                 "$id": "79",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithHeaderClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1214,7 +1211,6 @@
                 "$id": "83",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithHeaderClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1336,7 +1332,6 @@
                 "$id": "91",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMultipleClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1519,7 +1514,6 @@
                 "$id": "105",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMultipleClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1613,7 +1607,6 @@
                 "$id": "111",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMultipleClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1764,7 +1757,6 @@
                 "$id": "121",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMixedClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1949,7 +1941,6 @@
                 "$id": "135",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMixedClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2066,7 +2057,6 @@
                 "$id": "143",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMixedClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2237,7 +2227,6 @@
                 "$id": "155",
                 "name": "withAliasedName",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithParamAliasClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2329,7 +2318,6 @@
                 "$id": "161",
                 "name": "withOriginalName",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithParamAliasClient",
                 "accessibility": "public",
                 "parameters": [
                   {

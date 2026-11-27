@@ -15,13 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class MultiPoint : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
-        /// <param name="coordinates"> The coordinates of the multipoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiPoint(IEnumerable<IList<float>> coordinates) : base(GeometryKind.MultiPoint)
+        public MultiPoint() : base(GeometryKind.MultiPoint)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
-
-            Coordinates = coordinates.ToList();
+            Coordinates = new ChangeTrackingList<IList<float>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
@@ -32,6 +28,16 @@ namespace Azure.Analytics.PlanetaryComputer
         internal MultiPoint(GeometryKind @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<float>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
+        /// <param name="coordinates"> The coordinates of the multipoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public MultiPoint(IEnumerable<IList<float>> coordinates) : this()
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            Coordinates = coordinates.ToList();
         }
 
         /// <summary> The coordinates of the multipoint. </summary>

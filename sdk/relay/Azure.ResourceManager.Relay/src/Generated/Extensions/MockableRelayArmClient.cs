@@ -80,6 +80,15 @@ namespace Azure.ResourceManager.Relay.Mocking
             return new RelayPrivateLinkResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="RelayClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RelayClusterResource"/> object. </returns>
+        public virtual RelayClusterResource GetRelayClusterResource(ResourceIdentifier id)
+        {
+            RelayClusterResource.ValidateResourceId(id);
+            return new RelayClusterResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="RelayNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource"/> object. </returns>

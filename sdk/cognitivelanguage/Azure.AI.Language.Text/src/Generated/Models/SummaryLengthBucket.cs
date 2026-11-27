@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryLengthBucket?(string value) => value == null ? null : new SummaryLengthBucket(value);
+        public static implicit operator SummaryLengthBucket?(string value) => value == null ? (SummaryLengthBucket?)null : new SummaryLengthBucket(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

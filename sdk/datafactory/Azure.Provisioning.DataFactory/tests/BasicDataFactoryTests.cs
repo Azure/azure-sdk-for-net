@@ -81,13 +81,13 @@ public class BasicDataFactoryTests
 
             resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
               name: 'ArmtemplateStorageLinkedService'
+              parent: dataFactory
               properties: {
                 type: 'AzureBlobStorage'
                 typeProperties: {
                   connectionString: connectionString
                 }
               }
-              parent: dataFactory
             }
 
             output name string = dataFactory.name
@@ -199,8 +199,8 @@ public class BasicDataFactoryTests
                 publicNetworkAccess: 'Disabled'
                 repoConfiguration: {
                   accountName: gitAccountName
-                  repositoryName: gitRepositoryName
                   collaborationBranch: 'main'
+                  repositoryName: gitRepositoryName
                   rootFolder: '/'
                 }
               }
@@ -213,19 +213,19 @@ public class BasicDataFactoryTests
 
             resource integrationRuntime 'Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01' = {
               name: 'AutoResolveIntegrationRuntime'
+              parent: dataFactory
               properties: {
-                type: 'Managed'
                 managedVirtualNetwork: {
-                  type: 'ManagedVirtualNetworkReference'
                   referenceName: 'default'
+                  type: 'ManagedVirtualNetworkReference'
                 }
+                type: 'Managed'
                 typeProperties: {
                   computeProperties: {
                     location: 'AutoResolve'
                   }
                 }
               }
-              parent: dataFactory
             }
 
             output name string = dataFactory.name

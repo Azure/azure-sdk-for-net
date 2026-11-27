@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Creates a new ContinuousBackupPolicy. </summary>
         public ContinuousBackupPolicy()
         {
+            Kind.Assign(BackupPolicyKind.Continuous);
         }
 
         /// <summary> Gets or sets the Tier. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Continuous");
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" });
             DefineAdditionalProperties();
         }

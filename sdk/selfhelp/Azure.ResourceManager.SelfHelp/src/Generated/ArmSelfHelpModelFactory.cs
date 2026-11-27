@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Solution Invocation with additional params needed for invocation. </summary>
         /// <param name="solutionId"> Solution Id to invoke. </param>
         /// <param name="additionalParameters"> Additional parameters required to invoke the solutionId. </param>
         /// <returns> A new <see cref="Models.SelfHelpDiagnosticInvocation"/> instance for mocking. </returns>
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticInvocation(solutionId, additionalParameters ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties returned with in an insight. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="insights"> The problems (if any) detected by this insight. </param>
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticInfo(solutionId, status, (insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>()).ToList(), error, default);
         }
 
+        /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic. </summary>
         /// <param name="id"> Article id. </param>
         /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>
@@ -78,6 +81,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel, default);
         }
 
+        /// <summary> Error definition. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>
@@ -123,6 +127,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Solution request trigger criterion. SolutionId/ProblemClassificationId is the only supported trigger type for Solution PUT request. ReplacementKey is the only supported trigger type for Solution PATCH request. </summary>
         /// <param name="name"> Trigger criterion name. </param>
         /// <param name="value"> Trigger criterion value. </param>
         /// <returns> A new <see cref="Models.SolutionTriggerCriterion"/> instance for mocking. </returns>
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionTriggerCriterion(name, value, default);
         }
 
+        /// <summary> Solution replacement maps. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="diagnostics"> Solution diagnostics results. </param>
         /// <param name="troubleshooters"> Solutions Troubleshooters. </param>
@@ -157,6 +163,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> AzureKB web result. </summary>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="searchResults"> AzureKB search results. </param>
         /// <returns> A new <see cref="Models.KBWebResult"/> instance for mocking. </returns>
@@ -167,6 +174,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new KBWebResult(replacementKey, (searchResults ?? new ChangeTrackingList<KBSearchResult>()).ToList(), default);
         }
 
+        /// <summary> Details of an AzureKB search result. </summary>
         /// <param name="solutionId"> Unique id of the result. </param>
         /// <param name="content"> Content of the search result. </param>
         /// <param name="title"> Title of the search result. </param>
@@ -190,6 +198,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Solutions Diagnostic. </summary>
         /// <param name="solutionId"> Solution Id to identify single Solutions Diagnostic. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="statusDetails"> Details of the status. </param>
@@ -214,6 +223,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Troubleshooters in Solutions. </summary>
         /// <param name="solutionId"> Solution Id to identify single Solutions Troubleshooter. </param>
         /// <param name="title"> Troubleshooter title. </param>
         /// <param name="summary"> Troubleshooter summary. </param>
@@ -242,6 +252,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Filter criterion. </summary>
         /// <param name="name"> Filter name. </param>
         /// <param name="values"> Filter values. </param>
         /// <param name="operator"> Filter operator. </param>
@@ -251,6 +262,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpFilter(name, values, @operator, default);
         }
 
+        /// <summary> Video detail. </summary>
         /// <param name="src"> Link to the video. </param>
         /// <param name="title"> Title of the video. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
@@ -260,6 +272,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpVideo(src, title, default, replacementKey);
         }
 
+        /// <summary> VideoGroup video detail. </summary>
         /// <param name="src"> Link to the video. </param>
         /// <param name="title"> Title of the video. </param>
         /// <returns> A new <see cref="Models.VideoGroupVideo"/> instance for mocking. </returns>
@@ -268,6 +281,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new VideoGroupVideo(src, title, default);
         }
 
+        /// <summary> Video group detail. </summary>
         /// <param name="videos"> List of videos will be shown to customers. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
         /// <returns> A new <see cref="Models.VideoGroupDetail"/> instance for mocking. </returns>
@@ -278,6 +292,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new VideoGroupDetail((videos ?? new ChangeTrackingList<VideoGroupVideo>()).ToList(), replacementKey, default);
         }
 
+        /// <summary> Part of the solution and are dividers in the solution rendering. </summary>
         /// <param name="title"> Solution sections title. </param>
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
@@ -310,6 +325,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default), default);
         }
 
+        /// <summary> Solution WarmUpRequest body. </summary>
         /// <param name="parameters"> Dictionary of &lt;string&gt;. </param>
         /// <returns> A new <see cref="Models.SolutionWarmUpContent"/> instance for mocking. </returns>
         public static SolutionWarmUpContent SolutionWarmUpContent(IDictionary<string, string> parameters = default)
@@ -368,6 +384,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Troubleshooter step. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>
@@ -402,6 +419,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Details of step input. </summary>
         /// <param name="questionId"> Use Index as QuestionId. </param>
         /// <param name="questionType"> Type of Question. </param>
         /// <param name="questionTitle"> Question title. </param>
@@ -431,6 +449,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Troubleshooter step input response validation properties. </summary>
         /// <param name="regex"> Regex used for the input validation. </param>
         /// <param name="validationScope"> Validation scope. </param>
         /// <param name="isRequired"> Default True. </param>
@@ -448,6 +467,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> The status of the resource. </summary>
         /// <param name="key"> Unique string. </param>
         /// <param name="value"> Option description. </param>
         /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
@@ -456,6 +476,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new ResponseConfig(key, value, default);
         }
 
+        /// <summary> Only for AutomatedStep type. </summary>
         /// <param name="version"> Version for automated check result. </param>
         /// <param name="status"> Status for automated check result. </param>
         /// <param name="result"> Insight Article Content. </param>
@@ -466,6 +487,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new AutomatedCheckResult(version, status, result, resultType, default);
         }
 
+        /// <summary> Troubleshooter ContinueRequest body. </summary>
         /// <param name="stepId"> Unique id of the result. </param>
         /// <param name="responses"></param>
         /// <returns> A new <see cref="Models.TroubleshooterContinueContent"/> instance for mocking. </returns>
@@ -476,6 +498,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new TroubleshooterContinueContent(stepId, (responses ?? new ChangeTrackingList<TroubleshooterResult>()).ToList(), default);
         }
 
+        /// <summary> User Response for Troubleshooter continue request. </summary>
         /// <param name="questionId"> id of the question. </param>
         /// <param name="questionType"> Type of Question. </param>
         /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
@@ -485,6 +508,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new TroubleshooterResult(questionId, questionType, response, default);
         }
 
+        /// <summary> Troubleshooter restart response. </summary>
         /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
         /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
         public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = default)
@@ -492,6 +516,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new RestartTroubleshooterResult(troubleshooterResourceName, default);
         }
 
+        /// <summary> Discover NLP request. </summary>
         /// <param name="issueSummary"> Natural language description of the issue. </param>
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. Only applicable for Discovery Solution NLP Subscription Scope. </param>
         /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
@@ -531,6 +556,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Metadata Properties. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="solutionType"> Solution Type. </param>
         /// <param name="description"> A detailed description of solution. </param>
@@ -543,6 +569,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionMetadataProperties(solutionId, solutionType, description, (requiredInputs ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Service Classification result object. </summary>
         /// <param name="serviceId"> Azure resource Id of the service. </param>
         /// <param name="displayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
@@ -581,6 +608,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 default);
         }
 
+        /// <summary> Solution replacement maps. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
@@ -594,6 +622,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new ReplacementMapsResult((webResults ?? new ChangeTrackingList<KBWebResult>()).ToList(), (videos ?? new ChangeTrackingList<SelfHelpVideo>()).ToList(), (videoGroups ?? new ChangeTrackingList<VideoGroupDetail>()).ToList(), default);
         }
 
+        /// <summary> Part of the solution and are dividers in the solution rendering. </summary>
         /// <param name="title"> Solution sections title. </param>
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
@@ -603,6 +632,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionSection(title, content, replacementMaps, default);
         }
 
+        /// <summary> The check availability request body. </summary>
         /// <param name="resourceName"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityContent"/> instance for mocking. </returns>
@@ -611,6 +641,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpNameAvailabilityContent(resourceName, resourceType, default);
         }
 
+        /// <summary> Response for whether the requested resource name is available or not. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>

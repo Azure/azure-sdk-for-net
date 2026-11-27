@@ -174,7 +174,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MetricTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MetadataValue>(), values ?? new ChangeTrackingList<MetricValue>(), additionalBinaryDataProperties);

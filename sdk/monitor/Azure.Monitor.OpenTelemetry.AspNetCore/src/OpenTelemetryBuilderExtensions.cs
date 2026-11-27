@@ -14,8 +14,8 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
@@ -82,10 +82,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
 
             Action<ResourceBuilder> configureResource = (r) => r
-                .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") })
                 .AddDetector(new AppServiceResourceDetector())
                 .AddDetector(new AzureVMResourceDetector())
-                .AddDetector(new AzureContainerAppsResourceDetector());
+                .AddDetector(new AzureContainerAppsResourceDetector())
+                // ResourceBuilder.CreateDefault() already includes the env var detector, but the Azure detectors above
+                // override service.name / service.instance.id. Re-applying it last ensures OTEL_SERVICE_NAME and
+                // OTEL_RESOURCE_ATTRIBUTES take precedence over detected values. Do not remove or reorder.
+                .AddEnvironmentVariableDetector()
+                // The distro marker is added last so it cannot be overwritten by OTEL_RESOURCE_ATTRIBUTES,
+                // because the exporter relies on it to identify this package as the distro.
+                .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") });
 
             builder.ConfigureResource(configureResource);
 
@@ -188,6 +194,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         {
             return Environment.Version.Major >= 8 ?
                 meterProviderBuilder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http")
+                    .AddView(instrument =>
+                        string.Equals(instrument.Meter.Name, "System.Net.Http", StringComparison.Ordinal)
+                        && !string.Equals(instrument.Name, "http.client.request.duration", StringComparison.Ordinal)
+                            ? MetricStreamConfiguration.Drop
+                            : null)
                 : meterProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation();
         }
     }

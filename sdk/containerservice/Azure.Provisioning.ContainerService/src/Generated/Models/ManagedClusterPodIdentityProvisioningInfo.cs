@@ -34,7 +34,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Error.ErrorDetail;
+                return Error is null ? default : Error.ErrorDetail;
             }
         }
 

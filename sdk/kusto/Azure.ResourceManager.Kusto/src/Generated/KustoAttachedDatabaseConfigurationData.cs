@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto
         {
             get
             {
-                return Properties is null ? default : Properties.DefaultPrincipalsModificationKind;
+                return Properties is null ? (KustoDatabaseDefaultPrincipalsModificationKind?)default : Properties.DefaultPrincipalsModificationKind;
             }
             set
             {

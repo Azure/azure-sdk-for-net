@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningManagedOnlineDeployment. </summary>
         public MachineLearningManagedOnlineDeployment()
         {
+            EndpointComputeType.Assign(MachineLearningEndpointComputeType.Managed);
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningManagedOnlineDeployment. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("endpointComputeType", new string[] { "endpointComputeType" }, defaultValue: "Managed");
             DefineAdditionalProperties();
         }
 

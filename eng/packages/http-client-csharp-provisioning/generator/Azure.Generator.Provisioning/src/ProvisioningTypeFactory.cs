@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
-using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -23,6 +22,10 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningTypeFactory : ManagementTypeFactory
     {
+        /// <inheritdoc/>
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
+            => new NewProvisioningProjectScaffolding();
+
         /// <summary>
         /// Builds the resource provider name from the provisioning namespace.
         /// For instance, "Azure.Provisioning.KeyVault" returns "KeyVault".
@@ -204,10 +207,36 @@ namespace Azure.Generator.Provisioning
                     inputModelProperty, resolvedName, bicepType,
                     info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
                     BicepTypeHelpers.GetLiteralFormat(baseProperty?.SerializationFormat),
+                    baseProperty?.WireInfo, info.IsDiscriminator,
                     enclosingType);
             }
 
             return baseProperty;
+        }
+
+        internal static bool IsInheritedDiscriminatorProperty(
+            InputModelType model,
+            InputModelProperty property)
+        {
+            if (model.DiscriminatorValue == null)
+            {
+                return false;
+            }
+
+            var serializedName = property.SerializedName ?? property.Name;
+            for (var baseModel = model.BaseModel; baseModel != null; baseModel = baseModel.BaseModel)
+            {
+                if (baseModel.DiscriminatorProperty is { } discriminator
+                    && string.Equals(
+                        discriminator.SerializedName ?? discriminator.Name,
+                        serializedName,
+                        StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

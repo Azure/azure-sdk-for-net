@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceProperties"/>. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
-        /// <param name="usageStartOn"> The start of the date time range covered by the usage detail. </param>
-        /// <param name="usageEndOn"> The end of the date time range covered by the usage detail. </param>
+        /// <param name="usageStartsOn"> The start of the date time range covered by the usage detail. </param>
+        /// <param name="usageEndsOn"> The end of the date time range covered by the usage detail. </param>
         /// <param name="resourceRate"> The marketplace resource rate. </param>
         /// <param name="offerName"> The type of offer. </param>
         /// <param name="resourceGroup"> The name of resource group. </param>
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="planName"> The name of plan. </param>
         /// <param name="isRecurringCharge"> Flag indicating whether this is a recurring charge or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceProperties(string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceProperties(string billingPeriodId, DateTimeOffset? usageStartsOn, DateTimeOffset? usageEndsOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPeriodId = billingPeriodId;
-            UsageStartOn = usageStartOn;
-            UsageEndOn = usageEndOn;
+            UsageStartsOn = usageStartsOn;
+            UsageEndsOn = usageEndsOn;
             ResourceRate = resourceRate;
             OfferName = offerName;
             ResourceGroup = resourceGroup;
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingPeriodId { get; }
 
         /// <summary> The start of the date time range covered by the usage detail. </summary>
-        public DateTimeOffset? UsageStartOn { get; }
+        public DateTimeOffset? UsageStartsOn { get; }
 
         /// <summary> The end of the date time range covered by the usage detail. </summary>
-        public DateTimeOffset? UsageEndOn { get; }
+        public DateTimeOffset? UsageEndsOn { get; }
 
         /// <summary> The marketplace resource rate. </summary>
         public decimal? ResourceRate { get; }

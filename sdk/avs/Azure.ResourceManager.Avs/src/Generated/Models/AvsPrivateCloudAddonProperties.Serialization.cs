@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// The properties of an addon
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddonSrmProperties"/>, <see cref="AddonVrProperties"/>, <see cref="AddonHcxProperties"/>, and <see cref="AddonArcProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/>, and <see cref="AddonVrProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAddonProperties))]
     public abstract partial class AvsPrivateCloudAddonProperties : IJsonModel<AvsPrivateCloudAddonProperties>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Arc":
+                        return AddonArcProperties.DeserializeAddonArcProperties(element, options);
+                    case "HCX":
+                        return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
                     case "SRM":
                         return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
                     case "VR":
                         return AddonVrProperties.DeserializeAddonVrProperties(element, options);
-                    case "HCX":
-                        return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
-                    case "Arc":
-                        return AddonArcProperties.DeserializeAddonArcProperties(element, options);
                 }
             }
             return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);

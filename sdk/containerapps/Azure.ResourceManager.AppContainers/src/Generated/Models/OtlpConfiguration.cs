@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="OtlpConfiguration"/>. </summary>
         public OtlpConfiguration()
         {
-            Headers = new ChangeTrackingList<Header>();
+            Headers = new ChangeTrackingList<ContainerAppOtlpHeader>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OtlpConfiguration"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isInsecure"> Boolean indicating if otlp configuration is insecure. </param>
         /// <param name="headers"> Headers of otlp configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OtlpConfiguration(string name, string endpoint, bool? isInsecure, IList<Header> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OtlpConfiguration(string name, string endpoint, bool? isInsecure, IList<ContainerAppOtlpHeader> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Endpoint = endpoint;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Headers of otlp configurations. </summary>
         [WirePath("headers")]
-        public IList<Header> Headers { get; }
+        public IList<ContainerAppOtlpHeader> Headers { get; }
     }
 }

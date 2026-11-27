@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(Upn))
+            if (Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("upn"u8);
-                writer.WriteStringValue(Upn);
+                writer.WriteStringValue(UserPrincipalName);
             }
             if (Optional.IsDefined(PhoneNumber))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string firstName = default;
             string lastName = default;
             string emailAddress = default;
-            string upn = default;
+            string userPrincipalName = default;
             string phoneNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("upn"u8))
                 {
-                    upn = prop.Value.GetString();
+                    userPrincipalName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("phoneNumber"u8))
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CommvaultUserDetails(
                 firstName,
                 lastName,
                 emailAddress,
-                upn,
+                userPrincipalName,
                 phoneNumber,
                 additionalBinaryDataProperties);
         }

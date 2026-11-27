@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Network.Models
             Listeners = new ChangeTrackingList<ApplicationGatewayListener>();
             SslProfiles = new ChangeTrackingList<ApplicationGatewaySslProfile>();
             UrlPathMaps = new ChangeTrackingList<ApplicationGatewayUrlPathMap>();
+            AdvancedRoutingMaps = new ChangeTrackingList<ApplicationGatewayAdvancedRoutingMap>();
             RequestRoutingRules = new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
             RoutingRules = new ChangeTrackingList<ApplicationGatewayRoutingRule>();
             RewriteRuleSets = new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
+            AdvancedRoutingConditionSets = new ChangeTrackingList<ApplicationGatewayAdvancedRoutingConditionSet>();
             RedirectConfigurations = new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>();
             PrivateLinkConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>();
             PrivateEndpointConnections = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPropertiesFormat"/>. </summary>
         /// <param name="sku"> SKU of the application gateway resource. </param>
+        /// <param name="deploymentTier"> Deployment tier of the application gateway resource. Only valid on Standard_v2 and WAF_v2 SKUs. </param>
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="operationalState"> Operational state of the application gateway resource. </param>
         /// <param name="gatewayIPConfigurations"> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
@@ -66,15 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="advancedRoutingMaps"> Advanced routing maps of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
         /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
         /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
+        /// <param name="advancedRoutingConditionSets"> Advanced routing condition sets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
         /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
         /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
+        /// <param name="enableConfidentialCompute"> Whether Confidential Compute is enabled on the application gateway resource. </param>
         /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
+        /// <param name="reservedCapacity"> The reserved capacity of the application gateway resource. Applicable to the Basic_v2 and Basic_WAF_v2 SKU tiers. </param>
         /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
         /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
@@ -86,9 +93,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="globalConfiguration"> Global Configuration. </param>
         /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayPropertiesFormat(ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayBackendSettings> backendSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewayListener> listeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRoutingRule> routingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, NetworkSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, IList<ApplicationGatewayEntraJwtValidationConfig> entraJwtValidationConfigs, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayPropertiesFormat(ApplicationGatewaySku sku, ApplicationGatewayDeploymentTier? deploymentTier, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayBackendSettings> backendSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewayListener> listeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayAdvancedRoutingMap> advancedRoutingMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRoutingRule> routingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayAdvancedRoutingConditionSet> advancedRoutingConditionSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, NetworkSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, bool? enableConfidentialCompute, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, int? reservedCapacity, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, IList<ApplicationGatewayEntraJwtValidationConfig> entraJwtValidationConfigs, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
+            DeploymentTier = deploymentTier;
             SslPolicy = sslPolicy;
             OperationalState = operationalState;
             GatewayIPConfigurations = gatewayIPConfigurations;
@@ -106,15 +114,19 @@ namespace Azure.ResourceManager.Network.Models
             Listeners = listeners;
             SslProfiles = sslProfiles;
             UrlPathMaps = urlPathMaps;
+            AdvancedRoutingMaps = advancedRoutingMaps;
             RequestRoutingRules = requestRoutingRules;
             RoutingRules = routingRules;
             RewriteRuleSets = rewriteRuleSets;
+            AdvancedRoutingConditionSets = advancedRoutingConditionSets;
             RedirectConfigurations = redirectConfigurations;
             WebApplicationFirewallConfiguration = webApplicationFirewallConfiguration;
             FirewallPolicy = firewallPolicy;
             EnableHttp2 = enableHttp2;
             EnableFips = enableFips;
+            EnableConfidentialCompute = enableConfidentialCompute;
             AutoscaleConfiguration = autoscaleConfiguration;
+            ReservedCapacity = reservedCapacity;
             PrivateLinkConfigurations = privateLinkConfigurations;
             PrivateEndpointConnections = privateEndpointConnections;
             ResourceGuid = resourceGuid;
@@ -131,6 +143,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> SKU of the application gateway resource. </summary>
         [WirePath("sku")]
         public ApplicationGatewaySku Sku { get; set; }
+
+        /// <summary> Deployment tier of the application gateway resource. Only valid on Standard_v2 and WAF_v2 SKUs. </summary>
+        [WirePath("deploymentTier")]
+        public ApplicationGatewayDeploymentTier? DeploymentTier { get; set; }
 
         /// <summary> SSL policy of the application gateway resource. </summary>
         [WirePath("sslPolicy")]
@@ -200,6 +216,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("urlPathMaps")]
         public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; } = new ChangeTrackingList<ApplicationGatewayUrlPathMap>();
 
+        /// <summary> Advanced routing maps of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("advancedRoutingMaps")]
+        public IList<ApplicationGatewayAdvancedRoutingMap> AdvancedRoutingMaps { get; } = new ChangeTrackingList<ApplicationGatewayAdvancedRoutingMap>();
+
         /// <summary> Request routing rules of the application gateway resource. </summary>
         [WirePath("requestRoutingRules")]
         public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; } = new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
@@ -211,6 +231,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Rewrite rules for the application gateway resource. </summary>
         [WirePath("rewriteRuleSets")]
         public IList<ApplicationGatewayRewriteRuleSet> RewriteRuleSets { get; } = new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
+
+        /// <summary> Advanced routing condition sets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("advancedRoutingConditionSets")]
+        public IList<ApplicationGatewayAdvancedRoutingConditionSet> AdvancedRoutingConditionSets { get; } = new ChangeTrackingList<ApplicationGatewayAdvancedRoutingConditionSet>();
 
         /// <summary> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
         [WirePath("redirectConfigurations")]
@@ -232,9 +256,17 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("enableFips")]
         public bool? EnableFips { get; set; }
 
+        /// <summary> Whether Confidential Compute is enabled on the application gateway resource. </summary>
+        [WirePath("enableConfidentialCompute")]
+        public bool? EnableConfidentialCompute { get; set; }
+
         /// <summary> Autoscale Configuration. </summary>
         [WirePath("autoscaleConfiguration")]
         public ApplicationGatewayAutoscaleConfiguration AutoscaleConfiguration { get; set; }
+
+        /// <summary> The reserved capacity of the application gateway resource. Applicable to the Basic_v2 and Basic_WAF_v2 SKU tiers. </summary>
+        [WirePath("reservedCapacity")]
+        public int? ReservedCapacity { get; set; }
 
         /// <summary> PrivateLink configurations on application gateway. </summary>
         [WirePath("privateLinkConfigurations")]

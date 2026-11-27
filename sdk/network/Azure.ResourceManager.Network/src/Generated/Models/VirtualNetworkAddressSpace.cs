@@ -24,17 +24,6 @@ namespace Azure.ResourceManager.Network.Models
             IpamPoolPrefixAllocations = new ChangeTrackingList<IpamPoolPrefixAllocation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkAddressSpace"/>. </summary>
-        /// <param name="addressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
-        /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools allocating IP address prefixes. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAddressSpace(IList<string> addressPrefixes, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            AddressPrefixes = addressPrefixes;
-            IpamPoolPrefixAllocations = ipamPoolPrefixAllocations;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
         [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }

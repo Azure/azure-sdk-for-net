@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedSqlKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/>, and <see cref="WebKnowledgeSourceParams"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceParams
     {
@@ -38,9 +38,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             IncludeReferences = includeReferences;
@@ -50,7 +49,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             RerankerThreshold = rerankerThreshold;
             MaxOutputDocuments = maxOutputDocuments;
             Kind = kind;
-            EnableImageServing = enableImageServing;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,8 +75,5 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The type of the knowledge source. </summary>
         internal KnowledgeSourceKind Kind { get; set; }
-
-        /// <summary> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </summary>
-        public bool? EnableImageServing { get; set; }
     }
 }

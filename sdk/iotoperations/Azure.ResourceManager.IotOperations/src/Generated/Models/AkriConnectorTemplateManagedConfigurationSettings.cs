@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateManagedConfigurationSettings"/>. </summary>
+        protected AkriConnectorTemplateManagedConfigurationSettings() : this(default)
+        {
+        }
+
         /// <summary> The type of the managed configuration. </summary>
         internal AkriConnectorTemplateManagedConfigurationType ManagedConfigurationType { get; set; }
 

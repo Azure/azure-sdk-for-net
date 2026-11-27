@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorProperties"/>. </summary>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
-        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
+        /// <param name="hierarchyIdentifierTrialEndsOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
         /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
         /// <param name="offerings"> A collection of offerings for the security connector. </param>
         /// <param name="environmentData"> The security connector environment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorProperties(string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorProperties(string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndsOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyIdentifier = hierarchyIdentifier;
-            HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
+            HierarchyIdentifierTrialEndsOn = hierarchyIdentifierTrialEndsOn;
             EnvironmentName = environmentName;
             Offerings = offerings;
             EnvironmentData = environmentData;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string HierarchyIdentifier { get; set; }
 
         /// <summary> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </summary>
-        public DateTimeOffset? HierarchyIdentifierTrialEndOn { get; }
+        public DateTimeOffset? HierarchyIdentifierTrialEndsOn { get; }
 
         /// <summary> The multi cloud resource's cloud name. </summary>
         public SecurityCenterCloudName? EnvironmentName { get; set; }

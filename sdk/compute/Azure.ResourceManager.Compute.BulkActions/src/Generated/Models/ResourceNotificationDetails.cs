@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Resource notification details containing notification metadata like the resource context. </summary>
+    /// <summary> Caller-provided context associated with a virtual machine operation. </summary>
     internal partial class ResourceNotificationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationDetails"/>. </summary>
-        /// <param name="resourceContext"> Resource context for notification tracking. </param>
+        /// <param name="resourceContext"> Caller-provided context string returned with the virtual machine operation result notification. Do not include secrets or personal data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceNotificationDetails(string resourceContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Resource context for notification tracking. </summary>
+        /// <summary> Caller-provided context string returned with the virtual machine operation result notification. Do not include secrets or personal data. </summary>
         public string ResourceContext { get; }
     }
 }

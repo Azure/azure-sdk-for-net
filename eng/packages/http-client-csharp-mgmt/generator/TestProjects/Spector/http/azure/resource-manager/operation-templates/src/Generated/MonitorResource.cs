@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingMarkAsPageableAsyncCollectionResultOfT(
+            return new CollectionAsyncCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingMarkAsPageableCollectionResultOfT(
+            return new CollectionCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -288,18 +288,18 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitoredResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitoredResource> PostActionPagingAsync(LogStatusRequest content = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MonitoredResource> PostActionPagingAsync(LogStatusContent content = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingPostActionPagingAsyncCollectionResultOfT(
+            return new MonitoredResourceAsyncCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                LogStatusRequest.ToRequestContent(content),
+                LogStatusContent.ToRequestContent(content),
                 context,
                 "MonitorResource.PostActionPaging");
         }
@@ -328,18 +328,18 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitoredResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitoredResource> PostActionPaging(LogStatusRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<MonitoredResource> PostActionPaging(LogStatusContent content = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingPostActionPagingCollectionResultOfT(
+            return new MonitoredResourceCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                LogStatusRequest.ToRequestContent(content),
+                LogStatusContent.ToRequestContent(content),
                 context,
                 "MonitorResource.PostActionPaging");
         }

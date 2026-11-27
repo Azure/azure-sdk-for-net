@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
@@ -80,6 +81,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("nvaSku"u8);
                 writer.WriteObjectValue(NvaSku, options);
+            }
+            if (Optional.IsDefined(LoadBalancerConfiguration))
+            {
+                writer.WritePropertyName("loadBalancerConfiguration"u8);
+                writer.WriteObjectValue(LoadBalancerConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
@@ -170,9 +176,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("internetIngressPublicIps"u8);
                 writer.WriteStartArray();
-                foreach (InternetIngressPublicIpsProperties item in InternetIngressPublicIPs)
+                foreach (WritableSubResource item in InternetIngressPublicIPs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -264,7 +275,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateIPAddressV6))
             {
@@ -319,6 +330,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             VirtualApplianceSkuProperties nvaSku = default;
+            NetworkVirtualApplianceLoadBalancerConfiguration loadBalancerConfiguration = default;
             string addressPrefix = default;
             string addressPrefixV6 = default;
             IList<string> bootStrapConfigurationBlobs = default;
@@ -330,7 +342,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
             NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
-            IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs = default;
+            IList<WritableSubResource> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
             IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
             IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
@@ -340,7 +352,7 @@ namespace Azure.ResourceManager.Network.Models
             PartnerManagedResourceProperties partnerManagedResource = default;
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
             IList<NetworkIPVersion> addressFamily = default;
-            string privateIPAddress = default;
+            IPAddress privateIPAddress = default;
             string privateIPAddressV6 = default;
             NetworkVirtualApplianceMigrationStatus migrationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -353,6 +365,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("loadBalancerConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loadBalancerConfiguration = NetworkVirtualApplianceLoadBalancerConfiguration.DeserializeNetworkVirtualApplianceLoadBalancerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addressPrefix"u8))
@@ -478,10 +499,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<InternetIngressPublicIpsProperties> array = new List<InternetIngressPublicIpsProperties>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternetIngressPublicIpsProperties.DeserializeInternetIngressPublicIpsProperties(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     internetIngressPublicIPs = array;
                     continue;
@@ -611,7 +639,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIPAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddressV6"u8))
@@ -630,11 +662,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkVirtualAppliancePropertiesFormat(
                 nvaSku,
+                loadBalancerConfiguration,
                 addressPrefix,
                 addressPrefixV6,
                 bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(),
@@ -646,7 +679,7 @@ namespace Azure.ResourceManager.Network.Models
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
                 networkProfile,
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
-                internetIngressPublicIPs ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>(),
+                internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),

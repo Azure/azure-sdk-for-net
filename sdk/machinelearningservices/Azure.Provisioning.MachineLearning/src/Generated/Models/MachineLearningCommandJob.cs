@@ -29,6 +29,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningCommandJob. </summary>
         public MachineLearningCommandJob()
         {
+            JobType.Assign(MachineLearning.JobType.Command);
         }
 
         /// <summary> Gets or sets the CodeId. </summary>
@@ -122,7 +123,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Limits. </summary>
-        internal MachineLearningCommandJobLimits Limits
+        public MachineLearningCommandJobLimits Limits
         {
             get
             {
@@ -191,23 +192,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the Timeout. </summary>
-        public BicepValue<TimeSpan> LimitsTimeout
-        {
-            get
-            {
-                return Limits is null ? default : Limits.Timeout;
-            }
-            set
-            {
-                if (Limits is null)
-                {
-                    Limits = new MachineLearningCommandJobLimits();
-                }
-                Limits.Timeout = value;
-            }
-        }
-
         /// <summary> Gets or sets the JobTier. </summary>
         public BicepValue<JobTier> QueueJobTier
         {
@@ -229,7 +213,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "Command");
             _codeId = DefineProperty<ResourceIdentifier>(nameof(CodeId), new string[] { "codeId" });
             _command = DefineProperty<string>(nameof(Command), new string[] { "command" }, isRequired: true);
             _distribution = DefineModelProperty<MachineLearningDistributionConfiguration>(nameof(Distribution), new string[] { "distribution" });

@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Gateway _gateway;
+        private bool _gatewayIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterProperties"/>. </summary>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distributionVersion"> The Kubernetes distribution version on this connected cluster. </param>
         /// <param name="infrastructure"> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </param>
         /// <param name="offering"> Connected cluster offering. </param>
-        /// <param name="managedIdentityCertificateExpirationOn"> Expiration time of the managed identity certificate. </param>
+        /// <param name="managedIdentityCertificateExpiresOn"> Expiration time of the managed identity certificate. </param>
         /// <param name="lastConnectivityOn"> Time representing the last instance when heart beat was received from the cluster. </param>
         /// <param name="connectivityStatus"> Represents the connectivity status of the connected cluster. </param>
         /// <param name="privateLinkState"> Property which describes the state of private link on a connected cluster resource. </param>
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ConnectedClusterProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectedClusterConnectivityStatus? connectivityStatus, ConnectedClusterPrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, ConnectedClusterAadProfile aadProfile, ConnectedClusterArcAgentProfile arcAgentProfile, ConnectedClusterSecurityProfile securityProfile, ConnectedClusterOidcIssuerProfile oidcIssuerProfile, Gateway gateway, IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ConnectedClusterProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpiresOn, DateTimeOffset? lastConnectivityOn, ConnectedClusterConnectivityStatus? connectivityStatus, ConnectedClusterPrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, ConnectedClusterAadProfile aadProfile, ConnectedClusterArcAgentProfile arcAgentProfile, ConnectedClusterSecurityProfile securityProfile, ConnectedClusterOidcIssuerProfile oidcIssuerProfile, Gateway gateway, IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
             KubernetesVersion = kubernetesVersion;
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             DistributionVersion = distributionVersion;
             Infrastructure = infrastructure;
             Offering = offering;
-            ManagedIdentityCertificateExpirationOn = managedIdentityCertificateExpirationOn;
+            ManagedIdentityCertificateExpiresOn = managedIdentityCertificateExpiresOn;
             LastConnectivityOn = lastConnectivityOn;
             ConnectivityStatus = connectivityStatus;
             PrivateLinkState = privateLinkState;
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             ArcAgentProfile = arcAgentProfile;
             SecurityProfile = securityProfile;
             OidcIssuerProfile = oidcIssuerProfile;
-            Gateway = gateway;
+            _gateway = gateway;
             ArcAgentryConfigurations = arcAgentryConfigurations;
             MiscellaneousProperties = miscellaneousProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string Offering { get; }
 
         /// <summary> Expiration time of the managed identity certificate. </summary>
-        public DateTimeOffset? ManagedIdentityCertificateExpirationOn { get; }
+        public DateTimeOffset? ManagedIdentityCertificateExpiresOn { get; }
 
         /// <summary> Time representing the last instance when heart beat was received from the cluster. </summary>
         public DateTimeOffset? LastConnectivityOn { get; }
@@ -144,7 +146,18 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ConnectedClusterOidcIssuerProfile OidcIssuerProfile { get; set; }
 
         /// <summary> Details of the gateway used by the Arc router for connectivity. </summary>
-        internal Gateway Gateway { get; set; }
+        internal Gateway Gateway
+        {
+            get
+            {
+                return _gateway;
+            }
+            set
+            {
+                _gateway = value;
+                _gatewayIsDefined = true;
+            }
+        }
 
         /// <summary> Configuration settings for customizing the behavior of the connected cluster. </summary>
         public IList<ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations { get; set; }

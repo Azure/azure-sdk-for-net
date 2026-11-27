@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="SecurityRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the security rule. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal SecurityRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, SecurityRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
+        internal SecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityRulePropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (SecurityRuleProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Access;
+                return Properties is null ? (SecurityRuleAccess?)default : Properties.Access;
             }
             set
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Priority;
+                return Properties is null ? (int?)default : Properties.Priority;
             }
             set
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Direction;
+                return Properties is null ? (SecurityRuleDirection?)default : Properties.Direction;
             }
             set
             {

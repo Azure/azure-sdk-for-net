@@ -25,10 +25,10 @@ namespace Azure.AI.Discovery
         /// <summary> Initializes a new instance of <see cref="DiscoveryInvestigation"/>. </summary>
         /// <param name="name"> The investigation name. </param>
         /// <param name="projectName"> The parent project name. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="status"> The status. </param>
@@ -36,14 +36,14 @@ namespace Azure.AI.Discovery
         /// <param name="tags"> The tags. </param>
         /// <param name="displayName"> The title. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryInvestigation(string name, string projectName, DateTimeOffset? createdAt, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedAt, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, InvestigationStatus? status, string description, IList<DiscoveryTag> tags, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryInvestigation(string name, string projectName, DateTimeOffset? createdOn, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedOn, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, InvestigationStatus? status, string description, IList<DiscoveryTag> tags, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ProjectName = projectName;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             Status = status;
@@ -60,7 +60,7 @@ namespace Azure.AI.Discovery
         public string ProjectName { get; }
 
         /// <summary> The timestamp when the resource was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The ID of the user who created this resource. </summary>
         public string CreatedBy { get; }
@@ -69,7 +69,7 @@ namespace Azure.AI.Discovery
         public DiscoveryActorType? CreatedByType { get; }
 
         /// <summary> The timestamp when the resource was last updated. </summary>
-        public DateTimeOffset? LastModifiedAt { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The ID of the user who updated this resource. </summary>
         public string LastModifiedBy { get; }

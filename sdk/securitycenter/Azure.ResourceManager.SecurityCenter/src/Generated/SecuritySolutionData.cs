@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.SecurityFamily;
+                return Properties is null ? (SecurityFamily?)default : Properties.SecurityFamily;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                return Properties is null ? (SecurityCenterProvisioningState?)default : Properties.ProvisioningState;
             }
         }
 

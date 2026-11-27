@@ -1,9 +1,5 @@
 # Sample on getting the responses from hosted Agent in Azure.AI.Extensions.OpenAI
 
-## Hosted Agent Deployment prerequisites
-
-In this example we will build the docker image for hosted Agent based on the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
-
 ## Hosted agent deployment
 `Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, while the hosted Agent represents the running container, which exposes the OpenAI-compatible API. In this example we will use a simple Agent, which replies with the prompt prefixed by "Echo". Please see this and other Hosted Agent samples [here](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples)
 1. Create a project and add `Azure.AI.AgentServer.Responses` package as a dependency.
@@ -171,7 +167,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
@@ -191,7 +187,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
     ProtocolConfiguration = new()
     {
         Responses = new()

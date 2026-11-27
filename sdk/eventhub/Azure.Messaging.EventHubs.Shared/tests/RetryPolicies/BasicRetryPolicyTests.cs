@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
@@ -35,10 +36,37 @@ namespace Azure.Messaging.EventHubs.Tests
             // WebSocketException should use the inner exception as the decision point.
             yield return new object[] { new WebSocketException("dummy", new EventHubsException(true, null)) };
 
+            // Nested transport wrappers should be unwrapped until an exception that can be classified is found.
+
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new IOException("dummy", new SocketException((int)SocketError.ConnectionReset)))) };
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new SocketException((int)SocketError.ConnectionReset))) };
+            yield return new object[] { new HttpRequestException("dummy", new IOException()) };
+            yield return new object[] { new AggregateException(new WebSocketException("dummy", new IOException())) };
+
+            // ManagedWebSocket wraps a transport failure in a cancellation when an abort ends a pending receive.
+            yield return new object[] { new OperationCanceledException("dummy", new WebSocketException("dummy", new IOException())) };
+
+            // Mid-stream transport failures with a transient socket error stay retriable.  This chain has no
+            // HttpRequestException layer, which matches what ManagedWebSocket produces.
+
+            yield return new object[] { new WebSocketException("dummy", new IOException("dummy", new SocketException((int)SocketError.ConnectionReset))) };
+
+            // The same transient socket error stays retriable at the minimal depth of a single IOException wrapper.
+
+            yield return new object[] { new IOException("dummy", new SocketException((int)SocketError.ConnectionReset)) };
+
+            // An IOException with a non-socket inner exception keeps its own retriable classification.  FormatException
+            // is non-retriable on its own, so this case fails if IOException is ever unwrapped unconditionally.
+
+            yield return new object[] { new IOException("dummy", new FormatException()) };
+
             // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new EventHubsException(true, null)) };
             yield return new object[] { new OperationCanceledException("dummy", new EventHubsException(true, null)) };
+
+            // Since .NET 5, an HttpClient timeout arrives as a TaskCanceledException that wraps a TimeoutException.
+            yield return new object[] { new TaskCanceledException("dummy", new TimeoutException()) };
 
             // Aggregate should use the first inner exception as the decision point.
 
@@ -50,6 +78,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     new ArgumentException()
                 })
             };
+
+            // Synthetic case; five wrappers reach the leaf and pin MaximumUnwrapDepth at 5.
+
+            yield return new object[] { new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new EventHubsException(true, null)))))) };
         }
 
         /// <summary>
@@ -66,14 +98,38 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new ObjectDisposedException("dummy") };
             yield return new object[] { new SocketException((int)SocketError.HostNotFound) };
             yield return new object[] { new SocketException((int)SocketError.HostUnreachable) };
+            yield return new object[] { new SocketException((int)SocketError.NoRecovery) };
 
             // WebSocketException should use the inner exception as the decision point.
             yield return new object[] { new WebSocketException("dummy", new EventHubsException(false, null)) };
+
+            // Nested transport wrappers with a terminal root cause should remain non-retriable.
+
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new SocketException((int)SocketError.HostNotFound))) };
+            yield return new object[] { new WebSocketException("dummy") };
+            yield return new object[] { new HttpRequestException("dummy") };
+
+            // Mid-stream transport failures with a terminal socket error must stay non-retriable.  ManagedWebSocket
+            // wraps the stream IOException directly, so this chain has no HttpRequestException layer.
+
+            yield return new object[] { new WebSocketException("dummy", new IOException("dummy", new SocketException((int)SocketError.HostUnreachable))) };
+
+            // NetworkStream and SslStream produce this minimal shape, with no WebSocketException wrapper around it.
+
+            yield return new object[] { new IOException("dummy", new SocketException((int)SocketError.HostUnreachable)) };
+
+            // This case is a classifier contract case, not a chain that the runtime produces.  It pins the promise
+            // that a terminal socket error stays terminal at each supported depth.
+
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new IOException("dummy", new SocketException((int)SocketError.HostNotFound)))) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new EventHubsException(false, null)) };
             yield return new object[] { new OperationCanceledException("dummy", new EventHubsException(false, null)) };
+
+            // A caller cancellation has no inner exception, so it resolves to null and stays terminal.
+            yield return new object[] { new OperationCanceledException("dummy") };
 
             // Null is not retriable, even if it is a blessed type.
 
@@ -90,6 +146,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     new TimeoutException()
                 })
             };
+
+            // Synthetic case; a sixth wrapper exceeds MaximumUnwrapDepth and does not classify.
+
+            yield return new object[] { new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new EventHubsException(true, null))))))) };
         }
 
         /// <summary>
@@ -221,6 +281,58 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(NonRetriableExceptionTestCases))]
         public void CalculateRetryDelayDoesNotRetryForNotKnownRetriableExceptions(Exception exception)
         {
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 99,
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(100),
+                Mode = EventHubsRetryMode.Fixed
+            });
+
+            Assert.That(policy.CalculateRetryDelay(exception, 88), Is.Null);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayUnwrapsNestedWrappersWithinTheMaximumDepth()
+        {
+            Exception exception = new IOException();
+
+            for (var index = 0; index < 3; ++index)
+            {
+                exception = new WebSocketException("dummy", exception);
+            }
+
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 99,
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(100),
+                Mode = EventHubsRetryMode.Fixed
+            });
+
+            Assert.That(policy.CalculateRetryDelay(exception, 88), Is.Not.Null);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayStopsUnwrappingAtTheMaximumDepth()
+        {
+            Exception exception = new IOException();
+
+            for (var index = 0; index < 10; ++index)
+            {
+                exception = new WebSocketException("dummy", exception);
+            }
+
             var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,

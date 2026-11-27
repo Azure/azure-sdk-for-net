@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedLimitCapData, SharedLimitCapResource>(new SharedLimitCapsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_sharedLimitCapsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "SharedLimitCapCollection.GetAll"), data => new SharedLimitCapResource(Client, data));
+            return new AsyncPageableWrapper<SharedLimitCapData, SharedLimitCapResource>(new SharedLimitCapDataAsyncCollectionResultOfT(_sharedLimitCapsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "SharedLimitCapCollection.GetAll"), data => new SharedLimitCapResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedLimitCapData, SharedLimitCapResource>(new SharedLimitCapsGetBySubscriptionLocationResourceCollectionResultOfT(_sharedLimitCapsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "SharedLimitCapCollection.GetAll"), data => new SharedLimitCapResource(Client, data));
+            return new PageableWrapper<SharedLimitCapData, SharedLimitCapResource>(new SharedLimitCapDataCollectionResultOfT(_sharedLimitCapsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "SharedLimitCapCollection.GetAll"), data => new SharedLimitCapResource(Client, data));
         }
 
         /// <summary>

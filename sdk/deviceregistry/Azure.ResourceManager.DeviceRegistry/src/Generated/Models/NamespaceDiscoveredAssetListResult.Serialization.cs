@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NamespaceDiscoveredAssetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NamespaceDiscoveredAssetListResult(value ?? new ChangeTrackingList<DeviceRegistryNamespaceDiscoveredAssetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

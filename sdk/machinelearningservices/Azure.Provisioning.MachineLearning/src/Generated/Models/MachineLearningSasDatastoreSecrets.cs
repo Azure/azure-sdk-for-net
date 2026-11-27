@@ -10,13 +10,14 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Datastore SAS secrets. </summary>
-    internal partial class MachineLearningSasDatastoreSecrets : MachineLearningDatastoreSecrets
+    public partial class MachineLearningSasDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private BicepValue<string> _sasToken;
 
         /// <summary> Creates a new MachineLearningSasDatastoreSecrets. </summary>
         public MachineLearningSasDatastoreSecrets()
         {
+            SecretsType.Assign(MachineLearning.SecretsType.Sas);
         }
 
         /// <summary> Gets or sets the SasToken. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("secretsType", new string[] { "secretsType" }, defaultValue: "Sas");
             _sasToken = DefineProperty<string>(nameof(SasToken), new string[] { "sasToken" });
             DefineAdditionalProperties();
         }

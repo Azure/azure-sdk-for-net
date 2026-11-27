@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Referenced dependency.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TriggerDependencyReference"/>, <see cref="TumblingWindowTriggerDependencyReference"/>, and <see cref="SelfDependencyTumblingWindowTriggerReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/>, and <see cref="TumblingWindowTriggerDependencyReference"/>.
     /// </summary>
     public abstract partial class DependencyReference
     {
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DependencyReferenceType = dependencyReferenceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
+        protected DependencyReference() : this(default)
+        {
         }
 
         /// <summary> The type of dependency reference. </summary>

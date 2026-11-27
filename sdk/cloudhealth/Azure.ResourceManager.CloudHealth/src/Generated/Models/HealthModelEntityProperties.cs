@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public HealthModelEntityProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            SignalAggregationGroups = new ChangeTrackingList<HealthModelSignalAggregationGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthModelEntityProperties"/>. </summary>
@@ -32,11 +33,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="impact"> Impact of the entity in health state propagation. </param>
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="signalGroups"> Signal groups which are assigned to this entity. </param>
+        /// <param name="signalAggregationGroups"> Logical aggregation groups over the signals on this entity. Overlap is allowed: the same signal may appear in more than one group's members. Each group is evaluated independently according to its strategy, and a shared signal can contribute to multiple group states and related per-group telemetry. Group states contribute alongside any ungrouped signals and the dependency-aggregated child health to the entity's overall worst-of composite. </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> tags, EntitySignalGroups signalGroups, string discoveredBy, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelEntityCoordinates canvasPosition, HealthModelEntityIcon icon, float? healthObjective, HealthModelEntityImpact? impact, IDictionary<string, string> tags, EntitySignalGroups signalGroups, IList<HealthModelSignalAggregationGroup> signalAggregationGroups, string discoveredBy, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             Impact = impact;
             Tags = tags;
             SignalGroups = signalGroups;
+            SignalAggregationGroups = signalAggregationGroups;
             DiscoveredBy = discoveredBy;
             HealthState = healthState;
             Alerts = alerts;
@@ -59,22 +62,25 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string DisplayName { get; set; }
 
         /// <summary> Positioning of the entity on the model canvas. </summary>
-        public EntityCoordinates CanvasPosition { get; set; }
+        public HealthModelEntityCoordinates CanvasPosition { get; set; }
 
         /// <summary> Visual icon definition. If not set, a default icon is used. </summary>
-        public EntityIcon Icon { get; set; }
+        public HealthModelEntityIcon Icon { get; set; }
 
         /// <summary> Health objective as a percentage of time the entity should be healthy. </summary>
         public float? HealthObjective { get; set; }
 
         /// <summary> Impact of the entity in health state propagation. </summary>
-        public EntityImpact? Impact { get; set; }
+        public HealthModelEntityImpact? Impact { get; set; }
 
         /// <summary> Optional set of tags (key-value pairs). </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Signal groups which are assigned to this entity. </summary>
         public EntitySignalGroups SignalGroups { get; set; }
+
+        /// <summary> Logical aggregation groups over the signals on this entity. Overlap is allowed: the same signal may appear in more than one group's members. Each group is evaluated independently according to its strategy, and a shared signal can contribute to multiple group states and related per-group telemetry. Group states contribute alongside any ungrouped signals and the dependency-aggregated child health to the entity's overall worst-of composite. </summary>
+        public IList<HealthModelSignalAggregationGroup> SignalAggregationGroups { get; }
 
         /// <summary> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }

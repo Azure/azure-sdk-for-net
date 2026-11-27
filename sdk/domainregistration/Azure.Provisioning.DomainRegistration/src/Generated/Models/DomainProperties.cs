@@ -24,7 +24,7 @@ namespace Azure.Provisioning.DomainRegistration
         private BicepList<string> _nameServers;
         private BicepValue<bool> _isDomainPrivacyEnabled;
         private BicepValue<DateTimeOffset> _createdOn;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<DateTimeOffset> _lastRenewedOn;
         private BicepValue<bool> _isAutoRenew;
         private BicepValue<bool> _isDnsRecordManagementReady;
@@ -156,13 +156,13 @@ namespace Azure.Provisioning.DomainRegistration
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
@@ -309,7 +309,7 @@ namespace Azure.Provisioning.DomainRegistration
             _nameServers = DefineListProperty<string>(nameof(NameServers), new string[] { "nameServers" }, isOutput: true);
             _isDomainPrivacyEnabled = DefineProperty<bool>(nameof(IsDomainPrivacyEnabled), new string[] { "privacy" });
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdTime" }, isOutput: true, format: "O");
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTime" }, isOutput: true, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationTime" }, isOutput: true, format: "O");
             _lastRenewedOn = DefineProperty<DateTimeOffset>(nameof(LastRenewedOn), new string[] { "lastRenewedTime" }, isOutput: true, format: "O");
             _isAutoRenew = DefineProperty<bool>(nameof(IsAutoRenew), new string[] { "autoRenew" });
             _isDnsRecordManagementReady = DefineProperty<bool>(nameof(IsDnsRecordManagementReady), new string[] { "readyForDnsRecordManagement" }, isOutput: true);

@@ -15,11 +15,16 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// <typeparam name="TInput">The task input type.</typeparam>
 internal sealed class TaskContextState<TInput>
 {
-    public TaskContextState(TInput input, string taskId, string inputId)
+    public TaskContextState(
+        TInput input,
+        string taskId,
+        string inputId,
+        TaskStreamState stream)
     {
         Input = input;
         TaskId = taskId;
         InputId = inputId;
+        Stream = stream.Writer;
     }
 
     public TInput Input { get; }
@@ -27,6 +32,8 @@ internal sealed class TaskContextState<TInput>
     public string TaskId { get; }
 
     public string InputId { get; }
+
+    public TaskStreamWriter Stream { get; }
 
     public EntryMode EntryMode { get; set; } = EntryMode.Fresh;
 

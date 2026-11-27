@@ -95,7 +95,7 @@ namespace Azure.Provisioning.ContainerRegistry
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _scopeMapId = DefineProperty<ResourceIdentifier>(nameof(ScopeMapId), new string[] { "scopeMapId" });
             _credentials = DefineModelProperty<ContainerRegistryTokenCredentials>(nameof(Credentials), new string[] { "credentials" });

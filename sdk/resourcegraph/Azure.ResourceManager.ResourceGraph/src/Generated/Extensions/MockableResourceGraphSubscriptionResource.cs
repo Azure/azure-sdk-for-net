@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -36,7 +37,72 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
 
         private ClientDiagnostics GraphQueryClientDiagnostics => _graphQueryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(GraphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
+        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(GraphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        /// <summary> Gets a collection of Offerings in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of Offerings and their operations over a OfferingResource. </returns>
+        public virtual OfferingCollection GetOfferings()
+        {
+            return GetCachedClient(client => new OfferingCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an offering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceGraph/offerings/{offeringName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Offerings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="offeringName"> The name of the Offering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OfferingResource>> GetOfferingAsync(string offeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offeringName, nameof(offeringName));
+
+            return await GetOfferings().GetAsync(offeringName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an offering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceGraph/offerings/{offeringName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Offerings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="offeringName"> The name of the Offering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OfferingResource> GetOffering(string offeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offeringName, nameof(offeringName));
+
+            return GetOfferings().Get(offeringName, cancellationToken);
+        }
 
         /// <summary>
         /// Get all graph queries defined within a specified subscription.
@@ -63,7 +129,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionAsyncCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryDataAsync0CollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +157,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
+            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryData0CollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
     }
 }

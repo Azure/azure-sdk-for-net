@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="IndexerResyncOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexerResyncOption?(string value) => value == null ? null : new IndexerResyncOption(value);
+        public static implicit operator IndexerResyncOption?(string value) => value == null ? (IndexerResyncOption?)null : new IndexerResyncOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

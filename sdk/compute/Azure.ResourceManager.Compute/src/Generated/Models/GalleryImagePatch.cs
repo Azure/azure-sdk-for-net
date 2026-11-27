@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : Properties.OSType;
+                return Properties is null ? (SupportedOperatingSystemType?)default : Properties.OSType;
             }
             set
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : Properties.OSState;
+                return Properties is null ? (OperatingSystemStateType?)default : Properties.OSState;
             }
             set
             {

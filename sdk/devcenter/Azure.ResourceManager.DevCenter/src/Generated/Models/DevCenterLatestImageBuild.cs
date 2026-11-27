@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DevCenterLatestImageBuild"/>. </summary>
         /// <param name="name"> Identifier of a build. </param>
-        /// <param name="startOn"> Start time of the task group. </param>
-        /// <param name="endOn"> End time of the task group. </param>
+        /// <param name="startsOn"> Start time of the task group. </param>
+        /// <param name="endsOn"> End time of the task group. </param>
         /// <param name="status"> The state of an Image Definition Build. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterLatestImageBuild(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, DevCenterImageDefinitionBuildStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterLatestImageBuild(string name, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DevCenterImageDefinitionBuildStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string Name { get; }
 
         /// <summary> Start time of the task group. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the task group. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The state of an Image Definition Build. </summary>
         public DevCenterImageDefinitionBuildStatus? Status { get; }

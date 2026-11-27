@@ -1609,7 +1609,7 @@ namespace Azure.Identity
     {
         public ManagedIdentityCredentialOptions(Azure.Identity.ManagedIdentityId managedIdentityId = null) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
-        public bool DisableMtlsProofOfPossession { get { throw null; } set { } }
+        public bool EnableMtlsProofOfPossession { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ManagedIdentityId
@@ -1805,7 +1805,6 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0002")]
         public bool IsAzureProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedSiteData, DeletedSiteResource>(new GlobalDeletedWebAppsGetAllAsyncCollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
+            return new AsyncPageableWrapper<DeletedSiteData, DeletedSiteResource>(new DeletedSiteDataAsync0CollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedSiteData, DeletedSiteResource>(new GlobalDeletedWebAppsGetAllCollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
+            return new PageableWrapper<DeletedSiteData, DeletedSiteResource>(new DeletedSiteData0CollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
         }
 
         /// <summary>

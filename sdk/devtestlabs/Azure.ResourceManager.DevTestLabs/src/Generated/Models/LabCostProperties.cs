@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
         /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
         /// <param name="currencyCode"> The currency code of the cost. </param>
-        /// <param name="startOn"> The start time of the cost data. </param>
-        /// <param name="endOn"> The end time of the cost data. </param>
+        /// <param name="startsOn"> The start time of the cost data. </param>
+        /// <param name="endsOn"> The end time of the cost data. </param>
         /// <param name="createdOn"> The creation date of the cost. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabCostProperties(DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabCostProperties(DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetCost = targetCost;
             LabCostSummary = labCostSummary;
             LabCostDetails = labCostDetails;
             ResourceCosts = resourceCosts;
             CurrencyCode = currencyCode;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string CurrencyCode { get; set; }
 
         /// <summary> The start time of the cost data. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time of the cost data. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The creation date of the cost. </summary>
         public DateTimeOffset? CreatedOn { get; set; }

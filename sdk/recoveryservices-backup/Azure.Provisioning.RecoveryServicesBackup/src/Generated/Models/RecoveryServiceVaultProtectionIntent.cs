@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new RecoveryServiceVaultProtectionIntent. </summary>
         public RecoveryServiceVaultProtectionIntent()
         {
+            ProtectionIntentItemType.Assign(RecoveryServicesBackup.ProtectionIntentItemType.RecoveryServiceVaultItem);
         }
 
         /// <summary> Define all the provisionable properties for RecoveryServiceVaultProtectionIntent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectionIntentItemType", new string[] { "protectionIntentItemType" }, defaultValue: "RecoveryServiceVaultItem");
             DefineAdditionalProperties();
         }
 

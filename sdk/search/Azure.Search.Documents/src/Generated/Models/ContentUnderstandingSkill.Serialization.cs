@@ -82,18 +82,42 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ExtractionOptions))
             {
-                writer.WritePropertyName("extractionOptions"u8);
-                writer.WriteStartArray();
-                foreach (ContentUnderstandingSkillExtractionOptions item in ExtractionOptions)
+                if (ExtractionOptions != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("extractionOptions"u8);
+                    writer.WriteStartArray();
+                    foreach (ContentUnderstandingSkillExtractionOptions item in ExtractionOptions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("extractionOptions"u8);
+                }
             }
-            if (Optional.IsDefined(ChunkingProperties))
+            if (Optional.IsDefined(ChunkingProperties, _chunkingPropertiesIsDefined))
             {
-                writer.WritePropertyName("chunkingProperties"u8);
-                writer.WriteObjectValue(ChunkingProperties, options);
+                if (ChunkingProperties != null)
+                {
+                    writer.WritePropertyName("chunkingProperties"u8);
+                    writer.WriteObjectValue(ChunkingProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("chunkingProperties"u8);
+                }
+            }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(ModelDeployment))
+            {
+                writer.WritePropertyName("modelDeployment"u8);
+                writer.WriteStringValue(ModelDeployment);
             }
         }
 
@@ -129,8 +153,11 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = default;
+            IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>();
+            bool chunkingPropertiesIsDefined = false;
             ContentUnderstandingSkillChunkingProperties chunkingProperties = default;
+            string modelName = default;
+            string modelDeployment = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -177,6 +204,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        extractionOptions = null;
                         continue;
                     }
                     List<ContentUnderstandingSkillExtractionOptions> array = new List<ContentUnderstandingSkillExtractionOptions>();
@@ -189,6 +217,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("chunkingProperties"u8))
                 {
+                    chunkingPropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         chunkingProperties = null;
@@ -197,9 +226,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     chunkingProperties = ContentUnderstandingSkillChunkingProperties.DeserializeContentUnderstandingSkillChunkingProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("modelName"u8))
+                {
+                    modelName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modelDeployment"u8))
+                {
+                    modelDeployment = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContentUnderstandingSkill(
@@ -207,11 +246,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
-                extractionOptions ?? new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>(),
-                chunkingProperties);
+                extractionOptions,
+                chunkingProperties,
+                modelName,
+                modelDeployment)
+            {
+                _chunkingPropertiesIsDefined = chunkingPropertiesIsDefined
+            };
         }
     }
 }

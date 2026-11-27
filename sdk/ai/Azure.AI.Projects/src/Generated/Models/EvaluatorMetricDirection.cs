@@ -4,13 +4,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The direction of the metric indicating whether a higher value is better, a lower value is better, or neutral. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct EvaluatorMetricDirection : IEquatable<EvaluatorMetricDirection>
     {
         private readonly string _value;
@@ -56,7 +54,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="EvaluatorMetricDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorMetricDirection?(string value) => value == null ? null : new EvaluatorMetricDirection(value);
+        public static implicit operator EvaluatorMetricDirection?(string value) => value == null ? (EvaluatorMetricDirection?)null : new EvaluatorMetricDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

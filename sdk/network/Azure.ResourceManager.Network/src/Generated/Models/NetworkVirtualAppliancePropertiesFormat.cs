@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             CloudInitConfigurationBlobs = new ChangeTrackingList<string>();
             VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
             AdditionalNics = new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>();
-            InternetIngressPublicIPs = new ChangeTrackingList<InternetIngressPublicIpsProperties>();
+            InternetIngressPublicIPs = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualAppliancePropertiesFormat"/>. </summary>
         /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
+        /// <param name="loadBalancerConfiguration"> Configuration of the internal load balancer for a managed Network Virtual Appliance in a virtual hub or virtual network. Not applicable to partner-managed load balancers on SaaS NVAs. When omitted on create or update, Default distribution and a 5-minute idle timeout are used. </param>
         /// <param name="addressPrefix"> Address Prefix. </param>
         /// <param name="addressPrefixV6"> Address Prefix for Dual-Stack NVAs. </param>
         /// <param name="bootStrapConfigurationBlobs"> BootStrapConfigurationBlobs storage URLs. </param>
@@ -61,9 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateIPAddressV6"> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </param>
         /// <param name="migrationStatus"> The migration status of the Network Virtual Appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, string addressPrefixV6, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IList<NetworkIPVersion> addressFamily, string privateIPAddress, string privateIPAddressV6, NetworkVirtualApplianceMigrationStatus migrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, NetworkVirtualApplianceLoadBalancerConfiguration loadBalancerConfiguration, string addressPrefix, string addressPrefixV6, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IList<NetworkIPVersion> addressFamily, IPAddress privateIPAddress, string privateIPAddressV6, NetworkVirtualApplianceMigrationStatus migrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NvaSku = nvaSku;
+            LoadBalancerConfiguration = loadBalancerConfiguration;
             AddressPrefix = addressPrefix;
             AddressPrefixV6 = addressPrefixV6;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
@@ -94,6 +97,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Network Virtual Appliance SKU. </summary>
         [WirePath("nvaSku")]
         public VirtualApplianceSkuProperties NvaSku { get; set; }
+
+        /// <summary> Configuration of the internal load balancer for a managed Network Virtual Appliance in a virtual hub or virtual network. Not applicable to partner-managed load balancers on SaaS NVAs. When omitted on create or update, Default distribution and a 5-minute idle timeout are used. </summary>
+        [WirePath("loadBalancerConfiguration")]
+        public NetworkVirtualApplianceLoadBalancerConfiguration LoadBalancerConfiguration { get; set; }
 
         /// <summary> Address Prefix. </summary>
         [WirePath("addressPrefix")]
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
         [WirePath("internetIngressPublicIps")]
-        public IList<InternetIngressPublicIpsProperties> InternetIngressPublicIPs { get; } = new ChangeTrackingList<InternetIngressPublicIpsProperties>();
+        public IList<WritableSubResource> InternetIngressPublicIPs { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of references to VirtualApplianceSite. </summary>
         [WirePath("virtualApplianceSites")]
@@ -181,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
         [WirePath("privateIpAddress")]
-        public string PrivateIPAddress { get; }
+        public IPAddress PrivateIPAddress { get; }
 
         /// <summary> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </summary>
         [WirePath("privateIpAddressV6")]

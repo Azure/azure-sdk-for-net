@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <summary> Initializes a new instance of <see cref="StudentLabProperties"/>. </summary>
         /// <param name="displayName"> Student lab Display Name. </param>
         /// <param name="description"> Detail description of this lab. </param>
-        /// <param name="expireOn"> Date the lab will expire and by default will be the expiration date for each student in this lab. </param>
+        /// <param name="expiresOn"> Date the lab will expire and by default will be the expiration date for each student in this lab. </param>
         /// <param name="role"> Student Role. </param>
         /// <param name="budget"> Student Budget. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> User Added Date. </param>
         /// <param name="labScope"> Lab Scope. /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StudentLabProperties(string displayName, string description, DateTimeOffset? expireOn, StudentRole? role, EducationAmount budget, string subscriptionId, StudentLabStatus? status, DateTimeOffset? effectiveOn, string labScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StudentLabProperties(string displayName, string description, DateTimeOffset? expiresOn, StudentRole? role, EducationAmount budget, string subscriptionId, StudentLabStatus? status, DateTimeOffset? effectiveOn, string labScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             Role = role;
             Budget = budget;
             SubscriptionId = subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Education.Models
         public string Description { get; }
 
         /// <summary> Date the lab will expire and by default will be the expiration date for each student in this lab. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Student Role. </summary>
         public StudentRole? Role { get; }

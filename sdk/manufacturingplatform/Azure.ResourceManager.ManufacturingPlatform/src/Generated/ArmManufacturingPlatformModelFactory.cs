@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     public static partial class ArmManufacturingPlatformModelFactory
     {
 
+        /// <summary> A ManufacturingPlatformProviderHub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 default);
         }
 
+        /// <summary> The properties related to Azure Data Explorer (Adx) Resource. </summary>
         /// <param name="id"> Resource Id of Adx Resource. </param>
         /// <param name="uri"> Uri of Adx Resource. </param>
         /// <param name="dataIngestionUri"> Data Ingestion Uri of Adx Resource. </param>
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new AdxProfile(id, uri, dataIngestionUri, default);
         }
 
+        /// <summary> The properties related to EventHub Resource. </summary>
         /// <param name="adxInstanceId"> Resource Id of Adx Instance. </param>
         /// <param name="hostName"> Host Name. </param>
         /// <returns> A new <see cref="Models.EventHubProfile"/> instance for mocking. </returns>
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new EventHubProfile(adxInstanceId, hostName, default);
         }
 
+        /// <summary> The properties related to OpenAI Resource. </summary>
         /// <param name="id"> Resource Id of OpenAI Resource. </param>
         /// <param name="gptModelName"> GPT Model Name. </param>
         /// <param name="gptModelVersion"> GPT Model Version. </param>
@@ -87,6 +91,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 default);
         }
 
+        /// <summary> Configuration of the managed resource group associated with the resource. </summary>
         /// <param name="name"> The resource group name. </param>
         /// <param name="location"> The resource group location. </param>
         /// <returns> A new <see cref="Models.ManagedResourceGroupConfiguration"/> instance for mocking. </returns>
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new ManagedResourceGroupConfiguration(name, location, default);
         }
 
+        /// <summary> MoboBroker resource. </summary>
         /// <param name="id"> Resource Id of MoboBrokerResource. </param>
         /// <returns> A new <see cref="Models.ManagedOnBehalfOfBrokerResourceInfo"/> instance for mocking. </returns>
         public static ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(ResourceIdentifier id = default)
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new ManagedOnBehalfOfBrokerResourceInfo(id, default);
         }
 
+        /// <summary> The properties related to Fabric. </summary>
         /// <param name="keyUri"> Azure Key Vault Uri. </param>
         /// <param name="oneLakeUri"> URI of One Lake. </param>
         /// <param name="oneLakePath"> One Lake Path. </param>
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new FabricProfile(keyUri, oneLakeUri, oneLakePath, default);
         }
 
+        /// <summary> The properties related to User Managed OpenAI Resource. </summary>
         /// <param name="id"> Resource Id of OpenAI Resource. </param>
         /// <param name="gptModelDeploymentName"> GPT Model Deployment Name. </param>
         /// <param name="embeddingModelDeploymentName"> Embedding Model Deployment Name. </param>
@@ -121,6 +129,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new UserManagedOpenAIProfile(id, gptModelDeploymentName, embeddingModelDeploymentName, embeddingModelType, default);
         }
 
+        /// <summary> The properties related to Deny Assignment Exclusions. </summary>
         /// <param name="id"> Object Id of Identity. </param>
         /// <param name="type"> Type of Identity. </param>
         /// <returns> A new <see cref="Models.DenyAssignmentExclusion"/> instance for mocking. </returns>
@@ -129,6 +138,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new DenyAssignmentExclusion(id, @type, default);
         }
 
+        /// <summary> The resource model definition representing SKU. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
@@ -146,6 +156,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the MdsResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -158,6 +169,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new ManufacturingDataServicePatch(identity, sku, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the MdsResource. </summary>
         /// <param name="version"> Mds Resource Version. </param>
         /// <param name="enableCopilot"> Enable Copilot. </param>
         /// <param name="enableDiagnosticSettings"> Enable Diagnostic Settings. </param>
@@ -183,6 +195,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 default);
         }
 
+        /// <summary> The list of available versions. </summary>
         /// <param name="versions"> The list of versions. </param>
         /// <returns> A new <see cref="Models.ManufacturingDataServiceAvailableVersionListResult"/> instance for mocking. </returns>
         public static ManufacturingDataServiceAvailableVersionListResult ManufacturingDataServiceAvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions = default)
@@ -192,6 +205,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new ManufacturingDataServiceAvailableVersionListResult((versions ?? new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>()).ToList(), default);
         }
 
+        /// <summary> Information about application versions. </summary>
         /// <param name="version"> Application Version. </param>
         /// <param name="isLatest"> Is Latest. </param>
         /// <param name="isPreview"> Is Preview. </param>

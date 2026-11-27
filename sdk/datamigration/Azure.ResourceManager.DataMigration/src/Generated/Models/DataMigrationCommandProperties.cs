@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Base class for all types of DMS (classic) command properties. If command is not supported by current client, this object is returned.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, and <see cref="DataMigrationMongoDBRestartCommand"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, <see cref="DataMigrationMongoDBRestartCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, and <see cref="MigrateSyncCompleteCommandProperties"/>.
     /// </summary>
     public abstract partial class DataMigrationCommandProperties
     {

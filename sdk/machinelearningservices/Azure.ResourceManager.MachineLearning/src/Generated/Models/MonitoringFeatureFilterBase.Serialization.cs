@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The MonitoringFeatureFilterBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/>, and <see cref="TopNFeaturesByAttribution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FeatureSubset"/>, <see cref="MachineLearningAllFeatures"/>, and <see cref="TopNFeaturesByAttribution"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMonitoringFeatureFilterBase))]
     public abstract partial class MonitoringFeatureFilterBase : IJsonModel<MonitoringFeatureFilterBase>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AllFeatures":
-                        return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element, options);
                     case "FeatureSubset":
                         return FeatureSubset.DeserializeFeatureSubset(element, options);
+                    case "AllFeatures":
+                        return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element, options);
                     case "TopNByAttribution":
                         return TopNFeaturesByAttribution.DeserializeTopNFeaturesByAttribution(element, options);
                 }

@@ -121,10 +121,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionFileWriteResponse> Upload(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<SessionFileWriteResult> Upload(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
         {
             ClientResult result = Upload(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((SessionFileWriteResult)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -137,10 +137,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadAsync(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<SessionFileWriteResult>> UploadAsync(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
         {
             ClientResult result = await UploadAsync(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((SessionFileWriteResult)result, result.GetRawResponse());
         }
 
         /// <summary>

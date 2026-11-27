@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new ResiliencyReviewsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new AdvisorResiliencyReviewDataAsyncCollectionResultOfT(
                 _resiliencyReviewsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new ResiliencyReviewsGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new AdvisorResiliencyReviewDataCollectionResultOfT(
                 _resiliencyReviewsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,

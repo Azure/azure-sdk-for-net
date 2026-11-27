@@ -80,11 +80,17 @@ public class PipelineMessage : IDisposable
     /// Gets or sets the <see cref="CancellationToken"/> used for the duration
     /// of the call to <see cref="ClientPipeline.Send(PipelineMessage)"/>.
     /// </summary>
+    /// <remarks>
+    /// The token can be set by applying <see cref="RequestOptions"/> or
+    /// overridden by calling
+    /// <see cref="ClientPipeline.Send(PipelineMessage, CancellationToken)"/>
+    /// or <see cref="ClientPipeline.SendAsync(PipelineMessage, CancellationToken)"/>.
+    /// </remarks>
     public CancellationToken CancellationToken
     {
         get;
 
-        // Set internally by RequestOptions.Apply
+        // Set internally by RequestOptions.Apply and ClientPipeline.Send/SendAsync.
         protected internal set;
     }
 
@@ -150,6 +156,20 @@ public class PipelineMessage : IDisposable
     /// <param name="value">The value of the property.</param>
     public void SetProperty(Type key, object? value) =>
         _propertyBag.Set((ulong)key.TypeHandle.Value, value);
+
+    internal void CopyPipelineStateTo(PipelineMessage message)
+    {
+        for (int i = 0; i < _propertyBag.Count; i++)
+        {
+            _propertyBag.GetAt(i, out ulong key, out object? value);
+            message._propertyBag.Set(key, value);
+        }
+
+        message.NetworkTimeout = NetworkTimeout;
+        message.PerCallPolicies = PerCallPolicies;
+        message.PerTryPolicies = PerTryPolicies;
+        message.BeforeTransportPolicies = BeforeTransportPolicies;
+    }
 
     #endregion
 

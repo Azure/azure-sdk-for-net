@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    files = BinaryData.FromString(prop.Value.GetRawText());
+                    files = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("flowState"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LogicAppWorkflowEnvelopeProperties(files, flowState, health, additionalBinaryDataProperties);

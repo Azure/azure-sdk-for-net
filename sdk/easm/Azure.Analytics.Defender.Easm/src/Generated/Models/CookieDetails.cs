@@ -28,9 +28,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <param name="cookieExpiryDate"></param>
+        /// <param name="cookieExpiryOn"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CookieDetails(string cookieName, string cookieDomain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, DateTimeOffset? cookieExpiryDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CookieDetails(string cookieName, string cookieDomain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, DateTimeOffset? cookieExpiryOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CookieName = cookieName;
             CookieDomain = cookieDomain;
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Defender.Easm
             LastSeen = lastSeen;
             Count = count;
             Recent = recent;
-            CookieExpiryDate = cookieExpiryDate;
+            CookieExpiryOn = cookieExpiryOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Recent. </summary>
         public bool? Recent { get; }
 
-        /// <summary> Gets the CookieExpiryDate. </summary>
-        public DateTimeOffset? CookieExpiryDate { get; }
+        /// <summary> Gets the CookieExpiryOn. </summary>
+        public DateTimeOffset? CookieExpiryOn { get; }
     }
 }

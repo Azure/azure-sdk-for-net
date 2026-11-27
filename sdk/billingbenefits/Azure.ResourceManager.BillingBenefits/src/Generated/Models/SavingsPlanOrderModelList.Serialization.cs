@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SavingsPlanOrderModelList(value, nextLink, additionalBinaryDataProperties);
+            return new SavingsPlanOrderModelList(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanOrderData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

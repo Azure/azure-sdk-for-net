@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="Shortfall"/>. </summary>
         /// <param name="productCode"> Represents catalog UPN. </param>
         /// <param name="charge"> Shortfall amount with grain. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the credits associated with the shortfall. </param>
         /// <param name="balanceVersion"> Points to BalanceVersion document that indicates the remaining commitment balance when the credit was created. </param>
         /// <param name="systemId"> This is an identifier of the shortfall which will not change for its lifetime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Shortfall(string productCode, BillingBenefitsCommitment charge, DateTimeOffset? startOn, DateTimeOffset? endOn, ResourceIdentifier resourceId, float? balanceVersion, string systemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Shortfall(string productCode, BillingBenefitsCommitment charge, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ResourceIdentifier resourceId, float? balanceVersion, string systemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProductCode = productCode;
             Charge = charge;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ResourceId = resourceId;
             BalanceVersion = balanceVersion;
             SystemId = systemId;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Charge { get; set; }
 
         /// <summary> Start DateTime. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Fully-qualified resource identifier of the credits associated with the shortfall. </summary>
         public ResourceIdentifier ResourceId { get; set; }

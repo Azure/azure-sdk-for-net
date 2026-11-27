@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return TransportPreferences is null ? default : TransportPreferences.PreferredShipmentType;
+                return TransportPreferences is null ? (TransportShipmentType?)default : TransportPreferences.PreferredShipmentType;
             }
             set
             {

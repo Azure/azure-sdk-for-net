@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="ServicePlacementRequiredDomainPolicy"/>.
     /// </summary>
     public abstract partial class ManagedServicePlacementPolicy
     {

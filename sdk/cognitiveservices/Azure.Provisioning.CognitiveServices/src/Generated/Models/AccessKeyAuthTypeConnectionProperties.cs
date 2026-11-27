@@ -15,6 +15,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new AccessKeyAuthTypeConnectionProperties. </summary>
         public AccessKeyAuthTypeConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.AccessKey);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "AccessKey");
             _credentials = DefineModelProperty<CognitiveServicesConnectionAccessKey>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

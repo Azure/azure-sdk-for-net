@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Binding actions to the interactive message.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WhatsAppListActionBindings"/>, <see cref="WhatsAppButtonActionBindings"/>, and <see cref="WhatsAppUrlActionBindings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WhatsAppButtonActionBindings"/>, <see cref="WhatsAppListActionBindings"/>, and <see cref="WhatsAppUrlActionBindings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownActionBindings))]
     public abstract partial class ActionBindings : IJsonModel<ActionBindings>
@@ -130,10 +130,10 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "whatsAppListAction":
-                        return WhatsAppListActionBindings.DeserializeWhatsAppListActionBindings(element, options);
                     case "whatsAppButtonAction":
                         return WhatsAppButtonActionBindings.DeserializeWhatsAppButtonActionBindings(element, options);
+                    case "whatsAppListAction":
+                        return WhatsAppListActionBindings.DeserializeWhatsAppListActionBindings(element, options);
                     case "whatsAppUrlAction":
                         return WhatsAppUrlActionBindings.DeserializeWhatsAppUrlActionBindings(element, options);
                 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("azureBlobStorage")]
         internal BlobStorageTokenStore AzureBlobStorage { get; set; }
 
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
+        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
         [WirePath("azureBlobStorage.sasUrlSettingName")]
         public string AzureBlobStorageSasUrlSettingName
         {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
         [WirePath("azureBlobStorage.managedIdentityResourceId")]
-        public string ManagedIdentityResourceId
+        public ResourceIdentifier ManagedIdentityResourceId
         {
             get
             {

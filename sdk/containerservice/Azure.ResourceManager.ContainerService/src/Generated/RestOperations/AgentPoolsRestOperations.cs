@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateGetBootstrapDataRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetBootstrapDataRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -305,6 +305,35 @@ namespace Azure.ResourceManager.ContainerService
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContent content, ETag? ifMatch, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
+            if (ifMatch != null)
+            {
+                request.Headers.Add("if-match", ifMatch.Value);
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

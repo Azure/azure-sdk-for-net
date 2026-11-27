@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMISyncTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
-        public MigrateSqlServerSqlMISyncTaskProperties() : base(DataMigrationTaskType.MigrateSqlServerAzureSqlDbMISyncLRS)
+        public MigrateSqlServerSqlMISyncTaskProperties() : base(DataMigrationTaskType.MigrateSqlServerAzureSqlDBMISyncLRS)
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>();
         }

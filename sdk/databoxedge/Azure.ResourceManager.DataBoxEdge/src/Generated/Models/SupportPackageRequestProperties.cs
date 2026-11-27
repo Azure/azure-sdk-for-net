@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportPackageRequestProperties"/>. </summary>
-        /// <param name="minimumTimeStamp"> MinimumTimeStamp from where logs need to be collected. </param>
-        /// <param name="maximumTimeStamp"> Start of the timespan of the log collection. </param>
+        /// <param name="minimumOn"> MinimumTimeStamp from where logs need to be collected. </param>
+        /// <param name="maximumOn"> Start of the timespan of the log collection. </param>
         /// <param name="include">
         /// Type of files, which need to be included in the logs
         /// This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
         /// or a comma separated list of log types that are required
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportPackageRequestProperties(DateTimeOffset? minimumTimeStamp, DateTimeOffset? maximumTimeStamp, string include, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportPackageRequestProperties(DateTimeOffset? minimumOn, DateTimeOffset? maximumOn, string include, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MinimumTimeStamp = minimumTimeStamp;
-            MaximumTimeStamp = maximumTimeStamp;
+            MinimumOn = minimumOn;
+            MaximumOn = maximumOn;
             Include = include;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MinimumTimeStamp from where logs need to be collected. </summary>
-        public DateTimeOffset? MinimumTimeStamp { get; set; }
+        public DateTimeOffset? MinimumOn { get; set; }
 
         /// <summary> Start of the timespan of the log collection. </summary>
-        public DateTimeOffset? MaximumTimeStamp { get; set; }
+        public DateTimeOffset? MaximumOn { get; set; }
 
         /// <summary>
         /// Type of files, which need to be included in the logs

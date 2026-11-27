@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AvatarConfigKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvatarConfigKind?(string value) => value == null ? null : new AvatarConfigKind(value);
+        public static implicit operator AvatarConfigKind?(string value) => value == null ? (AvatarConfigKind?)null : new AvatarConfigKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

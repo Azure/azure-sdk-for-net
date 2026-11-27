@@ -85,11 +85,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("reasoningTokens"u8);
                 writer.WriteNumberValue(ReasoningTokens.Value);
             }
-            if (Optional.IsDefined(RetrievalReasoningEffort))
-            {
-                writer.WritePropertyName("retrievalReasoningEffort"u8);
-                writer.WriteObjectValue(RetrievalReasoningEffort, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,12 +114,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? reasoningTokens = default;
-            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -135,6 +131,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("startedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -169,29 +183,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     reasoningTokens = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("retrievalReasoningEffort"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeBaseAgenticReasoningActivityRecord(
                 id,
                 @type,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties,
-                reasoningTokens,
-                retrievalReasoningEffort);
+                reasoningTokens);
         }
     }
 }

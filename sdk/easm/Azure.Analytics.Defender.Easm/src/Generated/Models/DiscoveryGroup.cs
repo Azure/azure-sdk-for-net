@@ -35,10 +35,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="names"> The list of names used for the disco group runs. </param>
         /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="latestRun"> The latest run of this disco group with some limited information, null if the group has never been run. </param>
-        /// <param name="createdDate"> The date for the disco group was created. </param>
+        /// <param name="createdOn"> The date for the disco group was created. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryGroup(string id, string name, string displayName, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, DiscoveryRunResult latestRun, DateTimeOffset? createdDate, string templateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryGroup(string id, string name, string displayName, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, DiscoveryRunResult latestRun, DateTimeOffset? createdOn, string templateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
             Names = names;
             Excludes = excludes;
             LatestRun = latestRun;
-            CreatedDate = createdDate;
+            CreatedOn = createdOn;
             TemplateId = templateId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Defender.Easm
         public DiscoveryRunResult LatestRun { get; }
 
         /// <summary> The date for the disco group was created. </summary>
-        public DateTimeOffset? CreatedDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The unique identifier for the disco template used for the disco group creation. </summary>
         public string TemplateId { get; }

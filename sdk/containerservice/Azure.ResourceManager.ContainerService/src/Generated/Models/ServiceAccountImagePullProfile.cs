@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isEnabled"> Indicates whether service account based image pull is enabled, for which identity bindings are required for the managed identity to be used for authentication. For more information, refer to https://aka.ms/aks/identity-binding-docs. </param>
         /// <param name="defaultManagedIdentityId"> Optional. The default managed identity resource ID used for image pulls at the cluster level. When configured, this identity is used if a Pod’s service account does not explicitly specify an identity for pulling images. If not configured and no identity is specified at service account level, image will be pulled via anonymous authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountImagePullProfile(bool? isEnabled, string defaultManagedIdentityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountImagePullProfile(bool? isEnabled, ResourceIdentifier defaultManagedIdentityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             DefaultManagedIdentityId = defaultManagedIdentityId;
@@ -39,6 +40,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Optional. The default managed identity resource ID used for image pulls at the cluster level. When configured, this identity is used if a Pod’s service account does not explicitly specify an identity for pulling images. If not configured and no identity is specified at service account level, image will be pulled via anonymous authentication. </summary>
         [WirePath("defaultManagedIdentityId")]
-        public string DefaultManagedIdentityId { get; set; }
+        public ResourceIdentifier DefaultManagedIdentityId { get; set; }
     }
 }

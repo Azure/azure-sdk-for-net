@@ -23,6 +23,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadContainer. </summary>
         public WorkloadContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.AzureWorkloadContainer);
         }
 
         /// <summary> Gets or sets the SourceResourceId. </summary>
@@ -104,7 +105,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "AzureWorkloadContainer");
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
             _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, format: "O");
             _extendedInfo = DefineModelProperty<WorkloadContainerExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(ResourceType, out string eventHubApiVersion);
             _eventHubAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _eventHubAuthorizationRuleRestClient = new EventHubAuthorizationRule(_eventHubAuthorizationRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubApiVersion ?? "2026-01-01");
+            _eventHubAuthorizationRuleRestClient = new EventHubAuthorizationRule(_eventHubAuthorizationRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -465,6 +465,39 @@ namespace Azure.ResourceManager.EventHubs
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
 
             return GetEventHubsConsumerGroups().Get(consumerGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventHubsFabricShortcuts in the <see cref="EventHubResource"/>. </summary>
+        /// <returns> An object representing collection of EventHubsFabricShortcuts and their operations over a EventHubsFabricShortcutResource. </returns>
+        public virtual EventHubsFabricShortcutCollection GetEventHubsFabricShortcuts()
+        {
+            return GetCachedClient(client => new EventHubsFabricShortcutCollection(client, Id));
+        }
+
+        /// <summary> Gets a Microsoft Fabric shortcut. </summary>
+        /// <param name="fabricShortcutName"> The Microsoft Fabric shortcut name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricShortcutName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricShortcutName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventHubsFabricShortcutResource>> GetEventHubsFabricShortcutAsync(string fabricShortcutName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fabricShortcutName, nameof(fabricShortcutName));
+
+            return await GetEventHubsFabricShortcuts().GetAsync(fabricShortcutName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Microsoft Fabric shortcut. </summary>
+        /// <param name="fabricShortcutName"> The Microsoft Fabric shortcut name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricShortcutName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricShortcutName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubsFabricShortcutResource> GetEventHubsFabricShortcut(string fabricShortcutName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fabricShortcutName, nameof(fabricShortcutName));
+
+            return GetEventHubsFabricShortcuts().Get(fabricShortcutName, cancellationToken);
         }
     }
 }

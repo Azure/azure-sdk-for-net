@@ -17,6 +17,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new SASAuthTypeConnectionProperties. </summary>
         public SASAuthTypeConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.SAS);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -55,7 +56,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "SAS");
             _credentials = DefineModelProperty<ConnectionSharedAccessSignature>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

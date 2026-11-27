@@ -200,7 +200,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsRouterJobClassificationFailedEventData(
@@ -209,10 +209,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 channelId,
                 additionalBinaryDataProperties,
                 queueId,
-                labels,
-                tags,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 classificationPolicyId,
-                errorsInternal);
+                errorsInternal ?? new ChangeTrackingList<AcsRouterCommunicationError>());
         }
 
         internal partial class AcsRouterJobClassificationFailedEventDataConverter : JsonConverter<AcsRouterJobClassificationFailedEventData>

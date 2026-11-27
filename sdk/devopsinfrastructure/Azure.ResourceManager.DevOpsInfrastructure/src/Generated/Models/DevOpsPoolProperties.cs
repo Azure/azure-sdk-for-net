@@ -22,20 +22,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="organizationProfile"> Defines the organization in which the pool will be used. </param>
         /// <param name="agentProfile"> Defines how the machine will be handled once it executed a job. </param>
         /// <param name="fabricProfile"> Defines the type of fabric the agent will run on. </param>
-        /// <param name="devCenterProjectResourceId"> The resource id of the DevCenter Project the pool belongs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationProfile"/>, <paramref name="agentProfile"/>, <paramref name="fabricProfile"/> or <paramref name="devCenterProjectResourceId"/> is null. </exception>
-        public DevOpsPoolProperties(int maximumConcurrency, DevOpsOrganizationProfile organizationProfile, DevOpsPoolAgentProfile agentProfile, DevOpsFabricProfile fabricProfile, string devCenterProjectResourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationProfile"/>, <paramref name="agentProfile"/> or <paramref name="fabricProfile"/> is null. </exception>
+        public DevOpsPoolProperties(int maximumConcurrency, DevOpsOrganizationProfile organizationProfile, DevOpsPoolAgentProfile agentProfile, DevOpsFabricProfile fabricProfile)
         {
             Argument.AssertNotNull(organizationProfile, nameof(organizationProfile));
             Argument.AssertNotNull(agentProfile, nameof(agentProfile));
             Argument.AssertNotNull(fabricProfile, nameof(fabricProfile));
-            Argument.AssertNotNull(devCenterProjectResourceId, nameof(devCenterProjectResourceId));
 
             MaximumConcurrency = maximumConcurrency;
             OrganizationProfile = organizationProfile;
             AgentProfile = agentProfile;
             FabricProfile = fabricProfile;
-            DevCenterProjectResourceId = devCenterProjectResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsPoolProperties"/>. </summary>

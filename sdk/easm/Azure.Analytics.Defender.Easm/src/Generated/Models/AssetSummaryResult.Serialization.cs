@@ -83,10 +83,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(UpdatedAt))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
-                writer.WriteStringValue(UpdatedAt.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(MetricCategory))
             {
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Defender.Easm
             }
             string displayName = default;
             string description = default;
-            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? updatedOn = default;
             string metricCategory = default;
             string metric = default;
             string filter = default;
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    updatedAt = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("metricCategory"u8))
@@ -252,13 +252,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AssetSummaryResult(
                 displayName,
                 description,
-                updatedAt,
+                updatedOn,
                 metricCategory,
                 metric,
                 filter,

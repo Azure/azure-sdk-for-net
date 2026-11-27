@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             get
             {
-                return Properties is null ? default : Properties.ScanStartOn;
+                return Properties is null ? default : Properties.ScanStartsOn;
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             get
             {
-                return Properties is null ? default : Properties.ScanEndOn;
+                return Properties is null ? default : Properties.ScanEndsOn;
             }
         }
 

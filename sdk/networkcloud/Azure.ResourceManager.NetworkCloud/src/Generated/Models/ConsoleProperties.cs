@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="ConsoleProperties"/>. </summary>
         /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
-        /// <param name="expireOn"> The date and time after which the key will be disallowed access. </param>
+        /// <param name="expiresOn"> The date and time after which the key will be disallowed access. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
         /// <param name="detailedStatus"> The more detailed status of the console. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="virtualMachineAccessId"> The unique identifier for the virtual machine that is used to access the console. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual machine console. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConsoleProperties(ConsoleEnabled enabled, DateTimeOffset? expireOn, NetworkCloudSshPublicKey sshPublicKey, ConsoleDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier privateLinkServiceId, Guid? virtualMachineAccessId, ConsoleProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConsoleProperties(ConsoleEnabled enabled, DateTimeOffset? expiresOn, NetworkCloudSshPublicKey sshPublicKey, ConsoleDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier privateLinkServiceId, Guid? virtualMachineAccessId, ConsoleProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             SshPublicKey = sshPublicKey;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ConsoleEnabled Enabled { get; set; }
 
         /// <summary> The date and time after which the key will be disallowed access. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </summary>
         internal NetworkCloudSshPublicKey SshPublicKey { get; set; }

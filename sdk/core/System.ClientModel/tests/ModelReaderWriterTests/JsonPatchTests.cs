@@ -470,6 +470,103 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true},\"new\":\"newValue\"}}", jp.ToString("J"));
         }
 
+        [TestCase("""{"name":"original"}""", "$.agent.name", """{"name":VALUE}""", "updated")]
+        [TestCase("""{"child":{"name":"original"}}""", "$.agent.child.name", """{"child":{"name":VALUE}}""", "updated")]
+        [TestCase("""[{"name":"original"}]""", "$.agent[0].name", """[{"name":VALUE}]""", "updated")]
+        [TestCase("""["original"]""", "$.agent[0]", """[VALUE]""", "updated")]
+        [TestCase("""{"name":"original"}""", "$.agent", "VALUE", "updated")]
+        [TestCase("""{"name":"original"}""", "$.agent.name", """{"name":VALUE}""", "")]
+        [TestCase("""{"name":"original"}""", "$.agent.name", """{"name":VALUE}""", "Line1\nLine2\t\"Quote\"\\Path")]
+        [TestCase("""{"name":"original"}""", "$.agent.name", """{"name":VALUE}""", "caf\u00e9")]
+        [TestCase("""["original"]""", "$.agent[0]", """[VALUE]""", "Line1\nLine2\t\"Quote\"\\Path")]
+        public void ReplaceStringInStoredJson(
+            string json,
+            string path,
+            string expected,
+            string value)
+        {
+            JsonPatch jp = new();
+            jp.Set("$.agent"u8, Encoding.UTF8.GetBytes(json));
+            byte[] jsonPath = Encoding.UTF8.GetBytes(path);
+
+            for (int i = 0; i < 2; i++)
+            {
+                jp.Set(jsonPath, value);
+
+                Assert.AreEqual(value, jp.GetString(jsonPath));
+                Assert.AreEqual(
+                    "{\"agent\":" + expected.Replace("VALUE", JsonSerializer.Serialize(value)) + "}",
+                    jp.ToString("J"));
+                using JsonDocument document = JsonDocument.Parse(jp.ToString("J"));
+                Assert.AreEqual(JsonValueKind.Object, document.RootElement.ValueKind);
+            }
+        }
+
+        private static IEnumerable<TestCaseData> StoredJsonReplacementValues()
+        {
+            yield return new TestCaseData(Guid.Empty, "\"00000000-0000-0000-0000-000000000000\"");
+            yield return new TestCaseData(new DateTime(2025, 12, 25, 6, 7, 8), "\"12/25/2025 06:07:08\"");
+            yield return new TestCaseData(new DateTimeOffset(2025, 12, 25, 6, 7, 8, TimeSpan.Zero), "\"12/25/2025 06:07:08 +00:00\"");
+            yield return new TestCaseData(TimeSpan.FromMinutes(5), "\"00:05:00\"");
+            yield return new TestCaseData(42, "42");
+            yield return new TestCaseData(true, "true");
+            yield return new TestCaseData(null, "null");
+            yield return new TestCaseData("\"updated\""u8.ToArray(), "\"updated\"");
+        }
+
+        [TestCaseSource(nameof(StoredJsonReplacementValues))]
+        public void ReplaceValueInStoredJson(object? value, string expected)
+        {
+            JsonPatch jp = new();
+            jp.Set("$.o"u8, """{"k":"original","other":42}"""u8.ToArray());
+
+            for (int i = 0; i < 2; i++)
+            {
+                switch (value)
+                {
+                    case Guid guid:
+                        jp.Set("$.o.k"u8, guid);
+                        Assert.AreEqual(guid, jp.GetGuid("$.o.k"u8));
+                        break;
+                    case DateTime dateTime:
+                        jp.Set("$.o.k"u8, dateTime);
+                        Assert.AreEqual(dateTime, jp.GetDateTime("$.o.k"u8));
+                        break;
+                    case DateTimeOffset dateTimeOffset:
+                        jp.Set("$.o.k"u8, dateTimeOffset);
+                        Assert.AreEqual(dateTimeOffset, jp.GetDateTimeOffset("$.o.k"u8));
+                        break;
+                    case TimeSpan timeSpan:
+                        jp.Set("$.o.k"u8, timeSpan);
+                        Assert.AreEqual(timeSpan, jp.GetTimeSpan("$.o.k"u8));
+                        break;
+                    case int number:
+                        jp.Set("$.o.k"u8, number);
+                        Assert.AreEqual(number, jp.GetInt32("$.o.k"u8));
+                        break;
+                    case bool boolean:
+                        jp.Set("$.o.k"u8, boolean);
+                        Assert.AreEqual(boolean, jp.GetBoolean("$.o.k"u8));
+                        break;
+                    case null:
+                        jp.SetNull("$.o.k"u8);
+                        Assert.IsNull(jp.GetNullableValue<int>("$.o.k"u8));
+                        break;
+                    case byte[] bytes:
+                        jp.Set("$.o.k"u8, bytes);
+                        Assert.AreEqual("updated", jp.GetString("$.o.k"u8));
+                        break;
+                    default:
+                        Assert.Fail($"Unexpected test value: {value}");
+                        break;
+                }
+
+                Assert.AreEqual("{\"o\":{\"k\":" + expected + ",\"other\":42}}", jp.ToString("J"));
+                using JsonDocument document = JsonDocument.Parse(jp.ToString("J"));
+                Assert.AreEqual(42, document.RootElement.GetProperty("o").GetProperty("other").GetInt32());
+            }
+        }
+
         [Test]
         public void AddStringArrayElement()
         {

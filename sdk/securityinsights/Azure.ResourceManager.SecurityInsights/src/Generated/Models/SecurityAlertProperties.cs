@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="confidenceScore"> The confidence score of the alert. </param>
         /// <param name="confidenceScoreStatus"> The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final. </param>
         /// <param name="description"> Alert description. </param>
-        /// <param name="endOn"> The impact end time of the alert (the time of the last event contributing to the alert). </param>
+        /// <param name="endsOn"> The impact end time of the alert (the time of the last event contributing to the alert). </param>
         /// <param name="intent"> Holds the alert intent stage(s) mapping for this alert. </param>
         /// <param name="providerAlertId"> The identifier of the alert inside the product which generated the alert. </param>
-        /// <param name="processingEndOn"> The time the alert was made available for consumption. </param>
+        /// <param name="processingEndsOn"> The time the alert was made available for consumption. </param>
         /// <param name="productComponentName"> The name of a component inside the product which generated the alert. </param>
         /// <param name="productName"> The name of the product which published this alert. </param>
         /// <param name="productVersion"> The version of the product generating the alert. </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
         /// <param name="severity"> The severity of the alert. </param>
-        /// <param name="startOn"> The impact start time of the alert (the time of the first event contributing to the alert). </param>
+        /// <param name="startsOn"> The impact start time of the alert (the time of the first event contributing to the alert). </param>
         /// <param name="status"> The lifecycle status of the alert. </param>
         /// <param name="systemAlertId"> Holds the product identifier of the alert for the product. </param>
         /// <param name="tactics"> The tactics of the alert. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="vendorName"> The name of the vendor that raise the alert. </param>
         /// <param name="alertLink"> The uri link of the alert. </param>
         /// <param name="resourceIdentifiers"> The list of resource identifiers of the alert. </param>
-        internal SecurityAlertProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(additionalData, friendlyName, additionalBinaryDataProperties)
+        internal SecurityAlertProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endsOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndsOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startsOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(additionalData, friendlyName, additionalBinaryDataProperties)
         {
             AlertDisplayName = alertDisplayName;
             AlertType = alertType;
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ConfidenceScore = confidenceScore;
             ConfidenceScoreStatus = confidenceScoreStatus;
             Description = description;
-            EndOn = endOn;
+            EndsOn = endsOn;
             Intent = intent;
             ProviderAlertId = providerAlertId;
-            ProcessingEndOn = processingEndOn;
+            ProcessingEndsOn = processingEndsOn;
             ProductComponentName = productComponentName;
             ProductName = productName;
             ProductVersion = productVersion;
             RemediationSteps = remediationSteps;
             Severity = severity;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Status = status;
             SystemAlertId = systemAlertId;
             Tactics = tactics;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The impact end time of the alert (the time of the last event contributing to the alert). </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Holds the alert intent stage(s) mapping for this alert. </summary>
         [WirePath("intent")]
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The time the alert was made available for consumption. </summary>
         [WirePath("processingEndTime")]
-        public DateTimeOffset? ProcessingEndOn { get; }
+        public DateTimeOffset? ProcessingEndsOn { get; }
 
         /// <summary> The name of a component inside the product which generated the alert. </summary>
         [WirePath("productComponentName")]
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The impact start time of the alert (the time of the first event contributing to the alert). </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The lifecycle status of the alert. </summary>
         [WirePath("status")]

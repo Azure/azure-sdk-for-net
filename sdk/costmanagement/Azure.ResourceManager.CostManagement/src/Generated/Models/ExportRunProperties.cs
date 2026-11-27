@@ -26,25 +26,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> The last known status of the export run. </param>
         /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </param>
         /// <param name="submittedOn"> The time when export was queued to be run. </param>
-        /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
-        /// <param name="processingEndOn"> The time when the export run finished. </param>
-        /// <param name="startOn"> The start datetime for the export. </param>
-        /// <param name="endOn"> The end datetime for the export. </param>
+        /// <param name="processingStartsOn"> The time when export was picked up to be run. </param>
+        /// <param name="processingEndsOn"> The time when the export run finished. </param>
+        /// <param name="startsOn"> The start datetime for the export. </param>
+        /// <param name="endsOn"> The end datetime for the export. </param>
         /// <param name="fileName"> The name of the exported file. </param>
         /// <param name="manifestFile"> The manifest file location(URI location) for the exported files. </param>
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRunProperties(ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string fileName, string manifestFile, CommonExportProperties runSettings, ExportRunErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportRunProperties(ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartsOn, DateTimeOffset? processingEndsOn, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string fileName, string manifestFile, CommonExportProperties runSettings, ExportRunErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionType = executionType;
             Status = status;
             SubmittedBy = submittedBy;
             SubmittedOn = submittedOn;
-            ProcessingStartOn = processingStartOn;
-            ProcessingEndOn = processingEndOn;
-            StartOn = startOn;
-            EndOn = endOn;
+            ProcessingStartsOn = processingStartsOn;
+            ProcessingEndsOn = processingEndsOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             FileName = fileName;
             ManifestFile = manifestFile;
             RunSettings = runSettings;
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         public DateTimeOffset? SubmittedOn { get; set; }
 
         /// <summary> The time when export was picked up to be run. </summary>
-        public DateTimeOffset? ProcessingStartOn { get; set; }
+        public DateTimeOffset? ProcessingStartsOn { get; set; }
 
         /// <summary> The time when the export run finished. </summary>
-        public DateTimeOffset? ProcessingEndOn { get; set; }
+        public DateTimeOffset? ProcessingEndsOn { get; set; }
 
         /// <summary> The start datetime for the export. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end datetime for the export. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The name of the exported file. </summary>
         public string FileName { get; set; }

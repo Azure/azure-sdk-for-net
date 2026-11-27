@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleAssignmentScheduleRequestData, RoleAssignmentScheduleRequestResource>(new RoleAssignmentScheduleRequestsGetForScopeAsyncCollectionResultOfT(_roleAssignmentScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleAssignmentScheduleRequestCollection.GetAll"), data => new RoleAssignmentScheduleRequestResource(Client, data));
+            return new AsyncPageableWrapper<RoleAssignmentScheduleRequestData, RoleAssignmentScheduleRequestResource>(new RoleAssignmentScheduleRequestDataAsyncCollectionResultOfT(_roleAssignmentScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleAssignmentScheduleRequestCollection.GetAll"), data => new RoleAssignmentScheduleRequestResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleAssignmentScheduleRequestData, RoleAssignmentScheduleRequestResource>(new RoleAssignmentScheduleRequestsGetForScopeCollectionResultOfT(_roleAssignmentScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleAssignmentScheduleRequestCollection.GetAll"), data => new RoleAssignmentScheduleRequestResource(Client, data));
+            return new PageableWrapper<RoleAssignmentScheduleRequestData, RoleAssignmentScheduleRequestResource>(new RoleAssignmentScheduleRequestDataCollectionResultOfT(_roleAssignmentScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleAssignmentScheduleRequestCollection.GetAll"), data => new RoleAssignmentScheduleRequestResource(Client, data));
         }
 
         /// <summary>

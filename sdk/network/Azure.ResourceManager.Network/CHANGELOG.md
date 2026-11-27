@@ -1,14 +1,63 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.18.0 (2026-11-24)
+
+This release ensures no breaking API changes compared with version 1.15.0 only. Versions 1.16.x and 1.17.x have been retracted; compatibility with those versions or previous preview releases is not guaranteed.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded the default Network API version from 2026-03-01 to 2026-05-01.
+- Added Application Gateway deployment tiers and confidential compute settings.
+- Added configurable TCP idle timeouts for Azure Firewall.
+- Added network adapter indices for network interfaces.
+- Added load-balancer configuration for network virtual appliances and their inbound security rules, including load distribution and idle timeout settings.
 
 ### Other Changes
+
+- Regenerated the library from the updated Network specification.
+- Updated the preview capability API: removed `VirtualNetworkApplianceCapabilityBaseData`. `VirtualNetworkApplianceCapabilityData` now derives directly from `ResourceData` and declares `Properties` itself.
+- Updated the preview Interconnect Group and Subgroup APIs: flattened properties onto their resource data types and updated the corresponding model factories. The property-envelope types are now internal.
+- Represented the Interconnect Group resource GUID as `Guid?` instead of `string`.
+
+## 1.18.0-beta.3 (2026-10-30)
+
+### Features Added
+
+- Upgraded API version from 2026-01-01 to 2026-03-01.
+- Added support for managing ExpressRoute LAG authorizations, including retrieving authorization keys.
+- Added support for listing and retrieving virtual network appliance capabilities.
+- Added DDoS custom policy mitigation rules with traffic scopes, TCP and UDP mitigation settings, and source-specific policy overrides.
+- Exposed strongly typed `ETag` properties on `NetworkChildResourceData` and `NetworkProxyResourceData`.
+
+## 1.18.0-beta.2 (2026-10-28)
+
+The changes below are described relative to version 1.15.0. Previously published releases after 1.15.0, including 1.16.1 and 1.17.0, are planned for retraction.
+
+### Features Added
+
+- Upgraded API version from 2025-05-01 to 2026-01-01.
+- Added resource APIs for address prefix sets, connection analyzers, connection policies, ExpressRoute LAGs, firewall policy Kubernetes selector groups, identity integration authentication policies, interconnect groups, and network manager configuration commits.
+- Added models for Application Gateway advanced routing conditions, maps, and rules.
+- Added strongly typed `BastionHostPatch` overloads to `BastionHostResource.Update` and `UpdateAsync`.
+
+### Breaking Changes
+
+- This release contains breaking changes compared with versions 1.16.1 and 1.17.0.
+
+### Other Changes
+
+- Migrated code generation from AutoRest to TypeSpec.
+- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins` and hid the legacy property from IntelliSense. The legacy property forwards to the replacement property for serialization.
+
+## 1.18.0-beta.1 (2026-09-20)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-01.
+
+### Other Changes
+
+- Added strongly-typed `BastionHostPatch` overloads to `BastionHostResource.Update` and `UpdateAsync`.
 
 ## 1.17.0 (2026-08-21)
 

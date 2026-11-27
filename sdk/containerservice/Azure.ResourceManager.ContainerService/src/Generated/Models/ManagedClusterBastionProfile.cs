@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterBastionProfile"/>. </summary>
-        /// <param name="enabled"> Indicates whether managed bastion is enabled. </param>
+        /// <param name="isEnabled"> Indicates whether managed bastion is enabled. </param>
         /// <param name="bastionId"> The resource ID of the managed bastion associated with the managed cluster. </param>
         /// <param name="sku">
         /// The SKU of the managed bastion.
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// This field cannot be updated. To change IP address after creation, please disable and re-enable the managed bastion with the new public IP address.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterBastionProfile(bool? enabled, ResourceIdentifier bastionId, ManagedClusterBastionSku? sku, int? scaleUnits, ResourceIdentifier publicIPAddressId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterBastionProfile(bool? isEnabled, ResourceIdentifier bastionId, ManagedClusterBastionSku? sku, int? scaleUnits, ResourceIdentifier publicIPAddressId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             BastionId = bastionId;
             Sku = sku;
             ScaleUnits = scaleUnits;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Indicates whether managed bastion is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The resource ID of the managed bastion associated with the managed cluster. </summary>
         [WirePath("bastionId")]

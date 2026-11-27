@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SuspensionDetails"/>. </summary>
-        /// <param name="suspensionStartOn"> The starting date and time of the suspension state. </param>
+        /// <param name="suspensionStartsOn"> The starting date and time of the suspension state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuspensionDetails(DateTimeOffset? suspensionStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuspensionDetails(DateTimeOffset? suspensionStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SuspensionStartOn = suspensionStartOn;
+            SuspensionStartsOn = suspensionStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The starting date and time of the suspension state. </summary>
         [WirePath("suspensionStartDate")]
-        public DateTimeOffset? SuspensionStartOn { get; }
+        public DateTimeOffset? SuspensionStartsOn { get; }
     }
 }

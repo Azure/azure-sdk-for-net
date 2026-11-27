@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomRuleMatchCondition(
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 selector,
                 matchOperator,
                 negateCondition,
-                matchValue,
+                matchValue ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<TransformType>(),
                 additionalBinaryDataProperties);
         }

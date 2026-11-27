@@ -268,7 +268,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadBlobFromUriRequest(copySource, metadata, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, sourceContentMd5, blobTagsString, copySourceBlobProperties, copySourceAuthorization, copySourceTags, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateUploadBlobFromUrlRequest(copySource, metadata, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, sourceContentMd5, blobTagsString, copySourceBlobProperties, copySourceAuthorization, copySourceTags, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -327,7 +327,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadBlobFromUriRequest(copySource, metadata, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, sourceContentMd5, blobTagsString, copySourceBlobProperties, copySourceAuthorization, copySourceTags, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateUploadBlobFromUrlRequest(copySource, metadata, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, sourceContentMd5, blobTagsString, copySourceBlobProperties, copySourceAuthorization, copySourceTags, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -577,7 +577,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStageBlockFromUriRequest(blockId, contentLength, sourceUrl, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateStageBlockFromUrlRequest(blockId, contentLength, sourceUrl, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -625,7 +625,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStageBlockFromUriRequest(blockId, contentLength, sourceUrl, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateStageBlockFromUrlRequest(blockId, contentLength, sourceUrl, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

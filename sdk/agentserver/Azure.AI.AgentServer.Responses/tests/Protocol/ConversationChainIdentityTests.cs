@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -113,5 +116,140 @@ public class ConversationChainIdentityTests
         var b = ConversationChainIdDerivation.Derive("conv_abc", null, "caresp_x", "agent-b", "sess_1", true);
 
         Assert.That(a, Is.Not.EqualTo(b));
+    }
+
+    [Test]
+    public void SessionInstanceIdScopesPhysicalTaskIdWithoutChangingPublicChainId()
+    {
+        const string sessionId = "same-public-name";
+        Guid sessionInstanceId =
+            Guid.ParseExact("11111111111111111111111111111111", "N");
+
+        string publicChainId = ConversationChainIdDerivation.Derive(
+            "conv_abc", null, "caresp_x", "agent-x", sessionId, true);
+        string taskScope =
+            TaskIdDerivation.DeriveSessionScope(sessionId, sessionInstanceId);
+        string physicalTaskId = TaskIdDerivation.Derive(
+            "conv_abc", null, "caresp_x", "agent-x", sessionId, taskScope, true);
+
+        Assert.That(physicalTaskId, Is.Not.EqualTo(publicChainId));
+    }
+
+    [Test]
+    public void DifferentSessionInstanceIdsProduceDifferentPhysicalTaskIds()
+    {
+        string first = TaskIdDerivation.Derive(
+            "conv_abc",
+            null,
+            "caresp_x",
+            "agent-x",
+            "same-public-name",
+            TaskIdDerivation.DeriveSessionScope(
+                "same-public-name",
+                Guid.ParseExact("11111111111111111111111111111111", "N")),
+            true);
+        string recreated = TaskIdDerivation.Derive(
+            "conv_abc",
+            null,
+            "caresp_x",
+            "agent-x",
+            "same-public-name",
+            TaskIdDerivation.DeriveSessionScope(
+                "same-public-name",
+                Guid.ParseExact("22222222222222222222222222222222", "N")),
+            true);
+
+        Assert.That(first, Is.Not.EqualTo(recreated));
+    }
+
+    [Test]
+    public void MissingSessionInstanceIdPreservesLegacyTaskId()
+    {
+        const string sessionId = "public-session";
+        string legacy = ConversationChainIdDerivation.Derive(
+            "conv_abc", null, "caresp_x", "agent-x", sessionId, true);
+        string physical = TaskIdDerivation.Derive(
+            "conv_abc",
+            null,
+            "caresp_x",
+            "agent-x",
+            sessionId,
+            TaskIdDerivation.DeriveSessionScope(sessionId, null),
+            true);
+
+        Assert.That(physical, Is.EqualTo(legacy));
+    }
+
+    [Test]
+    public void SessionScopeIncludesPublicSessionId()
+    {
+        Guid sessionInstanceId =
+            Guid.ParseExact("11111111111111111111111111111111", "N");
+
+        Assert.That(
+            TaskIdDerivation.DeriveSessionScope("session-a", sessionInstanceId),
+            Is.Not.EqualTo(
+                TaskIdDerivation.DeriveSessionScope("session-b", sessionInstanceId)));
+    }
+
+    [Test]
+    public void SessionScopeUsesLowercaseNFormatting()
+    {
+        Guid sessionInstanceId =
+            Guid.ParseExact("ABCDEFABCDEFABCDEFABCDEFABCDEFAB", "N");
+
+        Assert.That(
+            TaskIdDerivation.DeriveSessionScope("session-a", sessionInstanceId),
+            Is.EqualTo("abcdefabcdefabcdefabcdefabcdefab\u001fsession-a"));
+    }
+
+    [Test]
+    public void SessionInstanceIdDoesNotChangeOneShotTaskId()
+    {
+        string taskId = TaskIdDerivation.Derive(
+            conversationId: null,
+            previousResponseId: null,
+            responseId: "caresp_one_shot",
+            agentName: "agent-x",
+            sessionId: "public-session",
+            taskSessionId: TaskIdDerivation.DeriveSessionScope(
+                "public-session",
+                Guid.ParseExact("11111111111111111111111111111111", "N")),
+            steerable: false);
+
+        Assert.That(taskId, Is.EqualTo("caresp_one_shot"));
+    }
+
+    [Test]
+    public async Task DeprecatedAgentProperty_IsUsedWhenAgentReferenceIsAbsent()
+    {
+        var handler = new TestHandler();
+        using var factory = new TestWebApplicationFactory(handler);
+        using var client = factory.CreateClient();
+
+        async Task<string> PostAsync(object payload)
+        {
+            using var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("/responses", content);
+            Assert.That(response.IsSuccessStatusCode, Is.True, await response.Content.ReadAsStringAsync());
+            return handler.LastContext!.ConversationChainId;
+        }
+
+        string viaAgent = await PostAsync(new
+        {
+            model = "test",
+            conversation = "conv_abc",
+            agent = new { type = "agent_reference", name = "alice" },
+        });
+        string otherAgent = await PostAsync(new
+        {
+            model = "test",
+            conversation = "conv_abc",
+            agent = new { type = "agent_reference", name = "bob" },
+        });
+
+        // The deprecated "agent" name scopes the chain, so different agents in the same
+        // conversation must not share one.
+        Assert.That(otherAgent, Is.Not.EqualTo(viaAgent));
     }
 }

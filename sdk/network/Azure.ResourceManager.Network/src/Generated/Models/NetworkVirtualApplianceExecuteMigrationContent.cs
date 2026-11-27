@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MigrationType;
+                return Properties is null ? (NetworkVirtualApplianceMigrationType?)default : Properties.MigrationType;
             }
             set
             {

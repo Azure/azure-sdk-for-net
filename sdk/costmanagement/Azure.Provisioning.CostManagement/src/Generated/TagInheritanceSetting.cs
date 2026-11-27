@@ -19,6 +19,7 @@ namespace Azure.Provisioning.CostManagement
         /// <param name="resourceVersion"> The resource API version. </param>
         public TagInheritanceSetting(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign(SettingsKind.Taginheritance);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -57,7 +58,6 @@ namespace Azure.Provisioning.CostManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "taginheritance");
             _properties = DefineModelProperty<TagInheritanceProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

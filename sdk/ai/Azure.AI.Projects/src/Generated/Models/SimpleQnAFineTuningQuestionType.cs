@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. </summary>
+    /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. This is a preview feature. </summary>
     [Experimental("AAIP001")]
     public readonly partial struct SimpleQnAFineTuningQuestionType : IEquatable<SimpleQnAFineTuningQuestionType>
     {
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="SimpleQnAFineTuningQuestionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SimpleQnAFineTuningQuestionType?(string value) => value == null ? null : new SimpleQnAFineTuningQuestionType(value);
+        public static implicit operator SimpleQnAFineTuningQuestionType?(string value) => value == null ? (SimpleQnAFineTuningQuestionType?)null : new SimpleQnAFineTuningQuestionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

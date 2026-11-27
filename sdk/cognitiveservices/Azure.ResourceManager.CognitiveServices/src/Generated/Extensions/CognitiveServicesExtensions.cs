@@ -75,6 +75,24 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="AttachedAksClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetAttachedAksClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AttachedAksClusterResource"/> object. </returns>
+        public static AttachedAksClusterResource GetAttachedAksClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetAttachedAksClusterResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -216,6 +234,42 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetSubscriptionRaiPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiRegoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetRaiRegoResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RaiRegoResource"/> object. </returns>
+        public static RaiRegoResource GetRaiRegoResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetRaiRegoResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBindingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetRaiBindingResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RaiBindingResource"/> object. </returns>
+        public static RaiBindingResource GetRaiBindingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetRaiBindingResource(id);
         }
 
         /// <summary>
@@ -507,6 +561,24 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ArcDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetArcDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArcDeploymentResource"/> object. </returns>
+        public static ArcDeploymentResource GetArcDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetArcDeploymentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CognitiveServicesAgentApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -561,6 +633,24 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="AdapterDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetAdapterDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdapterDeploymentResource"/> object. </returns>
+        public static AdapterDeploymentResource GetAdapterDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetAdapterDeploymentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CognitiveServicesComputeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -594,6 +684,42 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesWorkbenchResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CognitiveServicesAccountCostControlResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesAccountCostControlResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CognitiveServicesAccountCostControlResource"/> object. </returns>
+        public static CognitiveServicesAccountCostControlResource GetCognitiveServicesAccountCostControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesAccountCostControlResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CognitiveServicesProjectCostControlResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesProjectCostControlResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CognitiveServicesProjectCostControlResource"/> object. </returns>
+        public static CognitiveServicesProjectCostControlResource GetCognitiveServicesProjectCostControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesProjectCostControlResource(id);
         }
 
         /// <summary>
@@ -1251,7 +1377,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// per accelerator type, including deployment size information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetAllAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacitiesAsync(string, string, ResourceIdentifier, AzureLocation?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1261,14 +1387,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Optional deployment resource ID. When provided, returns capacity for the specific region
         /// where the deployment is hosted rather than the best available region.
         /// </param>
+        /// <param name="location">
+        /// Optional Azure location used to select a DataZone scope. Without a deployment ID,
+        /// omitted or blank location returns Global and both US and EU DataZone capacities.
+        /// A supported location returns Global and the matching DataZone capacities; an
+        /// unsupported location returns Global capacity only. With a deployment ID, a
+        /// nonblank location must match the parent account location, ignoring case and
+        /// surrounding whitespace, or the request returns HTTP 400. Capacity is still
+        /// returned for the deployment's backend region.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CognitiveServicesManagedComputeCapacity> GetAllAsync(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacitiesAsync(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, ResourceIdentifier deploymentId = default, AzureLocation? location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetAllAsync(offer, acceleratorType, deploymentId, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesManagedComputeCapacitiesAsync(offer, acceleratorType, deploymentId, location, cancellationToken);
         }
 
         /// <summary>
@@ -1276,7 +1411,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// per accelerator type, including deployment size information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetAll(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacities(string, string, ResourceIdentifier, AzureLocation?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1286,14 +1421,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Optional deployment resource ID. When provided, returns capacity for the specific region
         /// where the deployment is hosted rather than the best available region.
         /// </param>
+        /// <param name="location">
+        /// Optional Azure location used to select a DataZone scope. Without a deployment ID,
+        /// omitted or blank location returns Global and both US and EU DataZone capacities.
+        /// A supported location returns Global and the matching DataZone capacities; an
+        /// unsupported location returns Global capacity only. With a deployment ID, a
+        /// nonblank location must match the parent account location, ignoring case and
+        /// surrounding whitespace, or the request returns HTTP 400. Capacity is still
+        /// returned for the deployment's backend region.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CognitiveServicesManagedComputeCapacity> GetAll(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
+        public static Pageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacities(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, ResourceIdentifier deploymentId = default, AzureLocation? location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetAll(offer, acceleratorType, deploymentId, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesManagedComputeCapacities(offer, acceleratorType, deploymentId, location, cancellationToken);
         }
 
         /// <summary>

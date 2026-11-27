@@ -73,6 +73,19 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
+        /// Initializes an already-completed operation for a ledger entry that the service has
+        /// already globally committed (for example, when the entry was posted with
+        /// <c>waitForCommit</c> set to <see langword="true"/>). No status polling is performed.
+        /// </summary>
+        /// <param name="transactionId"> The transaction id of the committed ledger entry. </param>
+        /// <param name="rawResponse"> The final response returned by the create-ledger-entry call. </param>
+        public PostLedgerEntryOperation(string transactionId, Response rawResponse)
+        {
+            _id = transactionId;
+            _operationInternal = OperationInternal.Succeeded(rawResponse);
+        }
+
+        /// <summary>
         /// A constructor for mocking.
         /// </summary>
         protected PostLedgerEntryOperation()

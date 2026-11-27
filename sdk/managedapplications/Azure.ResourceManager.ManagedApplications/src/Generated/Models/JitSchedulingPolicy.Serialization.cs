@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             }
             JitSchedulingType @type = default;
             TimeSpan duration = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset startsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,15 +145,15 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JitSchedulingPolicy(@type, duration, startOn, additionalBinaryDataProperties);
+            return new JitSchedulingPolicy(@type, duration, startsOn, additionalBinaryDataProperties);
         }
     }
 }

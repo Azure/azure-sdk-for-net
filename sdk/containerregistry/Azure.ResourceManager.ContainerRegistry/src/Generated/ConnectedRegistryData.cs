@@ -30,16 +30,22 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the connected registry. </param>
+        /// <param name="identity"> The user-assigned managed identity used by the on-prem connected registry to authenticate with the cloud registry for sync operations. Requires authType to be ManagedIdentity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedRegistryProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedRegistryProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the connected registry. </summary>
         [WirePath("properties")]
         internal ConnectedRegistryProperties Properties { get; set; }
+
+        /// <summary> The user-assigned managed identity used by the on-prem connected registry to authenticate with the cloud registry for sync operations. Requires authType to be ManagedIdentity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]

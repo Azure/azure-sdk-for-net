@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    skipToken = BinaryData.FromString(prop.Value.GetRawText());
+                    skipToken = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceChangeList(changes ?? new ChangeTrackingList<ResourceChangeData>(), skipToken, additionalBinaryDataProperties);

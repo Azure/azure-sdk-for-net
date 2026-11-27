@@ -152,6 +152,49 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateAndUpdateStorageAccountWithTurboTier()
+        {
+            AzureLocation location = new AzureLocation("eastus2euap");
+            string accountName = Recording.GenerateAssetName(namePrefix);
+            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            _resourceGroup = (await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(location))).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2);
+            parameters.Location = location;
+            parameters.AccessTier = StorageAccountAccessTier.Hot;
+            parameters.TurboTier = new TurboTier
+            {
+                Status = TurboTierStatus.Enabled,
+                TargetPercent = 10
+            };
+
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                accountName,
+                parameters)).Value;
+
+            Assert.AreEqual(TurboTierStatus.Enabled, account.Data.TurboTier.Status);
+            Assert.AreEqual(10, account.Data.TurboTier.TargetPercent);
+
+            account = await account.UpdateAsync(new StorageAccountPatch
+            {
+                TurboTier = new TurboTier
+                {
+                    Status = TurboTierStatus.Disabled
+                }
+            });
+
+            account = await account.GetAsync();
+            Assert.AreEqual(TurboTierStatus.Disabled, account.Data.TurboTier.Status);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task CreateStandardAccount()
         {
             _resourceGroup = await CreateResourceGroupAsync();
@@ -432,6 +475,69 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             VerifyAccountProperties(account1, false);
             Assert.IsFalse(account1.Data.AllowSharedKeyAccess);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateAndUpdateStorageAccountDelegationSasPolicy()
+        {
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
+            parameters.AllowCrossTenantDelegationSas = true;
+            parameters.SasPolicy = new StorageAccountSasPolicy("1.00:00:00", ExpirationAction.Log)
+            {
+                IsUserBoundUserDelegationSasRequired = true,
+                RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Log
+            };
+
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                accountName,
+                parameters)).Value;
+
+            account = await account.GetAsync();
+            Assert.IsTrue(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("1.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.Log, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+
+            var patch = new StorageAccountPatch
+            {
+                AllowCrossTenantDelegationSas = false,
+                SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Block)
+                {
+                    IsUserBoundUserDelegationSasRequired = true,
+                    RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Block
+                }
+            };
+            account = await account.UpdateAsync(patch);
+
+            account = await account.GetAsync();
+            Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.Block, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+
+            patch = new StorageAccountPatch
+            {
+                SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Log)
+                {
+                    IsUserBoundUserDelegationSasRequired = false,
+                    RequireUserBoundUserDelegationSasAction = PolicyViolationAction.None
+                }
+            };
+            account = await account.UpdateAsync(patch);
+
+            account = await account.GetAsync();
+            Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsFalse(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.None, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
         }
 
         [Test]

@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingProfileDisplayName = BinaryData.FromString(prop.Value.GetRawText());
+                    billingProfileDisplayName = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("billingProfileId"u8))
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BillingTransactionProperties(

@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LineChannelProperties(lineRegistrations, callbackUri, isValidated, additionalBinaryDataProperties);
+            return new LineChannelProperties(lineRegistrations ?? new ChangeTrackingList<LineRegistration>(), callbackUri, isValidated, additionalBinaryDataProperties);
         }
     }
 }

@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The time the run started. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

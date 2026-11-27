@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     Properties = new AttestationProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             get
             {
-                return Properties is null ? default : Properties.LastComplianceStateChangeOn;
+                return Properties is null ? default : Properties.LastComplianceStateChangedOn;
             }
         }
 

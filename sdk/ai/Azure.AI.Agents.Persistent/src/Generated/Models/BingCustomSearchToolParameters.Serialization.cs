@@ -143,10 +143,10 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BingCustomSearchToolParameters(searchConfigurations, additionalBinaryDataProperties);
+            return new BingCustomSearchToolParameters(searchConfigurations ?? new ChangeTrackingList<BingCustomSearchConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

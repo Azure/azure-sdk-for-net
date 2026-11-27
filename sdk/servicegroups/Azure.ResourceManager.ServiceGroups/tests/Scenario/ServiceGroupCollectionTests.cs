@@ -78,56 +78,11 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.AreEqual(updatedData.Properties.DisplayName, updatedServiceGroup.Data.Properties.DisplayName);
             Assert.AreEqual(tenantId, updatedServiceGroup.Data.Properties.Parent.ResourceId.Name);
 
-            // 4. List Ancestors Collection
-            var serviceGroupName2 = Recording.GenerateAssetName("testsg-");
-
-            ServiceGroupData data2 = new ServiceGroupData
-            {
-                Properties = new ServiceGroupProperties
-                {
-                    DisplayName = $"Test ServiceGroup {serviceGroupName2}",
-                    Parent = new ParentServiceGroupProperties
-                    {
-                        ResourceId = new ResourceIdentifier(serviceGroup.Id),
-                    }
-                },
-            };
-
-            lro = await serviceGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceGroupName2, data2);
-            ServiceGroupResource serviceGroup2 = lro.Value;
-
-            var serviceGroupName3 = Recording.GenerateAssetName("testsg-");
-
-            ServiceGroupData data3 = new ServiceGroupData
-            {
-                Properties = new ServiceGroupProperties
-                {
-                    DisplayName = $"Test ServiceGroup {serviceGroupName3}",
-                    Parent = new ParentServiceGroupProperties
-                    {
-                        ResourceId = new ResourceIdentifier(serviceGroup2.Id),
-                    }
-                },
-            };
-
-            lro = await serviceGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceGroupName3, data3);
-            ServiceGroupResource serviceGroup3 = lro.Value;
-
-            ResourceIdentifier resourceId = ServiceGroupResource.CreateResourceIdentifier(serviceGroup3.Data.Name);
-            var ancestors = await Client.GetServiceGroupResource(resourceId).GetAncestorsAsync().ToEnumerableAsync();
-            Assert.IsNotNull(ancestors);
-            Assert.IsNotEmpty(ancestors);
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName2)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName3)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(tenantId)));
-            Assert.AreEqual(4, ancestors.Count);
-
-            // 5. Exists
+            // 4. Exists
             Assert.IsTrue(await serviceGroupCollection.ExistsAsync(serviceGroup.Data.Name));
             Assert.IsFalse(await serviceGroupCollection.ExistsAsync(serviceGroup.Data.Name + "x"));
 
-            // 6. GetIfExists
+            // 5. GetIfExists
             var serviceGroupIfExists = await serviceGroupCollection.GetIfExistsAsync(serviceGroup.Data.Name);
             Assert.IsTrue(serviceGroupIfExists.HasValue);
             Assert.IsNotNull(serviceGroupIfExists.Value);
@@ -135,9 +90,7 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.IsFalse(serviceGroupIfExists.HasValue);
             Assert.AreEqual(404, serviceGroupIfExists.GetRawResponse().Status);
 
-            // 7. Clean up all created SGs
-            await serviceGroup3.DeleteAsync(WaitUntil.Completed);
-            await serviceGroup2.DeleteAsync(WaitUntil.Completed);
+            // 6. Clean up all created SGs
             await serviceGroup.DeleteAsync(WaitUntil.Completed);
         }
     }

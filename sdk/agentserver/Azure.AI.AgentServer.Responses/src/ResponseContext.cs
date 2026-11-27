@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Primitives;
@@ -31,31 +32,7 @@ public class ResponseContext
     public string ResponseId { get; }
 
     private readonly CancellationTokenSource _shutdownSignal = new();
-
-    /// <summary>
-    /// Gets or sets whether the host is gracefully shutting down. Setting this to
-    /// <see langword="true"/> also signals <see cref="Shutdown"/>; setting it to
-    /// <see langword="false"/> has no effect (a shutdown signal cannot be withdrawn).
-    /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
-    /// graceful shutdown from an explicit client cancel or a client disconnect.
-    /// </summary>
-    public bool IsShutdownRequested
-    {
-        get => _shutdownSignal.IsCancellationRequested;
-        set
-        {
-            if (value && !_shutdownSignal.IsCancellationRequested)
-            {
-                try
-                {
-                    _shutdownSignal.Cancel();
-                }
-                catch (ObjectDisposedException)
-                {
-                }
-            }
-        }
-    }
+    private readonly CancellationTokenSource _clientCancellationSignal = new();
 
     /// <summary>
     /// Gets a cancellation token that is signaled when the host begins a graceful shutdown.
@@ -72,6 +49,40 @@ public class ResponseContext
     public virtual CancellationToken Shutdown => _shutdownSignal.Token;
 
     /// <summary>
+    /// Gets a cancellation token that is signaled when the client explicitly cancels this
+    /// response. Kept separate from <see cref="Shutdown"/> (host shutting down), the handler's
+    /// primary cancellation token, and a raw client disconnect, so a handler can compose or
+    /// link it to react specifically to an explicit client cancel.
+    /// </summary>
+    public virtual CancellationToken ClientCancellation => _clientCancellationSignal.Token;
+
+    /// <summary>
+    /// Signals <see cref="Shutdown"/>. Invoked by the framework when the host begins a graceful
+    /// shutdown. Idempotent; a shutdown signal cannot be withdrawn.
+    /// </summary>
+    internal void SignalShutdown() => Signal(_shutdownSignal);
+
+    /// <summary>
+    /// Signals <see cref="ClientCancellation"/>. Invoked by the framework when the client
+    /// explicitly cancels this response. Idempotent.
+    /// </summary>
+    internal void SignalClientCancellation() => Signal(_clientCancellationSignal);
+
+    private static void Signal(CancellationTokenSource source)
+    {
+        if (!source.IsCancellationRequested)
+        {
+            try
+            {
+                source.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+    }
+
+    /// <summary>
     /// Gets the full raw JSON request body as a <see cref="BinaryData"/>.
     /// Allows handlers to access custom or extension fields that are not part of the typed model.
     /// Returns <see langword="null"/> when no raw body is available (e.g., test-constructed contexts).
@@ -86,13 +97,14 @@ public class ResponseContext
     /// for each <paramref name="resolveReferences"/> mode.
     /// </summary>
     /// <param name="resolveReferences">
-    /// When <c>true</c> (the default), <see cref="Models.ItemReferenceParam"/> items
+    /// When <c>true</c> (the default), <see cref="ItemReferenceParam"/> items
     /// are resolved via the provider and returned as their concrete <see cref="Item"/> subtype.
-    /// When <c>false</c>, item references are left as <see cref="Models.ItemReferenceParam"/>
+    /// When <c>false</c>, item references are left as <see cref="ItemReferenceParam"/>
     /// in the returned list.
     /// </param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The resolved input items.</returns>
+    [Experimental("OPENAI001")]
     public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<Item>>(Array.Empty<Item>());
 
@@ -104,12 +116,13 @@ public class ResponseContext
     /// </summary>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The resolved history items, or an empty list if no conversation context exists.</returns>
+    [Experimental("OPENAI001")]
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
 
     /// <summary>
     /// Resolves input items and extracts all text content as a single string.
-    /// Filters for <see cref="Models.ItemMessage"/> items, expands their content,
+    /// Filters for <see cref="ItemMessage"/> items, expands their content,
     /// and joins all text values with newline separators.
     /// </summary>
     /// <param name="resolveReferences">
@@ -121,8 +134,11 @@ public class ResponseContext
     /// </returns>
     public virtual async Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
     {
+        // The items are only reduced to text here, so OpenAI's experimental types are not exposed to the caller.
+#pragma warning disable OPENAI001
         var items = await GetInputItemsAsync(resolveReferences, cancellationToken).ConfigureAwait(false);
         return items.GetInputText();
+#pragma warning restore OPENAI001
     }
 
     /// <summary>
@@ -164,6 +180,7 @@ public class ResponseContext
     /// (<see cref="IsRecovery"/> is <see langword="false"/>). Handlers can use this to
     /// resume from the last checkpointed watermark rather than restarting work.
     /// </summary>
+    [Experimental("OPENAI001")]
     public virtual ResponseObject? PersistedResponse => null;
 
     /// <summary>
@@ -187,11 +204,21 @@ public class ResponseContext
     public virtual int PendingInputCount => 0;
 
     /// <summary>
-    /// Gets whether the client has explicitly cancelled this response. Distinct from
+    /// Gets whether the host is gracefully shutting down. This is a get-only virtual
+    /// passthrough over <see cref="Shutdown"/> (<see cref="CancellationToken.IsCancellationRequested"/>).
+    /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
+    /// graceful shutdown from an explicit client cancel or a client disconnect.
+    /// </summary>
+    public virtual bool IsShutdownRequested => Shutdown.IsCancellationRequested;
+
+    /// <summary>
+    /// Gets whether the client has explicitly cancelled this response. This is a get-only
+    /// virtual passthrough over <see cref="ClientCancellation"/>
+    /// (<see cref="CancellationToken.IsCancellationRequested"/>). Distinct from
     /// <see cref="IsShutdownRequested"/> (server shutting down) and client disconnect;
     /// handlers can use this to stop work in response to an explicit cancel request.
     /// </summary>
-    public virtual bool ClientCancelled => false;
+    public virtual bool IsClientCancelled => ClientCancellation.IsCancellationRequested;
 
     /// <summary>
     /// Defers the current handler invocation for recovery instead of failing. Used during a

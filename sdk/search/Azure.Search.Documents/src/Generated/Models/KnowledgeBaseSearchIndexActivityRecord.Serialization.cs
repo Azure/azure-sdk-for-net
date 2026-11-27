@@ -85,20 +85,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("knowledgeSourceName"u8);
                 writer.WriteStringValue(KnowledgeSourceName);
             }
-            if (Optional.IsDefined(QueryTime))
+            if (Optional.IsDefined(QueryOn))
             {
                 writer.WritePropertyName("queryTime"u8);
-                writer.WriteStringValue(QueryTime.Value, "O");
+                writer.WriteStringValue(QueryOn.Value, "O");
             }
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
-            }
-            if (Optional.IsDefined(ImageServing))
-            {
-                writer.WritePropertyName("imageServing"u8);
-                writer.WriteObjectValue(ImageServing, options);
             }
             if (Optional.IsDefined(SearchIndexArguments))
             {
@@ -134,14 +129,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string knowledgeSourceName = default;
-            DateTimeOffset? queryTime = default;
+            DateTimeOffset? queryOn = default;
             int? count = default;
-            ImageServingStatistics imageServing = default;
             KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,6 +149,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("startedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -189,7 +203,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    queryTime = prop.Value.GetDateTimeOffset("O");
+                    queryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("count"u8))
@@ -199,15 +213,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     count = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("imageServing"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageServing = ImageServingStatistics.DeserializeImageServingStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("searchIndexArguments"u8))
@@ -221,20 +226,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeBaseSearchIndexActivityRecord(
                 id,
                 @type,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
-                imageServing,
                 searchIndexArguments);
         }
     }

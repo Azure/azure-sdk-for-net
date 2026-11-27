@@ -18,6 +18,7 @@ namespace Azure.Provisioning.MachineLearning
     {
         private BicepValue<int> _delayEvaluation;
         private BicepValue<int> _evaluationInterval;
+        private BicepValue<EarlyTerminationPolicyType> _policyType;
 
         /// <summary> Creates a new MachineLearningEarlyTerminationPolicy. </summary>
         public MachineLearningEarlyTerminationPolicy()
@@ -54,12 +55,23 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Name of policy configuration. </summary>
+        internal BicepValue<EarlyTerminationPolicyType> PolicyType
+        {
+            get
+            {
+                Initialize();
+                return _policyType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningEarlyTerminationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _delayEvaluation = DefineProperty<int>(nameof(DelayEvaluation), new string[] { "delayEvaluation" });
             _evaluationInterval = DefineProperty<int>(nameof(EvaluationInterval), new string[] { "evaluationInterval" });
+            _policyType = DefineProperty<EarlyTerminationPolicyType>(nameof(PolicyType), new string[] { "policyType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

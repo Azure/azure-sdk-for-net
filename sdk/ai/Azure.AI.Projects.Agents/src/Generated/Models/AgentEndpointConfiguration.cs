@@ -23,12 +23,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocolConfiguration"> Per-protocol configuration for the agent endpoint. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
+        /// <param name="publishApprovalStatus"> The Microsoft Agent Certification review status of the Microsoft 365 store title published for this agent. Server-populated and best-effort: it is absent when the status could not be determined, and an absent value must not be interpreted as the agent not being published. No value is terminal, because publishing a new version of an agent reuses the same store title and sends it back through review. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentEndpointConfiguration(VersionSelector versionSelector, ProtocolConfiguration protocolConfiguration, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentEndpointConfiguration(VersionSelector versionSelector, ProtocolConfiguration protocolConfiguration, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, PublishApprovalStatus? publishApprovalStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VersionSelector = versionSelector;
             ProtocolConfiguration = protocolConfiguration;
             AuthorizationSchemes = authorizationSchemes;
+            PublishApprovalStatus = publishApprovalStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The authorization schemes supported by the agent endpoint. </summary>
         public IList<AgentEndpointAuthorizationScheme> AuthorizationSchemes { get; }
+
+        /// <summary> The Microsoft Agent Certification review status of the Microsoft 365 store title published for this agent. Server-populated and best-effort: it is absent when the status could not be determined, and an absent value must not be interpreted as the agent not being published. No value is terminal, because publishing a new version of an agent reuses the same store title and sends it back through review. </summary>
+        public PublishApprovalStatus? PublishApprovalStatus { get; }
     }
 }

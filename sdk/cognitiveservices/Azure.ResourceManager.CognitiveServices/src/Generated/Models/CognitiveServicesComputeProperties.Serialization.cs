@@ -86,6 +86,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

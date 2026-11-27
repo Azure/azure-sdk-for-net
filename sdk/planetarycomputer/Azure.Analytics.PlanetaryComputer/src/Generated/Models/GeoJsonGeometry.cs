@@ -15,7 +15,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// Supported geometry types include:
     /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
     /// Used for spatial filtering in STAC.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="PointGeometry"/>, and <see cref="PolygonGeometry"/>.
     /// </summary>
     public abstract partial class GeoJsonGeometry
     {

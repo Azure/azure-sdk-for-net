@@ -59,7 +59,7 @@ namespace Azure.Provisioning.ContainerRegistry
             base.DefineProvisionableProperties();
             _displayStatus = DefineProperty<string>(nameof(DisplayStatus), new string[] { "displayStatus" }, isOutput: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
-            _timestamp = DefineProperty<DateTimeOffset>(nameof(Timestamp), new string[] { "timestamp" }, isOutput: true);
+            _timestamp = DefineProperty<DateTimeOffset>(nameof(Timestamp), new string[] { "timestamp" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

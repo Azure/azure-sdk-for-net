@@ -2,16 +2,23 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
+using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
@@ -90,6 +97,76 @@ public class ServiceRegistrationTests
         // file-backed replay is an internal Core selection; from the Responses layer
         // we assert the registry is available for the orchestrator/replay to use.
         Assert.That(sp.GetService<Core.Streaming.AgentEventStreamRegistry>(), Is.Not.Null);
+    }
+
+    [Test]
+    public void Resilient_Task_Handlers_Are_Keyed_Scoped_Without_Root_Provider_Capture()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+        services.AddResponsesServer();
+
+        var handlers = services
+            .Where(descriptor =>
+                descriptor.ServiceType ==
+                    typeof(IResilientTaskHandler<ResponseTaskInput, ResponseTaskOutput>))
+            .ToArray();
+
+        Assert.That(handlers, Has.Length.EqualTo(2));
+        Assert.That(handlers, Has.All.Property(nameof(ServiceDescriptor.Lifetime))
+            .EqualTo(ServiceLifetime.Scoped));
+        Assert.That(handlers.Select(descriptor => descriptor.ServiceKey), Is.EquivalentTo(new object[]
+        {
+            ResponsesResilientTaskHandler.OneShotTaskName,
+            ResponsesResilientTaskHandler.MultiTurnTaskName,
+        }));
+        Assert.That(
+            services.Any(descriptor =>
+                descriptor.ServiceType == typeof(IHostedService)
+                && descriptor.ImplementationType?.Name == "ResponsesResilientTaskRootProvider"),
+            Is.False);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task Application_EventStream_Backing_Overrides_Responses_Default(
+        bool applicationFirst)
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+
+        void AddApplicationBacking() =>
+            services.AddAgentEventStreams(options => options.UseInMemoryLive());
+        void AddResponses() =>
+            services.AddResponsesServer(options => options.ResilientBackground = true);
+
+        if (applicationFirst)
+        {
+            AddApplicationBacking();
+            AddResponses();
+        }
+        else
+        {
+            AddResponses();
+            AddApplicationBacking();
+        }
+
+        await using ServiceProvider provider = services.BuildServiceProvider();
+        AgentEventStreamRegistry registry =
+            provider.GetRequiredService<AgentEventStreamRegistry>();
+        AgentEventStream stream = await registry.GetOrCreateAsync("application-backing");
+        await stream.EmitAsync(
+            new SseItem<string>("not-replayed", "test"),
+            close: true);
+
+        var replayed = new List<SseItem<string>>();
+        await foreach (SseItem<string> item in stream.Subscribe())
+        {
+            replayed.Add(item);
+        }
+
+        Assert.That(replayed, Is.Empty,
+            "The explicit in-memory live application backing must override Responses replay defaults.");
     }
 
     [Test]
@@ -231,14 +308,14 @@ public class ServiceRegistrationTests
 
     private sealed class StubResponsesProvider : ResponsesProvider
     {
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
         public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
-            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+            => Task.FromResult(new ResponseItemCollectionPage { Object = "list", HasMore = false });
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
         public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext isolation, CancellationToken ct = default)
@@ -257,17 +334,17 @@ public class ServiceRegistrationTests
     /// </summary>
     private sealed class RecordingStateProvider : ResponsesProvider
     {
-        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+        private readonly ConcurrentDictionary<string, ResponseObject> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -275,7 +352,7 @@ public class ServiceRegistrationTests
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
@@ -290,8 +367,8 @@ public class ServiceRegistrationTests
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
-            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+            => Task.FromResult(new ResponseItemCollectionPage { Object = "list", HasMore = false });
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
@@ -332,8 +409,8 @@ public class ServiceRegistrationTests
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         try
         {
             await Task.Delay(Timeout.Infinite, ct);
@@ -343,6 +420,6 @@ public class ServiceRegistrationTests
             // Expected
         }
         response.SetCancelled();
-        yield return new ResponseIncompleteEvent(0, response);
+        yield return new ResponseIncompleteEvent { SequenceNumber = (int)(0), Response = response };
     }
 }

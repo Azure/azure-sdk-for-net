@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 administrationMembers is null && mode is null && tenantId is null && friendlyName is null && state is null && provisioningState is null ? default : new DedicatedCapacityProperties(
-                    new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default),
+                    administrationMembers is null ? default : new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default),
                     mode,
                     tenantId,
                     friendlyName,
@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 default);
         }
 
+        /// <summary> Represents the SKU name and Azure pricing tier for PowerBI Dedicated capacity resource. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <param name="capacity"> The capacity of the SKU. </param>
@@ -75,15 +76,17 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DedicatedCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), administrationMembers is null && mode is null && tenantId is null && friendlyName is null ? default : new DedicatedCapacityMutableProperties(new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), mode, tenantId, friendlyName, default), default);
+            return new DedicatedCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), administrationMembers is null && mode is null && tenantId is null && friendlyName is null ? default : new DedicatedCapacityMutableProperties(administrationMembers is null ? default : new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), mode, tenantId, friendlyName, default), default);
         }
 
+        /// <summary> The request has succeeded. </summary>
         /// <returns> A new <see cref="Models.OkResponse"/> instance for mocking. </returns>
         public static OkResponse OkResponse()
         {
             return new OkResponse(default);
         }
 
+        /// <summary> An object that represents SKU details for existing resources. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new SkuDetails(resourceType, sku, default);
         }
 
+        /// <summary> Details of capacity name request body. </summary>
         /// <param name="name"> Name for checking availability. </param>
         /// <param name="resourceType"> The resource type of PowerBI dedicated. </param>
         /// <returns> A new <see cref="Models.CheckCapacityNameAvailabilityContent"/> instance for mocking. </returns>
@@ -100,6 +104,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new CheckCapacityNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The checking result of capacity name availability. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the capacity name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>
@@ -136,6 +141,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 default);
         }
 
+        /// <summary> Represents the SKU name and Azure pricing tier for auto scale v-core resource. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <param name="capacity"> The capacity of an auto scale v-core resource. </param>

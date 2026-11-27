@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewInstanceProperties"/>. </summary>
         /// <param name="status"> This read-only field specifies the status of an access review instance. </param>
-        /// <param name="startOn"> The DateTime when the review instance is scheduled to be start. </param>
-        /// <param name="endOn"> The DateTime when the review instance is scheduled to end. </param>
+        /// <param name="startsOn"> The DateTime when the review instance is scheduled to be start. </param>
+        /// <param name="endsOn"> The DateTime when the review instance is scheduled to end. </param>
         /// <param name="reviewers"> This is the collection of reviewers. </param>
         /// <param name="backupReviewers"> This is the collection of backup reviewers. </param>
         /// <param name="reviewersType"> This field specifies the type of reviewers for a review. Usually for a review, reviewers are explicitly assigned. However, in some cases, the reviewers may not be assigned and instead be chosen dynamically. For example managers review or self review. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewInstanceProperties(AccessReviewInstanceStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AccessReviewReviewer> reviewers, IList<AccessReviewReviewer> backupReviewers, AccessReviewInstanceReviewersType? reviewersType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewInstanceProperties(AccessReviewInstanceStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<AccessReviewReviewer> reviewers, IList<AccessReviewReviewer> backupReviewers, AccessReviewInstanceReviewersType? reviewersType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Reviewers = reviewers;
             BackupReviewers = backupReviewers;
             ReviewersType = reviewersType;
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The DateTime when the review instance is scheduled to be start. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The DateTime when the review instance is scheduled to end. </summary>
         [WirePath("endDateTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> This is the collection of reviewers. </summary>
         [WirePath("reviewers")]

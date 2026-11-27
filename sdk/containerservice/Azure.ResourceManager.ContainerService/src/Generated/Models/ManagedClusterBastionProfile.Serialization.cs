@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterBastionProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BastionId))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             ResourceIdentifier bastionId = default;
             ManagedClusterBastionSku? sku = default;
             int? scaleUnits = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("bastionId"u8))
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterBastionProfile(
-                enabled,
+                isEnabled,
                 bastionId,
                 sku,
                 scaleUnits,

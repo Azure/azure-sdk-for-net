@@ -6,6 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -71,27 +73,34 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(FileSearchToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxNumResults))
+            if (Optional.IsDefined(MaxResultCount))
             {
                 writer.WritePropertyName("max_num_results"u8);
-                writer.WriteNumberValue(MaxNumResults.Value);
+                writer.WriteNumberValue(MaxResultCount.Value);
             }
-            if (Optional.IsDefined(RankingOptionsInternal))
+            if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptionsInternal, options);
+                writer.WriteObjectValue(RankingOptions, options);
             }
-            if (Optional.IsDefined(Filters))
+            if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
-                writer.WritePropertyName("filters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Filters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Filters))
+                if (Filters != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("filters"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(Filters);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Filters))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("filters"u8);
+                }
             }
             if (Optional.IsCollectionDefined(VectorStoreIds))
             {
@@ -140,8 +149,9 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long? maxNumResults = default;
-            InternalRankingOptions rankingOptionsInternal = default;
+            long? maxResultCount = default;
+            FileSearchToolRankingOptions rankingOptions = default;
+            bool filtersIsDefined = false;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +180,14 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -181,7 +198,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    maxNumResults = prop.Value.GetInt64();
+                    maxResultCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("ranking_options"u8))
@@ -190,17 +207,18 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    rankingOptionsInternal = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
+                    rankingOptions = ModelReaderWriter.Read<FileSearchToolRankingOptions>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
                 {
+                    filtersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         filters = null;
                         continue;
                     }
-                    filters = BinaryData.FromString(prop.Value.GetRawText());
+                    filters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("vector_store_ids"u8))
@@ -226,7 +244,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileSearchToolboxTool(
@@ -235,10 +253,13 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
-                maxNumResults,
-                rankingOptionsInternal,
+                maxResultCount,
+                rankingOptions,
                 filters,
-                vectorStoreIds ?? new ChangeTrackingList<string>());
+                vectorStoreIds ?? new ChangeTrackingList<string>())
+            {
+                _filtersIsDefined = filtersIsDefined
+            };
         }
     }
 }

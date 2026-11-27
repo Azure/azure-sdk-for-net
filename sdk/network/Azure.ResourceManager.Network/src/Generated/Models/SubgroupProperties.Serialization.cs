@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of subgroup. </summary>
-    public partial class SubgroupProperties : IJsonModel<SubgroupProperties>
+    internal partial class SubgroupProperties : IJsonModel<SubgroupProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SubgroupProperties(internalSubgroupId, interconnectBlock, virtualMachines ?? new ChangeTrackingList<NetworkSubResource>(), provisioningState, additionalBinaryDataProperties);

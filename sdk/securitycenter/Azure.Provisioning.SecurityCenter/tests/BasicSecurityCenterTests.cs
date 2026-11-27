@@ -38,7 +38,7 @@ public class BasicSecurityCenterTests
         await using Trycep test = CreateDefenderPricingTest();
         test.Compare(
             """
-            resource pricing 'Microsoft.Security/pricings@2023-01-01' = {
+            resource pricing 'Microsoft.Security/pricings@2024-01-01' = {
               name: 'VirtualMachines'
               properties: {
                 pricingTier: 'Standard'

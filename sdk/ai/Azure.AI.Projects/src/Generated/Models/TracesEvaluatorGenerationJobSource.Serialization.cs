@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
     public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<TracesEvaluatorGenerationJobSource>
@@ -98,11 +98,11 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(AgentVersion);
             }
             writer.WritePropertyName("start_time"u8);
-            writer.WriteNumberValue(StartsOn, "U");
-            if (Optional.IsDefined(EndsOn))
+            writer.WriteNumberValue(StartsAt, "U");
+            if (Optional.IsDefined(EndsAt))
             {
                 writer.WritePropertyName("end_time"u8);
-                writer.WriteNumberValue(EndsOn.Value, "U");
+                writer.WriteNumberValue(EndsAt.Value, "U");
             }
         }
 
@@ -137,8 +137,8 @@ namespace Azure.AI.Projects
             string agentId = default;
             string agentName = default;
             string agentVersion = default;
-            DateTimeOffset startsOn = default;
-            DateTimeOffset? endsOn = default;
+            DateTimeOffset startsAt = default;
+            DateTimeOffset? endsAt = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -168,7 +168,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("start_time"u8))
                 {
-                    startsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
@@ -177,12 +177,12 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TracesEvaluatorGenerationJobSource(
@@ -192,8 +192,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startsOn,
-                endsOn);
+                startsAt,
+                endsAt);
         }
     }
 }

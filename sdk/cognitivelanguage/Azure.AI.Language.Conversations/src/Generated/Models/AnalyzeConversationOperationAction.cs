@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Base class for a long-running conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="SummarizationOperationAction"/>, and <see cref="PiiOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="PiiOperationAction"/>, and <see cref="SummarizationOperationAction"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationOperationAction
     {

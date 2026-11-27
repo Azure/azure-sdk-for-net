@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FreeServicesPatchRequestProperties"/>. </summary>
-        /// <param name="endOn"> Updated expiration date and time of the free services. </param>
+        /// <param name="endsOn"> Updated expiration date and time of the free services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FreeServicesPatchRequestProperties(DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FreeServicesPatchRequestProperties(DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndOn = endOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Updated expiration date and time of the free services. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
     }
 }

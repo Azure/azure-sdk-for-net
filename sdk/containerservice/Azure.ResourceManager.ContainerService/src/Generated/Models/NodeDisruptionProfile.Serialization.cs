@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            NodeDisruptionPolicy? nodeDisruptionPolicy = default;
+            AgentPoolNodeDisruptionPolicy? nodeDisruptionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    nodeDisruptionPolicy = new NodeDisruptionPolicy(prop.Value.GetString());
+                    nodeDisruptionPolicy = new AgentPoolNodeDisruptionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NodeDisruptionProfile(nodeDisruptionPolicy, additionalBinaryDataProperties);

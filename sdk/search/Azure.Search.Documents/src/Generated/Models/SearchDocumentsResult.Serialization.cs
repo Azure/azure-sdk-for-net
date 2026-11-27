@@ -114,18 +114,20 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Answers))
             {
-                writer.WritePropertyName("@search.answers"u8);
-                writer.WriteStartArray();
-                foreach (QueryAnswerResult item in Answers)
+                if (Answers != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("@search.answers"u8);
+                    writer.WriteStartArray();
+                    foreach (QueryAnswerResult item in Answers)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(DebugInfo))
-            {
-                writer.WritePropertyName("@search.debug"u8);
-                writer.WriteObjectValue(DebugInfo, options);
+                else
+                {
+                    writer.WriteNull("@search.answers"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(NextPageParameters))
             {
@@ -156,11 +158,6 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("@search.semanticPartialResponseType"u8);
                 writer.WriteStringValue(SemanticPartialResponseType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(SemanticQueryRewritesResultType))
-            {
-                writer.WritePropertyName("@search.semanticQueryRewritesResultType"u8);
-                writer.WriteStringValue(SemanticQueryRewritesResultType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -207,14 +204,12 @@ namespace Azure.Search.Documents.Models
             long? count = default;
             double? coverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
-            IReadOnlyList<QueryAnswerResult> answers = default;
-            DebugInfo debugInfo = default;
+            IReadOnlyList<QueryAnswerResult> answers = new ChangeTrackingList<QueryAnswerResult>();
             SearchOptions nextPageParameters = default;
             IReadOnlyList<SearchResult> results = default;
             string nextLink = default;
             SemanticErrorReason? semanticPartialResponseReason = default;
             SemanticSearchResultsType? semanticPartialResponseType = default;
-            SemanticQueryRewritesResultType? semanticQueryRewritesResultType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -266,6 +261,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        answers = null;
                         continue;
                     }
                     List<QueryAnswerResult> array = new List<QueryAnswerResult>();
@@ -274,16 +270,6 @@ namespace Azure.Search.Documents.Models
                         array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item, options));
                     }
                     answers = array;
-                    continue;
-                }
-                if (prop.NameEquals("@search.debug"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        debugInfo = null;
-                        continue;
-                    }
-                    debugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@search.nextPageParameters"u8))
@@ -328,32 +314,21 @@ namespace Azure.Search.Documents.Models
                     semanticPartialResponseType = new SemanticSearchResultsType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("@search.semanticQueryRewritesResultType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    semanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchDocumentsResult(
                 count,
                 coverage,
                 facets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
-                answers ?? new ChangeTrackingList<QueryAnswerResult>(),
-                debugInfo,
+                answers,
                 nextPageParameters,
-                results,
+                results ?? new ChangeTrackingList<SearchResult>(),
                 nextLink,
                 semanticPartialResponseReason,
                 semanticPartialResponseType,
-                semanticQueryRewritesResultType,
                 additionalBinaryDataProperties);
         }
     }

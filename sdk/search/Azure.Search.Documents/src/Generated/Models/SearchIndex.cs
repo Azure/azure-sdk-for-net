@@ -15,6 +15,16 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CorsOptions _corsOptions;
+        private bool _corsOptionsIsDefined;
+        private SearchResourceEncryptionKey _encryptionKey;
+        private bool _encryptionKeyIsDefined;
+        private SemanticSearch _semanticSearch;
+        private bool _semanticSearchIsDefined;
+        private VectorSearch _vectorSearch;
+        private bool _vectorSearchIsDefined;
+        private SearchIndexPermissionFilterOption? _permissionFilterOption;
+        private bool _permissionFilterOptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="name"> The name of the index. </param>
@@ -33,30 +43,28 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
-        /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
         /// <param name="sharePointConnectorAppRegistration"> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. If provided, the applicationId and federatedCredentialId properties are required. </param>
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             ScoringProfiles = scoringProfiles;
             DefaultScoringProfile = defaultScoringProfile;
-            CorsOptions = corsOptions;
+            _corsOptions = corsOptions;
             Suggesters = suggesters;
             Analyzers = analyzers;
             Tokenizers = tokenizers;
             TokenFilters = tokenFilters;
             CharFilters = charFilters;
             Normalizers = normalizers;
-            EncryptionKey = encryptionKey;
+            _encryptionKey = encryptionKey;
             Similarity = similarity;
-            SemanticSearch = semanticSearch;
-            VectorSearch = vectorSearch;
-            PermissionFilterOption = permissionFilterOption;
-            PurviewEnabled = purviewEnabled;
+            _semanticSearch = semanticSearch;
+            _vectorSearch = vectorSearch;
+            _permissionFilterOption = permissionFilterOption;
             SharePointConnectorAppRegistration = sharePointConnectorAppRegistration;
             _fields = fields;
             _etag = etag;
@@ -76,7 +84,18 @@ namespace Azure.Search.Documents.Indexes.Models
         public string DefaultScoringProfile { get; set; }
 
         /// <summary> Options to control Cross-Origin Resource Sharing (CORS) for the index. </summary>
-        public CorsOptions CorsOptions { get; set; }
+        public CorsOptions CorsOptions
+        {
+            get
+            {
+                return _corsOptions;
+            }
+            set
+            {
+                _corsOptions = value;
+                _corsOptionsIsDefined = true;
+            }
+        }
 
         /// <summary> The suggesters for the index. </summary>
         public IList<SearchSuggester> Suggesters { get; }
@@ -97,22 +116,63 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<LexicalNormalizer> Normalizers { get; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; set; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+            set
+            {
+                _encryptionKey = value;
+                _encryptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used. </summary>
         public SimilarityAlgorithm Similarity { get; set; }
 
         /// <summary> Defines parameters for a search index that influence semantic capabilities. </summary>
-        public SemanticSearch SemanticSearch { get; set; }
+        public SemanticSearch SemanticSearch
+        {
+            get
+            {
+                return _semanticSearch;
+            }
+            set
+            {
+                _semanticSearch = value;
+                _semanticSearchIsDefined = true;
+            }
+        }
 
         /// <summary> Contains configuration options related to vector search. </summary>
-        public VectorSearch VectorSearch { get; set; }
+        public VectorSearch VectorSearch
+        {
+            get
+            {
+                return _vectorSearch;
+            }
+            set
+            {
+                _vectorSearch = value;
+                _vectorSearchIsDefined = true;
+            }
+        }
 
         /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
-        public SearchIndexPermissionFilterOption? PermissionFilterOption { get; set; }
-
-        /// <summary> A value indicating whether Purview is enabled for the index. </summary>
-        public bool? PurviewEnabled { get; set; }
+        public SearchIndexPermissionFilterOption? PermissionFilterOption
+        {
+            get
+            {
+                return _permissionFilterOption;
+            }
+            set
+            {
+                _permissionFilterOption = value;
+                _permissionFilterOptionIsDefined = true;
+            }
+        }
 
         /// <summary> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. If provided, the applicationId and federatedCredentialId properties are required. </summary>
         public SharePointConnectorAppRegistration SharePointConnectorAppRegistration { get; set; }

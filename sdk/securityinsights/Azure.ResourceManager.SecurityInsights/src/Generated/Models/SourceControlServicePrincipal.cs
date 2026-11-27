@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="id"> Id of service principal. </param>
         /// <param name="tenantId"> Tenant id of service principal. </param>
         /// <param name="appId"> App id of service principal. </param>
-        /// <param name="credentialsExpireOn"> Expiration time of service principal credentials. </param>
+        /// <param name="credentialsExpiresOn"> Expiration time of service principal credentials. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlServicePrincipal(string id, string tenantId, string appId, DateTimeOffset? credentialsExpireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlServicePrincipal(string id, string tenantId, string appId, DateTimeOffset? credentialsExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             TenantId = tenantId;
             AppId = appId;
-            CredentialsExpireOn = credentialsExpireOn;
+            CredentialsExpiresOn = credentialsExpiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Expiration time of service principal credentials. </summary>
         [WirePath("credentialsExpireOn")]
-        public DateTimeOffset? CredentialsExpireOn { get; set; }
+        public DateTimeOffset? CredentialsExpiresOn { get; set; }
     }
 }

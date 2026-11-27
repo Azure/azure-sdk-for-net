@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="state"> The current state of the application package. </param>
         /// <param name="format"> The format of the application package, if the package is active. </param>
         /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
-        /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
+        /// <param name="storageUriExpiresOn"> The UTC time at which the Azure Storage URL will expire. </param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationPackageProperties(BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationPackageProperties(BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpiresOn, DateTimeOffset? lastActivatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Format = format;
             StorageUri = storageUri;
-            StorageUriExpireOn = storageUriExpireOn;
+            StorageUriExpiresOn = storageUriExpiresOn;
             LastActivatedOn = lastActivatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Batch.Models
         public Uri StorageUri { get; }
 
         /// <summary> The UTC time at which the Azure Storage URL will expire. </summary>
-        public DateTimeOffset? StorageUriExpireOn { get; }
+        public DateTimeOffset? StorageUriExpiresOn { get; }
 
         /// <summary> The time at which the package was last activated, if the package is active. </summary>
         public DateTimeOffset? LastActivatedOn { get; }

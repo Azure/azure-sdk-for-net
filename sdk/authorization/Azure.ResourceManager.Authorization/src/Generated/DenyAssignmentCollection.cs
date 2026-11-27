@@ -39,7 +39,13 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(DenyAssignmentResource.ResourceType, out string denyAssignmentApiVersion);
             _denyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", DenyAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _denyAssignmentsRestClient = new DenyAssignments(_denyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, denyAssignmentApiVersion ?? "2024-07-01-preview");
+            _denyAssignmentsRestClient = new DenyAssignments(
+                _denyAssignmentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                denyAssignmentApiVersion ?? "2024-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
         }
 
         /// <summary>
@@ -276,7 +282,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForScopeAsyncCollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentDataAsync0CollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +311,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForScopeCollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentData0CollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>

@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/>. </summary>
         /// <param name="azureResourceId"> The anomaly azure resource id. </param>
         /// <param name="displayName"> The anomaly name. </param>
-        /// <param name="endOn"> The anomaly end time. </param>
-        /// <param name="startOn"> The anomaly start time. </param>
+        /// <param name="endsOn"> The anomaly end time. </param>
+        /// <param name="startsOn"> The anomaly start time. </param>
         /// <param name="generatedOn"> The anomaly generated time. </param>
-        internal AnomalyTimelineItem(ResourceIdentifier azureResourceId, string displayName, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn) : base(EntityTimelineKind.Anomaly)
+        internal AnomalyTimelineItem(ResourceIdentifier azureResourceId, string displayName, DateTimeOffset endsOn, DateTimeOffset startsOn, DateTimeOffset generatedOn) : base(EntityTimelineKind.Anomaly)
         {
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
-            EndOn = endOn;
-            StartOn = startOn;
+            EndsOn = endsOn;
+            StartsOn = startsOn;
             GeneratedOn = generatedOn;
             Techniques = new ChangeTrackingList<string>();
             Reasons = new ChangeTrackingList<string>();
@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="productName"> The anomaly product name. </param>
         /// <param name="description"> The anomaly description. </param>
         /// <param name="displayName"> The anomaly name. </param>
-        /// <param name="endOn"> The anomaly end time. </param>
-        /// <param name="startOn"> The anomaly start time. </param>
+        /// <param name="endsOn"> The anomaly end time. </param>
+        /// <param name="startsOn"> The anomaly start time. </param>
         /// <param name="generatedOn"> The anomaly generated time. </param>
         /// <param name="vendor"> The name of the anomaly vendor. </param>
         /// <param name="intent"> The intent of the anomaly. </param>
         /// <param name="techniques"> The techniques of the anomaly. </param>
         /// <param name="reasons"> The reasons that cause the anomaly. </param>
-        internal AnomalyTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string productName, string description, string displayName, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string vendor, string intent, IList<string> techniques, IList<string> reasons) : base(kind, additionalBinaryDataProperties)
+        internal AnomalyTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string productName, string description, string displayName, DateTimeOffset endsOn, DateTimeOffset startsOn, DateTimeOffset generatedOn, string vendor, string intent, IList<string> techniques, IList<string> reasons) : base(kind, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             ProductName = productName;
             Description = description;
             DisplayName = displayName;
-            EndOn = endOn;
-            StartOn = startOn;
+            EndsOn = endsOn;
+            StartsOn = startsOn;
             GeneratedOn = generatedOn;
             Vendor = vendor;
             Intent = intent;
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The anomaly end time. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> The anomaly start time. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The anomaly generated time. </summary>
         [WirePath("timeGenerated")]

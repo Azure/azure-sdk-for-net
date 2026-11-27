@@ -49,6 +49,19 @@ namespace Azure.ResourceManager.EdgeOrder
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="orderItemDetails"> Represents order item details. </param>
+        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
+        /// <param name="orderId"> Id of the order to which order item belongs to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressDetails"/> is null. </exception>
+        public EdgeOrderItemData(AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, ResourceIdentifier orderId) : this(location, orderItemDetails, orderId)
+        {
+            Argument.AssertNotNull(addressDetails, nameof(addressDetails));
+
+            AddressDetails = addressDetails;
+        }
+
         /// <summary> Order item properties. </summary>
         internal OrderItemProperties Properties { get; set; }
 
@@ -94,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

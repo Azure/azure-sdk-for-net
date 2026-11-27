@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(), computedDisabledRules ?? new ChangeTrackingList<ManagedRuleSetRuleGroup>(), additionalBinaryDataProperties);

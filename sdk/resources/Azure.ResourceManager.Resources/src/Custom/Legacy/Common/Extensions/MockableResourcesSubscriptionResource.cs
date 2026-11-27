@@ -1,0 +1,170 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources.Models;
+
+namespace Azure.ResourceManager.Resources.Mocking
+{
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    public partial class MockableResourcesSubscriptionResource : ArmResource
+    {
+        /// <summary> Gets a collection of ArmDeploymentResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        [Obsolete("Use MockableResourcesDeploymentsSubscriptionResource.GetArmDeployments instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmDeploymentCollection GetArmDeployments()
+        {
+            return GetCachedClient(client => new ArmDeploymentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [Obsolete("Use MockableResourcesDeploymentsSubscriptionResource.GetArmDeploymentAsync instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return await GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [Obsolete("Use MockableResourcesDeploymentsSubscriptionResource.GetArmDeployment instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ArmDeploymentResource> GetArmDeployment(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return GetArmDeployments().Get(deploymentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DeploymentStackResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
+        [Obsolete("Use Azure.ResourceManager.Resources.DeploymentStacks.Mocking.MockableResourcesDeploymentStacksArmClient instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DeploymentStackCollection GetDeploymentStacks()
+        {
+            return GetCachedClient(client => new DeploymentStackCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Deployment stack with a given name at specific scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [Obsolete("Use Azure.ResourceManager.Resources.DeploymentStacks.Mocking.MockableResourcesDeploymentStacksArmClient instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            return await GetDeploymentStacks().GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Deployment stack with a given name at specific scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [Obsolete("Use Azure.ResourceManager.Resources.DeploymentStacks.Mocking.MockableResourcesDeploymentStacksArmClient instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<DeploymentStackResource> GetDeploymentStack(string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            return GetDeploymentStacks().Get(deploymentStackName, cancellationToken);
+        }
+    }
+}

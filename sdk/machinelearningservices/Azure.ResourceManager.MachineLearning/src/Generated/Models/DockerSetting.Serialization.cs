@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DockerSetting)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Privileged))
+            if (Optional.IsDefined(Privileged, _privilegedIsDefined))
             {
-                writer.WritePropertyName("privileged"u8);
-                writer.WriteBooleanValue(Privileged.Value);
+                if (Privileged != null)
+                {
+                    writer.WritePropertyName("privileged"u8);
+                    writer.WriteBooleanValue(Privileged.Value);
+                }
+                else
+                {
+                    writer.WriteNull("privileged"u8);
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -118,12 +125,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool privilegedIsDefined = false;
             bool? privileged = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("privileged"u8))
                 {
+                    privilegedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         privileged = null;
@@ -132,9 +141,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     privileged = prop.Value.GetBoolean();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
-            return new DockerSetting(privileged, additionalProperties);
+            return new DockerSetting(privileged, additionalProperties)
+            {
+                _privilegedIsDefined = privilegedIsDefined
+            };
         }
     }
 }

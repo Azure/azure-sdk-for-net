@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

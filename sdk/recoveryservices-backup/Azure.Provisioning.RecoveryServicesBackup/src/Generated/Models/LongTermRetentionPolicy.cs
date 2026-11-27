@@ -18,6 +18,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new LongTermRetentionPolicy. </summary>
         public LongTermRetentionPolicy()
         {
+            RetentionPolicyType.Assign("LongTermRetentionPolicy");
         }
 
         /// <summary> Gets or sets the DailySchedule. </summary>
@@ -84,7 +85,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("retentionPolicyType", new string[] { "retentionPolicyType" }, defaultValue: "LongTermRetentionPolicy");
             _dailySchedule = DefineModelProperty<DailyRetentionSchedule>(nameof(DailySchedule), new string[] { "dailySchedule" });
             _weeklySchedule = DefineModelProperty<WeeklyRetentionSchedule>(nameof(WeeklySchedule), new string[] { "weeklySchedule" });
             _monthlySchedule = DefineModelProperty<MonthlyRetentionSchedule>(nameof(MonthlySchedule), new string[] { "monthlySchedule" });

@@ -835,7 +835,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -844,13 +844,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeletePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -881,7 +881,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -890,13 +890,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeletePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -922,7 +922,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -930,9 +930,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return DeletePoolInternal(poolId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return DeletePoolInternal(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -951,7 +951,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -959,9 +959,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await DeletePoolInternalAsync(poolId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeletePoolInternalAsync(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -974,7 +974,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -983,13 +983,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response PoolExistsInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response PoolExistsInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.PoolExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1009,7 +1009,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1018,13 +1018,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> PoolExistsInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> PoolExistsInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.PoolExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1665,7 +1665,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1674,13 +1674,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ResizePoolInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response ResizePoolInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ResizePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1707,7 +1707,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1716,13 +1716,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ResizePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1744,7 +1744,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="resizeOptions"> The options to use for resizing the pool. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1752,9 +1752,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response ResizePoolInternal(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response ResizePoolInternal(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return ResizePoolInternal(poolId, resizeOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return ResizePoolInternal(poolId, resizeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1769,7 +1769,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="resizeOptions"> The options to use for resizing the pool. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1777,9 +1777,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ResizePoolInternalAsync(poolId, resizeOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ResizePoolInternalAsync(poolId, resizeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1798,7 +1798,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1807,13 +1807,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StopPoolResizeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1839,7 +1839,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1848,13 +1848,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StopPoolResizeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1875,7 +1875,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1883,9 +1883,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return StopPoolResizeInternal(poolId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return StopPoolResizeInternal(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1899,7 +1899,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1907,9 +1907,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await StopPoolResizeInternalAsync(poolId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await StopPoolResizeInternalAsync(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2059,7 +2059,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2068,13 +2068,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RemoveNodesInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response RemoveNodesInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RemoveNodesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2097,7 +2097,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2106,13 +2106,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RemoveNodesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2130,7 +2130,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="removeOptions"> The options to use for removing the node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2138,9 +2138,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response RemoveNodesInternal(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response RemoveNodesInternal(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return RemoveNodesInternal(poolId, removeOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return RemoveNodesInternal(poolId, removeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2151,7 +2151,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="removeOptions"> The options to use for removing the node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2159,9 +2159,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await RemoveNodesInternalAsync(poolId, removeOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RemoveNodesInternalAsync(poolId, removeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2457,7 +2457,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2467,13 +2467,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2500,7 +2500,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2510,13 +2510,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2538,7 +2538,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2547,9 +2547,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will delete the Job even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return DeleteJobInternal(jobId, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext());
+            return DeleteJobInternal(jobId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2564,7 +2564,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2573,9 +2573,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will delete the Job even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteJobInternalAsync(jobId, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteJobInternalAsync(jobId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2948,7 +2948,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2957,13 +2957,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DisableJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response DisableJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DisableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2991,7 +2991,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3000,13 +3000,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DisableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3029,7 +3029,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="disableOptions"> The options to use for disabling the Job. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3037,9 +3037,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response DisableJobInternal(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response DisableJobInternal(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return DisableJobInternal(jobId, disableOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return DisableJobInternal(jobId, disableOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3055,7 +3055,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="disableOptions"> The options to use for disabling the Job. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3063,9 +3063,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await DisableJobInternalAsync(jobId, disableOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DisableJobInternalAsync(jobId, disableOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3083,7 +3083,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3092,13 +3092,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.EnableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3123,7 +3123,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3132,13 +3132,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.EnableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3158,7 +3158,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3166,9 +3166,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return EnableJobInternal(jobId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return EnableJobInternal(jobId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3181,7 +3181,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3189,9 +3189,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await EnableJobInternalAsync(jobId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await EnableJobInternalAsync(jobId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3210,7 +3210,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3220,13 +3220,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response TerminateJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
+        internal virtual Response TerminateJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3252,7 +3252,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3262,13 +3262,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
+        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3289,7 +3289,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="options"> The options to use for terminating the Job. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3298,9 +3298,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response TerminateJobInternal(string jobId, BatchJobTerminateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual Response TerminateJobInternal(string jobId, BatchJobTerminateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return TerminateJobInternal(jobId, options, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext());
+            return TerminateJobInternal(jobId, options, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3314,7 +3314,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="options"> The options to use for terminating the Job. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3323,9 +3323,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, BatchJobTerminateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, BatchJobTerminateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await TerminateJobInternalAsync(jobId, options, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await TerminateJobInternalAsync(jobId, options, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4124,7 +4124,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4133,13 +4133,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response JobScheduleExistsInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response JobScheduleExistsInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4159,7 +4159,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4168,13 +4168,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> JobScheduleExistsInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> JobScheduleExistsInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4198,7 +4198,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4208,13 +4208,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4238,7 +4238,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4248,13 +4248,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4273,7 +4273,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4282,9 +4282,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will delete the JobSchedule even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return DeleteJobScheduleInternal(jobScheduleId, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext());
+            return DeleteJobScheduleInternal(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -4296,7 +4296,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4305,9 +4305,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will delete the JobSchedule even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteJobScheduleInternalAsync(jobScheduleId, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteJobScheduleInternalAsync(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4920,7 +4920,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4930,13 +4930,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4956,7 +4956,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4966,13 +4966,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4985,7 +4985,7 @@ namespace Azure.Compute.Batch
         /// <summary> Terminates a Job Schedule. </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4994,15 +4994,15 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will terminate the JobSchedule even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return TerminateJobScheduleInternal(jobScheduleId, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext());
+            return TerminateJobScheduleInternal(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Terminates a Job Schedule. </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5011,9 +5011,9 @@ namespace Azure.Compute.Batch
         /// <param name="force"> If true, the server will terminate the JobSchedule even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await TerminateJobScheduleInternalAsync(jobScheduleId, timeout, requestDate, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await TerminateJobScheduleInternalAsync(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6964,7 +6964,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6973,7 +6973,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
@@ -6988,7 +6988,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7010,7 +7010,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7019,7 +7019,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
@@ -7034,7 +7034,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7049,7 +7049,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7057,9 +7057,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties of the specified Task file. </summary>
@@ -7067,7 +7067,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7075,9 +7075,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7842,7 +7842,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7850,13 +7850,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RebootNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual Response RebootNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RebootNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7878,7 +7878,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7886,13 +7886,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RebootNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7907,16 +7907,16 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="options"> The options to use for rebooting the Compute Node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response RebootNodeInternal(string poolId, string nodeId, BatchNodeRebootOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual Response RebootNodeInternal(string poolId, string nodeId, BatchNodeRebootOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return RebootNodeInternal(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext());
+            return RebootNodeInternal(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary> You can restart a Compute Node only if it is in an idle or running state. </summary>
@@ -7924,16 +7924,16 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="options"> The options to use for rebooting the Compute Node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, BatchNodeRebootOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, BatchNodeRebootOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await RebootNodeInternalAsync(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RebootNodeInternalAsync(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7947,7 +7947,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7955,13 +7955,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
+        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StartNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestDate, context);
+                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7982,7 +7982,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7990,13 +7990,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
+        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StartNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestDate, context);
+                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -8010,32 +8010,32 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return StartNodeInternal(poolId, nodeId, timeout, requestDate, cancellationToken.ToRequestContext());
+            return StartNodeInternal(poolId, nodeId, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary> You can start a Compute Node only if it has been deallocated. </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await StartNodeInternalAsync(poolId, nodeId, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await StartNodeInternalAsync(poolId, nodeId, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8052,7 +8052,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8060,13 +8060,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -8090,7 +8090,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8098,13 +8098,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -8123,16 +8123,16 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="options"> The options to use for reimaging the Compute Node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, BatchNodeReimageOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, BatchNodeReimageOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return ReimageNodeInternal(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext());
+            return ReimageNodeInternal(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -8144,16 +8144,16 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="options"> The options to use for reimaging the Compute Node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, BatchNodeReimageOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, BatchNodeReimageOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await ReimageNodeInternalAsync(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReimageNodeInternalAsync(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8168,7 +8168,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8176,13 +8176,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -8204,7 +8204,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8212,13 +8212,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -8233,16 +8233,16 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="options"> The options to use for deallocating the Compute Node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, BatchNodeDeallocateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, BatchNodeDeallocateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return DeallocateNodeInternal(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext());
+            return DeallocateNodeInternal(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary> You can deallocate a Compute Node only if it is in an idle or running state. </summary>
@@ -8250,16 +8250,16 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="options"> The options to use for deallocating the Compute Node. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, BatchNodeDeallocateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, BatchNodeDeallocateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await DeallocateNodeInternalAsync(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeallocateNodeInternalAsync(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -9602,7 +9602,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9611,7 +9611,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
@@ -9626,7 +9626,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -9648,7 +9648,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9657,7 +9657,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
@@ -9672,7 +9672,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -9687,7 +9687,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9695,9 +9695,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
+            return GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties of the specified Compute Node file. </summary>
@@ -9705,7 +9705,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9713,9 +9713,9 @@ namespace Azure.Compute.Batch
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

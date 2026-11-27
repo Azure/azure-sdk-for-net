@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="status"> The operation status. </param>
         /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="startsOn"> Operation start time. </param>
+        /// <param name="endsOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string id, string name, DateTimeOffset? startsOn, DateTimeOffset? endsOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Status = status;
             Id = id;
             Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             PercentComplete = percentComplete;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Terraform.Models
         public string Name { get; }
 
         /// <summary> Operation start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Operation complete time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The progress made toward completing the operation. </summary>
         public double? PercentComplete { get; }

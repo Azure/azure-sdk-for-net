@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// The kind of the security setting
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataExportSettings"/> and <see cref="AlertSyncSettings"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AlertSyncSettings"/> and <see cref="DataExportSettings"/>.
     /// </summary>
     public partial class SecuritySettingData : ResourceData
     {

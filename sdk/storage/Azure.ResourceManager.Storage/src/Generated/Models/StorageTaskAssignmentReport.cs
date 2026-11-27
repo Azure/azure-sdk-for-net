@@ -5,10 +5,22 @@
 
 #nullable disable
 
+using System;
+using Azure.ResourceManager.Storage;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The storage task assignment report. </summary>
     public partial class StorageTaskAssignmentReport
     {
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentReport"/>. </summary>
+        /// <param name="prefix"> The container prefix for the location of storage task assignment report. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
+        public StorageTaskAssignmentReport(string prefix)
+        {
+            Argument.AssertNotNull(prefix, nameof(prefix));
+
+            Prefix = prefix;
+        }
     }
 }

@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EndpointList(value, nextLink, additionalBinaryDataProperties);
+            return new EndpointList(value ?? new ChangeTrackingList<StorageMoverEndpointData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

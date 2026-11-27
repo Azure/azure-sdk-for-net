@@ -71,7 +71,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="PlanetaryComputerOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlanetaryComputerOperationStatus?(string value) => value == null ? null : new PlanetaryComputerOperationStatus(value);
+        public static implicit operator PlanetaryComputerOperationStatus?(string value) => value == null ? (PlanetaryComputerOperationStatus?)null : new PlanetaryComputerOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

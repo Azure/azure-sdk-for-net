@@ -69,6 +69,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private Lazy<MessagingClientDiagnostics> _clientDiagnostics;
         private readonly IDrainModeManager _drainModeManager;
         private readonly MessagingProvider _messagingProvider;
+        private readonly BatchLockRenewalManager _batchLockRenewal;
 
         public ServiceBusListener(
             string functionId,
@@ -163,6 +164,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
+            if (!singleDispatch)
+            {
+                _batchLockRenewal = new BatchLockRenewalManager(
+                    options.MaxAutoLockRenewalDuration, _functionExecutionCancellationTokenSource.Token, _logger);
+            }
 
             _supportMinBatchSize = options.MinMessageBatchSize > 1;
 
@@ -221,7 +227,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (!_drainModeManager.IsDrainModeEnabled)
+            bool isDrainModeEnabled = _drainModeManager.IsDrainModeEnabled;
+            if (!isDrainModeEnabled)
             {
                 _functionExecutionCancellationTokenSource.Cancel();
             }
@@ -243,12 +250,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // This will also cancel the background monitoring task through the linked cancellation token source.
                 _stoppingCancellationTokenSource.Cancel();
 
-                // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
+                // Stop new messages from being processed while allowing in-flight messages to finish.
                 if (_singleDispatch)
                 {
                     if (_isSessionsEnabled)
                     {
-                        await _sessionMessageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+                        if (isDrainModeEnabled)
+                        {
+                            // Drain mode is terminal for this host. Close the processor to release accepted
+                            // sessions after in-flight handlers finish instead of preserving them for restart.
+                            await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            await _sessionMessageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+                        }
                     }
                     else
                     {
@@ -269,6 +285,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     // Try to dispatch any already received messages.
                     await DispatchRemainingMessages(_monitoringCycleReceiver, _monitoringCycleMessageActions, _monitoringCycleReceiveActions, cancellationToken).ConfigureAwait(false);
+                    await _batchLockRenewal.StopAllAsync().ConfigureAwait(false);
                 }
 
                 Started = false;
@@ -322,6 +339,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _sessionMessageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+            }
+
+            if (_batchLockRenewal != null)
+            {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                _batchLockRenewal.StopAllAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
@@ -473,6 +497,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                     PrefetchCount = _serviceBusOptions.PrefetchCount
                                 },
                                 cancellationToken).ConfigureAwait(false);
+                            _batchLockRenewal.Start((ServiceBusSessionReceiver)receiver);
 
                             // Processing messages from a new session, create a new message cache for that session
                              _cachedMessagesManager = new ServiceBusMessageManager(
@@ -500,9 +525,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         var messageActions = _isSessionsEnabled
                             ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
                             : new ServiceBusMessageActions(receiver);
+                        messageActions.MessageSettled = _batchLockRenewal.Cancel;
 
                         foreach (var message in messages)
                         {
+                            _batchLockRenewal.Start(message, receiver);
                             _messagingProvider.ActionsCache.TryAdd(message.LockToken, (message, messageActions));
                             if (_isSessionsEnabled)
                             {
@@ -510,7 +537,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             }
                         }
 
-                        var receiveActions = new ServiceBusReceiveActions(receiver);
+                        var receiveActions = new ServiceBusReceiveActions(receiver, _batchLockRenewal);
 
                         ServiceBusReceivedMessage[] messagesArray = _supportMinBatchSize ? Array.Empty<ServiceBusReceivedMessage>() : messages.ToArray();
 
@@ -577,6 +604,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             await DispatchRemainingMessages(receiver, messageActions, receiveActions, cancellationToken).ConfigureAwait(false);
 
                             // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                            await _batchLockRenewal.StopAsync(receiver).ConfigureAwait(false);
                             await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                         }
                     }
@@ -612,6 +640,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         try
                         {
                             // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                            await _batchLockRenewal.StopAsync(receiver).ConfigureAwait(false);
                             await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                         }
                         catch
@@ -655,6 +684,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
 
                     // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                    await _batchLockRenewal.StopAsync(receiver).ConfigureAwait(false);
                     await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
@@ -700,7 +730,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
 
                         // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
-                        completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
+                        completeTasks.Add(messageActions.CompleteMessageAsync(message, CancellationToken.None));
                     }
 
                     await Task.WhenAll(completeTasks).ConfigureAwait(false);
@@ -721,7 +751,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
 
                         // Pass CancellationToken.None to allow abandon to finish even when shutting down
-                        abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                        abandonTasks.Add(messageActions.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
                     }
 
                     await Task.WhenAll(abandonTasks).ConfigureAwait(false);
@@ -729,6 +759,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
             finally
             {
+                receiveActions.EndExecutionScope();
+                await _batchLockRenewal.StopAsync(messagesArray.Concat(receiveActions.Messages.Keys)).ConfigureAwait(false);
                 foreach (var message in input.Messages)
                 {
                     _messagingProvider.ActionsCache.TryRemove(message.LockToken, out _);

@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    headers = BinaryData.FromString(prop.Value.GetRawText());
+                    headers = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("queryParameters"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    queryParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    queryParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("queryParametersTemplate"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CodelessConnectorPollingRequestProperties(

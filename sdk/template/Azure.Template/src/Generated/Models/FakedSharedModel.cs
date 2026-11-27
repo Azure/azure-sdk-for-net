@@ -17,25 +17,18 @@ namespace Azure.Template
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/>. </summary>
-        /// <param name="tag"> The tag. </param>
-        /// <param name="createdAt"> The created date. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
-        public FakedSharedModel(string tag, DateTimeOffset createdAt)
+        public FakedSharedModel()
         {
-            Argument.AssertNotNull(tag, nameof(tag));
-
-            Tag = tag;
-            CreatedAt = createdAt;
         }
 
         /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/>. </summary>
         /// <param name="tag"> The tag. </param>
-        /// <param name="createdAt"> The created date. </param>
+        /// <param name="createdOn"> The created date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FakedSharedModel(string tag, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FakedSharedModel(string tag, DateTimeOffset createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tag = tag;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +36,6 @@ namespace Azure.Template
         public string Tag { get; set; }
 
         /// <summary> The created date. </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
     }
 }

@@ -47,7 +47,7 @@
     "status": {
       "type": "string",
       "enum": ["repaired", "failed", "ineligible", "skipped_already_green"],
-      "description": "Terminal outcome. repaired = build green after repair; failed = still red at a stop condition; ineligible = not an Auto SDK PR (no engine run); skipped_already_green = package already built, no repair needed."
+      "description": "Terminal outcome. repaired = build green after repair; failed = still red at a stop condition and attempted changes were not committed; ineligible = not an Auto SDK PR (no engine run); skipped_already_green = package already built, no repair needed."
     },
     "repaired_at": {
       "type": ["string", "null"],

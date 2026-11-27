@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// Defines the organization in which the pool will be used.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsGitHubOrganizationProfile"/> and <see cref="DevOpsAzureOrganizationProfile"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsAzureOrganizationProfile"/> and <see cref="DevOpsGitHubOrganizationProfile"/>.
     /// </summary>
     public abstract partial class DevOpsOrganizationProfile
     {

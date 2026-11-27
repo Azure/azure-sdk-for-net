@@ -21,6 +21,22 @@ namespace Azure.Messaging.ServiceBus
     public static class ServiceBusModelFactory
     {
         /// <summary>
+        /// Creates a new <see cref="DeleteMessagesResult"/> instance for mocking.
+        /// </summary>
+        /// <param name="deletedCount">The number of messages that were deleted.</param>
+        /// <returns>The populated <see cref="DeleteMessagesResult"/> instance to use for mocking.</returns>
+        public static DeleteMessagesResult DeleteMessagesResult(int deletedCount) =>
+            new(deletedCount);
+
+        /// <summary>
+        /// Creates a new <see cref="PurgeMessagesResult"/> instance for mocking.
+        /// </summary>
+        /// <param name="deletedCount">The total number of messages that were deleted.</param>
+        /// <returns>The populated <see cref="PurgeMessagesResult"/> instance to use for mocking.</returns>
+        public static PurgeMessagesResult PurgeMessagesResult(long deletedCount) =>
+            new(deletedCount);
+
+        /// <summary>
         /// Creates a new ServiceBusReceivedMessage instance for mocking.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

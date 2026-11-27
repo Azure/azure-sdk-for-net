@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Pipeline Job definition: defines generic to MFE attributes. </summary>
     public partial class MachineLearningPipelineJob : MachineLearningJobProperties
     {
+        private BinaryData _settings;
+        private bool _settingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         public MachineLearningPipelineJob() : base(JobType.Pipeline)
         {
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="parentJobName"> Parent job name. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -51,12 +53,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="outputs"> Outputs for the pipeline job. </param>
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
         /// <param name="sourceJobId"> ARM resource ID of source job. </param>
-        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName, services, status)
+        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
             Inputs = inputs;
             Jobs = jobs;
             Outputs = outputs;
-            Settings = settings;
+            _settings = settings;
             SourceJobId = sourceJobId;
         }
 
@@ -124,7 +126,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("settings")]
-        public BinaryData Settings { get; set; }
+        public BinaryData Settings
+        {
+            get
+            {
+                return _settings;
+            }
+            set
+            {
+                _settings = value;
+                _settingsIsDefined = true;
+            }
+        }
 
         /// <summary> ARM resource ID of source job. </summary>
         [WirePath("sourceJobId")]

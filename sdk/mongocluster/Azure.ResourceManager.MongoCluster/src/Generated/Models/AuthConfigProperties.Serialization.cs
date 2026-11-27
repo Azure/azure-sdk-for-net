@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The authentication configuration for the Mongo cluster. </summary>
+    /// <summary> The authentication configuration for the DocumentDB cluster. </summary>
     internal partial class AuthConfigProperties : IJsonModel<AuthConfigProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AuthConfigProperties(allowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>(), additionalBinaryDataProperties);

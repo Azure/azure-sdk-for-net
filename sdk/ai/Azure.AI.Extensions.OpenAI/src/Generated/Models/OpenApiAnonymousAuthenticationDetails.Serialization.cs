@@ -109,7 +109,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OpenApiAnonymousAuthenticationDetails(kind, additionalBinaryDataProperties);

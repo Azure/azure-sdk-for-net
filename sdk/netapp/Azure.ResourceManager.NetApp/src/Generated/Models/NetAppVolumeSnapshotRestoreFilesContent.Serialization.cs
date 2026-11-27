@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetAppVolumeSnapshotRestoreFilesContent(filePaths, destinationPath, additionalBinaryDataProperties);
+            return new NetAppVolumeSnapshotRestoreFilesContent(filePaths ?? new ChangeTrackingList<string>(), destinationPath, additionalBinaryDataProperties);
         }
     }
 }

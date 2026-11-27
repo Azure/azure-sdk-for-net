@@ -37,30 +37,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Batch provisioning support. </summary>
-        internal BatchProvisioningSupport BatchProvisioningSupport { get; set; }
+        public BatchProvisioningSupport BatchProvisioningSupport { get; set; }
 
         /// <summary> Delete dependencies. </summary>
         public IList<ResourceTypeRegistrationDeleteDependency> DeleteDependencies { get; }
 
         /// <summary> Nested provisioning support. </summary>
         internal NestedProvisioningSupport NestedProvisioningSupport { get; set; }
-
-        /// <summary> Supported operations. </summary>
-        public ResourceManagementSupportedOperation? BatchProvisioningSupportSupportedOperations
-        {
-            get
-            {
-                return BatchProvisioningSupport is null ? default : BatchProvisioningSupport.SupportedOperations;
-            }
-            set
-            {
-                if (BatchProvisioningSupport is null)
-                {
-                    BatchProvisioningSupport = new BatchProvisioningSupport();
-                }
-                BatchProvisioningSupport.SupportedOperations = value;
-            }
-        }
 
         /// <summary> Minimum API version. </summary>
         public string NestedProvisioningSupportMinimumApiVersion

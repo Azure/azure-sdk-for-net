@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="runType"> The type of run. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="createdOn"> The time the run was scheduled. </param>
-        /// <param name="startOn"> The time the run started. </param>
+        /// <param name="startsOn"> The time the run started. </param>
         /// <param name="finishOn"> The time the run finished. </param>
         /// <param name="outputImages"> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </param>
         /// <param name="task"> The task against which run was scheduled. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunProperties(string runId, ContainerRegistryTaskRunStatus? status, DateTimeOffset? lastUpdatedOn, ContainerRegistryTaskRunType? runType, string agentPoolName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? finishOn, IList<ContainerRegistryTaskImageDescriptor> outputImages, string task, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string sourceRegistryAuth, IList<string> customRegistries, string runErrorMessage, string updateTriggerToken, ContainerRegistryTaskImageDescriptor logArtifact, ContainerRegistryTaskProvisioningState? provisioningState, bool? isArchiveEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunProperties(string runId, ContainerRegistryTaskRunStatus? status, DateTimeOffset? lastUpdatedOn, ContainerRegistryTaskRunType? runType, string agentPoolName, DateTimeOffset? createdOn, DateTimeOffset? startsOn, DateTimeOffset? finishOn, IList<ContainerRegistryTaskImageDescriptor> outputImages, string task, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string sourceRegistryAuth, IList<string> customRegistries, string runErrorMessage, string updateTriggerToken, ContainerRegistryTaskImageDescriptor logArtifact, ContainerRegistryTaskProvisioningState? provisioningState, bool? isArchiveEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
             Status = status;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             RunType = runType;
             AgentPoolName = agentPoolName;
             CreatedOn = createdOn;
-            StartOn = startOn;
+            StartsOn = startsOn;
             FinishOn = finishOn;
             OutputImages = outputImages;
             Task = task;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time the run started. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The time the run finished. </summary>
         public DateTimeOffset? FinishOn { get; }

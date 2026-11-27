@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType resourceType = default;
             SystemData systemData = default;
             OpenidConnectProviderContractProperties properties = default;
-            string openId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApiManagementOpenIdConnectProviderData(
@@ -204,7 +203,6 @@ namespace Azure.ResourceManager.ApiManagement
                 resourceType,
                 systemData,
                 properties,
-                openId,
                 additionalBinaryDataProperties);
         }
     }

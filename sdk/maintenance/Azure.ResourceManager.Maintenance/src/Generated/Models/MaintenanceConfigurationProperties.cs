@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Maintenance.Models
         public MaintenancePatchConfiguration InstallPatches { get; set; }
 
         /// <summary> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return MaintenanceWindow is null ? default : MaintenanceWindow.StartOn;
+                return MaintenanceWindow is null ? default : MaintenanceWindow.StartsOn;
             }
             set
             {
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     MaintenanceWindow = new MaintenanceWindow();
                 }
-                MaintenanceWindow.StartOn = value;
+                MaintenanceWindow.StartsOn = value;
             }
         }
 
         /// <summary> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return MaintenanceWindow is null ? default : MaintenanceWindow.ExpireOn;
+                return MaintenanceWindow is null ? default : MaintenanceWindow.ExpiresOn;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     MaintenanceWindow = new MaintenanceWindow();
                 }
-                MaintenanceWindow.ExpireOn = value;
+                MaintenanceWindow.ExpiresOn = value;
             }
         }
 

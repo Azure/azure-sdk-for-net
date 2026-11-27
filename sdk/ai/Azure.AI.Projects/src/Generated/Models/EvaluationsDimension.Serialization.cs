@@ -80,8 +80,15 @@ namespace Azure.AI.Projects.Evaluation
             writer.WriteStringValue(Id);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            writer.WritePropertyName("weight"u8);
-            writer.WriteNumberValue(Weight);
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            else
+            {
+                writer.WriteNull("weight"u8);
+            }
             if (Optional.IsDefined(IsAlwaysApplicable))
             {
                 writer.WritePropertyName("always_applicable"u8);
@@ -131,7 +138,7 @@ namespace Azure.AI.Projects.Evaluation
             }
             string id = default;
             string description = default;
-            int weight = default;
+            int? weight = default;
             bool? isAlwaysApplicable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,6 +155,11 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("weight"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        weight = null;
+                        continue;
+                    }
                     weight = prop.Value.GetInt32();
                     continue;
                 }
@@ -162,7 +174,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties);

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVersionDetails"/>. </summary>
         /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. </param>
-        /// <param name="versionSupportExpireOn"> The date of expiry of support of the version. </param>
+        /// <param name="versionSupportExpiresOn"> The date of expiry of support of the version. </param>
         /// <param name="osType"> Cluster operating system, the default will be Windows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterVersionDetails(string clusterCodeVersion, DateTimeOffset? versionSupportExpireOn, ServiceFabricManagedClusterOSType? osType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterVersionDetails(string clusterCodeVersion, DateTimeOffset? versionSupportExpiresOn, ServiceFabricManagedClusterOSType? osType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterCodeVersion = clusterCodeVersion;
-            VersionSupportExpireOn = versionSupportExpireOn;
+            VersionSupportExpiresOn = versionSupportExpiresOn;
             OSType = osType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string ClusterCodeVersion { get; }
 
         /// <summary> The date of expiry of support of the version. </summary>
-        public DateTimeOffset? VersionSupportExpireOn { get; }
+        public DateTimeOffset? VersionSupportExpiresOn { get; }
 
         /// <summary> Cluster operating system, the default will be Windows. </summary>
         public ServiceFabricManagedClusterOSType? OSType { get; }

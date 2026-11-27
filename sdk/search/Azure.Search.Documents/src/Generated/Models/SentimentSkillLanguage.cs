@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="SentimentSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SentimentSkillLanguage?(string value) => value == null ? null : new SentimentSkillLanguage(value);
+        public static implicit operator SentimentSkillLanguage?(string value) => value == null ? (SentimentSkillLanguage?)null : new SentimentSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

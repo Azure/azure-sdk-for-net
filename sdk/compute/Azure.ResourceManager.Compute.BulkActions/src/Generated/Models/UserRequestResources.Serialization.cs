@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The resources needed for the user request. </summary>
+    /// <summary> The virtual machines targeted by a bulk action. </summary>
     public partial class UserRequestResources : IJsonModel<UserRequestResources>
     {
         /// <summary> Initializes a new instance of <see cref="UserRequestResources"/> for deserialization. </summary>
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UserRequestResources(ids, additionalBinaryDataProperties);
+            return new UserRequestResources(ids ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

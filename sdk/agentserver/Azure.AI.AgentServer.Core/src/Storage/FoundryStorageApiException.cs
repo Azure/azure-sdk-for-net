@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary>Raised for storage service errors that do not map to a more specific type.</summary>
+    [Experimental("AAAS004")]
     public class FoundryStorageApiException : FoundryStorageException
     {
         /// <summary>Initializes a new instance of the <see cref="FoundryStorageApiException"/> class.</summary>

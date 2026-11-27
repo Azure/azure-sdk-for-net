@@ -55,14 +55,14 @@ public class BasicEnclaveTests
               name: take('enclave-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
+                bastionEnabled: false
+                communityResourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.Mission/communities/example'
                 enclaveVirtualNetwork: {
+                  allowSubnetCommunication: true
+                  customCidrRange: '10.0.0.0/16'
                   networkName: 'enclave-vnet'
                   networkSize: 'small'
-                  customCidrRange: '10.0.0.0/16'
-                  allowSubnetCommunication: true
                 }
-                communityResourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.Mission/communities/example'
-                bastionEnabled: false
               }
             }
             """);

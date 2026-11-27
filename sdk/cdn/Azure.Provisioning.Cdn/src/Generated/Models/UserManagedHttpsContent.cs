@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UserManagedHttpsContent. </summary>
         public UserManagedHttpsContent()
         {
+            CertificateSource.Assign(Cdn.CertificateSource.AzureKeyVault);
         }
 
         /// <summary> Gets or sets the CertificateSourceParameters. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("certificateSource", new string[] { "certificateSource" }, defaultValue: "AzureKeyVault");
             _certificateSourceParameters = DefineModelProperty<KeyVaultCertificateSource>(nameof(CertificateSourceParameters), new string[] { "certificateSourceParameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

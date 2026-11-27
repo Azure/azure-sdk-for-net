@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    value = BinaryData.FromString(prop.Value.GetRawText());
+                    value = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("document"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    document = BinaryData.FromString(prop.Value.GetRawText());
+                    document = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GlobalSchemaContractProperties(

@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="id"> ID of the resource. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="status"> status of the Operation result. </param>
-        /// <param name="startOn"> The operation start time. </param>
-        /// <param name="endOn"> The operation end time. </param>
+        /// <param name="startsOn"> The operation start time. </param>
+        /// <param name="endsOn"> The operation end time. </param>
         /// <param name="percentComplete"> Percentage completed. </param>
         /// <param name="properties"> Properties of the operation results. </param>
         /// <param name="error"> Object that contains the error code and message if the operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationResult(string id, string name, Status? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, OperationResultProperties properties, OperationResultErrorProperties error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationResult(string id, string name, Status? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, double? percentComplete, OperationResultProperties properties, OperationResultErrorProperties error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             PercentComplete = percentComplete;
             Properties = properties;
             Error = error;
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> The operation start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The operation end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Percentage completed. </summary>
         [WirePath("percentComplete")]

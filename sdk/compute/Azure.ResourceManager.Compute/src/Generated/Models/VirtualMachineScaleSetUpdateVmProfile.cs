@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string UserData { get; set; }
 
         /// <summary> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </summary>
-        internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+        public VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
 
         /// <summary> Specifies the Interconnect Block related details of a scale set. Minimum api-version: 2026-03-01. </summary>
         internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
@@ -125,23 +125,6 @@ namespace Azure.ResourceManager.Compute.Models
                     BillingProfile = new BillingProfile();
                 }
                 BillingProfile.MaxPrice = value;
-            }
-        }
-
-        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
-        public VirtualMachineSizeProperties HardwareVmSizeProperties
-        {
-            get
-            {
-                return HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
-            }
-            set
-            {
-                if (HardwareProfile is null)
-                {
-                    HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
-                }
-                HardwareProfile.VmSizeProperties = value;
             }
         }
 

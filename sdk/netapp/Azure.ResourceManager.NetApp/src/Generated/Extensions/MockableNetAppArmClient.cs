@@ -169,14 +169,5 @@ namespace Azure.ResourceManager.NetApp.Mocking
             CapacityPoolResource.ValidateResourceId(id);
             return new CapacityPoolResource(Client, id);
         }
-
-        /// <summary> Gets an object representing a <see cref="NetAppSubvolumeInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppSubvolumeInfoResource"/> object. </returns>
-        public virtual NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(ResourceIdentifier id)
-        {
-            NetAppSubvolumeInfoResource.ValidateResourceId(id);
-            return new NetAppSubvolumeInfoResource(Client, id);
-        }
     }
 }

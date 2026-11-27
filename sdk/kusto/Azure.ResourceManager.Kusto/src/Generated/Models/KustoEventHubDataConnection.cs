@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new EventHubConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
     }

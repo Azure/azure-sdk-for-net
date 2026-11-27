@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsVmssFabricProfile : DevOpsFabricProfile
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsVmssFabricProfile"/>. </summary>
-        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="sku"> The Azure SKU of the machines in the pool. </param>
         /// <param name="images"> The VM images of the machines in the pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> or <paramref name="images"/> is null. </exception>
-        public DevOpsVmssFabricProfile(string skuName, IEnumerable<DevOpsPoolVmImage> images) : base("Vmss")
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="images"/> is null. </exception>
+        public DevOpsVmssFabricProfile(DevOpsAzureSku sku, IEnumerable<DevOpsPoolVmImage> images) : base("Vmss")
         {
-            Argument.AssertNotNull(skuName, nameof(skuName));
+            Argument.AssertNotNull(sku, nameof(sku));
             Argument.AssertNotNull(images, nameof(images));
 
-            Sku = new DevOpsAzureSku(skuName);
+            Sku = sku;
             Images = images.ToList();
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The Azure SKU of the machines in the pool. </summary>
-        internal DevOpsAzureSku Sku { get; set; }
+        public DevOpsAzureSku Sku { get; set; }
 
         /// <summary> The VM images of the machines in the pool. </summary>
         public IList<DevOpsPoolVmImage> Images { get; }
@@ -59,18 +59,5 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> The network profile of the machines in the pool. </summary>
         public DevOpsNetworkProfile NetworkProfile { get; set; }
-
-        /// <summary> The Azure SKU name of the machines in the pool. </summary>
-        public string SkuName
-        {
-            get
-            {
-                return Sku is null ? default : Sku.Name;
-            }
-            set
-            {
-                Sku = new DevOpsAzureSku(value);
-            }
-        }
     }
 }

@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.DependencyMap.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DependencyMapDateTimeFilter"/>. </summary>
-        /// <param name="startOn"> Start date time for dependency map visualization query. </param>
-        /// <param name="endOn"> End date time for dependency map visualization query. </param>
+        /// <param name="startsOn"> Start date time for dependency map visualization query. </param>
+        /// <param name="endsOn"> End date time for dependency map visualization query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyMapDateTimeFilter(DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DependencyMapDateTimeFilter(DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start date time for dependency map visualization query. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End date time for dependency map visualization query. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
     }
 }

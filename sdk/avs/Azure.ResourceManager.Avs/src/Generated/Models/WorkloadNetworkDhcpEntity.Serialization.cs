@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary>
     /// Base class for WorkloadNetworkDhcpServer and WorkloadNetworkDhcpRelay to
     /// inherit from
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadNetworkDhcpServer"/> and <see cref="WorkloadNetworkDhcpRelay"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownWorkloadNetworkDhcpEntity))]
     public abstract partial class WorkloadNetworkDhcpEntity : IJsonModel<WorkloadNetworkDhcpEntity>
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SERVER":
-                        return WorkloadNetworkDhcpServer.DeserializeWorkloadNetworkDhcpServer(element, options);
                     case "RELAY":
                         return WorkloadNetworkDhcpRelay.DeserializeWorkloadNetworkDhcpRelay(element, options);
+                    case "SERVER":
+                        return WorkloadNetworkDhcpServer.DeserializeWorkloadNetworkDhcpServer(element, options);
                 }
             }
             return UnknownWorkloadNetworkDhcpEntity.DeserializeUnknownWorkloadNetworkDhcpEntity(element, options);

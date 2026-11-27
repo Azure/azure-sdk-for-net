@@ -11,14 +11,16 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
+    /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group, 'Targeted' for reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full, and 'Open' for reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group and fall back to the publicly available capacity if the reservation is full. Future capacity reservations can be created in 'Targeted' or 'Open' capacity reservation groups. The reservation type is immutable and cannot be changed after the capacity reservation group is created. </summary>
     public readonly partial struct CapacityReservationType : IEquatable<CapacityReservationType>
     {
         private readonly string _value;
-        /// <summary> To consume on demand allocated capacity reservation when a capacity reservation group is provided. </summary>
+        /// <summary> Reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full. </summary>
         private const string TargetedValue = "Targeted";
-        /// <summary> To consume scheduled allocated block capacity reservation when a capacity reservation group is provided. </summary>
+        /// <summary> Block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group. </summary>
         private const string BlockValue = "Block";
+        /// <summary> Reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group, and fall back to the publicly available capacity if the reservation is full. Minimum api-version: 2026-04-01. </summary>
+        private const string OpenValue = "Open";
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,11 +32,14 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> To consume on demand allocated capacity reservation when a capacity reservation group is provided. </summary>
+        /// <summary> Reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full. </summary>
         public static CapacityReservationType Targeted { get; } = new CapacityReservationType(TargetedValue);
 
-        /// <summary> To consume scheduled allocated block capacity reservation when a capacity reservation group is provided. </summary>
+        /// <summary> Block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group. </summary>
         public static CapacityReservationType Block { get; } = new CapacityReservationType(BlockValue);
+
+        /// <summary> Reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group, and fall back to the publicly available capacity if the reservation is full. Minimum api-version: 2026-04-01. </summary>
+        public static CapacityReservationType Open { get; } = new CapacityReservationType(OpenValue);
 
         /// <summary> Determines if two <see cref="CapacityReservationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

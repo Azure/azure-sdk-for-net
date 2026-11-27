@@ -28,6 +28,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // disable tracing so as not to impact any tracing tests
                 new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
 
+        private static ServiceBusAdministrationClient s_premiumAdminClient =>
+            new(ServiceBusTestEnvironment.Instance.PremiumFullyQualifiedNamespace,
+                ServiceBusTestEnvironment.Instance.Credential,
+                // disable tracing so as not to impact any tracing tests
+                new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
+
         /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
         ///   of a single test and disposed when the test has completed.
@@ -40,6 +46,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <param name="useSecondaryNamespace">When <c>true</c>, the queue will be created in the secondary namespace corresponding
         /// to <see cref="ServiceBusTestEnvironment.ServiceBusSecondaryNamespace"/>.</param>
         /// <param name="defaultMessageTimeToLive">The default message time to live for the queue.</param>
+        /// <param name="usePremiumNamespace">When <c>true</c>, the queue will be created in the premium namespace corresponding
+        /// to <see cref="ServiceBusTestEnvironment.PremiumFullyQualifiedNamespace"/>. Required for features that the
+        /// service offers only on the Premium tier, such as non-exclusive session locking.</param>
         /// <returns>The requested Service Bus <see cref="QueueScope" />.</returns>
         ///
         public static async Task<QueueScope> CreateWithQueue(bool enablePartitioning,
@@ -47,6 +56,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              TimeSpan? lockDuration = default,
                                                              bool useSecondaryNamespace = false,
                                                              TimeSpan? defaultMessageTimeToLive = default,
+                                                             bool usePremiumNamespace = false,
                                                              [CallerMemberName] string caller = "")
         {
             // Create a new queue specific to the scope being created.
@@ -70,10 +80,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 queueOptions.DefaultMessageTimeToLive = defaultMessageTimeToLive.Value;
             }
 
-            var client = useSecondaryNamespace ? s_secondaryAdminClient : s_adminClient;
+            if (useSecondaryNamespace && usePremiumNamespace)
+            {
+                throw new ArgumentException($"Only one of {nameof(useSecondaryNamespace)} and {nameof(usePremiumNamespace)} may be specified.");
+            }
+
+            var client = useSecondaryNamespace ? s_secondaryAdminClient
+                : usePremiumNamespace ? s_premiumAdminClient
+                : s_adminClient;
 
             QueueProperties queueProperties = await client.CreateQueueAsync(queueOptions);
-            return new QueueScope(queueProperties.Name, true, useSecondaryNamespace);
+            return new QueueScope(queueProperties.Name, true, useSecondaryNamespace, usePremiumNamespace);
         }
 
         /// <summary>
@@ -138,6 +155,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             private readonly bool _useSecondaryNamespace;
 
             /// <summary>
+            /// A flag indicating whether the queue is in the premium namespace or not.
+            /// </summary>
+            private readonly bool _usePremiumNamespace;
+
+            /// <summary>
             ///  The name of the queue.
             /// </summary>
             ///
@@ -158,14 +180,17 @@ namespace Azure.Messaging.ServiceBus.Tests
             /// <param name="queueName">The name of the queue.</param>
             /// <param name="shouldRemoveAtScopeCompletion">A flag indicating whether the queue should be removed when the scope is complete.</param>
             /// <param name="useSecondaryNamespace">A flag indicating whether the queue should be created in the secondary namespace.</param>
+            /// <param name="usePremiumNamespace">A flag indicating whether the queue should be created in the premium namespace.</param>
             ///
             public QueueScope(string queueName,
                               bool shouldRemoveAtScopeCompletion,
-                              bool useSecondaryNamespace)
+                              bool useSecondaryNamespace,
+                              bool usePremiumNamespace = false)
             {
                 QueueName = queueName;
                 ShouldRemoveAtScopeCompletion = shouldRemoveAtScopeCompletion;
                 _useSecondaryNamespace = useSecondaryNamespace;
+                _usePremiumNamespace = usePremiumNamespace;
             }
 
             /// <summary>
@@ -186,7 +211,9 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    var client = _useSecondaryNamespace ? s_secondaryAdminClient : s_adminClient;
+                    var client = _useSecondaryNamespace ? s_secondaryAdminClient
+                        : _usePremiumNamespace ? s_premiumAdminClient
+                        : s_adminClient;
                     await client.DeleteQueueAsync(QueueName);
                 }
                 catch

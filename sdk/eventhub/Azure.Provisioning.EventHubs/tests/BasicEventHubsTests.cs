@@ -76,9 +76,9 @@ public class BasicEventHubsTests
               name: take('ns-${uniqueString(resourceGroup().id)}', 256)
               location: location
               sku: {
+                capacity: 1
                 name: 'Standard'
                 tier: 'Standard'
-                capacity: 1
               }
             }
 
@@ -89,10 +89,10 @@ public class BasicEventHubsTests
 
             resource group 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2026-01-01' = {
               name: groupName
+              parent: hub
               properties: {
                 userMetadata: '{"foo":1,"bar":"hello"}'
               }
-              parent: hub
             }
             """);
     }

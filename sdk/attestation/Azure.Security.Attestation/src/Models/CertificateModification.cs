@@ -1,15 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
-    [CodeGenModel("CertificateModification")]
-    public partial struct PolicyCertificateResolution
+    [CodeGenType("CertificateModification")]
+    public readonly partial struct PolicyCertificateResolution
     {
     }
 }

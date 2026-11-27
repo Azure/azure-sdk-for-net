@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Updated expiration date and time of the free services. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new FreeServicesPatchRequestProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
     }

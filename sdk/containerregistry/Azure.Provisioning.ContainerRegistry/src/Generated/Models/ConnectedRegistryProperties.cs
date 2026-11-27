@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ConnectedRegistryConnectionState> _connectionState;
         private BicepValue<DateTimeOffset> _lastActivityOn;
         private ActivationProperties _activation;
-        private ConnectedRegistryParent _connectedRegistryParent;
+        private ConnectedRegistryParent _parent;
         private BicepList<ResourceIdentifier> _clientTokenIds;
         private ConnectedRegistryLoginServer _loginServer;
         private ConnectedRegistryLogging _logging;
@@ -99,18 +99,18 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the ConnectedRegistryParent. </summary>
-        public ConnectedRegistryParent ConnectedRegistryParent
+        /// <summary> Gets or sets the Parent. </summary>
+        public ConnectedRegistryParent Parent
         {
             get
             {
                 Initialize();
-                return _connectedRegistryParent;
+                return _parent;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _connectedRegistryParent, value);
+                AssignOrReplace(ref _parent, value);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                return Activation.Status;
+                return Activation is null ? default : Activation.Status;
             }
         }
 
@@ -216,9 +216,9 @@ namespace Azure.Provisioning.ContainerRegistry
             _mode = DefineProperty<ConnectedRegistryMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
             _connectionState = DefineProperty<ConnectedRegistryConnectionState>(nameof(ConnectionState), new string[] { "connectionState" }, isOutput: true);
-            _lastActivityOn = DefineProperty<DateTimeOffset>(nameof(LastActivityOn), new string[] { "lastActivityTime" }, isOutput: true);
+            _lastActivityOn = DefineProperty<DateTimeOffset>(nameof(LastActivityOn), new string[] { "lastActivityTime" }, isOutput: true, format: "O");
             _activation = DefineModelProperty<ActivationProperties>(nameof(Activation), new string[] { "activation" }, isOutput: true);
-            _connectedRegistryParent = DefineModelProperty<ConnectedRegistryParent>(nameof(ConnectedRegistryParent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineModelProperty<ConnectedRegistryParent>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             _clientTokenIds = DefineListProperty<ResourceIdentifier>(nameof(ClientTokenIds), new string[] { "clientTokenIds" });
             _loginServer = DefineModelProperty<ConnectedRegistryLoginServer>(nameof(LoginServer), new string[] { "loginServer" });
             _logging = DefineModelProperty<ConnectedRegistryLogging>(nameof(Logging), new string[] { "logging" });

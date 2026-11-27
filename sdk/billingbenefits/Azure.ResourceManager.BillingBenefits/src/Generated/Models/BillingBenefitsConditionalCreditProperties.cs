@@ -33,21 +33,21 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsConditionalCreditProperties(ConditionalCreditEntityType entityType, string displayName, ResourceIdentifier billingAccountResourceId, ConditionalCreditsProvisioningState? provisioningState, ConditionalCreditStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string productCode, ResourceIdentifier benefitResourceId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingBenefitsConditionalCreditProperties(ConditionalCreditEntityType entityType, string displayName, ResourceIdentifier billingAccountResourceId, ConditionalCreditsProvisioningState? provisioningState, ConditionalCreditStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string productCode, ResourceIdentifier benefitResourceId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityType = entityType;
             DisplayName = displayName;
             BillingAccountResourceId = billingAccountResourceId;
             ProvisioningState = provisioningState;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ProductCode = productCode;
             BenefitResourceId = benefitResourceId;
             ResourceId = resourceId;
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public ConditionalCreditStatus? Status { get; set; }
 
         /// <summary> Start date of the conditional credit. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End date of the conditional credit (derived from last milestone). </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Product code for the conditional credit. </summary>
         public string ProductCode { get; set; }

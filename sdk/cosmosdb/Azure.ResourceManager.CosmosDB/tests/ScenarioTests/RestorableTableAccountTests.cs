@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.NotNull(backupInformation);
             Assert.NotNull(backupInformation.Value.ContinuousBackupInformation);
-            Assert.True(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime);
+            Assert.True(backupInformation.Value.ContinuousBackupInformation.LatestRestorableOn.Value.DateTime > oldTime);
         }
 
         [RecordedTest]

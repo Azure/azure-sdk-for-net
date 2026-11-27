@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HuntCommentList(value, nextLink, additionalBinaryDataProperties);
+            return new HuntCommentList(value ?? new ChangeTrackingList<SecurityInsightsHuntCommentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

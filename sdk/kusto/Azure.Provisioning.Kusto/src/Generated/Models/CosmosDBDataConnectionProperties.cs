@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<ResourceIdentifier> _cosmosDBAccountResourceId;
         private BicepValue<string> _cosmosDBDatabase;
         private BicepValue<string> _cosmosDBContainer;
-        private BicepValue<DateTimeOffset> _retrievalStartOn;
+        private BicepValue<DateTimeOffset> _retrievalStartsOn;
         private BicepValue<KustoProvisioningState> _provisioningState;
 
         /// <summary> Creates a new CosmosDBDataConnectionProperties. </summary>
@@ -130,18 +130,18 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets or sets the RetrievalStartOn. </summary>
-        public BicepValue<DateTimeOffset> RetrievalStartOn
+        /// <summary> Gets or sets the RetrievalStartsOn. </summary>
+        public BicepValue<DateTimeOffset> RetrievalStartsOn
         {
             get
             {
                 Initialize();
-                return _retrievalStartOn;
+                return _retrievalStartsOn;
             }
             set
             {
                 Initialize();
-                _retrievalStartOn.Assign(value);
+                _retrievalStartsOn.Assign(value);
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.Kusto
             _cosmosDBAccountResourceId = DefineProperty<ResourceIdentifier>(nameof(CosmosDBAccountResourceId), new string[] { "cosmosDbAccountResourceId" }, isRequired: true);
             _cosmosDBDatabase = DefineProperty<string>(nameof(CosmosDBDatabase), new string[] { "cosmosDbDatabase" }, isRequired: true);
             _cosmosDBContainer = DefineProperty<string>(nameof(CosmosDBContainer), new string[] { "cosmosDbContainer" }, isRequired: true);
-            _retrievalStartOn = DefineProperty<DateTimeOffset>(nameof(RetrievalStartOn), new string[] { "retrievalStartDate" }, format: "O");
+            _retrievalStartsOn = DefineProperty<DateTimeOffset>(nameof(RetrievalStartsOn), new string[] { "retrievalStartDate" }, format: "O");
             _provisioningState = DefineProperty<KustoProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

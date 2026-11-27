@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="HealthReportEvaluationRule"/>. </summary>
         /// <param name="unhealthyRule"> Unhealthy rule with static threshold. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unhealthyRule"/> is null. </exception>
-        public HealthReportEvaluationRule(EntitySignalThresholdRuleV2 unhealthyRule)
+        public HealthReportEvaluationRule(EntitySignalThresholdRule unhealthyRule)
         {
             Argument.AssertNotNull(unhealthyRule, nameof(unhealthyRule));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="degradedRule"> Degraded rule with static threshold. </param>
         /// <param name="unhealthyRule"> Unhealthy rule with static threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportEvaluationRule(EntitySignalThresholdRuleV2 degradedRule, EntitySignalThresholdRuleV2 unhealthyRule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthReportEvaluationRule(EntitySignalThresholdRule degradedRule, EntitySignalThresholdRule unhealthyRule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DegradedRule = degradedRule;
             UnhealthyRule = unhealthyRule;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Degraded rule with static threshold. </summary>
-        public EntitySignalThresholdRuleV2 DegradedRule { get; set; }
+        public EntitySignalThresholdRule DegradedRule { get; set; }
 
         /// <summary> Unhealthy rule with static threshold. </summary>
-        public EntitySignalThresholdRuleV2 UnhealthyRule { get; }
+        public EntitySignalThresholdRule UnhealthyRule { get; }
     }
 }

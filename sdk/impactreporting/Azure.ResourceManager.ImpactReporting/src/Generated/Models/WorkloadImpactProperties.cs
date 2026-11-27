@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadImpactProperties"/>. </summary>
-        /// <param name="startOn"> Time at which impact was observed . </param>
+        /// <param name="startsOn"> Time at which impact was observed . </param>
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactCategory"> Category of the impact,  details can found from /impactCategories API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceId"/> or <paramref name="impactCategory"/> is null. </exception>
-        public WorkloadImpactProperties(DateTimeOffset startOn, ResourceIdentifier impactedResourceId, string impactCategory)
+        public WorkloadImpactProperties(DateTimeOffset startsOn, ResourceIdentifier impactedResourceId, string impactCategory)
         {
             Argument.AssertNotNull(impactedResourceId, nameof(impactedResourceId));
             Argument.AssertNotNull(impactCategory, nameof(impactCategory));
 
-            StartOn = startOn;
+            StartsOn = startsOn;
             ImpactedResourceId = impactedResourceId;
             ImpactCategory = impactCategory;
             ArmCorrelationIds = new ChangeTrackingList<string>();
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadImpactProperties"/>. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="startOn"> Time at which impact was observed . </param>
-        /// <param name="endOn"> Time at which impact has ended . </param>
+        /// <param name="startsOn"> Time at which impact was observed . </param>
+        /// <param name="endsOn"> Time at which impact has ended . </param>
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
         /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<ImpactPerformance> performance, ImpactConnectivityDetails connectivity, IDictionary<string, BinaryData> additionalProperties, ImpactErrorDetails errorDetails, ImpactedWorkload workload, string impactGroupId, ImpactConfidenceLevel? confidenceLevel, ImpactClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState, DateTimeOffset startsOn, DateTimeOffset? endsOn, ResourceIdentifier impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<ImpactPerformance> performance, ImpactConnectivityDetails connectivity, IDictionary<string, BinaryData> additionalProperties, ImpactErrorDetails errorDetails, ImpactedWorkload workload, string impactGroupId, ImpactConfidenceLevel? confidenceLevel, ImpactClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ImpactedResourceId = impactedResourceId;
             ImpactUniqueId = impactUniqueId;
             ReportedTimeUtc = reportedTimeUtc;
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactReportingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Time at which impact was observed . </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> Time at which impact has ended . </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Azure resource id of the impacted resource. </summary>
         public ResourceIdentifier ImpactedResourceId { get; set; }

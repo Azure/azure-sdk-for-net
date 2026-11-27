@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
 using Azure.Identity;
@@ -173,7 +172,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
+                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
                 }
             }
             limitIteration--;
@@ -273,7 +272,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
+                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
                 }
             }
             limitIteration--;

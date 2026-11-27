@@ -3,6 +3,8 @@
 
 using Microsoft.AspNetCore.Http;
 
+#pragma warning disable AAAS005 // Capture experimental attribution without forwarding it.
+
 namespace Azure.AI.AgentServer.Core.Internal;
 
 /// <summary>
@@ -17,11 +19,25 @@ internal sealed class RequestContextMiddleware : IMiddleware
     /// <inheritdoc />
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
+        FoundryOriginalSubject? subject;
+        try
+        {
+            subject = FoundryOriginalSubject.FromHeaders(context.Request.Headers);
+        }
+        catch (FormatException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Response.Headers[PlatformHeaders.ErrorSource] = PlatformHeaders.ErrorSourcePlatform;
+            context.Response.Headers[PlatformHeaders.ErrorDetail] = "invalid_original_subject";
+            return;
+        }
+
         FoundryAgentRequestContext? previous = FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext
         {
             CallId = NormalizeHeader(context.Request.Headers[PlatformHeaders.FoundryCallId]),
             UserId = NormalizeHeader(context.Request.Headers[PlatformHeaders.UserId]),
             SessionId = FoundryEnvironment.SessionId,
+            OriginalSubject = subject,
         });
 
         try

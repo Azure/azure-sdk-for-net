@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmEdgeActionsModelFactory
     {
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 default);
         }
 
+        /// <summary> Represents an edge action properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the edge action. </param>
         /// <param name="attachments"> A list of attachments for the edge action. </param>
         /// <returns> A new <see cref="Models.EdgeActionProperties"/> instance for mocking. </returns>
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionProperties(provisioningState, (attachments ?? new ChangeTrackingList<EdgeActionAttachment>()).ToList(), default);
         }
 
+        /// <summary> Edge action attachment information. </summary>
         /// <param name="id"> The edge action attachment id. </param>
         /// <param name="attachedResourceId"> The attached resource Id. </param>
         /// <returns> A new <see cref="Models.EdgeActionAttachment"/> instance for mocking. </returns>
@@ -60,6 +63,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionAttachment(id, attachedResourceId, default);
         }
 
+        /// <summary> The SKU type for the edge action. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>
         /// <returns> A new <see cref="Models.EdgeActionSkuType"/> instance for mocking. </returns>
@@ -68,9 +72,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionSkuType(name, tier, default);
         }
 
+        /// <summary> The type used for update operations of the EdgeAction. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="sku"> The sku type of the edge action. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The SKU of the Edge Action. Do not include sku in PATCH requests; any supplied sku, including null or the existing value, is rejected. </param>
+        /// <param name="tags"> Resource tags. For PATCH requests, omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. </param>
         /// <returns> A new <see cref="Models.EdgeActionPatch"/> instance for mocking. </returns>
         public static EdgeActionPatch EdgeActionPatch(EdgeActionPropertiesUpdate properties = default, EdgeActionSkuTypeUpdate sku = default, IDictionary<string, string> tags = default)
         {
@@ -79,12 +84,14 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionPatch(properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Represents an edge action properties. </summary>
         /// <returns> A new <see cref="Models.EdgeActionPropertiesUpdate"/> instance for mocking. </returns>
         public static EdgeActionPropertiesUpdate EdgeActionPropertiesUpdate()
         {
             return new EdgeActionPropertiesUpdate(default);
         }
 
+        /// <summary> The SKU fields in the update model. Do not include sku in PATCH requests; any supplied sku, including null or the existing value, is rejected. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>
         /// <returns> A new <see cref="Models.EdgeActionSkuTypeUpdate"/> instance for mocking. </returns>
@@ -93,6 +100,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionSkuTypeUpdate(name, tier, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -116,10 +124,11 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 default);
         }
 
-        /// <param name="deploymentType"> The deployment type. </param>
+        /// <summary> Represents an edge action version. </summary>
+        /// <param name="deploymentType"> The deployment type for the Edge Action version. Set this value when creating the version. When updating an existing version, any supplied value must match the existing value. </param>
         /// <param name="validationStatus"> The validation status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="isDefaultVersion"> The active state. </param>
+        /// <param name="isDefaultVersion"> Indicates whether this is the default version. When creating a version, if the Edge Action has no default version, the service makes the new version the default even when false is supplied. If another default version exists, supplying true is rejected. When updating an existing version, any supplied value must match the existing value. Use swapDefault to change the default version. </param>
         /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
         /// <returns> A new <see cref="Models.EdgeActionVersionProperties"/> instance for mocking. </returns>
         public static EdgeActionVersionProperties EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType = default, EdgeActionVersionValidationStatus? validationStatus = default, EdgeActionProvisioningState? provisioningState = default, EdgeActionIsDefaultVersion isDefaultVersion = default, DateTimeOffset? lastPackageUpdatedOn = default)
@@ -133,6 +142,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the EdgeActionVersion. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.EdgeActionVersionPatch"/> instance for mocking. </returns>
@@ -143,14 +153,16 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionVersionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <param name="deploymentType"> The deployment type. </param>
-        /// <param name="isDefaultVersion"> The active state. </param>
+        /// <summary> The updatable properties of the EdgeActionVersion. </summary>
+        /// <param name="deploymentType"> The deployment type for the Edge Action version. Set this value when creating the version. When updating an existing version, any supplied value must match the existing value. </param>
+        /// <param name="isDefaultVersion"> Indicates whether this is the default version. When creating a version, if the Edge Action has no default version, the service makes the new version the default even when false is supplied. If another default version exists, supplying true is rejected. When updating an existing version, any supplied value must match the existing value. Use swapDefault to change the default version. </param>
         /// <returns> A new <see cref="Models.EdgeActionVersionUpdateProperties"/> instance for mocking. </returns>
         public static EdgeActionVersionUpdateProperties EdgeActionVersionUpdateProperties(EdgeActionVersionDeploymentType? deploymentType = default, EdgeActionIsDefaultVersion? isDefaultVersion = default)
         {
             return new EdgeActionVersionUpdateProperties(deploymentType, isDefaultVersion, default);
         }
 
+        /// <summary> Version code information for edge action. </summary>
         /// <param name="content"> The version code deployment content . </param>
         /// <param name="name"> The version code name. </param>
         /// <returns> A new <see cref="Models.EdgeActionVersionCode"/> instance for mocking. </returns>
@@ -159,6 +171,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionVersionCode(content, name, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -182,6 +195,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 default);
         }
 
+        /// <summary> Properties for edge action execution filter. </summary>
         /// <param name="versionId"> The referenced versionId of the edgeaction version. </param>
         /// <param name="lastUpdatedOn"> The last update time in UTC for the execution filter. </param>
         /// <param name="executionFilterIdentifierHeaderName"> Custom Header Key associated with the execution filter. </param>
@@ -199,6 +213,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the EdgeActionExecutionFilter. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.EdgeActionExecutionFilterPatch"/> instance for mocking. </returns>
@@ -209,6 +224,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionExecutionFilterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the EdgeActionExecutionFilter. </summary>
         /// <param name="versionId"> The referenced versionId of the edgeaction version. </param>
         /// <param name="executionFilterIdentifierHeaderName"> Custom Header Key associated with the execution filter. </param>
         /// <param name="executionFilterIdentifierHeaderValue"> Custom Header Value associated with the execution filter. </param>

@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="eventSystemProperties"> System properties of the iot hub. </param>
         /// <param name="sharedAccessPolicyName"> The name of the share access policy. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        /// <param name="retrievalStartsOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubConnectionProperties(ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubConnectionProperties(ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartsOn, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
             EventSystemProperties = eventSystemProperties;
             SharedAccessPolicyName = sharedAccessPolicyName;
             DatabaseRouting = databaseRouting;
-            RetrievalStartOn = retrievalStartOn;
+            RetrievalStartsOn = retrievalStartsOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </summary>
         [WirePath("retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn { get; set; }
+        public DateTimeOffset? RetrievalStartsOn { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("provisioningState")]

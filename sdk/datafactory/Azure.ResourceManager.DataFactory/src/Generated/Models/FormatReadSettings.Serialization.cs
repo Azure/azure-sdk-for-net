@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format read settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ParquetReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/>, and <see cref="BinaryReadSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="ParquetReadSettings"/>, and <see cref="XmlReadSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFormatReadSettings))]
     public abstract partial class FormatReadSettings : IJsonModel<FormatReadSettings>
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ParquetReadSettings":
-                        return ParquetReadSettings.DeserializeParquetReadSettings(element, options);
+                    case "BinaryReadSettings":
+                        return BinaryReadSettings.DeserializeBinaryReadSettings(element, options);
                     case "DelimitedTextReadSettings":
                         return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element, options);
                     case "JsonReadSettings":
                         return JsonReadSettings.DeserializeJsonReadSettings(element, options);
+                    case "ParquetReadSettings":
+                        return ParquetReadSettings.DeserializeParquetReadSettings(element, options);
                     case "XmlReadSettings":
                         return XmlReadSettings.DeserializeXmlReadSettings(element, options);
-                    case "BinaryReadSettings":
-                        return BinaryReadSettings.DeserializeBinaryReadSettings(element, options);
                 }
             }
             return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element, options);

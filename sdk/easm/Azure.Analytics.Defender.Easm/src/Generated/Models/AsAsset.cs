@@ -64,8 +64,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        /// <param name="detailedFromWhoisAt"></param>
-        internal AsAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, long? asn, IList<ObservedString> asNames, IList<ObservedString> orgNames, IList<ObservedString> orgIds, IList<ObservedString> countries, IList<ObservedString> registries, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> registrantContacts, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedString> registrarNames, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, DateTimeOffset? detailedFromWhoisAt) : base(additionalBinaryDataProperties)
+        /// <param name="detailedFromWhoisOn"></param>
+        internal AsAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, long? asn, IList<ObservedString> asNames, IList<ObservedString> orgNames, IList<ObservedString> orgIds, IList<ObservedString> countries, IList<ObservedString> registries, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> registrantContacts, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedString> registrarNames, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, DateTimeOffset? detailedFromWhoisOn) : base(additionalBinaryDataProperties)
         {
             Asn = asn;
             AsNames = asNames;
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Defender.Easm
             RegistrantPhones = registrantPhones;
             AdminPhones = adminPhones;
             TechnicalPhones = technicalPhones;
-            DetailedFromWhoisAt = detailedFromWhoisAt;
+            DetailedFromWhoisOn = detailedFromWhoisOn;
         }
 
         /// <summary> Gets the Asn. </summary>
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the TechnicalPhones. </summary>
         public IList<ObservedString> TechnicalPhones { get; }
 
-        /// <summary> Gets the DetailedFromWhoisAt. </summary>
-        public DateTimeOffset? DetailedFromWhoisAt { get; }
+        /// <summary> Gets the DetailedFromWhoisOn. </summary>
+        public DateTimeOffset? DetailedFromWhoisOn { get; }
     }
 }

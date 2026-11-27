@@ -94,15 +94,22 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ComputerCount))
             {
@@ -185,8 +192,9 @@ namespace Azure.ResourceManager.Automation.Models
             string status = default;
             TimeSpan? configuredDuration = default;
             string osType = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             int? computerCount = default;
             int? failedCount = default;
             DateTimeOffset? createdOn = default;
@@ -231,17 +239,18 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("computerCount"u8))
@@ -301,7 +310,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SoftwareUpdateConfigurationRunProperties(
@@ -309,8 +318,8 @@ namespace Azure.ResourceManager.Automation.Models
                 status,
                 configuredDuration,
                 osType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 computerCount,
                 failedCount,
                 createdOn,
@@ -318,7 +327,10 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn,
                 lastModifiedBy,
                 tasks,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

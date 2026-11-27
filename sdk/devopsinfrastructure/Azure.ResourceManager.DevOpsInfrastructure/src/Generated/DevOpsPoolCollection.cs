@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         {
             TryGetApiVersion(DevOpsPoolResource.ResourceType, out string devOpsPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            _poolsRestClient = new Pools(
+                _poolsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                devOpsPoolApiVersion ?? "2026-07-03-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +288,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new DevOpsPoolDataAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new DevOpsPoolDataCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +401,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +519,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -18,6 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningDataPathAssetReference. </summary>
         public MachineLearningDataPathAssetReference()
         {
+            ReferenceType.Assign(MachineLearning.ReferenceType.DataPath);
         }
 
         /// <summary> Gets or sets the DatastoreId. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("referenceType", new string[] { "referenceType" }, defaultValue: "DataPath");
             _datastoreId = DefineProperty<string>(nameof(DatastoreId), new string[] { "datastoreId" });
             _path = DefineProperty<string>(nameof(Path), new string[] { "path" });
             DefineAdditionalProperties();

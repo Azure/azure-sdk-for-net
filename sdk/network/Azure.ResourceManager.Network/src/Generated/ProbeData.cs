@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of load balancer probe. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ProbeData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ProbePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ProbeData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ProbePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -42,13 +43,27 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> The load balancer rules that use this probe. </summary>
+        [WirePath("properties.loadBalancingRules")]
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                return Properties.LoadBalancingRules;
+            }
+        }
+
         /// <summary> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
         [WirePath("properties.protocol")]
         public ProbeProtocol? Protocol
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (ProbeProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -69,7 +84,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Port;
+                return Properties is null ? (int?)default : Properties.Port;
             }
             set
             {

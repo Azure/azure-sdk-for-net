@@ -24,15 +24,55 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the subgroup. </param>
-        internal InterconnectGroupSubgroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, SubgroupProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
+        internal InterconnectGroupSubgroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, SubgroupProperties properties) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
         }
 
         /// <summary> Properties of the subgroup. </summary>
         [WirePath("properties")]
-        public SubgroupProperties Properties { get; }
+        internal SubgroupProperties Properties { get; }
+
+        /// <summary> The unique identifier of the subgroup. </summary>
+        [WirePath("properties.internalSubgroupId")]
+        public string InternalSubgroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InternalSubgroupId;
+            }
+        }
+
+        /// <summary> A list of virtual machine references. </summary>
+        [WirePath("properties.virtualMachines")]
+        public IReadOnlyList<NetworkSubResource> VirtualMachines
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachines;
+            }
+        }
+
+        /// <summary> The provisioning state of the subgroup. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.interconnectBlock.id")]
+        public ResourceIdentifier InterconnectBlockId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterconnectBlockId;
+            }
+        }
     }
 }

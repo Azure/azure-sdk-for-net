@@ -9,6 +9,7 @@ using System;
 using System.Buffers;
 using System.Buffers.Text;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -24,6 +25,10 @@ namespace Azure.ResourceManager.DurableTask
         {
             MaxDepth = 256
         };
+        /// <summary> The wire v3 options for model serialization. </summary>
+        internal static readonly ModelReaderWriterOptions WireV3Options = new ModelReaderWriterOptions("W|v3");
+        /// <summary> The JSON v3 options for model serialization. </summary>
+        internal static readonly ModelReaderWriterOptions JsonV3Options = new ModelReaderWriterOptions("J|v3");
 
         public static object GetObject(this JsonElement element)
         {
@@ -247,6 +252,18 @@ namespace Azure.ResourceManager.DurableTask
                 case int i:
                     writer.WriteNumberValue(i);
                     break;
+                case short shortValue:
+                    writer.WriteNumberValue(shortValue);
+                    break;
+                case ushort ushortValue:
+                    writer.WriteNumberValue(ushortValue);
+                    break;
+                case uint uintValue:
+                    writer.WriteNumberValue(uintValue);
+                    break;
+                case ulong ulongValue:
+                    writer.WriteNumberValue(ulongValue);
+                    break;
                 case decimal d:
                     writer.WriteNumberValue(d);
                     break;
@@ -290,7 +307,7 @@ namespace Azure.ResourceManager.DurableTask
                     }
                     writer.WriteEndObject();
                     break;
-                case IEnumerable<object> objectEnumerable:
+                case IEnumerable objectEnumerable:
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {

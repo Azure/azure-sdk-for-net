@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// Determines how the stand-by scheme should be provided.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManualResourcePredictionsProfile"/> and <see cref="AutomaticResourcePredictionsProfile"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResourcePredictionsProfile))]
     public abstract partial class ResourcePredictionsProfile : IJsonModel<ResourcePredictionsProfile>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Manual":
-                        return ManualResourcePredictionsProfile.DeserializeManualResourcePredictionsProfile(element, options);
                     case "Automatic":
                         return AutomaticResourcePredictionsProfile.DeserializeAutomaticResourcePredictionsProfile(element, options);
+                    case "Manual":
+                        return ManualResourcePredictionsProfile.DeserializeManualResourcePredictionsProfile(element, options);
                 }
             }
             return UnknownResourcePredictionsProfile.DeserializeUnknownResourcePredictionsProfile(element, options);

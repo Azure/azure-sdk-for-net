@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the hub virtual network connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, HubVirtualNetworkConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, HubVirtualNetworkConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Enable Only IPv6 Peering for this connection. </summary>
-        [WirePath("properties.enableOnlyIpv6Peering")]
-        public EnableOnlyIPv6PeeringState? EnableOnlyIPv6Peering
+        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.EnableOnlyIPv6Peering;
+                return Properties is null ? default : Properties.RoutingConfiguration;
             }
             set
             {
@@ -110,7 +110,25 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new HubVirtualNetworkConnectionProperties();
                 }
-                Properties.EnableOnlyIPv6Peering = value;
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
+        /// <summary> Enable Only IPv6 Peering for this connection. </summary>
+        [WirePath("properties.enableOnlyIPv6Peering")]
+        public bool? IsOnlyIPv6PeeringEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsOnlyIPv6PeeringEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.IsOnlyIPv6PeeringEnabled = value;
             }
         }
 

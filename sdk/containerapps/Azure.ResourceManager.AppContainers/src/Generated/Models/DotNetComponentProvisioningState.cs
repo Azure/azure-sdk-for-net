@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct DotNetComponentProvisioningState : IEquatable<DotNetComponentProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Succeeded. </summary>
+        /// <summary> The .NET component was provisioned successfully. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> Failed. </summary>
+        /// <summary> The .NET component failed to provision. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Canceled. </summary>
+        /// <summary> Provisioning of the .NET component was canceled. </summary>
         private const string CanceledValue = "Canceled";
-        /// <summary> Deleting. </summary>
+        /// <summary> The .NET component is being deleted. </summary>
         private const string DeletingValue = "Deleting";
-        /// <summary> InProgress. </summary>
+        /// <summary> The .NET component is being provisioned. </summary>
         private const string InProgressValue = "InProgress";
 
         /// <summary> Initializes a new instance of <see cref="DotNetComponentProvisioningState"/>. </summary>
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value;
         }
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> The .NET component was provisioned successfully. </summary>
         public static DotNetComponentProvisioningState Succeeded { get; } = new DotNetComponentProvisioningState(SucceededValue);
 
-        /// <summary> Failed. </summary>
+        /// <summary> The .NET component failed to provision. </summary>
         public static DotNetComponentProvisioningState Failed { get; } = new DotNetComponentProvisioningState(FailedValue);
 
-        /// <summary> Canceled. </summary>
+        /// <summary> Provisioning of the .NET component was canceled. </summary>
         public static DotNetComponentProvisioningState Canceled { get; } = new DotNetComponentProvisioningState(CanceledValue);
 
-        /// <summary> Deleting. </summary>
+        /// <summary> The .NET component is being deleted. </summary>
         public static DotNetComponentProvisioningState Deleting { get; } = new DotNetComponentProvisioningState(DeletingValue);
 
-        /// <summary> InProgress. </summary>
+        /// <summary> The .NET component is being provisioned. </summary>
         public static DotNetComponentProvisioningState InProgress { get; } = new DotNetComponentProvisioningState(InProgressValue);
 
         /// <summary> Determines if two <see cref="DotNetComponentProvisioningState"/> values are the same. </summary>

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NatGatewayPropertiesFormat"/>. </summary>
         public NatGatewayPropertiesFormat()
         {
-            PublicIPAddresses = new ChangeTrackingList<NetworkSubResource>();
-            PublicIPAddressesV6 = new ChangeTrackingList<NetworkSubResource>();
-            PublicIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
-            PublicIPPrefixesV6 = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
+            PublicIPAddressesV6 = new ChangeTrackingList<WritableSubResource>();
+            PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
+            PublicIPPrefixesV6 = new ChangeTrackingList<WritableSubResource>();
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NatGatewayPropertiesFormat(int? idleTimeoutInMinutes, IList<NetworkSubResource> publicIPAddresses, IList<NetworkSubResource> publicIPAddressesV6, IList<NetworkSubResource> publicIPPrefixes, IList<NetworkSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, NetworkSubResource sourceVirtualNetwork, NetworkSubResource serviceGateway, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NatGatewayPropertiesFormat(int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPAddressesV6, IList<WritableSubResource> publicIPPrefixes, IList<WritableSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, NetworkSubResource sourceVirtualNetwork, NetworkSubResource serviceGateway, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             PublicIPAddresses = publicIPAddresses;
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
         [WirePath("publicIpAddresses")]
-        public IList<NetworkSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
         [WirePath("publicIpAddressesV6")]
-        public IList<NetworkSubResource> PublicIPAddressesV6 { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> PublicIPAddressesV6 { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
         [WirePath("publicIpPrefixes")]
-        public IList<NetworkSubResource> PublicIPPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> PublicIPPrefixes { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
         [WirePath("publicIpPrefixesV6")]
-        public IList<NetworkSubResource> PublicIPPrefixesV6 { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> PublicIPPrefixesV6 { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
         [WirePath("subnets")]

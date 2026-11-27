@@ -23,6 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         /// <summary> Creates a new StatefulServiceProperties. </summary>
         public StatefulServiceProperties()
         {
+            ServiceKind.Assign(ApplicationServiceKind.Stateful);
         }
 
         /// <summary> Gets or sets the HasPersistedState. </summary>
@@ -119,7 +120,6 @@ namespace Azure.Provisioning.ServiceFabric
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceKind", new string[] { "serviceKind" }, defaultValue: "Stateful");
             _hasPersistedState = DefineProperty<bool>(nameof(HasPersistedState), new string[] { "hasPersistedState" });
             _targetReplicaSetSize = DefineProperty<int>(nameof(TargetReplicaSetSize), new string[] { "targetReplicaSetSize" });
             _minReplicaSetSize = DefineProperty<int>(nameof(MinReplicaSetSize), new string[] { "minReplicaSetSize" });

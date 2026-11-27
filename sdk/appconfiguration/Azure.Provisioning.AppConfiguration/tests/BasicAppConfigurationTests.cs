@@ -90,11 +90,11 @@ public class BasicAppConfigurationTests
 
             resource featureFlag 'Microsoft.AppConfiguration/configurationStores/keyValues@2022-05-01' = {
               name: '.appconfig.featureflag~2F${featureFlagKey}'
+              parent: configStore
               properties: {
                 contentType: 'application/vnd.microsoft.appconfig.ff+json;charset=utf-8'
                 value: string(flag)
               }
-              parent: configStore
             }
             """);
     }

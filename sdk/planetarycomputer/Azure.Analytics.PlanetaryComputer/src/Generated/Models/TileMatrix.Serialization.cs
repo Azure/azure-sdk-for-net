@@ -305,7 +305,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TileMatrix(
@@ -316,7 +316,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 scaleDenominator,
                 cellSize,
                 cornerOfOrigin,
-                pointOfOrigin,
+                pointOfOrigin ?? new ChangeTrackingList<float>(),
                 tileWidth,
                 tileHeight,
                 matrixWidth,

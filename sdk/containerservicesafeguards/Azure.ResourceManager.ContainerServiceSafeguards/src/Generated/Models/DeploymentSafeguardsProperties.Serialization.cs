@@ -234,14 +234,14 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeploymentSafeguardsProperties(
                 provisioningState,
                 level,
                 excludedNamespaces ?? new ChangeTrackingList<string>(),
-                systemExcludedNamespaces,
+                systemExcludedNamespaces ?? new ChangeTrackingList<string>(),
                 podSecurityStandardsLevel,
                 additionalBinaryDataProperties);
         }

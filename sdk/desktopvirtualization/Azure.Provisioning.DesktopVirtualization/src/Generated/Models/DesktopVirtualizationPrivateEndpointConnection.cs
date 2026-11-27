@@ -81,7 +81,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.GroupIds;
+                return Properties is null ? default : Properties.GroupIds;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.ConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
 

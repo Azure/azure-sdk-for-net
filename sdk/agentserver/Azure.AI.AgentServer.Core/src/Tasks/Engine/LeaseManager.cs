@@ -21,6 +21,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 internal sealed class LeaseManager
 {
     private readonly TaskWriteSerializer _serializer;
+    private string _instanceId;
 
     /// <summary>Initializes a new instance of the <see cref="LeaseManager"/> class.</summary>
     /// <param name="serializer">The write serializer used to apply lease PATCHes.</param>
@@ -28,11 +29,14 @@ internal sealed class LeaseManager
     public LeaseManager(TaskWriteSerializer serializer, string? instanceId = null)
     {
         _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-        InstanceId = instanceId ?? NewInstanceId();
+        _instanceId = instanceId ?? NewInstanceId();
     }
 
     /// <summary>The instance id identifying this worker for lease ownership.</summary>
-    public string InstanceId { get; }
+    public string InstanceId => Volatile.Read(ref _instanceId);
+
+    internal void RotateInstanceId()
+        => Volatile.Write(ref _instanceId, NewInstanceId());
 
     /// <summary>Forms the lease owner string as <c>&lt;agentName&gt;|session:&lt;sessionId&gt;</c>.</summary>
     /// <param name="agentName">The agent name.</param>
@@ -112,6 +116,31 @@ internal sealed class LeaseManager
                 LeaseInstanceId = InstanceId,
                 LeaseDurationSeconds = 0,
             },
+            WriteIntent.LeaseHeartbeat,
+            cancellationToken);
+
+    /// <summary>
+    /// Force-expires the lease only when the record is already <c>in_progress</c> under this
+    /// manager's exact owner and instance identity. A suspended record or a lease held by another
+    /// process is returned unchanged.
+    /// </summary>
+    public Task<TaskRecord> ReleaseIfOwnedAsync(
+        string taskId, string owner, CancellationToken cancellationToken = default)
+        => _serializer.UpdateAsync(
+            taskId,
+            current =>
+                current.Status == TaskWireKeys.StatusInProgress
+                && current.Lease is not null
+                && string.Equals(current.Lease.Owner, owner, StringComparison.Ordinal)
+                && string.Equals(current.Lease.InstanceId, InstanceId, StringComparison.Ordinal)
+                    ? new TaskPatchRequest
+                    {
+                        Status = TaskWireKeys.StatusInProgress,
+                        LeaseOwner = owner,
+                        LeaseInstanceId = InstanceId,
+                        LeaseDurationSeconds = 0,
+                    }
+                    : null,
             WriteIntent.LeaseHeartbeat,
             cancellationToken);
 

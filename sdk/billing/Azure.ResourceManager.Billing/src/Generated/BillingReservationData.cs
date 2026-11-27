@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
             set
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     Properties = new ReservationProperty();
                 }
-                Properties.BenefitStartOn = value;
+                Properties.BenefitStartsOn = value;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.ReservationExpireOn;
+                return Properties is null ? default : Properties.ReservationExpiresOn;
             }
             set
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     Properties = new ReservationProperty();
                 }
-                Properties.ReservationExpireOn = value;
+                Properties.ReservationExpiresOn = value;
             }
         }
 

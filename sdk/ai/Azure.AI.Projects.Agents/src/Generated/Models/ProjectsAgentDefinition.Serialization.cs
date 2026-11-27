@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ProjectsAgentDefinition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HostedAgentDefinition"/>, <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="ExternalAgentDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="ExternalAgentDefinition"/>, <see cref="HostedAgentDefinition"/>, <see cref="VoiceAgentDefinition"/>, and <see cref="WorkflowAgentDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentDefinition))]
     public abstract partial class ProjectsAgentDefinition : IJsonModel<ProjectsAgentDefinition>
@@ -121,6 +121,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         internal static ProjectsAgentDefinition DeserializeProjectsAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -131,17 +133,21 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
-                    case "hosted":
-                        return HostedAgentDefinition.DeserializeHostedAgentDefinition(element, options);
                     case "prompt":
                         return DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(element, options);
-                    case "workflow":
-                        return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                     case "external":
                         return ExternalAgentDefinition.DeserializeExternalAgentDefinition(element, options);
+                    case "hosted":
+                        return HostedAgentDefinition.DeserializeHostedAgentDefinition(element, options);
+                    case "voice":
+                        return VoiceAgentDefinition.DeserializeVoiceAgentDefinition(element, options);
+                    case "workflow":
+                        return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                 }
             }
             return UnknownAgentDefinition.DeserializeUnknownAgentDefinition(element, options);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
     }
 }

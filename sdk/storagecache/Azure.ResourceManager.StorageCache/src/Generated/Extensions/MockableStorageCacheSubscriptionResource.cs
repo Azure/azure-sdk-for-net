@@ -50,31 +50,31 @@ namespace Azure.ResourceManager.StorageCache.Mocking
 
         private ClientDiagnostics CachesClientDiagnostics => _cachesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Caches CachesRestClient => _cachesRestClient ??= new Caches(CachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private Caches CachesRestClient => _cachesRestClient ??= new Caches(CachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageCache/caches", out string apiVersion) ? apiVersion : "2026-08-01");
 
         private ClientDiagnostics AmlFilesystemsClientDiagnostics => _amlFilesystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AmlFilesystems AmlFilesystemsRestClient => _amlFilesystemsRestClient ??= new AmlFilesystems(AmlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AmlFilesystems AmlFilesystemsRestClient => _amlFilesystemsRestClient ??= new AmlFilesystems(AmlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageCache/amlFilesystems", out string apiVersion0) ? apiVersion0 : "2026-08-01");
 
         private ClientDiagnostics StorageCacheClientClientDiagnostics => _storageCacheClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageCacheClient StorageCacheClientRestClient => _storageCacheClientRestClient ??= new StorageCacheClient(StorageCacheClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private StorageCacheClient StorageCacheClientRestClient => _storageCacheClientRestClient ??= new StorageCacheClient(StorageCacheClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics UsageModelsClientDiagnostics => _usageModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsageModels UsageModelsRestClient => _usageModelsRestClient ??= new UsageModels(UsageModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private UsageModels UsageModelsRestClient => _usageModelsRestClient ??= new UsageModels(UsageModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics AscOperationsClientDiagnostics => _ascOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AscOperations AscOperationsRestClient => _ascOperationsRestClient ??= new AscOperations(AscOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AscOperations AscOperationsRestClient => _ascOperationsRestClient ??= new AscOperations(AscOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics AscUsagesClientDiagnostics => _ascUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AscUsages AscUsagesRestClient => _ascUsagesRestClient ??= new AscUsages(AscUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AscUsages AscUsagesRestClient => _ascUsagesRestClient ??= new AscUsages(AscUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         /// <summary>
         /// Returns all caches the user has access to under a subscription.
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageCacheData, StorageCacheResource>(new CachesGetAllAsyncCollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
+            return new AsyncPageableWrapper<StorageCacheData, StorageCacheResource>(new StorageCacheDataAsync0CollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageCacheData, StorageCacheResource>(new CachesGetAllCollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
+            return new PageableWrapper<StorageCacheData, StorageCacheResource>(new StorageCacheData0CollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetAllAsyncCollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemDataAsync0CollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetAllCollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
+            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemData0CollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetStorageCacheSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
+            return new StorageCacheSkuAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetStorageCacheSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
+            return new StorageCacheSkuCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageModelsGetUsageModelsAsyncCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
+            return new StorageCacheUsageModelAsyncCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageModelsGetUsageModelsCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
+            return new StorageCacheUsageModelCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AscUsagesGetStorageCacheUsagesAsyncCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
+            return new StorageCacheUsageAsyncCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
         }
 
         /// <summary>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AscUsagesGetStorageCacheUsagesCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
+            return new StorageCacheUsageCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
         }
     }
 }

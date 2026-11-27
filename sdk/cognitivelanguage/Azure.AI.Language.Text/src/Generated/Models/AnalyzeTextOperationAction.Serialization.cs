@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The long running task to be performed by the service on the input documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/>, <see cref="SentimentAnalysisOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/>, and <see cref="SentimentAnalysisOperationAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeTextOperationAction))]
     public abstract partial class AnalyzeTextOperationAction : IJsonModel<AnalyzeTextOperationAction>
@@ -134,16 +134,20 @@ namespace Azure.AI.Language.Text
             {
                 switch (discriminator.GetString())
                 {
+                    case "AbstractiveSummarization":
+                        return AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(element, options);
                     case "CustomEntityRecognition":
                         return CustomEntitiesOperationAction.DeserializeCustomEntitiesOperationAction(element, options);
-                    case "CustomSingleLabelClassification":
-                        return CustomSingleLabelClassificationOperationAction.DeserializeCustomSingleLabelClassificationOperationAction(element, options);
                     case "CustomMultiLabelClassification":
                         return CustomMultiLabelClassificationOperationAction.DeserializeCustomMultiLabelClassificationOperationAction(element, options);
-                    case "EntityLinking":
-                        return EntityLinkingOperationAction.DeserializeEntityLinkingOperationAction(element, options);
+                    case "CustomSingleLabelClassification":
+                        return CustomSingleLabelClassificationOperationAction.DeserializeCustomSingleLabelClassificationOperationAction(element, options);
                     case "EntityRecognition":
                         return EntitiesOperationAction.DeserializeEntitiesOperationAction(element, options);
+                    case "EntityLinking":
+                        return EntityLinkingOperationAction.DeserializeEntityLinkingOperationAction(element, options);
+                    case "ExtractiveSummarization":
+                        return ExtractiveSummarizationOperationAction.DeserializeExtractiveSummarizationOperationAction(element, options);
                     case "Healthcare":
                         return HealthcareOperationAction.DeserializeHealthcareOperationAction(element, options);
                     case "KeyPhraseExtraction":
@@ -152,10 +156,6 @@ namespace Azure.AI.Language.Text
                         return PiiOperationAction.DeserializePiiOperationAction(element, options);
                     case "SentimentAnalysis":
                         return SentimentAnalysisOperationAction.DeserializeSentimentAnalysisOperationAction(element, options);
-                    case "ExtractiveSummarization":
-                        return ExtractiveSummarizationOperationAction.DeserializeExtractiveSummarizationOperationAction(element, options);
-                    case "AbstractiveSummarization":
-                        return AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(element, options);
                 }
             }
             return UnknownAnalyzeTextOperationAction.DeserializeUnknownAnalyzeTextOperationAction(element, options);

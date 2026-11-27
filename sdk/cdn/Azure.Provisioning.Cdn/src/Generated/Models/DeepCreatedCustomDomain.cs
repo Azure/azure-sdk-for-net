@@ -46,7 +46,7 @@ namespace Azure.Provisioning.Cdn
         {
             get
             {
-                return Properties.HostName;
+                return Properties is null ? default : Properties.HostName;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.Cdn
         {
             get
             {
-                return Properties.ValidationData;
+                return Properties is null ? default : Properties.ValidationData;
             }
         }
 

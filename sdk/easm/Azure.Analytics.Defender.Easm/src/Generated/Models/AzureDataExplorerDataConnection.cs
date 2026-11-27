@@ -26,16 +26,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="createdDate"> The date the data connection was created. </param>
+        /// <param name="createdOn"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="updatedDate"> The date the data connection was last updated. </param>
-        /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
+        /// <param name="updatedOn"> The date the data connection was last updated. </param>
+        /// <param name="userUpdatedOn"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal AzureDataExplorerDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureDataExplorerDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, additionalBinaryDataProperties)
+        internal AzureDataExplorerDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdOn, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedOn, DateTimeOffset? userUpdatedOn, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureDataExplorerDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdOn, frequency, frequencyOffset, updatedOn, userUpdatedOn, active, inactiveMessage, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Advisory severity for a rubric-generation input-quality warning. Initial value set: `warning`. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct RubricGenerationInputQualityWarningSeverity : IEquatable<RubricGenerationInputQualityWarningSeverity>
     {
         private readonly string _value;
@@ -45,7 +43,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RubricGenerationInputQualityWarningSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RubricGenerationInputQualityWarningSeverity?(string value) => value == null ? null : new RubricGenerationInputQualityWarningSeverity(value);
+        public static implicit operator RubricGenerationInputQualityWarningSeverity?(string value) => value == null ? (RubricGenerationInputQualityWarningSeverity?)null : new RubricGenerationInputQualityWarningSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -134,5 +134,44 @@ namespace Azure.ResourceManager.Relay.Models
                 Properties.PublicNetworkAccess = value;
             }
         }
+
+        /// <summary>
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </summary>
+        public RelayTlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayNamespaceProperties();
+                }
+                Properties.MinimumTlsVersion = value;
+            }
+        }
+
+        /// <summary> Cluster ARM ID of the Namespace. </summary>
+        public ResourceIdentifier ClusterArmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterArmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayNamespaceProperties();
+                }
+                Properties.ClusterArmId = value;
+            }
+        }
     }
 }

@@ -6,13 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Streaming.Sse._Protocol;
 using Streaming.Sse._Retrieve;
 using Streaming.Sse._Unnamed;
 
 namespace Streaming.Sse
 {
     [ModelReaderWriterBuildable(typeof(Info))]
-    [ModelReaderWriterBuildable(typeof(RetrievalRequest))]
+    [ModelReaderWriterBuildable(typeof(ProtocolInfo))]
+    [ModelReaderWriterBuildable(typeof(RetrievalContent))]
     public partial class StreamingSseContext : ModelReaderWriterContext
     {
     }

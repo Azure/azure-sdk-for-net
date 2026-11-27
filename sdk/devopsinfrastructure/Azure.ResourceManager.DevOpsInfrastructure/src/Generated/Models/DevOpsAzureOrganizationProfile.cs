@@ -28,15 +28,25 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="DevOpsAzureOrganizationProfile"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsOrganizationProfile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="description"> An extra description to add to the Azure DevOps pool. </param>
+        /// <param name="updateDescription"> Determines whether the service updates the Azure DevOps pool description. </param>
         /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
         /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
         /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
-        internal DevOpsAzureOrganizationProfile(string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile, string @alias) : base(kind, additionalBinaryDataProperties)
+        internal DevOpsAzureOrganizationProfile(string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, bool? updateDescription, IList<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile, string @alias) : base(kind, additionalBinaryDataProperties)
         {
+            Description = description;
+            UpdateDescription = updateDescription;
             Organizations = organizations;
             PermissionProfile = permissionProfile;
             Alias = @alias;
         }
+
+        /// <summary> An extra description to add to the Azure DevOps pool. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Determines whether the service updates the Azure DevOps pool description. </summary>
+        public bool? UpdateDescription { get; set; }
 
         /// <summary> The list of Azure DevOps organizations the pool should be present in. </summary>
         public IList<DevOpsOrganization> Organizations { get; }

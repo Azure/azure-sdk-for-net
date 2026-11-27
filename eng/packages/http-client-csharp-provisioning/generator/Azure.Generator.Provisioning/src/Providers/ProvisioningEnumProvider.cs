@@ -21,14 +21,17 @@ namespace Azure.Generator.Provisioning.Providers
     /// Generates a simple C# enum from an InputEnumType.
     /// Provisioning enums are plain enums (not extensible structs) with optional
     /// [DataMember(Name = "...")] attributes when the serialized value differs
-    /// from the C# member name.
+    /// from the C# member name. Accessibility follows the base enum provider pattern,
+    /// allowing the reference map analyzer to internalize enums not exposed by the public API.
     /// </summary>
     internal class ProvisioningEnumProvider : EnumProvider
     {
         private readonly EnumProvider _baseEnumProvider;
+        private readonly InputEnumType _inputEnum;
 
         public ProvisioningEnumProvider(InputEnumType inputEnum) : base(inputEnum)
         {
+            _inputEnum = inputEnum;
             _baseEnumProvider = EnumProvider.Create(inputEnum, null);
         }
 
@@ -41,7 +44,14 @@ namespace Azure.Generator.Provisioning.Providers
             => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
-            => TypeSignatureModifiers.Public | TypeSignatureModifiers.Enum;
+        {
+            var modifiers = TypeSignatureModifiers.Enum;
+            if (_inputEnum.Access == "internal")
+            {
+                modifiers |= TypeSignatureModifiers.Internal;
+            }
+            return modifiers;
+        }
 
         protected override bool GetIsEnum() => true;
 

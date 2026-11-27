@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="name"> The resource name of the operation status. It must match the last segment of 'id' field. </param>
         /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
         /// <param name="error"> Contains error details if status is Failed/Canceled. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="properties"> Properties for export dependencies. These should only be set if the status is Succeeded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesOperationResult(string id, string name, string status, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, ExportDependenciesResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportDependenciesOperationResult(string id, string name, string status, ResponseError error, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ExportDependenciesResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Status = status;
             Error = error;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public ResponseError Error { get; }
 
         /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the operation. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Properties for export dependencies. These should only be set if the status is Succeeded. </summary>
         public ExportDependenciesResultProperties Properties { get; }

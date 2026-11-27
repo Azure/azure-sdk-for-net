@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="RegexFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegexFlag?(string value) => value == null ? null : new RegexFlag(value);
+        public static implicit operator RegexFlag?(string value) => value == null ? (RegexFlag?)null : new RegexFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

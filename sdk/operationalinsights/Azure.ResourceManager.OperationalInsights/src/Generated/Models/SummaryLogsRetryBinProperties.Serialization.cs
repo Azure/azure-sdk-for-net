@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 throw new FormatException($"The model {nameof(SummaryLogsRetryBinProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("retryBinStartTime"u8);
-            writer.WriteStringValue(RetryBinStartOn, "O");
+            writer.WriteStringValue(RetryBinStartsOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,21 +123,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            DateTimeOffset retryBinStartOn = default;
+            DateTimeOffset retryBinStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("retryBinStartTime"u8))
                 {
-                    retryBinStartOn = prop.Value.GetDateTimeOffset("O");
+                    retryBinStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SummaryLogsRetryBinProperties(retryBinStartOn, additionalBinaryDataProperties);
+            return new SummaryLogsRetryBinProperties(retryBinStartsOn, additionalBinaryDataProperties);
         }
     }
 }

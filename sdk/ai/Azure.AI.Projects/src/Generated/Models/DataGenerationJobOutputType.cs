@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported output file types for a data generation job. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobOutputType : IEquatable<DataGenerationJobOutputType>
     {
         private readonly string _value;
@@ -50,7 +48,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="DataGenerationJobOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataGenerationJobOutputType?(string value) => value == null ? null : new DataGenerationJobOutputType(value);
+        public static implicit operator DataGenerationJobOutputType?(string value) => value == null ? (DataGenerationJobOutputType?)null : new DataGenerationJobOutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

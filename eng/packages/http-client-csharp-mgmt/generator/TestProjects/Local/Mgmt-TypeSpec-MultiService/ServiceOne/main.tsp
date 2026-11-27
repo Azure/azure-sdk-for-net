@@ -37,6 +37,23 @@ interface Foos {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
   delete is ArmResourceDeleteWithoutOkAsync<Foo>;
   list is ArmResourceListByParent<Foo>;
+
+  // These array-response operations exercise inferred list naming alongside an explicit
+  // client-name override on the filtered operation.
+  @get
+  @action("listProperties")
+  listProperties is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooProperties[]>
+  >;
+
+  @action("listFilteredProperties")
+  listFilteredProperties is ArmResourceActionSync<
+    Foo,
+    CheckAvailabilityRequest,
+    ArmResponse<FooProperties[]>
+  >;
 }
 
 interface Operations extends Azure.ResourceManager.Operations {}

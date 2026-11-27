@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CaCertificateData, CaCertificateResource>(new CaCertificatesGetByNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CaCertificateData, CaCertificateResource>(new CaCertificateDataAsyncCollectionResultOfT(
                 _caCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CaCertificateData, CaCertificateResource>(new CaCertificatesGetByNamespaceCollectionResultOfT(
+            return new PageableWrapper<CaCertificateData, CaCertificateResource>(new CaCertificateDataCollectionResultOfT(
                 _caCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

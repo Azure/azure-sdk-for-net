@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 writer.WritePropertyName("symbolicName"u8);
                 writer.WriteStringValue(SymbolicName);
             }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
             if (Optional.IsDefined(Identifiers))
             {
                 writer.WritePropertyName("identifiers"u8);
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             string resourceId = default;
             string deploymentId = default;
             string symbolicName = default;
+            string resourceType = default;
             BinaryData identifiers = default;
             ArmDeploymentExtensionDefinition extension = default;
             WhatIfChangeType changeType = default;
@@ -222,13 +228,18 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     symbolicName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("resourceType"u8))
+                {
+                    resourceType = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("identifiers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identifiers = BinaryData.FromString(prop.Value.GetRawText());
+                    identifiers = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))
@@ -256,7 +267,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    before = BinaryData.FromString(prop.Value.GetRawText());
+                    before = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("after"u8))
@@ -265,7 +276,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    after = BinaryData.FromString(prop.Value.GetRawText());
+                    after = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("delta"u8))
@@ -284,13 +295,14 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WhatIfChange(
                 resourceId,
                 deploymentId,
                 symbolicName,
+                resourceType,
                 identifiers,
                 extension,
                 changeType,

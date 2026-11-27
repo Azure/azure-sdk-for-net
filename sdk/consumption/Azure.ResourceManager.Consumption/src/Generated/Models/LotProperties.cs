@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="originalAmount"> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="closedBalance"> The balance as of the last invoice. </param>
         /// <param name="source"> The source of the lot. </param>
-        /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expireOn"> The expiration date of a lot. </param>
+        /// <param name="startsOn"> The date when the lot became effective. </param>
+        /// <param name="expiresOn"> The expiration date of a lot. </param>
         /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
         /// <param name="purchasedOn"> The date when the lot was added. </param>
         /// <param name="status"> The status of the lot. </param>
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="organizationType"> The organization type of the lot. </param>
         /// <param name="usedAmount"> Amount consumed from the commitment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LotProperties(ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, bool? isEstimatedBalance, string propertiesETag, OrganizationType? organizationType, ConsumptionAmount usedAmount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LotProperties(ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, bool? isEstimatedBalance, string propertiesETag, OrganizationType? organizationType, ConsumptionAmount usedAmount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginalAmount = originalAmount;
             ClosedBalance = closedBalance;
             Source = source;
-            StartOn = startOn;
-            ExpireOn = expireOn;
+            StartsOn = startsOn;
+            ExpiresOn = expiresOn;
             PoNumber = poNumber;
             PurchasedOn = purchasedOn;
             Status = status;
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public ConsumptionLotSource? Source { get; }
 
         /// <summary> The date when the lot became effective. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The expiration date of a lot. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </summary>
         public string PoNumber { get; }

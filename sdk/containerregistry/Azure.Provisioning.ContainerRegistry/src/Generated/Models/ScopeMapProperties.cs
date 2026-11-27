@@ -91,7 +91,7 @@ namespace Azure.Provisioning.ContainerRegistry
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _scopeMapType = DefineProperty<string>(nameof(ScopeMapType), new string[] { "type" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _actions = DefineListProperty<string>(nameof(Actions), new string[] { "actions" }, isRequired: true);
             DefineAdditionalProperties();

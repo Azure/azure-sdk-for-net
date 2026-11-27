@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<RubricBasedEvaluatorDefinition>
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    initParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    initParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("data_schema"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    dataSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    dataSchema = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
@@ -183,7 +183,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RubricBasedEvaluatorDefinition(
@@ -192,7 +192,7 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
-                dimensions,
+                dimensions ?? new ChangeTrackingList<EvaluationsDimension>(),
                 passThreshold);
         }
     }

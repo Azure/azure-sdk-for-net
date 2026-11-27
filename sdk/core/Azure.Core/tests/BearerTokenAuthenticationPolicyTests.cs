@@ -5,6 +5,10 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+#if !NET462
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -1194,6 +1198,316 @@ namespace Azure.Core.Tests
                 "Credential must not be re-called in response to a challenge from a redirect-target host.");
             Assert.IsNull(lastClaims,
                 "Credential must not be called with CAE claims derived from a redirect-target host's challenge.");
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresPerRequestUriEvenWhenCredentialReturnsPlainBearerToken()
+        {
+            // The URI-based cache invalidation is gated on both contexts having
+            // IsProofOfPossessionEnabled=true — the *requested* PoP flag, not whether the
+            // credential honored it — to close the concurrent-request race where a second
+            // request arriving while the initial token acquisition is still in flight would
+            // otherwise reuse the pending token (whose completion state isn't yet observable).
+            // The trade-off is that a PoP-requesting caller whose credential silently returns
+            // plain bearer tokens still gets one credential invocation per distinct URI. That
+            // is the intended cost of opting into PoP; the CAE flow is unaffected because CAE
+            // callers do not enable PoP and therefore never reach this branch.
+            int callCount = 0;
+            var credential = new TokenCredentialStub((_, _) =>
+                {
+                    Interlocked.Increment(ref callCount);
+                    return new AccessToken("bearer-token", DateTimeOffset.UtcNow.AddHours(1));
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-c"));
+
+            Assert.AreEqual(3, callCount,
+                "Cache invalidation must fire on URI change whenever PoP is requested, independent of what the credential returns.");
+        }
+
+#if !NET462
+        // CertificateRequest was introduced in .NET Framework 4.7.2 and .NET Core 2.0, so the
+        // PoP-bound token tests below are excluded from the net462 TFM.
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresPerRequestUriWhileInitialAcquisitionIsInFlight()
+        {
+            // Regression coverage for
+            // https://github.com/Azure/azure-sdk-for-net/pull/61654#discussion_r3817254121.
+            // If IsCurrentContextMismatched gates the URI/method invalidation on the cached
+            // token being observably PoP-bound (Task.Status == RanToCompletion && BindingCertificate != null),
+            // then a second request for a different URI arriving while the very first
+            // credential invocation is still in flight will slip through: the task is not yet
+            // completed, the gate returns false, the context comparison reports "not
+            // mismatched", and the second request awaits the first request's token — which is
+            // bound to a different URI. Gating on *requested* PoP (present on both contexts)
+            // closes this window because it does not depend on the cached token's completion.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            var contexts = new List<TokenRequestContext>();
+            var gate = new ManualResetEventSlim(initialState: false);
+            var firstCallStarted = new ManualResetEventSlim(false);
+            var secondCallReached = new ManualResetEventSlim(false);
+            var credential = new TokenCredentialStub((requestContext, cancellationToken) =>
+                {
+                    int index;
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        index = contexts.Count;
+                    }
+                    if (index == 1)
+                    {
+                        firstCallStarted.Set();
+                        // Block synchronously so the first credential invocation is still
+                        // in flight (Task not yet RanToCompletion) when the second request
+                        // enters the cache's RefreshTokenRequestState.
+                        gate.Wait(cancellationToken);
+                    }
+                    else
+                    {
+                        // The second request issued its own credential call instead of coalescing
+                        // onto the first request's URI-bound in-flight acquisition.
+                        secondCallReached.Set();
+                    }
+                    return new AccessToken(
+                        $"pop-token-{index}",
+                        DateTimeOffset.UtcNow.AddHours(1),
+                        refreshOn: null,
+                        tokenType: "PoP",
+                        bindingCertificate: bindingCertificate);
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var firstRequest = Task.Run(() => SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a")));
+            firstCallStarted.Wait();
+
+            var secondRequest = Task.Run(() => SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b")));
+
+            // Deterministic synchronization: wait until the second request has independently reached its
+            // own credential call while the first acquisition is still blocked in flight. A broken
+            // implementation coalesces the second request onto the first (no second credential call), so
+            // this wait times out and the assertion below fails instead of passing on a lucky schedule.
+            bool secondReached = secondCallReached.Wait(TimeSpan.FromSeconds(30));
+            gate.Set();
+
+            await Task.WhenAll(firstRequest, secondRequest).ConfigureAwait(false);
+
+            Assert.IsTrue(secondReached,
+                "A second request for a different URI must trigger its own PoP acquisition while the first is in flight, not reuse the first request's URI-bound token.");
+            Assert.AreEqual(2, contexts.Count,
+                "The in-flight acquisition must not be shared across distinct request URIs when PoP is requested.");
+            // Order depends on scheduling, so just assert the set of URIs seen.
+            var uris = contexts.Select(c => c.ResourceRequestUri).ToArray();
+            CollectionAssert.AreEquivalent(
+                new[] { new Uri("https://example.com/resource-a"), new Uri("https://example.com/resource-b") },
+                uris);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerRequestUri()
+        {
+            // Regression coverage for the PoP token cache issue raised in
+            // https://github.com/Azure/azure-sdk-for-net/pull/61654#discussion_r3798801017.
+            // PoP tokens are cryptographically bound to the request URI and HTTP method, so
+            // AccessTokenCache must re-invoke the credential when either changes rather than
+            // silently returning a token whose binding no longer matches the outgoing request.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            var contexts = new List<TokenRequestContext>();
+            var credential = new TokenCredentialStub((requestContext, _) =>
+                {
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        return new AccessToken(
+                            $"pop-token-{contexts.Count}",
+                            DateTimeOffset.UtcNow.AddHours(1),
+                            refreshOn: null,
+                            tokenType: "PoP",
+                            bindingCertificate: bindingCertificate);
+                    }
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a")); // back to first URI
+
+            Assert.AreEqual(3, contexts.Count,
+                "Expected one credential invocation per distinct request URI when PoP is enabled.");
+            Assert.AreEqual(new Uri("https://example.com/resource-a"), contexts[0].ResourceRequestUri);
+            Assert.AreEqual(new Uri("https://example.com/resource-b"), contexts[1].ResourceRequestUri);
+            Assert.AreEqual(new Uri("https://example.com/resource-a"), contexts[2].ResourceRequestUri);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReusesProofOfPossessionTokenForSameUri()
+        {
+            // Complements the invalidate-on-URI-change regression test: repeated requests to
+            // the same URI+method still hit the cache. The URI-based invalidation only fires
+            // when the resource target actually changes.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            int callCount = 0;
+            var credential = new TokenCredentialStub((_, _) =>
+                {
+                    Interlocked.Increment(ref callCount);
+                    return new AccessToken(
+                        "pop-token",
+                        DateTimeOffset.UtcNow.AddHours(1),
+                        refreshOn: null,
+                        tokenType: "PoP",
+                        bindingCertificate: bindingCertificate);
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            var uri = new Uri("https://example.com/same-resource");
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendGetRequest(transport, policy, uri: uri);
+
+            Assert.AreEqual(1, callCount, "PoP token cache must still hit when the request URI and method are unchanged.");
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerNonce()
+        {
+            // A PoP token is also bound to the challenge nonce, so a new nonce for the same URI and method must
+            // re-invoke the credential rather than reuse proof generated with the stale nonce.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            var contexts = new List<TokenRequestContext>();
+            var credential = new TokenCredentialStub((requestContext, _) =>
+                {
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        return new AccessToken(
+                            $"pop-token-{contexts.Count}",
+                            DateTimeOffset.UtcNow.AddHours(1),
+                            refreshOn: null,
+                            tokenType: "PoP",
+                            bindingCertificate: bindingCertificate);
+                    }
+                },
+                IsAsync);
+
+            var nonces = new Queue<string>(new[] { "nonce-1", "nonce-2" });
+            var policy = new ProofOfPossessionNonceTestPolicy(credential, "scope", () => nonces.Dequeue());
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var uri = new Uri("https://example.com/same-resource");
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendGetRequest(transport, policy, uri: uri);
+
+            Assert.AreEqual(2, contexts.Count, "Expected a fresh credential call when only the PoP nonce changes.");
+            Assert.AreEqual("nonce-1", contexts[0].ProofOfPossessionNonce);
+            Assert.AreEqual("nonce-2", contexts[1].ProofOfPossessionNonce);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerRequestMethod()
+        {
+            // A PoP token is bound to the HTTP method as well as the URI and nonce, so the same URI with a
+            // different method (GET then POST) must re-invoke the credential rather than reuse the cached token.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            var contexts = new List<TokenRequestContext>();
+            var credential = new TokenCredentialStub((requestContext, _) =>
+                {
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        return new AccessToken(
+                            $"pop-token-{contexts.Count}",
+                            DateTimeOffset.UtcNow.AddHours(1),
+                            refreshOn: null,
+                            tokenType: "PoP",
+                            bindingCertificate: bindingCertificate);
+                    }
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var uri = new Uri("https://example.com/same-resource");
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendRequestAsync(transport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(uri);
+            }, policy);
+
+            Assert.AreEqual(2, contexts.Count, "Expected a fresh credential call when only the request method changes.");
+            Assert.AreEqual("GET", contexts[0].ResourceRequestMethod);
+            Assert.AreEqual("POST", contexts[1].ResourceRequestMethod);
+        }
+
+        private static X509Certificate2 MakeSelfSignedCertificate()
+        {
+            using RSA key = RSA.Create(2048);
+            var request = new CertificateRequest(
+                $"CN=BearerTokenAuthenticationPolicyTests-{Guid.NewGuid()}",
+                key,
+                HashAlgorithmName.SHA256,
+                RSASignaturePadding.Pkcs1);
+            return request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddHours(1));
+        }
+#endif
+
+        private class ProofOfPossessionTestPolicy : BearerTokenAuthenticationPolicy
+        {
+            public ProofOfPossessionTestPolicy(TokenCredential credential, string scope) : base(credential, scope) { }
+
+            protected override void AuthorizeRequest(HttpMessage message) =>
+                AuthenticateAndAuthorizeRequest(message, BuildPoPContext(message));
+
+            protected override async ValueTask AuthorizeRequestAsync(HttpMessage message) =>
+                await AuthenticateAndAuthorizeRequestAsync(message, BuildPoPContext(message)).ConfigureAwait(false);
+
+            private static TokenRequestContext BuildPoPContext(HttpMessage message) =>
+                new TokenRequestContext(
+                    new[] { "scope" },
+                    parentRequestId: message.Request.ClientRequestId,
+                    isCaeEnabled: true,
+                    isProofOfPossessionEnabled: true,
+                    requestUri: message.Request.Uri.ToUri(),
+                    requestMethod: message.Request.Method.ToString());
+        }
+
+        private class ProofOfPossessionNonceTestPolicy : BearerTokenAuthenticationPolicy
+        {
+            private readonly Func<string> _nonceProvider;
+
+            public ProofOfPossessionNonceTestPolicy(TokenCredential credential, string scope, Func<string> nonceProvider)
+                : base(credential, scope) => _nonceProvider = nonceProvider;
+
+            protected override void AuthorizeRequest(HttpMessage message) =>
+                AuthenticateAndAuthorizeRequest(message, BuildContext(message));
+
+            protected override async ValueTask AuthorizeRequestAsync(HttpMessage message) =>
+                await AuthenticateAndAuthorizeRequestAsync(message, BuildContext(message)).ConfigureAwait(false);
+
+            private TokenRequestContext BuildContext(HttpMessage message) =>
+                new TokenRequestContext(
+                    new[] { "scope" },
+                    parentRequestId: message.Request.ClientRequestId,
+                    isCaeEnabled: true,
+                    isProofOfPossessionEnabled: true,
+                    proofOfPossessionNonce: _nonceProvider(),
+                    requestUri: message.Request.Uri.ToUri(),
+                    requestMethod: message.Request.Method.ToString());
         }
 
         private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy

@@ -151,16 +151,16 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return Statistics.Size;
+                return Statistics is null ? default : Statistics.Size;
             }
         }
 
-        /// <summary> Gets the SuspensionStartOn. </summary>
-        public BicepValue<DateTimeOffset> SuspensionStartOn
+        /// <summary> Gets the SuspensionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> SuspensionStartsOn
         {
             get
             {
-                return SuspensionDetails.SuspensionStartOn;
+                return SuspensionDetails is null ? default : SuspensionDetails.SuspensionStartsOn;
             }
         }
 

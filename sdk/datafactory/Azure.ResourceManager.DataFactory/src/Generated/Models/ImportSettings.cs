@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Import command settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeradataImportCommand"/>, <see cref="AzureDatabricksDeltaLakeImportCommand"/>, and <see cref="SnowflakeImportCopyCommand"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDatabricksDeltaLakeImportCommand"/>, <see cref="SnowflakeImportCopyCommand"/>, and <see cref="TeradataImportCommand"/>.
     /// </summary>
     public abstract partial class ImportSettings
     {
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ImportSettingsType = importSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
+        protected ImportSettings() : this(default)
+        {
         }
 
         /// <summary> The import setting type. </summary>

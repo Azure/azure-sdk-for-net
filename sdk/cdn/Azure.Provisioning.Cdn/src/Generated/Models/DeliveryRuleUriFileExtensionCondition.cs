@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleUriFileExtensionCondition. </summary>
         public DeliveryRuleUriFileExtensionCondition()
         {
+            Name.Assign(DeliveryRuleMatchVariable.UrlFileExtension);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "UrlFileExtension");
             _properties = DefineModelProperty<UriFileExtensionMatchCondition>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

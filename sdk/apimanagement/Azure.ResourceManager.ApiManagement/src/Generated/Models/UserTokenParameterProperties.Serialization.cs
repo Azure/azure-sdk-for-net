@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToSerialString());
             writer.WritePropertyName("expiry"u8);
-            writer.WriteStringValue(ExpireOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             TokenGenerationUsedKeyType keyType = default;
-            DateTimeOffset expireOn = default;
+            DateTimeOffset expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("expiry"u8))
                 {
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UserTokenParameterProperties(keyType, expireOn, additionalBinaryDataProperties);
+            return new UserTokenParameterProperties(keyType, expiresOn, additionalBinaryDataProperties);
         }
     }
 }

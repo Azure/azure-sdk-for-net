@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleCacheKeyQueryStringAction. </summary>
         public DeliveryRuleCacheKeyQueryStringAction()
         {
+            Name.Assign(DeliveryRuleActionName.CacheKeyQueryString);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "CacheKeyQueryString");
             _properties = DefineModelProperty<CacheKeyQueryStringActionProperties>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

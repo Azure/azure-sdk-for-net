@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="ClusterMeshProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterMeshProfileResource"/> object. </returns>
+        public virtual ClusterMeshProfileResource GetClusterMeshProfileResource(ResourceIdentifier id)
+        {
+            ClusterMeshProfileResource.ValidateResourceId(id);
+            return new ClusterMeshProfileResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerServiceFleetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetResource"/> object. </returns>
@@ -60,6 +69,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         {
             ContainerServiceFleetGateResource.ValidateResourceId(id);
             return new ContainerServiceFleetGateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IdentityBindingProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IdentityBindingProfileResource"/> object. </returns>
+        public virtual IdentityBindingProfileResource GetIdentityBindingProfileResource(ResourceIdentifier id)
+        {
+            IdentityBindingProfileResource.ValidateResourceId(id);
+            return new IdentityBindingProfileResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerServiceFleetUpdateRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>

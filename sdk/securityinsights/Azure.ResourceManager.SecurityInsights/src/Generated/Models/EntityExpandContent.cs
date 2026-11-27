@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityExpandContent"/>. </summary>
-        /// <param name="endOn"> The end date filter, so the only expansion results returned are before this date. </param>
+        /// <param name="endsOn"> The end date filter, so the only expansion results returned are before this date. </param>
         /// <param name="expansionId"> The Id of the expansion to perform. </param>
-        /// <param name="startOn"> The start date filter, so the only expansion results returned are after this date. </param>
+        /// <param name="startsOn"> The start date filter, so the only expansion results returned are after this date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityExpandContent(DateTimeOffset? endOn, Guid? expansionId, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityExpandContent(DateTimeOffset? endsOn, Guid? expansionId, DateTimeOffset? startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndOn = endOn;
+            EndsOn = endsOn;
             ExpansionId = expansionId;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The end date filter, so the only expansion results returned are before this date. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The Id of the expansion to perform. </summary>
         [WirePath("expansionId")]
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The start date filter, so the only expansion results returned are after this date. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
     }
 }

@@ -91,8 +91,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(Counters, options);
             writer.WritePropertyName("limits"u8);
             writer.WriteObjectValue(Limits, options);
-            writer.WritePropertyName("indexersRuntime"u8);
-            writer.WriteObjectValue(IndexersRuntime, options);
+            if (Optional.IsDefined(IndexersRuntime))
+            {
+                writer.WritePropertyName("indexersRuntime"u8);
+                writer.WriteObjectValue(IndexersRuntime, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,12 +156,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("indexersRuntime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     indexersRuntime = ServiceIndexersRuntime.DeserializeServiceIndexersRuntime(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchServiceStatistics(counters, limits, indexersRuntime, additionalBinaryDataProperties);

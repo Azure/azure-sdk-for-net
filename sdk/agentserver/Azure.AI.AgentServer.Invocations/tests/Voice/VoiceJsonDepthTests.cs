@@ -130,8 +130,10 @@ public class VoiceJsonDepthTests
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddAgentServerCore();
+        VoiceTracingRegistration.Add(builder.Services);
         builder.Services.AddInvocationsServer();
         builder.Services.AddSingleton<InvocationHandler>(handler);
+        builder.Services.AddSingleton(new VoiceRegistrationMarker(handler.GetType()));
         var app = builder.Build();
         app.UseAgentServerCore();
         app.MapInvocationsServer();

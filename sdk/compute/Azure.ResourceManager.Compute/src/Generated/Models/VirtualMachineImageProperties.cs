@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return OSDiskImage is null ? default : OSDiskImage.OperatingSystem;
+                return OSDiskImage is null ? (SupportedOperatingSystemType?)default : OSDiskImage.OperatingSystem;
             }
             set
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return AutomaticOSUpgradeProperties is null ? default : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
+                return AutomaticOSUpgradeProperties is null ? (bool?)default : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
             }
             set
             {

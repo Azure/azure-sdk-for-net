@@ -182,10 +182,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReleaseResult(failedLockTokens, succeededLockTokens, additionalBinaryDataProperties);
+            return new ReleaseResult(failedLockTokens ?? new ChangeTrackingList<FailedLockToken>(), succeededLockTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

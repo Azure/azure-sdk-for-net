@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyEncryption(customerManagedKeyEncryption, additionalBinaryDataProperties);
+            return new KeyEncryption(customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>(), additionalBinaryDataProperties);
         }
     }
 }

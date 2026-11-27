@@ -114,6 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode? SqlManagement { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType? SqlServerLicenseType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlVmGroupResourceId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use Name instead.")]
         public string SqlVmName { get { throw null; } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmStorageConfigurationSettings StorageConfigurationSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmTroubleshootingStatus TroubleshootingStatus { get { throw null; } }
@@ -157,6 +158,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupScaleType? ScaleType { get { throw null; } }
         public string SqlImageOffer { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku? SqlImageSku { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use Name instead.")]
         public string SqlVmGroupName { get { throw null; } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.WindowsServerFailoverClusterDomainProfile WindowsServerFailoverClusterDomainProfile { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

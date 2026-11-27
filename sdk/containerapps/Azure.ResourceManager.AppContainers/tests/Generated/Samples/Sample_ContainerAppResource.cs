@@ -123,7 +123,7 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
 {
 Description = "Allowing all IP's within the subnet below to access containerapp",
 }},
-                        StickySessionsAffinity = Affinity.Sticky,
+                        StickySessionAffinity = StickySessionAffinity.Sticky,
                     },
                     Dapr = new ContainerAppDaprConfiguration
                     {

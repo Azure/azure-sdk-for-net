@@ -18,20 +18,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
     public class TestAsyncPageableWithContinuationToken : AsyncPageable<BlobItem>
     {
         private readonly List<BlobItem> _page;
-        private readonly bool _returnsContinuationToken;
+        private readonly string _continuationToken;
 
         public TestAsyncPageableWithContinuationToken(List<BlobItem> page, bool returnsContinuationToken)
+            : this(page, returnsContinuationToken ? System.Guid.NewGuid().ToString() : null)
+        {
+        }
+
+        public TestAsyncPageableWithContinuationToken(List<BlobItem> page, string continuationToken)
         {
             _page = page;
-            _returnsContinuationToken = returnsContinuationToken;
+            _continuationToken = continuationToken;
         }
 
         public override async IAsyncEnumerable<Page<BlobItem>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
-            string mockContinuationToken = System.Guid.NewGuid().ToString();
             yield return Page<BlobItem>.FromValues(
                 _page.AsReadOnly(),
-                _returnsContinuationToken ? mockContinuationToken : null,
+                _continuationToken,
                 Mock.Of<Response>());
             // Simulate async page boundary
             await Task.Yield();

@@ -97,7 +97,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        internal virtual async Task<Response<PersistentAgentFileInfo>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<PersistentAgentFileInfo>> UploadFileAsync(UploadFileContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -113,7 +113,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        internal virtual Response<PersistentAgentFileInfo> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
+        internal virtual Response<PersistentAgentFileInfo> UploadFile(UploadFileContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
-            Response<InternalFileListResponse> baseResponse = InternalListFiles(purpose, cancellationToken);
+            Response<InternalFileListResult> baseResponse = InternalListFiles(purpose, cancellationToken);
             return Response.FromValue((IReadOnlyList<PersistentAgentFileInfo>)baseResponse.Value?.Data?.ToList(), baseResponse.GetRawResponse());
         }
 
@@ -143,7 +143,7 @@ namespace Azure.AI.Agents.Persistent
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
-            Response<InternalFileListResponse> baseResponse = await InternalListFilesAsync(purpose, cancellationToken).ConfigureAwait(false);
+            Response<InternalFileListResult> baseResponse = await InternalListFilesAsync(purpose, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((IReadOnlyList<PersistentAgentFileInfo>)baseResponse.Value?.Data?.ToList(), baseResponse.GetRawResponse());
         }
 

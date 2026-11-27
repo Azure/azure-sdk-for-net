@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="displayName"> Friendly name for user to easily identified the reservation. </param>
         /// <param name="requestOn"> This is the DateTime when the reservation was initially requested for purchase. </param>
         /// <param name="createdOn"> This is the DateTime when the reservation was created. </param>
-        /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
-        /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
+        /// <param name="reservationExpiresOn"> This is the date when the reservation will expire. </param>
+        /// <param name="expiresOn"> This is the date-time when the reservation will expire. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the reservation benefit started. </param>
         /// <param name="originalQuantity"> Total Quantity of the skus purchased in the reservation. </param>
         /// <param name="term"> Represent the term of reservation. </param>
         /// <param name="provisioningState"> Current state of the reservation. </param>
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="reservations"></param>
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationOrderProperties(string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<ReservationDetailData> reservations, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationOrderProperties(string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? reservationExpiresOn, DateTimeOffset? expiresOn, DateTimeOffset? benefitStartsOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<ReservationDetailData> reservations, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             RequestOn = requestOn;
             CreatedOn = createdOn;
-            ReservationExpireOn = reservationExpireOn;
-            ExpireOn = expireOn;
-            BenefitStartOn = benefitStartOn;
+            ReservationExpiresOn = reservationExpiresOn;
+            ExpiresOn = expiresOn;
+            BenefitStartsOn = benefitStartsOn;
             OriginalQuantity = originalQuantity;
             Term = term;
             ProvisioningState = provisioningState;
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.Reservations.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> This is the date when the reservation will expire. </summary>
-        public DateTimeOffset? ReservationExpireOn { get; }
+        public DateTimeOffset? ReservationExpiresOn { get; }
 
         /// <summary> This is the date-time when the reservation will expire. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; }
+        public DateTimeOffset? BenefitStartsOn { get; }
 
         /// <summary> Total Quantity of the skus purchased in the reservation. </summary>
         public int? OriginalQuantity { get; }

@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="previousKeys"> A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is no ongoing key rotation. </param>
         /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
-        /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
+        /// <param name="lastKeyRotationOn"> The time when the active key of this disk encryption set was updated. </param>
         /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
         /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionSetProperties(DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ComputeApiError autoKeyRotationError, string federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionSetProperties(DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationOn, ComputeApiError autoKeyRotationError, string federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;
             PreviousKeys = previousKeys;
             ProvisioningState = provisioningState;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
-            LastKeyRotationTimestamp = lastKeyRotationTimestamp;
+            LastKeyRotationOn = lastKeyRotationOn;
             AutoKeyRotationError = autoKeyRotationError;
             FederatedClientId = federatedClientId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? RotationToLatestKeyVersionEnabled { get; set; }
 
         /// <summary> The time when the active key of this disk encryption set was updated. </summary>
-        public DateTimeOffset? LastKeyRotationTimestamp { get; }
+        public DateTimeOffset? LastKeyRotationOn { get; }
 
         /// <summary> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </summary>
         public ComputeApiError AutoKeyRotationError { get; }

@@ -552,10 +552,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListBlobsHierarchySegmentResponse> GetBlobHierarchySegment(string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListBlobsHierarchySegmentResult> GetBlobHierarchySegment(string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
             Response result = GetBlobHierarchySegment(prefix, delimiter, marker, maxResults, include, showonly?.ToString(), timeout, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListBlobsHierarchySegmentResponse)result, result);
+            return Response.FromValue((ListBlobsHierarchySegmentResult)result, result);
         }
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
@@ -568,10 +568,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobHierarchySegmentAsync(string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobHierarchySegmentAsync(string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
             Response result = await GetBlobHierarchySegmentAsync(prefix, delimiter, marker, maxResults, include, showonly?.ToString(), timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListBlobsHierarchySegmentResponse)result, result);
+            return Response.FromValue((ListBlobsHierarchySegmentResult)result, result);
         }
     }
 }

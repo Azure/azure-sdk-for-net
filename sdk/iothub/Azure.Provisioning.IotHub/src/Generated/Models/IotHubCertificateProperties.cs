@@ -16,7 +16,7 @@ namespace Azure.Provisioning.IotHub
     public partial class IotHubCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _subject;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<string> _thumbprintString;
         private BicepValue<bool> _isVerified;
         private BicepValue<DateTimeOffset> _createdOn;
@@ -39,13 +39,13 @@ namespace Azure.Provisioning.IotHub
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.Provisioning.IotHub
         {
             base.DefineProvisionableProperties();
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isOutput: true);
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiry" }, isOutput: true, format: "R");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expiry" }, isOutput: true, format: "R");
             _thumbprintString = DefineProperty<string>(nameof(ThumbprintString), new string[] { "thumbprint" }, isOutput: true);
             _isVerified = DefineProperty<bool>(nameof(IsVerified), new string[] { "isVerified" });
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "created" }, isOutput: true, format: "R");

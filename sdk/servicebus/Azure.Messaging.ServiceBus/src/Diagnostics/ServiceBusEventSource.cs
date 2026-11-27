@@ -743,7 +743,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void PurgeMessagesComplete(string identifier, int messagesPurged)
+        public virtual void PurgeMessagesComplete(string identifier, long messagesPurged)
         {
             if (IsEnabled())
             {
@@ -752,7 +752,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(PurgeMessagesCompleteEvent, Level = EventLevel.Informational, Message = "{0}: PurgeMessagesAsync done. Purged '{1}' message(s).")]
-        private void PurgeMessagesCompleteCore(string identifier, int messagesPurged)
+        private void PurgeMessagesCompleteCore(string identifier, long messagesPurged)
         {
             WriteEvent(PurgeMessagesCompleteEvent, identifier, messagesPurged);
         }

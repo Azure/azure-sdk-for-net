@@ -30,6 +30,8 @@ namespace Azure.AI.AgentServer.Core;
 /// </remarks>
 public static class AgentHostMiddlewareExtensions
 {
+    private const string RegistrationMarker = "Azure.AI.AgentServer.Core.Registered";
+
     /// <summary>
     /// Registers all Core middleware services: request ID, server version,
     /// request ID baggage propagation, and inbound request logging.
@@ -45,6 +47,11 @@ public static class AgentHostMiddlewareExtensions
         services.TryAddSingleton<RequestIdBaggagePropagator>();
         services.TryAddSingleton<W3CBaggagePropagator>();
         services.TryAddSingleton<InboundRequestLoggingMiddleware>();
+#pragma warning disable AAAS002 // Register the SDK's default implementation of the experimental lifecycle contract.
+        services.TryAddSingleton<IAgentSnapshotLifecycle, NoOpAgentSnapshotLifecycle>();
+#pragma warning restore AAAS002
+        services.TryAddSingleton<SnapshotLifecycleCoordinator>();
+        services.TryAddSingleton<SnapshotLifecycleMiddleware>();
         // Transient so it can be added to any HttpClient via AddHttpMessageHandler.
         services.TryAddTransient<FoundryCallIdHandler>();
         services.Configure<AgentHostOptions>(_ => { });
@@ -52,7 +59,8 @@ public static class AgentHostMiddlewareExtensions
     }
 
     /// <summary>
-    /// Adds all Core middleware to the pipeline in the correct order:
+    /// Adds all Core middleware to the pipeline in the correct order and maps
+    /// the platform snapshot lifecycle endpoints:
     /// request ID → server version → request ID baggage → inbound request logging
     /// → WebSocket upgrade handling.
     /// </summary>
@@ -60,15 +68,23 @@ public static class AgentHostMiddlewareExtensions
     /// <returns>The application builder for chaining.</returns>
     public static IApplicationBuilder UseAgentServerCore(this IApplicationBuilder app)
     {
-        // Capture platform identity headers into the request-scoped
-        // FoundryAgentRequestContext before anything else so the call id is
-        // available to the handler and to outbound Foundry-bound clients.
-        app.UseMiddleware<RequestContextMiddleware>();
+        if (app.Properties.ContainsKey(RegistrationMarker))
+        {
+            return app;
+        }
+
+        app.Properties.Add(RegistrationMarker, true);
+
         app.UseMiddleware<RequestIdMiddleware>();
         app.UseMiddleware<ServerVersionMiddleware>();
+        // Capture platform identity headers before protocol handling so the call id is
+        // available to handlers and outbound Foundry-bound clients. Keep this after the
+        // response-header middleware so rejected requests still receive standard headers.
+        app.UseMiddleware<RequestContextMiddleware>();
         app.UseMiddleware<W3CBaggagePropagator>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
         app.UseMiddleware<InboundRequestLoggingMiddleware>();
+        app.UseMiddleware<SnapshotLifecycleMiddleware>();
 
         // Enable WebSocket upgrade handling so protocol endpoints (e.g., Invocations
         // `/invocations_ws`) can call `HttpContext.WebSockets.AcceptWebSocketAsync()`.

@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ScheduleTrigger":
-                        return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
-                    case "BlobTrigger":
-                        return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
-                    case "BlobEventsTrigger":
-                        return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
                     case "CustomEventsTrigger":
                         return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
+                    case "BlobEventsTrigger":
+                        return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
+                    case "BlobTrigger":
+                        return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
+                    case "ScheduleTrigger":
+                        return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
                 }
             }
             return UnknownMultiplePipelineTrigger.DeserializeUnknownMultiplePipelineTrigger(element, options);

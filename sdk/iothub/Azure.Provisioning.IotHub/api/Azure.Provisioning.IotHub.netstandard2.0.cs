@@ -75,7 +75,7 @@ namespace Azure.Provisioning.IotHub
         public IotHubCertificateProperties() { }
         public Azure.Provisioning.BicepValue<string> Certificate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsVerified { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PolicyResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }

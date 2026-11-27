@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="IndexType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexType?(string value) => value == null ? null : new IndexType(value);
+        public static implicit operator IndexType?(string value) => value == null ? (IndexType?)null : new IndexType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

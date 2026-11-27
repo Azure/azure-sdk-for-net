@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -25,10 +26,14 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the packet capture result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureData(ETag? eTag, PacketCaptureResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, PacketCaptureResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             Properties = properties;
@@ -115,11 +120,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </summary>
         [WirePath("properties.continuousCapture")]
-        public bool? ContinuousCapture
+        public bool? IsContinuousCapture
         {
             get
             {
-                return Properties is null ? default : Properties.ContinuousCapture;
+                return Properties is null ? default : Properties.IsContinuousCapture;
             }
         }
 

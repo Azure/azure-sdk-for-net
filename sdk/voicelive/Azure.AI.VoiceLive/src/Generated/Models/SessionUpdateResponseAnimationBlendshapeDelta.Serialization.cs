@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("frames"u8))
                 {
-                    frames = BinaryData.FromString(prop.Value.GetRawText());
+                    frames = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("frame_index"u8))
@@ -178,7 +178,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SessionUpdateResponseAnimationBlendshapeDelta(

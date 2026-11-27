@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.SignalR.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResource"/>. </summary>
+        public SignalRPrivateLinkResource()
+        {
+        }
+
         /// <summary> Private link resource properties. </summary>
         [WirePath("properties")]
         internal SignalRPrivateLinkResourceProperties Properties { get; }

@@ -472,7 +472,19 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] A collection id may optionally be specified.
+        /// [Protocol Method] A collection id may optionally be specified. By default, the operation
+        /// returns after local commit with an `x-ms-ccf-transaction-id` that callers can
+        /// use with the `/app/transactions/{transactionId}/status` and
+        /// `/app/transactions/{transactionId}/receipt` endpoints, including after
+        /// reconnecting.
+        /// When `waitForCommit` is true, the response is held until the transaction is
+        /// globally committed. If the connection is lost before the response is
+        /// received, the caller might not receive the transaction ID and cannot
+        /// uniquely recover the specific write. Clients that require unambiguous
+        /// per-request recovery should use the default behavior and poll using the
+        /// returned transaction ID.
+        /// For more information, see [Azure Confidential Ledger write transaction
+        /// receipts](https://learn.microsoft.com/azure/confidential-ledger/write-transaction-receipts).
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -482,11 +494,18 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="tags"> Comma separated tags. </param>
+        /// <param name="waitForCommit">
+        /// Whether to wait for the transaction to be globally committed before
+        /// returning. When true, the response includes the transaction receipt, but
+        /// a disconnect before the response is received can prevent recovery of the
+        /// specific write. Use the default behavior and poll the transaction status
+        /// or receipt endpoints when unambiguous per-request recovery is required.
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateLedgerEntry(RequestContent content, string collectionId = default, string tags = default, RequestContext context = null)
+        public virtual Response CreateLedgerEntry(RequestContent content, string collectionId = default, string tags = default, bool? waitForCommit = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateLedgerEntry");
             scope.Start();
@@ -494,7 +513,7 @@ namespace Azure.Security.ConfidentialLedger
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, waitForCommit, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -505,7 +524,19 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] A collection id may optionally be specified.
+        /// [Protocol Method] A collection id may optionally be specified. By default, the operation
+        /// returns after local commit with an `x-ms-ccf-transaction-id` that callers can
+        /// use with the `/app/transactions/{transactionId}/status` and
+        /// `/app/transactions/{transactionId}/receipt` endpoints, including after
+        /// reconnecting.
+        /// When `waitForCommit` is true, the response is held until the transaction is
+        /// globally committed. If the connection is lost before the response is
+        /// received, the caller might not receive the transaction ID and cannot
+        /// uniquely recover the specific write. Clients that require unambiguous
+        /// per-request recovery should use the default behavior and poll using the
+        /// returned transaction ID.
+        /// For more information, see [Azure Confidential Ledger write transaction
+        /// receipts](https://learn.microsoft.com/azure/confidential-ledger/write-transaction-receipts).
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -515,11 +546,18 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="tags"> Comma separated tags. </param>
+        /// <param name="waitForCommit">
+        /// Whether to wait for the transaction to be globally committed before
+        /// returning. When true, the response includes the transaction receipt, but
+        /// a disconnect before the response is received can prevent recovery of the
+        /// specific write. Use the default behavior and poll the transaction status
+        /// or receipt endpoints when unambiguous per-request recovery is required.
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateLedgerEntryAsync(RequestContent content, string collectionId = default, string tags = default, RequestContext context = null)
+        public virtual async Task<Response> CreateLedgerEntryAsync(RequestContent content, string collectionId = default, string tags = default, bool? waitForCommit = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateLedgerEntry");
             scope.Start();
@@ -527,7 +565,7 @@ namespace Azure.Security.ConfidentialLedger
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, waitForCommit, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -537,33 +575,75 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A collection id may optionally be specified. </summary>
+        /// <summary>
+        /// A collection id may optionally be specified. By default, the operation
+        /// returns after local commit with an `x-ms-ccf-transaction-id` that callers can
+        /// use with the `/app/transactions/{transactionId}/status` and
+        /// `/app/transactions/{transactionId}/receipt` endpoints, including after
+        /// reconnecting.
+        /// When `waitForCommit` is true, the response is held until the transaction is
+        /// globally committed. If the connection is lost before the response is
+        /// received, the caller might not receive the transaction ID and cannot
+        /// uniquely recover the specific write. Clients that require unambiguous
+        /// per-request recovery should use the default behavior and poll using the
+        /// returned transaction ID.
+        /// For more information, see [Azure Confidential Ledger write transaction
+        /// receipts](https://learn.microsoft.com/azure/confidential-ledger/write-transaction-receipts).
+        /// </summary>
         /// <param name="entry"> Ledger entry. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="tags"> Comma separated tags. </param>
+        /// <param name="waitForCommit">
+        /// Whether to wait for the transaction to be globally committed before
+        /// returning. When true, the response includes the transaction receipt, but
+        /// a disconnect before the response is received can prevent recovery of the
+        /// specific write. Use the default behavior and poll the transaction status
+        /// or receipt endpoints when unambiguous per-request recovery is required.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LedgerWriteResult> CreateLedgerEntry(LedgerEntry entry, string collectionId = default, string tags = default, CancellationToken cancellationToken = default)
+        public virtual Response<LedgerWriteResult> CreateLedgerEntry(LedgerEntry entry, string collectionId = default, string tags = default, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entry, nameof(entry));
 
-            Response result = CreateLedgerEntry(entry, collectionId, tags, cancellationToken.ToRequestContext());
+            Response result = CreateLedgerEntry(entry, collectionId, tags, waitForCommit, cancellationToken.ToRequestContext());
             return Response.FromValue((LedgerWriteResult)result, result);
         }
 
-        /// <summary> A collection id may optionally be specified. </summary>
+        /// <summary>
+        /// A collection id may optionally be specified. By default, the operation
+        /// returns after local commit with an `x-ms-ccf-transaction-id` that callers can
+        /// use with the `/app/transactions/{transactionId}/status` and
+        /// `/app/transactions/{transactionId}/receipt` endpoints, including after
+        /// reconnecting.
+        /// When `waitForCommit` is true, the response is held until the transaction is
+        /// globally committed. If the connection is lost before the response is
+        /// received, the caller might not receive the transaction ID and cannot
+        /// uniquely recover the specific write. Clients that require unambiguous
+        /// per-request recovery should use the default behavior and poll using the
+        /// returned transaction ID.
+        /// For more information, see [Azure Confidential Ledger write transaction
+        /// receipts](https://learn.microsoft.com/azure/confidential-ledger/write-transaction-receipts).
+        /// </summary>
         /// <param name="entry"> Ledger entry. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="tags"> Comma separated tags. </param>
+        /// <param name="waitForCommit">
+        /// Whether to wait for the transaction to be globally committed before
+        /// returning. When true, the response includes the transaction receipt, but
+        /// a disconnect before the response is received can prevent recovery of the
+        /// specific write. Use the default behavior and poll the transaction status
+        /// or receipt endpoints when unambiguous per-request recovery is required.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LedgerWriteResult>> CreateLedgerEntryAsync(LedgerEntry entry, string collectionId = default, string tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LedgerWriteResult>> CreateLedgerEntryAsync(LedgerEntry entry, string collectionId = default, string tags = default, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entry, nameof(entry));
 
-            Response result = await CreateLedgerEntryAsync(entry, collectionId, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateLedgerEntryAsync(entry, collectionId, tags, waitForCommit, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((LedgerWriteResult)result, result);
         }
 

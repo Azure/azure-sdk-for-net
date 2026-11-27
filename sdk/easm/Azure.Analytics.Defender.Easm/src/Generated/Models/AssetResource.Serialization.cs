@@ -111,15 +111,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedDate))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDate"u8);
-                writer.WriteStringValue(UpdatedDate.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(State))
             {

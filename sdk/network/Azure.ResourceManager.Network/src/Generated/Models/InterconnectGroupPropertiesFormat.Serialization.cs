@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Interconnect group properties. </summary>
-    public partial class InterconnectGroupPropertiesFormat : IJsonModel<InterconnectGroupPropertiesFormat>
+    internal partial class InterconnectGroupPropertiesFormat : IJsonModel<InterconnectGroupPropertiesFormat>
     {
         /// <summary> Initializes a new instance of <see cref="InterconnectGroupPropertiesFormat"/> for deserialization. </summary>
         internal InterconnectGroupPropertiesFormat()
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             writer.WritePropertyName("subgroupProfile"u8);
             writer.WriteObjectValue(SubgroupProfile, options);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
             InterconnectGroupScope? scope = default;
             IReadOnlyList<InterconnectGroupSubgroupData> subgroups = default;
             NetworkProvisioningState? provisioningState = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             SubgroupProfile subgroupProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +190,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subgroupProfile"u8))
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InterconnectGroupPropertiesFormat(

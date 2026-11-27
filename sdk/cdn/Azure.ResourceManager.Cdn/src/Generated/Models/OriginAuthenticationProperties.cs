@@ -27,12 +27,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="authenticationType"> The type of the authentication for the origin. </param>
         /// <param name="userAssignedIdentity"> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </param>
         /// <param name="scope"> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </param>
+        /// <param name="tokenDestinationHeader"> The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin. If not specified, the service will use the `Authorization` header for backward compatibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, CdnResourceReference userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, CdnResourceReference userAssignedIdentity, Uri scope, OriginAuthenticationTokenDestinationHeader? tokenDestinationHeader, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationType = authenticationType;
             UserAssignedIdentity = userAssignedIdentity;
             Scope = scope;
+            TokenDestinationHeader = tokenDestinationHeader;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </summary>
         [WirePath("scope")]
         public Uri Scope { get; set; }
+
+        /// <summary> The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin. If not specified, the service will use the `Authorization` header for backward compatibility. </summary>
+        [WirePath("tokenDestinationHeader")]
+        public OriginAuthenticationTokenDestinationHeader? TokenDestinationHeader { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("userAssignedIdentity.id")]

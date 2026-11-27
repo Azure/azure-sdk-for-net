@@ -18,6 +18,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
+        /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
+        public SecurityInsightsAlertsDataTypeOfDataConnector(SecurityInsightsDataTypeConnectionState alertsState)
+        {
+
+            Alerts = new DataConnectorDataTypeCommon(alertsState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
         /// <param name="alerts"> Alerts data type connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)

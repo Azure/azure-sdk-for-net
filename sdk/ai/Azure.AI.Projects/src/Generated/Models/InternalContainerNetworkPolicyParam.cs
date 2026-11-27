@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal abstract partial class InternalContainerNetworkPolicyParam
+    internal partial class InternalContainerNetworkPolicyParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalContainerNetworkPolicyParam"/>. </summary>
         /// <param name="type"></param>
-        private protected InternalContainerNetworkPolicyParam(ContainerNetworkPolicyParamType @type)
+        internal InternalContainerNetworkPolicyParam(ContainerNetworkPolicyParamType @type)
         {
             Type = @type;
         }

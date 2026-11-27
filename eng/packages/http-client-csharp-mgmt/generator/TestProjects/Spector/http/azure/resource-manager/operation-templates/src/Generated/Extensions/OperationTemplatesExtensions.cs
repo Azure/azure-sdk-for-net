@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// Export
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.ExportAsync(WaitUntil, string, ExportRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.ExportAsync(WaitUntil, string, ExportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<ExportResult>> ExportAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<ExportResult>> ExportAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// Export
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.Export(WaitUntil, string, ExportRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.Export(WaitUntil, string, ExportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<ExportResult> Export(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<ExportResult> Export(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -527,14 +527,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// Implements global CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckGlobalAsync(CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckGlobalAsync(CheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckGlobalAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckGlobalAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -545,14 +545,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// Implements global CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckGlobal(CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckGlobal(CheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckGlobal(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckGlobal(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// Implements local CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckLocalAsync(AzureLocation, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckLocalAsync(AzureLocation, CheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// Implements local CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckLocal(AzureLocation, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.CheckLocal(AzureLocation, CheckNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckLocal(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckLocal(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// ExportArray
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ExportArrayAsync(WaitUntil, ExportRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ExportArrayAsync(WaitUntil, ExportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<IList<ExportResult>>> ExportArrayAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<IList<ExportResult>>> ExportArrayAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// ExportArray
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ExportArray(WaitUntil, ExportRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ExportArray(WaitUntil, ExportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<IList<ExportResult>> ExportArray(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<IList<ExportResult>> ExportArray(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -639,14 +639,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// ProviderPost
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ProviderPostAsync(ChangeAllowanceRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ProviderPostAsync(ChangeAllowanceContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(this SubscriptionResource subscriptionResource, ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(this SubscriptionResource subscriptionResource, ChangeAllowanceContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -657,14 +657,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// ProviderPost
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ProviderPost(ChangeAllowanceRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ProviderPost(ChangeAllowanceContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ChangeAllowanceResult> ProviderPost(this SubscriptionResource subscriptionResource, ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
+        public static Response<ChangeAllowanceResult> ProviderPost(this SubscriptionResource subscriptionResource, ChangeAllowanceContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

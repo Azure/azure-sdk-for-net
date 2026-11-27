@@ -39,7 +39,7 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         McpTool tool = ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
                 serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             ));
         tool.ProjectConnectionId = mcpProjectConnectionName;
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -116,7 +116,7 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         McpTool tool = ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
                 serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             ));
         tool.ProjectConnectionId = mcpProjectConnectionName;
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

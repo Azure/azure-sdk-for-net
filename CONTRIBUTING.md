@@ -5,7 +5,7 @@
 - Install Visual Studio 2026 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Install the **.NET desktop development** workload in VisualStudio
   - Need at least .NET Framework 4.6.2 and 4.7.1 development tools 
-- Install **.NET 10.0.400 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 10.0.*** band)  
+- Install **.NET 10.0.401 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 10.0.*** band)  
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (22.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -218,7 +218,7 @@ string ignored = "this code will not appear in the snippet markdown";
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md).
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md).
 Note that snippet names need to be globally unique under a given service directory.
 
 Snippets also can be integrated into XML doc comments. For example:

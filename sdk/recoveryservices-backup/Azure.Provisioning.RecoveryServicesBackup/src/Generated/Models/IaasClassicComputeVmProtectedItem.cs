@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new IaasClassicComputeVmProtectedItem. </summary>
         public IaasClassicComputeVmProtectedItem()
         {
+            ProtectedItemType.Assign("Microsoft.ClassicCompute/virtualMachines");
         }
 
         /// <summary> Define all the provisionable properties for IaasClassicComputeVmProtectedItem. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "Microsoft.ClassicCompute/virtualMachines");
             DefineAdditionalProperties();
         }
 

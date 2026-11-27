@@ -36,14 +36,28 @@ namespace Azure.AI.AgentServer.Core
         public string? AdditionalServerIdentity { get { throw null; } set { } }
         public System.TimeSpan ShutdownTimeout { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS002")]
+    public sealed partial class AgentRestoreContext
+    {
+        public AgentRestoreContext(string sessionId, string restoreId, System.Collections.Generic.IReadOnlyDictionary<string, string>? sessionEnvironmentOverrides = null) { }
+        public string RestoreId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> SessionEnvironmentOverrides { get { throw null; } }
+        public string SessionId { get { throw null; } }
+    }
     public sealed partial class FoundryAgentRequestContext
     {
         public FoundryAgentRequestContext() { }
         public string? CallId { get { throw null; } set { } }
         public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Current { get { throw null; } }
         public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Empty { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public Azure.AI.AgentServer.Core.FoundryOriginalSubject? OriginalSubject { get { throw null; } set { } }
         public string? SessionId { get { throw null; } set { } }
         public string? UserId { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public static System.IDisposable BeginScope(Azure.AI.AgentServer.Core.FoundryAgentRequestContext context) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public System.Collections.Generic.IDictionary<string, string> ModelAttributionHeaders(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>? headers = null) { throw null; }
         public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> PlatformHeaders() { throw null; }
     }
     public sealed partial class FoundryCallIdHandler : System.Net.Http.DelegatingHandler
@@ -70,15 +84,34 @@ namespace Azure.AI.AgentServer.Core
         public static string? ProjectArmId { get { throw null; } }
         public static string? ProjectEndpoint { get { throw null; } }
         public static string? SessionId { get { throw null; } }
+        public static System.Guid? SessionInstanceId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+    public sealed partial class FoundryOriginalSubject
+    {
+        public FoundryOriginalSubject(string? objectId, string? tenantId, string? identityType) { }
+        public string? IdentityType { get { throw null; } }
+        public string? ObjectId { get { throw null; } }
+        public string? TenantId { get { throw null; } }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS002")]
+    public partial interface IAgentSnapshotLifecycle
+    {
+        System.Threading.Tasks.Task AfterRestoreAsync(Azure.AI.AgentServer.Core.AgentRestoreContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task BeforeSnapshotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public partial class PlatformContext
     {
         protected PlatformContext() { }
         public PlatformContext(string? userIdKey, string? callId) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public PlatformContext(string? userIdKey, string? callId, Azure.AI.AgentServer.Core.FoundryOriginalSubject? originalSubject) { }
         public virtual string? CallId { get { throw null; } }
         public static Azure.AI.AgentServer.Core.PlatformContext Empty { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS005")]
+        public virtual Azure.AI.AgentServer.Core.FoundryOriginalSubject? OriginalSubject { get { throw null; } }
         public virtual string? UserIdKey { get { throw null; } }
         public static Azure.AI.AgentServer.Core.PlatformContext FromRequest(Microsoft.AspNetCore.Http.HttpRequest request) { throw null; }
     }
@@ -129,9 +162,9 @@ namespace Azure.AI.AgentServer.Core.Storage
         public static Azure.AI.AgentServer.Core.Storage.DeletedStateStore DeletedStateStore(string? id = null, string name = null, bool deleted = false) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem DeletedStateStoreItem(string? id = null, string key = null, bool deleted = false) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.StateStore StateStore(string id = null, string name = null, bool userIsolation = false, int itemTtlSeconds = 0, string? description = null, System.Collections.Generic.IDictionary<string, string> tags = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStoreItem StateStoreItem(string id = null, string key = null, System.Collections.Generic.IDictionary<string, System.BinaryData> value = null, System.Collections.Generic.IDictionary<string, string> tags = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemKey StateStoreItemKey(string id = null, string key = null, System.Collections.Generic.IDictionary<string, string> tags = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemRef StateStoreItemRef(string id = null, string key = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStoreItem StateStoreItem(string id = null, string key = null, System.Collections.Generic.IDictionary<string, System.BinaryData> value = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag etag = default(Azure.ETag), long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemKey StateStoreItemKey(string id = null, string key = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag etag = default(Azure.ETag), long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemRef StateStoreItemRef(string id = null, string key = null, Azure.ETag etag = default(Azure.ETag), long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
     }
     public partial class DeletedStateStore : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStore>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStore>
     {
@@ -169,6 +202,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStateStore
     {
         public const int DefaultItemTtlSeconds = 2592000;
@@ -177,48 +211,66 @@ namespace Azure.AI.AgentServer.Core.Storage
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> CreateItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> CreateItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStore> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, string? ifMatch, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, string? ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, Azure.ETag ifMatch, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStore?> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItem?> GetItemAsync(string key, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItem?> GetItemAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.FoundryStateStore> GetOrCreateAsync(string name, Azure.Core.TokenCredential? credential = null, System.Uri? endpoint = null, bool userIsolation = false, int itemTtlSeconds = 2592000, string? description = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, string? userId = null, string apiVersion = "v1", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemKeyPage> ListKeysAsync(System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, int? limit, string? after, string? before, Azure.AI.AgentServer.Core.Storage.ListRequestOrder order, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemKeyPage> ListKeysAsync(System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, int? limit = default(int?), string? after = null, string? before = null, Azure.AI.AgentServer.Core.Storage.ListRequestOrder order = Azure.AI.AgentServer.Core.Storage.ListRequestOrder.Desc, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, string? ifMatch, bool requireExists, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, string? ifMatch = null, bool requireExists = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemKeyPage> ListKeysAsync(System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, int? limit, string? after, string? before, Azure.AI.AgentServer.Core.Storage.ListRequestOrder? order, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemKeyPage> ListKeysAsync(System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, int? limit = default(int?), string? after = null, string? before = null, Azure.AI.AgentServer.Core.Storage.ListRequestOrder? order = default(Azure.AI.AgentServer.Core.Storage.ListRequestOrder?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, Azure.ETag ifMatch, bool requireExists, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, Azure.ETag ifMatch = default(Azure.ETag), bool requireExists = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStore> UpdateAsync(Azure.AI.AgentServer.Core.Storage.StateStoreUpdateOptions update, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageApiException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStorageApiException(int status, string message, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageBadRequestException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStorageBadRequestException(string message, string? param = null, int status = 400, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
         public string? Param { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageConflictException : Azure.AI.AgentServer.Core.Storage.FoundryStorageBadRequestException
     {
         public FoundryStorageConflictException(string message, string? param = null, string? errorCode = null) : base (default(string), default(string), default(int), default(string)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageException : Azure.RequestFailedException
     {
         public FoundryStorageException(int status, string message, string? errorCode = null, System.Exception? innerException = null) : base (default(string)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStorageNotFoundException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
         public FoundryStorageNotFoundException(string message, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS004")]
     public partial class FoundryStoragePreconditionException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
-        public FoundryStoragePreconditionException(string message, string? currentETag = null, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
-        public string? CurrentETag { get { throw null; } }
+        public FoundryStoragePreconditionException(string message, Azure.ETag currentETag = default(Azure.ETag), string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
+        public Azure.ETag CurrentETag { get { throw null; } }
     }
-    public enum ListRequestOrder
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ListRequestOrder : System.IEquatable<Azure.AI.AgentServer.Core.Storage.ListRequestOrder>
     {
-        Asc = 0,
-        Desc = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ListRequestOrder(string value) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.ListRequestOrder Asc { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.Storage.ListRequestOrder Desc { get { throw null; } }
+        public bool Equals(Azure.AI.AgentServer.Core.Storage.ListRequestOrder other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AgentServer.Core.Storage.ListRequestOrder left, Azure.AI.AgentServer.Core.Storage.ListRequestOrder right) { throw null; }
+        public static implicit operator Azure.AI.AgentServer.Core.Storage.ListRequestOrder (string value) { throw null; }
+        public static implicit operator Azure.AI.AgentServer.Core.Storage.ListRequestOrder? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AgentServer.Core.Storage.ListRequestOrder left, Azure.AI.AgentServer.Core.Storage.ListRequestOrder right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StateStore : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Core.Storage.StateStore>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.StateStore>
     {
@@ -247,7 +299,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStoreItem() { }
         public long CreatedAt { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
@@ -269,7 +321,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStoreItemKey() { }
         public long CreatedAt { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
@@ -297,7 +349,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStoreItemRef() { }
         public long CreatedAt { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
@@ -365,6 +417,9 @@ namespace Azure.AI.AgentServer.Core.Streaming
     public static partial class AgentEventStreamServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentEventStreams(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Core.Streaming.AgentEventStreamOptions>? configure = null) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAgentEventStreams(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder, string sectionName) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentEventStreamsDefault(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string source, System.Action<Azure.AI.AgentServer.Core.Streaming.AgentEventStreamOptions> configure) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentEventStreamsDefault(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string source, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Core.Streaming.AgentEventStreamOptions> configure) { throw null; }
     }
 }
 namespace Azure.AI.AgentServer.Core.Tasks
@@ -375,26 +430,19 @@ namespace Azure.AI.AgentServer.Core.Tasks
         Resumed = 1,
         Recovered = 2,
     }
-    public partial interface IMultiTurnTask
+    public partial interface IResilientTaskHandler<TInput, TOutput>
     {
-        System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<TOutput> RunAsync(Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput> context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public partial interface ITaskInvoker
+    public static partial class ResilientTaskEnablementExtensions
     {
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<TOutput> RunAsync<TInput, TOutput>(string name, TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync<TInput, TOutput>(string name, TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public abstract partial class ResilientTaskBuilder
-    {
-        protected ResilientTaskBuilder() { }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS003")]
+        public static System.IDisposable EnterResilientTaskScope(this System.IServiceProvider provider, string protocol, bool? enabled = default(bool?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS003")]
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection RegisterResilientTaskProtocol(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string protocol, System.Func<bool> enabled) { throw null; }
+        public static Azure.AI.AgentServer.Core.AgentHostBuilder SetResilientTasksEnabled(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, bool enabled = true) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection SetResilientTasksEnabled(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, bool enabled = true) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder SetResilientTasksEnabled(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, bool enabled = true) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResilientTaskErrorCode : System.IEquatable<Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode>
@@ -405,6 +453,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode Conflict { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode ExhaustedRetries { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode HandlerError { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode NotEnabled { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode PreconditionFailed { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode QueueFull { get { throw null; } }
         public bool Equals(Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode other) { throw null; }
@@ -423,9 +472,49 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode ErrorCode { get { throw null; } }
         public Azure.AI.AgentServer.Core.Tasks.TaskFailureDetail? Failure { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ResilientTaskHostExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResilientTasks(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResilientTasks(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AgentServer.Core.Tasks.ResilientTaskSettings> configureSettings) { throw null; }
+    }
+    public partial class ResilientTaskOptions
+    {
+        public ResilientTaskOptions() { }
+        public bool Enabled { get { throw null; } set { } }
+    }
     public static partial class ResilientTaskServiceCollectionExtensions
     {
-        public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Func<bool> isSteerable, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<bool> isSteerable, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResilientTaskCredentialDefault(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Func<System.IServiceProvider, Azure.Core.TokenCredential> credentialFactory) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential credential, System.Uri endpoint) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
+    }
+    public static partial class ResilientTaskServiceProviderExtensions
+    {
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> GetResilientTask<TInput, TOutput>(this System.IServiceProvider provider, string name) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ResilientTaskSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ResilientTaskSettings() { }
+        public System.Uri? Endpoint { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public sealed partial class RunOptions
     {
@@ -447,9 +536,22 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual int RecoveryCount { get { throw null; } }
         public virtual int RetryAttempt { get { throw null; } }
         public virtual System.Threading.CancellationToken Shutdown { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Core.Tasks.TaskStreamWriter Stream { get { throw null; } }
         public virtual string TaskId { get { throw null; } }
         public virtual bool TimeoutExceeded { get { throw null; } }
         public virtual System.Threading.Tasks.Task ExitForRecoveryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TaskDefinition<TInput, TOutput>
+    {
+        protected TaskDefinition() { }
+        public virtual string Name { get { throw null; } }
+        public virtual System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRunStatus?> GetStatusAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> TryStartExistingAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public sealed partial class TaskFailureDetail
     {
@@ -470,6 +572,8 @@ namespace Azure.AI.AgentServer.Core.Tasks
     public sealed partial class TaskRegistrationOptions
     {
         public TaskRegistrationOptions() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS003")]
+        public System.Func<bool>? IsEnabled { get { throw null; } set { } }
         public Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy? Retry { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
         public string? Title { get { throw null; } set { } }
@@ -494,7 +598,20 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual System.Threading.Tasks.Task<TOutput> Completion { get { throw null; } }
         public virtual string InputId { get { throw null; } }
         public virtual bool IsQueued { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Core.Tasks.TaskStream Stream { get { throw null; } }
         public virtual string TaskId { get { throw null; } }
         public virtual System.Threading.Tasks.Task RequestCancellationAsync() { throw null; }
+    }
+    public partial class TaskStream
+    {
+        protected TaskStream() { }
+        public virtual System.Threading.Tasks.ValueTask<string?> GetLastEventIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.Net.ServerSentEvents.SseItem<string>> Subscribe(string? afterEventId = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TaskStreamWriter
+    {
+        protected TaskStreamWriter() { }
+        public virtual System.Threading.Tasks.ValueTask EmitAsync(System.Net.ServerSentEvents.SseItem<string> item, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<string?> GetLastEventIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -24,11 +25,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineIPTag"/>. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
+        /// <param name="firstPartyServiceTagId"> The first party service tag resource identifier associated with the public IP address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineIPTag(string ipTagType, string tag, ResourceIdentifier firstPartyServiceTagId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPTagType = ipTagType;
             Tag = tag;
+            FirstPartyServiceTagId = firstPartyServiceTagId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> IP tag associated with the public IP. Example: SQL, Storage etc. </summary>
         public string Tag { get; set; }
+
+        /// <summary> The first party service tag resource identifier associated with the public IP address. </summary>
+        public ResourceIdentifier FirstPartyServiceTagId { get; set; }
     }
 }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisCacheAccessPolicyAssignmentList(value, nextLink, additionalBinaryDataProperties);
+            return new RedisCacheAccessPolicyAssignmentList(value ?? new ChangeTrackingList<RedisCacheAccessPolicyAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

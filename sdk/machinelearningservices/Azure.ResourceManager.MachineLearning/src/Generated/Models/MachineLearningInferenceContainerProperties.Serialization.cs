@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute, options);
             }
-            if (Optional.IsDefined(StartupRoute))
+            if (Optional.IsDefined(StartupRoute, _startupRouteIsDefined))
             {
-                writer.WritePropertyName("startupRoute"u8);
-                writer.WriteObjectValue(StartupRoute, options);
+                if (StartupRoute != null)
+                {
+                    writer.WritePropertyName("startupRoute"u8);
+                    writer.WriteObjectValue(StartupRoute, options);
+                }
+                else
+                {
+                    writer.WriteNull("startupRoute"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningInferenceContainerRoute livenessRoute = default;
             MachineLearningInferenceContainerRoute readinessRoute = default;
             MachineLearningInferenceContainerRoute scoringRoute = default;
+            bool startupRouteIsDefined = false;
             MachineLearningInferenceContainerRoute startupRoute = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,6 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("startupRoute"u8))
                 {
+                    startupRouteIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startupRoute = null;
@@ -182,10 +191,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningInferenceContainerProperties(livenessRoute, readinessRoute, scoringRoute, startupRoute, additionalBinaryDataProperties);
+            return new MachineLearningInferenceContainerProperties(livenessRoute, readinessRoute, scoringRoute, startupRoute, additionalBinaryDataProperties)
+            {
+                _startupRouteIsDefined = startupRouteIsDefined
+            };
         }
     }
 }

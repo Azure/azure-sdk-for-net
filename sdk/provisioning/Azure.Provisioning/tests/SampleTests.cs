@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.AppContainers;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ContainerRegistry;
@@ -60,14 +61,14 @@ internal class SampleTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -191,6 +192,7 @@ internal class SampleTests
     }
 
     [Test]
+    [Ignore("Ignored until Azure.Provisioning.AppContainers is released with the current resource name behavior.")]
     public async Task SimpleContainerApp()
     {
         await using Trycep test = CreateSimpleContainerAppTest();
@@ -211,42 +213,42 @@ internal class SampleTests
 
             resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
               name: take('acr${uniqueString(resourceGroup().id)}', 50)
-              tags: tags
               location: location
-              sku: {
-                name: 'Basic'
-              }
               identity: {
                 type: 'SystemAssigned, UserAssigned'
                 userAssignedIdentities: {
                   '${mi.id}': { }
                 }
               }
+              sku: {
+                name: 'Basic'
+              }
+              tags: tags
             }
 
             resource acr_mi_AcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(acr.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d'))
+              scope: acr
               properties: {
                 principalId: mi.properties.principalId
-                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
                 principalType: 'ServicePrincipal'
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
               }
-              scope: acr
             }
 
             resource law 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
               name: take('law-${uniqueString(resourceGroup().id)}', 63)
-              tags: tags
               location: location
               properties: {
                 sku: {
                   name: 'PerGB2018'
                 }
               }
+              tags: tags
             }
 
             resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('cae${uniqueString(resourceGroup().id)}', 24)
+              name: take('cae-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 appLogsConfiguration: {
@@ -268,12 +270,12 @@ internal class SampleTests
 
             resource cae_mi_Contributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(cae.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c'))
+              scope: cae
               properties: {
                 principalId: mi.properties.principalId
-                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
                 principalType: 'ServicePrincipal'
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
               }
-              scope: cae
             }
 
             resource aspireDashboard 'Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview' = {
@@ -303,6 +305,194 @@ internal class SampleTests
             output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = cae.id
 
             output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = cae.properties.defaultDomain
+            """);
+    }
+
+    [Test]
+    public async Task ManagementLockResourceScope()
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    #region Snippet:ProvisioningManagementLock
+                    Infrastructure infra = new();
+                    StorageAccount storage = new("storage", "2023-05-01")
+                    {
+                        Name = "lockedstorage",
+                        Location = AzureLocation.EastUS,
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+                    };
+                    infra.Add(storage);
+
+                    ManagementLock storageLock = new("storageLock")
+                    {
+                        Name = "protect-storage",
+                        Scope = storage,
+                        Level = ManagementLockLevel.CanNotDelete,
+                        Notes = "Protect the storage account from accidental deletion."
+                    };
+                    infra.Add(storageLock);
+                    #endregion
+
+                    return infra;
+                });
+
+        test.Compare(
+            """
+            resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+              name: 'lockedstorage'
+              location: 'eastus'
+              kind: 'StorageV2'
+              sku: {
+                name: 'Standard_LRS'
+              }
+            }
+
+            resource storageLock 'Microsoft.Authorization/locks@2020-05-01' = {
+              name: 'protect-storage'
+              scope: storage
+              properties: {
+                level: 'CanNotDelete'
+                notes: 'Protect the storage account from accidental deletion.'
+              }
+            }
+            """);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ManagementLockExistingTargetScope(bool explicitDependency)
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    UserAssignedIdentity identity = UserAssignedIdentity.FromExisting("identity", "2023-01-31");
+                    identity.Name = "existing-identity";
+                    infra.Add(identity);
+
+                    UserAssignedIdentity previous = new("previous");
+                    ManagementLock identityLock = new("identityLock")
+                    {
+                        Name = "protect-identity",
+                        Level = ManagementLockLevel.CanNotDelete,
+                        Scope = previous
+                    };
+                    identityLock.Scope = identity;
+                    Assert.That(identityLock.Scope, Is.SameAs(identity));
+                    identityLock.Scope = null;
+                    Assert.That(identityLock.Scope, Is.Null);
+                    identityLock.Scope = identity;
+                    if (explicitDependency)
+                    {
+                        identityLock.DependsOn.Add(identity);
+                    }
+                    infra.Add(identityLock);
+                    return infra;
+                });
+
+        string dependencies = explicitDependency ? "\n  dependsOn: [\n    identity\n  ]" : "";
+        test.Compare(
+            $$"""
+            resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+              name: 'existing-identity'
+            }
+
+            resource identityLock 'Microsoft.Authorization/locks@2020-05-01' = {
+              name: 'protect-identity'
+              scope: identity
+              properties: {
+                level: 'CanNotDelete'
+              }{{dependencies}}
+            }
+            """);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ManagementLockWithoutResourceScope(bool clearScope)
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    UserAssignedIdentity identity = UserAssignedIdentity.FromExisting("identity", "2023-01-31");
+                    identity.Name = "existing-identity";
+                    infra.Add(identity);
+
+                    ManagementLock identityLock = new("identityLock")
+                    {
+                        Name = "protect-deployment",
+                        Level = ManagementLockLevel.ReadOnly
+                    };
+                    Assert.That(identityLock.Scope, Is.Null);
+                    if (clearScope)
+                    {
+                        identityLock.Scope = identity;
+                        identityLock.Scope = null;
+                        identityLock.Scope = null;
+                        Assert.That(identityLock.Scope, Is.Null);
+                    }
+                    identityLock.DependsOn.Add(identity);
+                    infra.Add(identityLock);
+                    return infra;
+                });
+
+        test.Compare(
+            """
+            resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+              name: 'existing-identity'
+            }
+
+            resource identityLock 'Microsoft.Authorization/locks@2020-05-01' = {
+              name: 'protect-deployment'
+              properties: {
+                level: 'ReadOnly'
+              }
+              dependsOn: [
+                identity
+              ]
+            }
+            """);
+    }
+
+    [Test]
+    public async Task ManagementLockExistingLockScope()
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    StorageAccount storage = StorageAccount.FromExisting("storage", "2023-05-01");
+                    storage.Name = "lockedstorage";
+                    infra.Add(storage);
+
+                    ManagementLock storageLock = ManagementLock.FromExisting("storageLock");
+                    storageLock.Name = "protect-storage";
+                    storageLock.Scope = storage;
+                    infra.Add(storageLock);
+
+                    infra.Add(new ProvisioningOutput("lockId", typeof(string)) { Value = storageLock.Id });
+                    return infra;
+                });
+
+        test.Compare(
+            """
+            resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' existing = {
+              name: 'lockedstorage'
+            }
+
+            resource storageLock 'Microsoft.Authorization/locks@2020-05-01' existing = {
+              name: 'protect-storage'
+              scope: storage
+            }
+
+            output lockId string = storageLock.id
             """);
     }
 

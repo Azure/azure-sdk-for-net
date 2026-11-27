@@ -282,6 +282,45 @@ namespace Azure.Core.Tests
                 new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
             };
 
+        public static object[] HeaderValuesWithCrlf =>
+            new object[]
+            {
+                new object[] { "value\r" },
+                new object[] { "value\n" },
+                new object[] { "value\r\nInjected: 1" },
+                new object[] { "value\0" },
+            };
+
+        [TestCaseSource(nameof(HeaderValuesWithCrlf))]
+        public void AddRejectsHeaderValuesContainingCrlf(string headerValue)
+        {
+            Request request = GetTransport().CreateRequest();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.Add("Custom-Header", headerValue));
+
+            Assert.AreEqual("value", ex.ParamName);
+        }
+
+        [TestCaseSource(nameof(HeaderValuesWithCrlf))]
+        public void AddHttpHeaderRejectsHeaderValuesContainingCrlf(string headerValue)
+        {
+            Request request = GetTransport().CreateRequest();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.Add(new HttpHeader("Custom-Header", headerValue)));
+
+            Assert.AreEqual("header", ex.ParamName);
+        }
+
+        [TestCaseSource(nameof(HeaderValuesWithCrlf))]
+        public void SetValueRejectsHeaderValuesContainingCrlf(string headerValue)
+        {
+            Request request = GetTransport().CreateRequest();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.SetValue("Custom-Header", headerValue));
+
+            Assert.AreEqual("value", ex.ParamName);
+        }
+
         [TestCaseSource(nameof(HeadersWithValues))]
         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
@@ -760,29 +799,40 @@ namespace Azure.Core.Tests
         [TestCase("ALL_PROXY", "http://microsoft.com")]
         public async Task ProxySettingsAreReadFromEnvironment(string envVar, string url)
         {
-            try
+            using var proxyEnvironment = ClearProxyEnvironment();
+            using (TestServer testServer = new TestServer(async context =>
             {
-                using (TestServer testServer = new TestServer(async context =>
-                {
-                    context.Response.Headers["Via"] = "Test-Proxy";
-                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
-                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                }))
-                {
-                    Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
+                context.Response.Headers["Via"] = "Test-Proxy";
+                byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            }))
+            {
+                Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
 
-                    var transport = GetTransport();
-                    Request request = transport.CreateRequest();
-                    request.Uri.Reset(new Uri(url));
-                    Response response = await ExecuteRequest(request, transport);
-                    Assert.True(response.Headers.TryGetValue("Via", out var via));
-                    Assert.AreEqual("Test-Proxy", via);
-                }
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(new Uri(url));
+                Response response = await ExecuteRequest(request, transport);
+                Assert.True(response.Headers.TryGetValue("Via", out var via));
+                Assert.AreEqual("Test-Proxy", via);
             }
-            finally
+        }
+
+        private static TestEnvVar ClearProxyEnvironment()
+        {
+            // CI proxy and bypass settings must not override the local proxy selected by these tests.
+            return new TestEnvVar(new Dictionary<string, string>
             {
-                Environment.SetEnvironmentVariable(envVar, null);
-            }
+                { "http_proxy", null },
+                { "HTTP_PROXY", null },
+                { "https_proxy", null },
+                { "HTTPS_PROXY", null },
+                { "all_proxy", null },
+                { "ALL_PROXY", null },
+                { "no_proxy", null },
+                { "NO_PROXY", null },
+                { "GATEWAY_INTERFACE", null }
+            });
         }
 
 #if NET462 // GlobalProxySelection.Select not supported on netcoreapp
@@ -793,6 +843,7 @@ namespace Azure.Core.Tests
 #pragma warning disable 618 // Use of obsolete symbol
             var oldGlobalProxySelection = GlobalProxySelection.Select;
 #pragma warning restore 618
+            using var proxyEnvironment = ClearProxyEnvironment();
             try
             {
                 using (TestServer testServer = new TestServer(async context =>

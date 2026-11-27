@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// The arguments passed in to the execution
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScriptSecureStringExecutionParameterDetails"/>, <see cref="ScriptStringExecutionParameterDetails"/>, and <see cref="PSCredentialExecutionParameterDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/>, and <see cref="ScriptStringExecutionParameterDetails"/>.
     /// </summary>
     public abstract partial class ScriptExecutionParameterDetails
     {

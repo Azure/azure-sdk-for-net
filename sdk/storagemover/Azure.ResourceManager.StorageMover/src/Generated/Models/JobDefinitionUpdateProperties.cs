@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="connections"> List of connections associated to this job. </param>
         /// <param name="dataIntegrityValidation"> Data Integrity Validation mode. </param>
         /// <param name="schedule"> Schedule information for the Job Definition. </param>
+        /// <param name="syncMode"> The synchronization mode for the Job Definition. </param>
+        /// <param name="moverSyncedUntil"> The last time the mover was synchronized. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionUpdateProperties(string description, StorageMoverCopyMode? copyMode, string agentName, IList<ResourceIdentifier> connections, StorageMoverDataIntegrityValidation? dataIntegrityValidation, StorageMoverScheduleInfo schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionUpdateProperties(string description, StorageMoverCopyMode? copyMode, string agentName, IList<ResourceIdentifier> connections, StorageMoverDataIntegrityValidation? dataIntegrityValidation, StorageMoverScheduleInfo schedule, string syncMode, DateTimeOffset? moverSyncedUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             CopyMode = copyMode;
@@ -40,6 +42,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             Connections = connections;
             DataIntegrityValidation = dataIntegrityValidation;
             Schedule = schedule;
+            SyncMode = syncMode;
+            MoverSyncedUntil = moverSyncedUntil;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +64,11 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Schedule information for the Job Definition. </summary>
         public StorageMoverScheduleInfo Schedule { get; set; }
+
+        /// <summary> The synchronization mode for the Job Definition. </summary>
+        public string SyncMode { get; set; }
+
+        /// <summary> The last time the mover was synchronized. </summary>
+        public DateTimeOffset? MoverSyncedUntil { get; set; }
     }
 }

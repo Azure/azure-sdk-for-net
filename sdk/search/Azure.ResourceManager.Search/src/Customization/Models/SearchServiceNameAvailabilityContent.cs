@@ -11,9 +11,15 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Input of check name availability API. </summary>
     public partial class SearchServiceNameAvailabilityContent
     {
+        internal SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
+            : this(name, resourceType.ToString(), additionalBinaryDataProperties: null)
+        {
+            ResourceType = resourceType;
+        }
+
         /// <summary> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </summary>
         [WirePath("type")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public SearchServiceResourceType ResourceType { get => SearchServiceResourceType.SearchServices; }
+        public SearchServiceResourceType ResourceType { get; } = SearchServiceResourceType.SearchServices;
     }
 }

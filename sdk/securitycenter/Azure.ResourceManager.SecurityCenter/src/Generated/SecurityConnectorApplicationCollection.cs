@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityConnectorApplicationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityApplicationDataAsyncCollectionResultOfT(
                 _securityConnectorApplicationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityConnectorApplicationsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityApplicationDataCollectionResultOfT(
                 _securityConnectorApplicationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

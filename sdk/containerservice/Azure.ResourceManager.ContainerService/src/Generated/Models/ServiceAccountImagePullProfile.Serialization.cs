@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isEnabled = default;
-            string defaultManagedIdentityId = default;
+            ResourceIdentifier defaultManagedIdentityId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,12 +143,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("defaultManagedIdentityId"u8))
                 {
-                    defaultManagedIdentityId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultManagedIdentityId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServiceAccountImagePullProfile(isEnabled, defaultManagedIdentityId, additionalBinaryDataProperties);

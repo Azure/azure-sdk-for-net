@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="MarkdownHeaderDepth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarkdownHeaderDepth?(string value) => value == null ? null : new MarkdownHeaderDepth(value);
+        public static implicit operator MarkdownHeaderDepth?(string value) => value == null ? (MarkdownHeaderDepth?)null : new MarkdownHeaderDepth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

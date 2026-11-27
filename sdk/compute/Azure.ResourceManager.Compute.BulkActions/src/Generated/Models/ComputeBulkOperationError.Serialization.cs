@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> These describe errors that occur at the resource level. </summary>
+    /// <summary> An error that occurred while processing one virtual machine. </summary>
     public partial class ComputeBulkOperationError : IJsonModel<ComputeBulkOperationError>
     {
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationError"/> for deserialization. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeBulkOperationError(errorCode, errorDetails, additionalBinaryDataProperties);

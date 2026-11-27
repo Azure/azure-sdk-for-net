@@ -6,6 +6,7 @@ using System.Text;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Provider;
 
@@ -43,9 +44,9 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Create_Then_Get_RoundTrips()
     {
         var provider = NewProvider();
-        var response = new Models.ResponseObject("resp_rt", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new ResponseObject { Id = "resp_rt", Model = "gpt-4o", Status = ResponseStatus.InProgress };
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         var retrieved = await provider.GetResponseAsync("resp_rt", PlatformContext.Empty);
         Assert.That(retrieved.Id, Is.EqualTo("resp_rt"));
@@ -57,8 +58,8 @@ public class FileResponsesProviderTests : IDisposable
     {
         // Write with one instance.
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_durable", "gpt-4o") { Status = ResponseStatus.Completed };
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_durable", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         // Read back with a fresh instance over the same directory (simulates process restart).
         var reader = NewProvider();
@@ -71,8 +72,8 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Update_Persists_Across_Instances()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_upd", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_upd", Model = "gpt-4o", Status = ResponseStatus.InProgress };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         response.Status = ResponseStatus.Completed;
         await writer.UpdateResponseAsync(response, PlatformContext.Empty);
@@ -86,8 +87,8 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Delete_Is_Persisted_As_Tombstone()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_del", "gpt-4o") { Status = ResponseStatus.Completed };
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_del", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
         await writer.DeleteResponseAsync("resp_del", PlatformContext.Empty);
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
@@ -111,19 +112,19 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Duplicate_Create_Throws()
     {
         var provider = NewProvider();
-        var response = new Models.ResponseObject("resp_dup", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_dup", Model = "gpt-4o", Status = ResponseStatus.InProgress };
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
         Assert.ThrowsAsync<InvalidOperationException>(
-            () => provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty));
+            () => provider.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty));
     }
 
     [Test]
     public async Task UserIsolation_Mismatch_Returns_NotFound_Across_Instances()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_iso", "gpt-4o") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_iso", Model = "gpt-4o", Status = ResponseStatus.Completed };
         var owner = new PlatformContext("user-owner", null);
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), owner);
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), owner);
 
         var reader = NewProvider();
         var stranger = new PlatformContext("user-other", null);
@@ -139,16 +140,16 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Input_Items_Survive_Restart()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_items", "gpt-4o") { Status = ResponseStatus.Completed };
-        var inputItem = new OutputItemMessage("msg_in_1", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>());
+        var response = new ResponseObject { Id = "resp_items", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        var inputItem = MessageItemFactory.OutputMessage("msg_in_1", MessageStatus.Completed, MessageRole.User, new[] { ResponseContentPart.CreateInputTextPart("hi") });
         await writer.CreateResponseAsync(
-            new CreateResponseRequest(response, new OutputItem[] { inputItem }, null),
+            new CreateResponsePersistRequest(response, new OutputItem[] { inputItem }, null),
             PlatformContext.Empty);
 
         var reader = NewProvider();
         var page = await reader.GetInputItemsAsync("resp_items", PlatformContext.Empty);
         Assert.That(page.Data.Count, Is.EqualTo(1));
-        Assert.That(page.Data[0].GetId(), Is.EqualTo("msg_in_1"));
+        Assert.That(page.Data[0].Id, Is.EqualTo("msg_in_1"));
     }
 
     [Test]
@@ -161,14 +162,85 @@ public class FileResponsesProviderTests : IDisposable
     }
 
     [Test]
+    public async Task GetHistoryItemIdsAsync_UnlimitedReturnsAllItems()
+    {
+        var provider = NewProvider();
+        var historyIds = Enumerable.Range(0, 120).Select(i => $"history_{i}").ToArray();
+        var input = MessageItemFactory.OutputMessage("input_1", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>());
+        var response = new ResponseObject
+        {
+            Id = "resp_history",
+            Model = "gpt-4o",
+            Status = ResponseStatus.Completed,
+            ConversationOptions = new ConversationReference("conv_history"),
+        };
+        response.OutputItems.Add(MessageItemFactory.OutputMessage("output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
+        await provider.CreateResponseAsync(
+            new CreateResponsePersistRequest(response, new[] { input }, historyIds),
+            PlatformContext.Empty);
+
+        var unlimited = (await provider.GetHistoryItemIdsAsync(
+            response.Id, response.ConversationOptions.ConversationId, -1, PlatformContext.Empty)).ToList();
+        var limited = (await provider.GetHistoryItemIdsAsync(
+            response.Id, response.ConversationOptions.ConversationId, 10, PlatformContext.Empty)).ToList();
+        var conversationOnly = (await provider.GetHistoryItemIdsAsync(
+            null, response.ConversationOptions.ConversationId, -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(unlimited, Has.Count.EqualTo(122));
+        Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));
+        Assert.That(limited, Is.EqualTo(unlimited.TakeLast(10)));
+        Assert.That(conversationOnly, Is.EqualTo(unlimited));
+    }
+
+    [Test]
+    public async Task GetHistoryItemIdsAsync_PreviousResponseIdExcludesLaterConversationResponses()
+    {
+        var provider = NewProvider();
+        var first = new ResponseObject
+        {
+            Id = "resp_first",
+            Model = "gpt-4o",
+            Status = ResponseStatus.Completed,
+            ConversationOptions = new ConversationReference("conv_cutoff"),
+        };
+        first.OutputItems.Add(MessageItemFactory.OutputMessage("output_first", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
+        await provider.CreateResponseAsync(
+            new CreateResponsePersistRequest(
+                first,
+                new[] { MessageItemFactory.OutputMessage("input_first", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
+                Array.Empty<string>()),
+            PlatformContext.Empty);
+
+        var second = new ResponseObject
+        {
+            Id = "resp_second",
+            Model = "gpt-4o",
+            Status = ResponseStatus.Completed,
+            ConversationOptions = new ConversationReference("conv_cutoff"),
+        };
+        second.OutputItems.Add(MessageItemFactory.OutputMessage("output_second", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
+        await provider.CreateResponseAsync(
+            new CreateResponsePersistRequest(
+                second,
+                new[] { MessageItemFactory.OutputMessage("input_second", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
+                new[] { "input_first", "output_first" }),
+            PlatformContext.Empty);
+
+        var ids = (await provider.GetHistoryItemIdsAsync(
+            first.Id, "conv_cutoff", -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(ids, Is.EqualTo(new[] { "input_first", "output_first" }));
+    }
+
+    [Test]
     public async Task Corrupt_Envelope_File_Is_Skipped_On_Rehydrate()
     {
         var writer = NewProvider();
-        var good = new Models.ResponseObject("resp_good", "gpt-4o") { Status = ResponseStatus.Completed };
-        await writer.CreateResponseAsync(new CreateResponseRequest(good, null, null), PlatformContext.Empty);
+        var good = new ResponseObject { Id = "resp_good", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(good, null, null), PlatformContext.Empty);
 
         // Drop a corrupt file alongside the good one.
-        var envelopesDir = Path.Combine(_dir, "envelopes");
+        var envelopesDir = Path.Combine(_dir, "partitions-v1", "anonymous", "envelopes");
         File.WriteAllText(Path.Combine(envelopesDir, "resp_bad.json"), "{ this is not valid json", Encoding.UTF8);
 
         // A fresh instance must rehydrate the good record and skip the corrupt one without throwing.
@@ -183,14 +255,69 @@ public class FileResponsesProviderTests : IDisposable
     public async Task ListResponseIds_Excludes_Deleted()
     {
         var provider = NewProvider();
-        var a = new Models.ResponseObject("resp_a", "gpt-4o") { Status = ResponseStatus.Completed };
-        var b = new Models.ResponseObject("resp_b", "gpt-4o") { Status = ResponseStatus.Completed };
-        await provider.CreateResponseAsync(new CreateResponseRequest(a, null, null), PlatformContext.Empty);
-        await provider.CreateResponseAsync(new CreateResponseRequest(b, null, null), PlatformContext.Empty);
+        var a = new ResponseObject { Id = "resp_a", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        var b = new ResponseObject { Id = "resp_b", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(a, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(b, null, null), PlatformContext.Empty);
         await provider.DeleteResponseAsync("resp_b", PlatformContext.Empty);
 
         var ids = provider.ListResponseIds();
         Assert.That(ids, Does.Contain("resp_a"));
         Assert.That(ids, Does.Not.Contain("resp_b"));
+    }
+
+    [Test]
+    public async Task Legacy_Global_Files_Are_Never_Read_Or_Modified()
+    {
+        var envelopes = Path.Combine(_dir, "envelopes");
+        var items = Path.Combine(_dir, "items");
+        Directory.CreateDirectory(envelopes);
+        Directory.CreateDirectory(items);
+        File.WriteAllText(Path.Combine(envelopes, "resp_legacy.json"), """
+            {
+              "id": "resp_legacy",
+              "deleted": false,
+              "user_id_key": "user-owner",
+              "conversation_id": "conv_legacy",
+              "envelope": { "id": "resp_legacy", "model": "legacy", "object": "response", "status": "completed", "output": [] },
+              "input_item_ids": ["msg_legacy"], "output_item_ids": [], "history_item_ids": []
+            }
+            """);
+        File.WriteAllText(Path.Combine(envelopes, "resp_deleted.json"), """
+            {
+              "id": "resp_deleted", "deleted": true, "conversation_id": "conv_legacy",
+              "input_item_ids": ["msg_legacy"], "output_item_ids": [], "history_item_ids": []
+            }
+            """);
+        File.WriteAllText(Path.Combine(items, "msg_legacy.json"), """
+            { "id": "msg_legacy", "type": "message", "status": "completed", "role": "user", "content": [] }
+            """);
+        File.WriteAllText(Path.Combine(items, "interrupted.tmp"), "leave unchanged");
+        var original = Directory.GetFiles(_dir, "*", SearchOption.AllDirectories)
+            .ToDictionary(path => path, File.ReadAllBytes);
+
+        foreach (var provider in new[] { NewProvider(), NewProvider() })
+        {
+            foreach (var context in new[] { PlatformContext.Empty, new PlatformContext("user-owner", null), new PlatformContext("other", null) })
+            {
+                Assert.ThrowsAsync<ResourceNotFoundException>(() => provider.GetResponseAsync("resp_legacy", context));
+                Assert.ThrowsAsync<ResourceNotFoundException>(() => provider.GetInputItemsAsync("resp_legacy", context));
+                Assert.ThrowsAsync<ResourceNotFoundException>(() => provider.GetResponseAsync("resp_deleted", context));
+                Assert.That(await provider.GetItemsAsync(new[] { "msg_legacy" }, context), Is.All.Null);
+                Assert.That(await provider.GetHistoryItemIdsAsync("resp_legacy", null, 100, context), Is.Empty);
+                Assert.That(await provider.GetHistoryItemIdsAsync("resp_deleted", null, 100, context), Is.Empty);
+                Assert.That(await provider.GetHistoryItemIdsAsync(null, "conv_legacy", 100, context), Is.Empty);
+            }
+        }
+
+        var writer = NewProvider();
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(new ResponseObject { Id = "resp_legacy", Model = "new" }, null, null),
+            PlatformContext.Empty);
+        await writer.DeleteResponseAsync("resp_legacy", PlatformContext.Empty);
+        foreach (var pair in original)
+        {
+            Assert.That(File.ReadAllBytes(pair.Key), Is.EqualTo(pair.Value), pair.Key);
+        }
+        Assert.That(Directory.GetFiles(envelopes).Length + Directory.GetFiles(items).Length, Is.EqualTo(original.Count));
     }
 }

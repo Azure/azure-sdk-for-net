@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public sealed class SteeringCancelAndFullTests
 {
     [Test]
-    public async Task QueuedCallerCancelRemovesSlotWithoutDisturbingActiveTurn()
+    public async Task QueuedCallerCancelRemovesOnlyItsSlotWithoutDisturbingActiveTurn()
     {
         using TaskTestHost host = TaskTestHost.Create();
         var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -40,13 +40,18 @@ public sealed class SteeringCancelAndFullTests
             "chat", "in2", new RunOptions { TaskId = "t1", InputId = "i2" });
         Assert.That(run2.IsQueued, Is.True);
 
+        TaskRun<string> run3 = await host.Invoker.StartAsync<string, string>(
+            "chat", "in3", new RunOptions { TaskId = "t1", InputId = "i3" });
+        Assert.That(run3.IsQueued, Is.True);
+
         // The queued caller cancels its slot before promotion.
         await run2.RequestCancellationAsync();
         Assert.ThrowsAsync<OperationCanceledException>(async () => await run2.Completion);
 
-        // The active turn is undisturbed and there is nothing left to promote.
+        // The active turn is undisturbed, and the other queued input still promotes.
         gate.SetResult();
         Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
+        Assert.That(await run3.Completion, Is.EqualTo("S:in3"));
         await host.WaitForStatusAsync("t1", "suspended", TimeSpan.FromSeconds(5));
     }
 

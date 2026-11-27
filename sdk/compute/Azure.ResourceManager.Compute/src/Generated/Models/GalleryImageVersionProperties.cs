@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(storageProfile, nameof(storageProfile));
 
             StorageProfile = storageProfile;
+            ImageMetadataProfiles = new ChangeTrackingList<ImageMetadataProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionProperties"/>. </summary>
@@ -36,8 +37,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> The security profile of a gallery image version. </param>
         /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
+        /// <param name="imageMetadataProfiles"> The image metadata profiles associated with the gallery image version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionProperties(GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageVersionProperties(GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IReadOnlyList<ImageMetadataProfile> imageMetadataProfiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             SecurityProfile = securityProfile;
             IsRestoreEnabled = isRestoreEnabled;
             ValidationsProfile = validationsProfile;
+            ImageMetadataProfiles = imageMetadataProfiles;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ReplicationStatus ReplicationStatus { get; }
 
         /// <summary> The security profile of a gallery image version. </summary>
-        internal ImageVersionSecurityProfile SecurityProfile { get; set; }
+        public ImageVersionSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
         public bool? IsRestoreEnabled { get; set; }
@@ -74,21 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
         public GalleryImageValidationsProfile ValidationsProfile { get; }
 
-        /// <summary> Contains UEFI settings for the image version. </summary>
-        public GalleryImageVersionUefiSettings SecurityUefiSettings
-        {
-            get
-            {
-                return SecurityProfile is null ? default : SecurityProfile.UefiSettings;
-            }
-            set
-            {
-                if (SecurityProfile is null)
-                {
-                    SecurityProfile = new ImageVersionSecurityProfile();
-                }
-                SecurityProfile.UefiSettings = value;
-            }
-        }
+        /// <summary> The image metadata profiles associated with the gallery image version. </summary>
+        public IReadOnlyList<ImageMetadataProfile> ImageMetadataProfiles { get; } = new ChangeTrackingList<ImageMetadataProfile>();
     }
 }

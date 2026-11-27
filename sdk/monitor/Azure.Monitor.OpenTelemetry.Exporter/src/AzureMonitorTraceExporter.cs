@@ -7,6 +7,7 @@ using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -17,9 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public sealed class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
+        private readonly IMultiEndpointTransmitter? _multiEndpointTransmitter;
         private readonly string _instrumentationKey;
-        private readonly float _sampleRate; // This value is recorded on TelemetryItem.SampleRate.
+        private readonly float _fallbackSampleRate; // Used for TelemetryItem.SampleRate when a span carries no microsoft.sample_rate attribute.
+        private readonly bool _multiEndpointEnabled;
         private AzureMonitorResource? _resource;
+        private EndpointRouteBatch? _routeBatch;
         private bool _disposed;
 
         /// <summary>
@@ -31,10 +35,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
+            : this(options, transmitter, MultiEndpointConfig.Enabled)
         {
-            _sampleRate = (float)Math.Round(options.SamplingRatio * 100);
+        }
+
+        /// <remarks>
+        /// The gate is a constructor parameter so a test can exercise either path without mutating
+        /// process-wide state that other tests observe.
+        /// </remarks>
+        internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter, bool multiEndpointEnabled)
+        {
+            _fallbackSampleRate = SampleRateHelper.GetFallbackSampleRate(options);
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
+            _multiEndpointEnabled = multiEndpointEnabled;
+
+            if (_multiEndpointEnabled)
+            {
+                if (transmitter is not IMultiEndpointTransmitter multiEndpointTransmitter)
+                {
+                    // The caller already took a reference on the shared transmitter, which owns
+                    // storage timers and statsbeat, so it has to be released before unwinding.
+                    transmitter.Dispose();
+
+                    throw new NotSupportedException($"Multi-endpoint routing requires a transmitter implementing {nameof(IMultiEndpointTransmitter)}.");
+                }
+
+                _multiEndpointTransmitter = multiEndpointTransmitter;
+
+                AzureMonitorExporterEventSource.Log.MultiEndpointRoutingEnabled();
+            }
         }
 
         internal AzureMonitorResource? TraceResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
@@ -47,11 +77,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
+            if (_multiEndpointEnabled)
+            {
+                return ExportMultiEndpoint(batch);
+            }
+
             ExportResult exportResult = ExportResult.Failure;
 
             try
             {
-                (var telemetryItems, var telemetrySchemaTypeCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey, _sampleRate);
+                (var telemetryItems, var telemetrySchemaTypeCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey, _fallbackSampleRate);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).EnsureCompleted();
@@ -63,6 +98,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return exportResult;
+        }
+
+        private ExportResult ExportMultiEndpoint(in Batch<Activity> batch)
+        {
+            // A concurrent Export takes a fresh batch rather than sharing the cached one.
+            var routeBatch = Interlocked.Exchange(ref _routeBatch, null) ?? new EndpointRouteBatch();
+            routeBatch.BeginExport();
+
+            try
+            {
+                TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(batch, TraceResource, _fallbackSampleRate, routeBatch);
+
+                if (routeBatch.Count == 0)
+                {
+                    // Routing tags are stamped upstream only on Activities meant to be routed, so a
+                    // batch carrying none has no routed destination rather than a failed export.
+                    return ExportResult.Success;
+                }
+
+                // Blocks until every group has been sent, so Reset cannot run under a consumer that
+                // still holds a group's item list.
+                return _multiEndpointTransmitter!.Track(routeBatch, TelemetryItemOrigin.AzureMonitorTraceExporter, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorTraceExporter), _instrumentationKey, ex);
+                return ExportResult.Failure;
+            }
+            finally
+            {
+                routeBatch.Reset();
+                Interlocked.Exchange(ref _routeBatch, routeBatch);
+            }
         }
 
         /// <inheritdoc/>

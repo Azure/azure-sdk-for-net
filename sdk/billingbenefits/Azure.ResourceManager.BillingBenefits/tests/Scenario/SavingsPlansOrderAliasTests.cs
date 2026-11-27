@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
                     CurrencyCode = "USD",
                     Amount = 0.001
                 });
-            var requestContent = new BenefitValidateRequest();
+            var requestContent = new BenefitValidateContent();
             requestContent.Benefits.Add(model);
 
-            var response = (await _tenantResource.ValidateAsync(requestContent)).Value;
+            var response = (await _tenantResource.ValidateBillingBenefitsSavingsPlanPurchaseAsync(requestContent)).Value;
 
             Assert.NotNull(response);
             Assert.AreEqual(1, response.Benefits.Count);

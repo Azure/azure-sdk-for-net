@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Core;
@@ -22,6 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Contains the endpoint handler methods for the Responses API.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseEndpointHandler
 {
     /// <summary>
@@ -37,6 +40,7 @@ internal sealed class ResponseEndpointHandler
     private readonly ResponsesCancellationSignalProvider _cancellationProvider;
     private readonly AgentEventStreamRegistry _eventStreamRegistry;
     private readonly IOptions<ResponsesServerOptions> _options;
+    private readonly IOptions<ResilientTaskOptions> _resilientTaskOptions;
     private readonly ILogger<ResponseEndpointHandler> _logger;
 
     /// <summary>
@@ -50,6 +54,7 @@ internal sealed class ResponseEndpointHandler
         ResponsesCancellationSignalProvider cancellationProvider,
         AgentEventStreamRegistry eventStreamRegistry,
         IOptions<ResponsesServerOptions> options,
+        IOptions<ResilientTaskOptions> resilientTaskOptions,
         ILogger<ResponseEndpointHandler> logger)
     {
         _activitySource = activitySource;
@@ -59,6 +64,7 @@ internal sealed class ResponseEndpointHandler
         _cancellationProvider = cancellationProvider;
         _eventStreamRegistry = eventStreamRegistry;
         _options = options;
+        _resilientTaskOptions = resilientTaskOptions;
         _logger = logger;
     }
 
@@ -112,6 +118,7 @@ internal sealed class ResponseEndpointHandler
             var requestNode = JsonNode.Parse(bodyBytes)
                 ?? throw new BadRequestException("Request body is required.");
             InternalMetadataEgress.Strip(requestNode);
+            WireShorthandNormalizer.Normalize(requestNode);
             var sanitizedBodyBytes = JsonSerializer.SerializeToUtf8Bytes(requestNode, SharedJsonOptions.Instance);
 
             // Deserialize from the sanitized bytes
@@ -127,9 +134,9 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Detect mode flags (read-only on generated model)
-        var isStreaming = request.Stream == true;
-        var isBackground = request.Background == true;
-        var store = request.Store ?? true;
+        var isStreaming = request.StreamingEnabled == true;
+        var isBackground = request.BackgroundModeEnabled == true;
+        var store = request.StoredOutputEnabled ?? true;
 
         // B13: background=true requires store=true
         if (isBackground && !store)
@@ -220,7 +227,7 @@ internal sealed class ResponseEndpointHandler
         // once a chain exists). AddResponsesServer composes the Core task subsystem in both local and
         // hosted environments (hosted selects the hosted task store), so ANY conversation routes
         // multi-turn — a plain conversation_id chain gets concurrency protection (concurrent overlap
-        // → 409 conversation_locked) even with default options.
+        // → 409 conversation_locked) when Responses enables task execution.
         var steerable = _options.Value.SteerableConversations;
         bool multiTurnAvailable = true;
         bool pickMultiTurn = multiTurnAvailable
@@ -229,29 +236,34 @@ internal sealed class ResponseEndpointHandler
         string? chainId = pickMultiTurn
             ? DeriveConversationChainId(request, conversationId, responseId, steerable)
             : null;
+        string? taskId = pickMultiTurn
+            ? DeriveTaskId(request, conversationId, responseId, steerable)
+            : null;
 
         // Multi-turn (conversation / steerable) is NOT background-gated (parity with Python
         // `_pick_primitive`, which routes any conversation_id or steerable turn through the multi-turn
-        // primitive REGARDLESS of background) — a foreground conversation turn must still get
+        // primitive REGARDLESS of background) — an enabled foreground conversation turn gets
         // concurrency arbitration (concurrent overlap → 409 conversation_locked) and fork rejection
         // (409 conversation_fork_not_supported), which are FR-051/FR-052 requirements that are not
         // background-gated.
         //
-        // EVERY store=true request is task-tracked — including background AND foreground streaming.
+        // When Responses activates the Core task runtime, every store=true request is task-tracked —
+        // including background AND foreground streaming.
         // The streaming task path does NOT await response.created: the SSE result subscribes to the
-        // per-response wire stream and relays immediately (parity with Python `_live_stream`), so a
+        // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
         // pre-creation (Phase 1) persistence failure is surfaced by the relay as a standalone spec-B8
         // SSE `error` event (recorded on execution.PreCreatedRelayFailure and re-thrown by
-        // SubscribeBackgroundStreamAsync) rather than an HTTP 500, and the Phase-2 terminal is published
+        // SubscribeTaskStreamAsync) rather than an HTTP 500, and the Phase-2 terminal is published
         // to the wire stream by CreateStreamingAsync AFTER its persistence rewrite so a terminal persist
         // failure surfaces response.failed (not response.completed). This closes the former Row-2
         // background-streaming / Row-3 foreground crash-recovery gap: both are now task-tracked, so the
         // next-lifetime recovery scan observes and marks-failed a crashed turn (Path C).
         //
-        // Task-routing gate (parity with Python responses-resilience-spec §6): the handler runs INSIDE
-        // a Core resilient task for EVERY non-hosted store=true request — background OR foreground,
-        // streaming OR non-streaming, one-shot OR multi-turn. Only store=false (Row 4) runs inline
-        // (Python `run_sync`/`run_stream` skip the task when store=false: "no store ⇒ no resilient task").
+        // Task-routing gate (Python parity): when Responses enables the Core runtime, the
+        // handler runs INSIDE a task for every store=true request — background OR foreground,
+        // streaming OR non-streaming, one-shot OR multi-turn. When the runtime is disabled, stored
+        // work falls back to in-process execution: response persistence remains active, but crash
+        // recovery/task arbitration are not.
         // StartResilientTurnAsync selects the primitive from pickMultiTurn and the recovery disposition
         // from the row (Row 1 bg+resilient → re-invoke; Rows 2/3 → mark-failed). The trailing clause
         // keeps the pre-existing .NET behavior of routing a store=false conversation / steerable turn
@@ -259,23 +271,24 @@ internal sealed class ResponseEndpointHandler
         // the non-streaming path; store=false is otherwise inline.
         //
         // Streaming task-routing does NOT await response.created: the SSE result subscribes to the
-        // per-response wire stream and relays immediately (parity with Python `_live_stream`), so a
+        // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
         // Phase-1 persistence failure inside the task body surfaces as a standalone SSE `error` event
         // (spec-B8) delivered by the relay, and a slow first turn never blocks the HTTP response. A
         // task-START infra failure still propagates BEFORE the SSE headers as HTTP 500 +
         // x-platform-error-source (see ResilientStartFailureProtocolTests) — .NET returns a clean HTTP
         // error rather than a 200 + error event because, unlike Starlette, the SSE headers are not yet
         // committed when StartResilientTurnAsync runs.
-        bool useResilientTask = store
-            || (pickMultiTurn && (isBackground || !isStreaming));
+        bool useResilientTask = (_options.Value.ResilientBackground || _options.Value.SteerableConversations)
+            && _resilientTaskOptions.Value.Enabled
+            && (store || (pickMultiTurn && (isBackground || !isStreaming)));
 
-        var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
+        var execution = _tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
 
         // Record the creation-time session ID and user ID key on the execution
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
         execution.AgentSessionId = request.AgentSessionId;
-        execution.UserIdKey = platformContext.UserIdKey;
+        execution.InboundPlatformContext = platformContext;
 
         var context = new ResponseContextImpl(
             responseId,
@@ -311,7 +324,7 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Get cancellation token from provider (supports external cancel)
-        var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(responseId);
+        var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(execution.LifecycleId);
 
         if (isStreaming)
         {
@@ -324,35 +337,34 @@ internal sealed class ResponseEndpointHandler
                 if (useResilientTask)
                 {
                     // The handler runs inside a decoupled Core task; the client connection relays the
-                    // per-response wire stream (registry) rather than the task body's event enumerator.
-                    // Flag it so the orchestrator populates the registry publisher for BOTH background
-                    // and foreground streaming (foreground would otherwise get a NullPublisher and the
-                    // relay would block forever on an empty wire stream) and routes created/terminal
-                    // events through the wire stream only after their persistence outcome is known.
-                    execution.RelayViaRegistry = true;
+                    // task-bound stream rather than the task body's event enumerator. Flag it so the
+                    // orchestrator publishes through TaskContext.Stream for BOTH background and foreground
+                    // streaming and routes created/terminal events only after their persistence outcome
+                    // is known.
+                    execution.RelayViaTaskStream = true;
 
                     var run = await StartResilientTurnAsync(
-                        httpContext, request, responseId, chainId, pickMultiTurn,
+                        httpContext, request, responseId, chainId, taskId, pickMultiTurn,
                         platformContext, clientHeaders, queryParameters);
 
                     // A steered turn queued behind an active turn does NOT short-circuit to a JSON
                     // queued envelope when the caller asked to stream: stream=true must always yield an
                     // SSE stream regardless of whether the turn runs immediately or is queued (the JSON
                     // queued envelope is reserved for the NON-streaming queued paths below). We keep the
-                    // endpoint-created execution (RelayViaRegistry=true was set just above) rather than
+                    // endpoint-created execution (RelayViaTaskStream=true was set just above) rather than
                     // evicting it, so when the queued input drains later inside Core the re-entry REUSES
                     // this execution (tracker.TryGet) and its handler publishes response.created /
-                    // in_progress / … onto the per-response wire stream — for foreground turns too, which
+                    // in_progress / … onto the task-bound stream — for foreground turns too, which
                     // would otherwise get a NullPublisher if the drain created a fresh execution. The SSE
-                    // result below subscribes to that wire stream immediately (GetOrCreateAsync) and stays
-                    // open, relaying nothing until the turn starts, then emitting events as they arrive.
+                    // result below subscribes to the task-bound stream immediately and stays open, relaying
+                    // nothing until the turn starts, then emitting events as they arrive.
                     // run.Completion resolves when the queued turn's steered re-entry completes.
                     execution.ExecutionTask = run.Completion;
 
-                    // Relay the per-response wire stream immediately — do NOT await
+                    // Relay the task-bound stream immediately — do NOT await
                     // ResponseCreatedSignal. The handler runs inside the task body and writes events
                     // (including response.created, or a standalone B8 `error` on a pre-created failure)
-                    // to the registry wire stream; the SSE result subscribes and relays them as they
+                    // to TaskContext.Stream; the SSE result subscribes through TaskRun.Stream and relays them as they
                     // arrive (parity with Python `_live_stream`). Awaiting response.created here would
                     // deadlock a foreground stream whose handler backpressures on the wire stream until
                     // a subscriber attaches.
@@ -382,12 +394,12 @@ internal sealed class ResponseEndpointHandler
 
                     linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
                         providerCt, execution.CancellationTokenSource.Token);
-                    var backgroundSseResult = new SseResult(
-                        SubscribeBackgroundStreamAsync(responseId, execution, linkedCts.Token),
+                    var taskStreamSseResult = new SseResult(
+                        SubscribeTaskStreamAsync(run.Stream, execution, linkedCts.Token),
                         execution, linkedCts, SharedJsonOptions.Instance, _logger,
                         FoundryEnvironment.SseKeepAliveInterval);
                     linkedCts = null;
-                    return backgroundSseResult;
+                    return taskStreamSseResult;
                 }
                 else if (isBackground)
                 {
@@ -433,14 +445,14 @@ internal sealed class ResponseEndpointHandler
             if (useResilientTask)
             {
                 var run = await StartResilientTurnAsync(
-                    httpContext, request, responseId, chainId, pickMultiTurn,
+                    httpContext, request, responseId, chainId, taskId, pickMultiTurn,
                     platformContext, clientHeaders, queryParameters);
 
                 // A steered turn queued behind an active turn returns the queued envelope
                 // immediately; it drains later inside Core as a steered re-entry.
                 if (run.IsQueued)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
@@ -482,14 +494,14 @@ internal sealed class ResponseEndpointHandler
                 // the primitive from pickMultiTurn. Either way the foreground caller waits synchronously
                 // for the terminal result and receives the FINAL response inline.
                 var run = await StartResilientTurnAsync(
-                    httpContext, request, responseId, chainId, pickMultiTurn,
+                    httpContext, request, responseId, chainId, taskId, pickMultiTurn,
                     platformContext, clientHeaders, queryParameters);
 
                 // A steered turn queued behind an active turn returns the queued envelope immediately;
                 // it drains later inside Core as a steered re-entry.
                 if (run.IsQueued)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
@@ -537,7 +549,7 @@ internal sealed class ResponseEndpointHandler
                 // and Python run_sync §6.2.
                 if (execution.PersistenceFailed)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     if (execution.PersistenceException is ResponsesApiException or BadRequestException)
                     {
                         throw execution.PersistenceException;
@@ -554,7 +566,7 @@ internal sealed class ResponseEndpointHandler
                 // directly to avoid a spurious ResourceNotFoundException from the orchestrator read.
                 if (execution.ClientDisconnected)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
                     return JsonForClient(execution.Response?.Snapshot() ?? BuildQueuedEnvelope(request, context, responseId));
                 }
@@ -576,15 +588,13 @@ internal sealed class ResponseEndpointHandler
                 httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = finalResponse.AgentSessionId;
                 _logger.LogInformation(
                     "Foreground resilient response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                    responseId, finalResponse.Status, finalResponse.Output.Count);
+                    responseId, finalResponse.Status, finalResponse.OutputItems.Count);
                 return JsonForClient(finalResponse);
             }
 
-            // Inline foreground fallback — reached ONLY for store=false one-shot foreground (Row 4:
-            // ephemeral, no durable state to recover, so no Core task). Every store=true foreground
-            // turn routes through the resilient task above (Row 3 Path C task-tracking), matching Python
-            // responses-resilience-spec §6 (the handler runs inside a resilient task for EVERY
-            // store=true request; only store=false runs inline).
+            // Inline foreground fallback — used for store=false one-shot work and for stored work
+            // when the application did not opt in to Core resilient tasks. Stored fallback responses
+            // are still persisted, but they are not task-tracked or recovered after a crash.
             // Order matters: register linked CTS first, then ClientDisconnected flag.
             // CancellationToken callbacks fire in LIFO order, so registering the flag
             // second ensures it is set before the linked CTS propagates cancellation
@@ -597,7 +607,7 @@ internal sealed class ResponseEndpointHandler
 
             _logger.LogInformation(
                 "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                responseId, execution.Response!.Status, execution.Response!.Output.Count);
+                responseId, execution.Response!.Status, execution.Response!.OutputItems.Count);
             return JsonForClient(execution.Response!.Snapshot());
         }
     }
@@ -616,13 +626,13 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Derive the recovery disposition from the row classification rather than hard-coding it.
-        // This call site now also serves Row 2 (store + background, non-resilient): ResilientBackground
-        // resolves to re-invoke (Row 1) while a stored non-resilient background response resolves to
-        // mark-failed (Row 2), so the recovery scan marks it failed instead of re-invoking. Deriving it
+        // This call site also serves Row 2 when steering alone enables task execution:
+        // resilient background resolves to re-invoke (Row 1) while stored non-resilient
+        // background work resolves to mark-failed (Row 2). Deriving it
         // keeps every entry correct and matches the dispatch truth table exactly.
         var disposition = ResponseResilienceDispatch.DecideDisposition(
-            store: request.Store != false,
-            background: request.Background == true,
+            store: request.StoredOutputEnabled != false,
+            background: request.BackgroundModeEnabled == true,
             resilientBackground: _options.Value.ResilientBackground);
 
         var payload = new ResponseRecoveryPayload(
@@ -639,22 +649,92 @@ internal sealed class ResponseEndpointHandler
         return payload;
     }
 
-    private async IAsyncEnumerable<SseItem<string>> SubscribeBackgroundStreamAsync(
-        string responseId,
+    private async IAsyncEnumerable<SseItem<string>> SubscribeTaskStreamAsync(
+        TaskStream stream,
         ResponseExecution execution,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var stream = await _eventStreamRegistry.GetOrCreateAsync(responseId, cancellationToken)
-            .ConfigureAwait(false);
-        var enumerator = stream.Subscribe().WithCancellation(cancellationToken).ConfigureAwait(false).GetAsyncEnumerator();
+        using var relayCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var enumerator = stream.Subscribe().GetAsyncEnumerator(relayCts.Token);
+        Task? executionTask = execution.ExecutionTask;
         var createdSeen = false;
+        string? lastEventId = null;
+        string? failureEventId = null;
+        ExceptionDispatchInfo? completionFailure = null;
         try
         {
             while (true)
             {
                 try
                 {
-                    if (!await enumerator.MoveNextAsync())
+                    if (completionFailure is not null
+                        && string.Equals(lastEventId, failureEventId, StringComparison.Ordinal))
+                    {
+                        completionFailure.Throw();
+                    }
+
+                    ValueTask<bool> moveNext = enumerator.MoveNextAsync();
+                    bool hasNext;
+                    if (moveNext.IsCompletedSuccessfully)
+                    {
+                        // Prefer already-buffered events even if task completion faulted concurrently.
+                        // Once the buffer is drained, the next pending read observes the fault below.
+                        hasNext = moveNext.Result;
+                    }
+                    else
+                    {
+                        Task<bool> moveNextTask = moveNext.AsTask();
+                        if (completionFailure is null
+                            && executionTask is not null && !executionTask.IsCompletedSuccessfully)
+                        {
+                            Task completed = await Task.WhenAny(moveNextTask, executionTask);
+                            if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted)
+                            {
+                                Exception failure;
+                                try
+                                {
+                                    await executionTask;
+                                    throw new InvalidOperationException(
+                                        "A faulted task unexpectedly completed successfully.");
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Preserve the original Phase-1 storage/handler error rather
+                                    // than replacing it with Core's task-fault wrapper.
+                                    failure = !createdSeen && execution.PreCreatedRelayFailure is not null
+                                        ? execution.PreCreatedRelayFailure
+                                        : ex;
+                                }
+
+                                completionFailure = ExceptionDispatchInfo.Capture(failure);
+                                failureEventId = await stream.GetLastEventIdAsync(cancellationToken);
+
+                                // Replay may require asynchronous I/O even when events are retained.
+                                // Drain through the fault-time watermark before surfacing the failure;
+                                // Core leaves this stream open for recovery, so waiting for EOF hangs.
+                                if (string.Equals(lastEventId, failureEventId, StringComparison.Ordinal))
+                                {
+                                    relayCts.Cancel();
+                                    try
+                                    {
+                                        await moveNextTask;
+                                    }
+                                    catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
+                                    {
+                                        // Cancellation is local to this subscription, not the recoverable stream.
+                                    }
+
+                                    completionFailure.Throw();
+                                }
+                            }
+                        }
+
+                        // Successful task completion must not truncate buffered events. Core closes
+                        // the transport after the durable terminal transition, so continue until EOF.
+                        hasNext = await moveNextTask;
+                    }
+
+                    if (!hasNext)
                     {
                         break;
                     }
@@ -670,6 +750,7 @@ internal sealed class ResponseEndpointHandler
                 }
 
                 var item = enumerator.Current;
+                lastEventId = item.EventId;
                 if (string.Equals(item.EventType, "response.created", StringComparison.Ordinal))
                 {
                     createdSeen = true;
@@ -694,14 +775,14 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
-    /// Derives the stable conversation chain id for arbitration using the same inputs as
-    /// <see cref="ResponseContextImpl.ConversationChainId"/>, so a turn keys to the same chain in
-    /// the arbitrator as it reports to the handler.
+    /// Derives the stable public conversation chain id reported through
+    /// <see cref="ResponseContextImpl.ConversationChainId"/>. Hosted task arbitration may use a
+    /// private session-incarnation scope while preserving this handler-facing identity.
     /// </summary>
     private static string DeriveConversationChainId(
         CreateResponse request, string? conversationId, string responseId, bool steerable)
     {
-        AgentReference? agentReference = request.AgentReference ?? request.Agent;
+        AgentReference? agentReference = request.AgentReference ?? request.DeprecatedAgent;
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = request.AgentSessionId is { Length: > 0 } sid
             ? sid
@@ -709,6 +790,30 @@ internal sealed class ResponseEndpointHandler
 
         return ConversationChainIdDerivation.Derive(
             conversationId, request.PreviousResponseId, responseId, agentName, sessionId, steerable);
+    }
+
+    /// <summary>Derives the private physical task ID for the current hosted session incarnation.</summary>
+    private static string DeriveTaskId(
+        CreateResponse request, string? conversationId, string responseId, bool steerable)
+    {
+        AgentReference? agentReference = request.AgentReference ?? request.DeprecatedAgent;
+        string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
+        string sessionId = request.AgentSessionId is { Length: > 0 } sid
+            ? sid
+            : SessionIdDerivation.Derive(conversationId, request.PreviousResponseId, responseId, agentReference);
+        Guid? sessionInstanceId =
+            FoundryEnvironment.IsHosted ? FoundryEnvironment.SessionInstanceId : null;
+        string taskSessionId =
+            TaskIdDerivation.DeriveSessionScope(sessionId, sessionInstanceId);
+
+        return TaskIdDerivation.Derive(
+            conversationId,
+            request.PreviousResponseId,
+            responseId,
+            agentName,
+            sessionId,
+            taskSessionId,
+            steerable);
     }
 
     /// <summary>
@@ -722,6 +827,7 @@ internal sealed class ResponseEndpointHandler
         CreateResponse request,
         string responseId,
         string? chainId,
+        string? taskId,
         bool pickMultiTurn,
         PlatformContext platformContext,
         IReadOnlyDictionary<string, string> clientHeaders,
@@ -729,30 +835,74 @@ internal sealed class ResponseEndpointHandler
     {
         var payload = BuildRecoveryPayload(
             responseId, request, platformContext, clientHeaders, queryParameters);
-        var invoker = httpContext.RequestServices.GetRequiredService<ITaskInvoker>();
+        var partition = ResponseStorePartition.FromContext(platformContext);
+        var lifecycleId = partition.GetLifecycleId(responseId);
 
         var taskName = pickMultiTurn
             ? ResponsesResilientTaskHandler.MultiTurnTaskName
             : ResponsesResilientTaskHandler.OneShotTaskName;
 
-        // Multi-turn: the chain id is the task id and the response id is the per-turn input id; a
-        // previous_response_id becomes the ifLastInputId fork precondition (Core rejects a turn that
-        // does not extend the most recent turn). One-shot: task id == input id == response id.
-        var runOptions = pickMultiTurn
-            ? new RunOptions
-            {
-                TaskId = chainId!,
-                InputId = responseId,
-                IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
-                    ? null
-                    : request.PreviousResponseId,
-            }
-            : new RunOptions { TaskId = responseId, InputId = responseId };
+        var definition = httpContext.RequestServices
+            .GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(taskName);
 
         try
         {
-            return await invoker.StartAsync<ResponseTaskInput, ResponseTaskOutput>(
-                taskName,
+            string scopedTaskId = pickMultiTurn
+                ? partition.GetLifecycleId(taskId!)
+                : lifecycleId;
+            string legacyTaskId = pickMultiTurn
+                ? partition.GetLifecycleId(chainId!)
+                : lifecycleId;
+            string selectedTaskId = lifecycleId;
+            if (pickMultiTurn)
+            {
+                selectedTaskId = await SelectCompatibleTaskIdAsync(
+                    definition,
+                    scopedTaskId,
+                    legacyTaskId,
+                    CancellationToken.None).ConfigureAwait(false);
+            }
+
+            // Multi-turn: task and input identities are user-partitioned. The physical task id may
+            // additionally be scoped by the hosted session instance while the public chain id
+            // remains stable. A previous_response_id becomes the user-partitioned ifLastInputId
+            // fork precondition. One-shot task id == input id == lifecycle id.
+            var runOptions = pickMultiTurn
+                ? new RunOptions
+                {
+                    TaskId = selectedTaskId,
+                    InputId = lifecycleId,
+                    IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
+                        ? null
+                        : partition.GetLifecycleId(request.PreviousResponseId),
+                }
+                : new RunOptions { TaskId = lifecycleId, InputId = lifecycleId };
+
+            if (pickMultiTurn
+                && !string.Equals(scopedTaskId, legacyTaskId, StringComparison.Ordinal)
+                && string.Equals(selectedTaskId, legacyTaskId, StringComparison.Ordinal))
+            {
+                TaskRun<ResponseTaskOutput>? legacyRun =
+                    await definition.TryStartExistingAsync(
+                        new ResponseTaskInput(payload),
+                        runOptions,
+                        CancellationToken.None).ConfigureAwait(false);
+                if (legacyRun is not null)
+                {
+                    return legacyRun;
+                }
+
+                runOptions = new RunOptions
+                {
+                    TaskId = scopedTaskId,
+                    InputId = lifecycleId,
+                    IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
+                        ? null
+                        : partition.GetLifecycleId(request.PreviousResponseId),
+                };
+            }
+
+            return await definition.StartAsync(
                 new ResponseTaskInput(payload),
                 runOptions,
                 CancellationToken.None).ConfigureAwait(false);
@@ -763,12 +913,11 @@ internal sealed class ResponseEndpointHandler
             // fork (Core precondition failure) — reject rather than branch the chain. Body shape
             // (type/code/param/message) matches Python `_endpoint_handler` for wire parity.
             throw new ResponsesApiException(
-                new Error("conversation_fork_not_supported",
-                    "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.")
-                {
-                    Type = "conflict",
-                    Param = "previous_response_id",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_fork_not_supported",
+                    "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.",
+                    param: "previous_response_id",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.Conflict)
@@ -777,11 +926,10 @@ internal sealed class ResponseEndpointHandler
             // matches Python `_endpoint_handler` exactly: `Conversation is locked — task is {status}`
             // with the lower-case snake-case wire status and no trailing period.
             throw new ResponsesApiException(
-                new Error("conversation_locked",
-                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}")
-                {
-                    Type = "conflict",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_locked",
+                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.QueueFull)
@@ -790,11 +938,10 @@ internal sealed class ResponseEndpointHandler
             // distinct queue-full code; surfaced as conversation_locked (409 conflict) — recorded as a
             // Python-side verification action item in the parity report.
             throw new ResponsesApiException(
-                new Error("conversation_locked",
-                    "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.")
-                {
-                    Type = "conflict",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_locked",
+                    "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (Exception ex)
@@ -808,6 +955,31 @@ internal sealed class ResponseEndpointHandler
             ex.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
             throw;
         }
+    }
+
+    private static async Task<string> SelectCompatibleTaskIdAsync(
+        TaskDefinition<ResponseTaskInput, ResponseTaskOutput> definition,
+        string taskId,
+        string legacyTaskId,
+        CancellationToken cancellationToken)
+    {
+        if (string.Equals(taskId, legacyTaskId, StringComparison.Ordinal))
+        {
+            return taskId;
+        }
+
+        if (await definition.GetStatusAsync(taskId, cancellationToken).ConfigureAwait(false) is not null)
+        {
+            return taskId;
+        }
+
+        TaskRunStatus? legacyStatus =
+            await definition.GetStatusAsync(legacyTaskId, cancellationToken).ConfigureAwait(false);
+        return legacyStatus is TaskRunStatus.Pending
+            or TaskRunStatus.InProgress
+            or TaskRunStatus.Suspended
+                ? legacyTaskId
+                : taskId;
     }
 
     private static string ToWireStatus(Core.Tasks.TaskRunStatus status) => status switch
@@ -847,8 +1019,12 @@ internal sealed class ResponseEndpointHandler
             }
         }
 
-        return new ResponseObject(responseId, request.Model ?? string.Empty)
+        return new ResponseObject
         {
+            Id = responseId,
+            Object = "response",
+            CreatedAt = DateTimeOffset.UtcNow,
+            Model = request.Model ?? string.Empty,
             Status = ResponseStatus.Queued,
         };
     }
@@ -871,7 +1047,7 @@ internal sealed class ResponseEndpointHandler
                 "Getting response {ResponseId} with SSE replay: HasUserId={HasUserId} HasCallId={HasCallId}",
                 responseId, platformContext.UserIdKey is not null, platformContext.CallId is not null);
             // Apply B2 guards: SSE replay requires background + streaming + store.
-            if (_tracker.TryGet(responseId, out var execution) && execution is not null)
+            if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
             {
                 // User-key enforcement for in-flight responses
                 execution.EnforceUserIsolation(platformContext);
@@ -917,7 +1093,7 @@ internal sealed class ResponseEndpointHandler
 
                 // B2: SSE replay requires background mode. Non-bg responses never
                 // have event streams (they use NullPublisher).
-                if (persisted.Background != true)
+                if (persisted.BackgroundModeEnabled != true)
                 {
                     throw new BadRequestException(
                         "This response cannot be streamed because it was not created with background=true.",
@@ -950,7 +1126,11 @@ internal sealed class ResponseEndpointHandler
             }
 
             return new SseReplayResult(
-                _eventStreamRegistry, responseId, SharedJsonOptions.Instance, _logger,
+                _eventStreamRegistry,
+                ResponseStorePartition.FromContext(platformContext).GetLifecycleId(responseId),
+                responseId,
+                SharedJsonOptions.Instance,
+                _logger,
                 FoundryEnvironment.SseKeepAliveInterval, startingAfter);
         }
 
@@ -962,7 +1142,7 @@ internal sealed class ResponseEndpointHandler
         httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation(
             "Retrieved response {ResponseId}: Status={Status} OutputCount={OutputCount}",
-            responseId, response.Status, response.Output.Count);
+            responseId, response.Status, response.OutputItems.Count);
         return JsonForClient(response);
     }
     /// <summary>
@@ -996,7 +1176,7 @@ internal sealed class ResponseEndpointHandler
         // Guard: if response is in-flight, reject deletion.
         // With eager eviction, all tracked executions are in-flight — completed
         // responses are evicted by FinalizeExecutionAsync and served from the provider.
-        if (_tracker.TryGet(responseId, out var execution) && execution is not null)
+        if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
         {
             // User-key enforcement for in-flight responses
             execution.EnforceUserIsolation(platformContext);
@@ -1017,7 +1197,7 @@ internal sealed class ResponseEndpointHandler
             // could exist in storage. Best-effort delete — ignore NotFound.
             if (execution.PersistenceFailed)
             {
-                _tracker.TryEvict(responseId);
+                _tracker.TryEvict(execution);
 
                 try
                 {
@@ -1030,7 +1210,7 @@ internal sealed class ResponseEndpointHandler
 
                 try
                 {
-                    await _eventStreamRegistry.DeleteAsync(responseId);
+                    await _eventStreamRegistry.DeleteAsync(execution.LifecycleId);
                 }
                 catch (Exception ex)
                 {
@@ -1068,7 +1248,7 @@ internal sealed class ResponseEndpointHandler
             }
             catch (TimeoutException)
             {
-                _tracker.TryEvict(responseId);
+                _tracker.TryEvict(execution);
             }
         }
 
@@ -1083,7 +1263,8 @@ internal sealed class ResponseEndpointHandler
         // Clean up event stream — deleted responses should not be replayable.
         try
         {
-            await _eventStreamRegistry.DeleteAsync(responseId);
+            await _eventStreamRegistry.DeleteAsync(
+                ResponseStorePartition.FromContext(platformContext).GetLifecycleId(responseId));
         }
         catch (Exception ex)
         {
@@ -1150,6 +1331,8 @@ internal sealed class ResponseEndpointHandler
         var result = await _provider.GetInputItemsAsync(
             responseId, platformContext, limit, ascending, after, before, httpContext.RequestAborted);
 
+        // Custom providers may build the page without the list envelope discriminator.
+        result.Object ??= "list";
         return JsonForClient(result);
     }
 

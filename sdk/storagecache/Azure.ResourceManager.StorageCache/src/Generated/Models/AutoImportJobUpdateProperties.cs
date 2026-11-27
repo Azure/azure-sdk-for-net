@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> The AutoImportJobUpdateProperties. </summary>
+    /// <summary> Properties for updating an auto import job. </summary>
     internal partial class AutoImportJobUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

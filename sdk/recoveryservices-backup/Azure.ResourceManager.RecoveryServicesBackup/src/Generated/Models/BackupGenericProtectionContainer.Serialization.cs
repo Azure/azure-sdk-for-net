@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for container with backup items. Containers with specific workloads are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>, <see cref="DpmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="WorkloadContainer"/>, <see cref="SqlContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/>, <see cref="GenericContainer"/>, and <see cref="MabContainer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="IaasVmContainer"/>, <see cref="MabContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="SqlContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/>, and <see cref="WorkloadContainer"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownProtectionContainer))]
     public abstract partial class BackupGenericProtectionContainer : IJsonModel<BackupGenericProtectionContainer>
@@ -159,26 +159,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return BackupServerContainer.DeserializeBackupServerContainer(element, options);
                     case "DPMContainer":
                         return DpmContainer.DeserializeDpmContainer(element, options);
+                    case "GenericContainer":
+                        return GenericContainer.DeserializeGenericContainer(element, options);
                     case "Microsoft.ClassicCompute/virtualMachines":
                         return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element, options);
-                    case "IaasVMContainer":
-                        return IaasVmContainer.DeserializeIaasVmContainer(element, options);
                     case "Microsoft.Compute/virtualMachines":
                         return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element, options);
+                    case "IaasVMContainer":
+                        return IaasVmContainer.DeserializeIaasVmContainer(element, options);
+                    case "Windows":
+                        return MabContainer.DeserializeMabContainer(element, options);
                     case "SQLAGWorkLoadContainer":
                         return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element, options);
-                    case "AzureWorkloadContainer":
-                        return WorkloadContainer.DeserializeWorkloadContainer(element, options);
                     case "AzureSqlContainer":
                         return SqlContainer.DeserializeSqlContainer(element, options);
                     case "StorageContainer":
                         return StorageContainer.DeserializeStorageContainer(element, options);
                     case "VMAppContainer":
                         return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element, options);
-                    case "GenericContainer":
-                        return GenericContainer.DeserializeGenericContainer(element, options);
-                    case "Windows":
-                        return MabContainer.DeserializeMabContainer(element, options);
+                    case "AzureWorkloadContainer":
+                        return WorkloadContainer.DeserializeWorkloadContainer(element, options);
                 }
             }
             return UnknownProtectionContainer.DeserializeUnknownProtectionContainer(element, options);

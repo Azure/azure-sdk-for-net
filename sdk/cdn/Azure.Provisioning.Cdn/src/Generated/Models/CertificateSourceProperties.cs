@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.Cdn
     /// </summary>
     public partial class CertificateSourceProperties : ProvisionableConstruct
     {
+        private BicepValue<CertificateSourceParametersType> _typeName;
+
         /// <summary> Creates a new CertificateSourceProperties. </summary>
         public CertificateSourceProperties()
         {
+        }
+
+        /// <summary> Gets the TypeName. </summary>
+        internal BicepValue<CertificateSourceParametersType> TypeName
+        {
+            get
+            {
+                Initialize();
+                return _typeName;
+            }
         }
 
         /// <summary> Define all the provisionable properties for CertificateSourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _typeName = DefineProperty<CertificateSourceParametersType>(nameof(TypeName), new string[] { "typeName" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

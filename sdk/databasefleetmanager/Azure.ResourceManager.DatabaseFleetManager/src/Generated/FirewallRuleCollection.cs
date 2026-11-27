@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirewallRuleData, FirewallRuleResource>(new FirewallRulesGetByFleetspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FirewallRuleData, FirewallRuleResource>(new FirewallRuleDataAsyncCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirewallRuleData, FirewallRuleResource>(new FirewallRulesGetByFleetspaceCollectionResultOfT(
+            return new PageableWrapper<FirewallRuleData, FirewallRuleResource>(new FirewallRuleDataCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

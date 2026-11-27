@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Threading;
@@ -29,6 +30,9 @@ namespace Azure.Messaging.EventHubs.Core
 
         /// <summary>The maximum number of seconds allowed for a <see cref="TimeSpan" />.</summary>
         private static readonly double MaximumTimeSpanSeconds = TimeSpan.MaxValue.TotalSeconds;
+
+        /// <summary>The maximum number of nested exceptions to unwrap when determining whether an exception should be retried.</summary>
+        private const int MaximumUnwrapDepth = 5;
 
         /// <summary>
         ///   The set of options responsible for configuring the retry
@@ -141,16 +145,34 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
-            // Transform the exception into a more relevant type, if possible.
+            // Transform the exception into a more relevant type, if possible.  Wrapper exceptions are
+            // unwrapped one level at a time until an exception that can be classified is found.  The
+            // depth limit guards against a pathological or cyclic chain of inner exceptions.  An
+            // IOException is retriable on its own, so it is unwrapped only when it directly wraps a
+            // SocketException; the socket error code then decides whether the failure is terminal.
+            // Keep the unwrap loop and the classification switch in step with the copy in
+            // sdk/servicebus/Azure.Messaging.ServiceBus/src/Core/BasicRetryPolicy.cs.
 
-            exception = exception switch
+            for (var unwrapCount = 0; unwrapCount < MaximumUnwrapDepth; ++unwrapCount)
             {
-                TaskCanceledException => exception?.InnerException,
-                OperationCanceledException => exception?.InnerException,
-                WebSocketException => exception?.InnerException ?? exception,
-                AggregateException aggregateEx => aggregateEx?.Flatten().InnerException,
-                _ => exception
-            };
+                var unwrapped = exception switch
+                {
+                    TaskCanceledException => exception?.InnerException,
+                    OperationCanceledException => exception?.InnerException,
+                    WebSocketException => exception?.InnerException ?? exception,
+                    HttpRequestException => exception?.InnerException ?? exception,
+                    AggregateException aggregateEx => aggregateEx?.Flatten().InnerException,
+                    IOException when exception.InnerException is SocketException => exception.InnerException,
+                    _ => exception
+                };
+
+                if (ReferenceEquals(unwrapped, exception))
+                {
+                    break;
+                }
+
+                exception = unwrapped;
+            }
 
             switch (exception)
             {

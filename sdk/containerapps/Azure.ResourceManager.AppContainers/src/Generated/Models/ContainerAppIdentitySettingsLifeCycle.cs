@@ -11,17 +11,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Use to select the lifecycle stages of a Session Pool during which the Managed Identity should be available. </summary>
+    /// <summary> Use to select the lifecycle stages of a Container App during which the Managed Identity should be available. </summary>
     public readonly partial struct ContainerAppIdentitySettingsLifeCycle : IEquatable<ContainerAppIdentitySettingsLifeCycle>
     {
         private readonly string _value;
-        /// <summary> None. </summary>
+        /// <summary> Do not use managed identity during any lifecycle stage. </summary>
         private const string NoneValue = "None";
-        /// <summary> Main. </summary>
+        /// <summary> Use managed identity during the main stage of the Container App lifecycle. </summary>
         private const string MainValue = "Main";
-        /// <summary> Init. </summary>
+        /// <summary> Use managed identity during the init stage of the Container App lifecycle. </summary>
         private const string InitValue = "Init";
-        /// <summary> All. </summary>
+        /// <summary> Use managed identity during all lifecycle stages of the Container App. </summary>
         private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppIdentitySettingsLifeCycle"/>. </summary>
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value;
         }
 
-        /// <summary> None. </summary>
+        /// <summary> Do not use managed identity during any lifecycle stage. </summary>
         public static ContainerAppIdentitySettingsLifeCycle None { get; } = new ContainerAppIdentitySettingsLifeCycle(NoneValue);
 
-        /// <summary> Main. </summary>
+        /// <summary> Use managed identity during the main stage of the Container App lifecycle. </summary>
         public static ContainerAppIdentitySettingsLifeCycle Main { get; } = new ContainerAppIdentitySettingsLifeCycle(MainValue);
 
-        /// <summary> Init. </summary>
+        /// <summary> Use managed identity during the init stage of the Container App lifecycle. </summary>
         public static ContainerAppIdentitySettingsLifeCycle Init { get; } = new ContainerAppIdentitySettingsLifeCycle(InitValue);
 
-        /// <summary> All. </summary>
+        /// <summary> Use managed identity during all lifecycle stages of the Container App. </summary>
         public static ContainerAppIdentitySettingsLifeCycle All { get; } = new ContainerAppIdentitySettingsLifeCycle(AllValue);
 
         /// <summary> Determines if two <see cref="ContainerAppIdentitySettingsLifeCycle"/> values are the same. </summary>

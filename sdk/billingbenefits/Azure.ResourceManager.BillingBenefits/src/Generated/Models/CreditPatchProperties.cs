@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of <see cref="CreditPatchProperties"/>. </summary>
         /// <param name="credit"> The entire investment amount for the credit contract, including currency and amount. Only amount can be modified. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="breakdown"> Credit line-items/milestones/no-charge services breakdown. Entire breakdown will be replaced in a PATCH operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreditPatchProperties(BillingBenefitsCommitment credit, DateTimeOffset? endOn, IList<CreditBreakdownItem> breakdown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreditPatchProperties(BillingBenefitsCommitment credit, DateTimeOffset? endsOn, IList<CreditBreakdownItem> breakdown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Credit = credit;
-            EndOn = endOn;
+            EndsOn = endsOn;
             Breakdown = breakdown;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Credit { get; set; }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Credit line-items/milestones/no-charge services breakdown. Entire breakdown will be replaced in a PATCH operation. </summary>
         public IList<CreditBreakdownItem> Breakdown { get; } = new ChangeTrackingList<CreditBreakdownItem>();

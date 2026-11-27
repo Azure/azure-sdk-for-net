@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> AATP (Azure Advanced Threat Protection) data connector properties. </summary>
     internal partial class AatpDataConnectorProperties : IJsonModel<AatpDataConnectorProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AatpDataConnectorProperties"/> for deserialization. </summary>
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AatpDataConnectorProperties(tenantId, dataTypes, additionalBinaryDataProperties);

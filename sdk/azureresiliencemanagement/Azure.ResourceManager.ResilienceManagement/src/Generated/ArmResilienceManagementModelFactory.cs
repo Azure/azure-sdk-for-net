@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public static partial class ArmResilienceManagementModelFactory
     {
 
+        /// <summary> A goal assignment resource in the Azure Resilience Management provider. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,34 +37,29 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
-        /// <param name="goalTemplateId"> Arm id of the goal template. </param>
-        /// <param name="goalAssignmentType"> The type of goal assignment. </param>
+        /// <summary> Properties of a goal assignment. </summary>
+        /// <param name="isZonalResiliencyRequired"> Whether zonal resiliency is required for this goal assignment. </param>
         /// <param name="serviceLevelResources"> List of service level resources. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="provisioningState"> The provisioning state of the goal assignment. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <returns> A new <see cref="Models.GoalAssignmentProperties"/> instance for mocking. </returns>
-        public static GoalAssignmentProperties GoalAssignmentProperties(ResourceIdentifier goalTemplateId = default, GoalAssignmentType goalAssignmentType = default, IEnumerable<ServiceLevelTarget> serviceLevelResources = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        public static GoalAssignmentProperties GoalAssignmentProperties(bool isZonalResiliencyRequired = default, IEnumerable<ServiceLevelTarget> serviceLevelResources = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
         {
             serviceLevelResources ??= new ChangeTrackingList<ServiceLevelTarget>();
 
-            return new GoalAssignmentProperties(
-                goalTemplateId,
-                goalAssignmentType,
-                (serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>()).ToList(),
-                provisioningState,
-                errorDetails,
-                default);
+            return new GoalAssignmentProperties(isZonalResiliencyRequired, (serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>()).ToList(), provisioningState, errorDetails, default);
         }
 
-        /// <param name="serviceLevelIndicatorResourceId"> The arm id of the service level indicator resource. </param>
-        /// <param name="serviceLevelObjectiveResourceId"> The arm id of the service level object resource. </param>
+        /// <summary> A service-level resource associated with a goal assignment. </summary>
+        /// <param name="serviceLevelIndicatorResourceId"> The ARM resource ID of the service-level indicator resource. </param>
         /// <returns> A new <see cref="Models.ServiceLevelTarget"/> instance for mocking. </returns>
-        public static ServiceLevelTarget ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId = default, ResourceIdentifier serviceLevelObjectiveResourceId = default)
+        public static ServiceLevelTarget ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId = default)
         {
-            return new ServiceLevelTarget(serviceLevelIndicatorResourceId, serviceLevelObjectiveResourceId, default);
+            return new ServiceLevelTarget(serviceLevelIndicatorResourceId, default);
         }
 
-        /// <param name="resources"> List of update goal resource. </param>
+        /// <summary> Request body for updating goal resources. </summary>
+        /// <param name="resources"> The goal resources to update. </param>
         /// <returns> A new <see cref="Models.UpdateGoalResourceContent"/> instance for mocking. </returns>
         public static UpdateGoalResourceContent UpdateGoalResourceContent(IEnumerable<GoalMembersData> resources = default)
         {
@@ -72,6 +68,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new UpdateGoalResourceContent((resources ?? new ChangeTrackingList<GoalMembersData>()).ToList(), default);
         }
 
+        /// <summary> A goal resource in the Azure Resilience Management provider. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -89,53 +86,40 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
-        /// <param name="resourceArmId"> Arm Id of resource under the SG for which the extension resource is maintained. </param>
-        /// <param name="highAvailabilityGoalParticipation"> Flag which depicts whether the Arm resource is excluded for high availability recommendation. </param>
-        /// <param name="highAvailabilityAttestationStatus"> Flag which depicts whether the Arm resource is manually attested for high availability recommendation. </param>
-        /// <param name="disasterRecoveryGoalParticipation"> Flag which depicts whether the Arm resource is excluded for disaster recovery recommendation. </param>
-        /// <param name="disasterRecoveryAttestationStatus"> Flag which depicts whether the Arm resource is manually attested for disaster recovery recommendation. </param>
-        /// <param name="exclusionReasonForHighAvailabilityGoals"> Reason for exclusion from high availability goals. </param>
-        /// <param name="exclusionReasonForDisasterRecoveryGoals"> Reason for exclusion from disaster recovery goals. </param>
-        /// <param name="userConfirmationForHighAvailability"> List of user confirmations for high availability solutions. </param>
-        /// <param name="serviceGroupMemberships"> List of service groups of which this resource is memberof. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <summary> Properties of a goal resource. </summary>
+        /// <param name="resourceArmId"> The fully qualified ARM resource ID represented by this goal resource. </param>
+        /// <param name="zonalResiliency"> The zonal resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </param>
+        /// <param name="provisioningState"> The provisioning state of the goal resource. </param>
         /// <returns> A new <see cref="Models.GoalResourceProperties"/> instance for mocking. </returns>
-        public static GoalResourceProperties GoalResourceProperties(ResourceIdentifier resourceArmId = default, ExclusionState highAvailabilityGoalParticipation = default, AttestationState highAvailabilityAttestationStatus = default, ExclusionState? disasterRecoveryGoalParticipation = default, AttestationState? disasterRecoveryAttestationStatus = default, ExclusionReason? exclusionReasonForHighAvailabilityGoals = default, ExclusionReason? exclusionReasonForDisasterRecoveryGoals = default, IEnumerable<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability = default, IEnumerable<ServiceGroupMembership> serviceGroupMemberships = default, ResilienceManagementProvisioningState? provisioningState = default)
+        public static GoalResourceProperties GoalResourceProperties(ResourceIdentifier resourceArmId = default, GoalResourceResiliencyProperties zonalResiliency = default, ResilienceManagementProvisioningState? provisioningState = default)
         {
-            userConfirmationForHighAvailability ??= new ChangeTrackingList<UserConfirmationForHighAvailabilityItem>();
-            serviceGroupMemberships ??= new ChangeTrackingList<ServiceGroupMembership>();
-
-            return new GoalResourceProperties(
-                resourceArmId,
-                highAvailabilityGoalParticipation,
-                highAvailabilityAttestationStatus,
-                disasterRecoveryGoalParticipation,
-                disasterRecoveryAttestationStatus,
-                exclusionReasonForHighAvailabilityGoals,
-                exclusionReasonForDisasterRecoveryGoals,
-                (userConfirmationForHighAvailability ?? new ChangeTrackingList<UserConfirmationForHighAvailabilityItem>()).ToList(),
-                (serviceGroupMemberships ?? new ChangeTrackingList<ServiceGroupMembership>()).ToList(),
-                provisioningState,
-                default);
+            return new GoalResourceProperties(resourceArmId, zonalResiliency, provisioningState, default);
         }
 
+        /// <summary> Resiliency posture for a goal resource. </summary>
+        /// <param name="goalParticipation"> Indicates whether the ARM resource is excluded from resiliency recommendations. </param>
+        /// <param name="attestationStatus"> Indicates whether the ARM resource's resiliency posture is manually attested. </param>
+        /// <param name="exclusionReason"> The reason the ARM resource is excluded from resiliency goals. </param>
+        /// <param name="userConfirmation"> User confirmations for resiliency solutions recommended for the ARM resource. </param>
+        /// <returns> A new <see cref="Models.GoalResourceResiliencyProperties"/> instance for mocking. </returns>
+        public static GoalResourceResiliencyProperties GoalResourceResiliencyProperties(GoalResourceExclusionState? goalParticipation = default, GoalResourceAttestationState? attestationStatus = default, GoalResourceExclusionReason? exclusionReason = default, IEnumerable<GoalResourceUserConfirmation> userConfirmation = default)
+        {
+            userConfirmation ??= new ChangeTrackingList<GoalResourceUserConfirmation>();
+
+            return new GoalResourceResiliencyProperties(goalParticipation, attestationStatus, exclusionReason, (userConfirmation ?? new ChangeTrackingList<GoalResourceUserConfirmation>()).ToList(), default);
+        }
+
+        /// <summary> Represents a user confirmation for a high availability solution. </summary>
         /// <param name="solutionDisplayName"> The solution display name of the high availability solution. </param>
         /// <param name="confirmationStatus"> The confirmation status of the high availability solution. </param>
         /// <param name="reasonForRequestingConfirmation"> The reason for requesting user confirmation for the high availability solution. </param>
-        /// <returns> A new <see cref="Models.UserConfirmationForHighAvailabilityItem"/> instance for mocking. </returns>
-        public static UserConfirmationForHighAvailabilityItem UserConfirmationForHighAvailabilityItem(ResilienceManagementSolutionDisplayName solutionDisplayName = default, ConfirmationStatus confirmationStatus = default, ReasonForRequestingConfirmation? reasonForRequestingConfirmation = default)
+        /// <returns> A new <see cref="Models.GoalResourceUserConfirmation"/> instance for mocking. </returns>
+        public static GoalResourceUserConfirmation GoalResourceUserConfirmation(ResilienceManagementSolutionDisplayName solutionDisplayName = default, GoalResourceConfirmationStatus confirmationStatus = default, GoalResourceConfirmationReason? reasonForRequestingConfirmation = default)
         {
-            return new UserConfirmationForHighAvailabilityItem(solutionDisplayName, confirmationStatus, reasonForRequestingConfirmation, default);
+            return new GoalResourceUserConfirmation(solutionDisplayName, confirmationStatus, reasonForRequestingConfirmation, default);
         }
 
-        /// <param name="serviceGroupId"> Arm Id of the service group. </param>
-        /// <param name="membershipType"> Membership type of the service group to resource. </param>
-        /// <returns> A new <see cref="Models.ServiceGroupMembership"/> instance for mocking. </returns>
-        public static ServiceGroupMembership ServiceGroupMembership(ResourceIdentifier serviceGroupId = default, ResilienceManagementMembershipType membershipType = default)
-        {
-            return new ServiceGroupMembership(serviceGroupId, membershipType, default);
-        }
-
+        /// <summary> Request body for the recommend capacity action. Provide specific resource IDs to evaluate, or pass an empty array to let the service automatically select non-resilient resources from the goal assignment. </summary>
         /// <param name="resourceIds"> Azure resource IDs to evaluate for resiliency. Pass an empty array to automatically discover and evaluate non-resilient resources in the service group. Maximum 50 resources per request. </param>
         /// <returns> A new <see cref="Models.RecommendCapacityContent"/> instance for mocking. </returns>
         public static RecommendCapacityContent RecommendCapacityContent(IEnumerable<ResourceIdentifier> resourceIds = default)
@@ -145,44 +129,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecommendCapacityContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.GoalTemplateData"/> instance for mocking. </returns>
-        public static GoalTemplateData GoalTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GoalTemplateProperties properties = default)
-        {
-            return new GoalTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <param name="requireHighAvailability"> Option specified by customer under high availability section of goal template. </param>
-        /// <param name="requireDisasterRecovery"> Option specified by customer under disaster recovery section of goal template. </param>
-        /// <param name="regionalRecoveryPointObjective"> Regional recovery point objective specified by customer. eg, PT15M for 15 minutes. </param>
-        /// <param name="regionalRecoveryTimeObjective"> Regional recovery time objective specified by customer. eg, PT15M for 15 minutes. </param>
-        /// <param name="goalType"> Type of Goal Template created by customer. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
-        /// <returns> A new <see cref="Models.GoalTemplateProperties"/> instance for mocking. </returns>
-        public static GoalTemplateProperties GoalTemplateProperties(RequirementSelected? requireHighAvailability = default, RequirementSelected? requireDisasterRecovery = default, string regionalRecoveryPointObjective = default, string regionalRecoveryTimeObjective = default, ResilienceManagementGoalType goalType = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
-        {
-            return new GoalTemplateProperties(
-                requireHighAvailability,
-                requireDisasterRecovery,
-                regionalRecoveryPointObjective,
-                regionalRecoveryTimeObjective,
-                goalType,
-                provisioningState,
-                errorDetails,
-                default);
-        }
-
+        /// <summary> Represents a recovery orchestration plan resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -202,6 +149,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Properties of the recovery orchestration plan. </summary>
         /// <param name="provisioningState"> The provisioning state of the recovery orchestration plan. </param>
         /// <param name="planType"> The type of the recovery orchestration plan, which can be set during creation but cannot be changed afterward. </param>
         /// <param name="planState"> The current state of the recovery orchestration plan. </param>
@@ -225,6 +173,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Settings for the recovery orchestration groups. </summary>
         /// <param name="defaultGroup"> The default recovery orchestration group setting. Every recovery orchestration plan has a default recovery orchestration group. </param>
         /// <param name="additionalGroups"> Additional recovery orchestration group settings. </param>
         /// <returns> A new <see cref="Models.RecoveryGroupsSetting"/> instance for mocking. </returns>
@@ -235,6 +184,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryGroupsSetting(defaultGroup, (additionalGroups ?? new ChangeTrackingList<RecoveryGroup>()).ToList(), default);
         }
 
+        /// <summary> Represents a recovery orchestration group resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -252,6 +202,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Properties of the recovery orchestration group. </summary>
         /// <param name="groupUniqueId"> A unique id for the recovery orchestration group, which is a GUID. </param>
         /// <param name="orderId"> The order ID of the recovery orchestration group. </param>
         /// <param name="description"> A description of the recovery orchestration group. </param>
@@ -272,6 +223,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary>
+        /// Defines an action for the recovery orchestration group.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryGroupCustomRunbookAction"/> and <see cref="Models.RecoveryGroupManualAction"/>.
+        /// </summary>
         /// <param name="name"> The name of the recovery orchestration group action. </param>
         /// <param name="description"> A description of the recovery orchestration group action, containing the instructions to be performed during this action. </param>
         /// <param name="type"> The type of the recovery orchestration group action. </param>
@@ -279,18 +234,20 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.RecoveryGroupBaseAction"/> instance for mocking. </returns>
         public static RecoveryGroupBaseAction RecoveryGroupBaseAction(string name = default, string description = default, string @type = default, int timeoutInMinutes = default)
         {
-            return new UnknownRecoveryGroupBaseAction(name, description, default, timeoutInMinutes, default);
+            return new UnknownRecoveryGroupBaseAction(name, description, @type is null ? default : new RecoveryGroupActionType(@type), timeoutInMinutes, default);
         }
 
+        /// <summary> Defines a manual action for the recovery orchestration group. </summary>
         /// <param name="name"> The name of the recovery orchestration group action. </param>
         /// <param name="description"> A description of the recovery orchestration group action, containing the instructions to be performed during this action. </param>
         /// <param name="timeoutInMinutes"> The maximum amount of time, in minutes, allowed for the action to complete before it times out. </param>
         /// <returns> A new <see cref="Models.RecoveryGroupManualAction"/> instance for mocking. </returns>
         public static RecoveryGroupManualAction RecoveryGroupManualAction(string name = default, string description = default, int timeoutInMinutes = default)
         {
-            return new RecoveryGroupManualAction(name, description, default, timeoutInMinutes, default);
+            return new RecoveryGroupManualAction(name, description, RecoveryGroupActionType.ManualAction, timeoutInMinutes, default);
         }
 
+        /// <summary> Defines a custom runbook action for the recovery orchestration group. </summary>
         /// <param name="name"> The name of the recovery orchestration group action. </param>
         /// <param name="description"> A description of the recovery orchestration group action, containing the instructions to be performed during this action. </param>
         /// <param name="timeoutInMinutes"> The maximum amount of time, in minutes, allowed for the action to complete before it times out. </param>
@@ -305,7 +262,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryGroupCustomRunbookAction(
                 name,
                 description,
-                default,
+                RecoveryGroupActionType.CustomRunbook,
                 timeoutInMinutes,
                 default,
                 actionResourceId,
@@ -313,6 +270,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 associatedIdentity);
         }
 
+        /// <summary> Definition of associated identity linked with the various resources. </summary>
         /// <param name="type"> Identity type linked with the resource. </param>
         /// <param name="userAssignedIdentity"> User assigned identity id linked with the resource. </param>
         /// <returns> A new <see cref="Models.ResilienceManagementAssociatedIdentity"/> instance for mocking. </returns>
@@ -321,6 +279,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ResilienceManagementAssociatedIdentity(@type, userAssignedIdentity, default);
         }
 
+        /// <summary> Details of the recovery orchestration plan failover operation execution. </summary>
         /// <param name="lastExecutedOn"> The most recent execution time of the recovery orchestration plan in UTC. </param>
         /// <param name="operationStatus"> The status of the most recent execution of the recovery orchestration plan. </param>
         /// <param name="errorDetails"> Error details for the most recent execution of the recovery orchestration plan. </param>
@@ -331,6 +290,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryPlanFailoverOperationStatus(lastExecutedOn, operationStatus, errorDetails, recoveryTimeActual, default);
         }
 
+        /// <summary> Details of the recovery orchestration plan operation execution. </summary>
         /// <param name="lastExecutedOn"> The most recent execution time of the recovery orchestration plan in UTC. </param>
         /// <param name="operationStatus"> The status of the most recent execution of the recovery orchestration plan. </param>
         /// <param name="errorDetails"> Error details for the most recent execution of the recovery orchestration plan. </param>
@@ -344,9 +304,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.ArmResponseErrorResponseResult"/> instance for mocking. </returns>
         public static ArmResponseErrorResponseResult ArmResponseErrorResponseResult(ResponseError bodyError = default)
         {
-            return new ArmResponseErrorResponseResult(bodyError is null ? default : new ErrorResponse(bodyError, default), default);
+            return new ArmResponseErrorResponseResult(bodyError is null ? default : new ErrorResult(bodyError, default), default);
         }
 
+        /// <summary> RecoveryResources post action request to update in batch. </summary>
         /// <param name="resourcesToUpdate"> A list of recovery orchestration resources whose properties need to be updated. </param>
         /// <param name="resourcesToRemove"> A list of recovery orchestration resources that need to be removed from the recovery orchestration plan. </param>
         /// <returns> A new <see cref="Models.UpdateRecoveryResourcesContent"/> instance for mocking. </returns>
@@ -358,6 +319,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new UpdateRecoveryResourcesContent((resourcesToUpdate ?? new ChangeTrackingList<RecoveryMembersData>()).ToList(), (resourcesToRemove ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> RecoveryPlan Resource a AzureResilienceProviderHub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -375,6 +337,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Definition of recovery orchestration resource property associated with recovery orchestration plan. </summary>
         /// <param name="recoveryResourceUniqueId"> A unique id for the recovery resource, which is a GUID. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="resourceId"> Resource ID of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </param>
@@ -416,6 +379,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Definition of recovery resource resource protection solution settings. </summary>
         /// <param name="protectionSolutionType"> A setting that indicates the resource protected with which recovery solution. </param>
         /// <param name="protectionStatus"> A status that indicates the protection status of a resource with an Azure solution for regional or zonal recovery. </param>
         /// <param name="resourceId"> Resource ID of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </param>
@@ -430,7 +394,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="failoverState"> Failover state of the recovery orchestration resource. </param>
         /// <param name="testFailoverState"> TestFailover state of the recovery orchestration resource. </param>
         /// <returns> A new <see cref="Models.ResourceProtectionSolutionSettings"/> instance for mocking. </returns>
-        public static ResourceProtectionSolutionSettings ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType = default, ResourceProtectionStatus? protectionStatus = default, ResourceIdentifier resourceId = default, AzureLocation? activeLocation = default, IEnumerable<AzureLocation> activeLocations = default, IEnumerable<string> activePhysicalZones = default, IEnumerable<string> recoveryLocations = default, ResourceReplicationRole? replicationRole = default, ResourceIdentifier primaryResource = default, IEnumerable<ResourceIdentifier> replicaResources = default, bool isAutoFailover = default, FailoverState? failoverState = default, TestFailoverState? testFailoverState = default)
+        public static ResourceProtectionSolutionSettings ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType = default, ResourceProtectionStatus? protectionStatus = default, ResourceIdentifier resourceId = default, AzureLocation? activeLocation = default, IEnumerable<AzureLocation> activeLocations = default, IEnumerable<string> activePhysicalZones = default, IEnumerable<string> recoveryLocations = default, ResourceReplicationRole? replicationRole = default, ResourceIdentifier primaryResource = default, IEnumerable<ResourceIdentifier> replicaResources = default, bool isAutoFailover = default, RecoveryResourceFailoverState? failoverState = default, TestFailoverState? testFailoverState = default)
         {
             activeLocations ??= new ChangeTrackingList<AzureLocation>();
             activePhysicalZones ??= new ChangeTrackingList<string>();
@@ -454,17 +418,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary>
+        /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceCrossZoneVmRecoveryProtectionSetting"/>, <see cref="Models.ResourceCustomProtectionSetting"/>, <see cref="Models.ResourceNativeProtectionSolutionSetting"/>, and <see cref="Models.ResourceSiteRecoveryProtectionSetting"/>.
+        /// </summary>
         /// <param name="protectionSolutionType"> A setting that indicates the resource protected with which recovery solution. </param>
         /// <returns> A new <see cref="Models.ResourceBaseProtectionSolutionSetting"/> instance for mocking. </returns>
         public static ResourceBaseProtectionSolutionSetting ResourceBaseProtectionSolutionSetting(string protectionSolutionType = default)
         {
-            return new UnknownResourceBaseProtectionSolutionSetting(default, default);
+            return new UnknownResourceBaseProtectionSolutionSetting(protectionSolutionType is null ? default : new ResourceProtectionSolutionType(protectionSolutionType), default);
         }
 
+        /// <summary> Definition of recovery orchestration resource native protection solution setting with recovery orchestration plan. </summary>
         /// <returns> A new <see cref="Models.ResourceNativeProtectionSolutionSetting"/> instance for mocking. </returns>
         public static ResourceNativeProtectionSolutionSetting ResourceNativeProtectionSolutionSetting()
         {
-            return new ResourceNativeProtectionSolutionSetting(default, default);
+            return new ResourceNativeProtectionSolutionSetting(ResourceProtectionSolutionType.AzureNative, default);
         }
 
         /// <param name="failoverActionResourceId"> The Azure resource ID hosting the custom action automation script. </param>
@@ -476,7 +445,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static ResourceCustomProtectionSetting ResourceCustomProtectionSetting(ResourceIdentifier failoverActionResourceId = default, ResourceIdentifier failoverCommitActionResourceId = default, ResourceIdentifier testFailoverActionResourceId = default, ResourceIdentifier testFailoverCleanupActionResourceId = default, ResourceIdentifier reprotectActionResourceId = default)
         {
             return new ResourceCustomProtectionSetting(
-                default,
+                ResourceProtectionSolutionType.CustomRunbook,
                 default,
                 failoverActionResourceId is null ? default : new ResourceCustomProtectionAction(failoverActionResourceId, default),
                 failoverCommitActionResourceId is null ? default : new ResourceCustomProtectionAction(failoverCommitActionResourceId, default),
@@ -491,9 +460,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.ResourceSiteRecoveryProtectionSetting"/> instance for mocking. </returns>
         public static ResourceSiteRecoveryProtectionSetting ResourceSiteRecoveryProtectionSetting(ResourceIdentifier testFailoverParamsNetworkResourceId = default, string testFailoverCleanupParamsComments = default, IEnumerable<DiskReprotectInputDetails> diskReprotectInputDetails = default)
         {
-            return new ResourceSiteRecoveryProtectionSetting(default, default, testFailoverParamsNetworkResourceId is null ? default : new ResourceSiteRecoveryTestFailoverParams(testFailoverParamsNetworkResourceId, default), testFailoverCleanupParamsComments is null ? default : new ResourceSiteRecoveryTestFailoverCleanupParams(testFailoverCleanupParamsComments, default), diskReprotectInputDetails is null ? default : new ResourceSiteRecoveryReprotectParams((diskReprotectInputDetails ?? new ChangeTrackingList<DiskReprotectInputDetails>()).ToList(), default));
+            return new ResourceSiteRecoveryProtectionSetting(ResourceProtectionSolutionType.AzureSiteRecovery, default, testFailoverParamsNetworkResourceId is null ? default : new ResourceSiteRecoveryTestFailoverParams(testFailoverParamsNetworkResourceId, default), testFailoverCleanupParamsComments is null ? default : new ResourceSiteRecoveryTestFailoverCleanupParams(testFailoverCleanupParamsComments, default), diskReprotectInputDetails is null ? default : new ResourceSiteRecoveryReprotectParams((diskReprotectInputDetails ?? new ChangeTrackingList<DiskReprotectInputDetails>()).ToList(), default));
         }
 
+        /// <summary> Disk Reprotect Input Details. </summary>
         /// <param name="diskResourceId"> Disk Resource Id to Reprotect. </param>
         /// <param name="stagingStorageAccountResourceId"> The staging StorageAccount Resource Id. </param>
         /// <returns> A new <see cref="Models.DiskReprotectInputDetails"/> instance for mocking. </returns>
@@ -502,6 +472,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DiskReprotectInputDetails(diskResourceId, stagingStorageAccountResourceId, default);
         }
 
+        /// <summary> Definition of recovery orchestration resource protection with cross-zone (zonally resilient) VM recovery. </summary>
+        /// <param name="targetZone"> Customer-requested logical target availability zone for zonal failover (a positive availability-zone id, e.g. "1", "2", "3"; additional zones are accepted where the region exposes them). Always optional; when omitted the service selects a healthy zone. Immutable per failover. </param>
+        /// <param name="capacityReservationGroupId"> ARM resource ID of the Capacity Reservation Group (in the same subscription as the VM) to use when moving the VM to the target zone. </param>
+        /// <returns> A new <see cref="Models.ResourceCrossZoneVmRecoveryProtectionSetting"/> instance for mocking. </returns>
+        public static ResourceCrossZoneVmRecoveryProtectionSetting ResourceCrossZoneVmRecoveryProtectionSetting(string targetZone = default, ResourceIdentifier capacityReservationGroupId = default)
+        {
+            return new ResourceCrossZoneVmRecoveryProtectionSetting(ResourceProtectionSolutionType.CrossZoneVMRecovery, default, targetZone, capacityReservationGroupId);
+        }
+
+        /// <summary> RecoveryResources post action request to update in batch. </summary>
         /// <param name="failedResources"> A list of error details associated with resources for which the update has failed. </param>
         /// <returns> A new <see cref="Models.UpdateRecoveryResourcesResult"/> instance for mocking. </returns>
         public static UpdateRecoveryResourcesResult UpdateRecoveryResourcesResult(IEnumerable<RecoveryMembersData> failedResources = default)
@@ -511,17 +491,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new UpdateRecoveryResourcesResult((failedResources ?? new ChangeTrackingList<RecoveryMembersData>()).ToList(), default);
         }
 
+        /// <summary> ValidateForOperation post action request to check if operation can be performed. </summary>
         /// <param name="operationName"> Operation Name to validate. </param>
         /// <returns> A new <see cref="Models.ValidateForOperationContent"/> instance for mocking. </returns>
-        public static ValidateForOperationContent ValidateForOperationContent(RecoveryOperationNames operationName = default)
+        public static ValidateForOperationContent ValidateForOperationContent(RecoveryOperationName operationName = default)
         {
             return new ValidateForOperationContent(operationName, default);
         }
 
+        /// <summary> Failover post action request. </summary>
         /// <param name="failoverDirection"> Type of Failover direction. </param>
         /// <param name="failoverRequestProperties"> Additional properties for Failover. </param>
         /// <returns> A new <see cref="Models.ResilienceManagementFailoverContent"/> instance for mocking. </returns>
-        public static ResilienceManagementFailoverContent ResilienceManagementFailoverContent(FailoverDirectionTypes failoverDirection = default, FailoverRequestProperties failoverRequestProperties = default)
+        public static ResilienceManagementFailoverContent ResilienceManagementFailoverContent(ResilienceManagementFailoverDirection failoverDirection = default, ResilienceManagementFailoverProperties failoverRequestProperties = default)
         {
             return new ResilienceManagementFailoverContent(failoverDirection, failoverRequestProperties, default);
         }
@@ -529,15 +511,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="sourceLocations"> Source locations from where resources to be failed-over. </param>
         /// <param name="selectedResourceIds"> Selected recovery resource Ids to be processed. If not provided, all qualified resources based on the source location(s) will be processed. </param>
         /// <param name="executionConfigurationsUserConsent"> User consent for performing recovery action. </param>
-        /// <returns> A new <see cref="Models.FailoverRequestProperties"/> instance for mocking. </returns>
-        public static FailoverRequestProperties FailoverRequestProperties(IEnumerable<string> sourceLocations = default, IEnumerable<ResourceIdentifier> selectedResourceIds = default, UserConsent? executionConfigurationsUserConsent = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementFailoverProperties"/> instance for mocking. </returns>
+        public static ResilienceManagementFailoverProperties ResilienceManagementFailoverProperties(IEnumerable<string> sourceLocations = default, IEnumerable<ResourceIdentifier> selectedResourceIds = default, RecoveryActionUserConsent? executionConfigurationsUserConsent = default)
         {
             sourceLocations ??= new ChangeTrackingList<string>();
             selectedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new FailoverRequestProperties((sourceLocations ?? new ChangeTrackingList<string>()).ToList(), (selectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default), default);
+            return new ResilienceManagementFailoverProperties((sourceLocations ?? new ChangeTrackingList<string>()).ToList(), (selectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default), default);
         }
 
+        /// <summary> ValidateForRecoveryOperation post action response. </summary>
         /// <param name="recoveryResourceQualifications"> Qualification details of resources for the operation. </param>
         /// <returns> A new <see cref="Models.ValidateForRecoveryOperationBaseResult"/> instance for mocking. </returns>
         public static ValidateForRecoveryOperationBaseResult ValidateForRecoveryOperationBaseResult(IEnumerable<RecoveryResourceQualification> recoveryResourceQualifications = default)
@@ -547,22 +530,66 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ValidateForRecoveryOperationBaseResult((recoveryResourceQualifications ?? new ChangeTrackingList<RecoveryResourceQualification>()).ToList(), default);
         }
 
+        /// <summary> Details of resource and its qualification for an operation. </summary>
         /// <param name="recoveryResource"> Recovery orchestration resource. </param>
         /// <param name="operationQualificationDetails"> Details of qualification for the operation. </param>
         /// <returns> A new <see cref="Models.RecoveryResourceQualification"/> instance for mocking. </returns>
-        public static RecoveryResourceQualification RecoveryResourceQualification(RecoveryMembersData recoveryResource = default, OperationQualificationDetails operationQualificationDetails = default)
+        public static RecoveryResourceQualification RecoveryResourceQualification(RecoveryMembersData recoveryResource = default, RecoveryOperationQualificationDetails operationQualificationDetails = default)
         {
             return new RecoveryResourceQualification(recoveryResource, operationQualificationDetails, default);
         }
 
+        /// <summary> Details of qualification for an operation. </summary>
         /// <param name="qualificationState"> Resource qualification state for the operation. </param>
         /// <param name="notQualifiedReasons"> Reasons for resource not qualified for the operation. </param>
-        /// <returns> A new <see cref="Models.OperationQualificationDetails"/> instance for mocking. </returns>
-        public static OperationQualificationDetails OperationQualificationDetails(QualificationState qualificationState = default, IEnumerable<string> notQualifiedReasons = default)
+        /// <param name="resourceFeasibilityReviews"> Advisory resource feasibility reviews. Absent when no review was evaluated for this resource. </param>
+        /// <returns> A new <see cref="Models.RecoveryOperationQualificationDetails"/> instance for mocking. </returns>
+        public static RecoveryOperationQualificationDetails RecoveryOperationQualificationDetails(RecoveryResourceQualificationState qualificationState = default, IEnumerable<string> notQualifiedReasons = default, IEnumerable<ResourceFeasibilityReview> resourceFeasibilityReviews = default)
         {
             notQualifiedReasons ??= new ChangeTrackingList<string>();
+            resourceFeasibilityReviews ??= new ChangeTrackingList<ResourceFeasibilityReview>();
 
-            return new OperationQualificationDetails(qualificationState, (notQualifiedReasons ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new RecoveryOperationQualificationDetails(qualificationState, (notQualifiedReasons ?? new ChangeTrackingList<string>()).ToList(), (resourceFeasibilityReviews ?? new ChangeTrackingList<ResourceFeasibilityReview>()).ToList(), default);
+        }
+
+        /// <summary> Result of a single feasibility review performed against one resource in a recovery plan. </summary>
+        /// <param name="feasibilityType"> The resource feasibility review type. </param>
+        /// <param name="resourceType"> Fully qualified ARM resource type evaluated, e.g. `Microsoft.Compute/virtualMachines`. </param>
+        /// <param name="currentTargetSku"> The SKU the resource is currently configured to recover into, enriched for comparison against the recommendations. Absent when it could not be resolved, and always absent on `Passed` and `NotApplicable` reviews. </param>
+        /// <param name="status"> Outcome of this feasibility review. </param>
+        /// <param name="recommendedTargetSkus"> Alternative SKUs surfaced for this review. Absent or empty means a `Flagged` review has no alternatives, an `Unavailable` review has no applicable recommendations to surface, or the review has a minimal `Passed` / `NotApplicable` outcome. Callers should treat an absent array and an empty array identically. </param>
+        /// <returns> A new <see cref="Models.ResourceFeasibilityReview"/> instance for mocking. </returns>
+        public static ResourceFeasibilityReview ResourceFeasibilityReview(ResourceFeasibilityReviewType feasibilityType = default, ResourceType resourceType = default, ResourceFeasibilitySkuDetails currentTargetSku = default, ResourceFeasibilityReviewStatus status = default, IEnumerable<ResourceFeasibilitySkuDetails> recommendedTargetSkus = default)
+        {
+            recommendedTargetSkus ??= new ChangeTrackingList<ResourceFeasibilitySkuDetails>();
+
+            return new ResourceFeasibilityReview(
+                feasibilityType,
+                resourceType,
+                currentTargetSku,
+                status,
+                (recommendedTargetSkus ?? new ChangeTrackingList<ResourceFeasibilitySkuDetails>()).ToList(),
+                default);
+        }
+
+        /// <summary> SKU details for a resource feasibility review, used for both the current target SKU and the recommended alternate SKUs. </summary>
+        /// <param name="sku"> The Azure SKU name. </param>
+        /// <param name="vCpu"> Number of virtual CPUs for the SKU. Absent when SKU specifications are unavailable. </param>
+        /// <param name="ram"> Memory in GiB for the SKU. Absent when SKU specifications are unavailable. </param>
+        /// <param name="monthlyPrice"> Estimated monthly price. Absent when pricing is unavailable. </param>
+        /// <param name="currency"> ISO 4217 currency code for `monthlyPrice`. </param>
+        /// <param name="offeringId"> Identifier of the Azure offering used to estimate `monthlyPrice`. </param>
+        /// <returns> A new <see cref="Models.ResourceFeasibilitySkuDetails"/> instance for mocking. </returns>
+        public static ResourceFeasibilitySkuDetails ResourceFeasibilitySkuDetails(string sku = default, int? vCpu = default, int? ram = default, double? monthlyPrice = default, string currency = default, string offeringId = default)
+        {
+            return new ResourceFeasibilitySkuDetails(
+                sku,
+                vCpu,
+                ram,
+                monthlyPrice,
+                currency,
+                offeringId,
+                default);
         }
 
         /// <param name="reprotectRequestSelectedResourceIds"> Selected recovery resource Ids to be processed. If not provided, all qualified resources will be processed. </param>
@@ -572,6 +599,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ReprotectContent(reprotectRequestSelectedResourceIds is null ? default : new ReprotectRequestProperties((reprotectRequestSelectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default);
         }
 
+        /// <summary> Recovery Orchestration Plan post action response. </summary>
         /// <param name="jobId"> JobId of the job triggered for Recovery Orchestration Plan. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanActionBaseResult"/> instance for mocking. </returns>
         public static RecoveryPlanActionBaseResult RecoveryPlanActionBaseResult(string jobId = default)
@@ -579,6 +607,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryPlanActionBaseResult(jobId, default);
         }
 
+        /// <summary> TestFailoverCleanup post action request. </summary>
         /// <param name="comments"> Comments for test failover cleanup. </param>
         /// <returns> A new <see cref="Models.TestFailoverCleanupContent"/> instance for mocking. </returns>
         public static TestFailoverCleanupContent TestFailoverCleanupContent(string comments = default)
@@ -586,6 +615,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new TestFailoverCleanupContent(comments, default);
         }
 
+        /// <summary> Represents a recovery job resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -604,8 +634,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -617,23 +647,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="provisioningState"> The provisioning state of the recovery job. </param>
         /// <returns> A new <see cref="Models.RecoveryJobProperties"/> instance for mocking. </returns>
-        public static RecoveryJobProperties RecoveryJobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResilienceManagementProvisioningState? provisioningState = default)
+        public static RecoveryJobProperties RecoveryJobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default, ResilienceManagementJobExtendedInfo jobExtendedInfo = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, RecoveryActionUserConsent? executionConfigurationsUserConsent = default, ResilienceManagementJobTriggeredBy? triggeredBy = default, ResilienceManagementProvisioningState? provisioningState = default)
         {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
 
             return new RecoveryJobProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
                 operation,
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 jobExtendedInfo,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                default,
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
+                JobType.RecoveryPlan,
                 executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default),
                 triggeredBy,
                 default,
@@ -641,8 +671,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -653,85 +683,90 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="jobType"> The type of job. </param>
         /// <param name="executionConfigurationsUserConsent"> User consent for performing recovery action. </param>
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
-        /// <returns> A new <see cref="Models.JobProperties"/> instance for mocking. </returns>
-        public static JobProperties JobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobType = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobProperties"/> instance for mocking. </returns>
+        public static ResilienceManagementJobProperties ResilienceManagementJobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default, ResilienceManagementJobExtendedInfo jobExtendedInfo = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, string jobType = default, RecoveryActionUserConsent? executionConfigurationsUserConsent = default, ResilienceManagementJobTriggeredBy? triggeredBy = default)
         {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
 
-            return new UnknownJobProperties(
+            return new UnknownResilienceManagementJobProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
                 operation,
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 jobExtendedInfo,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                default,
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
+                jobType is null ? (JobType?)default : new JobType(jobType),
                 executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default),
                 triggeredBy,
                 default);
         }
 
+        /// <summary> Job Error information. </summary>
         /// <param name="errorCode"> A code representing the error. </param>
         /// <param name="errorMessage"> A detailed message explaining the error. </param>
         /// <param name="recommendations"> A list of recommendations to resolve the error. </param>
-        /// <returns> A new <see cref="Models.JobErrorInfo"/> instance for mocking. </returns>
-        public static JobErrorInfo JobErrorInfo(string errorCode = default, string errorMessage = default, IEnumerable<string> recommendations = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobErrorInfo"/> instance for mocking. </returns>
+        public static ResilienceManagementJobErrorInfo ResilienceManagementJobErrorInfo(string errorCode = default, string errorMessage = default, IEnumerable<string> recommendations = default)
         {
             recommendations ??= new ChangeTrackingList<string>();
 
-            return new JobErrorInfo(errorCode, errorMessage, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ResilienceManagementJobErrorInfo(errorCode, errorMessage, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Job Retry Details. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="retryAttempt"> The retry attempt number of the job. </param>
         /// <param name="userComments"> User Comments. </param>
-        /// <returns> A new <see cref="Models.JobRetryDetails"/> instance for mocking. </returns>
-        public static JobRetryDetails JobRetryDetails(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, int retryAttempt = default, IEnumerable<JobUserComment> userComments = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobRetryDetails"/> instance for mocking. </returns>
+        public static ResilienceManagementJobRetryDetails ResilienceManagementJobRetryDetails(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, int retryAttempt = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default)
         {
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
 
-            return new JobRetryDetails(
+            return new ResilienceManagementJobRetryDetails(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 retryAttempt,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
                 default);
         }
 
+        /// <summary> Job User's Comment. </summary>
         /// <param name="commentType"> The type of the user comment. </param>
         /// <param name="commentOn"> The time of user comment. </param>
         /// <param name="comments"> User Comment. </param>
-        /// <returns> A new <see cref="Models.JobUserComment"/> instance for mocking. </returns>
-        public static JobUserComment JobUserComment(CommentType? commentType = default, DateTimeOffset? commentOn = default, string comments = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobUserComment"/> instance for mocking. </returns>
+        public static ResilienceManagementJobUserComment ResilienceManagementJobUserComment(ResilienceManagementJobCommentType? commentType = default, DateTimeOffset? commentOn = default, string comments = default)
         {
-            return new JobUserComment(commentType, commentOn, comments, default);
+            return new ResilienceManagementJobUserComment(commentType, commentOn, comments, default);
         }
 
+        /// <summary> Additional information for job. </summary>
         /// <param name="tasksList"> List of tasks associated with this job. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
-        /// <returns> A new <see cref="Models.JobExtendedInfo"/> instance for mocking. </returns>
-        public static JobExtendedInfo JobExtendedInfo(IEnumerable<JobTaskDetail> tasksList = default, string dynamicErrorMessage = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobExtendedInfo"/> instance for mocking. </returns>
+        public static ResilienceManagementJobExtendedInfo ResilienceManagementJobExtendedInfo(IEnumerable<ResilienceManagementJobTaskDetail> tasksList = default, string dynamicErrorMessage = default)
         {
-            tasksList ??= new ChangeTrackingList<JobTaskDetail>();
+            tasksList ??= new ChangeTrackingList<ResilienceManagementJobTaskDetail>();
 
-            return new JobExtendedInfo((tasksList ?? new ChangeTrackingList<JobTaskDetail>()).ToList(), dynamicErrorMessage, default);
+            return new ResilienceManagementJobExtendedInfo((tasksList ?? new ChangeTrackingList<ResilienceManagementJobTaskDetail>()).ToList(), dynamicErrorMessage, default);
         }
 
+        /// <summary> Job task details. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="taskId"> Identifier of the task. </param>
@@ -740,32 +775,32 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="userComments"> User Comments. </param>
         /// <param name="subTasksList"> List of sub-tasks associated with this job. </param>
         /// <param name="retryDetails"> Retry details of the task. </param>
-        /// <returns> A new <see cref="Models.JobTaskDetail"/> instance for mocking. </returns>
-        public static JobTaskDetail JobTaskDetail(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, string taskId = default, string taskName = default, IEnumerable<ResourceIdentifier> linkedJobIds = default, IEnumerable<JobUserComment> userComments = default, IEnumerable<JobTaskDetail> subTasksList = default, IEnumerable<JobRetryDetails> retryDetails = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobTaskDetail"/> instance for mocking. </returns>
+        public static ResilienceManagementJobTaskDetail ResilienceManagementJobTaskDetail(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, string taskId = default, string taskName = default, IEnumerable<ResourceIdentifier> linkedJobIds = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, IEnumerable<ResilienceManagementJobTaskDetail> subTasksList = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default)
         {
             linkedJobIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-            subTasksList ??= new ChangeTrackingList<JobTaskDetail>();
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
+            subTasksList ??= new ChangeTrackingList<ResilienceManagementJobTaskDetail>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
 
-            return new JobTaskDetail(
+            return new ResilienceManagementJobTaskDetail(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 taskId,
                 taskName,
                 (linkedJobIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                (subTasksList ?? new ChangeTrackingList<JobTaskDetail>()).ToList(),
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
+                (subTasksList ?? new ChangeTrackingList<ResilienceManagementJobTaskDetail>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 default);
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -781,26 +816,27 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="notes"> Notes for this Drill. </param>
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
+        /// <param name="report"> Summary of report generation for this Drill Run. </param>
         /// <returns> A new <see cref="Models.DrillRunProperties"/> instance for mocking. </returns>
-        public static DrillRunProperties DrillRunProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResourceIdentifier drillId = default, DrillMode? drillMode = default, DrillAttestation? attestation = default, IEnumerable<string> notes = default, IEnumerable<SupportedVerbsForStage> supportedVerbsForStage = default, string currentActiveOperationId = default)
+        public static DrillRunProperties DrillRunProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default, ResilienceManagementJobExtendedInfo jobExtendedInfo = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, RecoveryActionUserConsent? executionConfigurationsUserConsent = default, ResilienceManagementJobTriggeredBy? triggeredBy = default, ResourceIdentifier drillId = default, DrillMode? drillMode = default, DrillAttestation? attestation = default, IEnumerable<string> notes = default, IEnumerable<DrillRunStageSupportedVerbs> supportedVerbsForStage = default, string currentActiveOperationId = default, DrillReportSummary report = default)
         {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
             notes ??= new ChangeTrackingList<string>();
-            supportedVerbsForStage ??= new ChangeTrackingList<SupportedVerbsForStage>();
+            supportedVerbsForStage ??= new ChangeTrackingList<DrillRunStageSupportedVerbs>();
 
             return new DrillRunProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
                 operation,
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 jobExtendedInfo,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                default,
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
+                JobType.DrillRun,
                 executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default),
                 triggeredBy,
                 default,
@@ -808,20 +844,71 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 drillMode,
                 attestation,
                 (notes ?? new ChangeTrackingList<string>()).ToList(),
-                (supportedVerbsForStage ?? new ChangeTrackingList<SupportedVerbsForStage>()).ToList(),
-                currentActiveOperationId);
+                (supportedVerbsForStage ?? new ChangeTrackingList<DrillRunStageSupportedVerbs>()).ToList(),
+                currentActiveOperationId,
+                report);
         }
 
+        /// <summary> Model for supported verbs for stage. </summary>
         /// <param name="drillRunStage"> Name of stage. </param>
         /// <param name="supportedVerbs"> Supported Verbs for stage. </param>
-        /// <returns> A new <see cref="Models.SupportedVerbsForStage"/> instance for mocking. </returns>
-        public static SupportedVerbsForStage SupportedVerbsForStage(DrillRunSubtasks drillRunStage = default, IEnumerable<DrillRunOperationVerbs> supportedVerbs = default)
+        /// <returns> A new <see cref="Models.DrillRunStageSupportedVerbs"/> instance for mocking. </returns>
+        public static DrillRunStageSupportedVerbs DrillRunStageSupportedVerbs(DrillRunStage drillRunStage = default, IEnumerable<DrillRunOperationVerb> supportedVerbs = default)
         {
-            supportedVerbs ??= new ChangeTrackingList<DrillRunOperationVerbs>();
+            supportedVerbs ??= new ChangeTrackingList<DrillRunOperationVerb>();
 
-            return new SupportedVerbsForStage(drillRunStage, (supportedVerbs ?? new ChangeTrackingList<DrillRunOperationVerbs>()).ToList(), default);
+            return new DrillRunStageSupportedVerbs(drillRunStage, (supportedVerbs ?? new ChangeTrackingList<DrillRunOperationVerb>()).ToList(), default);
         }
 
+        /// <summary> Public, read-only summary of report generation for a Drill Run. Exposes status and pointers only - the report content and internal storage locations are never surfaced. </summary>
+        /// <param name="generationStatus"> Overall report generation status for the Drill Run. </param>
+        /// <param name="stageStatuses"> Per-stage report generation statuses. </param>
+        /// <param name="availableFormats"> Formats the report is currently available for download in. </param>
+        /// <param name="lastGeneratedOn"> Timestamp of the last successful report generation. </param>
+        /// <param name="schemaVersion"> Schema version of the generated report content. </param>
+        /// <param name="finalizationState"> Finalization state of the report. A finalized report is immutable. </param>
+        /// <param name="lastError"> Error from the last failed report generation attempt. </param>
+        /// <returns> A new <see cref="Models.DrillReportSummary"/> instance for mocking. </returns>
+        public static DrillReportSummary DrillReportSummary(DrillReportGenerationStatus? generationStatus = default, IEnumerable<DrillReportStageStatus> stageStatuses = default, IEnumerable<DrillReportFormat> availableFormats = default, DateTimeOffset? lastGeneratedOn = default, string schemaVersion = default, DrillReportFinalizationState? finalizationState = default, ResilienceManagementErrorDetail lastError = default)
+        {
+            stageStatuses ??= new ChangeTrackingList<DrillReportStageStatus>();
+            availableFormats ??= new ChangeTrackingList<DrillReportFormat>();
+
+            return new DrillReportSummary(
+                generationStatus,
+                (stageStatuses ?? new ChangeTrackingList<DrillReportStageStatus>()).ToList(),
+                (availableFormats ?? new ChangeTrackingList<DrillReportFormat>()).ToList(),
+                lastGeneratedOn,
+                schemaVersion,
+                finalizationState,
+                lastError,
+                default);
+        }
+
+        /// <summary> Report generation status for a single Drill Run stage. </summary>
+        /// <param name="drillRunStage"> Name of the Drill Run stage this status applies to. </param>
+        /// <param name="generationStatus"> Report generation status for this stage. </param>
+        /// <param name="lastAttemptOn"> Timestamp of the last report generation attempt for this stage. </param>
+        /// <param name="lastError"> Error from the last failed report generation attempt for this stage. </param>
+        /// <returns> A new <see cref="Models.DrillReportStageStatus"/> instance for mocking. </returns>
+        public static DrillReportStageStatus DrillReportStageStatus(DrillRunStage drillRunStage = default, DrillReportGenerationStatus? generationStatus = default, DateTimeOffset? lastAttemptOn = default, ResilienceManagementErrorDetail lastError = default)
+        {
+            return new DrillReportStageStatus(drillRunStage, generationStatus, lastAttemptOn, lastError, default);
+        }
+
+        /// <summary> Errors in T&amp;C / RBAC assignment. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="recommendations"> A list of recommendations to resolve the error. </param>
+        /// <returns> A new <see cref="Models.ResilienceManagementErrorDetail"/> instance for mocking. </returns>
+        public static ResilienceManagementErrorDetail ResilienceManagementErrorDetail(string code = default, string message = default, IEnumerable<string> recommendations = default)
+        {
+            recommendations ??= new ChangeTrackingList<string>();
+
+            return new ResilienceManagementErrorDetail(code, message, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Request body for providing user input for a recovery action. </summary>
         /// <param name="description"> User-provided input for the action. </param>
         /// <returns> A new <see cref="Models.RecoveryActionContent"/> instance for mocking. </returns>
         public static RecoveryActionContent RecoveryActionContent(string description = default)
@@ -829,6 +916,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryActionContent(description, default);
         }
 
+        /// <summary> Represents a recovery orchestration job resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -846,9 +934,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Properties of a recovery orchestration job resource associated with a recovery orchestration plan. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -863,32 +952,33 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="protectionSolutionType"> A setting that indicates the protection solution selected. </param>
         /// <param name="recoveryGroupActionSettings"> The recovery action settings. </param>
         /// <returns> A new <see cref="Models.RecoveryJobResourceProperties"/> instance for mocking. </returns>
-        public static RecoveryJobResourceProperties RecoveryJobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default, ResourceProtectionSolutionType? protectionSolutionType = default, RecoveryGroupActionSettings recoveryGroupActionSettings = default)
+        public static RecoveryJobResourceProperties RecoveryJobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default, ResilienceManagementJobExtendedInfo jobExtendedInfo = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default, ResourceProtectionSolutionType? protectionSolutionType = default, RecoveryGroupActionSettings recoveryGroupActionSettings = default)
         {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
 
             return new RecoveryJobResourceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
                 operation,
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 jobExtendedInfo,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
                 jobId,
                 taskId,
                 taskName,
-                default,
+                JobResourceType.RecoveryPlan,
                 default,
                 provisioningState,
                 protectionSolutionType,
                 recoveryGroupActionSettings);
         }
 
+        /// <summary> Settings for a recovery group action. </summary>
         /// <param name="actionTask"> The action task associated with this job resource. </param>
         /// <param name="actionSequence"> Sequence number for the action. </param>
         /// <param name="recoveryGroupActionType"> Type of the recovery group action. </param>
@@ -906,9 +996,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary>
+        /// Definition of job-resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DrillRunResourceProperties"/> and <see cref="Models.RecoveryJobResourceProperties"/>.
+        /// </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -920,33 +1014,34 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="taskId"> Id of the job-task to which this job resource is associated. </param>
         /// <param name="taskName"> Friendly name of the job-task to which this job resource is associated. </param>
         /// <param name="jobResourceType"> Discriminator for the JobResource object hierarchy. </param>
-        /// <returns> A new <see cref="Models.JobResourceProperties"/> instance for mocking. </returns>
-        public static JobResourceProperties JobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, string jobResourceType = default)
+        /// <returns> A new <see cref="Models.ResilienceManagementJobResourceProperties"/> instance for mocking. </returns>
+        public static ResilienceManagementJobResourceProperties ResilienceManagementJobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default, ResilienceManagementJobExtendedInfo jobExtendedInfo = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, string jobResourceType = default)
         {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
 
-            return new UnknownJobResourceProperties(
+            return new UnknownResilienceManagementJobResourceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
                 operation,
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 jobExtendedInfo,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
                 jobId,
                 taskId,
                 taskName,
-                default,
+                jobResourceType is null ? default : new JobResourceType(jobResourceType),
                 default);
         }
 
+        /// <summary> Properties of a Drill Run resource. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -959,30 +1054,31 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="taskName"> Friendly name of the job-task to which this job resource is associated. </param>
         /// <param name="provisioningState"> The provisioning state of the Drill Run Resource. </param>
         /// <returns> A new <see cref="Models.DrillRunResourceProperties"/> instance for mocking. </returns>
-        public static DrillRunResourceProperties DrillRunResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default)
+        public static DrillRunResourceProperties DrillRunResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, ResilienceManagementJobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<ResilienceManagementJobRetryDetails> retryDetails = default, ResilienceManagementJobExtendedInfo jobExtendedInfo = default, IEnumerable<ResilienceManagementJobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default)
         {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
+            retryDetails ??= new ChangeTrackingList<ResilienceManagementJobRetryDetails>();
+            userComments ??= new ChangeTrackingList<ResilienceManagementJobUserComment>();
 
             return new DrillRunResourceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
                 operation,
-                (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
+                (retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>()).ToList(),
                 jobExtendedInfo,
-                (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
+                (userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>()).ToList(),
                 jobId,
                 taskId,
                 taskName,
-                default,
+                JobResourceType.DrillRun,
                 default,
                 provisioningState);
         }
 
+        /// <summary> Drill resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1002,9 +1098,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary>
+        /// Properties of the Resiliency Drill.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegionalDrillProperties"/> and <see cref="Models.ZonalDrillProperties"/>.
+        /// </summary>
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
@@ -1015,17 +1116,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="lastRunProperties"> Last run properties. </param>
         /// <param name="lastSyncOn"> Last sync time. </param>
         /// <param name="lastResyncReadinessCheckOn"> Last resync and readiness check time. </param>
-        /// <param name="managedOnBehalfOfMoboBrokerResources"> Associated MoboBrokerResources. </param>
         /// <param name="drillType"> The discriminator for the Drill object hierarchy. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <returns> A new <see cref="Models.DrillProperties"/> instance for mocking. </returns>
-        public static DrillProperties DrillProperties(ResilienceManagementProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, DrillSystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<ManagedBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, string drillType = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
+        public static DrillProperties DrillProperties(ResilienceManagementProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, DrillExecutionState? executionState = default, DrillExecutionReadinessState? executionReadinessState = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, DrillAttentionReason attentionReason = default, DrillSystemMetadata systemMetadata = default, DrillLastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, string drillType = default, MonitoringPropertiesOfDrill monitoringProperties = default, HealthModelMonitoringProperties healthModelMonitoringProperties = default, SliMonitoringProperties sliMonitoringProperties = default, ResponseError errorDetails = default)
         {
             return new UnknownDrillProperties(
                 provisioningState,
                 serviceGroupId,
                 recoveryPlanProperties,
+                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 executionState,
@@ -1036,13 +1139,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<ManagedBrokerTarget>()).ToList(), default),
-                default,
+                drillType is null ? default : new DrillType(drillType),
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 errorDetails,
                 default);
         }
 
+        /// <summary> RecoveryPlan properties. </summary>
         /// <param name="identity"> Identity to use for RecoveryPlan operations. </param>
         /// <param name="recoveryPlanId"> Recovery Orchestration plan associated with this Drill. </param>
         /// <param name="recoveryPlanResourceExcludedCount"> Excluded resource count in RecoveryPlan. </param>
@@ -1052,6 +1157,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryPlanPropertiesOfDrill(identity, recoveryPlanId, recoveryPlanResourceExcludedCount, default);
         }
 
+        /// <summary> Goal assignment properties. </summary>
+        /// <param name="identity"> Identity to use for goal assignment operations. </param>
+        /// <param name="goalAssignmentId"> Goal assignment id. </param>
+        /// <returns> A new <see cref="Models.GoalAssignmentPropertiesOfDrill"/> instance for mocking. </returns>
+        public static GoalAssignmentPropertiesOfDrill GoalAssignmentPropertiesOfDrill(ResilienceManagementAssociatedIdentity identity = default, ResourceIdentifier goalAssignmentId = default)
+        {
+            return new GoalAssignmentPropertiesOfDrill(identity, goalAssignmentId, default);
+        }
+
+        /// <summary> Drill asset properties. </summary>
         /// <param name="subscription"> Subscription where Drill's internal resources will be created. </param>
         /// <param name="region"> Region where Drill's internal resources will be created. </param>
         /// <param name="resourceGroup"> Resource group where Drill's internal resources will be created. If not specified, defaults to 'AzureResilienceManagementDrills'. This value is immutable after drill creation. </param>
@@ -1061,6 +1176,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new AssetPropertiesOfDrill(subscription, region, resourceGroup, default);
         }
 
+        /// <summary> Chaos Resource properties. </summary>
         /// <param name="identity"> Identity to use for Chaos Resource operations. </param>
         /// <param name="chaosResourceIdentityForFaults"> Identity to be used by the Chaos Resource for invoking faults on resources. </param>
         /// <param name="chaosResourceId"> Chaos Resource created for this Drill. </param>
@@ -1071,6 +1187,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ChaosResourcePropertiesOfDrill(identity, chaosResourceIdentityForFaults, chaosResourceId, faultDurationInMin, default);
         }
 
+        /// <summary> Reason why the Drill is in NeedsAttention state, and not ready to run. </summary>
         /// <param name="drillRbacOnChaosResource"> Drill object does not have the necessary RBAC to run the chaos resource. </param>
         /// <param name="rbacNeededForDrillOnChaosResource"> Permissions needed by the Drill MSI to run the chaos resource. </param>
         /// <param name="drillRbacOnRecoveryPlan"> Drill object does not have the necessary RBAC to run the Recovery Plan. </param>
@@ -1092,8 +1209,20 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="rbacNeededForDrillOnDrillMonitoringResources"> Permissions needed by the Drill MSI to Upload service group health data for monitoring. </param>
         /// <param name="rbacNeededForDrillOnDrillResources"> Permissions needed by the Drill MSI to read health metrics data for resources in service group. </param>
         /// <param name="missingRequiredResourceProviders"> List of required required Azure resource providers that are not registered in the subscription specified for chaos resource. </param>
-        /// <returns> A new <see cref="Models.AttentionReason"/> instance for mocking. </returns>
-        public static AttentionReason AttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource = default, IEnumerable<string> rbacNeededForDrillOnChaosResource = default, ResilienceManagementRbacState? drillRbacOnRecoveryPlan = default, IEnumerable<string> rbacNeededForDrillOnRecoveryPlan = default, RecoveryPlanState? roReadiness = default, ResilienceManagementRbacState? rbacOnTargetResources = default, ResilienceManagementRbacState? runbookFaultRbacOnTargets = default, ExtensionObjectState? chaosResource = default, IEnumerable<string> chaosResourceCreationFailureReasons = default, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default, ExtensionObjectState? drillUserMsi = default, ExtensionObjectState? chaosResourceUserMsi = default, ExtensionObjectState? includedResourceInDrill = default, ResilienceManagementRbacState? drillRbacOnMonitoringResources = default, IEnumerable<ResilienceManagementErrorDetail> drillMonitoringErrors = default, ExtensionObjectState? drillMonitoringResources = default, ResilienceManagementRbacState? monitoringRbacOnDrillResources = default, IEnumerable<string> rbacNeededForDrillOnDrillMonitoringResources = default, IEnumerable<string> rbacNeededForDrillOnDrillResources = default, IEnumerable<string> missingRequiredResourceProviders = default)
+        /// <param name="isMonitoringSourceNotConfigured"> Neither an Azure Health Model nor an SLI is configured for the Drill. Execution is blocked until a monitoring source is configured. </param>
+        /// <param name="healthModelExists"> Whether the selected Azure Health Model still exists. </param>
+        /// <param name="discoveryRuleExists"> Whether the selected discovery rule still exists. </param>
+        /// <param name="drillRbacOnHealthModel"> Whether the Drill identity has the necessary RBAC (Reader) to read the selected Azure Health Model. </param>
+        /// <param name="rbacNeededForDrillOnHealthModel"> Permissions needed by the Drill identity to read the selected Azure Health Model. </param>
+        /// <param name="drillRbacOnSli"> Rolled-up RBAC state: NotSet if the Drill identity is missing the necessary RBAC to read any selected SLI. </param>
+        /// <param name="sliAttentionStatuses"> Per-SLI attention status for each SLI selected for Drill monitoring. </param>
+        /// <param name="drillRbacOnGoalAssignment"> Drill object does not have the necessary RBAC on Goal Assignment. </param>
+        /// <param name="rbacNeededForDrillOnGoalAssignment"> Permissions needed by the Drill MSI on Goal Assignment. </param>
+        /// <param name="goalAssignment"> Goal Assignment not present. </param>
+        /// <param name="recoveryPlan"> Recovery plan not present. </param>
+        /// <param name="healthModelAssociatedWithServiceGroup"> Indicates whether any entity in the selected Azure Health Model references the Drill Service Group through properties.signalGroups.azureResource.azureResourceId. </param>
+        /// <returns> A new <see cref="Models.DrillAttentionReason"/> instance for mocking. </returns>
+        public static DrillAttentionReason DrillAttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource = default, IEnumerable<string> rbacNeededForDrillOnChaosResource = default, ResilienceManagementRbacState? drillRbacOnRecoveryPlan = default, IEnumerable<string> rbacNeededForDrillOnRecoveryPlan = default, RecoveryPlanState? roReadiness = default, ResilienceManagementRbacState? rbacOnTargetResources = default, ResilienceManagementRbacState? runbookFaultRbacOnTargets = default, DrillExtensionObjectState? chaosResource = default, IEnumerable<string> chaosResourceCreationFailureReasons = default, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default, DrillExtensionObjectState? drillUserMsi = default, DrillExtensionObjectState? chaosResourceUserMsi = default, DrillExtensionObjectState? includedResourceInDrill = default, ResilienceManagementRbacState? drillRbacOnMonitoringResources = default, IEnumerable<ResilienceManagementErrorDetail> drillMonitoringErrors = default, DrillExtensionObjectState? drillMonitoringResources = default, ResilienceManagementRbacState? monitoringRbacOnDrillResources = default, IEnumerable<string> rbacNeededForDrillOnDrillMonitoringResources = default, IEnumerable<string> rbacNeededForDrillOnDrillResources = default, IEnumerable<string> missingRequiredResourceProviders = default, bool? isMonitoringSourceNotConfigured = default, DrillExtensionObjectState? healthModelExists = default, DrillExtensionObjectState? discoveryRuleExists = default, ResilienceManagementRbacState? drillRbacOnHealthModel = default, IEnumerable<string> rbacNeededForDrillOnHealthModel = default, ResilienceManagementRbacState? drillRbacOnSli = default, IEnumerable<SliAttentionStatus> sliAttentionStatuses = default, ResilienceManagementRbacState? drillRbacOnGoalAssignment = default, IEnumerable<string> rbacNeededForDrillOnGoalAssignment = default, DrillExtensionObjectState? goalAssignment = default, DrillExtensionObjectState? recoveryPlan = default, DrillExtensionObjectState? healthModelAssociatedWithServiceGroup = default)
         {
             rbacNeededForDrillOnChaosResource ??= new ChangeTrackingList<string>();
             rbacNeededForDrillOnRecoveryPlan ??= new ChangeTrackingList<string>();
@@ -1102,8 +1231,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             rbacNeededForDrillOnDrillMonitoringResources ??= new ChangeTrackingList<string>();
             rbacNeededForDrillOnDrillResources ??= new ChangeTrackingList<string>();
             missingRequiredResourceProviders ??= new ChangeTrackingList<string>();
+            rbacNeededForDrillOnHealthModel ??= new ChangeTrackingList<string>();
+            sliAttentionStatuses ??= new ChangeTrackingList<SliAttentionStatus>();
+            rbacNeededForDrillOnGoalAssignment ??= new ChangeTrackingList<string>();
 
-            return new AttentionReason(
+            return new DrillAttentionReason(
                 drillRbacOnChaosResource,
                 (rbacNeededForDrillOnChaosResource ?? new ChangeTrackingList<string>()).ToList(),
                 drillRbacOnRecoveryPlan,
@@ -1125,50 +1257,66 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 (rbacNeededForDrillOnDrillMonitoringResources ?? new ChangeTrackingList<string>()).ToList(),
                 (rbacNeededForDrillOnDrillResources ?? new ChangeTrackingList<string>()).ToList(),
                 (missingRequiredResourceProviders ?? new ChangeTrackingList<string>()).ToList(),
+                isMonitoringSourceNotConfigured,
+                healthModelExists,
+                discoveryRuleExists,
+                drillRbacOnHealthModel,
+                (rbacNeededForDrillOnHealthModel ?? new ChangeTrackingList<string>()).ToList(),
+                drillRbacOnSli,
+                (sliAttentionStatuses ?? new ChangeTrackingList<SliAttentionStatus>()).ToList(),
+                drillRbacOnGoalAssignment,
+                (rbacNeededForDrillOnGoalAssignment ?? new ChangeTrackingList<string>()).ToList(),
+                goalAssignment,
+                recoveryPlan,
+                healthModelAssociatedWithServiceGroup,
                 default);
         }
 
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="recommendations"> A list of recommendations to resolve the error. </param>
-        /// <returns> A new <see cref="Models.ResilienceManagementErrorDetail"/> instance for mocking. </returns>
-        public static ResilienceManagementErrorDetail ResilienceManagementErrorDetail(string code = default, string message = default, IEnumerable<string> recommendations = default)
+        /// <summary> Per-SLI attention status of a Drill. </summary>
+        /// <param name="sliId"> Full ARM Id of the SLI this status refers to. </param>
+        /// <param name="type"> User-declared category of the SLI. </param>
+        /// <param name="exists"> Whether the selected SLI still exists. </param>
+        /// <param name="typeMatch"> Whether the user-declared SLI type matches the SLI's actual category. </param>
+        /// <param name="drillRbacOnDestinationAmw"> Rolled-up RBAC state: NotSet if the Drill identity is missing Monitoring Reader on any of the SLI's destination Azure Monitor Workspaces. </param>
+        /// <param name="rbacNeededOnDestinationAmws"> The destination Azure Monitor Workspaces that are still missing the Monitoring Reader grant for the Drill identity. </param>
+        /// <returns> A new <see cref="Models.SliAttentionStatus"/> instance for mocking. </returns>
+        public static SliAttentionStatus SliAttentionStatus(ResourceIdentifier sliId = default, SliType @type = default, DrillExtensionObjectState? exists = default, SliTypeMatchState? typeMatch = default, ResilienceManagementRbacState? drillRbacOnDestinationAmw = default, IEnumerable<string> rbacNeededOnDestinationAmws = default)
         {
-            recommendations ??= new ChangeTrackingList<string>();
+            rbacNeededOnDestinationAmws ??= new ChangeTrackingList<string>();
 
-            return new ResilienceManagementErrorDetail(code, message, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new SliAttentionStatus(
+                sliId,
+                @type,
+                exists,
+                typeMatch,
+                drillRbacOnDestinationAmw,
+                (rbacNeededOnDestinationAmws ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
+        /// <summary> Internal System Metadata, to be used by internal components only. </summary>
         /// <param name="initialConfig"> Indicates if the Initial system configuration of the Drill is complete or not. </param>
         /// <param name="resourceTypeCategories"> An indication whether a intrested resource type is present in drill resource. </param>
         /// <returns> A new <see cref="Models.DrillSystemMetadata"/> instance for mocking. </returns>
-        public static DrillSystemMetadata DrillSystemMetadata(InitialConfig initialConfig = default, IEnumerable<ResourceTypeCategories> resourceTypeCategories = default)
+        public static DrillSystemMetadata DrillSystemMetadata(DrillInitialConfig initialConfig = default, IEnumerable<DrillResourceTypeCategory> resourceTypeCategories = default)
         {
-            resourceTypeCategories ??= new ChangeTrackingList<ResourceTypeCategories>();
+            resourceTypeCategories ??= new ChangeTrackingList<DrillResourceTypeCategory>();
 
-            return new DrillSystemMetadata(initialConfig, (resourceTypeCategories ?? new ChangeTrackingList<ResourceTypeCategories>()).ToList(), default);
+            return new DrillSystemMetadata(initialConfig, (resourceTypeCategories ?? new ChangeTrackingList<DrillResourceTypeCategory>()).ToList(), default);
         }
 
+        /// <summary> Definition of Last Run properties. </summary>
         /// <param name="lastRunOn"> Timestamp of the last run of this Drill. </param>
         /// <param name="lastRunState"> Status of the last run of this Drill. </param>
         /// <param name="lastRunDuration"> Timespan of the last run of this Drill. </param>
         /// <param name="lastRunAttestation"> Attestation state of the last run of this Drill. </param>
-        /// <returns> A new <see cref="Models.LastRunProperties"/> instance for mocking. </returns>
-        public static LastRunProperties LastRunProperties(DateTimeOffset? lastRunOn = default, ResilienceManagementJobStatus? lastRunState = default, TimeSpan? lastRunDuration = default, DrillAttestation? lastRunAttestation = default)
+        /// <returns> A new <see cref="Models.DrillLastRunProperties"/> instance for mocking. </returns>
+        public static DrillLastRunProperties DrillLastRunProperties(DateTimeOffset? lastRunOn = default, ResilienceManagementJobStatus? lastRunState = default, TimeSpan? lastRunDuration = default, DrillAttestation? lastRunAttestation = default)
         {
-            return new LastRunProperties(lastRunOn, lastRunState, lastRunDuration, lastRunAttestation, default);
+            return new DrillLastRunProperties(lastRunOn, lastRunState, lastRunDuration, lastRunAttestation, default);
         }
 
-        /// <param name="id">
-        /// The fully qualified resource ID of the MoboBroker resource.
-        /// Example: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}`
-        /// </param>
-        /// <returns> A new <see cref="Models.ManagedBrokerTarget"/> instance for mocking. </returns>
-        public static ManagedBrokerTarget ManagedBrokerTarget(ResourceIdentifier id = default)
-        {
-            return new ManagedBrokerTarget(id, default);
-        }
-
+        /// <summary> Drill monitoring properties. </summary>
         /// <param name="identity"> Identity to use for Drill monitoring operations. </param>
         /// <param name="logAnalyticsWorkspaceId"> Full ARM Id of the Log analytics workspace created by Resiliency service where health data is collected. </param>
         /// <param name="rawMetricsDataCollectionRuleId"> Full ARM Id of the Data collection rule created by Resiliency service which will route data for RAW health data for service group resources. </param>
@@ -1186,9 +1334,40 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Azure Health Model monitoring properties of a Drill. Exactly one Health Model may be selected per Drill. </summary>
+        /// <param name="identity"> Identity that the Drill uses to read the Azure Health Model. The Drill is granted Reader on the Health Model for this identity. </param>
+        /// <param name="healthModelId"> Full ARM Id of the Azure Health Model selected for Drill monitoring. </param>
+        /// <returns> A new <see cref="Models.HealthModelMonitoringProperties"/> instance for mocking. </returns>
+        public static HealthModelMonitoringProperties HealthModelMonitoringProperties(ResilienceManagementAssociatedIdentity identity = default, ResourceIdentifier healthModelId = default)
+        {
+            return new HealthModelMonitoringProperties(identity, healthModelId, default);
+        }
+
+        /// <summary> SLI monitoring properties of a Drill. At most two SLIs may be selected: at most one Availability and one Latency. </summary>
+        /// <param name="identity"> Identity that the Drill uses to read evaluated SLI results from each SLI's destination Azure Monitor Workspace. The Drill is granted Monitoring Reader on every destination AMW of every selected SLI for this identity. </param>
+        /// <param name="slis"> The SLIs selected for Drill monitoring. Maximum of two entries: at most one Availability and one Latency. Duplicate types or duplicate SLI Ids are rejected. </param>
+        /// <returns> A new <see cref="Models.SliMonitoringProperties"/> instance for mocking. </returns>
+        public static SliMonitoringProperties SliMonitoringProperties(ResilienceManagementAssociatedIdentity identity = default, IEnumerable<SliSelection> slis = default)
+        {
+            slis ??= new ChangeTrackingList<SliSelection>();
+
+            return new SliMonitoringProperties(identity, (slis ?? new ChangeTrackingList<SliSelection>()).ToList(), default);
+        }
+
+        /// <summary> A single SLI selected for Drill monitoring. </summary>
+        /// <param name="sliId"> Full ARM Id of the SLI. </param>
+        /// <param name="type"> User-declared category of the SLI. Must be unique across the selected SLIs. </param>
+        /// <returns> A new <see cref="Models.SliSelection"/> instance for mocking. </returns>
+        public static SliSelection SliSelection(ResourceIdentifier sliId = default, SliType @type = default)
+        {
+            return new SliSelection(sliId, @type, default);
+        }
+
+        /// <summary> Definition of Zonal Drill properties. </summary>
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
@@ -1199,17 +1378,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="lastRunProperties"> Last run properties. </param>
         /// <param name="lastSyncOn"> Last sync time. </param>
         /// <param name="lastResyncReadinessCheckOn"> Last resync and readiness check time. </param>
-        /// <param name="managedOnBehalfOfMoboBrokerResources"> Associated MoboBrokerResources. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="vmsPresent"> An indication whether a VM is included in this Zonal Drill. If not, RO is not needed. </param>
         /// <returns> A new <see cref="Models.ZonalDrillProperties"/> instance for mocking. </returns>
-        public static ZonalDrillProperties ZonalDrillProperties(ResilienceManagementProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, DrillSystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<ManagedBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default, VmPresent? vmsPresent = default)
+        public static ZonalDrillProperties ZonalDrillProperties(ResilienceManagementProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, DrillExecutionState? executionState = default, DrillExecutionReadinessState? executionReadinessState = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, DrillAttentionReason attentionReason = default, DrillSystemMetadata systemMetadata = default, DrillLastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, MonitoringPropertiesOfDrill monitoringProperties = default, HealthModelMonitoringProperties healthModelMonitoringProperties = default, SliMonitoringProperties sliMonitoringProperties = default, ResponseError errorDetails = default, ZonalDrillVmPresence? vmsPresent = default)
         {
             return new ZonalDrillProperties(
                 provisioningState,
                 serviceGroupId,
                 recoveryPlanProperties,
+                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 executionState,
@@ -1220,17 +1401,20 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<ManagedBrokerTarget>()).ToList(), default),
-                default,
+                DrillType.Zonal,
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 errorDetails,
                 default,
                 vmsPresent);
         }
 
+        /// <summary> Definition of Regional Drill properties. </summary>
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
@@ -1241,16 +1425,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="lastRunProperties"> Last run properties. </param>
         /// <param name="lastSyncOn"> Last sync time. </param>
         /// <param name="lastResyncReadinessCheckOn"> Last resync and readiness check time. </param>
-        /// <param name="managedOnBehalfOfMoboBrokerResources"> Associated MoboBrokerResources. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <returns> A new <see cref="Models.RegionalDrillProperties"/> instance for mocking. </returns>
-        public static RegionalDrillProperties RegionalDrillProperties(ResilienceManagementProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, DrillSystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<ManagedBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
+        public static RegionalDrillProperties RegionalDrillProperties(ResilienceManagementProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, DrillExecutionState? executionState = default, DrillExecutionReadinessState? executionReadinessState = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, DrillAttentionReason attentionReason = default, DrillSystemMetadata systemMetadata = default, DrillLastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, MonitoringPropertiesOfDrill monitoringProperties = default, HealthModelMonitoringProperties healthModelMonitoringProperties = default, SliMonitoringProperties sliMonitoringProperties = default, ResponseError errorDetails = default)
         {
             return new RegionalDrillProperties(
                 provisioningState,
                 serviceGroupId,
                 recoveryPlanProperties,
+                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 executionState,
@@ -1261,13 +1447,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<ManagedBrokerTarget>()).ToList(), default),
-                default,
+                DrillType.Regional,
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 errorDetails,
                 default);
         }
 
+        /// <summary> The type used for update operations of the Drill. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ResilienceManagementDrillPatch"/> instance for mocking. </returns>
@@ -1276,30 +1464,50 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ResilienceManagementDrillPatch(identity, properties, default);
         }
 
+        /// <summary> The updatable properties of the Drill. </summary>
         /// <param name="recoveryPlanProperties"> Recovery Plan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. Send null to clear the selection. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. Send null to clear the selection; the submitted slis array is the new desired state. </param>
         /// <returns> A new <see cref="Models.DrillUpdateProperties"/> instance for mocking. </returns>
-        public static DrillUpdateProperties DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, MonitoringPropertiesOfDrill monitoringProperties = default)
+        public static DrillUpdateProperties DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ResilienceManagementRbacSetupMode? rbacSetupMode = default, MonitoringPropertiesOfDrill monitoringProperties = default, HealthModelMonitoringProperties healthModelMonitoringProperties = default, SliMonitoringProperties sliMonitoringProperties = default)
         {
             return new DrillUpdateProperties(
                 recoveryPlanProperties,
+                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 rbacSetupMode,
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 default);
         }
 
-        /// <param name="validateForExecutionSourceLocations"> Physiscal Source locations from where resources to be failed-over or faulted. </param>
+        /// <summary> Request body of the Validate For Execute Action of Drill. </summary>
+        /// <param name="validateForExecutionProperties"> Additional properties for Validate for execute. </param>
         /// <returns> A new <see cref="Models.ValidateForExecutionContent"/> instance for mocking. </returns>
-        public static ValidateForExecutionContent ValidateForExecutionContent(IEnumerable<string> validateForExecutionSourceLocations = default)
+        public static ValidateForExecutionContent ValidateForExecutionContent(ValidateForExecutionProperties validateForExecutionProperties = default)
         {
-            return new ValidateForExecutionContent(validateForExecutionSourceLocations is null ? default : new ValidateForExecutionProperties((validateForExecutionSourceLocations ?? new ChangeTrackingList<string>()).ToList(), default), default);
+            return new ValidateForExecutionContent(validateForExecutionProperties, default);
         }
 
+        /// <summary> Additional properties for Failover. </summary>
+        /// <param name="operationName"> Operation name for which the validation is being done. This is needed to determine the set of validations to be done for the operation. </param>
+        /// <param name="sourceLocations"> Physiscal Source locations from where resources to be failed-over or faulted. </param>
+        /// <returns> A new <see cref="Models.ValidateForExecutionProperties"/> instance for mocking. </returns>
+        public static ValidateForExecutionProperties ValidateForExecutionProperties(DrillRunTask? operationName = default, IEnumerable<string> sourceLocations = default)
+        {
+            sourceLocations ??= new ChangeTrackingList<string>();
+
+            return new ValidateForExecutionProperties(operationName, (sourceLocations ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Fault Properties. </summary>
         /// <param name="availableFaults"> Available faults for this resource. </param>
         /// <param name="defaultFault"> Default fault provided by the system. </param>
         /// <param name="overriddenDefaultFault"> Override fault provided by the user. </param>
@@ -1312,6 +1520,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new FaultProperties((availableFaults ?? new ChangeTrackingList<FaultDetails>()).ToList(), defaultFault, overriddenDefaultFault, customFault, default);
         }
 
+        /// <summary> Fault Details. </summary>
         /// <param name="faultUrn"> fault urn. </param>
         /// <param name="faultName"> fault name. </param>
         /// <param name="targetResourceId"> ARMId of the target resource where fault will be applied. For non-NSG, same as ResourceId. For NSG, its the NSG resource and not the actual resource which is to be simulated for faulting. </param>
@@ -1321,6 +1530,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new FaultDetails(faultUrn, faultName, targetResourceId, default);
         }
 
+        /// <summary> Custom fault details. </summary>
         /// <param name="faultName"> fault name. </param>
         /// <param name="scriptResourceId"> ID of ARM resource used for automation (e.g. Automation runbook URL). </param>
         /// <returns> A new <see cref="Models.CustomFaultDetails"/> instance for mocking. </returns>
@@ -1329,6 +1539,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new CustomFaultDetails(faultName, scriptResourceId, default);
         }
 
+        /// <summary> Request body of the Start Action of Drill. </summary>
         /// <param name="mode"> Mode of starting the Drill. </param>
         /// <returns> A new <see cref="Models.DrillStartContent"/> instance for mocking. </returns>
         public static DrillStartContent DrillStartContent(DrillMode mode = default)
@@ -1336,6 +1547,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillStartContent(mode, default);
         }
 
+        /// <summary> Request body of the End Action of Drill. </summary>
         /// <param name="attestation"> Attestation Status. </param>
         /// <param name="attestationNotes"> Notes. </param>
         /// <returns> A new <see cref="Models.DrillEndContent"/> instance for mocking. </returns>
@@ -1344,15 +1556,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillEndContent(attestation, attestationNotes, default);
         }
 
+        /// <summary> Request body of the AddOrUpdateResources API. </summary>
         /// <param name="faultDurationInMin"> Duration of faults. </param>
         /// <param name="resourceLists"> Add, Update, Delete resource lists. </param>
         /// <param name="forceInclusionAndUpdate"> Whether to allow inclusion and update despite attention reasons. </param>
         /// <returns> A new <see cref="Models.AddOrUpdateResourcesContent"/> instance for mocking. </returns>
-        public static AddOrUpdateResourcesContent AddOrUpdateResourcesContent(int faultDurationInMin = default, DrillResourcesList resourceLists = default, ForceInclusionState? forceInclusionAndUpdate = default)
+        public static AddOrUpdateResourcesContent AddOrUpdateResourcesContent(int faultDurationInMin = default, DrillResourcesList resourceLists = default, DrillResourceForceInclusionState? forceInclusionAndUpdate = default)
         {
             return new AddOrUpdateResourcesContent(faultDurationInMin, resourceLists, forceInclusionAndUpdate, default);
         }
 
+        /// <summary> Add, Update, Delete resource lists. </summary>
         /// <param name="includeResources"> Include resource. </param>
         /// <param name="excludeResources"> Excluded resource. </param>
         /// <param name="updateResources"> Update resource. </param>
@@ -1366,6 +1580,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillResourcesList((includeResources ?? new ChangeTrackingList<IncludeOrUpdateContent>()).ToList(), (excludeResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (updateResources ?? new ChangeTrackingList<IncludeOrUpdateContent>()).ToList(), default);
         }
 
+        /// <summary> Include or Update resource. </summary>
         /// <param name="id"> Id of the DrillResource to be included (NOT the ARM Id of the underlying resource). </param>
         /// <param name="faultProperties"> Fault properties. </param>
         /// <returns> A new <see cref="Models.IncludeOrUpdateContent"/> instance for mocking. </returns>
@@ -1374,6 +1589,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new IncludeOrUpdateContent(id, faultProperties, default);
         }
 
+        /// <summary> Drill Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1391,12 +1607,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary>
+        /// Properties of the Resiliency Drill Resource
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegionalDrillResourceProperties"/> and <see cref="Models.ZonalDrillResourceProperties"/>.
+        /// </summary>
         /// <param name="resourceId"> ARM Id of the underlying resource. </param>
         /// <param name="resourceType"> Type of the Drill resource. </param>
         /// <param name="activeLocations"> Active location and zones of the Azure resource. </param>
         /// <param name="recoveryLocations"> List of recovery locations and zones of the Azure resource. </param>
-        /// <param name="activePhysicalZones"> Active Resource location and physical zones of Azure Resource. </param>
-        /// <param name="recoveryPhysicalZones"> Recovery Resource location and physical zones of HA Azure Resource. </param>
         /// <param name="inclusionState"> Inclusion State of the Drill resource in Drill. </param>
         /// <param name="recoveryPlanInclusionState"> Inclusion State of the Drill resource in Recovery Plan. </param>
         /// <param name="recoveryPlanExclusionReason"> Exclusion reason of the Drill resource in Recovery Plan. </param>
@@ -1405,28 +1623,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="faultState"> Fault State of the Drill resource. </param>
         /// <param name="faultProperties"> Fault Properties. </param>
         /// <param name="forceInclusionState"> ForceInclusion status for this resource. Has the customer forceIncluded it?. </param>
-        /// <param name="haStatus"> HA status of the Drill resource. </param>
         /// <param name="attentionReason"> Attention reason if the Status is 'NeedsAttention'. </param>
         /// <param name="advisorRecommendationTypeId"> Recommendation Type Id for the recommendation. </param>
-        /// <param name="advisorHaRecommendationId"> Associated Advisor Recommendation link, if HA is not enabled on this resource. </param>
         /// <param name="rbacAssignmentError"> Last RBAC assignment error, if any. </param>
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="drillType"> The discriminator for the Drill Resource object hierarchy. Matches the parent Drill type. </param>
         /// <returns> A new <see cref="Models.DrillResourceProperties"/> instance for mocking. </returns>
-        public static DrillResourceProperties DrillResourceProperties(ResourceIdentifier resourceId = default, string resourceType = default, IEnumerable<string> activeLocations = default, IEnumerable<string> recoveryLocations = default, IEnumerable<string> activePhysicalZones = default, IEnumerable<string> recoveryPhysicalZones = default, DrillResourceInclusionState? inclusionState = default, ResourceInclusionState? recoveryPlanInclusionState = default, RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default, ResourceProtectionSolutionType? resourceProtectionSolutionType = default, DrillResourceReadinessState? readinessState = default, DrillResourceFaultState? faultState = default, FaultProperties faultProperties = default, ForceInclusionState? forceInclusionState = default, HighAvailabilityStatus? haStatus = default, DrillResourceAttentionReason attentionReason = default, string advisorRecommendationTypeId = default, ResourceIdentifier advisorHaRecommendationId = default, ResilienceManagementErrorDetail rbacAssignmentError = default, ResilienceManagementErrorDetail monitoringRbacAssignmentError = default, ResilienceManagementProvisioningState? provisioningState = default)
+        public static DrillResourceProperties DrillResourceProperties(ResourceIdentifier resourceId = default, ResourceType resourceType = default, IEnumerable<string> activeLocations = default, IEnumerable<string> recoveryLocations = default, DrillResourceInclusionState? inclusionState = default, ResourceInclusionState? recoveryPlanInclusionState = default, RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default, ResourceProtectionSolutionType? resourceProtectionSolutionType = default, DrillResourceReadinessState? readinessState = default, DrillResourceFaultState? faultState = default, FaultProperties faultProperties = default, DrillResourceForceInclusionState? forceInclusionState = default, DrillResourceAttentionReason attentionReason = default, string advisorRecommendationTypeId = default, ResilienceManagementErrorDetail rbacAssignmentError = default, ResilienceManagementErrorDetail monitoringRbacAssignmentError = default, ResilienceManagementProvisioningState? provisioningState = default, string drillType = default)
         {
             activeLocations ??= new ChangeTrackingList<string>();
             recoveryLocations ??= new ChangeTrackingList<string>();
-            activePhysicalZones ??= new ChangeTrackingList<string>();
-            recoveryPhysicalZones ??= new ChangeTrackingList<string>();
 
-            return new DrillResourceProperties(
+            return new UnknownDrillResourceProperties(
                 resourceId,
                 resourceType,
                 (activeLocations ?? new ChangeTrackingList<string>()).ToList(),
                 (recoveryLocations ?? new ChangeTrackingList<string>()).ToList(),
-                (activePhysicalZones ?? new ChangeTrackingList<string>()).ToList(),
-                (recoveryPhysicalZones ?? new ChangeTrackingList<string>()).ToList(),
                 inclusionState,
                 recoveryPlanInclusionState,
                 recoveryPlanExclusionReason,
@@ -1435,16 +1648,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 faultState,
                 faultProperties,
                 forceInclusionState,
-                haStatus,
                 attentionReason,
                 advisorRecommendationTypeId,
-                advisorHaRecommendationId,
                 rbacAssignmentError,
                 monitoringRbacAssignmentError,
                 provisioningState,
+                drillType is null ? default : new DrillType(drillType),
                 default);
         }
 
+        /// <summary> Reason why the Drill resource is in NeedsAttention state. </summary>
         /// <param name="faultRbacOnTargetResource"> Chaos Resource MSI does not have the desired RBAC on the resource. </param>
         /// <param name="runbookFaultRbacOnTargets"> RBAC required by AutomationAccount for runbook MSI not setup on the target resources. </param>
         /// <param name="monitoringRbacOnTargets"> RBAC required by Drill MSI on the target resource for monitoring. </param>
@@ -1457,6 +1670,109 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillResourceAttentionReason(faultRbacOnTargetResource, runbookFaultRbacOnTargets, monitoringRbacOnTargets, (resourceState ?? new ChangeTrackingList<DrillResourceState>()).ToList(), default);
         }
 
+        /// <summary> Properties of a resource in a zonal Resiliency Drill. </summary>
+        /// <param name="resourceId"> ARM Id of the underlying resource. </param>
+        /// <param name="resourceType"> Type of the Drill resource. </param>
+        /// <param name="activeLocations"> Active location and zones of the Azure resource. </param>
+        /// <param name="recoveryLocations"> List of recovery locations and zones of the Azure resource. </param>
+        /// <param name="inclusionState"> Inclusion State of the Drill resource in Drill. </param>
+        /// <param name="recoveryPlanInclusionState"> Inclusion State of the Drill resource in Recovery Plan. </param>
+        /// <param name="recoveryPlanExclusionReason"> Exclusion reason of the Drill resource in Recovery Plan. </param>
+        /// <param name="resourceProtectionSolutionType"> Protection Solution Type of the Drill resource. </param>
+        /// <param name="readinessState"> Readiness State of the Drill resource. </param>
+        /// <param name="faultState"> Fault State of the Drill resource. </param>
+        /// <param name="faultProperties"> Fault Properties. </param>
+        /// <param name="forceInclusionState"> ForceInclusion status for this resource. Has the customer forceIncluded it?. </param>
+        /// <param name="attentionReason"> Attention reason if the Status is 'NeedsAttention'. </param>
+        /// <param name="advisorRecommendationTypeId"> Recommendation Type Id for the recommendation. </param>
+        /// <param name="rbacAssignmentError"> Last RBAC assignment error, if any. </param>
+        /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="activePhysicalZones"> Active Resource location and physical zones of Azure Resource. </param>
+        /// <param name="recoveryPhysicalZones"> Recovery Resource location and physical zones of HA Azure Resource. </param>
+        /// <param name="haStatus"> HA status of the Drill resource. </param>
+        /// <param name="advisorHaRecommendationId"> Associated Advisor Recommendation link, if HA is not enabled on this resource. </param>
+        /// <returns> A new <see cref="Models.ZonalDrillResourceProperties"/> instance for mocking. </returns>
+        public static ZonalDrillResourceProperties ZonalDrillResourceProperties(ResourceIdentifier resourceId = default, ResourceType resourceType = default, IEnumerable<string> activeLocations = default, IEnumerable<string> recoveryLocations = default, DrillResourceInclusionState? inclusionState = default, ResourceInclusionState? recoveryPlanInclusionState = default, RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default, ResourceProtectionSolutionType? resourceProtectionSolutionType = default, DrillResourceReadinessState? readinessState = default, DrillResourceFaultState? faultState = default, FaultProperties faultProperties = default, DrillResourceForceInclusionState? forceInclusionState = default, DrillResourceAttentionReason attentionReason = default, string advisorRecommendationTypeId = default, ResilienceManagementErrorDetail rbacAssignmentError = default, ResilienceManagementErrorDetail monitoringRbacAssignmentError = default, ResilienceManagementProvisioningState? provisioningState = default, IEnumerable<string> activePhysicalZones = default, IEnumerable<string> recoveryPhysicalZones = default, DrillResourceHighAvailabilityStatus? haStatus = default, ResourceIdentifier advisorHaRecommendationId = default)
+        {
+            activeLocations ??= new ChangeTrackingList<string>();
+            recoveryLocations ??= new ChangeTrackingList<string>();
+            activePhysicalZones ??= new ChangeTrackingList<string>();
+            recoveryPhysicalZones ??= new ChangeTrackingList<string>();
+
+            return new ZonalDrillResourceProperties(
+                resourceId,
+                resourceType,
+                (activeLocations ?? new ChangeTrackingList<string>()).ToList(),
+                (recoveryLocations ?? new ChangeTrackingList<string>()).ToList(),
+                inclusionState,
+                recoveryPlanInclusionState,
+                recoveryPlanExclusionReason,
+                resourceProtectionSolutionType,
+                readinessState,
+                faultState,
+                faultProperties,
+                forceInclusionState,
+                attentionReason,
+                advisorRecommendationTypeId,
+                rbacAssignmentError,
+                monitoringRbacAssignmentError,
+                provisioningState,
+                DrillType.Zonal,
+                default,
+                (activePhysicalZones ?? new ChangeTrackingList<string>()).ToList(),
+                (recoveryPhysicalZones ?? new ChangeTrackingList<string>()).ToList(),
+                haStatus,
+                advisorHaRecommendationId);
+        }
+
+        /// <summary> Properties of a resource in a regional Resiliency Drill. </summary>
+        /// <param name="resourceId"> ARM Id of the underlying resource. </param>
+        /// <param name="resourceType"> Type of the Drill resource. </param>
+        /// <param name="activeLocations"> Active location and zones of the Azure resource. </param>
+        /// <param name="recoveryLocations"> List of recovery locations and zones of the Azure resource. </param>
+        /// <param name="inclusionState"> Inclusion State of the Drill resource in Drill. </param>
+        /// <param name="recoveryPlanInclusionState"> Inclusion State of the Drill resource in Recovery Plan. </param>
+        /// <param name="recoveryPlanExclusionReason"> Exclusion reason of the Drill resource in Recovery Plan. </param>
+        /// <param name="resourceProtectionSolutionType"> Protection Solution Type of the Drill resource. </param>
+        /// <param name="readinessState"> Readiness State of the Drill resource. </param>
+        /// <param name="faultState"> Fault State of the Drill resource. </param>
+        /// <param name="faultProperties"> Fault Properties. </param>
+        /// <param name="forceInclusionState"> ForceInclusion status for this resource. Has the customer forceIncluded it?. </param>
+        /// <param name="attentionReason"> Attention reason if the Status is 'NeedsAttention'. </param>
+        /// <param name="advisorRecommendationTypeId"> Recommendation Type Id for the recommendation. </param>
+        /// <param name="rbacAssignmentError"> Last RBAC assignment error, if any. </param>
+        /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <returns> A new <see cref="Models.RegionalDrillResourceProperties"/> instance for mocking. </returns>
+        public static RegionalDrillResourceProperties RegionalDrillResourceProperties(ResourceIdentifier resourceId = default, ResourceType resourceType = default, IEnumerable<string> activeLocations = default, IEnumerable<string> recoveryLocations = default, DrillResourceInclusionState? inclusionState = default, ResourceInclusionState? recoveryPlanInclusionState = default, RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default, ResourceProtectionSolutionType? resourceProtectionSolutionType = default, DrillResourceReadinessState? readinessState = default, DrillResourceFaultState? faultState = default, FaultProperties faultProperties = default, DrillResourceForceInclusionState? forceInclusionState = default, DrillResourceAttentionReason attentionReason = default, string advisorRecommendationTypeId = default, ResilienceManagementErrorDetail rbacAssignmentError = default, ResilienceManagementErrorDetail monitoringRbacAssignmentError = default, ResilienceManagementProvisioningState? provisioningState = default)
+        {
+            activeLocations ??= new ChangeTrackingList<string>();
+            recoveryLocations ??= new ChangeTrackingList<string>();
+
+            return new RegionalDrillResourceProperties(
+                resourceId,
+                resourceType,
+                (activeLocations ?? new ChangeTrackingList<string>()).ToList(),
+                (recoveryLocations ?? new ChangeTrackingList<string>()).ToList(),
+                inclusionState,
+                recoveryPlanInclusionState,
+                recoveryPlanExclusionReason,
+                resourceProtectionSolutionType,
+                readinessState,
+                faultState,
+                faultProperties,
+                forceInclusionState,
+                attentionReason,
+                advisorRecommendationTypeId,
+                rbacAssignmentError,
+                monitoringRbacAssignmentError,
+                provisioningState,
+                DrillType.Regional,
+                default);
+        }
+
+        /// <summary> DrillRun resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1474,14 +1790,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Request body for Failover API. </summary>
         /// <param name="autoFailover"> AutoFailover - whether to pause between Fault and Failover for manual input. </param>
         /// <param name="failoverProperties"> The failover properties. </param>
         /// <returns> A new <see cref="Models.DrillRunFailoverContent"/> instance for mocking. </returns>
-        public static DrillRunFailoverContent DrillRunFailoverContent(AutoFailover autoFailover = default, ResilienceManagementFailoverContent failoverProperties = default)
+        public static DrillRunFailoverContent DrillRunFailoverContent(DrillRunAutoFailover autoFailover = default, ResilienceManagementFailoverContent failoverProperties = default)
         {
             return new DrillRunFailoverContent(autoFailover, failoverProperties, default);
         }
 
+        /// <param name="reprotectRequestSelectedResourceIds"> Selected recovery resource Ids to be processed. If not provided, all qualified resources will be processed. </param>
+        /// <returns> A new <see cref="Models.DrillRunReprotectContent"/> instance for mocking. </returns>
+        public static DrillRunReprotectContent DrillRunReprotectContent(IEnumerable<ResourceIdentifier> reprotectRequestSelectedResourceIds = default)
+        {
+            return new DrillRunReprotectContent(reprotectRequestSelectedResourceIds is null ? default : new ReprotectContent(reprotectRequestSelectedResourceIds is null ? default : new ReprotectRequestProperties((reprotectRequestSelectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default), default);
+        }
+
+        /// <summary> Request body for AddNotes API. </summary>
         /// <param name="notes"> The notes string. </param>
         /// <param name="recordedOn"> System generated current Timestamp. </param>
         /// <param name="author"> System generated Object Id of the notes author. </param>
@@ -1491,13 +1816,33 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillRunAddNotesContent(notes, recordedOn, author, default);
         }
 
+        /// <summary> Request body for MarkAsComplete API. </summary>
         /// <param name="drillRunStage"> State of the Drill Run. </param>
         /// <returns> A new <see cref="Models.MarkAsCompleteContent"/> instance for mocking. </returns>
-        public static MarkAsCompleteContent MarkAsCompleteContent(DrillRunSubtasks drillRunStage = default)
+        public static MarkAsCompleteContent MarkAsCompleteContent(DrillRunStage drillRunStage = default)
         {
             return new MarkAsCompleteContent(drillRunStage, default);
         }
 
+        /// <summary> Request to mint a short-lived, read-only download URL for a Drill Run report. </summary>
+        /// <param name="format"> Format of the report to download. Defaults to Html when not specified. </param>
+        /// <returns> A new <see cref="Models.ListReportDownloadUrlContent"/> instance for mocking. </returns>
+        public static ListReportDownloadUrlContent ListReportDownloadUrlContent(DrillReportFormat? format = default)
+        {
+            return new ListReportDownloadUrlContent(format, default);
+        }
+
+        /// <summary> Response containing a short-lived, read-only download URL for a Drill Run report. </summary>
+        /// <param name="format"> Format of the report the download URL refers to. </param>
+        /// <param name="downloadUri"> Short-lived, read-only URL to download the report. </param>
+        /// <param name="expiryOn"> Timestamp at which the download URL expires. </param>
+        /// <returns> A new <see cref="Models.ListReportDownloadUrlResult"/> instance for mocking. </returns>
+        public static ListReportDownloadUrlResult ListReportDownloadUrlResult(DrillReportFormat? format = default, Uri downloadUri = default, DateTimeOffset? expiryOn = default)
+        {
+            return new ListReportDownloadUrlResult(format, downloadUri, expiryOn, default);
+        }
+
+        /// <summary> Represents a Drill Run job resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1515,6 +1860,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> A unified resilience item represents a computed and aggregated resilience information of Azure Applications. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1534,52 +1880,66 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="goals"> Computed and copied data of resilience goals. </param>
-        /// <param name="recommendationsHighAvailability"> The high availability section of resilience recommendation. </param>
+        /// <param name="zonalResiliency"> The zonal resiliency section of the resiliency posture. </param>
+        /// <param name="billingInfo"> Usage plan and enrollment billing information for the service group. </param>
         /// <param name="lastModifiedOn"> Last modified time of the unified resilience item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationsHighAvailability"/> is null. </exception>
         /// <returns> A new <see cref="Models.UnifiedResilienceItemProperties"/> instance for mocking. </returns>
-        public static UnifiedResilienceItemProperties UnifiedResilienceItemProperties(ResilienceManagementProvisioningState? provisioningState = default, ResilienceManagementGoalsInfo goals = default, RecommendationsHighAvailabilityInfo recommendationsHighAvailability = default, DateTimeOffset lastModifiedOn = default)
+        public static UnifiedResilienceItemProperties UnifiedResilienceItemProperties(ResilienceManagementProvisioningState? provisioningState = default, ResilienceManagementGoalsInfo goals = default, UnifiedResilienceItemZonalResiliencyPosture zonalResiliency = default, UnifiedResilienceItemBillingInfo billingInfo = default, DateTimeOffset lastModifiedOn = default)
         {
-            return new UnifiedResilienceItemProperties(provisioningState, goals, recommendationsHighAvailability is null ? default : new RecommendationsData(recommendationsHighAvailability, default), lastModifiedOn, default);
-        }
-
-        /// <param name="templateId"> Arm id of the goal template. </param>
-        /// <param name="assignmentId"> Arm id of the goal assignment. </param>
-        /// <param name="regionalRecoveryPointObjectiveInMinutes"> Regional RPO set in resilience goal in minutes. </param>
-        /// <param name="regionalRecoveryPointEstimatedInMinutes"> Computed recovery point estimated for the service group in minutes. </param>
-        /// <param name="regionalRecoveryPointObjectiveStatus"> Regional RPO status of the service group. </param>
-        /// <param name="regionalRecoveryTimeObjectiveInMinutes"> Regional RTO set in resilience goal in minutes. </param>
-        /// <param name="regionalRecoveryTimeActualInMinutes"> Computed RTA for the service group in minutes. </param>
-        /// <param name="regionalRecoveryTimeObjectiveStatus"> Regional RTO status of the service group. </param>
-        /// <param name="requireHighAvailability"> Whether the resource is required for high availability. </param>
-        /// <param name="requireDisasterRecovery"> Whether the resource is required for disaster recovery. </param>
-        /// <returns> A new <see cref="Models.ResilienceManagementGoalsInfo"/> instance for mocking. </returns>
-        public static ResilienceManagementGoalsInfo ResilienceManagementGoalsInfo(ResourceIdentifier templateId = default, ResourceIdentifier assignmentId = default, IsoDuration? regionalRecoveryPointObjectiveInMinutes = default, IsoDuration? regionalRecoveryPointEstimatedInMinutes = default, ResilienceHealthStatus regionalRecoveryPointObjectiveStatus = default, IsoDuration? regionalRecoveryTimeObjectiveInMinutes = default, IsoDuration? regionalRecoveryTimeActualInMinutes = default, ResilienceHealthStatus regionalRecoveryTimeObjectiveStatus = default, UnifiedResilienceItemRequirementSelected? requireHighAvailability = default, UnifiedResilienceItemRequirementSelected? requireDisasterRecovery = default)
-        {
-            return new ResilienceManagementGoalsInfo(
-                templateId,
-                assignmentId,
-                regionalRecoveryPointObjectiveInMinutes,
-                regionalRecoveryPointEstimatedInMinutes,
-                regionalRecoveryPointObjectiveStatus,
-                regionalRecoveryTimeObjectiveInMinutes,
-                regionalRecoveryTimeActualInMinutes,
-                regionalRecoveryTimeObjectiveStatus,
-                requireHighAvailability,
-                requireDisasterRecovery,
+            return new UnifiedResilienceItemProperties(
+                provisioningState,
+                goals,
+                zonalResiliency is null ? default : new UnifiedResilienceItemResiliencyPosture(zonalResiliency, default),
+                billingInfo,
+                lastModifiedOn,
                 default);
         }
 
-        /// <param name="enabledResourceCount"> Count of resources that have high availability enabled. </param>
-        /// <param name="notEnabledResourceCount"> Count of resources that do not have high availability enabled. </param>
-        /// <param name="notEvaluatedResourceCount"> Count of resources that have not been evaluated for high availability. </param>
-        /// <param name="evaluationOn"> The date and time when the high availability recommendations were last evaluated. </param>
-        /// <returns> A new <see cref="Models.RecommendationsHighAvailabilityInfo"/> instance for mocking. </returns>
-        public static RecommendationsHighAvailabilityInfo RecommendationsHighAvailabilityInfo(long? enabledResourceCount = default, long? notEnabledResourceCount = default, long? notEvaluatedResourceCount = default, DateTimeOffset? evaluationOn = default)
+        /// <param name="assignmentId"> Arm id of the goal assignment. </param>
+        /// <param name="isZonalResiliencyRequired"> Whether the goal is required for the service group. </param>
+        /// <returns> A new <see cref="Models.ResilienceManagementGoalsInfo"/> instance for mocking. </returns>
+        public static ResilienceManagementGoalsInfo ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId = default, bool? isZonalResiliencyRequired = default)
         {
-            return new RecommendationsHighAvailabilityInfo(enabledResourceCount, notEnabledResourceCount, notEvaluatedResourceCount, evaluationOn, default);
+            return new ResilienceManagementGoalsInfo(assignmentId, isZonalResiliencyRequired is null ? default : new UnifiedResilienceItemGoalRequirement(isZonalResiliencyRequired.GetValueOrDefault(), default), default);
         }
 
+        /// <summary> Definition of the zonal resiliency posture computed for the unified resilience item. </summary>
+        /// <param name="enabledResourceCount"> Count of resources that have zonal resiliency enabled. </param>
+        /// <param name="notEnabledResourceCount"> Count of resources that do not have zonal resiliency enabled. </param>
+        /// <param name="notEvaluatedResourceCount"> Count of resources that have not been evaluated for zonal resiliency. </param>
+        /// <param name="userConfirmationNeededCount"> Count of resources that require user confirmation for zonal resiliency. </param>
+        /// <param name="evaluationOn"> The date and time when the zonal resiliency posture was last evaluated. </param>
+        /// <returns> A new <see cref="Models.UnifiedResilienceItemZonalResiliencyPosture"/> instance for mocking. </returns>
+        public static UnifiedResilienceItemZonalResiliencyPosture UnifiedResilienceItemZonalResiliencyPosture(long? enabledResourceCount = default, long? notEnabledResourceCount = default, long? notEvaluatedResourceCount = default, long? userConfirmationNeededCount = default, DateTimeOffset? evaluationOn = default)
+        {
+            return new UnifiedResilienceItemZonalResiliencyPosture(
+                enabledResourceCount,
+                notEnabledResourceCount,
+                notEvaluatedResourceCount,
+                userConfirmationNeededCount,
+                evaluationOn,
+                default);
+        }
+
+        /// <summary> Definition of billing information in unified resilience item. </summary>
+        /// <param name="usagePlanArmId"> Arm id of the usage plan applied to the service group. </param>
+        /// <param name="usagePlanEnrollmentArmId"> Arm id of the usage plan enrollment that links the usage plan to the service group. </param>
+        /// <param name="usagePlanEnrollmentCreatedOn"> The date and time when the usage plan enrollment was created. </param>
+        /// <param name="usagePlanEnrollmentLastUpdatedOn"> The date and time when the usage plan enrollment was last updated. </param>
+        /// <param name="errorDetails"> Details of any errors encountered while resolving the billing information. </param>
+        /// <returns> A new <see cref="Models.UnifiedResilienceItemBillingInfo"/> instance for mocking. </returns>
+        public static UnifiedResilienceItemBillingInfo UnifiedResilienceItemBillingInfo(ResourceIdentifier usagePlanArmId = default, ResourceIdentifier usagePlanEnrollmentArmId = default, DateTimeOffset? usagePlanEnrollmentCreatedOn = default, DateTimeOffset? usagePlanEnrollmentLastUpdatedOn = default, ResponseError errorDetails = default)
+        {
+            return new UnifiedResilienceItemBillingInfo(
+                usagePlanArmId,
+                usagePlanEnrollmentArmId,
+                usagePlanEnrollmentCreatedOn,
+                usagePlanEnrollmentLastUpdatedOn,
+                errorDetails,
+                default);
+        }
+
+        /// <summary> A usage plan resource for Resiliency feature billing. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1603,6 +1963,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Definition of usage plan properties. </summary>
         /// <param name="planType"> The type of the usage plan. </param>
         /// <param name="provisioningState"> Provisioning state of the usage plan. </param>
         /// <param name="errorDetails"> Details of any errors encountered during Usage Plan create or update. </param>
@@ -1612,6 +1973,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new UsagePlanProperties(planType, provisioningState, errorDetails, default);
         }
 
+        /// <summary> The type used for updating tags in UsagePlan resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.UsagePlanPatch"/> instance for mocking. </returns>
         public static UsagePlanPatch UsagePlanPatch(IDictionary<string, string> tags = default)
@@ -1621,13 +1983,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new UsagePlanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> An enrollment that links a usage plan to a service group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ResilienceManagement.UsagePlanEnrollmentData"/> instance for mocking. </returns>
-        public static UsagePlanEnrollmentData UsagePlanEnrollmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EnrollmentProperties properties = default)
+        public static UsagePlanEnrollmentData UsagePlanEnrollmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UsagePlanEnrollmentProperties properties = default)
         {
             return new UsagePlanEnrollmentData(
                 id,
@@ -1638,13 +2001,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Definition of enrollment properties. </summary>
         /// <param name="serviceGroupId"> ARM resource identifier of the service group associated with this usage plan. </param>
         /// <param name="provisioningState"> Provisioning state of the enrollment. </param>
         /// <param name="errorDetails"> Details of any errors encountered during Enrollment create or update. </param>
-        /// <returns> A new <see cref="Models.EnrollmentProperties"/> instance for mocking. </returns>
-        public static EnrollmentProperties EnrollmentProperties(ResourceIdentifier serviceGroupId = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        /// <returns> A new <see cref="Models.UsagePlanEnrollmentProperties"/> instance for mocking. </returns>
+        public static UsagePlanEnrollmentProperties UsagePlanEnrollmentProperties(ResourceIdentifier serviceGroupId = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
         {
-            return new EnrollmentProperties(serviceGroupId, provisioningState, errorDetails, default);
+            return new UsagePlanEnrollmentProperties(serviceGroupId, provisioningState, errorDetails, default);
         }
     }
 }

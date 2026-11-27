@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> AllKeysRandom. </summary>
         private const string AllKeysRandomValue = "AllKeysRandom";
         /// <summary> VolatileLRU. </summary>
-        private const string VolatileLfuValue = "VolatileLRU";
+        private const string VolatileLruValue = "VolatileLRU";
         /// <summary> VolatileLFU. </summary>
-        private const string VolatileLruValue = "VolatileLFU";
+        private const string VolatileLfuValue = "VolatileLFU";
         /// <summary> VolatileTTL. </summary>
         private const string VolatileTtlValue = "VolatileTTL";
         /// <summary> VolatileRandom. </summary>
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseEvictionPolicy AllKeysRandom { get; } = new RedisEnterpriseEvictionPolicy(AllKeysRandomValue);
 
         /// <summary> VolatileLRU. </summary>
-        public static RedisEnterpriseEvictionPolicy VolatileLfu { get; } = new RedisEnterpriseEvictionPolicy(VolatileLfuValue);
+        public static RedisEnterpriseEvictionPolicy VolatileLru { get; } = new RedisEnterpriseEvictionPolicy(VolatileLruValue);
 
         /// <summary> VolatileLFU. </summary>
-        public static RedisEnterpriseEvictionPolicy VolatileLru { get; } = new RedisEnterpriseEvictionPolicy(VolatileLruValue);
+        public static RedisEnterpriseEvictionPolicy VolatileLfu { get; } = new RedisEnterpriseEvictionPolicy(VolatileLfuValue);
 
         /// <summary> VolatileTTL. </summary>
         public static RedisEnterpriseEvictionPolicy VolatileTtl { get; } = new RedisEnterpriseEvictionPolicy(VolatileTtlValue);

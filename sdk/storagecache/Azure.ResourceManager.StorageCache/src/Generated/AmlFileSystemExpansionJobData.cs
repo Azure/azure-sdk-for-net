@@ -69,6 +69,32 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
+        /// <summary> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </summary>
+        public bool? ShouldRunRebalanceJob
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShouldRunRebalanceJob;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpansionJobProperties();
+                }
+                Properties.ShouldRunRebalanceJob = value;
+            }
+        }
+
+        /// <summary> Fully qualified ARM resource ID of the child rebalance job created by this expansion. Populated after RebalanceJob is created. </summary>
+        public ResourceIdentifier RebalanceJobId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RebalanceJobId;
+            }
+        }
+
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
         public AmlFileSystemExpansionJobStatusType? State
         {

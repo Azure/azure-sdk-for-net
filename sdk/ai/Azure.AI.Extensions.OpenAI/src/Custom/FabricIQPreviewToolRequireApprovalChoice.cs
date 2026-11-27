@@ -8,10 +8,11 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary>
     /// The approval required for the tool.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class FabricIQPreviewToolRequireApprovalChoice
     {
         /// <summary>
-        /// The approval choce.
+        /// The approval choice.
         /// </summary>
         public string ApprovalString { get; }
 

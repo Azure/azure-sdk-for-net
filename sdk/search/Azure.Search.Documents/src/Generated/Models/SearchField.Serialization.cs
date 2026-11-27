@@ -118,25 +118,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Optional.IsDefined(PermissionFilter))
+            if (Optional.IsDefined(PermissionFilter, _permissionFilterIsDefined))
             {
-                writer.WritePropertyName("permissionFilter"u8);
-                writer.WriteStringValue(PermissionFilter.Value.ToString());
+                if (PermissionFilter != null)
+                {
+                    writer.WritePropertyName("permissionFilter"u8);
+                    writer.WriteStringValue(PermissionFilter.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("permissionFilter"u8);
+                }
             }
-            if (Optional.IsDefined(SensitivityLabelId))
+            if (Optional.IsDefined(OrganizationAccessExpiration))
             {
-                writer.WritePropertyName("sensitivityLabelId"u8);
-                writer.WriteBooleanValue(SensitivityLabelId.Value);
-            }
-            if (Optional.IsDefined(SensitivityLabelName))
-            {
-                writer.WritePropertyName("sensitivityLabelName"u8);
-                writer.WriteBooleanValue(SensitivityLabelName.Value);
-            }
-            if (Optional.IsDefined(SourceDocumentId))
-            {
-                writer.WritePropertyName("sourceDocumentId"u8);
-                writer.WriteBooleanValue(SourceDocumentId.Value);
+                writer.WritePropertyName("organizationAccessExpiration"u8);
+                writer.WriteBooleanValue(OrganizationAccessExpiration.Value);
             }
             if (Optional.IsDefined(SharepointSiteUrl))
             {
@@ -168,15 +165,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteNumberValue(VectorSearchDimensions.Value);
             }
-            if (Optional.IsDefined(VectorSearchProfileName))
+            if (Optional.IsDefined(VectorSearchProfileName, _vectorSearchProfileNameIsDefined))
             {
-                writer.WritePropertyName("vectorSearchProfile"u8);
-                writer.WriteStringValue(VectorSearchProfileName);
+                if (VectorSearchProfileName != null)
+                {
+                    writer.WritePropertyName("vectorSearchProfile"u8);
+                    writer.WriteStringValue(VectorSearchProfileName);
+                }
+                else
+                {
+                    writer.WriteNull("vectorSearchProfile"u8);
+                }
             }
-            if (Optional.IsDefined(VectorEncodingFormat))
+            if (Optional.IsDefined(VectorEncodingFormat, _vectorEncodingFormatIsDefined))
             {
-                writer.WritePropertyName("vectorEncoding"u8);
-                writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                if (VectorEncodingFormat != null)
+                {
+                    writer.WritePropertyName("vectorEncoding"u8);
+                    writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("vectorEncoding"u8);
+                }
             }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
@@ -254,17 +265,18 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isFilterable = default;
             bool? isSortable = default;
             bool? isFacetable = default;
+            bool permissionFilterIsDefined = false;
             PermissionFilter? permissionFilter = default;
-            bool? sensitivityLabelId = default;
-            bool? sensitivityLabelName = default;
-            bool? sourceDocumentId = default;
+            bool? organizationAccessExpiration = default;
             bool? sharepointSiteUrl = default;
             LexicalAnalyzerName? analyzerName = default;
             LexicalAnalyzerName? searchAnalyzerName = default;
             LexicalAnalyzerName? indexAnalyzerName = default;
             LexicalNormalizerName? normalizerName = default;
             int? vectorSearchDimensions = default;
+            bool vectorSearchProfileNameIsDefined = false;
             string vectorSearchProfileName = default;
+            bool vectorEncodingFormatIsDefined = false;
             VectorEncodingFormat? vectorEncodingFormat = default;
             IList<string> synonymMapNames = default;
             IList<SearchField> fields = default;
@@ -346,6 +358,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("permissionFilter"u8))
                 {
+                    permissionFilterIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         permissionFilter = null;
@@ -354,31 +367,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilter = new PermissionFilter(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sensitivityLabelId"u8))
+                if (prop.NameEquals("organizationAccessExpiration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sensitivityLabelId = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("sensitivityLabelName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sensitivityLabelName = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("sourceDocumentId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceDocumentId = prop.Value.GetBoolean();
+                    organizationAccessExpiration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sharepointSiteUrl"u8))
@@ -441,6 +436,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("vectorSearchProfile"u8))
                 {
+                    vectorSearchProfileNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         vectorSearchProfileName = null;
@@ -451,6 +447,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("vectorEncoding"u8))
                 {
+                    vectorEncodingFormatIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         vectorEncodingFormat = null;
@@ -496,7 +493,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchField(
@@ -510,9 +507,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 isSortable,
                 isFacetable,
                 permissionFilter,
-                sensitivityLabelId,
-                sensitivityLabelName,
-                sourceDocumentId,
+                organizationAccessExpiration,
                 sharepointSiteUrl,
                 analyzerName,
                 searchAnalyzerName,
@@ -523,7 +518,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 vectorEncodingFormat,
                 synonymMapNames ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _permissionFilterIsDefined = permissionFilterIsDefined,
+                _vectorSearchProfileNameIsDefined = vectorSearchProfileNameIsDefined,
+                _vectorEncodingFormatIsDefined = vectorEncodingFormatIsDefined
+            };
         }
     }
 }

@@ -1,0 +1,27 @@
+{
+  "version": 0,
+  "begin": "2024-01-15T08:00:00.000Z",
+  "intervalSecs": 900,
+  "status": "Finalized",
+  "config": {
+    "version": 1,
+    "configVersionEtag": "0x8db4d20a2b42b73",
+    "numShards": 1,
+    "recordsFormat": "avro",
+    "formatSchemaVersion": 1,
+    "shardDistFnVersion": 1,
+    "streamAppendType": 3
+  },
+  "chunkFilePaths": [
+    "$fileschangefeed-testguid/log/00/2024/01/15/0800/",
+    "$fileschangefeed-testguid/log/01/2024/01/15/0800/",
+    "$fileschangefeed-testguid/log/02/2024/01/15/0800/"
+  ],
+  "storageDiagnostics": {
+    "version": 0,
+    "lastModifiedTime": "2024-01-15T08:14:04.000Z",
+    "data": {
+      "aid": "a6a51225-d006-0048-0009-7f5097061ed8"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2026-10-08)
+
+### Features Added
+
+- Added `AdministrativeCredentialsPatch`, `BareMetalMachineConfigurationPatch`, `ClusterSecretArchivePatch`, `ClusterUpdateStrategyPatch`, `ImageRepositoryCredentialsPatch`, `NetworkCloudRackDefinitionPatch`, `NetworkCloudSshPublicKeyPatch`, `RuntimeProtectionConfigurationPatch`, `ServicePrincipalInformationPatch`, `StorageApplianceConfigurationPatch`, and `ValidationThresholdPatch` models to align the update/patch payloads with their corresponding patch semantics.
 
 ## 1.4.0-beta.1 (2026-06-16)
 

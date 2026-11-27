@@ -24,6 +24,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new FileshareProtectedItem. </summary>
         public FileshareProtectedItem()
         {
+            ProtectedItemType.Assign("AzureFileShareProtectedItem");
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
@@ -135,7 +136,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "AzureFileShareProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _protectionStatus = DefineProperty<string>(nameof(ProtectionStatus), new string[] { "protectionStatus" });
             _protectionState = DefineProperty<BackupProtectionState>(nameof(ProtectionState), new string[] { "protectionState" });

@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.ServiceGroups
         {
             TryGetApiVersion(ServiceGroupResource.ResourceType, out string serviceGroupApiVersion);
             _managementClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ServiceGroupResource.ResourceType.Namespace, Diagnostics);
-            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2026-08-01");
             _serviceGroupsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ServiceGroupResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ServiceGroups
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ServiceGroups
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>

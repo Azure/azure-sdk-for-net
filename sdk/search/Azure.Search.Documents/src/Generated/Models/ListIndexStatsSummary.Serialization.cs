@@ -81,16 +81,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ListIndexStatsSummary)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("@odata.count"u8);
-                writer.WriteNumberValue(Count.Value);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (IndexStatisticsSummary item in IndexesStatistics)
+                foreach (IndexStatisticsSummary item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,21 +138,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            long? count = default;
-            IReadOnlyList<IndexStatisticsSummary> indexesStatistics = default;
+            IReadOnlyList<IndexStatisticsSummary> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.count"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    count = prop.Value.GetInt64();
-                    continue;
-                }
                 if (prop.NameEquals("value"u8))
                 {
                     List<IndexStatisticsSummary> array = new List<IndexStatisticsSummary>();
@@ -165,7 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(IndexStatisticsSummary.DeserializeIndexStatisticsSummary(item, options));
                     }
-                    indexesStatistics = array;
+                    value = array;
                     continue;
                 }
                 if (prop.NameEquals("@odata.nextLink"u8))
@@ -175,10 +160,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListIndexStatsSummary(count, indexesStatistics, nextLink, additionalBinaryDataProperties);
+            return new ListIndexStatsSummary(value ?? new ChangeTrackingList<IndexStatisticsSummary>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private readonly string _value;
         /// <summary> Regular VM priority. </summary>
         private const string RegularValue = "Regular";
-        /// <summary> Low-priority VM. </summary>
-        private const string LowPriorityValue = "LowPriority";
+        /// <summary> Spot VM priority. </summary>
+        private const string SpotValue = "Spot";
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesVmPriority"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Regular VM priority. </summary>
         public static CognitiveServicesVmPriority Regular { get; } = new CognitiveServicesVmPriority(RegularValue);
 
-        /// <summary> Low-priority VM. </summary>
-        public static CognitiveServicesVmPriority LowPriority { get; } = new CognitiveServicesVmPriority(LowPriorityValue);
+        /// <summary> Spot VM priority. </summary>
+        public static CognitiveServicesVmPriority Spot { get; } = new CognitiveServicesVmPriority(SpotValue);
 
         /// <summary> Determines if two <see cref="CognitiveServicesVmPriority"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

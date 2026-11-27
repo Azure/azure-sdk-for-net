@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WritePropertyName("lastCertificateIssuanceTime"u8);
                 writer.WriteStringValue(LastCertificateIssuedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsPrivateKeyExternal))
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             AppServiceCertificateDetails root = default;
             string serialNumber = default;
             DateTimeOffset? lastCertificateIssuedOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             bool? isPrivateKeyExternal = default;
             IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
             DateTimeOffset? nextAutoRenewOn = default;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isPrivateKeyExternal"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AppServiceCertificateOrderProperties(
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 root,
                 serialNumber,
                 lastCertificateIssuedOn,
-                expireOn,
+                expiresOn,
                 isPrivateKeyExternal,
                 appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
                 nextAutoRenewOn,

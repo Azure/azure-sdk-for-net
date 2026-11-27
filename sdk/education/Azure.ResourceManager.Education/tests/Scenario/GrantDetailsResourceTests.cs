@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Education.Tests.Scenario
         {
             TenantResource tenant = await GetTenantAsync();
 
-            List<GrantDetailsResource> grants = await tenant.GetAllAsync(includeAllocatedBudget: true).ToEnumerableAsync();
+            List<GrantDetailsResource> grants = await tenant.ListAllAsync(includeAllocatedBudget: true).ToEnumerableAsync();
 
             Assert.That(grants, Is.Not.Null);
         }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> The pages of ExperimentsListCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ChaosExperimentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _running, _continuationToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _running, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListRequest(nextLink, _subscriptionId, _resourceGroupName, _running, _continuationToken, _context) : _client.CreateListRequest(_subscriptionId, _resourceGroupName, _running, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

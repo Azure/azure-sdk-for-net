@@ -3216,6 +3216,39 @@ namespace Azure.Storage.Files.Shares.Tests
                 () => directoryClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
         }
+
+        [Test]
+        public void GenerateSas_BuilderDirectoryNameWithIgnorableUnicode_IsRejected()
+        {
+            string shareName = "share";
+            string directoryName = "canary";
+            string spoofedDirectoryName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(directoryName, spoofedDirectoryName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(directoryName, spoofedDirectoryName, StringComparison.Ordinal));
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(new Uri("https://account.file.core.windows.net"))
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
+
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                ShareName = shareName,
+                FilePath = spoofedDirectoryName
+            };
+
+            TestHelper.AssertExpectedException(
+                () => directoryClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
+        }
         #endregion
 
         [RecordedTest]

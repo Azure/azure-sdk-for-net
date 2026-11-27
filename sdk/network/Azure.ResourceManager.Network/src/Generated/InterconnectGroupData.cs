@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="InterconnectGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the interconnect group. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal InterconnectGroupData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, InterconnectGroupPropertiesFormat properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal InterconnectGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, InterconnectGroupPropertiesFormat properties, string eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,10 +37,80 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the interconnect group. </summary>
         [WirePath("properties")]
-        public InterconnectGroupPropertiesFormat Properties { get; set; }
+        internal InterconnectGroupPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public string ETag { get; }
+
+        /// <summary> Scope of interconnect group resource. </summary>
+        [WirePath("properties.scope")]
+        public InterconnectGroupScope? Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InterconnectGroupPropertiesFormat();
+                }
+                Properties.Scope = value;
+            }
+        }
+
+        /// <summary> A list of subgroups of the interconnect group. </summary>
+        [WirePath("properties.subgroups")]
+        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InterconnectGroupPropertiesFormat();
+                }
+                return Properties.Subgroups;
+            }
+        }
+
+        /// <summary> The provisioning state of the interconnect group resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The resource GUID property of the interconnect group resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
+        /// <summary> The subgroup profile of the interconnect group resource. </summary>
+        [WirePath("properties.subgroupProfile")]
+        public SubgroupProfile SubgroupProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubgroupProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InterconnectGroupPropertiesFormat();
+                }
+                Properties.SubgroupProfile = value;
+            }
+        }
     }
 }

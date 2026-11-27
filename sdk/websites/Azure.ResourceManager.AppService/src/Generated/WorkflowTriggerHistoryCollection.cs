@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoriesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoryDataAsyncCollectionResultOfT(
                 _workflowTriggerHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoriesGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoryDataCollectionResultOfT(
                 _workflowTriggerHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

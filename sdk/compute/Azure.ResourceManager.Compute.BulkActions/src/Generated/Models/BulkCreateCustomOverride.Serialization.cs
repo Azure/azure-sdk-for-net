@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute.BulkActions;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -80,6 +81,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("virtualMachineName"u8);
                 writer.WriteStringValue(VirtualMachineName);
+            }
+            if (Optional.IsDefined(Zone))
+            {
+                writer.WritePropertyName("zone"u8);
+                writer.WriteStringValue(Zone);
+            }
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
@@ -165,6 +181,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             string virtualMachineName = default;
+            string zone = default;
+            ExtendedLocation extendedLocation = default;
+            BulkActionsVirtualMachinePlacement placement = default;
             BulkActionVMProperties virtualMachineProfile = default;
             IDictionary<string, string> tags = default;
             VirtualMachineIdentity identity = default;
@@ -176,6 +195,29 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 if (prop.NameEquals("virtualMachineName"u8))
                 {
                     virtualMachineName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("zone"u8))
+                {
+                    zone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("placement"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = BulkActionsVirtualMachinePlacement.DeserializeBulkActionsVirtualMachinePlacement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineProfile"u8))
@@ -242,11 +284,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BulkCreateCustomOverride(
                 virtualMachineName,
+                zone,
+                extendedLocation,
+                placement,
                 virtualMachineProfile,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,

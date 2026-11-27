@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(GlobalRulestackCertificateObjectResource.ResourceType, out string globalRulestackCertificateObjectApiVersion);
             _certificateObjectGlobalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", GlobalRulestackCertificateObjectResource.ResourceType.Namespace, Diagnostics);
-            _certificateObjectGlobalRulestackRestClient = new CertificateObjectGlobalRulestack(_certificateObjectGlobalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackCertificateObjectApiVersion ?? "2025-10-08");
+            _certificateObjectGlobalRulestackRestClient = new CertificateObjectGlobalRulestack(_certificateObjectGlobalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackCertificateObjectApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllAsyncCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackCertificateObjectCollection.GetAll"), data => new GlobalRulestackCertificateObjectResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new GlobalRulestackCertificateObjectDataAsyncCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackCertificateObjectCollection.GetAll"), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackCertificateObjectCollection.GetAll"), data => new GlobalRulestackCertificateObjectResource(Client, data));
+            return new PageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new GlobalRulestackCertificateObjectDataCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackCertificateObjectCollection.GetAll"), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

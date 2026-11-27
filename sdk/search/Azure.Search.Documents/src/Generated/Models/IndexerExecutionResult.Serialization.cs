@@ -79,16 +79,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusDetail))
-            {
-                writer.WritePropertyName("statusDetail"u8);
-                writer.WriteStringValue(StatusDetail.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
@@ -99,10 +89,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && Optional.IsDefined(EndTime, _endTimeIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime.Value, "O");
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W")
             {
@@ -187,10 +184,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerExecutionStatus status = default;
-            IndexerExecutionStatusDetail? statusDetail = default;
-            IndexingMode? mode = default;
             string errorMessage = default;
             DateTimeOffset? startTime = default;
+            bool endTimeIsDefined = false;
             DateTimeOffset? endTime = default;
             IReadOnlyList<SearchIndexerError> errors = default;
             IReadOnlyList<SearchIndexerWarning> warnings = default;
@@ -204,24 +200,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("status"u8))
                 {
                     status = prop.Value.GetString().ToIndexerExecutionStatus();
-                    continue;
-                }
-                if (prop.NameEquals("statusDetail"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    statusDetail = new IndexerExecutionStatusDetail(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("mode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new IndexingMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))
@@ -240,6 +218,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endTime = null;
@@ -290,23 +269,24 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IndexerExecutionResult(
                 status,
-                statusDetail,
-                mode,
                 errorMessage,
                 startTime,
                 endTime,
-                errors,
-                warnings,
+                errors ?? new ChangeTrackingList<SearchIndexerError>(),
+                warnings ?? new ChangeTrackingList<SearchIndexerWarning>(),
                 itemCount,
                 failedItemCount,
                 initialTrackingState,
                 finalTrackingState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endTimeIsDefined = endTimeIsDefined
+            };
         }
     }
 }

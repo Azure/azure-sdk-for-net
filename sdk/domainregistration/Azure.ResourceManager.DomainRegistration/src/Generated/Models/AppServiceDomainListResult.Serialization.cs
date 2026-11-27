@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppServiceDomainListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppServiceDomainListResult(value ?? new ChangeTrackingList<AppServiceDomainData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

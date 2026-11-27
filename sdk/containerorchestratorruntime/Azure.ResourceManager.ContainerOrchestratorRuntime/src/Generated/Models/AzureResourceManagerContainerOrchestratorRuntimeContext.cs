@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(BgpPeerListResult))]
     [ModelReaderWriterBuildable(typeof(BlobStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterBgpPeerData))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterBgpPeerProperties))]
@@ -30,18 +29,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     [ModelReaderWriterBuildable(typeof(ConnectedClusterStorageClassPatch))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterStorageClassProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterStorageClassResource))]
-    [ModelReaderWriterBuildable(typeof(LoadBalancerListResult))]
     [ModelReaderWriterBuildable(typeof(NativeStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(NfsStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(RwxStorageClassTypeProperties))]
-    [ModelReaderWriterBuildable(typeof(ServiceResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SmbStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(StorageClassPropertiesUpdate))]
-    [ModelReaderWriterBuildable(typeof(StorageClassResourceListResult))]
     [ModelReaderWriterBuildable(typeof(StorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(StorageClassTypePropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownStorageClassTypeProperties))]
     public partial class AzureResourceManagerContainerOrchestratorRuntimeContext : ModelReaderWriterContext
     {
     }

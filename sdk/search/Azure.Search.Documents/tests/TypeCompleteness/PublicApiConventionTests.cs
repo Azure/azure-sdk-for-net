@@ -93,14 +93,32 @@ namespace Azure.Search.Documents.Tests.TypeCompleteness
         [Test]
         public void PublicModelTypesAreClasses()
         {
-            // Extensible enums are readonly structs — exclude types that look like them
-            // (they have a single string field and implicit/explicit conversion operators).
+            // Extensible enums are readonly structs backed by a string or numeric value and
+            // expose named values as static properties of their own type.
             bool IsExtensibleEnum(Type t)
             {
                 if (!t.IsValueType)
                     return false;
+
                 var fields = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                return fields.Length <= 2 && fields.Any(f => f.FieldType == typeof(string));
+                bool hasSupportedBackingField = fields.Length <= 2 &&
+                    fields.Any(f => f.FieldType == typeof(string) || IsIntegralType(f.FieldType));
+                bool hasNamedValue = t.GetProperties(BindingFlags.Public | BindingFlags.Static)
+                    .Any(p => p.PropertyType == t);
+
+                return hasSupportedBackingField && hasNamedValue;
+            }
+
+            bool IsIntegralType(Type t)
+            {
+                return t == typeof(byte) ||
+                    t == typeof(sbyte) ||
+                    t == typeof(short) ||
+                    t == typeof(ushort) ||
+                    t == typeof(int) ||
+                    t == typeof(uint) ||
+                    t == typeof(long) ||
+                    t == typeof(ulong);
             }
 
             var structModels = s_sdkAssembly.GetExportedTypes()

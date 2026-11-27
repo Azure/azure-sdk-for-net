@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -11,21 +13,34 @@ namespace Azure.ResourceManager.NetApp
     // configuration objects. Preserve the old public properties for source compat.
     public partial class NetAppAccountData
     {
-        private EntraIdConfig _entraIdConfig;
-        private LdapConfiguration _ldapConfiguration;
-
         /// <summary> Entra ID configuration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version.")]
         public EntraIdConfig EntraIdConfig
         {
-            get => _entraIdConfig;
-            set => _entraIdConfig = value;
+            get => (EntraIdConfig)Properties?.EntraIdConfig;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.EntraIdConfig = value;
+            }
         }
 
         /// <summary> LDAP configuration. </summary>
         public LdapConfiguration LdapConfiguration
         {
-            get => _ldapConfiguration;
-            set => _ldapConfiguration = value;
+            get => Properties is null ? default : Properties.LdapConfiguration;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.LdapConfiguration = value;
+            }
         }
     }
 }

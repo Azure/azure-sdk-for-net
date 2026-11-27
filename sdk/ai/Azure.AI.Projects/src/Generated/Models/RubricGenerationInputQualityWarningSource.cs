@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Warning source attribution for a rubric-generation input-quality warning. Per-source values (`prompt`, `agent`, `dataset`) match the source category visible to the generation runtime. `aggregate` is a synthetic value used only for warnings computed across successfully resolved sources. `traces` is not exposed because trace sources resolve into dataset content upstream. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct RubricGenerationInputQualityWarningSource : IEquatable<RubricGenerationInputQualityWarningSource>
     {
         private readonly string _value;
@@ -60,7 +58,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RubricGenerationInputQualityWarningSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RubricGenerationInputQualityWarningSource?(string value) => value == null ? null : new RubricGenerationInputQualityWarningSource(value);
+        public static implicit operator RubricGenerationInputQualityWarningSource?(string value) => value == null ? (RubricGenerationInputQualityWarningSource?)null : new RubricGenerationInputQualityWarningSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

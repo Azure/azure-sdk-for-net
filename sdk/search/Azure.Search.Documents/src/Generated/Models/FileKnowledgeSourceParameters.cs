@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileKnowledgeSourceParameters"/>. </summary>
-        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. Only 'minimal' content extraction mode and embeddingModel are supported for file knowledge sources. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings for the File knowledge source, including the content extraction mode and an optional embeddingModel. </param>
         /// <param name="createdResources"> Resources created by the file knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Consolidates all general ingestion settings. Only 'minimal' content extraction mode and embeddingModel are supported for file knowledge sources. </summary>
+        /// <summary> Consolidates all general ingestion settings for the File knowledge source, including the content extraction mode and an optional embeddingModel. </summary>
         public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
 
         /// <summary> Resources created by the file knowledge source. </summary>

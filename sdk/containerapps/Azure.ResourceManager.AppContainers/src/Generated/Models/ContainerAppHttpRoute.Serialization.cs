@@ -13,7 +13,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Http Routes configuration, including paths to match on and whether or not rewrites are to be done. </summary>
+    /// <summary> Http Routes, including paths to match on and whether or not rewrites are to be done. </summary>
     public partial class ContainerAppHttpRoute : IJsonModel<ContainerAppHttpRoute>
     {
         /// <param name="data"> The data to parse. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerAppHttpRoute(match, action, additionalBinaryDataProperties);

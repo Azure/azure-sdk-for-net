@@ -18,24 +18,19 @@ export OPTIMIZATION_CANDIDATE_ID="<your-candidate-id>"
 ## Resolve config with the client
 
 The client calls the optimization API with an env-var fallback
-(`OPTIMIZATION_CONFIG` inline JSON) when the API is unreachable:
+(`OPTIMIZATION_CONFIG` inline JSON) when the API is unreachable. The example
+assumes a `TokenCredential` named `credential`, such as an
+`Azure.Identity.DefaultAzureCredential`:
 
 ```C# Snippet:Optimization_ReadMe_Load
-using Azure.AI.AgentServer.Optimization;
-using Azure.Identity;
+AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), credential);
+string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
-var client = new AgentOptimizationClient(
-    new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"),
-    new DefaultAzureCredential());
-
-string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
-CandidateDeployConfig? config = client.ResolveOptions(candidateId);
-
-if (config is not null)
+if (options is not null)
 {
-    Console.WriteLine($"Model: {config.Model}");
-    Console.WriteLine($"Instructions: {config.Instructions}");
-    Console.WriteLine($"Temperature: {config.Temperature}");
+    Console.WriteLine($"Instructions: {options.Instructions}");
+    Console.WriteLine($"Model: {options.Model}");
 }
 ```
 
@@ -45,32 +40,45 @@ Instead of calling the client directly, you can plug in the optimization
 source so the resolved config participates in the standard configuration
 pipeline:
 
-```C# Snippet:Optimization_ReadMe_IConfiguration
-using Azure.AI.AgentServer.Optimization;
-using Microsoft.Extensions.Configuration;
-
+```C# Snippet:Configuration_ReadMe_SingleAgent
 IConfiguration configuration = new ConfigurationBuilder()
     .AddOptimizationConfigSource("AgentOptimization")
     .Build();
 
 CandidateDeployConfig? config = configuration.GetOptimizationConfig();
-Console.WriteLine($"Model: {config?.Model}");
+
+IServiceCollection services = new ServiceCollection();
+services.AddSingleton(configuration);
+if (config is not null)
+{
+    services.AddSingleton(config);
+}
+
+using ServiceProvider provider = services.BuildServiceProvider();
+CandidateDeployConfig? options = provider.GetService<CandidateDeployConfig>();
+
+Console.WriteLine($"Model: {options?.Model}");
+Console.WriteLine($"Instructions: {options?.Instructions}");
 ```
 
 `"AgentOptimization"` is the configuration section that
-`AgentOptimizationClientSettings` is bound from (endpoint, credential, options).
-The resolved `CandidateDeployConfig` is projected into the default
-`AgentOptimization` section so you can read it with `GetOptimizationConfig()`.
+`AgentOptimizationClientSettings` is bound from. With no client settings, this
+example uses the `OPTIMIZATION_CONFIG` fallback. To query the API, configure an
+endpoint and credential using the `configureSettings` overload, which is
+experimental (`SCME0002`). The resolved `CandidateDeployConfig` is projected
+into the default `AgentOptimization` section for `GetOptimizationConfig()`.
 
 ## Use resolved config to build an agent
 
 Once resolved, use the config to set your agent's system prompt and model:
 
-```C# Snippet:Optimization_Sample1_UseConfig
-CandidateDeployConfig? config = client.ResolveOptions(candidateId);
+```C# Snippet:Optimization_Sample1_UseOptions
+AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), credential);
+string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
-string instructions = config?.Instructions ?? "You are a helpful assistant.";
-string model = config?.Model ?? "gpt-4o-mini";
+string instructions = options?.Instructions ?? "You are a helpful assistant.";
+string model = options?.Model ?? "gpt-4o-mini";
 
 Console.WriteLine($"Using model: {model}");
 Console.WriteLine($"Instructions length: {instructions.Length} chars");

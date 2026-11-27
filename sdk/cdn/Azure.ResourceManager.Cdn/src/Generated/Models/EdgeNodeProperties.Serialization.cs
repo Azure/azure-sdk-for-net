@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeNodeProperties(ipAddressGroups, additionalBinaryDataProperties);
+            return new EdgeNodeProperties(ipAddressGroups ?? new ChangeTrackingList<IPAddressGroup>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _snapshotCreatedOn;
+        private bool _snapshotCreatedOnIsDefined;
+        private DateTimeOffset? _completionOn;
+        private bool _completionOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
         /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
         /// <param name="createdOn"> The creation date of the backup. </param>
-        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
+        /// <param name="snapshotCreatedOn"> The snapshot creation date of the backup. </param>
         /// <param name="completionOn"> The completion date of the backup. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="size"> Size of backup in bytes. </param>
@@ -44,12 +48,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
         /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProperties(string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProperties(string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreatedOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupId = backupId;
             CreatedOn = createdOn;
-            SnapshotCreationOn = snapshotCreationOn;
-            CompletionOn = completionOn;
+            _snapshotCreatedOn = snapshotCreatedOn;
+            _completionOn = completionOn;
             ProvisioningState = provisioningState;
             Size = size;
             Label = label;
@@ -70,10 +74,22 @@ namespace Azure.ResourceManager.NetApp.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The snapshot creation date of the backup. </summary>
-        public DateTimeOffset? SnapshotCreationOn { get; }
+        public DateTimeOffset? SnapshotCreatedOn
+        {
+            get
+            {
+                return _snapshotCreatedOn;
+            }
+        }
 
         /// <summary> The completion date of the backup. </summary>
-        public DateTimeOffset? CompletionOn { get; }
+        public DateTimeOffset? CompletionOn
+        {
+            get
+            {
+                return _completionOn;
+            }
+        }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

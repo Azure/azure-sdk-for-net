@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("offerScope"u8);
                 writer.WriteStringValue(OfferScope);
             }
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("scopeId"u8);
+                writer.WriteStringValue(ScopeId);
+            }
             if (Optional.IsCollectionDefined(Deployments))
             {
                 writer.WritePropertyName("deployments"u8);
@@ -168,6 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             double? limit = default;
             double? currentValue = default;
             string offerScope = default;
+            string scopeId = default;
             IList<CognitiveServicesManagedComputeDeploymentInfo> deployments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -223,6 +229,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     offerScope = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("scopeId"u8))
+                {
+                    scopeId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("deployments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -239,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesManagedComputeUsage(
@@ -250,6 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 limit,
                 currentValue,
                 offerScope,
+                scopeId,
                 deployments ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>(),
                 additionalBinaryDataProperties);
         }

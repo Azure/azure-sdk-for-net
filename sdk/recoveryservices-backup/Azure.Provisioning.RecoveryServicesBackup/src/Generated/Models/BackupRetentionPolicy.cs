@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     /// </summary>
     public partial class BackupRetentionPolicy : ProvisionableConstruct
     {
+        private BicepValue<string> _retentionPolicyType;
+
         /// <summary> Creates a new BackupRetentionPolicy. </summary>
         public BackupRetentionPolicy()
         {
+        }
+
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> RetentionPolicyType
+        {
+            get
+            {
+                Initialize();
+                return _retentionPolicyType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BackupRetentionPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _retentionPolicyType = DefineProperty<string>(nameof(RetentionPolicyType), new string[] { "retentionPolicyType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

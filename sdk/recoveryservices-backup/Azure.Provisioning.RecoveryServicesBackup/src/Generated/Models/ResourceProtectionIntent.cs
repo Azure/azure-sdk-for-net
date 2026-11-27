@@ -17,6 +17,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new ResourceProtectionIntent. </summary>
         public ResourceProtectionIntent()
         {
+            ProtectionIntentItemType.Assign(RecoveryServicesBackup.ProtectionIntentItemType.AzureResourceItem);
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectionIntentItemType", new string[] { "protectionIntentItemType" }, defaultValue: "AzureResourceItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             DefineAdditionalProperties();
         }

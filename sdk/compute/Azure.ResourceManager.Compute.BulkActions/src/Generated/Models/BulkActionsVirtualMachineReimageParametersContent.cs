@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Parameters for Reimaging Virtual Machine. NOTE: Virtual Machine OS disk will always be reimaged. </summary>
+    /// <summary> The parameters for reimaging a virtual machine. The operating system disk is always reimaged. </summary>
     public partial class BulkActionsVirtualMachineReimageParametersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkActionsVirtualMachineReimageParametersContent"/>. </summary>
-        /// <param name="isTempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
-        /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
-        /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
+        /// <param name="isTempDisk"> Indicates whether to reimage the temporary disk. The default value is `false`. This option is supported only for virtual machines or virtual machine scale sets that use an ephemeral operating system disk. </param>
+        /// <param name="exactVersion"> The exact image version to use when reimaging the operating system disk. When omitted, the disk is reimaged to its current image version. </param>
+        /// <param name="osProfile"> The operating system profile used when reimaging a non-ephemeral operating system disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk, string exactVersion, BulkActionsOSProfileProvisioningContent osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </summary>
+        /// <summary> Indicates whether to reimage the temporary disk. The default value is `false`. This option is supported only for virtual machines or virtual machine scale sets that use an ephemeral operating system disk. </summary>
         public bool? IsTempDisk { get; set; }
 
-        /// <summary> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </summary>
+        /// <summary> The exact image version to use when reimaging the operating system disk. When omitted, the disk is reimaged to its current image version. </summary>
         public string ExactVersion { get; set; }
 
-        /// <summary> Specifies information required for reimaging the non-ephemeral OS disk. </summary>
+        /// <summary> The operating system profile used when reimaging a non-ephemeral operating system disk. </summary>
         public BulkActionsOSProfileProvisioningContent OSProfile { get; set; }
     }
 }

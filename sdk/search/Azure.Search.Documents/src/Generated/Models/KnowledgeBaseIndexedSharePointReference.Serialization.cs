@@ -85,10 +85,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("docUrl"u8);
                 writer.WriteStringValue(DocUrl);
             }
-            if (Optional.IsDefined(SearchSensitivityLabelInfo))
+            if (Optional.IsDefined(CitationUrl))
             {
-                writer.WritePropertyName("searchSensitivityLabelInfo"u8);
-                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
+                writer.WritePropertyName("citationUrl"u8);
+                writer.WriteStringValue(CitationUrl.AbsoluteUri);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string docUrl = default;
-            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
+            Uri citationUrl = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     sourceData = dictionary;
@@ -177,18 +177,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     docUrl = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("searchSensitivityLabelInfo"u8))
+                if (prop.NameEquals("citationUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
+                    citationUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeBaseIndexedSharePointReference(
@@ -199,7 +199,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 rerankerScore,
                 additionalBinaryDataProperties,
                 docUrl,
-                searchSensitivityLabelInfo);
+                citationUrl);
         }
     }
 }

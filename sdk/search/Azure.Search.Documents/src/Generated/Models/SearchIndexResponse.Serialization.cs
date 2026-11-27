@@ -112,10 +112,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultScoringProfile"u8);
                 writer.WriteStringValue(DefaultScoringProfile);
             }
-            if (Optional.IsDefined(CorsOptions))
+            if (Optional.IsDefined(CorsOptions, _corsOptionsIsDefined))
             {
-                writer.WritePropertyName("corsOptions"u8);
-                writer.WriteObjectValue(CorsOptions, options);
+                if (CorsOptions != null)
+                {
+                    writer.WritePropertyName("corsOptions"u8);
+                    writer.WriteObjectValue(CorsOptions, options);
+                }
+                else
+                {
+                    writer.WriteNull("corsOptions"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Suggesters))
             {
@@ -177,35 +184,63 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
             if (Optional.IsDefined(Similarity))
             {
                 writer.WritePropertyName("similarity"u8);
                 writer.WriteObjectValue(Similarity, options);
             }
-            if (Optional.IsDefined(SemanticSearch))
+            if (Optional.IsDefined(SemanticSearch, _semanticSearchIsDefined))
             {
-                writer.WritePropertyName("semantic"u8);
-                writer.WriteObjectValue(SemanticSearch, options);
+                if (SemanticSearch != null)
+                {
+                    writer.WritePropertyName("semantic"u8);
+                    writer.WriteObjectValue(SemanticSearch, options);
+                }
+                else
+                {
+                    writer.WriteNull("semantic"u8);
+                }
             }
-            if (Optional.IsDefined(VectorSearch))
+            if (Optional.IsDefined(VectorSearch, _vectorSearchIsDefined))
             {
-                writer.WritePropertyName("vectorSearch"u8);
-                writer.WriteObjectValue(VectorSearch, options);
+                if (VectorSearch != null)
+                {
+                    writer.WritePropertyName("vectorSearch"u8);
+                    writer.WriteObjectValue(VectorSearch, options);
+                }
+                else
+                {
+                    writer.WriteNull("vectorSearch"u8);
+                }
             }
-            if (Optional.IsDefined(PermissionFilterOption))
+            if (Optional.IsDefined(PermissionFilterOption, _permissionFilterOptionIsDefined))
             {
-                writer.WritePropertyName("permissionFilterOption"u8);
-                writer.WriteStringValue(PermissionFilterOption.Value.ToString());
+                if (PermissionFilterOption != null)
+                {
+                    writer.WritePropertyName("permissionFilterOption"u8);
+                    writer.WriteStringValue(PermissionFilterOption.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("permissionFilterOption"u8);
+                }
             }
-            if (Optional.IsDefined(PurviewEnabled))
+            if (Optional.IsDefined(SharePointConnectorAppRegistration))
             {
-                writer.WritePropertyName("purviewEnabled"u8);
-                writer.WriteBooleanValue(PurviewEnabled.Value);
+                writer.WritePropertyName("sharePointConnectorAppRegistration"u8);
+                writer.WriteObjectValue(SharePointConnectorAppRegistration, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -259,6 +294,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<SearchField> fields = default;
             IList<ScoringProfile> scoringProfiles = default;
             string defaultScoringProfile = default;
+            bool corsOptionsIsDefined = false;
             CorsOptions corsOptions = default;
             IList<SearchSuggester> suggesters = default;
             IList<LexicalAnalyzer> analyzers = default;
@@ -266,12 +302,16 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
             IList<LexicalNormalizer> normalizers = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
+            bool semanticSearchIsDefined = false;
             SemanticSearch semanticSearch = default;
+            bool vectorSearchIsDefined = false;
             VectorSearch vectorSearch = default;
+            bool permissionFilterOptionIsDefined = false;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool? purviewEnabled = default;
+            SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -321,6 +361,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("corsOptions"u8))
                 {
+                    corsOptionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         corsOptions = null;
@@ -415,6 +456,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -434,6 +476,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("semantic"u8))
                 {
+                    semanticSearchIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         semanticSearch = null;
@@ -444,6 +487,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("vectorSearch"u8))
                 {
+                    vectorSearchIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         vectorSearch = null;
@@ -454,6 +498,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("permissionFilterOption"u8))
                 {
+                    permissionFilterOptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         permissionFilterOption = null;
@@ -462,14 +507,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("purviewEnabled"u8))
+                if (prop.NameEquals("sharePointConnectorAppRegistration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        purviewEnabled = null;
                         continue;
                     }
-                    purviewEnabled = prop.Value.GetBoolean();
+                    sharePointConnectorAppRegistration = SharePointConnectorAppRegistration.DeserializeSharePointConnectorAppRegistration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -483,7 +527,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchIndexResponse(
@@ -504,9 +548,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 semanticSearch,
                 vectorSearch,
                 permissionFilterOption,
-                purviewEnabled,
+                sharePointConnectorAppRegistration,
                 eTag,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _corsOptionsIsDefined = corsOptionsIsDefined,
+                _encryptionKeyIsDefined = encryptionKeyIsDefined,
+                _semanticSearchIsDefined = semanticSearchIsDefined,
+                _vectorSearchIsDefined = vectorSearchIsDefined,
+                _permissionFilterOptionIsDefined = permissionFilterOptionIsDefined
+            };
         }
     }
 }

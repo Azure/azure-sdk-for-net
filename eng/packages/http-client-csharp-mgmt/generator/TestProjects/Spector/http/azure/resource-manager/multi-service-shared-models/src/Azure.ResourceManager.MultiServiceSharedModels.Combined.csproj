@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>The Azure.ResourceManager.MultiServiceSharedModels.Combined client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.MultiServiceSharedModels.Combined</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.ResourceManager.MultiServiceSharedModels.Combined</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+</Project>

@@ -85,6 +85,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("docName"u8);
                 writer.WriteStringValue(DocName);
             }
+            if (Optional.IsDefined(CitationUrl))
+            {
+                writer.WritePropertyName("citationUrl"u8);
+                writer.WriteStringValue(CitationUrl.AbsoluteUri);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,6 +124,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string docName = default;
+            Uri citationUrl = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -151,7 +157,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     sourceData = dictionary;
@@ -171,9 +177,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     docName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("citationUrl"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    citationUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeBaseFileReference(
@@ -183,7 +198,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 sourceData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 rerankerScore,
                 additionalBinaryDataProperties,
-                docName);
+                docName,
+                citationUrl);
         }
     }
 }

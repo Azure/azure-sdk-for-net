@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomCertificateList(value, nextLink, additionalBinaryDataProperties);
+            return new CustomCertificateList(value ?? new ChangeTrackingList<WebPubSubCustomCertificateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -33,34 +33,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, HybridComputePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
             => new HybridComputePrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, additionalBinaryDataProperties: null), connectionState, provisioningState, groupIds is null ? new List<string>() : new List<string>(groupIds), additionalBinaryDataProperties: null);
 
-        // Backward-compat justification: the GA model factory exposed the private link scope properties without the generated serviceExtensions parameter.
-        /// <summary>
-        /// Creates a HybridComputePrivateLinkScopeProperties for mocking.
-        /// This overload preserves the AutoRest-generated model factory API for backward compatibility.
-        /// </summary>
-        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
-
-            return new HybridComputePrivateLinkScopeProperties(
-                publicNetworkAccess,
-                provisioningState,
-                privateLinkScopeId,
-                new List<PrivateEndpointConnectionDataModel>(privateEndpointConnections),
-                serviceExtensions: new ChangeTrackingList<HybridComputeServiceExtension>(),
-                additionalBinaryDataProperties: null);
-        }
-
-        // Backward-compat justification: the GA model factory exposed Windows patch settings as flattened parameters.
-        /// <summary> Creates a HybridComputeWindowsConfiguration for mocking. </summary>
-        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
-            => new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, additionalBinaryDataProperties: null), additionalBinaryDataProperties: null);
-
-        // Backward-compat justification: the GA model factory exposed Linux patch settings as flattened parameters.
-        /// <summary> Creates a HybridComputeLinuxConfiguration for mocking. </summary>
-        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
-            => new HybridComputeLinuxConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, additionalBinaryDataProperties: null), additionalBinaryDataProperties: null);
-
         // Backward-compat justification: the GA model factory exposed assignedLicense on the ESU properties factory.
         /// <summary> Creates a LicenseProfileMachineInstanceViewEsuProperties for mocking. </summary>
         public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicenseData assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
@@ -135,11 +107,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, string cloudMetadataProvider, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IEnumerable<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IEnumerable<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, IEnumerable<HybridComputeNetworkInterface> networkInterfaces)
             => HybridComputeMachineData(id, name, resourceType, systemData, tags, location, resources, identity, kind, locationData, agentConfiguration, serviceStatuses, hardwareProfile: default, storageDisks: default, firmwareProfile: default, cloudMetadataProvider, agentUpgrade, osProfile, licenseProfile, provisioningState, status, lastStatusChange, errorDetails, agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, extensions, osSku, osEdition, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, msSqlDiscovered, detectedProperties, networkInterfaces);
-
-        // Backward-compat justification: the GA model factory exposed the custom EsuKey licenseStatus constructor shape.
-        /// <summary> Creates an EsuKey for mocking. </summary>
-        public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
-            => new EsuKey(sku, licenseStatus, additionalBinaryDataProperties: null);
 
         // Backward-compat justification: the GA model factory exposed HybridComputeLicense in the Models namespace.
         /// <summary> Creates a HybridComputeLicense for mocking. </summary>

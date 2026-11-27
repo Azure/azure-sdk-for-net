@@ -18,6 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningIdAssetReference. </summary>
         public MachineLearningIdAssetReference()
         {
+            ReferenceType.Assign(MachineLearning.ReferenceType.Id);
         }
 
         /// <summary> Gets or sets the AssetId. </summary>
@@ -39,7 +40,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("referenceType", new string[] { "referenceType" }, defaultValue: "Id");
             _assetId = DefineProperty<ResourceIdentifier>(nameof(AssetId), new string[] { "assetId" }, isRequired: true);
             DefineAdditionalProperties();
         }

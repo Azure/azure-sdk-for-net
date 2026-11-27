@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="logsConfiguration"> Open telemetry logs configuration. </param>
         /// <param name="metricsConfiguration"> Open telemetry metrics configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenTelemetryConfiguration(DestinationsConfiguration destinationsConfiguration, TracesConfiguration tracesConfiguration, LogsConfiguration logsConfiguration, MetricsConfiguration metricsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenTelemetryConfiguration(ContainerAppOpenTelemetryDestinationsConfiguration destinationsConfiguration, ContainerAppOpenTelemetryTracesConfiguration tracesConfiguration, LogsConfiguration logsConfiguration, ContainerAppOpenTelemetryMetricsConfiguration metricsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationsConfiguration = destinationsConfiguration;
             TracesConfiguration = tracesConfiguration;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Open telemetry destinations configuration. </summary>
         [WirePath("destinationsConfiguration")]
-        public DestinationsConfiguration DestinationsConfiguration { get; set; }
+        public ContainerAppOpenTelemetryDestinationsConfiguration DestinationsConfiguration { get; set; }
 
         /// <summary> Open telemetry trace configuration. </summary>
         [WirePath("tracesConfiguration")]
-        public TracesConfiguration TracesConfiguration { get; set; }
+        public ContainerAppOpenTelemetryTracesConfiguration TracesConfiguration { get; set; }
 
         /// <summary> Open telemetry logs configuration. </summary>
         [WirePath("logsConfiguration")]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Open telemetry metrics configuration. </summary>
         [WirePath("metricsConfiguration")]
-        public MetricsConfiguration MetricsConfiguration { get; set; }
+        public ContainerAppOpenTelemetryMetricsConfiguration MetricsConfiguration { get; set; }
 
         /// <summary> Open telemetry logs destinations. </summary>
         [WirePath("logsConfiguration.destinations")]

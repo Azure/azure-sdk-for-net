@@ -12,11 +12,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The VersionSelector. </summary>
     public partial class VersionSelector : IJsonModel<VersionSelector>
     {
-        /// <summary> Initializes a new instance of <see cref="VersionSelector"/> for deserialization. </summary>
-        internal VersionSelector()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VersionSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -140,10 +135,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VersionSelector(versionSelectionRules, additionalBinaryDataProperties);
+            return new VersionSelector(versionSelectionRules ?? new ChangeTrackingList<VersionSelectionRule>(), additionalBinaryDataProperties);
         }
     }
 }

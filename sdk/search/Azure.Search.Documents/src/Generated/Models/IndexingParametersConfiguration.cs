@@ -16,6 +16,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MarkdownParsingSubmode? _markdownParsingSubmode;
+        private bool _markdownParsingSubmodeIsDefined;
+        private MarkdownHeaderDepth? _markdownHeaderDepth;
+        private bool _markdownHeaderDepthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
         public IndexingParametersConfiguration()
@@ -41,9 +45,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source. This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
         /// <param name="pdfTextRotationAlgorithm"> Determines algorithm for text extraction from PDF files in Azure blob storage. </param>
         /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
+        /// <param name="refreshAllAcls"> For ADLS Gen2 data sources that ingest permissions, indicates whether the indexer refreshes the access control lists of documents whose content has not changed. Changing a file's permissions does not change its last-modified time, so without this the index keeps serving stale permissions. The refresh runs at most once every 24 hours, and only updates permission metadata: content and enriched fields are left as they are. Set to false to disable. </param>
         /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format "hh:mm:ss". </param>
         /// <param name="additionalProperties"></param>
-        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, BinaryData> additionalProperties)
+        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, bool? refreshAllAcls, string queryTimeout, IDictionary<string, BinaryData> additionalProperties)
         {
             ParsingMode = parsingMode;
             ExcludedFileNameExtensions = excludedFileNameExtensions;
@@ -54,14 +59,15 @@ namespace Azure.Search.Documents.Indexes.Models
             DelimitedTextHeaders = delimitedTextHeaders;
             DelimitedTextDelimiter = delimitedTextDelimiter;
             FirstLineContainsHeaders = firstLineContainsHeaders;
-            MarkdownParsingSubmode = markdownParsingSubmode;
-            MarkdownHeaderDepth = markdownHeaderDepth;
+            _markdownParsingSubmode = markdownParsingSubmode;
+            _markdownHeaderDepth = markdownHeaderDepth;
             DocumentRoot = documentRoot;
             DataToExtract = dataToExtract;
             ImageAction = imageAction;
             AllowSkillsetToReadFileData = allowSkillsetToReadFileData;
             PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
             ExecutionEnvironment = executionEnvironment;
+            RefreshAllAcls = refreshAllAcls;
             _queryTimeout = queryTimeout;
             _additionalBinaryDataProperties = additionalProperties;
         }
@@ -94,10 +100,32 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? FirstLineContainsHeaders { get; set; }
 
         /// <summary> Specifies the submode that will determine whether a markdown file will be parsed into exactly one search document or multiple search documents. Default is `oneToMany`. </summary>
-        public MarkdownParsingSubmode? MarkdownParsingSubmode { get; set; }
+        public MarkdownParsingSubmode? MarkdownParsingSubmode
+        {
+            get
+            {
+                return _markdownParsingSubmode;
+            }
+            set
+            {
+                _markdownParsingSubmode = value;
+                _markdownParsingSubmodeIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the max header depth that will be considered while grouping markdown content. Default is `h6`. </summary>
-        public MarkdownHeaderDepth? MarkdownHeaderDepth { get; set; }
+        public MarkdownHeaderDepth? MarkdownHeaderDepth
+        {
+            get
+            {
+                return _markdownHeaderDepth;
+            }
+            set
+            {
+                _markdownHeaderDepth = value;
+                _markdownHeaderDepthIsDefined = true;
+            }
+        }
 
         /// <summary> For JSON arrays, given a structured or semi-structured document, you can specify a path to the array using this property. </summary>
         public string DocumentRoot { get; set; }
@@ -116,5 +144,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Specifies the environment in which the indexer should execute. </summary>
         public IndexerExecutionEnvironment? ExecutionEnvironment { get; set; }
+
+        /// <summary> For ADLS Gen2 data sources that ingest permissions, indicates whether the indexer refreshes the access control lists of documents whose content has not changed. Changing a file's permissions does not change its last-modified time, so without this the index keeps serving stale permissions. The refresh runs at most once every 24 hours, and only updates permission metadata: content and enriched fields are left as they are. Set to false to disable. </summary>
+        public bool? RefreshAllAcls { get; set; }
     }
 }

@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
+            if (Optional.IsDefined(FlexProfile))
+            {
+                writer.WritePropertyName("flexProfile"u8);
+                writer.WriteObjectValue(FlexProfile, options);
+            }
             if (Optional.IsDefined(ScheduledEventsPolicy))
             {
                 writer.WritePropertyName("scheduledEventsPolicy"u8);
@@ -262,6 +267,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             VirtualMachineHardwareProfile hardwareProfile = default;
+            FlexProfile flexProfile = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
@@ -300,6 +306,15 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("flexProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    flexProfile = FlexProfile.DeserializeFlexProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledEventsPolicy"u8))
@@ -536,11 +551,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VirtualMachineProperties(
                 hardwareProfile,
+                flexProfile,
                 scheduledEventsPolicy,
                 storageProfile,
                 additionalCapabilities,

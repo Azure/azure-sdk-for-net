@@ -12,8 +12,6 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     [ModelReaderWriterBuildable(typeof(Animal))]
     [ModelReaderWriterBuildable(typeof(Dog))]
     [ModelReaderWriterBuildable(typeof(Pet))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnimal))]
-    [ModelReaderWriterBuildable(typeof(UnknownPet))]
     public partial class SpecsAzureClientGeneratorCoreHierarchyBuildingContext : ModelReaderWriterContext
     {
     }

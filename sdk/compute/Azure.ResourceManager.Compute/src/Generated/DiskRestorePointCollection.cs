@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointsGetByRestorePointAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointDataAsyncCollectionResultOfT(
                 _diskRestorePointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointsGetByRestorePointCollectionResultOfT(
+            return new PageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointDataCollectionResultOfT(
                 _diskRestorePointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Utilities;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -132,7 +134,6 @@ namespace Azure.Search.Documents.Indexes
         }
 
         #region Indexer operations - Convenience overloads
-
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
         /// </summary>
@@ -160,8 +161,6 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: null,
-                disableCacheReprocessingChangeDetection: null,
                 cancellationToken);
         }
 
@@ -192,8 +191,6 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: null,
-                disableCacheReprocessingChangeDetection: null,
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -288,11 +285,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.All }, cancellationToken);
-            return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
+            return GetAllIndexers(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -302,11 +299,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.All }, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
+            return await GetAllIndexersAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -319,9 +316,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.NameKey }, cancellationToken);
-            IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SearchIndexer>> response = GetAllIndexers(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -334,9 +330,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
-            IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SearchIndexer>> response = await GetAllIndexersAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         #endregion

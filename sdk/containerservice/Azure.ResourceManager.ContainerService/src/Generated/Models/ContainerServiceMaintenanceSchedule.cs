@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Daily is null ? default : Daily.IntervalDays;
+                return Daily is null ? (int?)default : Daily.IntervalDays;
             }
             set
             {

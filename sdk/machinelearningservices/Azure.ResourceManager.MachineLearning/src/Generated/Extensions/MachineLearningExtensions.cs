@@ -39,24 +39,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="EndpointDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetEndpointDeploymentResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointDeploymentResource"/> object. </returns>
-        public static EndpointDeploymentResource GetEndpointDeploymentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetEndpointDeploymentResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -435,60 +417,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="InferencePoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetInferencePoolResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InferencePoolResource"/> object. </returns>
-        public static InferencePoolResource GetInferencePoolResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetInferencePoolResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="InferenceEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetInferenceEndpointResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InferenceEndpointResource"/> object. </returns>
-        public static InferenceEndpointResource GetInferenceEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetInferenceEndpointResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="InferenceGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetInferenceGroupResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InferenceGroupResource"/> object. </returns>
-        public static InferenceGroupResource GetInferenceGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetInferenceGroupResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningMarketplaceSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -579,24 +507,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RaiPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiPolicyResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RaiPolicyResource"/> object. </returns>
-        public static RaiPolicyResource GetRaiPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetRaiPolicyResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -630,24 +540,6 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMachineLearningArmClient(client).GetMachineLearningComputeResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningWorkspaceConnectionDeploymentResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> object. </returns>
-        public static MachineLearningWorkspaceConnectionDeploymentResource GetMachineLearningWorkspaceConnectionDeploymentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetMachineLearningWorkspaceConnectionDeploymentResource(id);
         }
 
         /// <summary>
@@ -864,114 +756,6 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMachineLearningArmClient(client).GetMachineLearningWorkspaceConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RaiBlocklistResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
-        public static RaiBlocklistResource GetRaiBlocklistResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistItemResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
-        public static RaiBlocklistItemResource GetRaiBlocklistItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistItemResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectionRaiPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetConnectionRaiPolicyResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConnectionRaiPolicyResource"/> object. </returns>
-        public static ConnectionRaiPolicyResource GetConnectionRaiPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetConnectionRaiPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningEndpointResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningEndpointResource"/> object. </returns>
-        public static MachineLearningEndpointResource GetMachineLearningEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetMachineLearningEndpointResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedNetworkOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetManagedNetworkOutboundRuleBasicResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedNetworkOutboundRuleBasicResource"/> object. </returns>
-        public static ManagedNetworkOutboundRuleBasicResource GetManagedNetworkOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetManagedNetworkOutboundRuleBasicResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningManagedNetworkSettingsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningManagedNetworkSettingsResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningManagedNetworkSettingsResource"/> object. </returns>
-        public static MachineLearningManagedNetworkSettingsResource GetMachineLearningManagedNetworkSettingsResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetMachineLearningManagedNetworkSettingsResource(id);
         }
 
         /// <summary>
@@ -1198,122 +982,6 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMachineLearningSubscriptionResource(subscriptionResource).Update(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// List available MaaS PTU quota.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetAvailableAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableQuota> GetAvailableAsync(this SubscriptionResource subscriptionResource, string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetAvailableAsync(location, skip, cancellationToken);
-        }
-
-        /// <summary>
-        /// List available MaaS PTU quota.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetAvailable(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableQuota> GetAvailable(this SubscriptionResource subscriptionResource, string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetAvailable(location, skip, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get available MaaS PTU quota.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetAvailableAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AvailableQuota>> GetAvailableAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetAvailableAsync(location, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get available MaaS PTU quota.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetAvailable(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AvailableQuota> GetAvailable(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetAvailable(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List MaaS PTU usage and quota.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetAllAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageAndQuotaDetails"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UsageAndQuotaDetails> GetAllAsync(this SubscriptionResource subscriptionResource, string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetAllAsync(location, skip, cancellationToken);
-        }
-
-        /// <summary>
-        /// List MaaS PTU usage and quota.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetAll(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageAndQuotaDetails"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UsageAndQuotaDetails> GetAll(this SubscriptionResource subscriptionResource, string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetAll(location, skip, cancellationToken);
         }
     }
 }

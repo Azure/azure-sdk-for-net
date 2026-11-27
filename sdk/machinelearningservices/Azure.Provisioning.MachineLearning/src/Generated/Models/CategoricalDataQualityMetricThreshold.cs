@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new CategoricalDataQualityMetricThreshold. </summary>
         public CategoricalDataQualityMetricThreshold()
         {
+            DataType.Assign(MonitoringFeatureDataType.Categorical);
         }
 
         /// <summary> Gets or sets the Metric. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "Categorical");
             _metric = DefineProperty<CategoricalDataQualityMetric>(nameof(Metric), new string[] { "metric" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that migrates MySQL databases to Azure Database for MySQL for offline migrations
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>, and <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>, and <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>.
     /// </summary>
     public abstract partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {

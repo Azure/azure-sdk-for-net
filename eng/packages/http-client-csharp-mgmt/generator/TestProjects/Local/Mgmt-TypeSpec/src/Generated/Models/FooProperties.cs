@@ -6,8 +6,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
@@ -19,14 +23,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> The FooProperties. </summary>
     public partial class FooProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
         /// <param name="something"> something. </param>
         /// <param name="prop1"></param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties)
         {
             Argument.AssertNotNull(something, nameof(something));
@@ -37,7 +42,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             Prop1 = prop1.ToList();
             Prop2 = new ChangeTrackingList<int>();
             NestedProperty = new NestedFooModel(nestedPropertyProperties);
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
         /// <param name="serviceUri"> the service url. </param>
@@ -53,8 +60,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="computeFleetVmProfile"> Test case for multi-layer safe flatten. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="patch"></param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, in JsonPatch patch)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -69,8 +77,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ETag = eTag;
             WritableSubResourceProp = writableSubResourceProp;
             ComputeFleetVmProfile = computeFleetVmProfile;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _patch = patch;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> Gets the Patch. </summary>
+        [JsonIgnore]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Experimental("SCME0001")]
+        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> the service url. </summary>
         [WirePath("serviceUrl")]

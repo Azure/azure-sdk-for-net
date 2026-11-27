@@ -89,15 +89,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartsOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (Optional.IsDefined(SyncType))
             {
@@ -149,8 +163,10 @@ namespace Azure.ResourceManager.Automation.Models
             string sourceControlSyncJobId = default;
             DateTimeOffset? createdOn = default;
             SourceControlProvisioningState? provisioningState = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            bool startsOnIsDefined = false;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             SourceControlSyncType? syncType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,22 +196,24 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startOn = null;
+                        startsOn = null;
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("syncType"u8))
@@ -209,17 +227,21 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SourceControlSyncJobProperties(
                 sourceControlSyncJobId,
                 createdOn,
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 syncType,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startsOnIsDefined = startsOnIsDefined,
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

@@ -217,6 +217,20 @@ After Step 2, the resource set is fixed: a list of resources each with
 Read [, Create] [, CheckExistence] [, Update] [, Delete] }`, where `type`
 is fully constant. `parent` is filled in by Step 3.
 
+#### Collection existence checks
+
+The generated collection's `Exists` and `ExistsAsync` methods use the
+`CheckExistence` operation when one is available; otherwise they use `Read`
+(GET). Their parameters come from the selected operation. `GetIfExists` and
+`GetIfExistsAsync` always use `Read` because they return the resource.
+
+If a later service version adds a HEAD operation, regenerating the library
+switches `Exists` and `ExistsAsync` from GET to HEAD. HEAD may have different
+parameters from GET, so this can change the public method signatures as well
+as the request sent. Review generated API and behavior changes against the
+library's released compatibility baseline, and use customizations where needed
+to preserve the existing contract.
+
 ### Step 3 — Resolve parent relationships
 
 Parent cannot be settled before Step 2 is complete, because it depends

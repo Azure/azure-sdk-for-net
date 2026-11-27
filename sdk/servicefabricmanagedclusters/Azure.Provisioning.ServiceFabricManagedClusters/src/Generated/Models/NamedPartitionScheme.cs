@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new NamedPartitionScheme. </summary>
         public NamedPartitionScheme()
         {
+            PartitionScheme.Assign(ServiceFabricManagedClusters.PartitionScheme.Named);
         }
 
         /// <summary> Gets or sets the Names. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("partitionScheme", new string[] { "partitionScheme" }, defaultValue: "Named");
             _names = DefineListProperty<string>(nameof(Names), new string[] { "names" }, isRequired: true);
             DefineAdditionalProperties();
         }

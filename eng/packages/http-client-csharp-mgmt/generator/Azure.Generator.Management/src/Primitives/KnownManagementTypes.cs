@@ -119,11 +119,29 @@ namespace Azure.Generator.Management.Primitives
             [typeof(ManagedServiceIdentityType)] = DeserializeNewInstanceStringLikeType,
         };
 
-        private static readonly HashSet<CSharpType> _knownTypes = _idToInheritableSystemTypeMap.Values.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());
+        private static readonly CSharpType[] _inheritableSystemTypes =
+            [.. _idToInheritableSystemTypeMap.Values.Distinct(new CSharpFullNameComparer())];
+
+        private static readonly HashSet<CSharpType> _knownTypes = _inheritableSystemTypes.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());
 
         public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
+
+        public static bool TryGetInheritableSystemType(CSharpType type, [MaybeNullWhen(false)] out CSharpType knownType)
+        {
+            foreach (var candidate in _inheritableSystemTypes)
+            {
+                if (candidate.AreNamesEqual(type))
+                {
+                    knownType = candidate;
+                    return true;
+                }
+            }
+
+            knownType = null;
+            return false;
+        }
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 

@@ -16,6 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey : IJsonModel<SearchResourceEncryptionKey>
     {
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/> for deserialization. </summary>
+        internal SearchResourceEncryptionKey()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchResourceEncryptionKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -86,15 +91,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue(AccessCredentialsInternal, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
-            if (Optional.IsDefined(IsServiceLevelKey))
-            {
-                writer.WritePropertyName("isServiceLevelKey"u8);
-                writer.WriteBooleanValue(IsServiceLevelKey.Value);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
@@ -143,8 +150,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyName = default;
             string keyVersion = default;
             AzureActiveDirectoryApplicationCredentials accessCredentialsInternal = default;
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
-            bool? isServiceLevelKey = default;
             string vaultUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,21 +177,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
                         continue;
                     }
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("isServiceLevelKey"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isServiceLevelKey = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("keyVaultUri"u8))
@@ -194,7 +193,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchResourceEncryptionKey(
@@ -202,9 +201,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 keyVersion,
                 accessCredentialsInternal,
                 identity,
-                isServiceLevelKey,
                 vaultUri,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _identityIsDefined = identityIsDefined
+            };
         }
     }
 }

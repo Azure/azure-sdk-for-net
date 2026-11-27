@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties, configurationState, successfulDevices ?? new ChangeTrackingList<string>(), failedDevices ?? new ChangeTrackingList<string>());

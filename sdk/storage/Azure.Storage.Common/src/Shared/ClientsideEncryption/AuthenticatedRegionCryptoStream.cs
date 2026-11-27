@@ -17,9 +17,10 @@ namespace Azure.Storage.Cryptography
         private readonly Stream _innerStream;
         private readonly CryptoStreamMode _mode;
         private readonly IAuthenticatedCryptographicTransform _transform;
+        private readonly ArrayPool<byte> _arrayPool;
         private bool _flushedFinal;
 
-        private readonly byte[] _buffer;
+        private byte[] _buffer;
         private int _bufferPos;
         // in read mode, innerStream content length may not allign with buffer size
         // need to record how much data in buffer is legitimate
@@ -29,6 +30,8 @@ namespace Azure.Storage.Cryptography
         private readonly int _bufferLength;
 
         private readonly int _tempRefillBufferSize;
+
+        private int _disposed;
 
         public override bool CanRead => _mode == CryptoStreamMode.Read;
 
@@ -44,11 +47,13 @@ namespace Azure.Storage.Cryptography
             Stream innerStream,
             IAuthenticatedCryptographicTransform transform,
             int regionDataSize,
-            CryptoStreamMode streamMode)
+            CryptoStreamMode streamMode,
+            ArrayPool<byte> arrayPool = default)
         {
             _innerStream = innerStream;
             _transform = transform;
             _mode = streamMode;
+            _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
             // determine size of buffers. ciphertextLength = nonceLength + plaintextLength + tagLength.
             // determine if the stream's main buffer will hold ciphertext or plaintext and size accordingly.
@@ -75,7 +80,7 @@ namespace Azure.Storage.Cryptography
                 throw Errors.InvalidArgument(nameof(transform));
             }
 
-            _buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
+            _buffer = _arrayPool.Rent(bufferSize);
             _bufferLength = bufferSize; // not necessarily the total rented array size
             _bufferPopulatedLength = _bufferLength; // starting at max length triggers the refresh upfront when needed
 
@@ -110,7 +115,7 @@ namespace Azure.Storage.Cryptography
                 byte[] transformInputBuffer = null;
                 try
                 {
-                    transformInputBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                    transformInputBuffer = _arrayPool.Rent(_tempRefillBufferSize);
 
                     int totalRead = 0;
                     while (totalRead < _tempRefillBufferSize)
@@ -144,7 +149,7 @@ namespace Azure.Storage.Cryptography
                 }
                 finally
                 {
-                    ArrayPool<byte>.Shared.Return(transformInputBuffer);
+                    _arrayPool.Return(transformInputBuffer);
                 }
             }
 
@@ -216,7 +221,7 @@ namespace Azure.Storage.Cryptography
             byte[] transformedContentsBuffer = null;
             try
             {
-                transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                transformedContentsBuffer = _arrayPool.Rent(_tempRefillBufferSize);
                 int outputBytes = _transform.TransformAuthenticationBlock(
                     input: new ReadOnlySpan<byte>(_buffer, 0, _bufferLength),
                     output: transformedContentsBuffer);
@@ -241,7 +246,7 @@ namespace Azure.Storage.Cryptography
             }
             finally
             {
-                ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                _arrayPool.Return(transformedContentsBuffer);
             }
             return true;
         }
@@ -266,7 +271,7 @@ namespace Azure.Storage.Cryptography
                 byte[] transformedContentsBuffer = null;
                 try
                 {
-                    transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                    transformedContentsBuffer = _arrayPool.Rent(_tempRefillBufferSize);
                     int outputBytes = _transform.TransformAuthenticationBlock(
                         input: new ReadOnlySpan<byte>(_buffer, 0, _bufferPos),
                         output: transformedContentsBuffer);
@@ -291,7 +296,7 @@ namespace Azure.Storage.Cryptography
                 }
                 finally
                 {
-                    ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                    _arrayPool.Return(transformedContentsBuffer);
                 }
             }
 
@@ -310,14 +315,51 @@ namespace Azure.Storage.Cryptography
 
         protected override void Dispose(bool disposing)
         {
-            if (CanWrite)
+            // Disposal must be idempotent. Without this guard, a repeated or concurrent
+            // Dispose returns the same rented array to the pool more than once, which lets
+            // unrelated callers rent the same array and silently corrupt each other's data.
+            if (Interlocked.Exchange(ref _disposed, 1) != 0)
             {
-                FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
+                return;
             }
-            ArrayPool<byte>.Shared.Return(_buffer);
-            base.Dispose(disposing);
-            _transform.Dispose();
-            _innerStream?.Dispose();
+
+            try
+            {
+                if (CanWrite)
+                {
+                    FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
+                }
+            }
+            finally
+            {
+                // The final flush writes to the inner stream and can throw. Cleanup has to
+                // happen anyway: the gate above means no later Dispose call will get here.
+
+                // A failed flush leaves _flushedFinal unset. Set it so CanWrite reports false
+                // and a write after disposal fails as unsupported rather than on a released buffer.
+                _flushedFinal = true;
+
+                byte[] bufferToReturn = _buffer;
+                _buffer = null;
+                if (bufferToReturn != null)
+                {
+                    try
+                    {
+                        _arrayPool.Return(bufferToReturn);
+                    }
+                    catch
+                    {
+                        // Dispose should not throw, per .NET conventions. Return will fail only
+                        // when the incoming buffer was not rented or the runtime is in a bad
+                        // state. For either of these, there is no recovery possible so the
+                        // exception is ignored.
+                    }
+                }
+
+                base.Dispose(disposing);
+                _transform.Dispose();
+                _innerStream?.Dispose();
+            }
         }
     }
 }

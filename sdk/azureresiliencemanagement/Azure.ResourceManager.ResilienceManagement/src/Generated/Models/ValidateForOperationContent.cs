@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ValidateForOperationContent"/>. </summary>
         /// <param name="operationName"> Operation Name to validate. </param>
-        public ValidateForOperationContent(RecoveryOperationNames operationName)
+        public ValidateForOperationContent(RecoveryOperationName operationName)
         {
             OperationName = operationName;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ValidateForOperationContent"/>. </summary>
         /// <param name="operationName"> Operation Name to validate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateForOperationContent(RecoveryOperationNames operationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateForOperationContent(RecoveryOperationName operationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationName = operationName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operation Name to validate. </summary>
-        public RecoveryOperationNames OperationName { get; }
+        public RecoveryOperationName OperationName { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Education
     /// <summary>
     /// A class representing a collection of <see cref="StudentLabDetailsResource"/> and their operations.
     /// Each <see cref="StudentLabDetailsResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="StudentLabDetailsCollection"/> instance call the GetStudentLabDetails method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="StudentLabDetailsCollection"/> instance call the GetAllStudentLabDetails method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class StudentLabDetailsCollection : ArmCollection, IEnumerable<StudentLabDetailsResource>, IAsyncEnumerable<StudentLabDetailsResource>
     {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabsGetAllAsyncCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
+            return new AsyncPageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabDetailsDataAsyncCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabsGetAllCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
+            return new PageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabDetailsDataCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
         }
 
         /// <summary>

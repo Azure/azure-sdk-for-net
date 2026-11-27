@@ -60,7 +60,7 @@ namespace Azure.Generator
         {
             get
             {
-                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>(2)
+                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>(3)
                 {
                     new("Azure.Core")
                 };
@@ -68,10 +68,18 @@ namespace Azure.Generator
                 {
                     packages.Add(new("Azure.Core.Expressions.DataFactory"));
                 }
+                if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients.Any(HasStreamingOperation))
+                {
+                    packages.Add(new("System.ClientModel"));
+                }
 
                 return packages;
             }
         }
+
+        private static bool HasStreamingOperation(InputClient client)
+            => client.Methods.Any(method => method.Response.Type is InputStreamingType)
+                || client.Children.Any(HasStreamingOperation);
 
         /// <inheritdoc/>
         protected override string BuildServiceName()

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
     /// </summary>
     public partial class KubernetesConfigurationPrivateLinkScopeCollection : ArmCollection, IEnumerable<KubernetesConfigurationPrivateLinkScopeResource>, IAsyncEnumerable<KubernetesConfigurationPrivateLinkScopeResource>
     {
-        private readonly ClientDiagnostics _kubernetesConfigurationPrivateLinkScopesClientDiagnostics;
-        private readonly KubernetesConfigurationPrivateLinkScopes _kubernetesConfigurationPrivateLinkScopesRestClient;
+        private readonly ClientDiagnostics _privateLinkScopesOperationsClientDiagnostics;
+        private readonly PrivateLinkScopesOperations _privateLinkScopesOperationsRestClient;
 
         /// <summary> Initializes a new instance of KubernetesConfigurationPrivateLinkScopeCollection for mocking. </summary>
         protected KubernetesConfigurationPrivateLinkScopeCollection()
@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KubernetesConfigurationPrivateLinkScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(KubernetesConfigurationPrivateLinkScopeResource.ResourceType, out string kubernetesConfigurationPrivateLinkScopeApiVersion);
-            _kubernetesConfigurationPrivateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", KubernetesConfigurationPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            _kubernetesConfigurationPrivateLinkScopesRestClient = new KubernetesConfigurationPrivateLinkScopes(_kubernetesConfigurationPrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesConfigurationPrivateLinkScopeApiVersion ?? "2024-11-01-preview");
+            _privateLinkScopesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", KubernetesConfigurationPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkScopesOperationsRestClient = new PrivateLinkScopesOperations(_privateLinkScopesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KubernetesConfiguration/privateLinkScopes", out string privateLinkScopesOperationsApiVersionOverride) ? privateLinkScopesOperationsApiVersionOverride : "2024-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, KubernetesConfigurationPrivateLinkScopeData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, KubernetesConfigurationPrivateLinkScopeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = Response.FromValue(KubernetesConfigurationPrivateLinkScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, KubernetesConfigurationPrivateLinkScopeData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, KubernetesConfigurationPrivateLinkScopeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = Response.FromValue(KubernetesConfigurationPrivateLinkScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Get");
             scope.Start();
             try
             {
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = Response.FromValue(KubernetesConfigurationPrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Get");
             scope.Start();
             try
             {
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = Response.FromValue(KubernetesConfigurationPrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_kubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KubernetesConfigurationPrivateLinkScopeCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopeDataAsyncCollectionResultOfT(_privateLinkScopesOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KubernetesConfigurationPrivateLinkScopeCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetByResourceGroupCollectionResultOfT(_kubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KubernetesConfigurationPrivateLinkScopeCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopeDataCollectionResultOfT(_privateLinkScopesOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KubernetesConfigurationPrivateLinkScopeCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +343,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
@@ -352,7 +351,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = default;
@@ -401,7 +400,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = default;
@@ -458,7 +457,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -466,7 +465,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = default;
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using DiagnosticScope scope = _kubernetesConfigurationPrivateLinkScopesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopesOperationsClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -527,7 +526,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesConfigurationPrivateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KubernetesConfigurationPrivateLinkScopeData> response = default;

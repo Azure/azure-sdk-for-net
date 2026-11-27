@@ -21,6 +21,7 @@ namespace Azure.Provisioning.ServiceFabric
         /// <summary> Creates a new StatelessServiceProperties. </summary>
         public StatelessServiceProperties()
         {
+            ServiceKind.Assign(ApplicationServiceKind.Stateless);
         }
 
         /// <summary> Gets or sets the InstanceCount. </summary>
@@ -87,7 +88,6 @@ namespace Azure.Provisioning.ServiceFabric
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceKind", new string[] { "serviceKind" }, defaultValue: "Stateless");
             _instanceCount = DefineProperty<int>(nameof(InstanceCount), new string[] { "instanceCount" });
             _instanceCloseDelayDuration = DefineProperty<string>(nameof(InstanceCloseDelayDuration), new string[] { "instanceCloseDelayDuration" });
             _minInstanceCount = DefineProperty<int>(nameof(MinInstanceCount), new string[] { "minInstanceCount" });

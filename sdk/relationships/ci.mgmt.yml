@@ -1,6 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/relationships/Azure.ResourceManager.Relationships
+    - sdk/relationships/Azure.Provisioning.Relationships
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -9,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Relationships
       safeName: AzureResourceManagerRelationships
+    - name: Azure.Provisioning.Relationships
+      safeName: AzureProvisioningRelationships

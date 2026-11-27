@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SwitchProtectionProviderSpecificContent"/>. </summary>
+        protected SwitchProtectionProviderSpecificContent() : this(default)
+        {
+        }
+
         /// <summary> Gets the Instance type. </summary>
         internal string InstanceType { get; set; }
     }

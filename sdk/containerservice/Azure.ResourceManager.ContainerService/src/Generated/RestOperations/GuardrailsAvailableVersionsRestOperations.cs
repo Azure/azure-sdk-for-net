@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateGetGuardrailsVersionsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateListGuardrailsVersionsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateNextGetGuardrailsVersionsRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateNextListGuardrailsVersionsRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

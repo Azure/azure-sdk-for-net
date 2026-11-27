@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the private link service connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkPrivateLinkServiceConnection(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PrivateLinkServiceConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal NetworkPrivateLinkServiceConnection(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, PrivateLinkServiceConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public NetworkPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -116,7 +116,25 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new PrivateLinkServiceConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> The ARM resource id of an existing approved private endpoint whose approval state is inherited by this connection. </summary>
+        [WirePath("properties.approvalReference.privateEndpointId")]
+        public ResourceIdentifier ApprovalReferencePrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApprovalReferencePrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.ApprovalReferencePrivateEndpointId = value;
             }
         }
     }

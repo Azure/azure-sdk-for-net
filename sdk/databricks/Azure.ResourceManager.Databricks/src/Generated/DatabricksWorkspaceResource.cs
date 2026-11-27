@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Databricks.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Databricks
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Databricks
         {
             TryGetApiVersion(ResourceType, out string databricksWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksWorkspaceApiVersion ?? "2026-01-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Databricks/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-01-01");
             _outboundNetworkDependenciesEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpoints(_outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksWorkspaceApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
@@ -440,7 +441,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftDatabricksWorkspacesListAsyncCollectionResultOfT(
+            return new DatabricksWorkspaceResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
                 _outboundNetworkDependenciesEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -478,7 +479,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftDatabricksWorkspacesListCollectionResultOfT(
+            return new DatabricksWorkspaceResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
                 _outboundNetworkDependenciesEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -597,10 +598,9 @@ namespace Azure.ResourceManager.Databricks
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -640,10 +640,9 @@ namespace Azure.ResourceManager.Databricks
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

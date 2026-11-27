@@ -130,44 +130,44 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "session.update":
-                        return ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
-                    case "session.avatar.connect":
-                        return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
-                    case "input_audio.turn.start":
-                        return ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
-                    case "input_audio.turn.append":
-                        return ClientEventInputAudioTurnAppend.DeserializeClientEventInputAudioTurnAppend(element, options);
-                    case "input_audio.turn.end":
-                        return ClientEventInputAudioTurnEnd.DeserializeClientEventInputAudioTurnEnd(element, options);
-                    case "input_audio.turn.cancel":
-                        return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
+                    case "conversation.item.create":
+                        return ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
+                    case "conversation.item.delete":
+                        return ClientEventConversationItemDelete.DeserializeClientEventConversationItemDelete(element, options);
+                    case "conversation.item.retrieve":
+                        return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
+                    case "conversation.item.truncate":
+                        return ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
+                    case "input_audio_buffer.append":
+                        return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
+                    case "input_audio_buffer.clear":
+                        return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
+                    case "input_audio_buffer.commit":
+                        return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
                     case "input_audio.clear":
                         return ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
+                    case "input_audio.turn.append":
+                        return ClientEventInputAudioTurnAppend.DeserializeClientEventInputAudioTurnAppend(element, options);
+                    case "input_audio.turn.cancel":
+                        return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
+                    case "input_audio.turn.end":
+                        return ClientEventInputAudioTurnEnd.DeserializeClientEventInputAudioTurnEnd(element, options);
+                    case "input_audio.turn.start":
+                        return ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
                     case "input_text.delta":
                         return ClientEventInputTextDelta.DeserializeClientEventInputTextDelta(element, options);
                     case "input_text.done":
                         return ClientEventInputTextDone.DeserializeClientEventInputTextDone(element, options);
-                    case "input_audio_buffer.append":
-                        return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
-                    case "input_audio_buffer.commit":
-                        return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
-                    case "input_audio_buffer.clear":
-                        return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
-                    case "conversation.item.create":
-                        return ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
-                    case "conversation.item.truncate":
-                        return ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
-                    case "conversation.item.delete":
-                        return ClientEventConversationItemDelete.DeserializeClientEventConversationItemDelete(element, options);
-                    case "response.create":
-                        return ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
-                    case "response.cancel":
-                        return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
-                    case "conversation.item.retrieve":
-                        return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
                     case "output_audio_buffer.clear":
                         return ClientEventOutputAudioBufferClear.DeserializeClientEventOutputAudioBufferClear(element, options);
+                    case "response.cancel":
+                        return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
+                    case "response.create":
+                        return ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
+                    case "session.avatar.connect":
+                        return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
+                    case "session.update":
+                        return ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
                 }
             }
             return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);

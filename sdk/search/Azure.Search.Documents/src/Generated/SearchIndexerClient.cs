@@ -50,17 +50,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, RequestContext context = null)
+        internal virtual Response CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateDataSourceConnection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, skipIndexerResetRequirementForCache, context);
+                using HttpMessage message = CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -81,17 +80,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, RequestContext context = null)
+        internal virtual async Task<Response> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateDataSourceConnection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, skipIndexerResetRequirementForCache, context);
+                using HttpMessage message = CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -105,12 +103,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateDataSourceConnection(dataSourceConnectionName, dataSource, matchConditions, skipIndexerResetRequirementForCache, cancellationToken.ToRequestContext());
+            Response result = CreateOrUpdateDataSourceConnection(dataSourceConnectionName, dataSource, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
         }
 
@@ -118,12 +115,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnectionName, dataSource, matchConditions, skipIndexerResetRequirementForCache, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnectionName, dataSource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
         }
 
@@ -322,23 +318,22 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetDataSourceConnections(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllDataSourceConnections(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetDataSourceConnections");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexerClientGetAllDataSourceConnectionsCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexerClient.GetAllDataSourceConnections");
         }
 
         /// <summary>
@@ -350,43 +345,60 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetDataSourceConnectionsAsync(IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllDataSourceConnectionsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetDataSourceConnections");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexerClient.GetAllDataSourceConnections");
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListDataSourcesResult> GetDataSourceConnections(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexerDataSourceConnection> GetAllDataSourceConnections(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetDataSourceConnections(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListDataSourcesResult)result, result);
+            return new SearchIndexerClientGetAllDataSourceConnectionsCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexerClient.GetAllDataSourceConnections");
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListDataSourcesResult>> GetDataSourceConnectionsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexerDataSourceConnection> GetAllDataSourceConnectionsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetDataSourceConnectionsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListDataSourcesResult)result, result);
+            return new SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexerClient.GetAllDataSourceConnections");
         }
 
         /// <summary>
@@ -666,104 +678,6 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// [Protocol Method] Resets specific documents in the datasource to be selectively re-ingested by the indexer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="indexerName"> The name of the indexer. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response ResetDocuments(string indexerName, RequestContent content, bool? overwrite = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetDocuments");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-
-                using HttpMessage message = CreateResetDocumentsRequest(indexerName, content, overwrite, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resets specific documents in the datasource to be selectively re-ingested by the indexer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="indexerName"> The name of the indexer. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResetDocumentsAsync(string indexerName, RequestContent content, bool? overwrite = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetDocuments");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-
-                using HttpMessage message = CreateResetDocumentsRequest(indexerName, content, overwrite, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer. </param>
-        /// <param name="keysOrIds"> The keys or ids of the documents to be re-ingested. If keys are provided, the document key field must be specified in the indexer configuration. If ids are provided, the document key field is ignored. </param>
-        /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ResetDocuments(string indexerName, ResetDocumentOptions keysOrIds = default, bool? overwrite = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-
-            return ResetDocuments(indexerName, keysOrIds, overwrite, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer. </param>
-        /// <param name="keysOrIds"> The keys or ids of the documents to be re-ingested. If keys are provided, the document key field must be specified in the indexer configuration. If ids are provided, the document key field is ignored. </param>
-        /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResetDocumentsAsync(string indexerName, ResetDocumentOptions keysOrIds = default, bool? overwrite = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-
-            return await ResetDocumentsAsync(indexerName, keysOrIds, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Runs an indexer on-demand.
         /// <list type="bullet">
         /// <item>
@@ -864,18 +778,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateOrUpdateIndexer(string indexerName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
+        internal virtual Response CreateOrUpdateIndexer(string indexerName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateIndexer");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -896,18 +808,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateIndexerAsync(string indexerName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
+        internal virtual async Task<Response> CreateOrUpdateIndexerAsync(string indexerName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateIndexer");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -921,13 +831,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndexer> CreateOrUpdateIndexer(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchIndexer> CreateOrUpdateIndexer(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateIndexer(indexerName, indexer, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext());
+            Response result = CreateOrUpdateIndexer(indexerName, indexer, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((SearchIndexer)result, result);
         }
 
@@ -935,13 +843,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateIndexerAsync(indexerName, indexer, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrUpdateIndexerAsync(indexerName, indexer, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchIndexer)result, result);
         }
 
@@ -1140,23 +1046,22 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetIndexers(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllIndexers(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexers");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIndexersRequest(@select, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexerClientGetAllIndexersCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexerClient.GetAllIndexers");
         }
 
         /// <summary>
@@ -1168,43 +1073,60 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetIndexersAsync(IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllIndexersAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexers");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIndexersRequest(@select, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexerClientGetAllIndexersAsyncCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexerClient.GetAllIndexers");
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListIndexersResult> GetIndexers(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexer> GetAllIndexers(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetIndexers(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListIndexersResult)result, result);
+            return new SearchIndexerClientGetAllIndexersCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexerClient.GetAllIndexers");
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListIndexersResult>> GetIndexersAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexer> GetAllIndexersAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetIndexersAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListIndexersResult)result, result);
+            return new SearchIndexerClientGetAllIndexersAsyncCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexerClient.GetAllIndexers");
         }
 
         /// <summary>
@@ -1398,18 +1320,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateOrUpdateSkillset(string skillsetName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
+        internal virtual Response CreateOrUpdateSkillset(string skillsetName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateSkillset");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1430,18 +1350,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateSkillsetAsync(string skillsetName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
+        internal virtual async Task<Response> CreateOrUpdateSkillsetAsync(string skillsetName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateSkillset");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1455,13 +1373,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateSkillset(skillsetName, skillset, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext());
+            Response result = CreateOrUpdateSkillset(skillsetName, skillset, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((SearchIndexerSkillset)result, result);
         }
 
@@ -1469,13 +1385,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
-        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateSkillsetAsync(skillsetName, skillset, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrUpdateSkillsetAsync(skillsetName, skillset, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchIndexerSkillset)result, result);
         }
 
@@ -1674,23 +1588,22 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSkillsets(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllSkillsets(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetSkillsets");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSkillsetsRequest(@select, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexerClientGetAllSkillsetsCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexerClient.GetAllSkillsets");
         }
 
         /// <summary>
@@ -1702,43 +1615,60 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSkillsetsAsync(IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllSkillsetsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetSkillsets");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSkillsetsRequest(@select, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexerClientGetAllSkillsetsAsyncCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexerClient.GetAllSkillsets");
         }
 
         /// <summary> List all skillsets in a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListSkillsetsResult> GetSkillsets(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexerSkillset> GetAllSkillsets(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSkillsets(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListSkillsetsResult)result, result);
+            return new SearchIndexerClientGetAllSkillsetsCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexerClient.GetAllSkillsets");
         }
 
         /// <summary> List all skillsets in a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListSkillsetsResult>> GetSkillsetsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexerSkillset> GetAllSkillsetsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSkillsetsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListSkillsetsResult)result, result);
+            return new SearchIndexerClientGetAllSkillsetsAsyncCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexerClient.GetAllSkillsets");
         }
 
         /// <summary>
@@ -1827,104 +1757,6 @@ namespace Azure.Search.Documents.Indexes
 
             Response result = await CreateSkillsetAsync(skillset, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchIndexerSkillset)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Reset an existing skillset in a search service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skillsetName"> The name of the skillset. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response ResetSkills(string skillsetName, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetSkills");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateResetSkillsRequest(skillsetName, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Reset an existing skillset in a search service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skillsetName"> The name of the skillset. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResetSkillsAsync(string skillsetName, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetSkills");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateResetSkillsRequest(skillsetName, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Reset an existing skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset. </param>
-        /// <param name="skillNames"> The names of the skills to reset. If not specified, all skills in the skillset will be reset. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ResetSkills(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-            Argument.AssertNotNull(skillNames, nameof(skillNames));
-
-            return ResetSkills(skillsetName, skillNames, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Reset an existing skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset. </param>
-        /// <param name="skillNames"> The names of the skills to reset. If not specified, all skills in the skillset will be reset. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-            Argument.AssertNotNull(skillNames, nameof(skillNames));
-
-            return await ResetSkillsAsync(skillsetName, skillNames, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RoutineTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineTriggerKind?(string value) => value == null ? null : new RoutineTriggerKind(value);
+        public static implicit operator RoutineTriggerKind?(string value) => value == null ? (RoutineTriggerKind?)null : new RoutineTriggerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

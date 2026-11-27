@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InternetGatewaysListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InternetGatewaysListResult(value ?? new ChangeTrackingList<NetworkFabricInternetGatewayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

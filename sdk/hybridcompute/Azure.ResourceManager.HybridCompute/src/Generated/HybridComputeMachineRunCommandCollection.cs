@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeMachineRunCommandData, HybridComputeMachineRunCommandResource>(new MachineRunCommandsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridComputeMachineRunCommandData, HybridComputeMachineRunCommandResource>(new HybridComputeMachineRunCommandDataAsyncCollectionResultOfT(
                 _machineRunCommandsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeMachineRunCommandData, HybridComputeMachineRunCommandResource>(new MachineRunCommandsGetAllCollectionResultOfT(
+            return new PageableWrapper<HybridComputeMachineRunCommandData, HybridComputeMachineRunCommandResource>(new HybridComputeMachineRunCommandDataCollectionResultOfT(
                 _machineRunCommandsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

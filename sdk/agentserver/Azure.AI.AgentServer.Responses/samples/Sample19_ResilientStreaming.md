@@ -1,12 +1,12 @@
 # Sample 19 — Resilient streaming with handler-managed phase checkpoints
 
 A resilient response handler with **no** upstream framework. Each
-`ResponseEventStream.Checkpoint()` persists the completed phase output, and the
+`ResponseEventStream.CreateCheckpointEvent()` persists the completed phase output, and the
 recovered handler uses `context.PersistedResponse.Output.Count` as its resume
 watermark.
 
 The handler runs three phases (`analyze` → `generate` → `refine`) and emits one
-output item per phase. After each phase finishes it calls `stream.Checkpoint()`
+output item per phase. After each phase finishes it calls `stream.CreateCheckpointEvent()`
 to persist a durable snapshot. On a
 recovered entry, the handler seeds a new `ResponseEventStream` from
 `context.PersistedResponse` (the last checkpoint — it already contains the output
@@ -39,8 +39,8 @@ public class ResilientStreamingHandler : ResponseHandler
 {
     private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -89,7 +89,7 @@ public class ResilientStreamingHandler : ResponseHandler
 
             // Persist a durable snapshot at the phase boundary
             // (no-op unless resilient background).
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
 
         yield return stream.EmitCompleted();
@@ -98,7 +98,7 @@ public class ResilientStreamingHandler : ResponseHandler
     private static int NextPhaseIndex(ResponseContext context)
     {
         int completedPhases = context.IsRecovery
-            ? context.PersistedResponse?.Output?.Count ?? 0
+            ? context.PersistedResponse?.OutputItems?.Count ?? 0
             : 0;
         return Math.Min(completedPhases, PhaseOrder.Length);
     }
@@ -128,7 +128,7 @@ curl -N -X POST http://localhost:8088/responses \
 
 ## Recovery behavior
 
-- Each phase calls `stream.Checkpoint()` — a no-op unless the response is
+- Each phase calls `stream.CreateCheckpointEvent()` — a no-op unless the response is
   resilient background.
   The checkpoint persists the current response snapshot (including the output
   items emitted so far), which becomes `context.PersistedResponse` on recovery.

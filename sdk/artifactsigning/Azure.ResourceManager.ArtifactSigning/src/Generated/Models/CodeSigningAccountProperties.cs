@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Sku is null ? default : Sku.Name;
+                return Sku is null ? (ArtifactSigningSkuName?)default : Sku.Name;
             }
             set
             {

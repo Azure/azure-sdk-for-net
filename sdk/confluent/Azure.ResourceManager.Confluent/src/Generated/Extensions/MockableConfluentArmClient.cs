@@ -70,5 +70,23 @@ namespace Azure.ResourceManager.Confluent.Mocking
             TopicRecordResource.ValidateResourceId(id);
             return new TopicRecordResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ConfluentNetworkGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfluentNetworkGatewayResource"/> object. </returns>
+        public virtual ConfluentNetworkGatewayResource GetConfluentNetworkGatewayResource(ResourceIdentifier id)
+        {
+            ConfluentNetworkGatewayResource.ValidateResourceId(id);
+            return new ConfluentNetworkGatewayResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ConfluentAccessPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfluentAccessPointResource"/> object. </returns>
+        public virtual ConfluentAccessPointResource GetConfluentAccessPointResource(ResourceIdentifier id)
+        {
+            ConfluentAccessPointResource.ValidateResourceId(id);
+            return new ConfluentAccessPointResource(Client, id);
+        }
     }
 }

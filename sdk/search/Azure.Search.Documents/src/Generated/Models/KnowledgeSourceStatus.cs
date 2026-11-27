@@ -16,6 +16,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _synchronizationInterval;
+        private bool _synchronizationIntervalIsDefined;
+        private SynchronizationState _currentSynchronizationState;
+        private bool _currentSynchronizationStateIsDefined;
+        private CompletedSynchronizationState _lastSynchronizationState;
+        private bool _lastSynchronizationStateIsDefined;
+        private KnowledgeSourceStatistics _statistics;
+        private bool _statisticsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/>. </summary>
         /// <param name="synchronizationStatus"> The current synchronization status. </param>
@@ -31,15 +39,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="currentSynchronizationState"> Current synchronization state that spans multiple indexer runs. </param>
         /// <param name="lastSynchronizationState"> Details of the last completed synchronization. Null on first sync. </param>
         /// <param name="statistics"> Statistical information about the knowledge source synchronization history. Null on first sync. </param>
+        /// <param name="fileCapacity"> File upload capacity for a File knowledge source. Omitted for other knowledge source kinds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, KnowledgeSourceFileCapacity fileCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             SynchronizationStatus = synchronizationStatus;
-            SynchronizationInterval = synchronizationInterval;
-            CurrentSynchronizationState = currentSynchronizationState;
-            LastSynchronizationState = lastSynchronizationState;
-            Statistics = statistics;
+            _synchronizationInterval = synchronizationInterval;
+            _currentSynchronizationState = currentSynchronizationState;
+            _lastSynchronizationState = lastSynchronizationState;
+            _statistics = statistics;
+            FileCapacity = fileCapacity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,15 +60,62 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public KnowledgeSourceSynchronizationStatus SynchronizationStatus { get; set; }
 
         /// <summary> The synchronization interval (e.g., '1d' for daily). Null if no schedule is configured. </summary>
-        public string SynchronizationInterval { get; set; }
+        public string SynchronizationInterval
+        {
+            get
+            {
+                return _synchronizationInterval;
+            }
+            set
+            {
+                _synchronizationInterval = value;
+                _synchronizationIntervalIsDefined = true;
+            }
+        }
 
         /// <summary> Current synchronization state that spans multiple indexer runs. </summary>
-        public SynchronizationState CurrentSynchronizationState { get; set; }
+        public SynchronizationState CurrentSynchronizationState
+        {
+            get
+            {
+                return _currentSynchronizationState;
+            }
+            set
+            {
+                _currentSynchronizationState = value;
+                _currentSynchronizationStateIsDefined = true;
+            }
+        }
 
         /// <summary> Details of the last completed synchronization. Null on first sync. </summary>
-        public CompletedSynchronizationState LastSynchronizationState { get; set; }
+        public CompletedSynchronizationState LastSynchronizationState
+        {
+            get
+            {
+                return _lastSynchronizationState;
+            }
+            set
+            {
+                _lastSynchronizationState = value;
+                _lastSynchronizationStateIsDefined = true;
+            }
+        }
 
         /// <summary> Statistical information about the knowledge source synchronization history. Null on first sync. </summary>
-        public KnowledgeSourceStatistics Statistics { get; set; }
+        public KnowledgeSourceStatistics Statistics
+        {
+            get
+            {
+                return _statistics;
+            }
+            set
+            {
+                _statistics = value;
+                _statisticsIsDefined = true;
+            }
+        }
+
+        /// <summary> File upload capacity for a File knowledge source. Omitted for other knowledge source kinds. </summary>
+        public KnowledgeSourceFileCapacity FileCapacity { get; }
     }
 }

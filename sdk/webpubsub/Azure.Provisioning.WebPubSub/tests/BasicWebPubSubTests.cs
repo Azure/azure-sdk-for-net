@@ -91,22 +91,19 @@ public class BasicWebPubSubTests
               }
               properties: {
                 disableAadAuth: false
-                tls: {
-                  clientCertEnabled: false
-                }
                 disableLocalAuth: false
                 liveTraceConfiguration: {
-                  enabled: 'false'
                   categories: [
                     {
-                      name: 'ConnectivityLogs'
                       enabled: 'false'
+                      name: 'ConnectivityLogs'
                     }
                     {
-                      name: 'MessagingLogs'
                       enabled: 'false'
+                      name: 'MessagingLogs'
                     }
                   ]
+                  enabled: 'false'
                 }
                 networkACLs: {
                   defaultAction: 'Deny'
@@ -123,20 +120,23 @@ public class BasicWebPubSubTests
                 resourceLogConfiguration: {
                   categories: [
                     {
-                      name: 'ConnectivityLogs'
                       enabled: 'true'
+                      name: 'ConnectivityLogs'
                     }
                     {
-                      name: 'MessagingLogs'
                       enabled: 'true'
+                      name: 'MessagingLogs'
                     }
                   ]
                 }
+                tls: {
+                  clientCertEnabled: false
+                }
               }
               sku: {
+                capacity: 1
                 name: 'Free_F1'
                 tier: 'Free'
-                capacity: 1
               }
             }
             """);

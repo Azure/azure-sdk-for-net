@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionPatchProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Schedule = schedule;
             NotificationSettings = notificationSettings;
             Disabled = disabled;
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionType? ActionType { get; set; }
 
         /// <summary> The time which the scheduled action is supposed to start running. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The time when the scheduled action is supposed to stop scheduling. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The schedule the scheduled action is supposed to follow. </summary>
         public ScheduledActionsSchedule Schedule { get; set; }

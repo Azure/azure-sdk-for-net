@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelReplacementConfiguration"/>. </summary>
         /// <param name="targetModelName"> The name of the replacement model. </param>
         /// <param name="targetModelVersion"> The version of the replacement model. </param>
-        /// <param name="autoUpgradeStartOn"> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </param>
+        /// <param name="autoUpgradeStartsOn"> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </param>
         /// <param name="upgradeOnExpiryLeadTimeDays"> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesModelReplacementConfiguration(string targetModelName, string targetModelVersion, DateTimeOffset? autoUpgradeStartOn, int? upgradeOnExpiryLeadTimeDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesModelReplacementConfiguration(string targetModelName, string targetModelVersion, DateTimeOffset? autoUpgradeStartsOn, int? upgradeOnExpiryLeadTimeDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetModelName = targetModelName;
             TargetModelVersion = targetModelVersion;
-            AutoUpgradeStartOn = autoUpgradeStartOn;
+            AutoUpgradeStartsOn = autoUpgradeStartsOn;
             UpgradeOnExpiryLeadTimeDays = upgradeOnExpiryLeadTimeDays;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </summary>
         [WirePath("autoUpgradeStartDate")]
-        public DateTimeOffset? AutoUpgradeStartOn { get; set; }
+        public DateTimeOffset? AutoUpgradeStartsOn { get; set; }
 
         /// <summary> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </summary>
         [WirePath("upgradeOnExpiryLeadTimeDays")]

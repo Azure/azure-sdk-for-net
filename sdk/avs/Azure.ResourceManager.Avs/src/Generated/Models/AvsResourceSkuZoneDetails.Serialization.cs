@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvsResourceSkuZoneDetails(name, capabilities, additionalBinaryDataProperties);
+            return new AvsResourceSkuZoneDetails(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>(), additionalBinaryDataProperties);
         }
     }
 }

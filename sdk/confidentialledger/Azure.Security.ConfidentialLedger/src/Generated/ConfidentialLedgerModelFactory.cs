@@ -143,77 +143,21 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </summary>
         /// <param name="transactionId"> The transaction id at which this write will become durable. </param>
         /// <param name="collectionId"> The collection identifier of the ledger entry. </param>
+        /// <param name="receipt"> The receipt certifying the committed transaction. </param>
+        /// <param name="state"> State of the write transaction. </param>
+        /// <param name="applicationClaims"> The list of application claims. </param>
         /// <returns> A new <see cref="Models.LedgerWriteResult"/> instance for mocking. </returns>
-        public static LedgerWriteResult LedgerWriteResult(string transactionId = default, string collectionId = default)
-        {
-            return new LedgerWriteResult(transactionId, collectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The result of querying for a ledger entry from an older transaction id. The
-        /// ledger entry is available in the response only if the returned state is Ready.
-        /// </summary>
-        /// <param name="state"> State of a ledger query. </param>
-        /// <param name="entry">
-        /// The ledger entry found as a result of the query. This is only available if the
-        /// query is in Ready state.
-        /// </param>
-        /// <returns> A new <see cref="Models.LedgerQueryResult"/> instance for mocking. </returns>
-        public static LedgerQueryResult LedgerQueryResult(ConfidentialLedgerQueryState state = default, LedgerEntry entry = default)
-        {
-            return new LedgerQueryResult(state, entry, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A receipt certifying the transaction at the specified id. </summary>
-        /// <param name="applicationClaims"> List of application claims. </param>
-        /// <param name="receipt"> The receipt contents for the transaction. </param>
-        /// <param name="state"> State of a ledger query. </param>
-        /// <param name="transactionId">
-        /// A unique identifier for the state of the ledger. If returned as part of a
-        /// LedgerEntry, it indicates the state from which the entry was read.
-        /// </param>
-        /// <returns> A new <see cref="Models.TransactionReceipt"/> instance for mocking. </returns>
-        public static TransactionReceipt TransactionReceipt(IEnumerable<ApplicationClaim> applicationClaims = default, ReceiptContents receipt = default, ConfidentialLedgerQueryState state = default, string transactionId = default)
+        public static LedgerWriteResult LedgerWriteResult(string transactionId = default, string collectionId = default, ReceiptContents receipt = default, TransactionState state = default, IEnumerable<ApplicationClaim> applicationClaims = default)
         {
             applicationClaims ??= new ChangeTrackingList<ApplicationClaim>();
 
-            return new TransactionReceipt(applicationClaims.ToList(), receipt, state, transactionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A claim of a ledger application. </summary>
-        /// <param name="digest"> An application claim in digested form. </param>
-        /// <param name="kind"> Represents the kind of an application claim. </param>
-        /// <param name="ledgerEntry"> An application claim derived from ledger entry data. </param>
-        /// <returns> A new <see cref="Models.ApplicationClaim"/> instance for mocking. </returns>
-        public static ApplicationClaim ApplicationClaim(ClaimDigest digest = default, ApplicationClaimKind kind = default, LedgerEntryClaim ledgerEntry = default)
-        {
-            return new ApplicationClaim(digest, kind, ledgerEntry, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An application claim in digested form. </summary>
-        /// <param name="value"> The digest of the application claim, in hexadecimal form. </param>
-        /// <param name="protocol">
-        /// Represents the protocol to be used to compute the digest of a claim from the
-        /// given claim data.
-        /// </param>
-        /// <returns> A new <see cref="Models.ClaimDigest"/> instance for mocking. </returns>
-        public static ClaimDigest ClaimDigest(string value = default, ApplicationClaimProtocol protocol = default)
-        {
-            return new ClaimDigest(value, protocol, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An application claim derived from ledger entry data. </summary>
-        /// <param name="collectionId"> Identifier of a collection. </param>
-        /// <param name="contents"> Contents of a ledger entry. </param>
-        /// <param name="secretKey"> Base64-encoded secret key. </param>
-        /// <param name="protocol">
-        /// Represents the protocol to be used to compute the digest of a claim from the
-        /// given claim data.
-        /// </param>
-        /// <returns> A new <see cref="Models.LedgerEntryClaim"/> instance for mocking. </returns>
-        public static LedgerEntryClaim LedgerEntryClaim(string collectionId = default, string contents = default, string secretKey = default, ApplicationClaimProtocol protocol = default)
-        {
-            return new LedgerEntryClaim(collectionId, contents, secretKey, protocol, additionalBinaryDataProperties: null);
+            return new LedgerWriteResult(
+                transactionId,
+                collectionId,
+                receipt,
+                state,
+                applicationClaims.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The contents of a receipt. </summary>
@@ -260,6 +204,73 @@ namespace Azure.Security.ConfidentialLedger.Models
         public static ReceiptElement ReceiptElement(string left = default, string right = default)
         {
             return new ReceiptElement(left, right, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A claim of a ledger application. </summary>
+        /// <param name="digest"> An application claim in digested form. </param>
+        /// <param name="kind"> Represents the kind of an application claim. </param>
+        /// <param name="ledgerEntry"> An application claim derived from ledger entry data. </param>
+        /// <returns> A new <see cref="Models.ApplicationClaim"/> instance for mocking. </returns>
+        public static ApplicationClaim ApplicationClaim(ClaimDigest digest = default, ApplicationClaimKind kind = default, LedgerEntryClaim ledgerEntry = default)
+        {
+            return new ApplicationClaim(digest, kind, ledgerEntry, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An application claim in digested form. </summary>
+        /// <param name="value"> The digest of the application claim, in hexadecimal form. </param>
+        /// <param name="protocol">
+        /// Represents the protocol to be used to compute the digest of a claim from the
+        /// given claim data.
+        /// </param>
+        /// <returns> A new <see cref="Models.ClaimDigest"/> instance for mocking. </returns>
+        public static ClaimDigest ClaimDigest(string value = default, ApplicationClaimProtocol protocol = default)
+        {
+            return new ClaimDigest(value, protocol, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An application claim derived from ledger entry data. </summary>
+        /// <param name="collectionId"> Identifier of a collection. </param>
+        /// <param name="contents"> Contents of a ledger entry. </param>
+        /// <param name="secretKey"> Base64-encoded secret key. </param>
+        /// <param name="protocol">
+        /// Represents the protocol to be used to compute the digest of a claim from the
+        /// given claim data.
+        /// </param>
+        /// <returns> A new <see cref="Models.LedgerEntryClaim"/> instance for mocking. </returns>
+        public static LedgerEntryClaim LedgerEntryClaim(string collectionId = default, string contents = default, string secretKey = default, ApplicationClaimProtocol protocol = default)
+        {
+            return new LedgerEntryClaim(collectionId, contents, secretKey, protocol, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The result of querying for a ledger entry from an older transaction id. The
+        /// ledger entry is available in the response only if the returned state is Ready.
+        /// </summary>
+        /// <param name="state"> State of a ledger query. </param>
+        /// <param name="entry">
+        /// The ledger entry found as a result of the query. This is only available if the
+        /// query is in Ready state.
+        /// </param>
+        /// <returns> A new <see cref="Models.LedgerQueryResult"/> instance for mocking. </returns>
+        public static LedgerQueryResult LedgerQueryResult(ConfidentialLedgerQueryState state = default, LedgerEntry entry = default)
+        {
+            return new LedgerQueryResult(state, entry, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A receipt certifying the transaction at the specified id. </summary>
+        /// <param name="applicationClaims"> List of application claims. </param>
+        /// <param name="receipt"> The receipt contents for the transaction. </param>
+        /// <param name="state"> State of a ledger query. </param>
+        /// <param name="transactionId">
+        /// A unique identifier for the state of the ledger. If returned as part of a
+        /// LedgerEntry, it indicates the state from which the entry was read.
+        /// </param>
+        /// <returns> A new <see cref="Models.TransactionReceipt"/> instance for mocking. </returns>
+        public static TransactionReceipt TransactionReceipt(IEnumerable<ApplicationClaim> applicationClaims = default, ReceiptContents receipt = default, ConfidentialLedgerQueryState state = default, string transactionId = default)
+        {
+            applicationClaims ??= new ChangeTrackingList<ApplicationClaim>();
+
+            return new TransactionReceipt(applicationClaims.ToList(), receipt, state, transactionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response returned to a query for the transaction status. </summary>

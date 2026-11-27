@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceStartOn;
+                return Properties is null ? default : Properties.MaintenanceStartsOn;
             }
             set
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new MaintenancePropertiesForUpdate();
                 }
-                Properties.MaintenanceStartOn = value;
+                Properties.MaintenanceStartsOn = value;
             }
         }
     }

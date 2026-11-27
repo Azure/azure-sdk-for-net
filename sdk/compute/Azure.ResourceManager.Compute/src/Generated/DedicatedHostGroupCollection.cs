@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DedicatedHostGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DedicatedHostGroupResource.ResourceType, out string dedicatedHostGroupApiVersion);
             _dedicatedHostGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DedicatedHostGroupResource.ResourceType.Namespace, Diagnostics);
-            _dedicatedHostGroupsRestClient = new DedicatedHostGroups(_dedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHostGroupApiVersion ?? "2026-03-01");
+            _dedicatedHostGroupsRestClient = new DedicatedHostGroups(_dedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetByResourceGroupAsyncCollectionResultOfT(_dedicatedHostGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedHostGroupCollection.GetAll"), data => new DedicatedHostGroupResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupDataAsyncCollectionResultOfT(_dedicatedHostGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedHostGroupCollection.GetAll"), data => new DedicatedHostGroupResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +306,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +318,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetByResourceGroupCollectionResultOfT(_dedicatedHostGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedHostGroupCollection.GetAll"), data => new DedicatedHostGroupResource(Client, data));
+            return new PageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupDataCollectionResultOfT(_dedicatedHostGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedHostGroupCollection.GetAll"), data => new DedicatedHostGroupResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +450,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(MaintenancePropertiesForUpdate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MaintenanceStartOn))
+            if (Optional.IsDefined(MaintenanceStartsOn))
             {
                 writer.WritePropertyName("maintenanceStartTime"u8);
-                writer.WriteStringValue(MaintenanceStartOn.Value, "O");
+                writer.WriteStringValue(MaintenanceStartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            DateTimeOffset? maintenanceStartOn = default;
+            DateTimeOffset? maintenanceStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    maintenanceStartOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaintenancePropertiesForUpdate(maintenanceStartOn, additionalBinaryDataProperties);
+            return new MaintenancePropertiesForUpdate(maintenanceStartsOn, additionalBinaryDataProperties);
         }
     }
 }

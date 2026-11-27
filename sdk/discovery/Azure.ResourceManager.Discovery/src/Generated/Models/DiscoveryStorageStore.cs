@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Discovery.Models
 {
     /// <summary>
     /// An abstract representation of storage store kind.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobStore"/> and <see cref="AzureNetAppFilesStore"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureNetAppFilesStore"/> and <see cref="AzureStorageBlobStore"/>.
     /// </summary>
     public abstract partial class DiscoveryStorageStore
     {

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment, options);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(AutomaticShortfall))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             string milestoneId = default;
             BillingBenefitsPrice commitment = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             EnablementMode? automaticShortfall = default;
             AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default;
             MaccMilestoneStatus? status = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("automaticShortfall"u8))
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MaccMilestone(
                 milestoneId,
                 commitment,
-                endOn,
+                endsOn,
                 automaticShortfall,
                 automaticShortfallSuppressReason,
                 status,

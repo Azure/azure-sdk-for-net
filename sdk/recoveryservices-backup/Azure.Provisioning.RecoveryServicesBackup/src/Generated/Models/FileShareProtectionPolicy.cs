@@ -21,6 +21,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new FileShareProtectionPolicy. </summary>
         public FileShareProtectionPolicy()
         {
+            BackupManagementType.Assign("AzureStorage");
         }
 
         /// <summary> Gets or sets the WorkLoadType. </summary>
@@ -102,7 +103,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupManagementType", new string[] { "backupManagementType" }, defaultValue: "AzureStorage");
             _workLoadType = DefineProperty<BackupWorkloadType>(nameof(WorkLoadType), new string[] { "workLoadType" });
             _schedulePolicy = DefineModelProperty<BackupSchedulePolicy>(nameof(SchedulePolicy), new string[] { "schedulePolicy" });
             _retentionPolicy = DefineModelProperty<BackupRetentionPolicy>(nameof(RetentionPolicy), new string[] { "retentionPolicy" });

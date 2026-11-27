@@ -80,18 +80,21 @@ public class BasicContainerServiceTests
             resource aks 'Microsoft.ContainerService/managedClusters@2026-01-01' = {
               name: take('aks-${uniqueString(resourceGroup().id)}', 63)
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
               properties: {
-                dnsPrefix: dnsPrefix
                 agentPoolProfiles: [
                   {
                     count: 3
-                    vmSize: 'standard_d2s_v3'
-                    osDiskSizeGB: 0
-                    osType: 'Linux'
                     mode: 'System'
                     name: 'agentpool'
+                    osDiskSizeGB: 0
+                    osType: 'Linux'
+                    vmSize: 'standard_d2s_v3'
                   }
                 ]
+                dnsPrefix: dnsPrefix
                 linuxProfile: {
                   adminUsername: linuxAdminUsername
                   ssh: {
@@ -102,9 +105,6 @@ public class BasicContainerServiceTests
                     ]
                   }
                 }
-              }
-              identity: {
-                type: 'SystemAssigned'
               }
             }
             """);

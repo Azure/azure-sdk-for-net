@@ -210,12 +210,12 @@ namespace Azure.IoT.DeviceUpdate
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LogCollection(
                 logCollectionId,
-                deviceList,
+                deviceList ?? new ChangeTrackingList<DeviceUpdateAgentId>(),
                 description,
                 createdDateTime,
                 lastActionDateTime,

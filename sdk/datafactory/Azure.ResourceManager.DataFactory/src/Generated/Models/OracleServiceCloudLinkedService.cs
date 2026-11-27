@@ -8,12 +8,27 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Oracle Service Cloud linked service. </summary>
     public partial class OracleServiceCloudLinkedService : DataFactoryLinkedServiceProperties
     {
+        /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedService"/>. </summary>
+        /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
+        /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
+        public OracleServiceCloudLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> username, DataFactorySecret password) : base("OracleServiceCloud")
+        {
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(password, nameof(password));
+
+            TypeProperties = new OracleServiceCloudLinkedServiceTypeProperties(host, username, password);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

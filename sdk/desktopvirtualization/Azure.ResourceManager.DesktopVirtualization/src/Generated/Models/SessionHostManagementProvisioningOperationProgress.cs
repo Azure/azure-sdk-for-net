@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionHostManagementProvisioningOperationProgress"/>. </summary>
-        /// <param name="executionStartOn"> Time that the sessionHostManagement operation was created. </param>
+        /// <param name="executionStartsOn"> Time that the sessionHostManagement operation was created. </param>
         /// <param name="sessionHostsInProgress"> The number of sessionHosts in progress in the sessionHostManagement provisioning operation. </param>
         /// <param name="sessionHostsCompleted"> The number of sessionHosts completed in the sessionHostManagement provisioning operation. </param>
         /// <param name="finalSessionHostsCount"> The final instance count of the host pool for this provisioning operation. </param>
         /// <param name="initialSessionHostsCount"> The initial instance count of the host pool for this provisioning operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostManagementProvisioningOperationProgress(DateTimeOffset? executionStartOn, int? sessionHostsInProgress, int? sessionHostsCompleted, int? finalSessionHostsCount, int? initialSessionHostsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostManagementProvisioningOperationProgress(DateTimeOffset? executionStartsOn, int? sessionHostsInProgress, int? sessionHostsCompleted, int? finalSessionHostsCount, int? initialSessionHostsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExecutionStartOn = executionStartOn;
+            ExecutionStartsOn = executionStartsOn;
             SessionHostsInProgress = sessionHostsInProgress;
             SessionHostsCompleted = sessionHostsCompleted;
             FinalSessionHostsCount = finalSessionHostsCount;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Time that the sessionHostManagement operation was created. </summary>
         [WirePath("executionStartTime")]
-        public DateTimeOffset? ExecutionStartOn { get; }
+        public DateTimeOffset? ExecutionStartsOn { get; }
 
         /// <summary> The number of sessionHosts in progress in the sessionHostManagement provisioning operation. </summary>
         [WirePath("sessionHostsInProgress")]

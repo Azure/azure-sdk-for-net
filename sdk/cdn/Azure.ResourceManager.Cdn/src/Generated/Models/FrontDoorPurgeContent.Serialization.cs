@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FrontDoorPurgeContent(contentPaths, domains ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new FrontDoorPurgeContent(contentPaths ?? new ChangeTrackingList<string>(), domains ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

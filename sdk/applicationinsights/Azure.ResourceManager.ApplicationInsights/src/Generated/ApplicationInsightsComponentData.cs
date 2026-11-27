@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             get
             {
-                return Properties is null ? default : Properties.ApplicationType;
+                return Properties is null ? (ApplicationInsightsApplicationType?)default : Properties.ApplicationType;
             }
             set
             {

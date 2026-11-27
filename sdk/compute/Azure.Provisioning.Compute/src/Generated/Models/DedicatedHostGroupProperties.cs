@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return InstanceView.Hosts;
+                return InstanceView is null ? default : InstanceView.Hosts;
             }
         }
 

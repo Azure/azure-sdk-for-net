@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serviceProviderNotes"> The ServiceProviderNotes. </param>
         /// <param name="serviceProviderProperties"> The ServiceProviderProperties. </param>
         /// <param name="expressRoutePort"> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </param>
+        /// <param name="expressRouteLag"> The reference to the ExpressRouteLag resource when the circuit is provisioned on an ExpressRouteLag resource. </param>
         /// <param name="bandwidthInGbps"> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </param>
         /// <param name="sTag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
         /// <param name="resiliencyLevel"> The resiliency level of the ExpressRoute circuit. </param>
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
         /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuitPropertiesFormat(bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, NetworkSubResource expressRoutePort, float? bandwidthInGbps, int? sTag, ExpressRouteCircuitResiliencyLevel? resiliencyLevel, string partnerAccountId, string activationKey, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitPropertiesFormat(bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, NetworkSubResource expressRoutePort, NetworkSubResource expressRouteLag, float? bandwidthInGbps, int? sTag, ExpressRouteCircuitResiliencyLevel? resiliencyLevel, string partnerAccountId, string activationKey, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowClassicOperations = allowClassicOperations;
             CircuitProvisioningState = circuitProvisioningState;
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             ServiceProviderNotes = serviceProviderNotes;
             ServiceProviderProperties = serviceProviderProperties;
             ExpressRoutePort = expressRoutePort;
+            ExpressRouteLag = expressRouteLag;
             BandwidthInGbps = bandwidthInGbps;
             STag = sTag;
             ResiliencyLevel = resiliencyLevel;
@@ -107,6 +109,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </summary>
         [WirePath("expressRoutePort")]
         internal NetworkSubResource ExpressRoutePort { get; set; }
+
+        /// <summary> The reference to the ExpressRouteLag resource when the circuit is provisioned on an ExpressRouteLag resource. </summary>
+        [WirePath("expressRouteLag")]
+        internal NetworkSubResource ExpressRouteLag { get; set; }
 
         /// <summary> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </summary>
         [WirePath("bandwidthInGbps")]
@@ -167,6 +173,24 @@ namespace Azure.ResourceManager.Network.Models
                     ExpressRoutePort = new NetworkSubResource();
                 }
                 ExpressRoutePort.Id = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("expressRouteLag.id")]
+        public ResourceIdentifier ExpressRouteLagId
+        {
+            get
+            {
+                return ExpressRouteLag is null ? default : ExpressRouteLag.Id;
+            }
+            set
+            {
+                if (ExpressRouteLag is null)
+                {
+                    ExpressRouteLag = new NetworkSubResource();
+                }
+                ExpressRouteLag.Id = value;
             }
         }
     }

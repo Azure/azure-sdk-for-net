@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectivityTopology;
+                return Properties is null ? (ConnectivityTopology?)default : Properties.ConnectivityTopology;
             }
         }
 
@@ -105,6 +105,16 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Properties is null ? default : Properties.DeleteExistingPeering;
+            }
+        }
+
+        /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
             }
         }
     }

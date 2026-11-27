@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateValidateRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateBillingBenefitsSavingsPlanPurchaseRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

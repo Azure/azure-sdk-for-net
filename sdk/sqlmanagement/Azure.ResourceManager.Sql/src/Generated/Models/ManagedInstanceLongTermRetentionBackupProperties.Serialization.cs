@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(BackupExpiresOn))
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
-                writer.WriteStringValue(BackupExpireOn.Value, "O");
+                writer.WriteStringValue(BackupExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
             {
@@ -113,6 +113,26 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsBackupImmutable))
+            {
+                writer.WritePropertyName("isBackupImmutable"u8);
+                writer.WriteBooleanValue(IsBackupImmutable.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeBasedImmutability))
+            {
+                writer.WritePropertyName("timeBasedImmutability"u8);
+                writer.WriteStringValue(TimeBasedImmutability.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeBasedImmutabilityMode))
+            {
+                writer.WritePropertyName("timeBasedImmutabilityMode"u8);
+                writer.WriteStringValue(TimeBasedImmutabilityMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LegalHoldImmutability))
+            {
+                writer.WritePropertyName("legalHoldImmutability"u8);
+                writer.WriteStringValue(LegalHoldImmutability.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,9 +181,13 @@ namespace Azure.ResourceManager.Sql.Models
             string databaseName = default;
             DateTimeOffset? databaseDeletedOn = default;
             DateTimeOffset? backupOn = default;
-            DateTimeOffset? backupExpireOn = default;
+            DateTimeOffset? backupExpiresOn = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             SqlBackupStorageAccessTier? backupStorageAccessTier = default;
+            bool? isBackupImmutable = default;
+            TimeBasedImmutability? timeBasedImmutability = default;
+            TimeBasedImmutabilityMode? timeBasedImmutabilityMode = default;
+            SetLegalHoldImmutability? legalHoldImmutability = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,7 +234,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    backupExpireOn = prop.Value.GetDateTimeOffset("O");
+                    backupExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupStorageRedundancy"u8))
@@ -231,9 +255,45 @@ namespace Azure.ResourceManager.Sql.Models
                     backupStorageAccessTier = new SqlBackupStorageAccessTier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("isBackupImmutable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isBackupImmutable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("timeBasedImmutability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeBasedImmutability = new TimeBasedImmutability(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("timeBasedImmutabilityMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeBasedImmutabilityMode = new TimeBasedImmutabilityMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("legalHoldImmutability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    legalHoldImmutability = new SetLegalHoldImmutability(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedInstanceLongTermRetentionBackupProperties(
@@ -242,9 +302,13 @@ namespace Azure.ResourceManager.Sql.Models
                 databaseName,
                 databaseDeletedOn,
                 backupOn,
-                backupExpireOn,
+                backupExpiresOn,
                 backupStorageRedundancy,
                 backupStorageAccessTier,
+                isBackupImmutable,
+                timeBasedImmutability,
+                timeBasedImmutabilityMode,
+                legalHoldImmutability,
                 additionalBinaryDataProperties);
         }
     }

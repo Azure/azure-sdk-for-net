@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -43,6 +44,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
                     _transmitters[key] = transmitter;
+                }
+                else if (transmitter is AzureMonitorTransmitter cached && cached.IsAadEnabled != (azureMonitorExporterOptions.Credential != null))
+                {
+                    // Shared by connection string, so this exporter's credential setting is not applied.
+                    AzureMonitorExporterEventSource.Log.CachedTransmitterCredentialMismatch(cached.IsAadEnabled, azureMonitorExporterOptions.Credential != null);
                 }
 
                 // Each exporter handed this instance shares its lifetime, so the instance must

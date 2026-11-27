@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The gcpOrganization data
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GcpParentOrganizationalInfo"/> and <see cref="GcpMemberOrganizationalInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownGcpOrganizationalInfo))]
     public abstract partial class GcpOrganizationalInfo : IJsonModel<GcpOrganizationalInfo>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Organization":
-                        return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element, options);
                     case "Member":
                         return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element, options);
+                    case "Organization":
+                        return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element, options);
                 }
             }
             return UnknownGcpOrganizationalInfo.DeserializeUnknownGcpOrganizationalInfo(element, options);

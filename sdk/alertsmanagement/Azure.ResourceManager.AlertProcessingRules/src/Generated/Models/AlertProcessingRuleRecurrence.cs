@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary>
     /// Recurrence object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="AlertProcessingRuleMonthlyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlertProcessingRuleMonthlyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="DailyRecurrence"/>.
     /// </summary>
     public abstract partial class AlertProcessingRuleRecurrence
     {

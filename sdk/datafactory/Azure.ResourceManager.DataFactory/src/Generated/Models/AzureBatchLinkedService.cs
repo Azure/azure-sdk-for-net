@@ -8,12 +8,29 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Batch linked service. </summary>
     public partial class AzureBatchLinkedService : DataFactoryLinkedServiceProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
+        /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
+        /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
+        /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
+        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName) : base("AzureBatch")
+        {
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(batchUri, nameof(batchUri));
+            Argument.AssertNotNull(poolName, nameof(poolName));
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+            TypeProperties = new AzureBatchLinkedServiceTypeProperties(accountName, batchUri, poolName, linkedServiceName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

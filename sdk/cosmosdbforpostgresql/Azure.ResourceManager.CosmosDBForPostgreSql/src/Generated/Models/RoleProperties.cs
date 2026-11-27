@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         {
             get
             {
-                return ExternalIdentity is null ? default : ExternalIdentity.PrincipalType;
+                return ExternalIdentity is null ? (PrincipalType?)default : ExternalIdentity.PrincipalType;
             }
             set
             {

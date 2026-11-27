@@ -4,3 +4,9 @@ https://github.com/Azure/azure-digital-twins/blob/private-preview/Documentation/
 https://contoso.azureedge.net/urlsigning/test?expires=2145916800&amp;keyid:key1&amp;signature=iTsrLX9rVAIJkSahBA_j5o9Azf5-j331ohxDR1Gx2js=
 https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1
 https://learn.microsoft.com/dotnet/api/azure.monitor.query.logs.logsqueryclient.queryworkspaceasync
+#pre-release packages and directories not yet on main
+https://www.nuget.org/packages/Azure.AI.AgentServer.Activity
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/src
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples
+https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/docs/hosting-guide.md

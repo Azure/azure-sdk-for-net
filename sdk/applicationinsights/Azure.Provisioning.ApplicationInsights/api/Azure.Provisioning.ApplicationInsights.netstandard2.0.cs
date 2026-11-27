@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApplicationInsights
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole WorkbookContributor { get { throw null; } }
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole WorkbookReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
+        public override bool Equals(object obj) { throw null; }
         public static string GetBuiltInRoleName(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole value) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole left, Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole right) { throw null; }
@@ -31,7 +31,7 @@ namespace Azure.Provisioning.ApplicationInsights
     }
     public partial class ApplicationInsightsComponent : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApplicationInsightsComponent(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApplicationInsightsComponent(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ApplicationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApplicationInsights.ApplicationInsightsApplicationType> ApplicationType { get { throw null; } set { } }
@@ -64,10 +64,10 @@ namespace Azure.Provisioning.ApplicationInsights
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WorkspaceResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsComponent FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsComponent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.ApplicationInsights
     }
     public partial class ApplicationInsightsWebTest : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApplicationInsightsWebTest(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApplicationInsightsWebTest(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FrequencyInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.ApplicationInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApplicationInsights.WebTestKind> WebTestKind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WebTestName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWebTest FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWebTest FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_04_01;
@@ -116,7 +116,7 @@ namespace Azure.Provisioning.ApplicationInsights
     }
     public partial class ApplicationInsightsWorkbook : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApplicationInsightsWorkbook(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApplicationInsightsWorkbook(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Category { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
@@ -133,10 +133,11 @@ namespace Azure.Provisioning.ApplicationInsights
         public Azure.Provisioning.BicepValue<System.Uri> StorageUri { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> TagsPropertiesTags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UserId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWorkbook FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWorkbook FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_02_12;
@@ -147,9 +148,39 @@ namespace Azure.Provisioning.ApplicationInsights
             public static readonly string V2023_06_01;
         }
     }
+    public partial class ApplicationInsightsWorkbookRevision : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApplicationInsightsWorkbookRevision(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Category { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApplicationInsights.WorkbookSharedTypeKind> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ModifiedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApplicationInsights.ApplicationInsightsWorkbook Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Revision { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SerializedData { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> StorageUri { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> TagsPropertiesTags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> UserId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWorkbookRevision FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_06_01;
+        }
+    }
     public partial class ApplicationInsightsWorkbookTemplate : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApplicationInsightsWorkbookTemplate(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApplicationInsightsWorkbookTemplate(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Author { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApplicationInsights.WorkbookTemplateGallery> Galleries { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -161,7 +192,7 @@ namespace Azure.Provisioning.ApplicationInsights
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> TemplateData { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWorkbookTemplate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsWorkbookTemplate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_11_20;
@@ -176,6 +207,21 @@ namespace Azure.Provisioning.ApplicationInsights
         ApplicationInsights = 0,
         ApplicationInsightsWithDiagnosticSettings = 1,
         LogAnalytics = 2,
+    }
+    public partial class ComponentLinkedStorageAccounts : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ComponentLinkedStorageAccounts(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LinkedStorageAccount { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApplicationInsights.ApplicationInsightsComponent Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApplicationInsights.ComponentLinkedStorageAccounts FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2020_03_01_PREVIEW;
+        }
     }
     public enum ComponentRequestSource
     {

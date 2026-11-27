@@ -1,4 +1,7 @@
 <Project>
+  <ItemGroup>
+      <PackageVersion Include="Azure.AI.Projects.Agents" Version="3.0.0" />
+  </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
     <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
   </ItemGroup>

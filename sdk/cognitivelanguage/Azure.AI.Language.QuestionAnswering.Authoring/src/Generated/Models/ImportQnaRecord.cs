@@ -40,10 +40,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </param>
         /// <param name="dialog"> Context of a QnA. </param>
         /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
-        /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
+        /// <param name="lastUpdatedOn"> Date-time when the QnA was last updated. </param>
         /// <param name="sourceDisplayName"> Friendly name of the Source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportQnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QnaDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestions, DateTimeOffset? lastUpdatedDateTime, string sourceDisplayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportQnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QnaDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestions, DateTimeOffset? lastUpdatedOn, string sourceDisplayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Answer = answer;
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Metadata = metadata;
             Dialog = dialog;
             ActiveLearningSuggestions = activeLearningSuggestions;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            LastUpdatedOn = lastUpdatedOn;
             SourceDisplayName = sourceDisplayName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -85,7 +85,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public IList<SuggestedQuestionsCluster> ActiveLearningSuggestions { get; }
 
         /// <summary> Date-time when the QnA was last updated. </summary>
-        public DateTimeOffset? LastUpdatedDateTime { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> Friendly name of the Source. </summary>
         public string SourceDisplayName { get; set; }

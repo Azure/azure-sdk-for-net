@@ -43,13 +43,13 @@ public class BasicDesktopVirtualizationTests
 
             resource workspace 'Microsoft.DesktopVirtualization/workspaces@2026-04-01-preview' = {
               name: take('workspace-${uniqueString(resourceGroup().id)}', 64)
-              tags: {
-                environment: 'test'
-              }
               location: location
               properties: {
                 description: 'Example virtual desktop workspace'
                 friendlyName: 'Example workspace'
+              }
+              tags: {
+                environment: 'test'
               }
             }
             """);

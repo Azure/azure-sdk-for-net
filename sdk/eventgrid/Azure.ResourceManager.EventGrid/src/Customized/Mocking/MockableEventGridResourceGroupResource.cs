@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
+using TypeSpecCodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
@@ -18,18 +19,18 @@ namespace Azure.ResourceManager.EventGrid.Mocking
     // that call into MockableEventGridResourceGroupResource. The current generated mockable class
     // does not emit these specific methods, so we provide them here to preserve the existing
     // extension surface and mockable/virtual behavior.
-    [CodeGenSuppress("Get", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResource", typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResourceAsync", typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResource", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResourceAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptions", typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAll", typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAllAsync", typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Reconcile", typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("ReconcileAsync", typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("Get", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResource", typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResourceAsync", typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResource", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResourceAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptions", typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptionsAsync", typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAll", typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAllAsync", typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("Reconcile", typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("ReconcileAsync", typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class MockableEventGridResourceGroupResource
     {
         // Compatibility helper for customized private-link resources after suppressing generated public projection methods.

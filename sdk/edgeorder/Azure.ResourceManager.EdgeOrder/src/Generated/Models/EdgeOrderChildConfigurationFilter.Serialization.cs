@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EdgeOrderChildConfigurationFilter(hierarchyInformations ?? new ChangeTrackingList<HierarchyInformation>(), childConfigurationTypes ?? new ChangeTrackingList<EdgeOrderChildConfigurationType>(), additionalBinaryDataProperties);

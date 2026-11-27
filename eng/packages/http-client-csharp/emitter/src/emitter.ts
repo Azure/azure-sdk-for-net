@@ -57,7 +57,7 @@ export async function emitAzureCodeModel(
     ...(Array.isArray(existingDecorators) ? existingDecorators : []),
     // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/README.md#usesystemtextjsonconverter
     "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-    "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+    "Azure\\.ClientGenerator\\.Core\\.@dynamicModel"
   ];
 
   // warn if use-model-namespaces is true, but namespace is not set

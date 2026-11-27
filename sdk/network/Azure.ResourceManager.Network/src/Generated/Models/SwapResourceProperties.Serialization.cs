@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(SwapResourceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SlotType))
+            if (Optional.IsDefined(CloudServiceSwapSlotType))
             {
                 writer.WritePropertyName("slotType"u8);
-                writer.WriteStringValue(SlotType.Value.ToSerialString());
+                writer.WriteStringValue(CloudServiceSwapSlotType.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            SwapSlotType? slotType = default;
+            SwapSlotType? cloudServiceSwapSlotType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    slotType = prop.Value.GetString().ToSwapSlotType();
+                    cloudServiceSwapSlotType = prop.Value.GetString().ToSwapSlotType();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SwapResourceProperties(slotType, additionalBinaryDataProperties);
+            return new SwapResourceProperties(cloudServiceSwapSlotType, additionalBinaryDataProperties);
         }
     }
 }

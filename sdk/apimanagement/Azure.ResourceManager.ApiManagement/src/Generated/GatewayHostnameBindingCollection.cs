@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new GatewayHostnameBindingDataAsyncCollectionResultOfT(
                 _apiGatewayHostnameBindingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(
+            return new PageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new GatewayHostnameBindingDataCollectionResultOfT(
                 _apiGatewayHostnameBindingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

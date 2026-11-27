@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="reason"> The reason for the Incident. </param>
         /// <param name="article"> Article of event. </param>
         /// <param name="links"> Useful links of event. </param>
-        /// <param name="impactStartOn"> It provides the Timestamp for when the health impacting event started. </param>
+        /// <param name="impactStartsOn"> It provides the Timestamp for when the health impacting event started. </param>
         /// <param name="impactMitigationOn"> It provides the Timestamp for when the health impacting event resolved. </param>
         /// <param name="impact"> List services impacted by the service health event. </param>
         /// <param name="recommendedActions"> Recommended actions of event. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
         /// <param name="billingId"> Billing identifier information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventProperties(ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, IList<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventProperties(ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IList<ResourceHealthEventLink> links, DateTimeOffset? impactStartsOn, DateTimeOffset? impactMitigationOn, IList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, IList<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventType = eventType;
             EventSubType = eventSubType;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Reason = reason;
             Article = article;
             Links = links;
-            ImpactStartOn = impactStartOn;
+            ImpactStartsOn = impactStartsOn;
             ImpactMitigationOn = impactMitigationOn;
             Impact = impact;
             RecommendedActions = recommendedActions;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public IList<ResourceHealthEventLink> Links { get; } = new ChangeTrackingList<ResourceHealthEventLink>();
 
         /// <summary> It provides the Timestamp for when the health impacting event started. </summary>
-        public DateTimeOffset? ImpactStartOn { get; }
+        public DateTimeOffset? ImpactStartsOn { get; }
 
         /// <summary> It provides the Timestamp for when the health impacting event resolved. </summary>
         public DateTimeOffset? ImpactMitigationOn { get; }

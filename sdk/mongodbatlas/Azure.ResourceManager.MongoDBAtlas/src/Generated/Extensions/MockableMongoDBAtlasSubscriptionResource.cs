@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MongoDB.Atlas/organizations", out string apiVersion) ? apiVersion : "2026-03-01-preview");
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations"), data => new MongoDBAtlasOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new MongoDBAtlasOrganizationDataAsync0CollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations"), data => new MongoDBAtlasOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations"), data => new MongoDBAtlasOrganizationResource(Client, data));
+            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new MongoDBAtlasOrganizationData0CollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations"), data => new MongoDBAtlasOrganizationResource(Client, data));
         }
     }
 }

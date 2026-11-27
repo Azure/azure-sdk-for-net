@@ -17,7 +17,7 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary> Represents a Mongo cluster user. </summary>
+    /// <summary> Represents a DocumentDB cluster user. </summary>
     public partial class MongoClusterUserData : ResourceData, IJsonModel<MongoClusterUserData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MongoCluster
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MongoClusterUserData(

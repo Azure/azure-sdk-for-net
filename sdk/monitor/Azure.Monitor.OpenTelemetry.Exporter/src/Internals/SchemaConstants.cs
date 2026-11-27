@@ -136,24 +136,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiUserAccountId_MaxLength = 1024;
 
         /// <summary>
-        /// Maximum value length for GenAI semantic convention properties (256 KB).
+        /// Maximum value length for GenAI semantic convention properties (256 KiB).
         /// These properties may carry large payloads (e.g. full prompt/completion content)
         /// and are truncated to a higher limit than standard properties.
         /// </summary>
         public const int GenAi_Properties_MaxValueLength = 256 * 1024;
 
         /// <summary>
-        /// GenAI semantic convention property keys that receive a higher truncation limit.
+        /// Maximum value length for <c>gen_ai.input.messages</c> and <c>gen_ai.output.messages</c> (4 MiB)
+        /// when the <c>gen_ai_input_output_limit_increase</c> experimental switch is enabled.
+        /// These properties may carry multimodal content (e.g. base64-encoded images or audio).
         /// </summary>
-        public static readonly HashSet<string> GenAiProperties = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "gen_ai.input.messages",
-            "gen_ai.output.messages",
-            "gen_ai.system_instructions",
-            "gen_ai.tool.definitions",
-            "gen_ai.tool.call.arguments",
-            "gen_ai.tool.call.result",
-            "gen_ai.evaluation.explanation",
-        };
+        public const int GenAi_Messages_MaxValueLength = 4 * 1024 * 1024;
     }
 }

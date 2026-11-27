@@ -95,18 +95,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets a workspace connection. </summary>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningWorkspaceConnectionResource> GetMachineLearningWorkspaceConnection(string connectionName, CancellationToken cancellationToken = default) => GetMachineLearningWorkspaceConnections().Get(connectionName, cancellationToken);
-        /// <summary> Gets outbound rules. </summary>
-        public virtual MachineLearningOutboundRuleBasicCollection GetMachineLearningOutboundRuleBasics()
-        {
-            ResourceIdentifier managedNetworkId = MachineLearningManagedNetworkSettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LegacyManagedNetworkName);
-            return new MachineLearningOutboundRuleBasicCollection(Client, managedNetworkId);
-        }
-        /// <summary> Gets an outbound rule. </summary>
-        [ForwardsClientCalls]
-        public virtual Task<Response<MachineLearningOutboundRuleBasicResource>> GetMachineLearningOutboundRuleBasicAsync(string ruleName, CancellationToken cancellationToken = default) => GetMachineLearningOutboundRuleBasics().GetAsync(ruleName, cancellationToken);
-        /// <summary> Gets an outbound rule. </summary>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningOutboundRuleBasicResource> GetMachineLearningOutboundRuleBasic(string ruleName, CancellationToken cancellationToken = default) => GetMachineLearningOutboundRuleBasics().Get(ruleName, cancellationToken);
         /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>
         public virtual AsyncPageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default) => new OutboundNetworkDependenciesEndpointsAsyncPageable(this, cancellationToken);
         /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>

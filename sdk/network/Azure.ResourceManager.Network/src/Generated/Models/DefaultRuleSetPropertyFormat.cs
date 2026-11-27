@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="DefaultRuleSetPropertyFormat"/>. </summary>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRuleSetPropertyFormat(string ruleSetType, string ruleSetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultRuleSetPropertyFormat(string ruleSetType, string ruleSetVersion, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
+            DisplayName = displayName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The version of the web application firewall rule set type. </summary>
         [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("displayName")]
+        public string DisplayName { get; }
     }
 }

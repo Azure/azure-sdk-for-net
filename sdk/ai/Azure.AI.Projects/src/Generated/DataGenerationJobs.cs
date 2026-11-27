@@ -171,12 +171,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="job"> The job to create. </param>
+        /// <param name="job"> The data generation job inputs to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         [Experimental("SCME0006")]
-        internal virtual OperationResult CreateGenerationJob(bool waitUntilCompleted, DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual OperationResult CreateGenerationJob(bool waitUntilCompleted, DataGenerationJobInputs job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             OperationResult result = CreateGenerationJob(waitUntilCompleted, job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
             return result;
@@ -184,12 +184,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="job"> The job to create. </param>
+        /// <param name="job"> The data generation job inputs to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> CreateGenerationJobAsync(bool waitUntilCompleted, DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<OperationResult> CreateGenerationJobAsync(bool waitUntilCompleted, DataGenerationJobInputs job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             OperationResult result = await CreateGenerationJobAsync(waitUntilCompleted, job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;

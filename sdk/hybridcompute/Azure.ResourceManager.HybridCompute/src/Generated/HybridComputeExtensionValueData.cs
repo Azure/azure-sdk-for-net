@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.HybridCompute
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>
+        public HybridComputeExtensionValueData()
+        {
+        }
+
         /// <summary> The single extension based on search criteria. </summary>
         [WirePath("properties")]
         internal ExtensionValueProperties Properties { get; }

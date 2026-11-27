@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             get
             {
-                return Properties is null ? default : Properties.ExecutionStartOn;
+                return Properties is null ? default : Properties.ExecutionStartsOn;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             get
             {
-                return Properties is null ? default : Properties.ExecutionEndOn;
+                return Properties is null ? default : Properties.ExecutionEndsOn;
             }
         }
 

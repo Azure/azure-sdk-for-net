@@ -47,11 +47,23 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(
+            DenyAssignmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-07-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(
+            RoleAssignmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2022-04-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -671,6 +683,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return await GetDenyAssignments(scope).GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="PrivilegedResourceFavoriteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivilegedResourceFavoriteResource"/> object. </returns>
+        public virtual PrivilegedResourceFavoriteResource GetPrivilegedResourceFavoriteResource(ResourceIdentifier id)
+        {
+            PrivilegedResourceFavoriteResource.ValidateResourceId(id);
+            return new PrivilegedResourceFavoriteResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="RoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
@@ -1003,7 +1024,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentDataAsyncCollectionResultOfT(
                 DenyAssignmentsRestClient,
                 subscriptionId,
                 resourceGroupName,
@@ -1049,7 +1070,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceCollectionResultOfT(
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentDataCollectionResultOfT(
                 DenyAssignmentsRestClient,
                 subscriptionId,
                 resourceGroupName,
@@ -1090,7 +1111,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentDataAsync2CollectionResultOfT(
                 RoleAssignmentsRestClient,
                 scope.SubscriptionId,
                 scope.ResourceGroupName,
@@ -1131,7 +1152,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceCollectionResultOfT(
+            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentData2CollectionResultOfT(
                 RoleAssignmentsRestClient,
                 scope.SubscriptionId,
                 scope.ResourceGroupName,
@@ -1284,7 +1305,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EligibleChildResourcesGetEligibleChildResourcesAsyncCollectionResultOfT(EligibleChildResourcesRestClient, scope.ToString(), filter, context, "MockableAuthorizationArmClient.GetEligibleChildResources");
+            return new EligibleChildResourceAsyncCollectionResultOfT(EligibleChildResourcesRestClient, scope.ToString(), filter, context, "MockableAuthorizationArmClient.GetEligibleChildResources");
         }
 
         /// <summary>
@@ -1317,7 +1338,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EligibleChildResourcesGetEligibleChildResourcesCollectionResultOfT(EligibleChildResourcesRestClient, scope.ToString(), filter, context, "MockableAuthorizationArmClient.GetEligibleChildResources");
+            return new EligibleChildResourceCollectionResultOfT(EligibleChildResourcesRestClient, scope.ToString(), filter, context, "MockableAuthorizationArmClient.GetEligibleChildResources");
         }
 
         /// <summary>

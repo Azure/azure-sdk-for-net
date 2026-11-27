@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PipelineActivityRunsResult(value, continuationToken, additionalBinaryDataProperties);
+            return new PipelineActivityRunsResult(value ?? new ChangeTrackingList<PipelineActivityRunInformation>(), continuationToken, additionalBinaryDataProperties);
         }
     }
 }

@@ -75,5 +75,22 @@ namespace Azure.ResourceManager.NetApp.Models
                 Properties.IsSnapshotDirectoryVisible = value;
             }
         }
+
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbOplocks? SmbOplocks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SmbOplocks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumePatchProperties();
+                }
+                Properties.SmbOplocks = value;
+            }
+        }
     }
 }

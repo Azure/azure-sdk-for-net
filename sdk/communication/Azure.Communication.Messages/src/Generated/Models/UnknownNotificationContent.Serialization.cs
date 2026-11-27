@@ -140,10 +140,10 @@ namespace Azure.Communication.Messages
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownNotificationContent(channelRegistrationId, to, kind, additionalBinaryDataProperties);
+            return new UnknownNotificationContent(channelRegistrationId, to ?? new ChangeTrackingList<string>(), kind, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Kusto
 {
     /// <summary>
     /// Class representing a Kusto database.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadWriteDatabase"/> and <see cref="KustoReadOnlyFollowingDatabase"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadOnlyFollowingDatabase"/> and <see cref="KustoReadWriteDatabase"/>.
     /// </summary>
     public partial class KustoDatabase : ProvisionableResource
     {
@@ -23,7 +23,8 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<string> _name;
         private SystemData _systemData;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<KustoCluster> _parent;
+        private BicepValue<KustoKind> _kind;
+        private ProvisioningResourceReference<KustoCluster> _parent;
 
         /// <summary> Creates a new KustoDatabase. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -82,6 +83,16 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
+        /// <summary> Kind of the database. </summary>
+        internal BicepValue<KustoKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
+        }
+
         /// <summary> Gets or sets the Parent. </summary>
         public KustoCluster Parent
         {
@@ -105,7 +116,8 @@ namespace Azure.Provisioning.Kusto
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _kind = DefineProperty<KustoKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<KustoCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

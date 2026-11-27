@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -16,7 +17,6 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class NameVisitor : ScmLibraryVisitor
 {
-    private const string ResourceTypeName = "ResourceType";
     private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
@@ -40,6 +40,12 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateEndpointConnectionListResult",
             "PrivateLinkResourceListResult"
         };
+
+    protected override TypeProvider? VisitType(TypeProvider type)
+    {
+        ManagementClientGenerator.Instance.OutputLibrary.ApplyRegularCollectionResultName(type);
+        return base.VisitType(type);
+    }
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
@@ -65,9 +71,9 @@ internal class NameVisitor : ScmLibraryVisitor
         }
 
         type = base.PreVisitModel(model, type);
-        if (type is null)
+        if (type is null || model.IsExactName || inputLibrary.ClientNameOverriddenModels.Contains(model))
         {
-            return null;
+            return type;
         }
 
         if (TryTransformUrlToUri(type.Name, out var newName))
@@ -85,108 +91,64 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
-            // When the same model is also used as the Create body we always rename to
-            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
-            // consistent across the SDK surface.
             if (isAlsoUsedInCreate)
             {
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
-                type.Update(name: newName);
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
-            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            else
             {
-                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
-                type.Update(name: newName);
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
         }
         return type;
     }
 
+    private static string NormalizeRequestModelName(InputModelType model, ModelProvider type, string name)
+    {
+        var plugin = ManagementClientGenerator.Instance;
+        if (plugin.InputLibrary.IsResourceUpdateModelNameExplicit(model))
+        {
+            return name;
+        }
+
+        return type is ManagementModelProvider managementModel ? managementModel.NormalizeRequestModelName(name) : name;
+    }
+
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
-        DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
+        if (propertyProvider is not null)
+        {
+            ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
+        }
+
+        DoPreVisitArmResourceProperty(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
-        DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
-    private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
+    private static void DoPreVisitArmResourceProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider == null || property is not InputModelProperty)
+        if (property is InputModelProperty modelProperty &&
+            propertyProvider?.EnclosingType is SystemObjectModelProvider modelProvider &&
+            modelProvider.CrossLanguageDefinitionId == KnownManagementTypes.ArmResourceId &&
+            propertyProvider.Type.Equals(_nullableResourceType) &&
+            ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(modelProperty.Type) is { } currentType &&
+            ArmResourcePropertyProjection.TryGetName(modelProperty, currentType, out var name))
         {
-            return;
-        }
-        var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not SystemObjectModelProvider modelProvider
-            || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
-        {
-            return;
-        }
-        // the Azure.ResourceManager.CommonTypes.Resource defines its `type` property as an optional `armResourceType`
-        // therefore here we need to change it to required because our common types define it as required
-        if (propertyProvider.Type.Equals(_nullableResourceType))
-        {
-            propertyProvider.Update(name: ResourceTypeName, type: typeof(ResourceType));
+            propertyProvider.Update(name: name, type: currentType);
         }
     }
 
-    private readonly CSharpType _nullableResourceType = new CSharpType(typeof(ResourceType), isNullable: true);
+    private static readonly CSharpType _nullableResourceType = new(typeof(ResourceType), isNullable: true);
 
     private void DoPreVisitPropertyForUrlPropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {
         if (propertyProvider != null && TryTransformUrlToUri(propertyProvider.Name, out var newPropertyName))
         {
             propertyProvider.Update(name: newPropertyName);
-        }
-    }
-
-    // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
-    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
-        {
-            {"Creation", "Created"},
-            {"Deletion", "Deleted"},
-            {"Expiration", "Expire"},
-            {"Modification", "Modified"},
-        };
-    private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
-    {
-        if (propertyProvider != null && IsDateTimeInputType(property.Type))
-        {
-            var propertyName = propertyProvider.Name;
-            // Skip properties that are not following the pattern we want to change
-            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
-                propertyName.StartsWith("To", StringComparison.Ordinal) ||
-                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
-            {
-                return;
-            }
-
-            var lengthToCut = 0;
-            if (propertyName.Length > 8 &&
-                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
-            {
-                lengthToCut = 8;
-            }
-            else if (propertyName.Length > 4 &&
-                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
-                propertyName.EndsWith("Date", StringComparison.Ordinal)))
-            {
-                lengthToCut = 4;
-            }
-            else if (propertyName.Length > 2 &&
-                propertyName.EndsWith("At", StringComparison.Ordinal))
-            {
-                lengthToCut = 2;
-            }
-            if (lengthToCut > 0)
-            {
-                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
-                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
-                propertyProvider.Update(name: newPropertyName);
-            }
         }
     }
 
@@ -227,17 +189,4 @@ internal class NameVisitor : ScmLibraryVisitor
 
         return false;
     }
-
-    /// <summary>
-    /// Checks the input type (rather than the C# type) to determine if it represents a date/time,
-    /// so the rename logic works regardless of what C# type the downstream generator maps it to
-    /// (e.g., DateTimeOffset, BicepValue&lt;DateTimeOffset&gt;, etc.).
-    /// </summary>
-    private static bool IsDateTimeInputType(InputType inputType) => inputType switch
-    {
-        InputDateTimeType => true,
-        InputPrimitiveType { Kind: InputPrimitiveTypeKind.PlainDate } => true,
-        InputNullableType nullableType => IsDateTimeInputType(nullableType.Type),
-        _ => false
-    };
 }

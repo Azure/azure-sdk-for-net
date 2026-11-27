@@ -44,7 +44,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -263,7 +263,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -434,7 +434,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -484,7 +484,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> IotHubResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SharedAccessPolicyName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -655,7 +655,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> SoftDeletePeriod { get { throw null; } }
         public Azure.Provisioning.BicepValue<float> StatisticsSize { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionStartsOn { get { throw null; } }
         public Azure.Provisioning.Kusto.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -668,7 +668,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> SoftDeletePeriod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> StatisticsSize { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionStartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class KustoScript : Azure.Provisioning.Primitives.ProvisionableResource

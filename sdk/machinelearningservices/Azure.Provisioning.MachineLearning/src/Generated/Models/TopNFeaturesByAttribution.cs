@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new TopNFeaturesByAttribution. </summary>
         public TopNFeaturesByAttribution()
         {
+            FilterType.Assign(MonitoringFeatureFilterType.TopNByAttribution);
         }
 
         /// <summary> Gets or sets the Top. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("filterType", new string[] { "filterType" }, defaultValue: "TopNByAttribution");
             _top = DefineProperty<int>(nameof(Top), new string[] { "top" });
             DefineAdditionalProperties();
         }

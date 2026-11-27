@@ -54,8 +54,15 @@ To use Azure AI Agents capabilities, you must have an [Azure subscription](https
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
+dotnet add package Azure.AI.Projects.Agents
+```
+
+To install latest beta version please run:
+
+```dotnetcli
 dotnet add package Azure.AI.Projects.Agents --prerelease
 ```
+
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
@@ -340,7 +347,7 @@ await agentsClient.DisableAgentAsync(agentVersion.Name);
 // The new session cannot be created.
 try
 {
-    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
     throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
 }
 catch (ClientResultException ex)
@@ -357,7 +364,7 @@ The disabled Agent may be enabled, and it will be able to accept requests and se
 
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Async
 await agentsClient.EnableAgentAsync(agentVersion.Name);
-ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 Console.WriteLine($"The session {session2.AgentSessionId} was created.");
 ```
 
@@ -397,12 +404,12 @@ Toolboxes allow us to store tools in Azure so that they can be retrieved and use
 
 In the example below we create two versions of an MCP tool and save them to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-MCPToolboxTool tool = new(serverLabel: "api-specs")
+McpToolboxTool tool = new(serverLabel: "api-specs")
 {
     Name = "mcp-tool",
     Description = "Sample MCP tool",
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
@@ -451,13 +458,13 @@ string sessionId2 = Guid.NewGuid().ToString();
 ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
 ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
 while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
@@ -483,7 +490,7 @@ string sessionId = Guid.NewGuid().ToString("N");
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -557,13 +564,13 @@ make it aware of the skill we have created.
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
     }
 };
-AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+AgentCard card = new() { Version = "1", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
@@ -584,7 +591,7 @@ and `GetSessionLogStreamAsync`.
 ```C# Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
 Console.WriteLine(logEvent.Data);
@@ -601,107 +608,73 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
 ```
 
 An Agent optimization job accepts optimization criteria, evaluators, and several models as parameters. It also accepts baselines used as an optimization starting point.
 Several models need to be defined for different purposes:
-  - `OptimizationModel` - reads the Agent evaluation result and reason and creates the improved target description: system prompt, tool description or skill.
-  - `EvalModel` - used for Agent evaluation.
-  - `model_search_space` - the models considered during Agent optimization.
-  - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
+  - `OptimizationModelConfiguration` - reads the Agent evaluation result and reason and creates the improved target description: system prompt, tool description or skill.
+  - `evaluationModel` - used for Agent evaluation.
+  - `ModelSearchSpace` - the models considered during Agent optimization.
 
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-AgentOptimizationJob job = new()
-{
-    Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
-        {
-            AgentVersion = agentVersion.Version
-        },
-        trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
+AgentOptimizationConfiguration conf = new(
+    evaluationConfiguration: new(
+        trainingSet: GetDataset(0, 7),
+        evaluators: [new AgentOptimizationEvaluator(name: "builtin.meteor_score")],
+        evaluationModel: new(modelDeploymentName)
     )
     {
-        ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
-        {
-            OptimizationModel = modelDeploymentName,
-            EvalModel = modelDeploymentName,
-            MaxCandidates = 3,
-            OptimizationConfig =
-            {
-                // Start from bad prompt.
-                {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
-                {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
-                {"skills", BinaryData.FromObjectAsJson(new[]
-                    {new {
-                        name = "add two numbers",
-                        description = "Adds two numbers",
-                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
-                    }}
-                )},
-                {"tools",  BinaryData.FromObjectAsJson(new[]{
-                    new
-                    {
-                        type = "function",
-                        function = new
-                        {
-                            name = "sum_numbers",
-                            description = "Sum two numbers",
-                            parameters = new
-                            {
-                                type = "object",
-                                properties = new
-                                {
-                                    First = new
-                                    {
-                                        type = "number",
-                                        description = "First addend"
-                                    },
-                                    Second = new
-                                    {
-                                        type = "number",
-                                        description = "Second addend"
-                                    }
-                                },
-                                required = new[] { "First", "Second"},
-                                additionalProperties = false
-                            }
-                        }
-                    }
-                })}
-            }
-        }
+        ValidationSet = GetDataset(7, 3),
+    },
+    candidateSearchConfiguration: new()
+    {
+        MaxCandidates = 3,
+    },
+    agentOptimizationSpace: new()
+    {
+        TargetAttributes = { TargetAttribute.Skills, TargetAttribute.Instructions, TargetAttribute.Model },
+        ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
     }
+);
+AgentOptimizationJob job = new(optimizationModelConfiguration: new(modelDeploymentName), optimizationConfiguration: conf)
+{
+    DisplayName = "Sample agent optimization",
+    TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
+    {
+        Version = agentVersion.Version,
+    },
 };
-AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
+AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
 After the job has completed, the optimization candidates may be listed along with the optimized parameters:
 
 ```C# Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
+await foreach (AgentOptimizationCandidate candidate in candidatesClient.GetCandidatesAsync(jobId: submittedJob.Id, expand: [AgentOptimizationCandidateExpand.Mutations]))
 {
     Console.WriteLine("======================================================");
-    Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
-    if (candidate.Mutations.Count == 0)
+    if (candidate.Status == AgentOptimizationCandidateStatus.Failed)
     {
-        Console.WriteLine("<No mutations, baseline>");
+        Console.WriteLine($"The candidate {candidate.CandidateId} has failed.");
     }
     else
     {
-        Console.WriteLine("Mutations:");
-        foreach (KeyValuePair<string, BinaryData> mutation in candidate.Mutations)
+        Console.WriteLine($"Candidate ID: {candidate.CandidateId}, Candidate name: {candidate.Name ?? "<no name>"}, Candidate evaluation ID:  {candidate.Evaluation.EvalId}, Score: {candidate.Evaluation.Score}.");
+        if (candidate.Output is AgentOptimizationAgentCandidateOutput agentOutput)
         {
-            Console.WriteLine($"    {mutation.Key}: {mutation.Value}");
+            DisplayMutations(agentOutput.Mutations);
+        }
+        else if (candidate.Output != null)
+        {
+            throw new InvalidOperationException($"The candidate {candidate.CandidateId} has unexpected output: {candidate.Output.Type}");
         }
     }
     Console.WriteLine("======================================================");
 }
 ```
-
 
 ## Tracing
 
@@ -813,7 +786,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 [samples]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/net/samples
-[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-v1
 [nuget]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/package
 [source_code]: https://aka.ms/Azure.AI.Projects.Agents/net/code
 [product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc

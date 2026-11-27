@@ -13,13 +13,13 @@ namespace Azure.Provisioning.ServiceFabric
         /// <summary> Creates a new SingletonPartitionSchemeDescription. </summary>
         public SingletonPartitionSchemeDescription()
         {
+            PartitionScheme.Assign(ApplicationPartitionScheme.Singleton);
         }
 
         /// <summary> Define all the provisionable properties for SingletonPartitionSchemeDescription. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("partitionScheme", new string[] { "partitionScheme" }, defaultValue: "Singleton");
             DefineAdditionalProperties();
         }
 

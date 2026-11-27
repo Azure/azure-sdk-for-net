@@ -192,10 +192,10 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnalyzeRequest1(inputs, modelDeployments ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new AnalyzeRequest1(inputs ?? new ChangeTrackingList<AnalysisInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

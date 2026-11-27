@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         private readonly string _value;
         /// <summary> An approval gate is completed by setting its state to be Completed. </summary>
         private const string ApprovalValue = "Approval";
+        /// <summary> A scheduled start gate is automatically completed when the scheduled time is reached. </summary>
+        private const string ScheduledStartValue = "ScheduledStart";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> An approval gate is completed by setting its state to be Completed. </summary>
         public static ContainerServiceFleetGateType Approval { get; } = new ContainerServiceFleetGateType(ApprovalValue);
+
+        /// <summary> A scheduled start gate is automatically completed when the scheduled time is reached. </summary>
+        public static ContainerServiceFleetGateType ScheduledStart { get; } = new ContainerServiceFleetGateType(ScheduledStartValue);
 
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

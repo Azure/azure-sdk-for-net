@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Specifies the type of the message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBaseMessageImageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseMessageImageContent"/> and <see cref="KnowledgeBaseMessageTextContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseMessageContent))]
     public abstract partial class KnowledgeBaseMessageContent : IJsonModel<KnowledgeBaseMessageContent>
@@ -130,10 +130,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "text":
-                        return KnowledgeBaseMessageTextContent.DeserializeKnowledgeBaseMessageTextContent(element, options);
                     case "image":
                         return KnowledgeBaseMessageImageContent.DeserializeKnowledgeBaseMessageImageContent(element, options);
+                    case "text":
+                        return KnowledgeBaseMessageTextContent.DeserializeKnowledgeBaseMessageTextContent(element, options);
                 }
             }
             return UnknownKnowledgeBaseMessageContent.DeserializeUnknownKnowledgeBaseMessageContent(element, options);

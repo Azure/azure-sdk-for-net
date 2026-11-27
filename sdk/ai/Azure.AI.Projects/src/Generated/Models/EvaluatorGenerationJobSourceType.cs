@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported source types for evaluator generation jobs. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct EvaluatorGenerationJobSourceType : IEquatable<EvaluatorGenerationJobSourceType>
     {
         private readonly string _value;
@@ -60,7 +58,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="EvaluatorGenerationJobSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorGenerationJobSourceType?(string value) => value == null ? null : new EvaluatorGenerationJobSourceType(value);
+        public static implicit operator EvaluatorGenerationJobSourceType?(string value) => value == null ? (EvaluatorGenerationJobSourceType?)null : new EvaluatorGenerationJobSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

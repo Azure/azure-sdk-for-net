@@ -4,9 +4,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp.Models
     // properties; preserve them here for backward compatibility.
     public partial class NetAppAccountPatch : TrackedResourceData
     {
-        private EntraIdConfigPatch _entraIdConfig;
         private LdapConfiguration _ldapConfiguration;
 
         // ProvisioningState/DisableShowmount were read-only on the GA model. The new patch
@@ -38,17 +37,48 @@ namespace Azure.ResourceManager.NetApp.Models
         public MultiAdStatus? MultiAdStatus => throw new NotSupportedException("MultiAdStatus is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
 
         /// <summary> Entra ID configuration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version.")]
         public EntraIdConfigPatch EntraIdConfig
         {
-            get => _entraIdConfig;
-            set => _entraIdConfig = value;
+            get => (EntraIdConfigPatch)Properties?.EntraIdConfig;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.EntraIdConfig = value;
+            }
         }
 
         /// <summary> LDAP configuration. </summary>
         public LdapConfiguration LdapConfiguration
         {
-            get => _ldapConfiguration;
-            set => _ldapConfiguration = value;
+            get
+            {
+                if (_ldapConfiguration is null && Properties?.LdapConfiguration is not null)
+                {
+                    BinaryData data = ModelReaderWriter.Write(Properties.LdapConfiguration, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    _ldapConfiguration = ModelReaderWriter.Read<LdapConfiguration>(data, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                }
+                return _ldapConfiguration;
+            }
+            set
+            {
+                _ldapConfiguration = value;
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                if (value is null)
+                {
+                    Properties.LdapConfiguration = null;
+                    return;
+                }
+                BinaryData data = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                Properties.LdapConfiguration = ModelReaderWriter.Read<LdapConfigurationPatch>(data, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+            }
         }
     }
 }

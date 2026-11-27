@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -61,11 +61,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ipconfigurations/", false);
             uri.AppendPath(ipConfigurationName, true);
             uri.AppendPath("/publicipaddresses/", false);
-            uri.AppendPath(publicIpAddressName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendPath(publicIPAddressName, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-10-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -96,10 +93,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ipconfigurations/", false);
             uri.AppendPath(ipConfigurationName, true);
             uri.AppendPath("/publicipaddresses", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,10 +114,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2018-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

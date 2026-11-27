@@ -111,11 +111,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType computeType = default;
             string computeLocation = default;
             MachineLearningProvisioningState? provisioningState = default;
+            bool descriptionIsDefined = false;
             string description = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? modifiedOn = default;
             ResourceIdentifier resourceId = default;
-            IReadOnlyList<MachineLearningError> provisioningErrors = default;
+            IReadOnlyList<MachineLearningError> provisioningErrors = new ChangeTrackingList<MachineLearningError>();
             bool? isAttachedCompute = default;
             bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -182,6 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        provisioningErrors = null;
                         continue;
                     }
                     List<MachineLearningError> array = new List<MachineLearningError>();
@@ -221,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningVirtualMachineCompute(
@@ -232,11 +235,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 createdOn,
                 modifiedOn,
                 resourceId,
-                provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                provisioningErrors,
                 isAttachedCompute,
                 disableLocalAuth,
                 additionalBinaryDataProperties,
-                properties);
+                properties)
+            {
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
     }
 }

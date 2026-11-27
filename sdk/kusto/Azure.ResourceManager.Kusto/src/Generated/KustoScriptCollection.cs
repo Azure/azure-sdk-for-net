@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoScriptData, KustoScriptResource>(new ScriptsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoScriptData, KustoScriptResource>(new KustoScriptDataAsyncCollectionResultOfT(
                 _scriptsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoScriptData, KustoScriptResource>(new ScriptsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<KustoScriptData, KustoScriptResource>(new KustoScriptDataCollectionResultOfT(
                 _scriptsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

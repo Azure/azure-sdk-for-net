@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private ManagedClusterSecurityProfileDefender _defender;
         private ManagedClusterSecurityProfileKeyVaultKms _azureKeyVaultKms;
+        private KubernetesResourceObjectEncryptionProfile _kubernetesResourceObjectEncryptionProfile;
         private ManagedClusterSecurityProfileWorkloadIdentity _workloadIdentity;
         private ManagedClusterSecurityProfileImageCleaner _imageCleaner;
         private BicepList<BinaryData> _customCATrustCertificates;
@@ -52,6 +53,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 AssignOrReplace(ref _azureKeyVaultKms, value);
+            }
+        }
+
+        /// <summary> Gets or sets the KubernetesResourceObjectEncryptionProfile. </summary>
+        internal KubernetesResourceObjectEncryptionProfile KubernetesResourceObjectEncryptionProfile
+        {
+            get
+            {
+                Initialize();
+                return _kubernetesResourceObjectEncryptionProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _kubernetesResourceObjectEncryptionProfile, value);
             }
         }
 
@@ -100,6 +116,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the InfrastructureEncryption. </summary>
+        public BicepValue<KubernetesResourceObjectInfrastructureEncryption> InfrastructureEncryption
+        {
+            get
+            {
+                return KubernetesResourceObjectEncryptionProfile is null ? default : KubernetesResourceObjectEncryptionProfile.InfrastructureEncryption;
+            }
+            set
+            {
+                if (KubernetesResourceObjectEncryptionProfile is null)
+                {
+                    KubernetesResourceObjectEncryptionProfile = new KubernetesResourceObjectEncryptionProfile();
+                }
+                KubernetesResourceObjectEncryptionProfile.InfrastructureEncryption = value;
+            }
+        }
+
         /// <summary> Gets or sets the IsWorkloadIdentityEnabled. </summary>
         public BicepValue<bool> IsWorkloadIdentityEnabled
         {
@@ -123,9 +156,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _defender = DefineModelProperty<ManagedClusterSecurityProfileDefender>(nameof(Defender), new string[] { "defender" });
             _azureKeyVaultKms = DefineModelProperty<ManagedClusterSecurityProfileKeyVaultKms>(nameof(AzureKeyVaultKms), new string[] { "azureKeyVaultKms" });
+            _kubernetesResourceObjectEncryptionProfile = DefineModelProperty<KubernetesResourceObjectEncryptionProfile>(nameof(KubernetesResourceObjectEncryptionProfile), new string[] { "kubernetesResourceObjectEncryptionProfile" });
             _workloadIdentity = DefineModelProperty<ManagedClusterSecurityProfileWorkloadIdentity>(nameof(WorkloadIdentity), new string[] { "workloadIdentity" });
             _imageCleaner = DefineModelProperty<ManagedClusterSecurityProfileImageCleaner>(nameof(ImageCleaner), new string[] { "imageCleaner" });
-            _customCATrustCertificates = DefineListProperty<BinaryData>(nameof(CustomCATrustCertificates), new string[] { "customCATrustCertificates" });
+            _customCATrustCertificates = DefineListProperty<BinaryData>(nameof(CustomCATrustCertificates), new string[] { "customCATrustCertificates" }, format: "base64");
             DefineAdditionalProperties();
         }
 

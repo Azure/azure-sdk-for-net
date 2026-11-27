@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.WorkloadsSapMonitor.csproj" />
+  <Project Path="tests/Azure.ResourceManager.WorkloadsSapMonitor.Tests.csproj" />
+</Solution>

@@ -11,14 +11,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Describes a reference to Key Vault Secret. </summary>
+    /// <summary> A reference to a secret stored in Azure Key Vault. </summary>
     public partial class KeyVaultSecretReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
-        /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
+        /// <param name="secretUri"> The URL of the secret in Azure Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> is null. </exception>
         public KeyVaultSecretReference(string secretUri)
         {
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
-        /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
-        /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
+        /// <param name="secretUri"> The URL of the secret in Azure Key Vault. </param>
+        /// <param name="sourceVault"> The Azure resource ID of the Key Vault that contains the secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal KeyVaultSecretReference(string secretUri, ComputeBulkActionsSubResourceInfo sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The URL referencing a secret in a Key Vault. </summary>
+        /// <summary> The URL of the secret in Azure Key Vault. </summary>
         public string SecretUri { get; set; }
 
-        /// <summary> The relative URL of the Key Vault containing the secret. </summary>
+        /// <summary> The Azure resource ID of the Key Vault that contains the secret. </summary>
         internal ComputeBulkActionsSubResourceInfo SourceVault { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string SourceVaultId
         {
             get

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using OpenTelemetry.Trace;
 using System.Diagnostics;
 using System.Linq;
-using System.Collections.Concurrent;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -46,14 +46,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (samplingPercentage == 100)
             {
                 // optimization, no need to calculate sample score in this case
-                return new SamplingResult(SamplingDecision.RecordAndSample, [new("microsoft.sample_rate", samplingPercentage)]);
+                return new SamplingResult(SamplingDecision.RecordAndSample, [new(SemanticConventions.AttributeMicrosoftSampleRate, samplingPercentage)]);
             }
 
             // the sampling score is between 0 and 1, for correct comparison with samplingPercentage, we multiply by 100
             double sampleScore = 100 * SamplerUtils.DJB2SampleScore(samplingParameters.TraceId.ToHexString().ToUpperInvariant());
             if (sampleScore < samplingPercentage)
             {
-                return new SamplingResult(SamplingDecision.RecordAndSample, [new("microsoft.sample_rate", samplingPercentage)]);
+                return new SamplingResult(SamplingDecision.RecordAndSample, [new(SemanticConventions.AttributeMicrosoftSampleRate, samplingPercentage)]);
             }
             else
             {
@@ -83,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // this is a span that has a local parent span that is sampled. Sample it in and include the sample rate from the parent.
             if (parentSampleRate != null)
             {
-                return new SamplingResult(SamplingDecision.RecordAndSample, [new("microsoft.sample_rate", parentSampleRate)]);
+                return new SamplingResult(SamplingDecision.RecordAndSample, [new(SemanticConventions.AttributeMicrosoftSampleRate, parentSampleRate)]);
             }
 
             // if we reach here, it means the parent span is sampled but does not have a sample rate set. The child should be sampled, we just
@@ -108,7 +108,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var kvp in parentAttributes)
             {
-                if (kvp.Key == "microsoft.sample_rate") return kvp.Value;
+                if (kvp.Key == SemanticConventions.AttributeMicrosoftSampleRate)
+                    return kvp.Value;
             }
             return null;
         }

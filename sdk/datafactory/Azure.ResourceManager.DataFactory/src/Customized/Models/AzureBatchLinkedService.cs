@@ -48,11 +48,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.LinkedServiceName = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName) : base("AzureBatch")
-        {
-            TypeProperties = new AzureBatchLinkedServiceTypeProperties(accountName, batchUri, poolName, linkedServiceName);
-        }
     }
 }

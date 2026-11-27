@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CodelessConnectorPollingResponseProperties(eventsJsonPaths, successStatusJsonPath, successStatusValue, isGzipCompressed, additionalBinaryDataProperties);
+            return new CodelessConnectorPollingResponseProperties(eventsJsonPaths ?? new ChangeTrackingList<string>(), successStatusJsonPath, successStatusValue, isGzipCompressed, additionalBinaryDataProperties);
         }
     }
 }

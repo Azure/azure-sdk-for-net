@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// Specific entity query.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExpansionEntityQuery"/> and <see cref="ActivityEntityQuery"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityEntityQuery"/> and <see cref="ExpansionEntityQuery"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityInsightsEntityQuery))]
     public abstract partial class SecurityInsightsEntityQueryData : ResourceData, IJsonModel<SecurityInsightsEntityQueryData>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Expansion":
-                        return ExpansionEntityQuery.DeserializeExpansionEntityQuery(element, options);
                     case "Activity":
                         return ActivityEntityQuery.DeserializeActivityEntityQuery(element, options);
+                    case "Expansion":
+                        return ExpansionEntityQuery.DeserializeExpansionEntityQuery(element, options);
                 }
             }
             return UnknownSecurityInsightsEntityQuery.DeserializeUnknownSecurityInsightsEntityQuery(element, options);

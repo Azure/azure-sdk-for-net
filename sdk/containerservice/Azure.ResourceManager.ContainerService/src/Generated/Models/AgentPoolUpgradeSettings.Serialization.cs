@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("undrainableNodeBehavior"u8);
                 writer.WriteStringValue(UndrainableNodeBehavior.Value.ToString());
             }
+            if (Optional.IsDefined(UpgradeGateSettings))
+            {
+                writer.WritePropertyName("upgradeGateSettings"u8);
+                writer.WriteObjectValue(UpgradeGateSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? drainTimeoutInMinutes = default;
             int? nodeSoakDurationInMinutes = default;
             UndrainableNodeBehavior? undrainableNodeBehavior = default;
+            UpgradeGateSettings upgradeGateSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,9 +203,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     undrainableNodeBehavior = new UndrainableNodeBehavior(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("upgradeGateSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upgradeGateSettings = UpgradeGateSettings.DeserializeUpgradeGateSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentPoolUpgradeSettings(
@@ -209,6 +224,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 drainTimeoutInMinutes,
                 nodeSoakDurationInMinutes,
                 undrainableNodeBehavior,
+                upgradeGateSettings,
                 additionalBinaryDataProperties);
         }
     }

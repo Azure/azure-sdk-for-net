@@ -40,12 +40,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [WirePath("properties")]
         internal IoTDataConnectorProperties Properties { get; set; }
 
-        /// <summary> Gets or sets the AlertsState. </summary>
-        public SecurityInsightsDataTypeConnectionState? DataTypesAlertsState
+        /// <summary> The available data types for the connector. </summary>
+        [WirePath("properties.dataTypes")]
+        public SecurityInsightsAlertsDataTypeOfDataConnector DataTypes
         {
             get
             {
-                return Properties is null ? default : Properties.DataTypesAlertsState;
+                return Properties is null ? default : Properties.DataTypes;
             }
             set
             {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     Properties = new IoTDataConnectorProperties();
                 }
-                Properties.DataTypesAlertsState = value;
+                Properties.DataTypes = value;
             }
         }
 

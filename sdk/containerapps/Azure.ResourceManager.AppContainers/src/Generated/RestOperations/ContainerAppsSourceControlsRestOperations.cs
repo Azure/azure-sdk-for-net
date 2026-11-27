@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, RequestContent content, string xMsGithubAuxiliary, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,17 +90,13 @@ namespace Azure.ResourceManager.AppContainers
             request.Uri = uri;
             request.Method = RequestMethod.Put;
             _userAgent.Apply(message);
-            if (xMsGithubAuxiliary != null)
-            {
-                request.Headers.SetValue("x-ms-github-auxiliary", xMsGithubAuxiliary);
-            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, string xMsGithubAuxiliary, bool? ignoreWorkflowDeletionFailure, bool? deleteWorkflow, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -116,23 +112,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (ignoreWorkflowDeletionFailure != null)
-            {
-                uri.AppendQuery("ignoreWorkflowDeletionFailure", TypeFormatters.ConvertToString(ignoreWorkflowDeletionFailure), true);
-            }
-            if (deleteWorkflow != null)
-            {
-                uri.AppendQuery("deleteWorkflow", TypeFormatters.ConvertToString(deleteWorkflow), true);
-            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
             _userAgent.Apply(message);
-            if (xMsGithubAuxiliary != null)
-            {
-                request.Headers.SetValue("x-ms-github-auxiliary", xMsGithubAuxiliary);
-            }
             return message;
         }
 

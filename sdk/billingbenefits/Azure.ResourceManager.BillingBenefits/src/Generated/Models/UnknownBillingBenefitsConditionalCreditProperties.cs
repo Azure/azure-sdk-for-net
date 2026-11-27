@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBillingBenefitsConditionalCreditProperties(ConditionalCreditEntityType entityType, string displayName, ResourceIdentifier billingAccountResourceId, ConditionalCreditsProvisioningState? provisioningState, ConditionalCreditStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string productCode, ResourceIdentifier benefitResourceId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(entityType != default ? entityType : "unknown", displayName, billingAccountResourceId, provisioningState, status, startOn, endOn, productCode, benefitResourceId, resourceId, additionalBinaryDataProperties)
+        internal UnknownBillingBenefitsConditionalCreditProperties(ConditionalCreditEntityType entityType, string displayName, ResourceIdentifier billingAccountResourceId, ConditionalCreditsProvisioningState? provisioningState, ConditionalCreditStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string productCode, ResourceIdentifier benefitResourceId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(entityType != default ? entityType : "unknown", displayName, billingAccountResourceId, provisioningState, status, startsOn, endsOn, productCode, benefitResourceId, resourceId, additionalBinaryDataProperties)
         {
         }
     }

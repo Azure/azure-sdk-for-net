@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Keda is null ? default : Keda.IsKedaEnabled;
+                return Keda is null ? (bool?)default : Keda.IsKedaEnabled;
             }
             set
             {

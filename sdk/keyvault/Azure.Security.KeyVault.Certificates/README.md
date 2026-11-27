@@ -70,7 +70,11 @@ illustrated in the examples below.
 
 ### Thread safety
 
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads. Do not call `Dispose` while operations are in progress.
+
+### Client lifetime
+
+`CertificateClient` implements `IDisposable`. Reuse it rather than creating a client for each request, and dispose it when its intended lifetime ends to release its internally owned HTTP transport. Finish certificate operations, downloads, and pageable enumeration before disposal. A transport or credential supplied by the application remains application-owned and is not disposed by the client.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->

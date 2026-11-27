@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The dataset points to a HTML table in the web page. </summary>
     public partial class WebTableDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="index"/> is null. </exception>
+        public WebTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<int> index) : base("WebTable", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(index, nameof(index));
+
+            TypeProperties = new WebTableDatasetTypeProperties(index);
+        }
+
         /// <summary> Initializes a new instance of <see cref="WebTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

@@ -1,6 +1,10 @@
 import:
   - ../../.vscode/cspell.json
 words:
+  - lifs
+  - ontap
+  - oplocks
+  - svms
   - vserver
   - Vserver
   - SAPHANA

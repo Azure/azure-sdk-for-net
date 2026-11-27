@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Redis.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResource"/>. </summary>
+        public RedisPrivateLinkResource()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal RedisPrivateLinkResourceProperties Properties { get; }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Compute
     public partial class RollingUpgradeRunningStatus : ProvisionableConstruct
     {
         private BicepValue<RollingUpgradeStatusCode> _code;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<RollingUpgradeActionType> _lastAction;
         private BicepValue<DateTimeOffset> _lastActionOn;
 
@@ -34,13 +34,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _code = DefineProperty<RollingUpgradeStatusCode>(nameof(Code), new string[] { "code" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
             _lastAction = DefineProperty<RollingUpgradeActionType>(nameof(LastAction), new string[] { "lastAction" }, isOutput: true);
             _lastActionOn = DefineProperty<DateTimeOffset>(nameof(LastActionOn), new string[] { "lastActionTime" }, isOutput: true, format: "O");
             DefineAdditionalProperties();

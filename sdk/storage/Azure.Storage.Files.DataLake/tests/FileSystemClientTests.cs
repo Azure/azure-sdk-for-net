@@ -3410,6 +3410,36 @@ namespace Azure.Storage.Files.DataLake.Tests
                 () => fileSystemClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. DataLakeSasBuilder.FileSystemName does not match Name in the Client. DataLakeSasBuilder.FileSystemName must either be left empty or match the Name in the Client"));
         }
+
+        [Test]
+        public void GenerateSas_BuilderNameWithIgnorableUnicode_IsRejected()
+        {
+            string fileSystemName = "canary";
+            string spoofedFileSystemName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(fileSystemName, spoofedFileSystemName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(fileSystemName, spoofedFileSystemName, StringComparison.Ordinal));
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(new Uri("https://account.dfs.core.windows.net"))
+            {
+                FileSystemName = fileSystemName
+            };
+
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                dataLakeUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                FileSystemName = spoofedFileSystemName
+            };
+
+            TestHelper.AssertExpectedException(
+                () => fileSystemClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. DataLakeSasBuilder.FileSystemName does not match Name in the Client. DataLakeSasBuilder.FileSystemName must either be left empty or match the Name in the Client"));
+        }
         #endregion
 
         #region GenerateUserDelegationSasTests

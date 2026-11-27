@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatabaseAdvancedThreatProtectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DatabaseAdvancedThreatProtectionListResult(value ?? new ChangeTrackingList<DatabaseAdvancedThreatProtectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
