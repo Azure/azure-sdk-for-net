@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
         public virtual MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
         {
-            MaintenancePublicConfigurationResource.ValidateResourceId(id);
             return new MaintenancePublicConfigurationResource(Client, id);
         }
 
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
         public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
         {
-            MaintenanceConfigurationResource.ValidateResourceId(id);
             return new MaintenanceConfigurationResource(Client, id);
         }
 
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceSubscriptionConfigurationAssignmentResource"/> object. </returns>
         public virtual MaintenanceSubscriptionConfigurationAssignmentResource GetMaintenanceSubscriptionConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceSubscriptionConfigurationAssignmentResource.ValidateResourceId(id);
             return new MaintenanceSubscriptionConfigurationAssignmentResource(Client, id);
         }
 
@@ -83,7 +80,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> object. </returns>
         public virtual MaintenanceResourceGroupConfigurationAssignmentResource GetMaintenanceResourceGroupConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceResourceGroupConfigurationAssignmentResource.ValidateResourceId(id);
             return new MaintenanceResourceGroupConfigurationAssignmentResource(Client, id);
         }
 
@@ -92,7 +88,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceGroupConfigurationAssignmentResource"/> object. </returns>
         public virtual MaintenanceGroupConfigurationAssignmentResource GetMaintenanceGroupConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceGroupConfigurationAssignmentResource.ValidateResourceId(id);
             return new MaintenanceGroupConfigurationAssignmentResource(Client, id);
         }
 
@@ -137,7 +132,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentResource"/> object. </returns>
         public virtual MaintenanceConfigurationAssignmentResource GetMaintenanceConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceConfigurationAssignmentResource.ValidateResourceId(id);
             return new MaintenanceConfigurationAssignmentResource(Client, id);
         }
 
@@ -182,7 +176,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceGroupApplyUpdateResource"/> object. </returns>
         public virtual MaintenanceGroupApplyUpdateResource GetMaintenanceGroupApplyUpdateResource(ResourceIdentifier id)
         {
-            MaintenanceGroupApplyUpdateResource.ValidateResourceId(id);
             return new MaintenanceGroupApplyUpdateResource(Client, id);
         }
 
@@ -227,7 +220,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource"/> object. </returns>
         public virtual MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(ResourceIdentifier id)
         {
-            MaintenanceApplyUpdateResource.ValidateResourceId(id);
             return new MaintenanceApplyUpdateResource(Client, id);
         }
 

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="KeyVaultResource"/> object. </returns>
         public virtual KeyVaultResource GetKeyVaultResource(ResourceIdentifier id)
         {
-            KeyVaultResource.ValidateResourceId(id);
             return new KeyVaultResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="DeletedKeyVaultResource"/> object. </returns>
         public virtual DeletedKeyVaultResource GetDeletedKeyVaultResource(ResourceIdentifier id)
         {
-            DeletedKeyVaultResource.ValidateResourceId(id);
             return new DeletedKeyVaultResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource"/> object. </returns>
         public virtual KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            KeyVaultPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new KeyVaultPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="ManagedHsmResource"/> object. </returns>
         public virtual ManagedHsmResource GetManagedHsmResource(ResourceIdentifier id)
         {
-            ManagedHsmResource.ValidateResourceId(id);
             return new ManagedHsmResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="DeletedManagedHsmResource"/> object. </returns>
         public virtual DeletedManagedHsmResource GetDeletedManagedHsmResource(ResourceIdentifier id)
         {
-            DeletedManagedHsmResource.ValidateResourceId(id);
             return new DeletedManagedHsmResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ManagedHsmPrivateEndpointConnectionResource GetManagedHsmPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ManagedHsmPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ManagedHsmPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> Returns a <see cref="KeyVaultSecretResource"/> object. </returns>
         public virtual KeyVaultSecretResource GetKeyVaultSecretResource(ResourceIdentifier id)
         {
-            KeyVaultSecretResource.ValidateResourceId(id);
             return new KeyVaultSecretResource(Client, id);
         }
     }

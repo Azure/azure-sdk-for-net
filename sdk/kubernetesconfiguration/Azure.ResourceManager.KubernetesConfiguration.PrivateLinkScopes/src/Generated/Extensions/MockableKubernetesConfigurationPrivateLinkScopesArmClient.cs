@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
         /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkResource"/> object. </returns>
         public virtual KubernetesConfigurationPrivateLinkResource GetKubernetesConfigurationPrivateLinkResource(ResourceIdentifier id)
         {
-            KubernetesConfigurationPrivateLinkResource.ValidateResourceId(id);
             return new KubernetesConfigurationPrivateLinkResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
         /// <returns> Returns a <see cref="KubernetesConfigurationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual KubernetesConfigurationPrivateEndpointConnectionResource GetKubernetesConfigurationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            KubernetesConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new KubernetesConfigurationPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
         /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> object. </returns>
         public virtual KubernetesConfigurationPrivateLinkScopeResource GetKubernetesConfigurationPrivateLinkScopeResource(ResourceIdentifier id)
         {
-            KubernetesConfigurationPrivateLinkScopeResource.ValidateResourceId(id);
             return new KubernetesConfigurationPrivateLinkScopeResource(Client, id);
         }
     }

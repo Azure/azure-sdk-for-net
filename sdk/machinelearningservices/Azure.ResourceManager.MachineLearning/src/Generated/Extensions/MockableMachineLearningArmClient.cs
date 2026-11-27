@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningWorkspaceResource"/> object. </returns>
         public virtual MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(ResourceIdentifier id)
         {
-            MachineLearningWorkspaceResource.ValidateResourceId(id);
             return new MachineLearningWorkspaceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningCodeContainerResource"/> object. </returns>
         public virtual MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(ResourceIdentifier id)
         {
-            MachineLearningCodeContainerResource.ValidateResourceId(id);
             return new MachineLearningCodeContainerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryResource"/> object. </returns>
         public virtual MachineLearningRegistryResource GetMachineLearningRegistryResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryResource.ValidateResourceId(id);
             return new MachineLearningRegistryResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningCodeVersionResource"/> object. </returns>
         public virtual MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(ResourceIdentifier id)
         {
-            MachineLearningCodeVersionResource.ValidateResourceId(id);
             return new MachineLearningCodeVersionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningComponentContainerResource"/> object. </returns>
         public virtual MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(ResourceIdentifier id)
         {
-            MachineLearningComponentContainerResource.ValidateResourceId(id);
             return new MachineLearningComponentContainerResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningComponentVersionResource"/> object. </returns>
         public virtual MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(ResourceIdentifier id)
         {
-            MachineLearningComponentVersionResource.ValidateResourceId(id);
             return new MachineLearningComponentVersionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningDataContainerResource"/> object. </returns>
         public virtual MachineLearningDataContainerResource GetMachineLearningDataContainerResource(ResourceIdentifier id)
         {
-            MachineLearningDataContainerResource.ValidateResourceId(id);
             return new MachineLearningDataContainerResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningDataVersionResource"/> object. </returns>
         public virtual MachineLearningDataVersionResource GetMachineLearningDataVersionResource(ResourceIdentifier id)
         {
-            MachineLearningDataVersionResource.ValidateResourceId(id);
             return new MachineLearningDataVersionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource"/> object. </returns>
         public virtual MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(ResourceIdentifier id)
         {
-            MachineLearningEnvironmentContainerResource.ValidateResourceId(id);
             return new MachineLearningEnvironmentContainerResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource"/> object. </returns>
         public virtual MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(ResourceIdentifier id)
         {
-            MachineLearningEnvironmentVersionResource.ValidateResourceId(id);
             return new MachineLearningEnvironmentVersionResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningModelContainerResource"/> object. </returns>
         public virtual MachineLearningModelContainerResource GetMachineLearningModelContainerResource(ResourceIdentifier id)
         {
-            MachineLearningModelContainerResource.ValidateResourceId(id);
             return new MachineLearningModelContainerResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningModelVersionResource"/> object. </returns>
         public virtual MachineLearningModelVersionResource GetMachineLearningModelVersionResource(ResourceIdentifier id)
         {
-            MachineLearningModelVersionResource.ValidateResourceId(id);
             return new MachineLearningModelVersionResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningBatchEndpointResource"/> object. </returns>
         public virtual MachineLearningBatchEndpointResource GetMachineLearningBatchEndpointResource(ResourceIdentifier id)
         {
-            MachineLearningBatchEndpointResource.ValidateResourceId(id);
             return new MachineLearningBatchEndpointResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningBatchDeploymentResource"/> object. </returns>
         public virtual MachineLearningBatchDeploymentResource GetMachineLearningBatchDeploymentResource(ResourceIdentifier id)
         {
-            MachineLearningBatchDeploymentResource.ValidateResourceId(id);
             return new MachineLearningBatchDeploymentResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="CapabilityHostResource"/> object. </returns>
         public virtual CapabilityHostResource GetCapabilityHostResource(ResourceIdentifier id)
         {
-            CapabilityHostResource.ValidateResourceId(id);
             return new CapabilityHostResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningDatastoreResource"/> object. </returns>
         public virtual MachineLearningDatastoreResource GetMachineLearningDatastoreResource(ResourceIdentifier id)
         {
-            MachineLearningDatastoreResource.ValidateResourceId(id);
             return new MachineLearningDatastoreResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningFeatureSetContainerResource"/> object. </returns>
         public virtual MachineLearningFeatureSetContainerResource GetMachineLearningFeatureSetContainerResource(ResourceIdentifier id)
         {
-            MachineLearningFeatureSetContainerResource.ValidateResourceId(id);
             return new MachineLearningFeatureSetContainerResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningFeatureResource"/> object. </returns>
         public virtual MachineLearningFeatureResource GetMachineLearningFeatureResource(ResourceIdentifier id)
         {
-            MachineLearningFeatureResource.ValidateResourceId(id);
             return new MachineLearningFeatureResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningFeatureSetVersionResource"/> object. </returns>
         public virtual MachineLearningFeatureSetVersionResource GetMachineLearningFeatureSetVersionResource(ResourceIdentifier id)
         {
-            MachineLearningFeatureSetVersionResource.ValidateResourceId(id);
             return new MachineLearningFeatureSetVersionResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningFeatureStoreEntityContainerResource"/> object. </returns>
         public virtual MachineLearningFeatureStoreEntityContainerResource GetMachineLearningFeatureStoreEntityContainerResource(ResourceIdentifier id)
         {
-            MachineLearningFeatureStoreEntityContainerResource.ValidateResourceId(id);
             return new MachineLearningFeatureStoreEntityContainerResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningFeaturestoreEntityVersionResource"/> object. </returns>
         public virtual MachineLearningFeaturestoreEntityVersionResource GetMachineLearningFeaturestoreEntityVersionResource(ResourceIdentifier id)
         {
-            MachineLearningFeaturestoreEntityVersionResource.ValidateResourceId(id);
             return new MachineLearningFeaturestoreEntityVersionResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningMarketplaceSubscriptionResource"/> object. </returns>
         public virtual MachineLearningMarketplaceSubscriptionResource GetMachineLearningMarketplaceSubscriptionResource(ResourceIdentifier id)
         {
-            MachineLearningMarketplaceSubscriptionResource.ValidateResourceId(id);
             return new MachineLearningMarketplaceSubscriptionResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningOnlineEndpointResource"/> object. </returns>
         public virtual MachineLearningOnlineEndpointResource GetMachineLearningOnlineEndpointResource(ResourceIdentifier id)
         {
-            MachineLearningOnlineEndpointResource.ValidateResourceId(id);
             return new MachineLearningOnlineEndpointResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningOnlineDeploymentResource"/> object. </returns>
         public virtual MachineLearningOnlineDeploymentResource GetMachineLearningOnlineDeploymentResource(ResourceIdentifier id)
         {
-            MachineLearningOnlineDeploymentResource.ValidateResourceId(id);
             return new MachineLearningOnlineDeploymentResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningScheduleResource"/> object. </returns>
         public virtual MachineLearningScheduleResource GetMachineLearningScheduleResource(ResourceIdentifier id)
         {
-            MachineLearningScheduleResource.ValidateResourceId(id);
             return new MachineLearningScheduleResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningServerlessEndpointResource"/> object. </returns>
         public virtual MachineLearningServerlessEndpointResource GetMachineLearningServerlessEndpointResource(ResourceIdentifier id)
         {
-            MachineLearningServerlessEndpointResource.ValidateResourceId(id);
             return new MachineLearningServerlessEndpointResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MachineLearningPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningComputeResource"/> object. </returns>
         public virtual MachineLearningComputeResource GetMachineLearningComputeResource(ResourceIdentifier id)
         {
-            MachineLearningComputeResource.ValidateResourceId(id);
             return new MachineLearningComputeResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryCodeContainerResource"/> object. </returns>
         public virtual MachineLearningRegistryCodeContainerResource GetMachineLearningRegistryCodeContainerResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryCodeContainerResource.ValidateResourceId(id);
             return new MachineLearningRegistryCodeContainerResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryCodeVersionResource"/> object. </returns>
         public virtual MachineLearningRegistryCodeVersionResource GetMachineLearningRegistryCodeVersionResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryCodeVersionResource.ValidateResourceId(id);
             return new MachineLearningRegistryCodeVersionResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryComponentContainerResource"/> object. </returns>
         public virtual MachineLearningRegistryComponentContainerResource GetMachineLearningRegistryComponentContainerResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryComponentContainerResource.ValidateResourceId(id);
             return new MachineLearningRegistryComponentContainerResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryComponentVersionResource"/> object. </returns>
         public virtual MachineLearningRegistryComponentVersionResource GetMachineLearningRegistryComponentVersionResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryComponentVersionResource.ValidateResourceId(id);
             return new MachineLearningRegistryComponentVersionResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryDataContainerResource"/> object. </returns>
         public virtual MachineLearningRegistryDataContainerResource GetMachineLearningRegistryDataContainerResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryDataContainerResource.ValidateResourceId(id);
             return new MachineLearningRegistryDataContainerResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryDataVersionResource"/> object. </returns>
         public virtual MachineLearningRegistryDataVersionResource GetMachineLearningRegistryDataVersionResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryDataVersionResource.ValidateResourceId(id);
             return new MachineLearningRegistryDataVersionResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryEnvironmentContainerResource"/> object. </returns>
         public virtual MachineLearningRegistryEnvironmentContainerResource GetMachineLearningRegistryEnvironmentContainerResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryEnvironmentContainerResource.ValidateResourceId(id);
             return new MachineLearningRegistryEnvironmentContainerResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryEnvironmentVersionResource"/> object. </returns>
         public virtual MachineLearningRegistryEnvironmentVersionResource GetMachineLearningRegistryEnvironmentVersionResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryEnvironmentVersionResource.ValidateResourceId(id);
             return new MachineLearningRegistryEnvironmentVersionResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryModelContainerResource"/> object. </returns>
         public virtual MachineLearningRegistryModelContainerResource GetMachineLearningRegistryModelContainerResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryModelContainerResource.ValidateResourceId(id);
             return new MachineLearningRegistryModelContainerResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningRegistryModelVersionResource"/> object. </returns>
         public virtual MachineLearningRegistryModelVersionResource GetMachineLearningRegistryModelVersionResource(ResourceIdentifier id)
         {
-            MachineLearningRegistryModelVersionResource.ValidateResourceId(id);
             return new MachineLearningRegistryModelVersionResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningJobResource"/> object. </returns>
         public virtual MachineLearningJobResource GetMachineLearningJobResource(ResourceIdentifier id)
         {
-            MachineLearningJobResource.ValidateResourceId(id);
             return new MachineLearningJobResource(Client, id);
         }
 
@@ -382,7 +343,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource"/> object. </returns>
         public virtual MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(ResourceIdentifier id)
         {
-            MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
             return new MachineLearningWorkspaceConnectionResource(Client, id);
         }
     }

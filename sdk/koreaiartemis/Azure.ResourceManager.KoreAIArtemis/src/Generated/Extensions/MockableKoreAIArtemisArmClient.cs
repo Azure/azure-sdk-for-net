@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.KoreAIArtemis.Mocking
         /// <returns> Returns a <see cref="KoreAIArtemisOrganizationResource"/> object. </returns>
         public virtual KoreAIArtemisOrganizationResource GetKoreAIArtemisOrganizationResource(ResourceIdentifier id)
         {
-            KoreAIArtemisOrganizationResource.ValidateResourceId(id);
             return new KoreAIArtemisOrganizationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.KoreAIArtemis.Mocking
         /// <returns> Returns a <see cref="KoreAIArtemisWorkspaceResource"/> object. </returns>
         public virtual KoreAIArtemisWorkspaceResource GetKoreAIArtemisWorkspaceResource(ResourceIdentifier id)
         {
-            KoreAIArtemisWorkspaceResource.ValidateResourceId(id);
             return new KoreAIArtemisWorkspaceResource(Client, id);
         }
     }

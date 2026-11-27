@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource"/> object. </returns>
         public virtual KustoClusterPrincipalAssignmentResource GetKustoClusterPrincipalAssignmentResource(ResourceIdentifier id)
         {
-            KustoClusterPrincipalAssignmentResource.ValidateResourceId(id);
             return new KustoClusterPrincipalAssignmentResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource"/> object. </returns>
         public virtual KustoDatabasePrincipalAssignmentResource GetKustoDatabasePrincipalAssignmentResource(ResourceIdentifier id)
         {
-            KustoDatabasePrincipalAssignmentResource.ValidateResourceId(id);
             return new KustoDatabasePrincipalAssignmentResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoScriptResource"/> object. </returns>
         public virtual KustoScriptResource GetKustoScriptResource(ResourceIdentifier id)
         {
-            KustoScriptResource.ValidateResourceId(id);
             return new KustoScriptResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoDataConnectionResource"/> object. </returns>
         public virtual KustoDataConnectionResource GetKustoDataConnectionResource(ResourceIdentifier id)
         {
-            KustoDataConnectionResource.ValidateResourceId(id);
             return new KustoDataConnectionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoDatabaseResource"/> object. </returns>
         public virtual KustoDatabaseResource GetKustoDatabaseResource(ResourceIdentifier id)
         {
-            KustoDatabaseResource.ValidateResourceId(id);
             return new KustoDatabaseResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource"/> object. </returns>
         public virtual KustoAttachedDatabaseConfigurationResource GetKustoAttachedDatabaseConfigurationResource(ResourceIdentifier id)
         {
-            KustoAttachedDatabaseConfigurationResource.ValidateResourceId(id);
             return new KustoAttachedDatabaseConfigurationResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource"/> object. </returns>
         public virtual KustoManagedPrivateEndpointResource GetKustoManagedPrivateEndpointResource(ResourceIdentifier id)
         {
-            KustoManagedPrivateEndpointResource.ValidateResourceId(id);
             return new KustoManagedPrivateEndpointResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="SandboxCustomImageResource"/> object. </returns>
         public virtual SandboxCustomImageResource GetSandboxCustomImageResource(ResourceIdentifier id)
         {
-            SandboxCustomImageResource.ValidateResourceId(id);
             return new SandboxCustomImageResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoClusterResource"/> object. </returns>
         public virtual KustoClusterResource GetKustoClusterResource(ResourceIdentifier id)
         {
-            KustoClusterResource.ValidateResourceId(id);
             return new KustoClusterResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoPrivateEndpointConnectionResource"/> object. </returns>
         public virtual KustoPrivateEndpointConnectionResource GetKustoPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            KustoPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new KustoPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> Returns a <see cref="KustoPrivateLinkResource"/> object. </returns>
         public virtual KustoPrivateLinkResource GetKustoPrivateLinkResource(ResourceIdentifier id)
         {
-            KustoPrivateLinkResource.ValidateResourceId(id);
             return new KustoPrivateLinkResource(Client, id);
         }
     }
