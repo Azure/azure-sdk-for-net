@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="ManagedHsmNetworkRuleSet"/>. </summary>
         /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
+        /// <param name="publicNetworkIPAddressType"> The public network IP address type for the managed HSM pool. If omitted when creating a pool, the default is IPv4. If omitted when updating a pool, the existing value is preserved. IPv4 accepts only IPv4 rules; requests containing IPv6 rules are rejected. DualStack accepts both IPv4 and IPv6 rules in ipRules. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="serviceTags"> The list of service tags. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmServiceTagRule> serviceTags, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, MhsmPublicNetworkIPAddressType? publicNetworkIPAddressType, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmServiceTagRule> serviceTags, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
+            PublicNetworkIPAddressType = publicNetworkIPAddressType;
             IPRules = ipRules;
             ServiceTags = serviceTags;
             VirtualNetworkRules = virtualNetworkRules;
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         [WirePath("defaultAction")]
         public ManagedHsmNetworkRuleAction? DefaultAction { get; set; }
+
+        /// <summary> The public network IP address type for the managed HSM pool. If omitted when creating a pool, the default is IPv4. If omitted when updating a pool, the existing value is preserved. IPv4 accepts only IPv4 rules; requests containing IPv6 rules are rejected. DualStack accepts both IPv4 and IPv6 rules in ipRules. </summary>
+        [WirePath("publicNetworkIpAddressType")]
+        public MhsmPublicNetworkIPAddressType? PublicNetworkIPAddressType { get; set; }
 
         /// <summary> The list of IP address rules. </summary>
         [WirePath("ipRules")]

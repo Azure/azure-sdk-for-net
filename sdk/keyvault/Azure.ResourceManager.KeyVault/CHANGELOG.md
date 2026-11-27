@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Upgraded the API version to `2026-12-01`.
+- Added `ManagedHsmNetworkRuleSet.PublicNetworkIPAddressType` to configure IPv4 or dual-stack public network access.
+
 ### Breaking Changes
+
+- Removed preview-only vault managed identity, token binding, and external protection-key wrapping APIs that are not available in API version `2026-12-01`.
 
 ### Bugs Fixed
 

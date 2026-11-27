@@ -19,32 +19,6 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKeyVaultModelFactory
     {
-        /// <summary> Resource information with extended details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
-        public static KeyVaultData KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KeyVaultProperties properties, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <summary> Properties of the vault. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
@@ -63,22 +37,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        /// <param name="tokenBindingConfiguration"> Configuration for Token Binding for Entra tokens. </param>
         /// <param name="enableCrossTenantAccessProtection"> Whether cross-tenant access protection is enabled for this vault. When enabled, the vault tenant ID can only be set or changed to the subscription's home tenant ID. Once enabled, this protection cannot be disabled. If omitted when creating a vault, protection is disabled. If omitted when updating a vault, the existing value is preserved. </param>
-        /// <param name="protectionKeysWrappingKey">
-        /// Configures an external Managed HSM key used to wrap the vault's protection keys.
-        /// When configured, this property is returned in create, update, get, and list responses.
-        /// Responses contain the persisted key reference and authentication mechanism, not key material or credentials.
-        /// It can be supplied when creating a vault or enabling wrapping on an existing vault.
-        /// This property is available starting with API version 2026-10-01-preview, when the protection-key wrapping capability is available for the target vault.
-        /// Reapplying an equivalent configuration is supported; replacing or removing it is not.
-        /// A versionless reference can match the persisted versioned reference; resubmitting it does not rotate the key.
-        /// After configuration, vault availability depends on the persisted Managed HSM key version remaining usable and accessible to the service.
-        /// Disabling or deleting that key version, or revoking the service's access, can make the vault unavailable.
-        /// Omitting this property preserves the existing configuration.
-        /// </param>
         /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
-        public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default, Uri vaultUri = default, string hsmPoolResourceId = default, bool? enabledForDeployment = default, bool? enabledForDiskEncryption = default, bool? enabledForTemplateDeployment = default, bool? enableSoftDelete = default, int? softDeleteRetentionInDays = default, bool? enableRbacAuthorization = default, KeyVaultCreateMode? createMode = default, bool? enablePurgeProtection = default, KeyVaultNetworkRuleSet networkRuleSet = default, KeyVaultProvisioningState? provisioningState = default, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default, string publicNetworkAccess = default, TokenBindingConfiguration tokenBindingConfiguration = default, bool? enableCrossTenantAccessProtection = default, WrappingKeyConfiguration protectionKeysWrappingKey = default)
+        public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default, Uri vaultUri = default, string hsmPoolResourceId = default, bool? enabledForDeployment = default, bool? enabledForDiskEncryption = default, bool? enabledForTemplateDeployment = default, bool? enableSoftDelete = default, int? softDeleteRetentionInDays = default, bool? enableRbacAuthorization = default, KeyVaultCreateMode? createMode = default, bool? enablePurgeProtection = default, KeyVaultNetworkRuleSet networkRuleSet = default, KeyVaultProvisioningState? provisioningState = default, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default, string publicNetworkAccess = default, bool? enableCrossTenantAccessProtection = default)
         {
             accessPolicies ??= new ChangeTrackingList<KeyVaultAccessPolicy>();
             privateEndpointConnections ??= new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>();
@@ -101,9 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 provisioningState,
                 (privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>()).ToList(),
                 publicNetworkAccess,
-                tokenBindingConfiguration,
                 enableCrossTenantAccessProtection,
-                protectionKeysWrappingKey,
                 default);
         }
 
@@ -195,36 +154,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
-        /// <summary> Configuration for Token Binding for Entra tokens. </summary>
-        /// <param name="mode"> This specifies whether token binding is disabled, enabled or enforced. </param>
-        /// <param name="minimumTokenBindingStrength"> Must be one of the following values "NoValidation", "Unattested", "AttestedTrustedLaunch", "AttestedConfidential". Strength of the token binding increases with each value in that order. </param>
-        /// <returns> A new <see cref="Models.TokenBindingConfiguration"/> instance for mocking. </returns>
-        public static TokenBindingConfiguration TokenBindingConfiguration(TokenBindingMode? mode = default, TokenBindingStrength? minimumTokenBindingStrength = default)
+        /// <summary> Parameters for creating or updating a vault. </summary>
+        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <returns> A new <see cref="Models.KeyVaultCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, KeyVaultProperties properties = default)
         {
-            return new TokenBindingConfiguration(mode, minimumTokenBindingStrength, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new KeyVaultCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <param name="keyValue"> Identifies the external wrapping key. </param>
-        /// <param name="keyAuthenticationDataAuthType">
-        /// Authentication mechanism. Only ServiceIdentity is supported.
-        /// A caller-supplied vault managed identity is not required.
-        /// </param>
-        /// <returns> A new <see cref="Models.WrappingKeyConfiguration"/> instance for mocking. </returns>
-        public static WrappingKeyConfiguration WrappingKeyConfiguration(WrappingKeyValue keyValue = default, string keyAuthenticationDataAuthType = default)
+        /// <summary> Parameters for creating or updating a vault. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <returns> A new <see cref="Models.KeyVaultPatch"/> instance for mocking. </returns>
+        public static KeyVaultPatch KeyVaultPatch(IDictionary<string, string> tags = default, KeyVaultPatchProperties properties = default)
         {
-            return new WrappingKeyConfiguration(keyValue, keyAuthenticationDataAuthType is null ? default : new WrappingKeyAuthenticationData(keyAuthenticationDataAuthType, default), default);
-        }
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-        /// <summary> Reference to an external Managed HSM wrapping key. </summary>
-        /// <param name="uri">
-        /// Absolute HTTPS URL of a key on a supported Managed HSM endpoint.
-        /// The path must be /keys/{key-name} or /keys/{key-name}/{key-version}.
-        /// User information, query strings, fragments, and non-default ports are not supported.
-        /// </param>
-        /// <returns> A new <see cref="Models.WrappingKeyValue"/> instance for mocking. </returns>
-        public static WrappingKeyValue WrappingKeyValue(Uri uri = default)
-        {
-            return new WrappingKeyValue(uri, "oct", default);
+            return new KeyVaultPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> Properties of the vault. </summary>
@@ -241,22 +191,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </param>
         /// <param name="networkRuleSet"> A collection of rules governing the accessibility of the vault from specific network locations. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        /// <param name="tokenBindingConfiguration"> Configuration for Token Binding for Entra tokens. </param>
         /// <param name="enableCrossTenantAccessProtection"> Whether cross-tenant access protection is enabled for this vault. When enabled, changes to the vault tenant ID must use the subscription's home tenant ID. Once enabled, this protection cannot be disabled. If omitted, the existing value is preserved. </param>
-        /// <param name="protectionKeysWrappingKey">
-        /// Configures an external Managed HSM key used to wrap the vault's protection keys.
-        /// When configured, this property is returned in create, update, get, and list responses.
-        /// Responses contain the persisted key reference and authentication mechanism, not key material or credentials.
-        /// It can be supplied when enabling wrapping on an existing vault.
-        /// This property is available starting with API version 2026-10-01-preview, when the protection-key wrapping capability is available for the target vault.
-        /// Reapplying an equivalent configuration is supported; replacing or removing it is not.
-        /// A versionless reference can match the persisted versioned reference; resubmitting it does not rotate the key.
-        /// After configuration, vault availability depends on the persisted Managed HSM key version remaining usable and accessible to the service.
-        /// Disabling or deleting that key version, or revoking the service's access, can make the vault unavailable.
-        /// Omitting this property preserves the existing configuration.
-        /// </param>
         /// <returns> A new <see cref="Models.KeyVaultPatchProperties"/> instance for mocking. </returns>
-        public static KeyVaultPatchProperties KeyVaultPatchProperties(Guid? tenantId = default, KeyVaultSku sku = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default, bool? enabledForDeployment = default, bool? enabledForDiskEncryption = default, bool? enabledForTemplateDeployment = default, bool? enableSoftDelete = default, bool? enableRbacAuthorization = default, int? softDeleteRetentionInDays = default, KeyVaultPatchMode? createMode = default, bool? enablePurgeProtection = default, KeyVaultNetworkRuleSet networkRuleSet = default, string publicNetworkAccess = default, TokenBindingConfiguration tokenBindingConfiguration = default, bool? enableCrossTenantAccessProtection = default, WrappingKeyConfiguration protectionKeysWrappingKey = default)
+        public static KeyVaultPatchProperties KeyVaultPatchProperties(Guid? tenantId = default, KeyVaultSku sku = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default, bool? enabledForDeployment = default, bool? enabledForDiskEncryption = default, bool? enabledForTemplateDeployment = default, bool? enableSoftDelete = default, bool? enableRbacAuthorization = default, int? softDeleteRetentionInDays = default, KeyVaultPatchMode? createMode = default, bool? enablePurgeProtection = default, KeyVaultNetworkRuleSet networkRuleSet = default, string publicNetworkAccess = default, bool? enableCrossTenantAccessProtection = default)
         {
             accessPolicies ??= new ChangeTrackingList<KeyVaultAccessPolicy>();
 
@@ -274,9 +211,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 enablePurgeProtection,
                 networkRuleSet,
                 publicNetworkAccess,
-                tokenBindingConfiguration,
                 enableCrossTenantAccessProtection,
-                protectionKeysWrappingKey,
                 default);
         }
 
@@ -581,11 +516,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> A set of rules governing the network accessibility of a managed hsm pool. </summary>
         /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
+        /// <param name="publicNetworkIPAddressType"> The public network IP address type for the managed HSM pool. If omitted when creating a pool, the default is IPv4. If omitted when updating a pool, the existing value is preserved. IPv4 accepts only IPv4 rules; requests containing IPv6 rules are rejected. DualStack accepts both IPv4 and IPv6 rules in ipRules. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="serviceTags"> The list of service tags. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <returns> A new <see cref="Models.ManagedHsmNetworkRuleSet"/> instance for mocking. </returns>
-        public static ManagedHsmNetworkRuleSet ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass = default, ManagedHsmNetworkRuleAction? defaultAction = default, IEnumerable<ManagedHsmIPRule> ipRules = default, IEnumerable<ManagedHsmServiceTagRule> serviceTags = default, IEnumerable<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default)
+        public static ManagedHsmNetworkRuleSet ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass = default, ManagedHsmNetworkRuleAction? defaultAction = default, MhsmPublicNetworkIPAddressType? publicNetworkIPAddressType = default, IEnumerable<ManagedHsmIPRule> ipRules = default, IEnumerable<ManagedHsmServiceTagRule> serviceTags = default, IEnumerable<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default)
         {
             ipRules ??= new ChangeTrackingList<ManagedHsmIPRule>();
             serviceTags ??= new ChangeTrackingList<ManagedHsmServiceTagRule>();
@@ -594,6 +530,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmNetworkRuleSet(
                 bypass,
                 defaultAction,
+                publicNetworkIPAddressType,
                 (ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>()).ToList(),
                 (serviceTags ?? new ChangeTrackingList<ManagedHsmServiceTagRule>()).ToList(),
                 (virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>()).ToList(),
@@ -601,7 +538,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> A rule governing the accessibility of a managed HSM pool from a specific IP address or IP range. </summary>
-        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
+        /// <param name="addressRange"> An IP address or address range in CIDR notation. IPv4 examples include '192.0.2.10' and '192.0.2.0/24'. Starting with API version 2026-12-01, IPv6 addresses and ranges, such as '2001:db8::1' and '2001:db8:1234::/64', are also accepted when networkAcls.publicNetworkIpAddressType is DualStack. Earlier API versions and the IPv4 public network IP address type accept only IPv4 rules. </param>
         /// <returns> A new <see cref="Models.ManagedHsmIPRule"/> instance for mocking. </returns>
         public static ManagedHsmIPRule ManagedHsmIPRule(string addressRange = default)
         {
@@ -901,30 +838,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 (privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>()).ToList(),
                 publicNetworkAccess,
                 default,
-                default,
-                default,
                 default);
-        }
-
-        /// <summary> Parameters for creating or updating a vault. </summary>
-        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
-        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties)
-        {
-            return new KeyVaultCreateOrUpdateContent(default, location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <summary> Parameters for creating or updating a vault. </summary>
-        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KeyVaultPatch KeyVaultPatch(IDictionary<string, string> tags, KeyVaultPatchProperties properties)
-        {
-            return new KeyVaultPatch(default, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> Properties of the vault. </summary>
@@ -960,8 +874,26 @@ namespace Azure.ResourceManager.KeyVault.Models
                 networkRuleSet,
                 publicNetworkAccess,
                 default,
+                default);
+        }
+
+        /// <summary> A set of rules governing the network accessibility of a managed hsm pool. </summary>
+        /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
+        /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
+        /// <param name="ipRules"> The list of IP address rules. </param>
+        /// <param name="serviceTags"> The list of service tags. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmNetworkRuleSet"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmNetworkRuleSet ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IEnumerable<ManagedHsmIPRule> ipRules, IEnumerable<ManagedHsmServiceTagRule> serviceTags, IEnumerable<ManagedHsmVirtualNetworkRule> virtualNetworkRules)
+        {
+            return new ManagedHsmNetworkRuleSet(
+                bypass,
+                defaultAction,
                 default,
-                default,
+                (ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>()).ToList(),
+                (serviceTags ?? new ChangeTrackingList<ManagedHsmServiceTagRule>()).ToList(),
+                (virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>()).ToList(),
                 default);
         }
 
@@ -985,7 +917,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                default,
                 default);
         }
 

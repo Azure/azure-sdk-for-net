@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
+            if (Optional.IsDefined(PublicNetworkIPAddressType))
+            {
+                writer.WritePropertyName("publicNetworkIpAddressType"u8);
+                writer.WriteStringValue(PublicNetworkIPAddressType.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
@@ -158,6 +163,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             ManagedHsmNetworkRuleBypassOption? bypass = default;
             ManagedHsmNetworkRuleAction? defaultAction = default;
+            MhsmPublicNetworkIPAddressType? publicNetworkIPAddressType = default;
             IList<ManagedHsmIPRule> ipRules = default;
             IList<ManagedHsmServiceTagRule> serviceTags = default;
             IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default;
@@ -180,6 +186,15 @@ namespace Azure.ResourceManager.KeyVault.Models
                         continue;
                     }
                     defaultAction = new ManagedHsmNetworkRuleAction(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("publicNetworkIpAddressType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkIPAddressType = new MhsmPublicNetworkIPAddressType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipRules"u8))
@@ -232,6 +247,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmNetworkRuleSet(
                 bypass,
                 defaultAction,
+                publicNetworkIPAddressType,
                 ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>(),
                 serviceTags ?? new ChangeTrackingList<ManagedHsmServiceTagRule>(),
                 virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>(),
