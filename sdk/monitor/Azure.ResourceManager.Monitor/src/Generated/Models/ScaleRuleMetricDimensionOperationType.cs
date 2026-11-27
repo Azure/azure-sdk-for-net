@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="ScaleRuleMetricDimensionOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScaleRuleMetricDimensionOperationType?(string value) => value == null ? null : new ScaleRuleMetricDimensionOperationType(value);
+        public static implicit operator ScaleRuleMetricDimensionOperationType?(string value) => value == null ? (ScaleRuleMetricDimensionOperationType?)null : new ScaleRuleMetricDimensionOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

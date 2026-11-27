@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <summary> Converts a string to a <see cref="SapDiscoveryDataSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDiscoveryDataSource?(string value) => value == null ? null : new SapDiscoveryDataSource(value);
+        public static implicit operator SapDiscoveryDataSource?(string value) => value == null ? (SapDiscoveryDataSource?)null : new SapDiscoveryDataSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

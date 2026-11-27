@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="SyslogDataSourceStream"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyslogDataSourceStream?(string value) => value == null ? null : new SyslogDataSourceStream(value);
+        public static implicit operator SyslogDataSourceStream?(string value) => value == null ? (SyslogDataSourceStream?)null : new SyslogDataSourceStream(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

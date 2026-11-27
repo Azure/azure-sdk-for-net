@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkDeviceRebootType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkDeviceRebootType?(string value) => value == null ? null : new NetworkDeviceRebootType(value);
+        public static implicit operator NetworkDeviceRebootType?(string value) => value == null ? (NetworkDeviceRebootType?)null : new NetworkDeviceRebootType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

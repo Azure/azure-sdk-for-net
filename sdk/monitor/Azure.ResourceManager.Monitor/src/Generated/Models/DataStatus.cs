@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataStatus?(string value) => value == null ? null : new DataStatus(value);
+        public static implicit operator DataStatus?(string value) => value == null ? (DataStatus?)null : new DataStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

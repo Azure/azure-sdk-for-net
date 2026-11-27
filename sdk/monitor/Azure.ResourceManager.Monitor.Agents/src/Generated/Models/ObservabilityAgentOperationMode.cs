@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
 
         /// <summary> Converts a string to a <see cref="ObservabilityAgentOperationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObservabilityAgentOperationMode?(string value) => value == null ? null : new ObservabilityAgentOperationMode(value);
+        public static implicit operator ObservabilityAgentOperationMode?(string value) => value == null ? (ObservabilityAgentOperationMode?)null : new ObservabilityAgentOperationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataFlowStream"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataFlowStream?(string value) => value == null ? null : new DataFlowStream(value);
+        public static implicit operator DataFlowStream?(string value) => value == null ? (DataFlowStream?)null : new DataFlowStream(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

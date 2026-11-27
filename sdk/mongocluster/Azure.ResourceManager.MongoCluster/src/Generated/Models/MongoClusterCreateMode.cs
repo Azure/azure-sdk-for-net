@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterCreateMode?(string value) => value == null ? null : new MongoClusterCreateMode(value);
+        public static implicit operator MongoClusterCreateMode?(string value) => value == null ? (MongoClusterCreateMode?)null : new MongoClusterCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <summary> Converts a string to a <see cref="SapInstanceEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapInstanceEnvironment?(string value) => value == null ? null : new SapInstanceEnvironment(value);
+        public static implicit operator SapInstanceEnvironment?(string value) => value == null ? (SapInstanceEnvironment?)null : new SapInstanceEnvironment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

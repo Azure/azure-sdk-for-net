@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="ExtensionDataSourceStream"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtensionDataSourceStream?(string value) => value == null ? null : new ExtensionDataSourceStream(value);
+        public static implicit operator ExtensionDataSourceStream?(string value) => value == null ? (ExtensionDataSourceStream?)null : new ExtensionDataSourceStream(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

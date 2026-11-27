@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataCollectionRuleKnownPrometheusForwarderDataSourceStream?(string value) => value == null ? null : new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(value);
+        public static implicit operator DataCollectionRuleKnownPrometheusForwarderDataSourceStream?(string value) => value == null ? (DataCollectionRuleKnownPrometheusForwarderDataSourceStream?)null : new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

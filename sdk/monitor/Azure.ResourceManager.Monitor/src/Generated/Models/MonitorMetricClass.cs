@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorMetricClass"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorMetricClass?(string value) => value == null ? null : new MonitorMetricClass(value);
+        public static implicit operator MonitorMetricClass?(string value) => value == null ? (MonitorMetricClass?)null : new MonitorMetricClass(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

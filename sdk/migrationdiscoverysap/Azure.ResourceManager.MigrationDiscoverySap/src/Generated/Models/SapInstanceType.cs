@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <summary> Converts a string to a <see cref="SapInstanceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapInstanceType?(string value) => value == null ? null : new SapInstanceType(value);
+        public static implicit operator SapInstanceType?(string value) => value == null ? (SapInstanceType?)null : new SapInstanceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupCertificateSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupCertificateSourceType?(string value) => value == null ? null : new PipelineGroupCertificateSourceType(value);
+        public static implicit operator PipelineGroupCertificateSourceType?(string value) => value == null ? (PipelineGroupCertificateSourceType?)null : new PipelineGroupCertificateSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

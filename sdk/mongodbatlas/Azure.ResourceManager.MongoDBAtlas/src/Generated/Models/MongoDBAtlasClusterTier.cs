@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> Converts a string to a <see cref="MongoDBAtlasClusterTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoDBAtlasClusterTier?(string value) => value == null ? null : new MongoDBAtlasClusterTier(value);
+        public static implicit operator MongoDBAtlasClusterTier?(string value) => value == null ? (MongoDBAtlasClusterTier?)null : new MongoDBAtlasClusterTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

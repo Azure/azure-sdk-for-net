@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="ControlPlaneAclActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlPlaneAclActionType?(string value) => value == null ? null : new ControlPlaneAclActionType(value);
+        public static implicit operator ControlPlaneAclActionType?(string value) => value == null ? (ControlPlaneAclActionType?)null : new ControlPlaneAclActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

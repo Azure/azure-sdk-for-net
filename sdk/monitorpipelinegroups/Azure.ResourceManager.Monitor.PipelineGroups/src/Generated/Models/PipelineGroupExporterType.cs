@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupExporterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupExporterType?(string value) => value == null ? null : new PipelineGroupExporterType(value);
+        public static implicit operator PipelineGroupExporterType?(string value) => value == null ? (PipelineGroupExporterType?)null : new PipelineGroupExporterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="KnownEtwProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownEtwProviderType?(string value) => value == null ? null : new KnownEtwProviderType(value);
+        public static implicit operator KnownEtwProviderType?(string value) => value == null ? (KnownEtwProviderType?)null : new KnownEtwProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

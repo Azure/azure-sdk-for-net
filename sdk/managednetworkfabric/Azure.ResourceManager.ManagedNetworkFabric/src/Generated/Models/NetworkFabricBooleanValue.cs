@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricBooleanValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricBooleanValue?(string value) => value == null ? null : new NetworkFabricBooleanValue(value);
+        public static implicit operator NetworkFabricBooleanValue?(string value) => value == null ? (NetworkFabricBooleanValue?)null : new NetworkFabricBooleanValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

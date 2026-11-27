@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricSynchronizationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricSynchronizationStatus?(string value) => value == null ? null : new NetworkFabricSynchronizationStatus(value);
+        public static implicit operator NetworkFabricSynchronizationStatus?(string value) => value == null ? (NetworkFabricSynchronizationStatus?)null : new NetworkFabricSynchronizationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

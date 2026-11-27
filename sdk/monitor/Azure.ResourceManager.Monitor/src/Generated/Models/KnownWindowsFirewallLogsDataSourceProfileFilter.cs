@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="KnownWindowsFirewallLogsDataSourceProfileFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownWindowsFirewallLogsDataSourceProfileFilter?(string value) => value == null ? null : new KnownWindowsFirewallLogsDataSourceProfileFilter(value);
+        public static implicit operator KnownWindowsFirewallLogsDataSourceProfileFilter?(string value) => value == null ? (KnownWindowsFirewallLogsDataSourceProfileFilter?)null : new KnownWindowsFirewallLogsDataSourceProfileFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

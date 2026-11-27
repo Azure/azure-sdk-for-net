@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="TraceMetricsState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TraceMetricsState?(string value) => value == null ? null : new TraceMetricsState(value);
+        public static implicit operator TraceMetricsState?(string value) => value == null ? (TraceMetricsState?)null : new TraceMetricsState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

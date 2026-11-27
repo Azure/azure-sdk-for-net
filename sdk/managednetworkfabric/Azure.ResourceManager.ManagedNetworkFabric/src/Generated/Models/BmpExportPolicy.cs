@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="BmpExportPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BmpExportPolicy?(string value) => value == null ? null : new BmpExportPolicy(value);
+        public static implicit operator BmpExportPolicy?(string value) => value == null ? (BmpExportPolicy?)null : new BmpExportPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

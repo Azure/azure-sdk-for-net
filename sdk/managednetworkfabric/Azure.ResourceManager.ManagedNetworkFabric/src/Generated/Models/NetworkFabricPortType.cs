@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricPortType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricPortType?(string value) => value == null ? null : new NetworkFabricPortType(value);
+        public static implicit operator NetworkFabricPortType?(string value) => value == null ? (NetworkFabricPortType?)null : new NetworkFabricPortType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

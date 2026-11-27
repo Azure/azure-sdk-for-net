@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsIdentityType?(string value) => value == null ? null : new MapsIdentityType(value);
+        public static implicit operator MapsIdentityType?(string value) => value == null ? (MapsIdentityType?)null : new MapsIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

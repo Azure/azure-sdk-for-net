@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="IsolationDomainEncapsulationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsolationDomainEncapsulationType?(string value) => value == null ? null : new IsolationDomainEncapsulationType(value);
+        public static implicit operator IsolationDomainEncapsulationType?(string value) => value == null ? (IsolationDomainEncapsulationType?)null : new IsolationDomainEncapsulationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

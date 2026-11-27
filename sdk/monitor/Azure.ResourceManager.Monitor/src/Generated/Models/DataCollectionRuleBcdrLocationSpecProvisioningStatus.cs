@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataCollectionRuleBcdrLocationSpecProvisioningStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataCollectionRuleBcdrLocationSpecProvisioningStatus?(string value) => value == null ? null : new DataCollectionRuleBcdrLocationSpecProvisioningStatus(value);
+        public static implicit operator DataCollectionRuleBcdrLocationSpecProvisioningStatus?(string value) => value == null ? (DataCollectionRuleBcdrLocationSpecProvisioningStatus?)null : new DataCollectionRuleBcdrLocationSpecProvisioningStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

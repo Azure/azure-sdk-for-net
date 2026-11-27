@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricV6OverV4BgpSessionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricV6OverV4BgpSessionState?(string value) => value == null ? null : new NetworkFabricV6OverV4BgpSessionState(value);
+        public static implicit operator NetworkFabricV6OverV4BgpSessionState?(string value) => value == null ? (NetworkFabricV6OverV4BgpSessionState?)null : new NetworkFabricV6OverV4BgpSessionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataCollectionRuleAssociationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataCollectionRuleAssociationProvisioningState?(string value) => value == null ? null : new DataCollectionRuleAssociationProvisioningState(value);
+        public static implicit operator DataCollectionRuleAssociationProvisioningState?(string value) => value == null ? (DataCollectionRuleAssociationProvisioningState?)null : new DataCollectionRuleAssociationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

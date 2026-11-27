@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="DataColumnDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataColumnDefinitionType?(string value) => value == null ? null : new DataColumnDefinitionType(value);
+        public static implicit operator DataColumnDefinitionType?(string value) => value == null ? (DataColumnDefinitionType?)null : new DataColumnDefinitionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

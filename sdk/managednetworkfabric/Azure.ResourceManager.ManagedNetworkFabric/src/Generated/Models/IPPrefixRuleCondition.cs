@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="IPPrefixRuleCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPPrefixRuleCondition?(string value) => value == null ? null : new IPPrefixRuleCondition(value);
+        public static implicit operator IPPrefixRuleCondition?(string value) => value == null ? (IPPrefixRuleCondition?)null : new IPPrefixRuleCondition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

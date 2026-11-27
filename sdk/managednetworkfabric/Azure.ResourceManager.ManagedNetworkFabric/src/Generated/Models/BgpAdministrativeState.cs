@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="BgpAdministrativeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BgpAdministrativeState?(string value) => value == null ? null : new BgpAdministrativeState(value);
+        public static implicit operator BgpAdministrativeState?(string value) => value == null ? (BgpAdministrativeState?)null : new BgpAdministrativeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

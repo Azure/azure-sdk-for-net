@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliProvisioningState?(string value) => value == null ? null : new SliProvisioningState(value);
+        public static implicit operator SliProvisioningState?(string value) => value == null ? (SliProvisioningState?)null : new SliProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

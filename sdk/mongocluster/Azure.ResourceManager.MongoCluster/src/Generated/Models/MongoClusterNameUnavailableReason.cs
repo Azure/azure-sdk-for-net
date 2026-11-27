@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterNameUnavailableReason?(string value) => value == null ? null : new MongoClusterNameUnavailableReason(value);
+        public static implicit operator MongoClusterNameUnavailableReason?(string value) => value == null ? (MongoClusterNameUnavailableReason?)null : new MongoClusterNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

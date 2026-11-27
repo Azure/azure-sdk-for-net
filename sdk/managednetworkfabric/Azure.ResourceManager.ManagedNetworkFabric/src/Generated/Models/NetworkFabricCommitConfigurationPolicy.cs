@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricCommitConfigurationPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricCommitConfigurationPolicy?(string value) => value == null ? null : new NetworkFabricCommitConfigurationPolicy(value);
+        public static implicit operator NetworkFabricCommitConfigurationPolicy?(string value) => value == null ? (NetworkFabricCommitConfigurationPolicy?)null : new NetworkFabricCommitConfigurationPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

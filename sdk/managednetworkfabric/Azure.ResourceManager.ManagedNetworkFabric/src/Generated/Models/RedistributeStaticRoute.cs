@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="RedistributeStaticRoute"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedistributeStaticRoute?(string value) => value == null ? null : new RedistributeStaticRoute(value);
+        public static implicit operator RedistributeStaticRoute?(string value) => value == null ? (RedistributeStaticRoute?)null : new RedistributeStaticRoute(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

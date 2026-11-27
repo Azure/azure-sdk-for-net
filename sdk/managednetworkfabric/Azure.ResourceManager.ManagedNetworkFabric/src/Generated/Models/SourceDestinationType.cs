@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="SourceDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceDestinationType?(string value) => value == null ? null : new SourceDestinationType(value);
+        public static implicit operator SourceDestinationType?(string value) => value == null ? (SourceDestinationType?)null : new SourceDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

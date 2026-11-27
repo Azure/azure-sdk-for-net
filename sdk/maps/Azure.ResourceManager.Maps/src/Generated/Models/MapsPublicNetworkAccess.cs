@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsPublicNetworkAccess?(string value) => value == null ? null : new MapsPublicNetworkAccess(value);
+        public static implicit operator MapsPublicNetworkAccess?(string value) => value == null ? (MapsPublicNetworkAccess?)null : new MapsPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

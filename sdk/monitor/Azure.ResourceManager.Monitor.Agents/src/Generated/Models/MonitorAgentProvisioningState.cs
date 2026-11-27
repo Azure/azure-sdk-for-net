@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
 
         /// <summary> Converts a string to a <see cref="MonitorAgentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorAgentProvisioningState?(string value) => value == null ? null : new MonitorAgentProvisioningState(value);
+        public static implicit operator MonitorAgentProvisioningState?(string value) => value == null ? (MonitorAgentProvisioningState?)null : new MonitorAgentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

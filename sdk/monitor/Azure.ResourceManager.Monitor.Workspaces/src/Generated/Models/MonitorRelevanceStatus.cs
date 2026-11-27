@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="MonitorRelevanceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorRelevanceStatus?(string value) => value == null ? null : new MonitorRelevanceStatus(value);
+        public static implicit operator MonitorRelevanceStatus?(string value) => value == null ? (MonitorRelevanceStatus?)null : new MonitorRelevanceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

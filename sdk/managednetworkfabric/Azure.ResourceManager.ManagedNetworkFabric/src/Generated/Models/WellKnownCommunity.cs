@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="WellKnownCommunity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WellKnownCommunity?(string value) => value == null ? null : new WellKnownCommunity(value);
+        public static implicit operator WellKnownCommunity?(string value) => value == null ? (WellKnownCommunity?)null : new WellKnownCommunity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

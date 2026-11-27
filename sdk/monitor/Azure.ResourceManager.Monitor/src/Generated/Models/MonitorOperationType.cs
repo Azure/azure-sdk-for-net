@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorOperationType?(string value) => value == null ? null : new MonitorOperationType(value);
+        public static implicit operator MonitorOperationType?(string value) => value == null ? (MonitorOperationType?)null : new MonitorOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationLockLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationLockLevel?(string value) => value == null ? null : new ApplicationLockLevel(value);
+        public static implicit operator ApplicationLockLevel?(string value) => value == null ? (ApplicationLockLevel?)null : new ApplicationLockLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

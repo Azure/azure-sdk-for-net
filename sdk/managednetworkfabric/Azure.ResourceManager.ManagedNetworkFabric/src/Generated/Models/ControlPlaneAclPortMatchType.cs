@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="ControlPlaneAclPortMatchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlPlaneAclPortMatchType?(string value) => value == null ? null : new ControlPlaneAclPortMatchType(value);
+        public static implicit operator ControlPlaneAclPortMatchType?(string value) => value == null ? (ControlPlaneAclPortMatchType?)null : new ControlPlaneAclPortMatchType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="InternalNetworkRouteType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InternalNetworkRouteType?(string value) => value == null ? null : new InternalNetworkRouteType(value);
+        public static implicit operator InternalNetworkRouteType?(string value) => value == null ? (InternalNetworkRouteType?)null : new InternalNetworkRouteType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

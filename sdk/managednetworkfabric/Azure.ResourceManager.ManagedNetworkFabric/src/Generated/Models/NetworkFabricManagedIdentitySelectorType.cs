@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricManagedIdentitySelectorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricManagedIdentitySelectorType?(string value) => value == null ? null : new NetworkFabricManagedIdentitySelectorType(value);
+        public static implicit operator NetworkFabricManagedIdentitySelectorType?(string value) => value == null ? (NetworkFabricManagedIdentitySelectorType?)null : new NetworkFabricManagedIdentitySelectorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

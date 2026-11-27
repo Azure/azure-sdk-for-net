@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode?(string value) => value == null ? null : new MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode(value);
+        public static implicit operator MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode?(string value) => value == null ? (MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode?)null : new MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

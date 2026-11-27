@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkDeviceRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkDeviceRole?(string value) => value == null ? null : new NetworkDeviceRole(value);
+        public static implicit operator NetworkDeviceRole?(string value) => value == null ? (NetworkDeviceRole?)null : new NetworkDeviceRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

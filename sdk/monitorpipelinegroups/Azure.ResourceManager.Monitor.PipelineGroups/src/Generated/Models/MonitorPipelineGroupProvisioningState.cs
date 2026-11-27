@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="MonitorPipelineGroupProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorPipelineGroupProvisioningState?(string value) => value == null ? null : new MonitorPipelineGroupProvisioningState(value);
+        public static implicit operator MonitorPipelineGroupProvisioningState?(string value) => value == null ? (MonitorPipelineGroupProvisioningState?)null : new MonitorPipelineGroupProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentMode?(string value) => value == null ? null : new DeploymentMode(value);
+        public static implicit operator DeploymentMode?(string value) => value == null ? (DeploymentMode?)null : new DeploymentMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

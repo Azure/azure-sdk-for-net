@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MetricCriteriaOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricCriteriaOperator?(string value) => value == null ? null : new MetricCriteriaOperator(value);
+        public static implicit operator MetricCriteriaOperator?(string value) => value == null ? (MetricCriteriaOperator?)null : new MetricCriteriaOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

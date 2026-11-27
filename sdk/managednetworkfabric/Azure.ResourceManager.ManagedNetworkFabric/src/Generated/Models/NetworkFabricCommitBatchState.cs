@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricCommitBatchState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricCommitBatchState?(string value) => value == null ? null : new NetworkFabricCommitBatchState(value);
+        public static implicit operator NetworkFabricCommitBatchState?(string value) => value == null ? (NetworkFabricCommitBatchState?)null : new NetworkFabricCommitBatchState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

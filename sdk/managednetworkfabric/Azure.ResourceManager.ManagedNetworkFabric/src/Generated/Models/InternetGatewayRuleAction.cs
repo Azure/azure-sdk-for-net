@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="InternetGatewayRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InternetGatewayRuleAction?(string value) => value == null ? null : new InternetGatewayRuleAction(value);
+        public static implicit operator InternetGatewayRuleAction?(string value) => value == null ? (InternetGatewayRuleAction?)null : new InternetGatewayRuleAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

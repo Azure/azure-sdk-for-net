@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupAllowedFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupAllowedFormat?(string value) => value == null ? null : new PipelineGroupAllowedFormat(value);
+        public static implicit operator PipelineGroupAllowedFormat?(string value) => value == null ? (PipelineGroupAllowedFormat?)null : new PipelineGroupAllowedFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

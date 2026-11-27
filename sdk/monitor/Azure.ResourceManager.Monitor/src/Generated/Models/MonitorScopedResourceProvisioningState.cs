@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorScopedResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorScopedResourceProvisioningState?(string value) => value == null ? null : new MonitorScopedResourceProvisioningState(value);
+        public static implicit operator MonitorScopedResourceProvisioningState?(string value) => value == null ? (MonitorScopedResourceProvisioningState?)null : new MonitorScopedResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

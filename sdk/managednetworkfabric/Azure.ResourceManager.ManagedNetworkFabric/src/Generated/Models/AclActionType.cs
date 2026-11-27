@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="AclActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AclActionType?(string value) => value == null ? null : new AclActionType(value);
+        public static implicit operator AclActionType?(string value) => value == null ? (AclActionType?)null : new AclActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

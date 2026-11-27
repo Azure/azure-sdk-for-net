@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorMetricResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorMetricResultType?(string value) => value == null ? null : new MonitorMetricResultType(value);
+        public static implicit operator MonitorMetricResultType?(string value) => value == null ? (MonitorMetricResultType?)null : new MonitorMetricResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

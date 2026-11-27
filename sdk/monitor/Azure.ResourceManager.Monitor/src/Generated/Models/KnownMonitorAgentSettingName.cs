@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="KnownMonitorAgentSettingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownMonitorAgentSettingName?(string value) => value == null ? null : new KnownMonitorAgentSettingName(value);
+        public static implicit operator KnownMonitorAgentSettingName?(string value) => value == null ? (KnownMonitorAgentSettingName?)null : new KnownMonitorAgentSettingName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

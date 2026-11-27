@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricCommitStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricCommitStage?(string value) => value == null ? null : new NetworkFabricCommitStage(value);
+        public static implicit operator NetworkFabricCommitStage?(string value) => value == null ? (NetworkFabricCommitStage?)null : new NetworkFabricCommitStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

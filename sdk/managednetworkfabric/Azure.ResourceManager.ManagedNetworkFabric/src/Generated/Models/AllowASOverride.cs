@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="AllowASOverride"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowASOverride?(string value) => value == null ? null : new AllowASOverride(value);
+        public static implicit operator AllowASOverride?(string value) => value == null ? (AllowASOverride?)null : new AllowASOverride(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

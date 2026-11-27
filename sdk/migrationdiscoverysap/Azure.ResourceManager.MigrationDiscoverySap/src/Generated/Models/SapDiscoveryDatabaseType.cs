@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <summary> Converts a string to a <see cref="SapDiscoveryDatabaseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDiscoveryDatabaseType?(string value) => value == null ? null : new SapDiscoveryDatabaseType(value);
+        public static implicit operator SapDiscoveryDatabaseType?(string value) => value == null ? (SapDiscoveryDatabaseType?)null : new SapDiscoveryDatabaseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterPromoteMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterPromoteMode?(string value) => value == null ? null : new MongoClusterPromoteMode(value);
+        public static implicit operator MongoClusterPromoteMode?(string value) => value == null ? (MongoClusterPromoteMode?)null : new MongoClusterPromoteMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

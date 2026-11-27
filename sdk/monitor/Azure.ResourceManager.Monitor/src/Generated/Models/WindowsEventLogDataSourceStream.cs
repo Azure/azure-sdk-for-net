@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="WindowsEventLogDataSourceStream"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsEventLogDataSourceStream?(string value) => value == null ? null : new WindowsEventLogDataSourceStream(value);
+        public static implicit operator WindowsEventLogDataSourceStream?(string value) => value == null ? (WindowsEventLogDataSourceStream?)null : new WindowsEventLogDataSourceStream(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

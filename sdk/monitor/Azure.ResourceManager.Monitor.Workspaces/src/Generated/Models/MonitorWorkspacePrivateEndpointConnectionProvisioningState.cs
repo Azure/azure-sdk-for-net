@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="MonitorWorkspacePrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorWorkspacePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new MonitorWorkspacePrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator MonitorWorkspacePrivateEndpointConnectionProvisioningState?(string value) => value == null ? (MonitorWorkspacePrivateEndpointConnectionProvisioningState?)null : new MonitorWorkspacePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

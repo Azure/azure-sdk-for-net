@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         /// <summary> Converts a string to a <see cref="IsolationScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsolationScope?(string value) => value == null ? null : new IsolationScope(value);
+        public static implicit operator IsolationScope?(string value) => value == null ? (IsolationScope?)null : new IsolationScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

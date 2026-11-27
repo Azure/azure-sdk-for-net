@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Converts a string to a <see cref="MongoClusterDataApiMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterDataApiMode?(string value) => value == null ? null : new MongoClusterDataApiMode(value);
+        public static implicit operator MongoClusterDataApiMode?(string value) => value == null ? (MongoClusterDataApiMode?)null : new MongoClusterDataApiMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

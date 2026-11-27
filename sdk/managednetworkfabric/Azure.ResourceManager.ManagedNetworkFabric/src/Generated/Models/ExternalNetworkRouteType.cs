@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="ExternalNetworkRouteType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalNetworkRouteType?(string value) => value == null ? null : new ExternalNetworkRouteType(value);
+        public static implicit operator ExternalNetworkRouteType?(string value) => value == null ? (ExternalNetworkRouteType?)null : new ExternalNetworkRouteType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <summary> Converts a string to a <see cref="ManagedOpsDesiredEnablementState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedOpsDesiredEnablementState?(string value) => value == null ? null : new ManagedOpsDesiredEnablementState(value);
+        public static implicit operator ManagedOpsDesiredEnablementState?(string value) => value == null ? (ManagedOpsDesiredEnablementState?)null : new ManagedOpsDesiredEnablementState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

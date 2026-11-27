@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricRouteType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricRouteType?(string value) => value == null ? null : new NetworkFabricRouteType(value);
+        public static implicit operator NetworkFabricRouteType?(string value) => value == null ? (NetworkFabricRouteType?)null : new NetworkFabricRouteType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

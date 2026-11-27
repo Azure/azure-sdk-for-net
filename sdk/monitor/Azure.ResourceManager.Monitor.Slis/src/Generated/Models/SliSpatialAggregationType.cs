@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliSpatialAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliSpatialAggregationType?(string value) => value == null ? null : new SliSpatialAggregationType(value);
+        public static implicit operator SliSpatialAggregationType?(string value) => value == null ? (SliSpatialAggregationType?)null : new SliSpatialAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

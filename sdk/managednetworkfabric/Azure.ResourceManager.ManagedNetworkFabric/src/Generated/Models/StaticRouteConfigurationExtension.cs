@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="StaticRouteConfigurationExtension"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StaticRouteConfigurationExtension?(string value) => value == null ? null : new StaticRouteConfigurationExtension(value);
+        public static implicit operator StaticRouteConfigurationExtension?(string value) => value == null ? (StaticRouteConfigurationExtension?)null : new StaticRouteConfigurationExtension(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

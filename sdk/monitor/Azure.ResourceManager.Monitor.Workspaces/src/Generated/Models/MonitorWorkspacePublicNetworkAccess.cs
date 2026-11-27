@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="MonitorWorkspacePublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorWorkspacePublicNetworkAccess?(string value) => value == null ? null : new MonitorWorkspacePublicNetworkAccess(value);
+        public static implicit operator MonitorWorkspacePublicNetworkAccess?(string value) => value == null ? (MonitorWorkspacePublicNetworkAccess?)null : new MonitorWorkspacePublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

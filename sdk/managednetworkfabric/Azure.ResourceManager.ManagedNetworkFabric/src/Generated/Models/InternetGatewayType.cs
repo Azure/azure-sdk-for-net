@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="InternetGatewayType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InternetGatewayType?(string value) => value == null ? null : new InternetGatewayType(value);
+        public static implicit operator InternetGatewayType?(string value) => value == null ? (InternetGatewayType?)null : new InternetGatewayType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

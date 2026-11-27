@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="JitRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JitRequestStatus?(string value) => value == null ? null : new JitRequestStatus(value);
+        public static implicit operator JitRequestStatus?(string value) => value == null ? (JitRequestStatus?)null : new JitRequestStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

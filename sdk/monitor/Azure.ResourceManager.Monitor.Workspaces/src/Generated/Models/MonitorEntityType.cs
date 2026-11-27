@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="MonitorEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorEntityType?(string value) => value == null ? null : new MonitorEntityType(value);
+        public static implicit operator MonitorEntityType?(string value) => value == null ? (MonitorEntityType?)null : new MonitorEntityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="LogFilesDataSourceFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogFilesDataSourceFormat?(string value) => value == null ? null : new LogFilesDataSourceFormat(value);
+        public static implicit operator LogFilesDataSourceFormat?(string value) => value == null ? (LogFilesDataSourceFormat?)null : new LogFilesDataSourceFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

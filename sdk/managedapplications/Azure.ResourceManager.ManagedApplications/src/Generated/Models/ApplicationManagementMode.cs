@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationManagementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationManagementMode?(string value) => value == null ? null : new ApplicationManagementMode(value);
+        public static implicit operator ApplicationManagementMode?(string value) => value == null ? (ApplicationManagementMode?)null : new ApplicationManagementMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricAdministrativeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricAdministrativeState?(string value) => value == null ? null : new NetworkFabricAdministrativeState(value);
+        public static implicit operator NetworkFabricAdministrativeState?(string value) => value == null ? (NetworkFabricAdministrativeState?)null : new NetworkFabricAdministrativeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

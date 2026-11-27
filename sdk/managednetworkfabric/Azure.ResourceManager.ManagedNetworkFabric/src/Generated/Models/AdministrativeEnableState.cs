@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="AdministrativeEnableState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdministrativeEnableState?(string value) => value == null ? null : new AdministrativeEnableState(value);
+        public static implicit operator AdministrativeEnableState?(string value) => value == null ? (AdministrativeEnableState?)null : new AdministrativeEnableState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

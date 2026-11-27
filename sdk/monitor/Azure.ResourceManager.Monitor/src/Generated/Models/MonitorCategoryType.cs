@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorCategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorCategoryType?(string value) => value == null ? null : new MonitorCategoryType(value);
+        public static implicit operator MonitorCategoryType?(string value) => value == null ? (MonitorCategoryType?)null : new MonitorCategoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

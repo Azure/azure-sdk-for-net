@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Converts a string to a <see cref="SliCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliCategory?(string value) => value == null ? null : new SliCategory(value);
+        public static implicit operator SliCategory?(string value) => value == null ? (SliCategory?)null : new SliCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

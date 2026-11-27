@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="SyslogDataSourceFacilityName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyslogDataSourceFacilityName?(string value) => value == null ? null : new SyslogDataSourceFacilityName(value);
+        public static implicit operator SyslogDataSourceFacilityName?(string value) => value == null ? (SyslogDataSourceFacilityName?)null : new SyslogDataSourceFacilityName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Converts a string to a <see cref="MapsPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MapsPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new MapsPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator MapsPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (MapsPrivateEndpointServiceConnectionStatus?)null : new MapsPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

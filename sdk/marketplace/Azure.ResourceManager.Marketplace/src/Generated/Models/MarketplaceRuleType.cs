@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Converts a string to a <see cref="MarketplaceRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceRuleType?(string value) => value == null ? null : new MarketplaceRuleType(value);
+        public static implicit operator MarketplaceRuleType?(string value) => value == null ? (MarketplaceRuleType?)null : new MarketplaceRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

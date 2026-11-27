@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
 
         /// <summary> Converts a string to a <see cref="PipelineGroupPrivateKeySourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PipelineGroupPrivateKeySourceType?(string value) => value == null ? null : new PipelineGroupPrivateKeySourceType(value);
+        public static implicit operator PipelineGroupPrivateKeySourceType?(string value) => value == null ? (PipelineGroupPrivateKeySourceType?)null : new PipelineGroupPrivateKeySourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

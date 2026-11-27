@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="MonitorPrivateLinkAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorPrivateLinkAccessMode?(string value) => value == null ? null : new MonitorPrivateLinkAccessMode(value);
+        public static implicit operator MonitorPrivateLinkAccessMode?(string value) => value == null ? (MonitorPrivateLinkAccessMode?)null : new MonitorPrivateLinkAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <summary> Converts a string to a <see cref="SapDiscoveryOperatingSystem"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDiscoveryOperatingSystem?(string value) => value == null ? null : new SapDiscoveryOperatingSystem(value);
+        public static implicit operator SapDiscoveryOperatingSystem?(string value) => value == null ? (SapDiscoveryOperatingSystem?)null : new SapDiscoveryOperatingSystem(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

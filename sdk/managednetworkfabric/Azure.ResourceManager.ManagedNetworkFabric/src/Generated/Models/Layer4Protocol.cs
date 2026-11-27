@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="Layer4Protocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Layer4Protocol?(string value) => value == null ? null : new Layer4Protocol(value);
+        public static implicit operator Layer4Protocol?(string value) => value == null ? (Layer4Protocol?)null : new Layer4Protocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

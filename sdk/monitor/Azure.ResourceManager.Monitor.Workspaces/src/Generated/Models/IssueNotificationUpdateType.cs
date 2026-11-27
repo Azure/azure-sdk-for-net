@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Converts a string to a <see cref="IssueNotificationUpdateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IssueNotificationUpdateType?(string value) => value == null ? null : new IssueNotificationUpdateType(value);
+        public static implicit operator IssueNotificationUpdateType?(string value) => value == null ? (IssueNotificationUpdateType?)null : new IssueNotificationUpdateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

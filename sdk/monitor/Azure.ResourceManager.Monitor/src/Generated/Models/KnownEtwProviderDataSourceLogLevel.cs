@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Converts a string to a <see cref="KnownEtwProviderDataSourceLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownEtwProviderDataSourceLogLevel?(string value) => value == null ? null : new KnownEtwProviderDataSourceLogLevel(value);
+        public static implicit operator KnownEtwProviderDataSourceLogLevel?(string value) => value == null ? (KnownEtwProviderDataSourceLogLevel?)null : new KnownEtwProviderDataSourceLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

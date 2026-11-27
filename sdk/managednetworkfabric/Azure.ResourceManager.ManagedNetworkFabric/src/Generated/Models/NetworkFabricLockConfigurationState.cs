@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFabricLockConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFabricLockConfigurationState?(string value) => value == null ? null : new NetworkFabricLockConfigurationState(value);
+        public static implicit operator NetworkFabricLockConfigurationState?(string value) => value == null ? (NetworkFabricLockConfigurationState?)null : new NetworkFabricLockConfigurationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
