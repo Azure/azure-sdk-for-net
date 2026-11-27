@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByApiRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateListByApiRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByApiRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextListByApiRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateListByOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByOperationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextListByOperationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateListByProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByProductRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextListByProductRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

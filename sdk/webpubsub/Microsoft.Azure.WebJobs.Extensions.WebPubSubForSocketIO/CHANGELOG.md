@@ -1,6 +1,10 @@
 # Release History
 
-## 1.0.1 (2026-11-23)
+## 1.1.0 (Unreleased)
+
+### Breaking Changes
+
+- `AddSocketToRoom` now rejects room names, namespaces, and socket IDs containing `U+FFFD` or unpaired UTF-16 surrogates to prevent ambiguous group membership. This also rejects intentionally supplied `U+FFFD` characters. Sending to and removing members from existing rooms are unchanged.
 
 ### Bugs Fixed
 

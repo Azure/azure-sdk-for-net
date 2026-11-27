@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (EducationJoinRequestData item in Value)
+                foreach (EducationJoinContentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 return null;
             }
-            IReadOnlyList<EducationJoinRequestData> value = default;
+            IReadOnlyList<EducationJoinContentData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    List<EducationJoinRequestData> array = new List<EducationJoinRequestData>();
+                    List<EducationJoinContentData> array = new List<EducationJoinContentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EducationJoinRequestData.DeserializeEducationJoinRequestData(item, options));
+                        array.Add(EducationJoinContentData.DeserializeEducationJoinContentData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Education.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JoinRequestList(value ?? new ChangeTrackingList<EducationJoinRequestData>(), nextLink, additionalBinaryDataProperties);
+            return new JoinRequestList(value ?? new ChangeTrackingList<EducationJoinContentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

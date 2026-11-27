@@ -41,8 +41,11 @@ namespace Azure.ResourceManager.ScVmm
 
         /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemData"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ScVmmInventoryItemData(ScVmmInventoryItemProperties properties) : this()
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
             Properties = properties;
         }
 

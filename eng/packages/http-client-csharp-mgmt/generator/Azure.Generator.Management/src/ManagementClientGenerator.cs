@@ -58,6 +58,8 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override TypeProviderWriter GetWriter(TypeProvider provider)
         {
+            // Model finalization can rebuild serialization providers after visitors have run.
+            SerializationVisitor.UpdateSerializationMethods(provider);
             if (provider is ModelFactoryProvider modelFactory)
             {
                 // Run model-factory repairs at write time, after all visitors have finalized model constructor
@@ -73,6 +75,7 @@ namespace Azure.Generator.Management
 
             foreach (var serialization in provider.SerializationProviders)
             {
+                SerializationVisitor.UpdateSerializationMethods(serialization);
                 SerializationConstructorCallHelper.FixConstructorCalls(serialization.Methods);
             }
 

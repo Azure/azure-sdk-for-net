@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- `NapsterOrganizationData.OrganizationName` is obsolete; use `Name` instead. When calling `ArmNapsterOmniagentApiModelFactory.NapsterOrganizationData`, pass `name` instead of `organizationName`. The legacy parameter is retained for compatibility but ignored.
+
 ## 1.0.0 (2026-09-23)
 
 ### Features Added

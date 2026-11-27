@@ -1628,11 +1628,11 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        /// <summary> Gets a collection of MarketplaceApprovalRequests in the <see cref="PrivateStoreResource"/>. </summary>
-        /// <returns> An object representing collection of MarketplaceApprovalRequests and their operations over a MarketplaceApprovalRequestResource. </returns>
-        public virtual MarketplaceApprovalRequestCollection GetMarketplaceApprovalRequests()
+        /// <summary> Gets a collection of MarketplaceRequestApprovals in the <see cref="PrivateStoreResource"/>. </summary>
+        /// <returns> An object representing collection of MarketplaceRequestApprovals and their operations over a MarketplaceRequestApprovalResource. </returns>
+        public virtual MarketplaceRequestApprovalCollection GetMarketplaceRequestApprovals()
         {
-            return GetCachedClient(client => new MarketplaceApprovalRequestCollection(client, Id));
+            return GetCachedClient(client => new MarketplaceRequestApprovalCollection(client, Id));
         }
 
         /// <summary> Get open request approval details. </summary>
@@ -1641,11 +1641,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetMarketplaceApprovalRequestAsync(string requestApprovalId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceRequestApprovalResource>> GetMarketplaceRequestApprovalAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            return await GetMarketplaceApprovalRequests().GetAsync(requestApprovalId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceRequestApprovals().GetAsync(requestApprovalId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get open request approval details. </summary>
@@ -1654,18 +1654,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MarketplaceApprovalRequestResource> GetMarketplaceApprovalRequest(string requestApprovalId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceRequestApprovalResource> GetMarketplaceRequestApproval(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            return GetMarketplaceApprovalRequests().Get(requestApprovalId, cancellationToken);
+            return GetMarketplaceRequestApprovals().Get(requestApprovalId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MarketplaceAdminApprovalRequests in the <see cref="PrivateStoreResource"/>. </summary>
-        /// <returns> An object representing collection of MarketplaceAdminApprovalRequests and their operations over a MarketplaceAdminApprovalRequestResource. </returns>
-        public virtual MarketplaceAdminApprovalRequestCollection GetMarketplaceAdminApprovalRequests()
+        /// <summary> Gets a collection of MarketplaceAdminRequestApprovals in the <see cref="PrivateStoreResource"/>. </summary>
+        /// <returns> An object representing collection of MarketplaceAdminRequestApprovals and their operations over a MarketplaceAdminRequestApprovalResource. </returns>
+        public virtual MarketplaceAdminRequestApprovalCollection GetMarketplaceAdminRequestApprovals()
         {
-            return GetCachedClient(client => new MarketplaceAdminApprovalRequestCollection(client, Id));
+            return GetCachedClient(client => new MarketplaceAdminRequestApprovalCollection(client, Id));
         }
 
         /// <summary> Get open approval requests. </summary>
@@ -1675,12 +1675,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetMarketplaceAdminApprovalRequestAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceAdminRequestApprovalResource>> GetMarketplaceAdminRequestApprovalAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
 
-            return await GetMarketplaceAdminApprovalRequests().GetAsync(adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceAdminRequestApprovals().GetAsync(adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get open approval requests. </summary>
@@ -1690,12 +1690,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MarketplaceAdminApprovalRequestResource> GetMarketplaceAdminApprovalRequest(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceAdminRequestApprovalResource> GetMarketplaceAdminRequestApproval(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
 
-            return GetMarketplaceAdminApprovalRequests().Get(adminRequestApprovalId, publisherId, cancellationToken);
+            return GetMarketplaceAdminRequestApprovals().Get(adminRequestApprovalId, publisherId, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateStoreCollectionInfos in the <see cref="PrivateStoreResource"/>. </summary>

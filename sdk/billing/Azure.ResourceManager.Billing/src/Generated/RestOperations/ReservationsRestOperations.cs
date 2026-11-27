@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByReservationOrderRequest(string billingAccountName, string reservationOrderId, RequestContext context)
+        internal HttpMessage CreateListByReservationOrderRequest(string billingAccountName, string reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByReservationOrderRequest(Uri nextPage, string billingAccountName, string reservationOrderId, RequestContext context)
+        internal HttpMessage CreateNextListByReservationOrderRequest(Uri nextPage, string billingAccountName, string reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
