@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,6 +20,59 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     [CodeGenSuppress("NetworkCloudClusterData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(NetworkCloudRackDefinition), typeof(AnalyticsOutputSettings), typeof(ResourceIdentifier), typeof(string), typeof(ServicePrincipalInformation), typeof(ClusterType), typeof(string), typeof(CommandOutputSettings), typeof(ValidationThreshold), typeof(IEnumerable<NetworkCloudRackDefinition>), typeof(ManagedResourceGroupConfiguration), typeof(ResourceIdentifier), typeof(RuntimeProtectionConfiguration), typeof(ClusterSecretArchive), typeof(SecretArchiveSettings), typeof(ClusterUpdateStrategy), typeof(IEnumerable<NetworkCloudActionState>), typeof(IEnumerable<ClusterAvailableUpgradeVersion>), typeof(ClusterCapacity), typeof(ClusterConnectionStatus?), typeof(Resources.Models.ExtendedLocation), typeof(ClusterManagerConnectionStatus?), typeof(ResourceIdentifier), typeof(ClusterDetailedStatus?), typeof(string), typeof(NetworkCloudCertificateInfo), typeof(Resources.Models.ExtendedLocation), typeof(DateTimeOffset?), typeof(IEnumerable<string>), typeof(long?), typeof(DateTimeOffset?), typeof(IEnumerable<ResourceIdentifier>), typeof(ClusterProvisioningState?), typeof(VulnerabilityScanningSettingsContainerScan?), typeof(ETag?), typeof(ExtendedLocation), typeof(ManagedServiceIdentity), typeof(NetworkCloudDeploymentType?))]
     public static partial class ArmNetworkCloudModelFactory
     {
+        // Preserve the shipped factory signature and forward its support expiry to the current model.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterData"/> for mocking. </summary>
+        /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, IEnumerable<NetworkCloudActionState> actionStates, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Resources.Models.ExtendedLocation hybridAksExtendedLocation, DateTimeOffset? lastSuccessfulVersionUpdateOn, IEnumerable<string> managedCredentials, long? manualActionCount, DateTimeOffset? supportExpireOn, IEnumerable<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind)
+        {
+            return NetworkCloudClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                aggregatorOrSingleRackDefinition,
+                analyticsOutputSettings,
+                analyticsWorkspaceId,
+                clusterLocation,
+                clusterServicePrincipal,
+                clusterType,
+                clusterVersion,
+                commandOutputSettings,
+                computeDeploymentThreshold,
+                computeRackDefinitions,
+                managedResourceGroupConfiguration,
+                networkFabricId,
+                runtimeProtectionConfiguration,
+                secretArchive,
+                secretArchiveSettings,
+                updateStrategy,
+                actionStates,
+                availableUpgradeVersions,
+                clusterCapacity,
+                clusterConnectionStatus,
+                clusterExtendedLocation,
+                clusterManagerConnectionStatus,
+                clusterManagerId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksExtendedLocation,
+                lastSuccessfulVersionUpdateOn,
+                managedCredentials,
+                manualActionCount,
+                supportExpireOn,
+                workloadResourceIds,
+                provisioningState,
+                vulnerabilityScanningContainerScan,
+                eTag,
+                extendedLocation,
+                identity,
+                kind,
+                edgeManagementServiceCACertificate: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch"/>. </summary>
         /// <param name="identity"> The identity for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
