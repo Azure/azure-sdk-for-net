@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="PrivateLinkGroupResource"/> and their operations.
-    /// Each <see cref="PrivateLinkGroupResource"/> in the collection will belong to the same instance of <see cref="PrivateLinkResource"/>.
-    /// To get a <see cref="PrivateLinkGroupCollection"/> instance call the GetPrivateLinkGroups method from an instance of <see cref="PrivateLinkResource"/>.
+    /// Each <see cref="PrivateLinkGroupResource"/> in the collection will belong to the same instance of <see cref="SecurityCenterPrivateLinkResource"/>.
+    /// To get a <see cref="PrivateLinkGroupCollection"/> instance call the GetPrivateLinkGroups method from an instance of <see cref="SecurityCenterPrivateLinkResource"/>.
     /// </summary>
     public partial class PrivateLinkGroupCollection : ArmCollection, IEnumerable<PrivateLinkGroupResource>, IAsyncEnumerable<PrivateLinkGroupResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateLinkResource.ResourceType)
+            if (id.ResourceType != SecurityCenterPrivateLinkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SecurityCenterPrivateLinkResource.ResourceType), nameof(id));
             }
         }
 

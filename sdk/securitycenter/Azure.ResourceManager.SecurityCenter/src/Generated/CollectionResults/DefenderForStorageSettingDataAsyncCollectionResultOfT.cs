@@ -60,8 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 DefenderForStorageSettingList result = DefenderForStorageSettingList.FromResponse(response);
-                string nextPageString = result.NextLink;
-                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                nextPage = result.NextLink;
                 yield return Page<DefenderForStorageSettingData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {

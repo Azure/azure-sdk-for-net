@@ -12,21 +12,21 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Request payload for updating a private link resource. Used in PATCH operations to update specific mutable properties without affecting the entire resource configuration. </summary>
-    public partial class PrivateLinkResourcePatch
+    public partial class SecurityCenterPrivateLinkResourcePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcePatch"/>. </summary>
-        public PrivateLinkResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPrivateLinkResourcePatch"/>. </summary>
+        public SecurityCenterPrivateLinkResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPrivateLinkResourcePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityCenterPrivateLinkResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

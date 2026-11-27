@@ -10,27 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Describes the state of a malware scan operation. </summary>
-    public partial class MalwareScan
+    /// <summary> Reference to the pricing properties defined in pricings.json. </summary>
+    public partial class PricingPropertiesReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MalwareScan"/>. </summary>
-        internal MalwareScan()
+        /// <summary> Initializes a new instance of <see cref="PricingPropertiesReference"/>. </summary>
+        public PricingPropertiesReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MalwareScan"/>. </summary>
-        /// <param name="properties"></param>
+        /// <summary> Initializes a new instance of <see cref="PricingPropertiesReference"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MalwareScan(MalwareScanProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricingPropertiesReference(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the Properties. </summary>
-        public MalwareScanProperties Properties { get; }
     }
 }

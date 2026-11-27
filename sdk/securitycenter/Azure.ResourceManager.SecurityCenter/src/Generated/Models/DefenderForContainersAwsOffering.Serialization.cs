@@ -95,6 +95,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3, options);
             }
+            if (Optional.IsDefined(InstallationMethod))
+            {
+                writer.WritePropertyName("installationMethod"u8);
+                writer.WriteStringValue(InstallationMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(SecurityGatingEnabled))
+            {
+                writer.WritePropertyName("securityGatingEnabled"u8);
+                writer.WriteBooleanValue(SecurityGatingEnabled.Value);
+            }
+            if (Optional.IsDefined(ContainerAntiMalwareEnabled))
+            {
+                writer.WritePropertyName("containerAntiMalwareEnabled"u8);
+                writer.WriteBooleanValue(ContainerAntiMalwareEnabled.Value);
+            }
             if (Optional.IsDefined(EnableAuditLogsAutoProvisioning))
             {
                 writer.WritePropertyName("enableAuditLogsAutoProvisioning"u8);
@@ -169,6 +184,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             DefenderForContainersAwsOfferingKubernetesDataCollection kubernetesDataCollection = default;
             DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis = default;
             DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3 = default;
+            InstallationMethod? installationMethod = default;
+            bool? securityGatingEnabled = default;
+            bool? containerAntiMalwareEnabled = default;
             bool? enableAuditLogsAutoProvisioning = default;
             bool? enableDefenderAgentAutoProvisioning = default;
             bool? enablePolicyAgentAutoProvisioning = default;
@@ -223,6 +241,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         continue;
                     }
                     kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("installationMethod"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    installationMethod = new InstallationMethod(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("securityGatingEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityGatingEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("containerAntiMalwareEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerAntiMalwareEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAuditLogsAutoProvisioning"u8))
@@ -306,6 +351,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 kubernetesDataCollection,
                 cloudWatchToKinesis,
                 kinesisToS3,
+                installationMethod,
+                securityGatingEnabled,
+                containerAntiMalwareEnabled,
                 enableAuditLogsAutoProvisioning,
                 enableDefenderAgentAutoProvisioning,
                 enablePolicyAgentAutoProvisioning,

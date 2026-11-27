@@ -123,14 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (ExcludeBlobsLargerThan != null)
                 {
                     writer.WritePropertyName("excludeBlobsLargerThan"u8);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(ExcludeBlobsLargerThan);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(ExcludeBlobsLargerThan))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteNumberValue(ExcludeBlobsLargerThan.Value);
                 }
                 else
                 {
@@ -182,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<string> excludeBlobsWithPrefix = new ChangeTrackingList<string>();
             IList<string> excludeBlobsWithSuffix = new ChangeTrackingList<string>();
             bool excludeBlobsLargerThanIsDefined = false;
-            BinaryData excludeBlobsLargerThan = default;
+            long? excludeBlobsLargerThan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -238,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         excludeBlobsLargerThan = null;
                         continue;
                     }
-                    excludeBlobsLargerThan = prop.Value.GetUtf8Bytes();
+                    excludeBlobsLargerThan = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")

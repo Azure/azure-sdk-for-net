@@ -153,6 +153,51 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new SecurityContactResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PricingBatchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PricingBatchResource"/> object. </returns>
+        public virtual PricingBatchResource GetPricingBatchResource(ResourceIdentifier id)
+        {
+            PricingBatchResource.ValidateResourceId(id);
+            return new PricingBatchResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="PricingBatchCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PricingBatchResource"/> objects. </returns>
+        public virtual PricingBatchCollection GetPricingBatches(ResourceIdentifier scope)
+        {
+            return new PricingBatchCollection(Client, scope);
+        }
+
+        /// <summary> Gets the current pricing batch configuration for the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="pricingBatchName"> Name of the pricing batch resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pricingBatchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingBatchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PricingBatchResource> GetPricingBatch(ResourceIdentifier scope, string pricingBatchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pricingBatchName, nameof(pricingBatchName));
+
+            return GetPricingBatches(scope).Get(pricingBatchName, cancellationToken);
+        }
+
+        /// <summary> Gets the current pricing batch configuration for the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="pricingBatchName"> Name of the pricing batch resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pricingBatchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingBatchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PricingBatchResource>> GetPricingBatchAsync(ResourceIdentifier scope, string pricingBatchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pricingBatchName, nameof(pricingBatchName));
+
+            return await GetPricingBatches(scope).GetAsync(pricingBatchName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="ComplianceResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ComplianceResultResource"/> object. </returns>
@@ -1067,22 +1112,75 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         /// <summary> Gets the Defender for Storage settings for the specified storage account. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
+        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(ResourceIdentifier scope, string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             return GetDefenderForStorageSettings(scope).Get(settingName, cancellationToken);
         }
 
         /// <summary> Gets the Defender for Storage settings for the specified storage account. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(ResourceIdentifier scope, string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MalwareScanResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MalwareScanResource"/> object. </returns>
+        public virtual MalwareScanResource GetMalwareScanResource(ResourceIdentifier id)
+        {
+            MalwareScanResource.ValidateResourceId(id);
+            return new MalwareScanResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MalwareScanCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MalwareScanResource"/> objects. </returns>
+        public virtual MalwareScanCollection GetMalwareScans(ResourceIdentifier scope)
+        {
+            return new MalwareScanCollection(Client, scope);
+        }
+
+        /// <summary> Gets the Defender for Storage malware scan for the specified storage resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MalwareScanResource> GetMalwareScan(ResourceIdentifier scope, string scanId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
+
+            return GetMalwareScans(scope).Get(scanId, cancellationToken);
+        }
+
+        /// <summary> Gets the Defender for Storage malware scan for the specified storage resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MalwareScanResource>> GetMalwareScanAsync(ResourceIdentifier scope, string scanId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
+
+            return await GetMalwareScans(scope).GetAsync(scanId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="IotSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1130,13 +1228,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new SecurityCenterLocationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SecurityCenterPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityCenterPrivateLinkResource"/> object. </returns>
+        public virtual SecurityCenterPrivateLinkResource GetSecurityCenterPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            SecurityCenterPrivateLinkResource.ValidateResourceId(id);
+            return new SecurityCenterPrivateLinkResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SecureScoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>

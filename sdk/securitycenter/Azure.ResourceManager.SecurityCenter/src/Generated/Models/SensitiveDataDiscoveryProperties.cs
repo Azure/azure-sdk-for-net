@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ResourceIdentifier _scannerResourceId;
+        private bool _scannerResourceIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SensitiveDataDiscoveryProperties"/>. </summary>
         public SensitiveDataDiscoveryProperties()
@@ -23,17 +26,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="SensitiveDataDiscoveryProperties"/>. </summary>
         /// <param name="isEnabled"> Indicates whether Sensitive Data Discovery should be enabled. </param>
+        /// <param name="scannerResourceId"> Optional. Resource id of the scanner resource (e.g., securityOperator or dataScanner) whose identity will be used for sensitive data discovery. </param>
         /// <param name="operationStatus"> Upon failure or partial success. Additional data describing Sensitive Data Discovery enable/disable operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SensitiveDataDiscoveryProperties(bool? isEnabled, SecurityCenterOperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SensitiveDataDiscoveryProperties(bool? isEnabled, ResourceIdentifier scannerResourceId, SecurityCenterOperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
+            _scannerResourceId = scannerResourceId;
             OperationStatus = operationStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether Sensitive Data Discovery should be enabled. </summary>
         public bool? IsEnabled { get; set; }
+
+        /// <summary> Optional. Resource id of the scanner resource (e.g., securityOperator or dataScanner) whose identity will be used for sensitive data discovery. </summary>
+        public ResourceIdentifier ScannerResourceId
+        {
+            get
+            {
+                return _scannerResourceId;
+            }
+            set
+            {
+                _scannerResourceId = value;
+                _scannerResourceIdIsDefined = true;
+            }
+        }
 
         /// <summary> Upon failure or partial success. Additional data describing Sensitive Data Discovery enable/disable operation. </summary>
         public SecurityCenterOperationStatus OperationStatus { get; }

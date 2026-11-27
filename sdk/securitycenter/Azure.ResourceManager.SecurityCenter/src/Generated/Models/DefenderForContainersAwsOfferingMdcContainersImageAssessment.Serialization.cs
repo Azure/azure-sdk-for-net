@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (Optional.IsDefined(SecurityFindingsEnabled))
+            {
+                writer.WritePropertyName("securityFindingsEnabled"u8);
+                writer.WriteBooleanValue(SecurityFindingsEnabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             bool? enabled = default;
             string cloudRoleArn = default;
+            bool? securityFindingsEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,12 +151,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("securityFindingsEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityFindingsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DefenderForContainersAwsOfferingMdcContainersImageAssessment(enabled, cloudRoleArn, additionalBinaryDataProperties);
+            return new DefenderForContainersAwsOfferingMdcContainersImageAssessment(enabled, cloudRoleArn, securityFindingsEnabled, additionalBinaryDataProperties);
         }
     }
 }

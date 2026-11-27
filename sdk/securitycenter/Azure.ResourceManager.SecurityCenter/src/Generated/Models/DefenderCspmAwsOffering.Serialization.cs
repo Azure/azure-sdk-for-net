@@ -105,6 +105,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
             }
+            if (Optional.IsDefined(ServerlessContainers))
+            {
+                writer.WritePropertyName("serverlessContainers"u8);
+                writer.WriteObjectValue(ServerlessContainers, options);
+            }
+            if (Optional.IsDefined(AgentlessServerlessPosture))
+            {
+                writer.WritePropertyName("agentlessServerlessPosture"u8);
+                writer.WriteObjectValue(AgentlessServerlessPosture, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -141,6 +151,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             DefenderCspmAwsOfferingCiem ciem = default;
             DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
             DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderCspmAwsOfferingServerlessContainers serverlessContainers = default;
+            DefenderCspmAwsOfferingAgentlessServerlessPosture agentlessServerlessPosture = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("offeringType"u8))
@@ -207,6 +219,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     mdcContainersAgentlessDiscoveryK8S = DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("serverlessContainers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverlessContainers = DefenderCspmAwsOfferingServerlessContainers.DeserializeDefenderCspmAwsOfferingServerlessContainers(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agentlessServerlessPosture"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentlessServerlessPosture = DefenderCspmAwsOfferingAgentlessServerlessPosture.DeserializeDefenderCspmAwsOfferingAgentlessServerlessPosture(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -221,7 +251,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 databasesDspm,
                 ciem,
                 mdcContainersImageAssessment,
-                mdcContainersAgentlessDiscoveryK8S);
+                mdcContainersAgentlessDiscoveryK8S,
+                serverlessContainers,
+                agentlessServerlessPosture);
         }
     }
 }

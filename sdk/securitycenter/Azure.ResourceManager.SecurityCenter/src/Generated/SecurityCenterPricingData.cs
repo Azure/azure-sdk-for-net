@@ -173,5 +173,40 @@ namespace Azure.ResourceManager.SecurityCenter
                 return Properties.ReplacedBy;
             }
         }
+
+        /// <summary> Resource ID of the security operator associated with the pricing configuration. </summary>
+        public string SecurityOperatorResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityOperatorResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PricingProperties();
+                }
+                Properties.SecurityOperatorResourceId = value;
+            }
+        }
+
+        /// <summary> Indicates the origin of the most recent configuration change. </summary>
+        public OriginatedFrom? OriginatedFrom
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginatedFrom;
+            }
+        }
+
+        /// <summary> Indicates who exclusively manages the pricing configuration. </summary>
+        public string ManagedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedBy;
+            }
+        }
     }
 }

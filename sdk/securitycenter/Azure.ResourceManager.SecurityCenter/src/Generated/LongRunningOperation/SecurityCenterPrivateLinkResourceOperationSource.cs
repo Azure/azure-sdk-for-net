@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    internal partial class PrivateLinkResourceOperationSource : IOperationSource<PrivateLinkResource>
+    internal partial class SecurityCenterPrivateLinkResourceOperationSource : IOperationSource<SecurityCenterPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal PrivateLinkResourceOperationSource(ArmClient client)
+        internal SecurityCenterPrivateLinkResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        PrivateLinkResource IOperationSource<PrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SecurityCenterPrivateLinkResource IOperationSource<SecurityCenterPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             SecurityCenterPrivateLinkResourceData data = SecurityCenterPrivateLinkResourceData.DeserializeSecurityCenterPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PrivateLinkResource(_client, data);
+            return new SecurityCenterPrivateLinkResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<PrivateLinkResource> IOperationSource<PrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SecurityCenterPrivateLinkResource> IOperationSource<SecurityCenterPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             SecurityCenterPrivateLinkResourceData data = SecurityCenterPrivateLinkResourceData.DeserializeSecurityCenterPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PrivateLinkResource(_client, data);
+            return new SecurityCenterPrivateLinkResource(_client, data);
         }
     }
 }

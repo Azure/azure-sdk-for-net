@@ -36,13 +36,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
+        /// <param name="securityOperatorResourceId"> Resource ID of the security operator associated with the extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorExtension(string name, SecurityCenterExtensionIsEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, SecurityCenterOperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorExtension(string name, SecurityCenterExtensionIsEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, SecurityCenterOperationStatus operationStatus, string securityOperatorResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsEnabled = isEnabled;
             AdditionalExtensionProperties = additionalExtensionProperties;
             OperationStatus = operationStatus;
+            SecurityOperatorResourceId = securityOperatorResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -82,5 +84,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </summary>
         public SecurityCenterOperationStatus OperationStatus { get; }
+
+        /// <summary> Resource ID of the security operator associated with the extension. </summary>
+        public string SecurityOperatorResourceId { get; set; }
     }
 }

@@ -23,13 +23,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The offering description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ciemDiscovery"> GCP Defenders CSPM Permissions Management OIDC (Open ID connect) connection configurations. </param>
+        /// <param name="ciem"> The GCP Defender CSPM Permissions Management configurations. </param>
         /// <param name="vmScanners"> The Microsoft Defender for CSPM VM scanning configuration. </param>
         /// <param name="dataSensitivityDiscovery"> The Microsoft Defender Data Sensitivity discovery configuration. </param>
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
-        internal DefenderCspmGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery, DefenderCspmGcpOfferingVmScanners vmScanners, DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery, DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, additionalBinaryDataProperties)
+        internal DefenderCspmGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery, DefenderCspmGcpOfferingCiem ciem, DefenderCspmGcpOfferingVmScanners vmScanners, DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery, DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, additionalBinaryDataProperties)
         {
             CiemDiscovery = ciemDiscovery;
+            Ciem = ciem;
             VmScanners = vmScanners;
             DataSensitivityDiscovery = dataSensitivityDiscovery;
             MdcContainersImageAssessment = mdcContainersImageAssessment;
@@ -38,6 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> GCP Defenders CSPM Permissions Management OIDC (Open ID connect) connection configurations. </summary>
         public DefenderCspmGcpOfferingCiemDiscovery CiemDiscovery { get; set; }
+
+        /// <summary> The GCP Defender CSPM Permissions Management configurations. </summary>
+        public DefenderCspmGcpOfferingCiem Ciem { get; set; }
 
         /// <summary> The Microsoft Defender for CSPM VM scanning configuration. </summary>
         public DefenderCspmGcpOfferingVmScanners VmScanners { get; set; }

@@ -26,13 +26,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="malwareScanning"> Properties of Malware Scanning. </param>
         /// <param name="sensitiveDataDiscovery"> Properties of Sensitive Data Discovery. </param>
         /// <param name="isOverrideSubscriptionLevelSettings"> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </param>
+        /// <param name="managedBy"> Indicates whether this resource's Defender for Storage settings are managed by a higher MDC enforcement scope and which component is managing them. When set to a value other than 'None', the resource-level settings become read-only and can only be modified by the managing component. Possible values: 'None' (not managed), 'MicrosoftDefenderXDR' (managed by Microsoft Defender XDR), 'SubscriptionSettingsEnforcer' (managed by subscription-level settings enforcer). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForStorageSettingProperties(bool? isEnabled, MalwareScanningProperties malwareScanning, SensitiveDataDiscoveryProperties sensitiveDataDiscovery, bool? isOverrideSubscriptionLevelSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForStorageSettingProperties(bool? isEnabled, MalwareScanningProperties malwareScanning, SensitiveDataDiscoveryProperties sensitiveDataDiscovery, bool? isOverrideSubscriptionLevelSettings, ManagedByType? managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             MalwareScanning = malwareScanning;
             SensitiveDataDiscovery = sensitiveDataDiscovery;
             IsOverrideSubscriptionLevelSettings = isOverrideSubscriptionLevelSettings;
+            ManagedBy = managedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </summary>
         public bool? IsOverrideSubscriptionLevelSettings { get; set; }
+
+        /// <summary> Indicates whether this resource's Defender for Storage settings are managed by a higher MDC enforcement scope and which component is managing them. When set to a value other than 'None', the resource-level settings become read-only and can only be modified by the managing component. Possible values: 'None' (not managed), 'MicrosoftDefenderXDR' (managed by Microsoft Defender XDR), 'SubscriptionSettingsEnforcer' (managed by subscription-level settings enforcer). </summary>
+        public ManagedByType? ManagedBy { get; }
     }
 }

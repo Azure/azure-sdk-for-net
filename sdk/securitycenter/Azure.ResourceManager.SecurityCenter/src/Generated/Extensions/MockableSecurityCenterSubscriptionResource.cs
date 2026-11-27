@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1426,14 +1426,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterPrivateLinkResource> GetSecurityCenterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsync0CollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetPrivateLinkResources"), data => new PrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, SecurityCenterPrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsync0CollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterPrivateLinkResources"), data => new SecurityCenterPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -1454,14 +1454,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterPrivateLinkResource> GetSecurityCenterPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceData0CollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetPrivateLinkResources"), data => new PrivateLinkResource(Client, data));
+            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, SecurityCenterPrivateLinkResource>(new SecurityCenterPrivateLinkResourceData0CollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterPrivateLinkResources"), data => new SecurityCenterPrivateLinkResource(Client, data));
         }
 
         /// <summary>
