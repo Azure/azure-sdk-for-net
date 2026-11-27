@@ -31,7 +31,6 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         /// <returns> Returns a <see cref="FilteredExistenceTestResource"/> object. </returns>
         public virtual FilteredExistenceTestResource GetFilteredExistenceTestResource(ResourceIdentifier id)
         {
-            FilteredExistenceTestResource.ValidateResourceId(id);
             return new FilteredExistenceTestResource(Client, id);
         }
 
