@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.BillingBenefits
             return message;
         }
 
-        internal HttpMessage CreateGetApplicableRequest(string scope, RequestContext context)
+        internal HttpMessage CreateGetApplicableCreditsRequest(string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.BillingBenefits
             return message;
         }
 
-        internal HttpMessage CreateNextGetApplicableRequest(Uri nextPage, string scope, RequestContext context)
+        internal HttpMessage CreateNextGetApplicableCreditsRequest(Uri nextPage, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
