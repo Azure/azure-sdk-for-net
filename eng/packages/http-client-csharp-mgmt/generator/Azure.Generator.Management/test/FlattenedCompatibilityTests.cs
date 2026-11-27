@@ -29,6 +29,2686 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class FlattenedCompatibilityTests
     {
+        [Test]
+        public void FlattenedAcronymNamePreservesContractAndWireBehavior()
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            var type = Compile(plugin.Object).GetType("Samples.Models.SqlVmData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(type.GetProperty("OSType"), Is.Null);
+            Assert.That(property!.SetMethod, Is.Not.Null);
+            var instance = Activator.CreateInstance(type)!;
+            property.SetValue(instance, "Linux");
+            Assert.That(property.GetValue(instance), Is.EqualTo("Linux"));
+
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+            var roundTrip = ModelReaderWriter.Read(
+                BinaryData.FromString("""{"properties":{"osType":"Windows"}}"""), type, new ModelReaderWriterOptions("J"));
+            Assert.That(property.GetValue(roundTrip), Is.EqualTo("Windows"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedAcronymCollectionPreservesContractSetterAndWireBehavior(bool wrapperRequired)
+        {
+            var usage = wrapperRequired ? InputModelTypeUsage.Input | InputModelTypeUsage.Json
+                : InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json;
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", usage: usage, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, isRequired: wrapperRequired, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public System.Collections.Generic.IList<string> OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            if (wrapperRequired)
+            {
+                Assert.That(model.Properties.Single(p => p.Name == "Properties").Body.HasSetter, Is.False,
+                    "The required input-only wrapper starts without a setter.");
+            }
+            Visit(model);
+
+            var assembly = Compile(plugin.Object);
+            var type = assembly.GetType("Samples.Models.SqlVmData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod, Is.Not.Null);
+            var instance = Activator.CreateInstance(type)!;
+            property.SetValue(instance, new List<string> { "Linux" });
+            Assert.That(((IList<string>)property.GetValue(instance)!).Single(), Is.EqualTo("Linux"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("osType")[0].GetString(), Is.EqualTo("Linux"));
+
+            var innerType = assembly.GetType("Samples.Models.SqlVirtualMachineProperties")!;
+            Assert.That(innerType.GetProperty("OSType")!.SetMethod?.IsPublic, Is.Not.True,
+                "The delegation setter on the wire model must not expand its public API.");
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetterOnlyWrapperPreservesHistoricalCollectionSetter(bool safeFlatten)
+        {
+            var usage = safeFlatten ? InputModelTypeUsage.Input | InputModelTypeUsage.Json
+                : InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json;
+            var properties = InputFactory.Model("ConfigProperties", usage: usage, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isRequired: safeFlatten,
+                isReadOnly: !safeFlatten, serializedName: "config");
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("ConfigData", usage: usage, properties: [wrapper]);
+            var previousName = safeFlatten ? "ConfigOsType" : "OsType";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class ConfigData {{ public System.Collections.Generic.IList<string> {previousName} {{ get; set; }} }} }}")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Assert.That(model.Properties.Single(p => p.Name == "Config").Body.HasSetter, Is.False);
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(previousName);
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod, Is.Not.Null);
+            var instance = Activator.CreateInstance(type)!;
+            property.SetValue(instance, new List<string> { "Linux" });
+            Assert.That(((IList<string>)property.GetValue(instance)!).Single(), Is.EqualTo("Linux"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType")[0].GetString(), Is.EqualTo("Linux"));
+        }
+
+        [Test]
+        public void OutputOnlySafeFlattenUsesCustomizedParameterlessConstructor()
+        {
+            const string customization = "namespace Samples.Models { public partial class ConfigProperties { public ConfigProperties() { } } }";
+            var properties = InputFactory.Model("ConfigProperties", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public System.Collections.Generic.IList<string> ConfigOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            Assert.That(inner.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 0 &&
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOsType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, new List<string> { "Linux" });
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType")[0].GetString(), Is.EqualTo("Linux"));
+        }
+
+        [Test]
+        public void OutputOnlySafeFlattenRestoresHistoricalCollectionSetter()
+        {
+            var properties = InputFactory.Model("ConfigProperties", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public System.Collections.Generic.IList<string> ConfigOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            Visit(model);
+            Assert.That(inner.Constructors.Select(c => c.Signature.Parameters.Count), Does.Contain(0),
+                "The output-only model must have an accessible initialization constructor.");
+            var type = Compile(plugin.Object).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOsType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, new List<string> { "Linux" });
+            Assert.That(((IList<string>)property.GetValue(instance)!).Single(), Is.EqualTo("Linux"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType")[0].GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetterOnlyWrapperPreservesHistoricalScalarSetter(bool safeFlatten)
+        {
+            var usage = safeFlatten ? InputModelTypeUsage.Input | InputModelTypeUsage.Json
+                : InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json;
+            var properties = InputFactory.Model("ConfigProperties", usage: usage, properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isRequired: safeFlatten,
+                isReadOnly: !safeFlatten, serializedName: "config");
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("ConfigData", usage: usage, properties: [wrapper]);
+            var previousName = safeFlatten ? "ConfigOsType" : "OsType";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class ConfigData {{ public string {previousName} {{ get; set; }} }} }}")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Assert.That(model.Properties.Single(p => p.Name == "Config").Body.HasSetter, Is.False);
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(previousName);
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod, Is.Not.Null);
+            var instance = Activator.CreateInstance(type)!;
+            property.SetValue(instance, "Linux");
+            Assert.That(property.GetValue(instance), Is.EqualTo("Linux"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SharedFlattenedCollectionRetainsContractSetter(bool contractOwnerFirst)
+        {
+            var properties = InputFactory.Model("SharedProperties", properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var firstWrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            var secondWrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(firstWrapper);
+            Flatten(secondWrapper);
+            var first = InputFactory.Model("FirstData", properties: [firstWrapper]);
+            var second = InputFactory.Model("SecondData", properties: [secondWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [first, second, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class FirstData { public System.Collections.Generic.IList<string> OsType { get; set; } } }")
+                ]));
+            var firstProvider = plugin.Object.TypeFactory.CreateModel(first)!;
+            var secondProvider = plugin.Object.TypeFactory.CreateModel(second)!;
+            var sharedProvider = plugin.Object.TypeFactory.CreateModel(properties)!;
+            Visit(contractOwnerFirst ? firstProvider : secondProvider);
+            Visit(contractOwnerFirst ? secondProvider : firstProvider);
+
+            Assert.That(firstProvider.Properties.Single(p => p.Name == "OsType").Body.HasSetter, Is.True);
+            Assert.That(sharedProvider.Properties.Single(p => p.Name == "OSType").Body.HasSetter, Is.True);
+            var assembly = Compile(plugin.Object);
+            var type = assembly.GetType("Samples.Models.FirstData")!;
+            var instance = Activator.CreateInstance(type)!;
+            type.GetProperty("OsType")!.SetValue(instance, new List<string> { "Linux" });
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("osType")[0].GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SharedFlattenedScalarDoesNotGainSetterOnNewOwner(bool contractOwnerFirst)
+        {
+            var properties = InputFactory.Model("SharedProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType")]);
+            var firstWrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            var secondWrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(firstWrapper);
+            Flatten(secondWrapper);
+            var first = InputFactory.Model("FirstData", properties: [firstWrapper]);
+            var second = InputFactory.Model("SecondData", properties: [secondWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [first, second, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class FirstData { public string OsType { get; set; } } }")
+                ]));
+            var firstProvider = plugin.Object.TypeFactory.CreateModel(first)!;
+            var secondProvider = plugin.Object.TypeFactory.CreateModel(second)!;
+            Visit(contractOwnerFirst ? firstProvider : secondProvider);
+            Visit(contractOwnerFirst ? secondProvider : firstProvider);
+            Assert.That(secondProvider.Properties.Single(p => p.Name == "OSType").Body.HasSetter, Is.False);
+            Assert.That(firstProvider.Properties.Single(p => p.Name == "OsType").Body.HasSetter, Is.True);
+            var assembly = Compile(plugin.Object);
+            Assert.That(assembly.GetType("Samples.Models.SecondData")!.GetProperty("OSType")!.SetMethod, Is.Null);
+        }
+
+        [Test]
+        public void ChainedFlattenedAcronymNamePreservesContractAndWireBehavior()
+        {
+            // A scalar leaf isolates wire-name propagation from an existing chained collection-constructor issue.
+            var nextHop = InputFactory.Model("RouteNextHopEcmp", properties:
+                [InputFactory.Property("nextHopIpAddresses", InputPrimitiveType.String, serializedName: "nextHopIpAddresses")]);
+            var nextHopProperty = InputFactory.Property("nextHop", nextHop, serializedName: "nextHop");
+            Flatten(nextHopProperty);
+            var properties = InputFactory.Model("RoutePropertiesFormat", properties: [nextHopProperty]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("RouteData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties, nextHop],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute
+                        {
+                            public WirePathAttribute(string path) { }
+                        }
+                        public class RouteData
+                        {
+                            [WirePath("properties.nextHop.nextHopIpAddresses")]
+                            public string NextHopIpAddresses { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            var type = Compile(plugin.Object).GetType("Samples.Models.RouteData")!;
+            var property = type.GetProperty("NextHopIpAddresses");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(type.GetProperty("NextHopIPAddresses"), Is.Null);
+            Assert.That(property!.SetMethod, Is.Not.Null);
+            var instance = Activator.CreateInstance(type)!;
+            property.SetValue(instance, "192.0.2.1");
+            Assert.That(property.GetValue(instance), Is.EqualTo("192.0.2.1"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            var serialized = json.RootElement.GetProperty("properties").GetProperty("nextHop").GetProperty("nextHopIpAddresses");
+            Assert.That(serialized.GetString(), Is.EqualTo("192.0.2.1"));
+        }
+
+        [TestCase("properties.osType", "OsType")]
+        [TestCase("other.osType", "OSType")]
+        public void FlattenedAcronymNameUsesMatchingContractWirePath(string previousPath, string expectedName)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute
+                        {
+                            public WirePathAttribute(string path) { }
+                        }
+                        public class SqlVmData
+                        {
+                            [WirePath("{{previousPath}}")] public string OsType { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain(expectedName));
+        }
+
+        [Test]
+        public void FlattenedAcronymNamePrefersExistingCanonicalContractMember()
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } public string OSType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OsType"));
+        }
+
+        [TestCase("public string OsType { get; set; }", false, "OsType")]
+        [TestCase("private string OsType { get; set; }", false, "OSType")]
+        [TestCase("public int OsType { get; set; }", false, "OSType")]
+        [TestCase("public string OsType { get; set; }", true, "OSType")]
+        public void FlattenedAcronymNameRejectsIneligibleContractMembers(string declaration, bool acceptedRemoval, string expectedName)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties],
+                apiCompatBaseline: acceptedRemoval
+                    ? ApiCompatBaseline.Parse(["MembersMustExist : Member 'Samples.Models.SqlVmData.OsType.get()' does not exist in the implementation but it does exist in the contract."])
+                    : null,
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class SqlVmData {{ {declaration} }} }}")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain(expectedName));
+        }
+
+        [Test]
+        public void FlattenedAcronymNameKeepsExplicitCustomization()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute
+                    {
+                        public CodeGenMemberAttribute(string name) { }
+                    }
+                }
+                namespace Samples.Models
+                {
+                    public partial class SqlVmData
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OsType { get; set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.CustomCodeView!.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OsType"));
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.SqlVmData")!;
+            Assert.That(type.GetProperty("OsType"), Is.Not.Null);
+        }
+
+        [Test]
+        public void PrivateCustomizedSiblingDoesNotClaimFlattenedHistoricalName()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class SqlVirtualMachineProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OsType")]
+                        private string OsType { get; set; }
+                    }
+                }
+                """;
+            const InputModelTypeUsage output = InputModelTypeUsage.Output | InputModelTypeUsage.Json;
+            var normal = InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType");
+            var exact = InputFactory.Property("OsType", InputPrimitiveType.String, isReadOnly: true, serializedName: "otherOsType");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exact, true);
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", usage: output, properties: [exact, normal]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData { [WirePath("properties.osType")] public string OsType { get; } }
+                    }
+                    """)
+                ]));
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            _ = inner.CanonicalView.Properties;
+            var custom = inner.CustomCodeView!.Properties.Single();
+            Assert.That(custom.WireInfo!.SerializedName, Is.EqualTo("otherOsType"));
+            Assert.That(custom.Modifiers.HasFlag(MethodSignatureModifiers.Private), Is.True);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OSType"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedAcronymNameDoesNotClaimExactSibling(bool exactFirst)
+        {
+            var normal = InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType");
+            var exact = InputFactory.Property("OsType", InputPrimitiveType.String, serializedName: "otherOsType");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exact, true);
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                exactFirst ? [exact, normal] : [normal, exact]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Count(p => p.Name == "OsType"), Is.EqualTo(1));
+            // Compiling this pair also hits a pre-existing duplicate-parameter bug on the base generator.
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedAcronymNameDoesNotClaimLaterWrapperMember(bool exactFirst)
+        {
+            var normal = InputFactory.Model("NormalProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var exactLeaf = InputFactory.Property("OsType", InputPrimitiveType.String, serializedName: "otherOsType");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactLeaf, true);
+            var exact = InputFactory.Model("ExactProperties", properties: [exactLeaf]);
+            var normalWrapper = InputFactory.Property("normal", normal, serializedName: "normal");
+            var exactWrapper = InputFactory.Property("exact", exact, serializedName: "exact");
+            Flatten(normalWrapper);
+            Flatten(exactWrapper);
+            var input = InputFactory.Model("SqlVmData", properties:
+                exactFirst ? [exactWrapper, normalWrapper] : [normalWrapper, exactWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, normal, exact],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Count(p => p.Name == "OsType"), Is.EqualTo(1));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedAcronymNameDoesNotClaimCustomWrapperMember(bool customFirst)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class ExactProperties { }
+                    public partial class SqlVmData
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Exact")]
+                        internal ExactProperties Exact { get; set; }
+                    }
+                }
+                """;
+            const InputModelTypeUsage output = InputModelTypeUsage.Output | InputModelTypeUsage.Json;
+            var normal = InputFactory.Model("NormalProperties", usage: output, properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType")]);
+            var exactLeaf = InputFactory.Property("OsType", InputPrimitiveType.String, isReadOnly: true, serializedName: "otherOsType");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactLeaf, true);
+            var exact = InputFactory.Model("ExactProperties", usage: output, properties: [exactLeaf]);
+            var normalWrapper = InputFactory.Property("normal", normal, serializedName: "normal");
+            var exactWrapper = InputFactory.Property("exact", exact, serializedName: "exact");
+            Flatten(normalWrapper);
+            Flatten(exactWrapper);
+            var input = InputFactory.Model("SqlVmData", properties:
+                customFirst ? [exactWrapper, normalWrapper] : [normalWrapper, exactWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, normal, exact],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData { [WirePath("normal.osType")] public string OsType { get; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            _ = model.CanonicalView.Properties;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Count(p => p.Name == "OsType"), Is.EqualTo(1));
+            Assert.That(Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.SqlVmData"), Is.Not.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedAcronymNameDoesNotClaimSafeFlattenedSibling(bool safeFirst)
+        {
+            var normal = InputFactory.Model("NormalProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var suffix = InputFactory.Model("SuffixProperties", properties:
+                [InputFactory.Property("type", InputPrimitiveType.String, serializedName: "type")]);
+            var normalWrapper = InputFactory.Property("normal", normal, serializedName: "normal");
+            Flatten(normalWrapper);
+            var safeWrapper = InputFactory.Property("Os", suffix, serializedName: "other");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(safeWrapper, true);
+            var input = InputFactory.Model("SqlVmData", properties:
+                safeFirst ? [safeWrapper, normalWrapper] : [normalWrapper, safeWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, normal, suffix],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Count(p => p.Name == "OsType"), Is.EqualTo(1));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ChainedFlattenedAcronymNameDoesNotClaimNestedSibling(bool exactFirst)
+        {
+            var normal = InputFactory.Model("NormalProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var exactLeaf = InputFactory.Property("OsType", InputPrimitiveType.String, serializedName: "otherOsType");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactLeaf, true);
+            var exact = InputFactory.Model("ExactProperties", properties: [exactLeaf]);
+            var normalWrapper = InputFactory.Property("normal", normal, serializedName: "normal");
+            var exactWrapper = InputFactory.Property("exact", exact, serializedName: "exact");
+            Flatten(normalWrapper);
+            Flatten(exactWrapper);
+            var properties = InputFactory.Model("ContainerProperties", properties:
+                exactFirst ? [exactWrapper, normalWrapper] : [normalWrapper, exactWrapper]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties, normal, exact],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData { [WirePath("properties.normal.osType")] public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Count(p => p.Name == "OsType"), Is.EqualTo(1));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DirectFlattenedSuffixDoesNotClaimHistoricalName(bool hasWirePath)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+            [
+                InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType"),
+                InputFactory.Property("type", InputPrimitiveType.String, serializedName: "type")
+            ]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var attribute = hasWirePath ? "[WirePath(\"properties.osType\")]" : "";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData { {{attribute}} public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("Type"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void NonFlattenedSiblingDoesNotClaimHistoricalName(bool hasWirePath)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var settings = InputFactory.Model("OtherSettings", properties:
+            [
+                InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType"),
+                InputFactory.Property("displayName", InputPrimitiveType.String, serializedName: "displayName")
+            ]);
+            var settingsProperty = InputFactory.Property("settings", settings, serializedName: "settings");
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper, settingsProperty]);
+            var attribute = hasWirePath ? "[WirePath(\"properties.osType\")]" : "";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties, settings],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData { {{attribute}} public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("Settings"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void NonFlattenedNestedSiblingDoesNotClaimHistoricalName(bool settingsFirst)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var nested = InputFactory.Model("NestedSettings", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var settings = InputFactory.Model("OtherSettings", properties:
+            [
+                InputFactory.Property("displayName", InputPrimitiveType.String, serializedName: "displayName"),
+                InputFactory.Property("nested", nested, serializedName: "nested")
+            ]);
+            var settingsProperty = InputFactory.Property("settings", settings, serializedName: "settings");
+            var input = InputFactory.Model("SqlVmData", properties:
+                settingsFirst ? [settingsProperty, wrapper] : [wrapper, settingsProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties, settings, nested],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData { [WirePath("properties.osType")] public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("Settings"));
+        }
+
+        [Test]
+        public void NonProjectedDescendantDoesNotClaimHistoricalName()
+        {
+            var first = InputFactory.Model("FirstProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var firstWrapper = InputFactory.Property("first", first, serializedName: "first");
+            Flatten(firstWrapper);
+            var settings = InputFactory.Model("Settings", properties:
+            [
+                InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType"),
+                InputFactory.Property("displayName", InputPrimitiveType.String, serializedName: "displayName")
+            ]);
+            var second = InputFactory.Model("SecondProperties", properties:
+            [
+                InputFactory.Property("settings", settings, serializedName: "settings"),
+                InputFactory.Property("mode", InputPrimitiveType.String, serializedName: "mode")
+            ]);
+            var secondWrapper = InputFactory.Property("second", second, serializedName: "second");
+            Flatten(secondWrapper);
+            var input = InputFactory.Model("TestData", properties: [firstWrapper, secondWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, first, second, settings],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class TestData { [WirePath("first.osType")] public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("Settings"));
+        }
+
+        [TestCase("OSType", "other.osType", "", "OSType", false)]
+        [TestCase("OsType", "properties.osType", "private", "OsType", false)]
+        [TestCase("OsType", "properties.osType", "", "OsType", true)]
+        public void FlattenedCollectionSetterRequiresMatchingPublicContract(
+            string previousName, string previousPath, string setterAccess, string expectedName, bool expectedSetter)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class SqlVmData
+                        {
+                            [WirePath("{{previousPath}}")] public System.Collections.Generic.IList<string> {{previousName}} { get; {{setterAccess}} set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var property = model.Properties.Single(p => p.Name == expectedName);
+            Assert.That(property.Body.HasSetter, Is.EqualTo(expectedSetter));
+        }
+
+        [Test]
+        public void FlattenedAcronymNameDoesNotCollideWithCustomNestedType()
+        {
+            const string customization = "namespace Samples.Models { public partial class SqlVmData { public class OsType { } } }";
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.SqlVmData"), Is.Not.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DiscardedExactBooleanWrapperDoesNotBlockHistoricalLeafName(bool chained)
+        {
+            var inner = InputFactory.Model("OptionsProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.Boolean, isRequired: true, serializedName: "osType")]);
+            var exactWrapper = InputFactory.Property("Options", inner, serializedName: "options");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactWrapper, true);
+            var details = InputFactory.Model("DetailContainer", properties: [exactWrapper]);
+            var outerWrapper = InputFactory.Property("details", details, serializedName: "details");
+            Flatten(outerWrapper);
+            var input = chained ? InputFactory.Model("ConfigData", properties: [outerWrapper]) :
+                InputFactory.Model("ConfigData", properties: [exactWrapper]);
+            var path = chained ? "details.options.osType" : "options.osType";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, details, inner] : [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class ConfigData { [WirePath("{{path}}")] public bool OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OSType"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void UnusedExactModelNameDoesNotBlockHistoricalLeafName(bool chained)
+        {
+            var inner = InputFactory.Model("ConfigProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            typeof(InputType).GetProperty(nameof(InputType.IsExactName))!.SetValue(inner, true);
+            var wrapper = InputFactory.Property("options", inner, serializedName: "options");
+            var details = InputFactory.Model("DetailContainer", properties: [wrapper]);
+            var outerWrapper = InputFactory.Property("details", details, serializedName: "details");
+            Flatten(outerWrapper);
+            var input = chained ? InputFactory.Model("ConfigData", properties: [outerWrapper]) :
+                InputFactory.Model("ConfigData", properties: [wrapper]);
+            var path = chained ? "details.options.osType" : "options.osType";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, details, inner] : [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class ConfigData { [WirePath("{{path}}")] public string OptionsOsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OptionsOsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OptionsOSType"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ExactPropertiesWrapperDoesNotBlockHistoricalLeafName(bool chained)
+        {
+            var inner = InputFactory.Model("ConfigProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var exactWrapper = InputFactory.Property("Properties", inner, serializedName: "properties");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactWrapper, true);
+            var details = InputFactory.Model("DetailContainer", properties: [exactWrapper]);
+            var outerWrapper = InputFactory.Property("details", details, serializedName: "details");
+            Flatten(outerWrapper);
+            var input = chained ? InputFactory.Model("ConfigData", properties: [outerWrapper]) :
+                InputFactory.Model("ConfigData", properties: [exactWrapper]);
+            var path = chained ? "details.properties.osType" : "properties.osType";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, details, inner] : [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class ConfigData { [WirePath("{{path}}")] public string ConfigOsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("ConfigOsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("ConfigOSType"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ExplicitExactWrapperDoesNotBlockHistoricalLeafName(bool chained)
+        {
+            var inner = InputFactory.Model("InnerProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var exactWrapper = InputFactory.Property("Details", inner, serializedName: "details");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactWrapper, true);
+            Flatten(exactWrapper);
+            var intermediate = InputFactory.Model("Intermediate", properties: [exactWrapper]);
+            var outerWrapper = InputFactory.Property("container", intermediate, serializedName: "container");
+            Flatten(outerWrapper);
+            var input = chained ? InputFactory.Model("OuterData", properties: [outerWrapper]) :
+                InputFactory.Model("OuterData", properties: [exactWrapper]);
+            var path = chained ? "container.details.osType" : "details.osType";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, intermediate, inner] : [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class OuterData { [WirePath("{{path}}")] public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OSType"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void CustomizedExactWrapperRetainsStrippedAcronym(bool chained)
+        {
+            var ownerName = chained ? "DetailContainer" : "EndpointData";
+            var customization = $$"""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class EndpointProperties { }
+                    public partial class {{ownerName}}
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSSettings")]
+                        internal EndpointProperties OSSettings { get; set; }
+                    }
+                }
+                """;
+            var inner = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("type", InputPrimitiveType.String, serializedName: "type")]);
+            var exactWrapper = InputFactory.Property("OSSettings", inner, serializedName: "osSettings");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactWrapper, true);
+            var details = InputFactory.Model("DetailContainer", properties: [exactWrapper]);
+            var outerWrapper = InputFactory.Property("properties", details, serializedName: "properties");
+            Flatten(outerWrapper);
+            var input = chained ? InputFactory.Model("EndpointData", properties: [outerWrapper]) :
+                InputFactory.Model("EndpointData", properties: [exactWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, details, inner] : [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class EndpointData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var customOwner = chained ? plugin.Object.TypeFactory.CreateModel(details)! : model;
+            _ = customOwner.CanonicalView.Properties;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OsType"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenedExactWrapperRetainsStrippedAcronym(bool chained)
+        {
+            var inner = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("type", InputPrimitiveType.String, serializedName: "type")]);
+            var exactWrapper = InputFactory.Property("OSSettings", inner, serializedName: "osSettings");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exactWrapper, true);
+            var details = InputFactory.Model("DetailContainer", properties: [exactWrapper]);
+            var outerWrapper = InputFactory.Property("properties", details, serializedName: "properties");
+            Flatten(outerWrapper);
+            var input = chained ? InputFactory.Model("EndpointData", properties: [outerWrapper]) :
+                InputFactory.Model("EndpointData", properties: [exactWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, details, inner] : [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class EndpointData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("OsType"));
+        }
+
+        [Test]
+        public void FlattenedAcronymNameRespectsRepeatedExactContributor()
+        {
+            var leaf = InputFactory.Property("IP", InputPrimitiveType.String, serializedName: "ip");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(leaf, true);
+            var inner = InputFactory.Model("EndpointProperties", properties: [leaf]);
+            var wrapper = InputFactory.Property("VIPGateway", inner, serializedName: "gateway");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(wrapper, true);
+            var input = InputFactory.Model("EndpointData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class EndpointData { public string VIPGatewayIp { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("VIPGatewayIP"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("VIPGatewayIp"));
+        }
+
+        [TestCase("protected", false)]
+        [TestCase("", true)]
+        public void FlattenedCollectionSetterHonorsVisibilityAndFailsClosedForInit(string setterAccess, bool initOnly)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var accessor = initOnly ? "init" : "set";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public class SqlVmData
+                        {
+                            public System.Collections.Generic.IList<string> OsType { get; {{setterAccess}} {{accessor}}; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.SqlVmData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property, Is.Not.Null);
+            if (initOnly)
+            {
+                Assert.That(property!.SetMethod, Is.Null,
+                    "MTG cannot emit an init accessor here; it must not replace it with a public setter.");
+            }
+            else
+            {
+                Assert.That(property!.SetMethod!.IsFamily, Is.True);
+            }
+        }
+
+        [TestCase("private", false)]
+        [TestCase("", true)]
+        public void FlattenedScalarSetterDoesNotPromoteNonPublicOrInitContract(string setterAccess, bool initOnly)
+        {
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var accessor = initOnly ? "init" : "set";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class SqlVmData {{ public string OsType {{ get; {setterAccess} {accessor}; }} }} }}")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.SqlVmData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void SeparatedDateTimeAcronymPreservesHistoricalSetter(bool chained, bool mismatchedPath)
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            var inner = InputFactory.Model("TimeProperties", properties:
+                [InputFactory.Property("ip_start_time", dateTimeType, isReadOnly: true, wireName: "ip_start_time", serializedName: "ip_start_time")]);
+            var innerWrapper = InputFactory.Property("inner", inner, serializedName: "inner");
+            Flatten(innerWrapper);
+            var details = InputFactory.Model("DetailContainer", properties: [innerWrapper]);
+            var outerWrapper = InputFactory.Property("details", chained ? details : inner, serializedName: "details");
+            Flatten(outerWrapper);
+            var input = InputFactory.Model("TimeData", properties: [outerWrapper]);
+            var path = mismatchedPath ? "other.ip_start_time" :
+                chained ? "details.inner.ip_start_time" : "details.ip_start_time";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => chained ? [input, details, inner] : [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class TimeData { [WirePath("{{path}}")] public System.DateTimeOffset? IpStartOn { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var expectedName = mismatchedPath ? "IPStartsOn" : "IpStartOn";
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain(expectedName));
+            var property = model.Properties.Single(p => p.Name == expectedName);
+            Assert.That(property.Body.HasSetter, Is.EqualTo(!mismatchedPath));
+            if (mismatchedPath)
+            {
+                return;
+            }
+            var type = Compile(plugin.Object).GetType("Samples.Models.TimeData")!;
+            var instance = Activator.CreateInstance(type)!;
+            var expected = new DateTimeOffset(2026, 1, 2, 3, 4, 5, TimeSpan.Zero);
+            type.GetProperty(expectedName)!.SetValue(instance, expected);
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            var detailsJson = json.RootElement.GetProperty("details");
+            if (chained)
+            {
+                detailsJson = detailsJson.GetProperty("inner");
+            }
+            Assert.That(detailsJson.GetProperty("ip_start_time").GetDateTimeOffset(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void SeparatedDateTimeAcronymDoesNotCollideWithCustomMethod()
+        {
+            const string customization = "namespace Samples.Models { public partial class TimeData { public void IpStartOn() { } } }";
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            var inner = InputFactory.Model("TimeProperties", properties:
+                [InputFactory.Property("ip_start_time", dateTimeType, wireName: "ip_start_time", serializedName: "ip_start_time")]);
+            var wrapper = InputFactory.Property("details", inner, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("TimeData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class TimeData { public System.DateTimeOffset? IpStartOn { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("IPStartsOn"));
+            Assert.That(Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.TimeData"), Is.Not.Null);
+        }
+
+        [TestCase(null, true)]
+        [TestCase("details.properties.startTime", true)]
+        [TestCase("other.properties.startTime", false)]
+        public void ChainedDateTimeAcronymPreservesHistoricalSetter(string? previousPath, bool shouldPreserve)
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            var inner = InputFactory.Model("DbSystemUpdateProperties", properties:
+                [InputFactory.Property("startTime", dateTimeType, isReadOnly: true, serializedName: "startTime")]);
+            var innerWrapper = InputFactory.Property("properties", inner, serializedName: "properties");
+            var details = InputFactory.Model("DetailContainer", properties: [innerWrapper]);
+            var wrapper = InputFactory.Property("details", details, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("PatchData", properties: [wrapper]);
+            var attribute = previousPath is null ? "" : $"[WirePath(\"{previousPath}\")]";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, details, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class PatchData { {{attribute}} public System.DateTimeOffset? DbSystemUpdateStartOn { get; set; } }
+                    }
+                    """)
+                ]));
+            var parent = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(parent);
+            var name = shouldPreserve ? "DbSystemUpdateStartOn" : "DBSystemUpdateStartsOn";
+            var property = parent.Properties.Single(p => p.Name == name);
+            Assert.That(property.Body.HasSetter, Is.EqualTo(shouldPreserve));
+            if (!shouldPreserve)
+            {
+                return;
+            }
+            var type = Compile(plugin.Object).GetType("Samples.Models.PatchData")!;
+            var instance = Activator.CreateInstance(type)!;
+            var expected = new DateTimeOffset(2026, 1, 2, 3, 4, 5, TimeSpan.Zero);
+            type.GetProperty(name)!.SetValue(instance, expected);
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("details").GetProperty("properties").GetProperty("startTime").GetDateTimeOffset(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void FlattenedSetterDoesNotCallMissingDefaultConstructor()
+        {
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var inner = InputFactory.Model("RequiredProperties", usage: inputUsage, properties:
+            [
+                InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name"),
+                InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType")
+            ]);
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public string OsType { get; set; } } }")
+                ]));
+            var innerProvider = plugin.Object.TypeFactory.CreateModel(inner)!;
+            Assert.That(innerProvider.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 0), Is.False);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.OuterData")!;
+            Assert.That(type.GetProperty("OsType")?.SetMethod?.IsPublic, Is.Not.True,
+                "A missing initialization constructor cannot support lazy wrapper reconstruction.");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedSetterRequiresSatisfiedRequiredMembers(bool setsRequiredMembers)
+        {
+            var attribute = setsRequiredMembers ? "[System.Diagnostics.CodeAnalysis.SetsRequiredMembers]" : "";
+            var customization = "namespace Samples.Models { public partial class RequiredProperties { " +
+                "public required string Marker { get; set; } " + attribute +
+                " public RequiredProperties() { Marker = \"done\"; } } }";
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var inner = InputFactory.Model("RequiredProperties", usage: inputUsage, properties:
+            [
+                InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name"),
+                InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType")
+            ]);
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.OuterData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property?.SetMethod?.IsPublic == true, Is.EqualTo(setsRequiredMembers));
+            if (setsRequiredMembers)
+            {
+                var instance = Activator.CreateInstance(type)!;
+                property!.SetValue(instance, "Linux");
+                Assert.That(property.GetValue(instance), Is.EqualTo("Linux"));
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedSetterDoesNotConstructAbstractWrapper(bool discriminated)
+        {
+            var customization = discriminated
+                ? "namespace Samples.Models { public partial class AbstractProperties { public AbstractProperties() { } } }"
+                : "namespace Samples.Models { public abstract partial class AbstractProperties { public AbstractProperties() { } } }";
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = new List<InputModelProperty>
+            {
+                InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType")
+            };
+            if (discriminated)
+            {
+                properties.Add(InputFactory.Property("kind", InputPrimitiveType.String, isDiscriminator: true, serializedName: "kind"));
+            }
+            var inner = InputFactory.Model("AbstractProperties", usage: discriminated
+                ? InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json : inputUsage, properties: properties);
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var assembly = Compile(plugin.Object, customizationSource: customization);
+            Assert.That(assembly.GetType("Samples.Models.AbstractProperties")!.IsAbstract, Is.True);
+            Assert.That(assembly.GetType("Samples.Models.OuterData")!.GetProperty("OsType")?.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [TestCase("public RequiredProperties(string name = null) { }", true)]
+        [TestCase("public RequiredProperties(string name = null) { } public RequiredProperties(int version = 0) { }", false)]
+        [TestCase("private RequiredProperties() { } public RequiredProperties(string name = null) { }", false)]
+        public void FlattenedSetterRequiresAnUnambiguousAccessibleConstructor(string constructors, bool canConstruct)
+        {
+            var customization = "namespace Samples.Models { public partial class RequiredProperties { " + constructors + " } }";
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var inner = InputFactory.Model("RequiredProperties", usage: inputUsage, properties:
+            [
+                InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name"),
+                InputFactory.Property("osType", InputPrimitiveType.String, isReadOnly: true, serializedName: "osType")
+            ]);
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.OuterData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property?.SetMethod?.IsPublic == true, Is.EqualTo(canConstruct));
+            if (canConstruct)
+            {
+                var instance = Activator.CreateInstance(type)!;
+                property!.SetValue(instance, "Linux");
+                Assert.That(property.GetValue(instance), Is.EqualTo("Linux"));
+            }
+        }
+
+        [Test]
+        public void FlattenedScalarDoesNotCallInaccessibleGeneratedLeafSetter()
+        {
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var readOnly = InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, isReadOnly: true, serializedName: "osType");
+            var baseModel = InputFactory.Model("BaseModel", usage: inputUsage, properties: [readOnly]);
+            var relaxed = InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType");
+            relaxed.Update(isRequiredInConstructor: false);
+            var leaf = InputFactory.Model("LeafModel", usage: inputUsage, properties: [relaxed], baseModel: baseModel);
+            var addDerived = typeof(InputModelType).GetMethod("AddDerivedModel", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            addDerived.Invoke(baseModel, [leaf]);
+            var wrapper = InputFactory.Property("details", baseModel, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, leaf, input],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public string OsType { get; set; } } }")
+                ]));
+            var baseProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var baseProperty = baseProvider.Properties.Single();
+            Assert.That(baseProperty.Body, Is.InstanceOf<AutoPropertyBody>());
+            var setterModifiers = ((AutoPropertyBody)baseProperty.Body).SetterModifiers;
+            Assert.That(setterModifiers.HasFlag(MethodSignatureModifiers.Private | MethodSignatureModifiers.Protected), Is.True);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(Compile(plugin.Object).GetType("Samples.Models.OuterData"), Is.Not.Null);
+        }
+
+        [Test]
+        public void ChainedScalarCanDelegateThroughPrivateHistoricalSetter()
+        {
+            var strategy = InputFactory.Model("TestUpdateRunStrategy", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var strategyProperty = InputFactory.Property("strategy", strategy, serializedName: "strategy");
+            var properties = InputFactory.Model("TestUpdateRunProperties", properties: [strategyProperty]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("TestUpdateRunData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties, strategy],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public class TestUpdateRunProperties { public string StrategyOsType { get; private set; } }
+                        public class TestUpdateRunData { public string StrategyOsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var assembly = Compile(plugin.Object);
+            var intermediate = assembly.GetType("Samples.Models.TestUpdateRunProperties")!;
+            Assert.That(intermediate.GetProperty("StrategyOsType")!.SetMethod?.IsPublic, Is.Not.True);
+            var type = assembly.GetType("Samples.Models.TestUpdateRunData")!;
+            var property = type.GetProperty("StrategyOsType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("strategy").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase("get;", false)]
+        [TestCase("get; private set;", false)]
+        [TestCase("get; init;", false)]
+        [TestCase("get; set;", true)]
+        public void CustomCollectionLeafWithoutAccessibleSetterDoesNotGenerateInvalidForwarder(string accessor, bool expectedSetter)
+        {
+            var customization = $$"""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public System.Collections.Generic.IList<string> OSType { {{accessor}} } = new System.Collections.Generic.List<string>();
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("CustomData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class CustomData { public System.Collections.Generic.IList<string> OSType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.CustomData")!;
+            var property = type.GetProperty("OSType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic == true, Is.EqualTo(expectedSetter),
+                "Only a handwritten leaf with an accessible non-init setter can support a forwarding setter.");
+        }
+
+        [Test]
+        public void WritableCustomLeafPreservesFlattenedAcronymContract()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("CustomData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class CustomData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.CustomData")!;
+            var instance = Activator.CreateInstance(type)!;
+            type.GetProperty("OsType")!.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void CustomSourceMappingPrefersExactInputName(bool exactFirst)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; set; }
+                    }
+                }
+                """;
+            var normal = InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "normal");
+            var exact = InputFactory.Property("OSType", InputPrimitiveType.String, serializedName: "exact");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exact, true);
+            var input = InputFactory.Model("CustomProperties", properties: exactFirst ? [exact, normal] : [normal, exact]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input], customizationSources: [customization]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            _ = model.CanonicalView.Properties;
+            var custom = model.CustomCodeView!.Properties.Single();
+            plugin.Object.DateTimePropertyMatcher.RegisterCanonicalProperty(custom, model);
+            Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(custom), Is.SameAs(exact));
+        }
+
+        [Test]
+        public void CustomizedNormalizedAliasUsesCanonicalInputWhenInnerContractPreservesOldName()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; set; }
+                    }
+                }
+                """;
+            var source = InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType");
+            var properties = InputFactory.Model("CustomProperties", properties: [source]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("CustomData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class CustomProperties { public string OsType { get; set; } } public class CustomData { public string OsType { get; set; } } }")
+                ]));
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            _ = inner.CanonicalView.Properties;
+            var custom = inner.CustomCodeView!.Properties.Single();
+            var inputProperty = typeof(PropertyProvider).GetProperty("InputProperty", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            Assert.That(inputProperty.GetValue(custom), Is.SameAs(source), "MTG must bind the normalized alias to this input.");
+            Assert.That(custom.WireInfo!.SerializedName, Is.EqualTo("osType"));
+            plugin.Object.DateTimePropertyMatcher.RegisterCanonicalProperty(custom, inner);
+            Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(custom), Is.SameAs(source));
+            var parent = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(parent);
+            Assert.That(parent.Properties.Select(p => p.Name), Does.Contain("OsType"));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void CustomSourceMappingAgreesWithCanonicalIdentifierCollision(bool exactFirst, bool ambiguousWireName)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OsType")]
+                        public string Other { get; set; }
+                    }
+                }
+                """;
+            var normal = InputFactory.Property("osType", InputPrimitiveType.String, serializedName: ambiguousWireName ? "same" : "normal");
+            var exact = InputFactory.Property("OsType", InputPrimitiveType.String, serializedName: ambiguousWireName ? "same" : "exact");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exact, true);
+            var input = InputFactory.Model("CustomProperties", properties: exactFirst ? [exact, normal] : [normal, exact]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input], customizationSources: [customization]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            _ = model.CanonicalView.Properties;
+            var custom = model.CustomCodeView!.Properties.Single();
+            var expected = exactFirst ? exact : normal;
+            Assert.That(custom.WireInfo!.SerializedName, Is.EqualTo(expected.SerializedName));
+            plugin.Object.DateTimePropertyMatcher.RegisterCanonicalProperty(custom, model);
+            if (ambiguousWireName)
+            {
+                Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(custom), Is.Null);
+            }
+            else
+            {
+                Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(custom), Is.SameAs(expected));
+            }
+        }
+
+        [TestCase("System.IO.DirectoryInfo", "exists", "Exists", false)]
+        [TestCase("System.Version", "major", "Major", true)]
+        public void FlattenedExternalGetterOnlyPropertyDoesNotGainSetter(string externalType, string inputName, string propertyName, bool integer)
+        {
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var inner = InputFactory.Model("ExternalProperties", usage: inputUsage, properties:
+                [InputFactory.Property(inputName, integer ? InputPrimitiveType.Int32 : InputPrimitiveType.Boolean, isReadOnly: true, serializedName: inputName)]);
+            typeof(InputType).GetProperty(nameof(InputType.External))!.SetValue(inner, new InputExternalTypeMetadata(externalType, null, null));
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var memberType = integer ? "int" : "bool";
+            const string customization = "namespace Samples.Models { public partial class OuterData { } }";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class OuterData {{ public {memberType} {propertyName} {{ get; set; }} }} }}")
+                ]));
+            Assert.That(plugin.Object.TypeFactory.CreateModel(inner), Is.InstanceOf<SystemObjectModelProvider>());
+            Assert.That(plugin.Object.SourceInputModel.Customization?.GetTypeByMetadataName(externalType), Is.Not.Null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.OuterData")!;
+            var property = type.GetProperty(propertyName);
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [Test]
+        public void FlattenedExternalSetterRejectsMismatchedInputType()
+        {
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            const string customization = "namespace Samples.Models { public partial class OuterData { } }";
+            var inner = InputFactory.Model("ExternalProperties", usage: inputUsage, properties:
+                [InputFactory.Property("capacity", InputPrimitiveType.Int64, isRequired: true, isReadOnly: true, serializedName: "capacity")]);
+            typeof(InputType).GetProperty(nameof(InputType.External))!.SetValue(inner, new InputExternalTypeMetadata("System.Text.StringBuilder", null, null));
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public long Capacity { get; set; } } }")
+                ]));
+            Assert.That(plugin.Object.TypeFactory.CreateModel(inner), Is.InstanceOf<SystemObjectModelProvider>());
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.OuterData")!;
+            var property = type.GetProperty("Capacity");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [Test]
+        public void ExternalTypeMatchDistinguishesRankAndDeclaringType()
+        {
+            _ = ManagementMockHelpers.LoadMockPlugin();
+            var compilation = Helpers.BuildCompilation(
+            [
+                ("Types.cs", """
+                    namespace Azure.Generator.Mgmt.Tests
+                    {
+                        internal class FlattenedCompatibilityTests
+                        {
+                            public class ExternalOwnerA { public class Value { } }
+                            public class ExternalOwnerB { public class Value { } }
+                            public class Signature { public void M(int[,] value) { } }
+                        }
+                    }
+                    """)
+            ]);
+            var signature = compilation.GetTypeByMetadataName("Azure.Generator.Mgmt.Tests.FlattenedCompatibilityTests+Signature")!;
+            var array = ((IMethodSymbol)signature.GetMembers("M").Single()).Parameters[0].Type;
+            var nested = compilation.GetTypeByMetadataName("Azure.Generator.Mgmt.Tests.FlattenedCompatibilityTests+ExternalOwnerA+Value")!;
+            var method = typeof(PropertyHelpers).GetMethod("ExternalTypeMatches", BindingFlags.NonPublic | BindingFlags.Static)!;
+            bool Matches(ITypeSymbol symbol, CSharpType type) => (bool)method.Invoke(null, [symbol, type])!;
+            Assert.That(Matches(nested, new CSharpType(typeof(ExternalOwnerB.Value))), Is.False);
+            Assert.That(Matches(nested, new CSharpType(typeof(ExternalOwnerA.Value))), Is.True);
+            Assert.That(Matches(array, new CSharpType(typeof(int[]))), Is.False);
+            Assert.That(Matches(array, new CSharpType(typeof(int[,]))), Is.True);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedExternalPublicSetterCanBeUsed(bool hasCustomization)
+        {
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            const string customization = "namespace Samples.Models { public partial class OuterData { } }";
+            var inner = InputFactory.Model("ExternalProperties", usage: inputUsage, properties:
+                [InputFactory.Property("capacity", InputPrimitiveType.Int32, isReadOnly: true, serializedName: "capacity")]);
+            typeof(InputType).GetProperty(nameof(InputType.External))!.SetValue(inner, new InputExternalTypeMetadata("System.Text.StringBuilder", null, null));
+            var wrapper = InputFactory.Property("details", inner, isReadOnly: true, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: hasCustomization ? [customization] : null,
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class OuterData { public int Capacity { get; set; } } }")
+                ]));
+            if (hasCustomization)
+            {
+                Assert.That(plugin.Object.SourceInputModel.Customization?.GetTypeByMetadataName("System.Text.StringBuilder"), Is.Not.Null);
+            }
+            Assert.That(plugin.Object.TypeFactory.CreateModel(inner), Is.InstanceOf<SystemObjectModelProvider>());
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: hasCustomization ? customization : null).GetType("Samples.Models.OuterData")!;
+            var property = type.GetProperty("Capacity");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, 42);
+            Assert.That(property.GetValue(instance), Is.EqualTo(42));
+        }
+
+        [Test]
+        public void SafeFlattenedExternalValueConstructorRetainsExistingSetter()
+        {
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var inner = InputFactory.Model("ExternalProperties", usage: inputUsage, properties:
+                [InputFactory.Property("originalString", InputPrimitiveType.String, isRequired: true, serializedName: "originalString")]);
+            typeof(InputType).GetProperty(nameof(InputType.External))!.SetValue(inner, new InputExternalTypeMetadata("System.Uri", null, null));
+            var wrapper = InputFactory.Property("config", inner, serializedName: "config");
+            var input = InputFactory.Model("OuterData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner]);
+            Assert.That(plugin.Object.TypeFactory.CreateModel(inner), Is.InstanceOf<SystemObjectModelProvider>());
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.OuterData")!;
+            var property = type.GetProperty("ConfigOriginalString");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "https://example.com");
+            Assert.That(property.GetValue(instance), Is.EqualTo("https://example.com"));
+        }
+
+        [Test]
+        public void CustomSourceMappingTracksExternalBaseProperty()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class Derived
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string Other { get; set; }
+                    }
+                }
+                """;
+            var source = InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "os_type");
+            var external = InputFactory.Model("ExternalBase", properties: [source]);
+            typeof(InputType).GetProperty(nameof(InputType.External))!.SetValue(
+                external, new InputExternalTypeMetadata("System.Exception", null, null));
+            var input = InputFactory.Model("Derived", properties: [], baseModel: external);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [external, input], customizationSources: [customization]);
+            var baseProvider = plugin.Object.TypeFactory.CreateModel(external)!;
+            Assert.That(baseProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            var baseProperty = baseProvider.Properties.Single(p => p.WireInfo?.SerializedName == "os_type");
+            Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(baseProperty), Is.SameAs(source));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Assert.That(model.BaseModelProvider, Is.SameAs(baseProvider));
+            var custom = model.CanonicalView.Properties.Single(p => p.Name == "Other");
+            var inputProperty = typeof(PropertyProvider).GetProperty("InputProperty", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            Assert.That(inputProperty.GetValue(custom), Is.SameAs(source));
+            Assert.That(custom.WireInfo!.SerializedName, Is.EqualTo("os_type"));
+            plugin.Object.DateTimePropertyMatcher.RegisterCanonicalProperty(custom, model);
+            Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(custom), Is.SameAs(source));
+        }
+
+        [Test]
+        public void CustomSourceMappingDoesNotGuessOverriddenWireIdentity()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                    [System.AttributeUsage(System.AttributeTargets.Class)]
+                    internal sealed class CodeGenSerializationAttribute : System.Attribute
+                    {
+                        public CodeGenSerializationAttribute(string name, string wireName) { }
+                    }
+                }
+                namespace Samples.Models
+                {
+                    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization("Other", "exact")]
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OsType")]
+                        public string Other { get; set; }
+                    }
+                }
+                """;
+            var normal = InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "normal");
+            var exact = InputFactory.Property("OsType", InputPrimitiveType.String, serializedName: "exact");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(exact, true);
+            var input = InputFactory.Model("CustomProperties", properties: [normal, exact]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input], customizationSources: [customization]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            _ = model.CanonicalView.Properties;
+            var custom = model.CustomCodeView!.Properties.Single();
+            plugin.Object.DateTimePropertyMatcher.RegisterCanonicalProperty(custom, model);
+            Assert.That(plugin.Object.DateTimePropertyMatcher.GetSourceProperty(custom), Is.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenRejectsUncallableCustomizedValueConstructor(bool byRef)
+        {
+            var propertyType = byRef ? "string" : "int?";
+            var constructorParameter = byRef ? "ref string value" : "int value";
+            var customization = $$"""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        public CustomProperties({{constructorParameter}}) { OSType = value; }
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public {{propertyType}} OSType { get; private set; }
+                    }
+                }
+                """;
+            InputType inputType = byRef ? InputPrimitiveType.String : InputPrimitiveType.Int32;
+            var properties = InputFactory.Model("CustomProperties", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json, properties:
+                [InputFactory.Property("osType", inputType, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class ConfigData {{ public {propertyType} ConfigOsType {{ get; set; }} }} }}")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            var customConstructor = inner.CanonicalView.Constructors.Single(c => c.Signature.Parameters.Count == 1 &&
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(customConstructor.Signature.Parameters.Single().IsRef, Is.EqualTo(byRef));
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.Not.True,
+                "An uncallable constructor cannot support a forwarding setter.");
+        }
+
+        [Test]
+        public void SafeFlattenedSetterDoesNotCallMissingValueConstructor()
+        {
+            const string customization = """
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        private CustomProperties() { }
+                        public CustomProperties(int value) { }
+                    }
+                }
+                """;
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = InputFactory.Model("CustomProperties", usage: inputUsage, properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isReadOnly: true, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            Assert.That(type.GetProperty("ConfigOsType")?.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FlattenedContractMatchesNestedArrayElementIdentity(bool matchingElement)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public class A { public class Value { } }
+                    public class B { public class Value { } }
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public A.Value[] OSType { get; private set; }
+                    }
+                }
+                """;
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = InputFactory.Model("CustomProperties", usage: inputUsage, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isReadOnly: true, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", usage: inputUsage, properties: [wrapper]);
+            var previousElement = matchingElement ? "A" : "B";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                        namespace Samples.Models
+                        {
+                            public class A { public class Value { } }
+                            public class B { public class Value { } }
+                            [System.AttributeUsage(System.AttributeTargets.Property)]
+                            internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                            public class ConfigData { [WirePath("config.osType")] public {{previousElement}}.Value[] ConfigOsType { get; set; } }
+                        }
+                        """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var current = type.GetProperty(matchingElement ? "ConfigOsType" : "ConfigOSType");
+            Assert.That(current, Is.Not.Null);
+            Assert.That(type.GetProperty(matchingElement ? "ConfigOSType" : "ConfigOsType"), Is.Null);
+            Assert.That(current!.SetMethod?.IsPublic == true, Is.EqualTo(matchingElement));
+        }
+
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public void SafeFlattenedSetterDoesNotConfuseNestedArrayElementTypes(bool leafReadOnly, bool hasCallableConstructor)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public class A { public class Value { } }
+                    public class B { public class Value { } }
+                    public partial class CustomProperties
+                    {
+                        private CustomProperties() { }
+                        public CustomProperties(B.Value[] value) { }
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public A.Value[] OSType { get; private set; }
+                    }
+                }
+                """;
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = InputFactory.Model("CustomProperties", usage: inputUsage, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), isRequired: true, isReadOnly: leafReadOnly, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isReadOnly: true, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class A { public class Value { } } public class ConfigData { public A.Value[] ConfigOsType { get; set; } } }")
+                ]));
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            var custom = inner.CustomCodeView!;
+            var valueType = custom.Properties.Single(p => p.Name == "OSType").Type;
+            var matcher = typeof(FlattenPropertyVisitor).GetMethod("HasAccessibleSingleValueConstructor", BindingFlags.NonPublic | BindingFlags.Static)!;
+            Assert.That((bool)matcher.Invoke(null, [inner, valueType])!, Is.EqualTo(hasCallableConstructor),
+                "Only a constructor taking the actual nested array type is callable.");
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var assembly = Compile(plugin.Object, customizationSource: customization);
+            var type = assembly.GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic == true, Is.EqualTo(hasCallableConstructor));
+            if (hasCallableConstructor)
+            {
+                var instance = Activator.CreateInstance(type)!;
+                var value = Array.CreateInstance(assembly.GetType("Samples.Models.A+Value")!, 0);
+                property.SetValue(instance, value);
+                Assert.That(property.GetValue(instance), Is.SameAs(value));
+            }
+        }
+
+        [Test]
+        public void SafeFlattenedSetterDoesNotValidateDifferentConstructorOverload()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        public required string Marker;
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public System.Collections.Generic.IList<string> OSType { get; private set; }
+                        [System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
+                        public CustomProperties(System.Collections.Generic.IEnumerable<string> values) { Marker = "done"; OSType = new System.Collections.Generic.List<string>(values); }
+                        public CustomProperties(System.Collections.Generic.IList<string> items) { Marker = "done"; OSType = items; }
+                    }
+                }
+                """;
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = InputFactory.Model("CustomProperties", usage: inputUsage, properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isReadOnly: true, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public System.Collections.Generic.IList<string> ConfigOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            Assert.That(type.GetProperty("ConfigOsType")?.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public void SafeFlattenedSetterRequiresSatisfiedRequiredMembers(bool valueConstructor, bool setsRequiredMembers)
+        {
+            var attribute = setsRequiredMembers ? "[System.Diagnostics.CodeAnalysis.SetsRequiredMembers]" : "";
+            var leaf = valueConstructor ? "[Microsoft.TypeSpec.Generator.Customizations.CodeGenMember(\"OSType\")] public string OSType { get; private set; }" : "";
+            var constructor = valueConstructor
+                ? "public CustomProperties(string value) { Marker = \"done\"; OSType = value; }"
+                : "public CustomProperties() { Marker = \"done\"; }";
+            var customization = "namespace Microsoft.TypeSpec.Generator.Customizations { [System.AttributeUsage(System.AttributeTargets.Property)] " +
+                "internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } } } " +
+                "namespace Samples.Models { public partial class CustomProperties { public required string Marker; " +
+                leaf + attribute + constructor + " } }";
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = InputFactory.Model("CustomProperties", usage: inputUsage, properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isRequired: valueConstructor, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isReadOnly: true, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic == true, Is.EqualTo(setsRequiredMembers));
+            if (setsRequiredMembers)
+            {
+                var instance = Activator.CreateInstance(type)!;
+                property!.SetValue(instance, "Linux");
+                Assert.That(property.GetValue(instance), Is.EqualTo("Linux"));
+            }
+        }
+
+        [Test]
+        public void SafeFlattenUsesAnnotatedValueConstructorWhenDefaultCannotSatisfyRequiredMembers()
+        {
+            const string customization = """
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        public required string Marker;
+                        public CustomProperties() { Marker = "default"; }
+                        [System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
+                        public CustomProperties(string value) { Marker = "value"; OSType = value; }
+                    }
+                }
+                """;
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input;
+            var properties = InputFactory.Model("CustomProperties", usage: inputUsage, properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, isReadOnly: true, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", usage: inputUsage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOsType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            Assert.That(property.GetValue(instance), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenRetainsGeneratedLeafValueConstructorSemantics(bool hasContract)
+        {
+            const string customization = """
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        public CustomProperties() { }
+                        public CustomProperties(string value) { OSType = value.ToUpperInvariant(); }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOSType { get; set; } } }")
+                ]) : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "linux");
+            Assert.That(property.GetValue(instance), Is.EqualTo("LINUX"));
+            property.SetValue(instance, "windows");
+            Assert.That(property.GetValue(instance), Is.EqualTo("WINDOWS"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenRetainsExistingValueConstructorSemantics(bool hasContract)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        internal CustomProperties() { }
+                        public CustomProperties(string value) { OSType = value.ToUpperInvariant(); }
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOSType { get; set; } } }")
+                ]) : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty("ConfigOSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "linux");
+            Assert.That(property.GetValue(instance), Is.EqualTo("LINUX"));
+            property.SetValue(instance, "windows");
+            Assert.That(property.GetValue(instance), Is.EqualTo("WINDOWS"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenHonorsCustomConstructorSemantics(bool hasContract)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        public CustomProperties(string value) { OSType = "fixed"; }
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; private set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]) : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(hasContract ? "ConfigOsType" : "ConfigOSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            Assert.That(property.GetValue(instance), Is.EqualTo("fixed"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType").GetString(), Is.EqualTo("fixed"));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void SafeFlattenedCustomPrivateLeafUsesCustomizedValueConstructor(bool hasContract, bool hasDefaultConstructor)
+        {
+            var defaultConstructor = hasDefaultConstructor ? "public CustomProperties() { }" : "";
+            var customization = $$"""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        {{defaultConstructor}}
+                        public CustomProperties(string value) { OSType = value; }
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; private set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]) : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var inner = plugin.Object.TypeFactory.CreateModel(properties)!;
+            Assert.That(inner.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 1 &&
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(hasContract ? "ConfigOsType" : "ConfigOSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenedCustomPrivateLeafUsesPublicConstructor(bool hasContract)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { get; private set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("config", properties, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]) : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(hasContract ? "ConfigOsType" : "ConfigOSType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenedGeneratedRestrictedLeafUsesValueConstructorWithDefault(bool hasContract)
+        {
+            const string customization = "namespace Samples.Models { public partial class BaseModel { public BaseModel() { } public BaseModel(string value) { OSType = value; } } }";
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var readOnly = InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, isReadOnly: true, serializedName: "osType");
+            var baseModel = InputFactory.Model("BaseModel", usage: inputUsage, properties: [readOnly]);
+            var relaxed = InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, serializedName: "osType");
+            relaxed.Update(isRequiredInConstructor: false);
+            var leaf = InputFactory.Model("LeafModel", usage: inputUsage, properties: [relaxed], baseModel: baseModel);
+            typeof(InputModelType).GetMethod("AddDerivedModel", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(baseModel, [leaf]);
+            var wrapper = InputFactory.Property("config", baseModel, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, leaf, input],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]) : null);
+            var inner = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var body = inner.Properties.Single().Body as AutoPropertyBody;
+            Assert.That(body!.SetterModifiers.HasFlag(MethodSignatureModifiers.Private | MethodSignatureModifiers.Protected), Is.True);
+            Assert.That(inner.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 0 && c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            Assert.That(inner.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 1 && c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(hasContract ? "ConfigOsType" : "ConfigOSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenedGeneratedGetterOnlyLeafUsesValueConstructorWithDefault(bool hasContract)
+        {
+            const string customization = "namespace Samples.Models { public partial class BaseModel { public BaseModel() { } public BaseModel(string value) { OSType = value; } } }";
+            const InputModelTypeUsage inputUsage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var readOnly = InputFactory.Property("osType", InputPrimitiveType.String, isRequired: true, isReadOnly: true, serializedName: "osType");
+            var baseModel = InputFactory.Model("BaseModel", usage: inputUsage, properties: [readOnly]);
+            var wrapper = InputFactory.Property("config", baseModel, serializedName: "config");
+            var input = InputFactory.Model("ConfigData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, input],
+                customizationSources: [customization],
+                lastContractCompilation: hasContract ? () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class ConfigData { public string ConfigOsType { get; set; } } }")
+                ]) : null);
+            var inner = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            Assert.That(inner.Properties.Single().Body.HasSetter, Is.False);
+            Assert.That(inner.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 0 && c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            Assert.That(inner.CanonicalView.Constructors.Any(c => c.Signature.Parameters.Count == 1 && c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.ConfigData")!;
+            var property = type.GetProperty(hasContract ? "ConfigOsType" : "ConfigOSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("config").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase("get;", false)]
+        [TestCase("get; private set;", false)]
+        [TestCase("get; init;", false)]
+        [TestCase("get; set;", true)]
+        public void CustomScalarLeafRequiresAccessibleSetter(string accessor, bool expectedSetter)
+        {
+            var customization = $$"""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("OSType")]
+                        public string OSType { {{accessor}} } = "Linux";
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("CustomData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class CustomData { public string OSType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.CustomData")!;
+            var property = type.GetProperty("OSType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic == true, Is.EqualTo(expectedSetter));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ChainedCollectionCanDelegateThroughProtectedHistoricalSetter(bool getterOnly)
+        {
+            var strategy = InputFactory.Model("TestUpdateRunStrategy", properties:
+                [InputFactory.Property("osType", InputFactory.Array(InputPrimitiveType.String), isRequired: true, serializedName: "osType")]);
+            var strategyProperty = InputFactory.Property("strategy", strategy, serializedName: "strategy");
+            var properties = InputFactory.Model("TestUpdateRunProperties", properties: [strategyProperty]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("TestUpdateRunData", properties: [wrapper]);
+            var accessor = getterOnly ? "get;" : "get; protected set;";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties, strategy],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public class TestUpdateRunProperties
+                        {
+                            public System.Collections.Generic.IList<string> StrategyOsType { {{accessor}} }
+                        }
+                        public class TestUpdateRunData
+                        {
+                            public System.Collections.Generic.IList<string> StrategyOsType { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var assembly = Compile(plugin.Object);
+            var intermediate = assembly.GetType("Samples.Models.TestUpdateRunProperties")!;
+            var intermediateSetter = intermediate.GetProperty("StrategyOsType")!.SetMethod!;
+            Assert.That(intermediateSetter.IsPublic, Is.False);
+            Assert.That(getterOnly ? intermediateSetter.IsAssembly : intermediateSetter.IsFamilyOrAssembly, Is.True);
+            var type = assembly.GetType("Samples.Models.TestUpdateRunData")!;
+            var property = type.GetProperty("StrategyOsType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, new List<string> { "Linux" });
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("strategy").GetProperty("osType")[0].GetString(), Is.EqualTo("Linux"));
+        }
+
+        [Test]
+        public void DistinctSafeFlattenedSiblingDoesNotClaimHistoricalName()
+        {
+            var first = InputFactory.Model("FirstProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var firstWrapper = InputFactory.Property("first", first, serializedName: "first");
+            Flatten(firstWrapper);
+            var network = InputFactory.Model("NetworkProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var networkWrapper = InputFactory.Property("network", network, serializedName: "network");
+            var input = InputFactory.Model("TestData", properties: [firstWrapper, networkWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, first, network],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute { public WirePathAttribute(string path) { } }
+                        public class TestData { [WirePath("first.osType")] public string OsType { get; set; } }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("NetworkOSType"));
+        }
+
+        [Test]
+        public void CustomPrivateWrapperCanForwardWithinOwningType()
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties { }
+                    public partial class CustomData
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Properties")]
+                        internal CustomProperties Properties { get; private set; }
+                    }
+                }
+                """;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("CustomData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.CustomData")!;
+            var property = type.GetProperty("OSType");
+            Assert.That(property?.SetMethod?.IsPublic, Is.True);
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Linux");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("osType").GetString(), Is.EqualTo("Linux"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void CustomInitOnlyWrapperDoesNotGenerateInvalidForwarder(bool collection)
+        {
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute { public CodeGenMemberAttribute(string name) { } }
+                }
+                namespace Samples.Models
+                {
+                    public partial class CustomProperties { }
+                    public partial class CustomData
+                    {
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Properties")]
+                        internal CustomProperties Properties { get; init; }
+                    }
+                }
+                """;
+            InputType leafType = collection ? InputFactory.Array(InputPrimitiveType.String) : InputPrimitiveType.String;
+            var properties = InputFactory.Model("CustomProperties", properties:
+                [InputFactory.Property("osType", leafType, isReadOnly: true, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("CustomData", properties: [wrapper]);
+            var contractType = collection ? "System.Collections.Generic.IReadOnlyList<string>" : "string";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $"namespace Samples.Models {{ public class CustomData {{ public {contractType} OsType {{ get; set; }} }} }}")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.CustomData")!;
+            var property = type.GetProperty("OsType");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property!.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [Test]
+        public void FlattenedAcronymNameDoesNotCollideWithCustomMethod()
+        {
+            const string customization = "namespace Samples.Models { public partial class SqlVmData { public void OsType() { } } }";
+            var properties = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", properties, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OSType"));
+            Assert.That(Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.SqlVmData"), Is.Not.Null);
+        }
+
+        [Test]
+        public void ChainedFlattenedAcronymRespectsExactInnerWrapperType()
+        {
+            var inner = InputFactory.Model("DBSystemUpdateProperties", properties:
+                [InputFactory.Property("source", InputPrimitiveType.String, serializedName: "source")]);
+            typeof(InputType).GetProperty(nameof(InputType.IsExactName))!.SetValue(inner, true);
+            var innerWrapper = InputFactory.Property("properties", inner, serializedName: "properties");
+            var details = InputFactory.Model("DetailContainer", properties: [innerWrapper]);
+            var wrapper = InputFactory.Property("details", details, serializedName: "details");
+            Flatten(wrapper);
+            var input = InputFactory.Model("PatchData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, details, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class PatchData { public string DbSystemUpdateSource { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("DBSystemUpdateSource"));
+            Assert.That(model.Properties.Select(p => p.Name), Does.Not.Contain("DbSystemUpdateSource"));
+        }
+
+        [Test]
+        public void SafeFlattenedAcronymKeepsExactWrapperAndHistoricalLeaf()
+        {
+            var inner = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("IpAddress", inner, serializedName: "endpoint");
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!.SetValue(wrapper, true);
+            var input = InputFactory.Model("EndpointData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class EndpointData { public string IpAddressOsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("IpAddressOsType"));
+        }
+
+        [Test]
+        public void FlattenedAcronymIgnoresAcceptedIncompatibleCanonicalContract()
+        {
+            var inner = InputFactory.Model("SqlVirtualMachineProperties", properties:
+                [InputFactory.Property("osType", InputPrimitiveType.String, serializedName: "osType")]);
+            var wrapper = InputFactory.Property("properties", inner, serializedName: "properties");
+            Flatten(wrapper);
+            var input = InputFactory.Model("SqlVmData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                apiCompatBaseline: ApiCompatBaseline.Parse(["MembersMustExist : Member 'Samples.Models.SqlVmData.OSType.get()' does not exist in the implementation but it does exist in the contract."]),
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", "namespace Samples.Models { public class SqlVmData { public int OSType { get; set; } public string OsType { get; set; } } }")
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Select(p => p.Name), Does.Contain("OsType"));
+        }
+
         // Regression for #63717: a required, getter-only outer wrapper must not
         // hide the mutable collection exposed by the inner model's lazy getter.
         [Test]
@@ -1714,6 +4394,9 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(result.Success, Is.True, string.Join(Environment.NewLine, result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error)));
             return Assembly.Load(stream.ToArray());
         }
+
+        private sealed class ExternalOwnerA { public sealed class Value { } }
+        private sealed class ExternalOwnerB { public sealed class Value { } }
 
         private sealed class ContractView(string name) : TypeProvider
         {
