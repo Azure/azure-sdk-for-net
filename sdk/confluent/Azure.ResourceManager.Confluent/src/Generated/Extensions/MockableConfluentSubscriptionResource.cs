@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         private ClientDiagnostics ConfluentOrganizationClientDiagnostics => _confluentOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Confluent/organizations", out string apiVersion) ? apiVersion : "2026-06-02-preview");
+        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Confluent/organizations", out string apiVersion) ? apiVersion : "2026-10-21-preview");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-21-preview");
 
         private ClientDiagnostics MarketplaceAgreementsOperationGroupClientDiagnostics => _marketplaceAgreementsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-21-preview");
 
         /// <summary>
         /// List all organizations under the specified subscription.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-10-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
